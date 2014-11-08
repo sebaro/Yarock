@@ -1749,23 +1749,30 @@ void PageSongInfo::saveSettings()
 //! ----------- restoreSettings ------------------------------------------------
 void PageSongInfo::restoreSettings()
 {
-    QStringList all_providers = ServiceLyrics::fullProvidersList();
-    
-    foreach(const QString& provider, SETTINGS()->_lyrics_providers) {
-      
-      QListWidgetItem* item = new QListWidgetItem(ui_listwidget);
-      item->setText(provider);
-      item->setCheckState(Qt::Checked);
-      item->setForeground(palette().color(QPalette::Active, QPalette::Text));
-      
-      all_providers.removeOne(provider);
+    /* loop over user activated providers */
+    foreach(const QString& provider_name, SETTINGS()->_lyrics_providers) 
+    {
+      foreach(const QString& name, ServiceLyrics::fullProvidersList()) 
+      {
+         if (provider_name == name) 
+         {
+          QListWidgetItem* item = new QListWidgetItem(ui_listwidget);
+          item->setText(provider_name);
+          item->setCheckState(Qt::Checked);
+          item->setForeground(palette().color(QPalette::Active, QPalette::Text));
+         }
+      }
     }
     
-    foreach(const QString& provider, all_providers) {
-      QListWidgetItem* item = new QListWidgetItem(ui_listwidget);
-      item->setText(provider);
-      item->setCheckState(Qt::Unchecked);
-      item->setForeground(palette().color(QPalette::Disabled, QPalette::Text));
+    foreach(const QString& name, ServiceLyrics::fullProvidersList()) 
+    {
+        if( !SETTINGS()->_lyrics_providers.contains( name ) )
+        {
+          QListWidgetItem* item = new QListWidgetItem(ui_listwidget);
+          item->setText(name);
+          item->setCheckState(Qt::Unchecked);
+          item->setForeground(palette().color(QPalette::Disabled, QPalette::Text));	  
+        }
     }
 }
 

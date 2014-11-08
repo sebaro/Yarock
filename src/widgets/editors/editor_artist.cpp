@@ -397,10 +397,12 @@ void EditorArtist::slot_on_image_received(INFO::InfoRequestData request, QVarian
     if(!m_requests_ids.contains(request.requestId))
       return;
 
-    m_requests_ids.removeOne(request.requestId);
-    
     /* get data */  
     m_new_image = QImage::fromData(output.toByteArray());
+    if(m_new_image.isNull())
+      return;
+
+    m_requests_ids.removeOne(request.requestId);
 
     int ITEM_HEIGHT = 120;
     int ITEM_WIDTH  = 120;

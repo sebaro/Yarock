@@ -71,6 +71,8 @@ QList<UltimateLyricsProvider*> UltimateLyricsReader::ParseDevice(QIODevice* devi
 
 UltimateLyricsProvider* UltimateLyricsReader::ParseProvider(QXmlStreamReader* reader) const
 {
+  //Debug::debug() << "########## UltimateLyricsReader ParseProvider";
+  
   QXmlStreamAttributes attributes = reader->attributes();
 
   UltimateLyricsProvider* scraper = new UltimateLyricsProvider;
@@ -85,7 +87,8 @@ UltimateLyricsProvider* UltimateLyricsReader::ParseProvider(QXmlStreamReader* re
     if (reader->tokenType() == QXmlStreamReader::EndElement)
       break;
 
-    if (reader->tokenType() == QXmlStreamReader::StartElement) {
+    if (reader->tokenType() == QXmlStreamReader::StartElement) 
+    {
       if (reader->name() == "extract")
         scraper->add_extract_rule(ParseRule(reader));
       else if (reader->name() == "exclude")
@@ -106,8 +109,10 @@ UltimateLyricsProvider* UltimateLyricsReader::ParseProvider(QXmlStreamReader* re
 
 UltimateLyricsProvider::Rule UltimateLyricsReader::ParseRule(QXmlStreamReader* reader) const {
   UltimateLyricsProvider::Rule ret;
+  //Debug::debug() << "########## UltimateLyricsReader ParseRule";
 
-  while (!reader->atEnd()) {
+  while (!reader->atEnd()) 
+  {
     reader->readNext();
 
     if (reader->tokenType() == QXmlStreamReader::EndElement)
@@ -115,12 +120,16 @@ UltimateLyricsProvider::Rule UltimateLyricsReader::ParseRule(QXmlStreamReader* r
 
     if (reader->tokenType() == QXmlStreamReader::StartElement) {
       if (reader->name() == "item") {
+        //Debug::debug() << "########## UltimateLyricsReader ParseRule find item";
+
         QXmlStreamAttributes attr = reader->attributes();
         if (attr.hasAttribute("tag"))
           ret << UltimateLyricsProvider::RuleItem(attr.value("tag").toString(), QString());
-        else if (attr.hasAttribute("begin"))
+        else if (attr.hasAttribute("begin")) 
+        {
           ret << UltimateLyricsProvider::RuleItem(attr.value("begin").toString(),
                                                   attr.value("end").toString());
+        }
       }
       reader->skipCurrentElement();
     }

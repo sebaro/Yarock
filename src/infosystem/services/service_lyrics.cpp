@@ -81,10 +81,11 @@ void ServiceLyrics::slot_ultimate_lyrics_parsed()
       list << provider;
     }
 
-    //! sort lyrics providers
-    QStringList user_order = SETTINGS()->_lyrics_providers;
+    /* sort user lyrics providers */
+    QStringList user_names = SETTINGS()->_lyrics_providers;
 
-    foreach (const QString& name, user_order) {
+    foreach (const QString& name, user_names) 
+    {
       for(int i = 0;i<list.count();i++)
       {
        if (list.at(i)->name() == name) {
@@ -115,23 +116,24 @@ QStringList ServiceLyrics::defaultProvidersList()
 {
     QStringList default_order;
     default_order << "lyrics.wikia.com"
-                  << "lyricstime.com"
                   << "lyricsreg.com"
                   << "lyricsmania.com"
                   << "metrolyrics.com"
                   << "azlyrics.com"
                   << "songlyrics.com"
                   << "elyrics.net"
-                  << "lyricsdownload.com"
                   << "lyrics.com"
                   << "lyricsbay.com"
+                  << "lyricsmode.com"
                   << "directlyrics.com"
-                  << "loudson.gs"
-                  << "teksty.org";/*
+                  << "loudsongs.com";
+                  /*
+                  << "teksty.org"
                   << "tekstowo.pl (Polish translations)"
                   << "vagalume.uol.com.br"
                   << "vagalume.uol.com.br (Portuguese translations)"
-                  << "darklyrics.com";*/
+                  << "darklyrics.com";
+                  */
                   
     return default_order;
 }
@@ -142,24 +144,23 @@ QStringList ServiceLyrics::defaultProvidersList()
 QStringList ServiceLyrics::fullProvidersList()
 {
     QStringList full_list;
-    full_list << "lyrics.wikia.com"
-                  << "lyricstime.com"
+    full_list     << "lyrics.wikia.com"
                   << "lyricsreg.com"
                   << "lyricsmania.com"
                   << "metrolyrics.com"
                   << "azlyrics.com"
                   << "songlyrics.com"
                   << "elyrics.net"
-                  << "lyricsdownload.com"
                   << "lyrics.com"
                   << "lyricsbay.com"
+                  << "lyricsmode.com"
                   << "directlyrics.com"
-                  << "loudson.gs"
+                  << "loudsongs.com"
+                  << "darklyrics.com"
                   << "teksty.org"
                   << "tekstowo.pl (Polish translations)"
                   << "vagalume.uol.com.br"
-                  << "vagalume.uol.com.br (Portuguese translations)"
-                  << "darklyrics.com";
+                  << "vagalume.uol.com.br (Portuguese translations)";
                   
     return full_list;
 }

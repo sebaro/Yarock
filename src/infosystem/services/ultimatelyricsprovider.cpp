@@ -23,6 +23,7 @@
 #include "networkaccess.h"
 #include "debug.h"
 
+#include <QTextDocument>
 /*
 ********************************************************************************
 *                                                                              *
@@ -46,12 +47,14 @@ void UltimateLyricsProvider::FetchInfo(INFO::InfoRequestData request)
     }
 
     //! Fill in fields in the URL
-    //Debug::debug() << " ---- UltimateLyricsProvider::base url " << url_;
+//     Debug::debug() << " ---- UltimateLyricsProvider::base url " << url_;
 
     lyrics_url_ = url_;
     ReplaceFields(request, &lyrics_url_);
 
-    //Debug::debug() << " ---- UltimateLyricsProvider::complete url " << lyrics_url_;
+//     Debug::debug() << " ---- UltimateLyricsProvider::complete url " << lyrics_url_;
+    
+    
     QUrl url(lyrics_url_);
 
     QObject *reply = HTTP()->get( url );
@@ -75,7 +78,7 @@ void UltimateLyricsProvider::signalFinish()
 
 void UltimateLyricsProvider::LyricsFetched(QByteArray bytes)
 {
-    //Debug::debug() << "[UltimateLyricsProvider] " << name_ << " LyricsFetched";
+    Debug::debug() << "[UltimateLyricsProvider] " << name_ << " LyricsFetched";
  
     QObject* reply = qobject_cast<QObject*>(sender());
     if (!reply || !m_requests.contains(reply))   return;
@@ -84,8 +87,8 @@ void UltimateLyricsProvider::LyricsFetched(QByteArray bytes)
 
     const QTextCodec* codec = QTextCodec::codecForName(charset_.toLatin1().constData());
     const QString original_content = codec->toUnicode(bytes);
-    //Debug::debug() << "[UltimateLyricsProvider] original_content :" << original_content;
-
+//     Debug::debug() << "[UltimateLyricsProvider] original_content :" << original_content;
+    
     QString lyrics;
 
     // Check for invalid indicators
@@ -120,13 +123,19 @@ void UltimateLyricsProvider::LyricsFetched(QByteArray bytes)
       ApplyExcludeRule(rule, &lyrics);
     }
 
-    //Debug::debug() << "[UltimateLyricsProvider] lyrics :" << lyrics;
-    
-    if (!lyrics.isEmpty()) {
-      //Debug::debug() << "[UltimateLyricsProvider] :" << name_ << " emit InfoReady !!";
+//     Debug::debug() << "[UltimateLyricsProvider] lyrics :" << lyrics;
+
+    /* add check to avoid bad detection with only html items*/
+    QTextDocument doc;
+    doc.setHtml( lyrics );
+
+    if (!lyrics.isEmpty() && !doc.toPlainText().isEmpty()) 
+    {
+//       Debug::debug() << "[UltimateLyricsProvider] :" << name_ << " emit InfoReady !!";
       emit InfoReady(request, lyrics);
     }
-    else {
+    else 
+    {
       /* WARNING CHANGE FOR YAROCK : only emit Finished in case of No Lyrics WARNING*/
       /* Request are send synchronously if no lyrics is found */
       emit Finished(request);
@@ -136,9 +145,12 @@ void UltimateLyricsProvider::LyricsFetched(QByteArray bytes)
 
 void UltimateLyricsProvider::ApplyExtractRule(const Rule& rule, QString* content) const
 {
+    //Debug::debug() << "#### UltimateLyricsProvider::ApplyExtractRule ####";;
     foreach (const RuleItem& item, rule) {
+      //Debug::debug() << "UltimateLyricsProvider::ApplyExtractRule FIRST " << item.first << " SECOND " << item.second;
       if (item.second.isNull()) {
         *content = ExtractXmlTag(*content, item.first);
+        //Debug::debug() << "UltimateLyricsProvider::ApplyExtractRule EXTRACTED " <<*content ;
       }
       else {
         *content = Extract(*content, item.first, item.second);
@@ -249,19 +261,22 @@ void UltimateLyricsProvider::ReplaceFields(INFO::InfoRequestData request, QStrin
 {
     INFO::InfoStringHash hash = request.data.value< INFO::InfoStringHash >();
 
+    QString cleantitle = hash["title"].remove("&").simplified();
+    
     ReplaceField("{artist}",  hash["artist"].toLower(),          text);
     ReplaceField("{artist2}", NoSpace(hash["artist"].toLower()), text);
     ReplaceField("{album}",   hash["album"].toLower(),           text);
     ReplaceField("{album2}",  NoSpace(hash["album"].toLower()),  text);
-    ReplaceField("{title}",   hash["title"].toLower(),           text);
+    ReplaceField("{title}",   cleantitle,                        text);
+    ReplaceField("{title2}",  NoSpace(cleantitle.toLower()),     text);
     ReplaceField("{Artist}",  hash["artist"],                    text);
     ReplaceField("{Album}",   hash["album"],                     text);
     ReplaceField("{ARTIST}",  hash["artist"].toUpper(),          text);
-    ReplaceField("{year}",    hash["year"],     text);
-    ReplaceField("{Title}",   hash["title"],                     text);
-    ReplaceField("{Title2}",  TitleCase(hash["title"]),          text);
+    ReplaceField("{year}",    hash["year"],                      text);
+    ReplaceField("{Title}",   cleantitle,                        text);
+    ReplaceField("{Title2}",  TitleCase(cleantitle),             text);
     ReplaceField("{a}",       FirstChar(hash["artist"]),         text);
-    ReplaceField("{track}",   hash["number"],      text);
+    ReplaceField("{track}",   hash["number"],                    text);
 }
 
 QString UltimateLyricsProvider::NoSpace(const QString& text)
