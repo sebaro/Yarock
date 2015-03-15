@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2014 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -63,9 +63,10 @@ void YarockSettings::readSettings()
     _engine              = s->value("Session/engine",              0).toInt();    // default = null engine
 #endif
     
-    _viewMode            = s->value("Session/viewMode",            5).toInt();  // ViewAlbum default
-    _album_view_type     = s->value("Session/album_view_type",     1).toInt();  // extended default
-    _playlist_view_type  = s->value("Session/playlist_view_type",  0).toInt();  // overview default
+    _browserScroll       = s->value("Session/browserScroll",       0).toInt();  
+    _viewMode            = s->value("Session/viewMode",            5).toInt();    // ViewAlbum default
+    _album_view_type     = s->value("Session/album_view_type",     1).toInt();    // extended default
+    _playlist_view_type  = s->value("Session/playlist_view_type",  0).toInt();    // overview default
 
     _playqueueShowCover  = s->value("Session/playqueueShowCover", true).toBool();
     _playqueueShowRating = s->value("Session/playqueueShowRating", true).toBool();
@@ -149,8 +150,8 @@ void YarockSettings::writeSettings()
     s->beginGroup("Window");
     s->setValue("geometry",           _windowsGeometry);
     s->setValue("state",              _windowsState);
-    s->setValue("splitter1",           _splitterState_1);
-    s->setValue("splitter2",           _splitterState_2);
+    s->setValue("splitter1",          _splitterState_1);
+    s->setValue("splitter2",          _splitterState_2);
 
     s->setValue("showPlaylistPanel",  _showPlayQueuePanel);
     s->setValue("showMenuPanel",      _showMenuPanel);
@@ -161,6 +162,7 @@ void YarockSettings::writeSettings()
     // session
     s->beginGroup("Session");
     s->setValue("engine",             _engine);
+    s->setValue("browserScroll",      _browserScroll);
     s->setValue("viewMode",           _viewMode);
     s->setValue("album_view_type",    _album_view_type);
     s->setValue("playlist_view_type", _playlist_view_type);

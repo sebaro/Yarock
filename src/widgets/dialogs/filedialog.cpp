@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2014 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -18,8 +18,10 @@
 #include "debug.h"
 
 #include <QFileInfo>
+#include <QDesktopServices>
 #include <QApplication>
 #include <QPushButton>
+
 
 /**
  *   This function has been copied from Qt library
@@ -99,14 +101,26 @@ FileDialog::FileDialog(QWidget *parent, Mode mode, const QString& title) : Dialo
     connect(ui_filename_lineedit, SIGNAL(textChanged(const QString &)), this, SLOT(slot_on_filename_textChanged(const QString &)));
 
     
-    /* init */
+    /* initialization */
     ui_listView->setRootIndex( m_model->index(QDir::rootPath()) );
     m_rootIdx = m_model->index(QDir::rootPath());
 
-    this->updateCurrentIndex( m_model->index(QDir::homePath()) );
+    QDir userMusicDir = QDir( QDesktopServices::storageLocation( QDesktopServices::MusicLocation ) );
+    if(userMusicDir.exists())
+      this->updateCurrentIndex( m_model->index(userMusicDir.path()) );
+    else
+      this->updateCurrentIndex( m_model->index(QDir::homePath()) );
+    
     this->enableButton(false);
 }
 
+void FileDialog::startWithDir(QString path)
+{
+    if(QDir(path).exists())
+      this->updateCurrentIndex( m_model->index(path) );
+}
+
+    
 //! --------- on_buttonBox_accepted --------------------------------------------
 void FileDialog::on_buttonBox_accepted()
 {

@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2014 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -87,6 +87,7 @@ Q_DISABLE_COPY(YarockSettings)
     QByteArray           _splitterState_1;
     QByteArray           _splitterState_2;
 
+    int                  _browserScroll;
     int                  _viewMode;            // 1 to 16
     int                  _album_view_type;     // 0 : grid, 1: extended
     int                  _playlist_view_type;  // 0 : overview, 1: by_tracks

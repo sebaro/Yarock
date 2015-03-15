@@ -29,9 +29,11 @@
   </description>
   <url type="homepage">http://qt-apps.org/content/show.php/yarock?content=129372</url>
   <screenshots>
-    <screenshot type="default" width="1248" height="702">https://launchpadlibrarian.net/176718106/screenshot_track_view.png</screenshot>
-    <screenshot width="1248" height="702">https://launchpadlibrarian.net/176718103/screenshot_artist_view_dark_theme.png</screenshot>
-    <screenshot width="1248" height="702">https://launchpadlibrarian.net/176718082/screenshot_album_view.png</screenshot>
+    <screenshot type="default" width="1248" height="702">https://launchpadlibrarian.net/189537409/screenshot_album_view.png</screenshot>
+    <screenshot width="1248" height="702">https://launchpadlibrarian.net/189537418/screenshot_artist_view_1.png</screenshot>
+    <screenshot width="1248" height="702">https://launchpadlibrarian.net/189537419/screenshot_artist_view_2.png</screenshot>
+    <screenshot width="1248" height="702">https://launchpadlibrarian.net/189537431/screenshot_track_view.png</screenshot>
+    <screenshot width="1248" height="702">https://launchpadlibrarian.net/189537441/screenshot_tunin_view.png</screenshot>    
   </screenshots>
   <updatecontact>updatecontact@yarock.org</updatecontact>
 </application> 

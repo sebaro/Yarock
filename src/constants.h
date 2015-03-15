@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2014 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -21,7 +21,7 @@
 
 static const QString APP_NAME        = "yarock";
 static const QString ORG_NAME        = "yarock";
-static const QString VERSION         = "1.0.0";
+static const QString VERSION         = "1.0.1";
 static const QString AUTHOR_NAME     = "Sébastien Amardeilh";
 static const QString USER_AGENT = APP_NAME + " " + VERSION;
 

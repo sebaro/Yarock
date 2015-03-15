@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2014 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -58,6 +58,7 @@ public:
 
 public slots:
     void restore_view();
+    void save_view();
 
 protected:
     bool eventFilter(QObject *obj, QEvent *ev);
@@ -98,11 +99,10 @@ private :
         scroll = 0;
       }
 
-      VIEW::Id  mode;
-//       QString         filter;
-      QVariant        search; 
-      QVariant        data;
-      int             scroll;
+      VIEW::Id      mode;
+      QVariant      search; 
+      QVariant      data;
+      int           scroll;
     };
     void switch_view(BrowserParam& param);
     void add_history_entry(BrowserParam& param);

@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2014 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -42,7 +42,9 @@ Q_OBJECT
       ui_file_path->setText(text);
       ui_file_path->home(false);    
     }
-    
+
+    void hideRemoveButton() {ui_remove_button->hide();}
+
   private:
     QLineEdit    *ui_file_path;
     QPushButton  *ui_open_button;

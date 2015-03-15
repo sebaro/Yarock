@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2014 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -43,7 +43,7 @@ public:
     QPixmap cover( const MEDIA::AlbumPtr album);
     QPixmap cover( const MEDIA::TrackPtr track);
 
-    void addStreamCover( const MEDIA::TrackPtr stream, QImage image);
+    void addStreamCover( const QString& url, QImage image);
     bool hasCover(MEDIA::TrackPtr );
     
 private:
@@ -52,6 +52,7 @@ private:
     
     /* hash from media Object pointer to QPixmapCache:key internal key */
     QHash< const MEDIA::MediaPtr, QPixmapCache::Key > m_keys;
+    QHash< const QString, QPixmapCache::Key > m_keys_urls;
 
     QPixmap get_default_pixmap(bool isStream=false);
     

@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2014 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -92,11 +92,10 @@ void EngineVlc::setAudioOutput()
 //                       << QByteArray("oss")
 //                       << QByteArray("jack");
 // 
-// libvlc_audio_output_device_t* prefered_device;
-// 
-//     foreach (const QByteArray &soundSystem, knownSoundSystems) 
+//     libvlc_audio_output_device_t* prefered_device;
+//     QByteArray soundSystem=0;
+//     foreach (soundSystem, knownSoundSystems) 
 //     {
-// 
 //       libvlc_audio_output_device_t* outputDevices = libvlc_audio_output_device_list_get(
 //              m_vlclib->core(), soundSystem);
 //       
@@ -105,17 +104,18 @@ void EngineVlc::setAudioOutput()
 //         Debug::debug() << "found device" << soundSystem << QString::fromUtf8( outputDevices->psz_device );
 //         Debug::debug() << "      " << QString::fromUtf8( outputDevices->psz_description );
 // 
-// 	if(soundSystem== QByteArray("alsa") && 
-// 	  QString::fromUtf8( outputDevices->psz_device ) == QString("sysdefault:CARD=Audio"))
-// 	  prefered_device = outputDevices;
-//       
+//         if( soundSystem== QByteArray("alsa") && 
+//             QString::fromUtf8( outputDevices->psz_device ) == QString("sysdefault:CARD=Audio"))
+//         {
+//           prefered_device = outputDevices;
+// 	  break;
+//         }
+// 
 //         outputDevices = outputDevices->p_next;
-// 	
-// 	
 //       }
 //     }    
-//       libvlc_audio_output_set(m_vlc_player, QByteArray("alsa").data() );
-//       libvlc_audio_output_device_set(m_vlc_player, QByteArray("alsa").data(), prefered_device->psz_device);
+//     libvlc_audio_output_set(m_vlc_player, soundSystem.data() );
+//     libvlc_audio_output_device_set(m_vlc_player, soundSystem.data(), prefered_device->psz_device);
 }
 
 /* ---------------------------------------------------------------------------*/

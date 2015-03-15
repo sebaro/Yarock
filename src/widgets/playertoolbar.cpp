@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2014 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -21,6 +21,7 @@
 #include "widgets/spacer.h"
 #include "widgets/seekslider.h"
 
+#include "settings.h"
 #include "core/player/engine.h"
 #include "utilities.h"
 #include "global_actions.h"
@@ -106,7 +107,7 @@ VolumeToolButton::VolumeToolButton(QWidget *parent) : QToolButton( parent )
     
     /* ---- init  ---- */
     Engine::instance()->setMuted(false);
-    m_slider->setValue(Engine::instance()->volume());    
+    slot_volume_change(true);
 }
 
 
@@ -120,11 +121,13 @@ void VolumeToolButton::slot_show_menu()
 }
 
 
-void VolumeToolButton::slot_volume_change()
+void VolumeToolButton::slot_volume_change(bool init/*=false*/)
 {
 //     Debug::debug() << "- VolumeToolButton -> slot_volume_change percent: ";
     int volume = Engine::instance()->volume();
     m_volume_label->setText( QString::number( volume ) + '%' );
+    if(init)
+       m_slider->setValue(Engine::instance()->volume());
 }
 
 void VolumeToolButton::slot_apply_volume(int vol)
@@ -198,6 +201,17 @@ PlayerToolBar::PlayerToolBar(QWidget *parent) : QWidget( parent )
     m_separator->setText("/");
     m_separator->hide();
     
+    m_pauseState = new QLabel(this);
+    m_pauseState->setFont(font);
+    m_pauseState->setAlignment( Qt::AlignRight );
+    m_pauseState->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
+    m_pauseState->setText(tr("[paused]"));
+    m_pauseState->hide();
+    
+    QPalette p = m_pauseState->palette();
+    p.setColor(m_pauseState->foregroundRole(), SETTINGS()->_baseColor);
+    m_pauseState->setPalette(p);  
+    
     /* -- playing track label -- */
     m_playingTrack = new QLabel(this);
     m_playingTrack->setFont( QApplication::font() );    
@@ -210,6 +224,7 @@ PlayerToolBar::PlayerToolBar(QWidget *parent) : QWidget( parent )
     hbl1->addWidget(m_currentTime, 0, Qt::AlignVCenter | Qt::AlignLeft);
     hbl1->addWidget(m_separator, 0, Qt::AlignVCenter | Qt::AlignLeft);
     hbl1->addWidget(m_totalTime, 0, Qt::AlignVCenter | Qt::AlignLeft);
+    hbl1->addWidget(m_pauseState, 0, Qt::AlignVCenter | Qt::AlignLeft);
     hbl1->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Minimum));
 
     QVBoxLayout *vl1 = new QVBoxLayout();
@@ -242,7 +257,6 @@ PlayerToolBar::PlayerToolBar(QWidget *parent) : QWidget( parent )
     ui_equalizer_button->setDefaultAction(ACTIONS()->value(ENGINE_AUDIO_EQ));
     ui_equalizer_button->setIconSize( QSize( 32, 32 ) );
     ui_equalizer_button->setAutoRaise(true);
-    
     
     
     //! volume tool button and menu
@@ -279,11 +293,11 @@ PlayerToolBar::PlayerToolBar(QWidget *parent) : QWidget( parent )
     
     /* -- signals connection -- */
     connect(this->m_player, SIGNAL(mediaTick(qint64)), this, SLOT(slot_update_time_position(qint64)));
-    connect(this->m_player, SIGNAL(mediaTotalTimeChanged(qint64)), this, SLOT(slot_update_total_time(qint64)));
+//     connect(this->m_player, SIGNAL(mediaTotalTimeChanged(qint64)), this, SLOT(slot_update_total_time(qint64)));
 
     connect(this->m_player, SIGNAL(mediaMetaDataChanged()), this, SLOT(slot_update_track_playing_info()));
     connect(this->m_player, SIGNAL(mediaChanged()), this, SLOT(slot_update_track_playing_info()));
-    connect(this->m_player, SIGNAL(engineStateChanged()), this, SLOT(slot_update_track_playing_info()));
+    connect(this->m_player, SIGNAL(engineStateChanged()), this, SLOT(slot_on_player_state_changed()));
 }
 
 
@@ -293,24 +307,38 @@ void PlayerToolBar::clear()
     m_playingTrack->clear();
     m_currentTime->clear();
     m_totalTime->clear();
+    m_pauseState->hide();
     m_separator->hide();
+}
+
+void PlayerToolBar::slot_on_player_state_changed()
+{
+    //Debug::debug() << "    [PlayerToolBar] slot_on_player_state_changed";
+    if( m_player->state() == ENGINE::STOPPED && !m_player->playingTrack() )
+    {
+        this->clear();
+    }
+    else if( m_player->state() == ENGINE::PAUSED )
+    {
+       m_pauseState->show();
+    }
+    else if( m_player->state() == ENGINE::PLAYING )
+    {
+       m_pauseState->hide();
+    }
 }
 
 
 void PlayerToolBar::slot_update_track_playing_info()
 {
-    //Debug::debug() << "    [PlayerToolBar] slot_update_track_playing_info";
-
-    if(m_player->state() == ENGINE::STOPPED && !m_player->playingTrack())
-    {
-        this->clear();
-        return;
-    }
+    Debug::debug() << "    [PlayerToolBar] slot_update_track_playing_info";
    
     if(m_player->playingTrack())
     {
+        /* update total time for current track */
         slot_update_total_time( m_player->currentTotalTime() );
 
+        /* update playing info */
         QString playingText;
         MEDIA::TrackPtr track = m_player->playingTrack();
         if(track->type() == TYPE_TRACK)
@@ -341,56 +369,28 @@ void PlayerToolBar::slot_update_track_playing_info()
 }
 
 
-void PlayerToolBar::slot_update_time_position(qint64 newPos)
+void PlayerToolBar::slot_update_time_position(qint64 newPos /*ms*/)
 {
     //Debug::debug() << "    [PlayerToolBar] slot_update_time_position " << newPos;
-
-    if(m_player->state() == ENGINE::STOPPED && !m_player->playingTrack()) {
-       this->clear();
-       return;
-    }
 
     if (newPos <= 0) {
         m_currentTime->clear();
         return;
     }
 
-    const QTime displayTime = displayTime.addMSecs(newPos);
-    QString timeString;
-
-    if (newPos > 3600000)
-        timeString = displayTime.toString("h:mm:ss");
-    else
-        timeString = displayTime.toString("m:ss");
-
-    m_currentTime->setText(timeString);
+    m_currentTime->setText( UTIL::durationToString( newPos / 1000 ) );
 }
 
 
-void PlayerToolBar::slot_update_total_time(qint64 newTotalTime)
+void PlayerToolBar::slot_update_total_time(qint64 newTotalTime /*ms*/)
 {
-    //Debug::debug() << "    [PlayerToolBar] slot_update_total_time";
-
-    if(m_player->state() == ENGINE::STOPPED && !m_player->playingTrack()) {
-       m_separator->hide();
-       return;
-    }
-
     if (newTotalTime <= 0) {
         m_separator->hide();
         m_totalTime->clear();
         return;
     }
+    Debug::debug() << "    [PlayerToolBar] slot_update_total_time update to :" << UTIL::durationToString( newTotalTime / 1000 );
 
     m_separator->show();
-
-    const QTime displayTime = displayTime.addMSecs(newTotalTime);
-    QString timeString;
-
-    if (newTotalTime > 3600000)
-        timeString = displayTime.toString("h:mm:ss");
-    else
-        timeString = displayTime.toString("m:ss");
-
-    m_totalTime->setText(timeString);
+    m_totalTime->setText( UTIL::durationToString( newTotalTime / 1000 ) );
 }

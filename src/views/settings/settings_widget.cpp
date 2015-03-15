@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2014 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -29,10 +29,10 @@
 #include "global_shortcuts.h"
 #include "utilities.h"
 #include "settings.h"
-#include "filedialog.h"
 #include "debug.h"
 
 #include <QColorDialog>
+#include <QFileInfo>
 #include <QGraphicsView>
 #include <QGraphicsProxyWidget>
 #include <QCryptographicHash>
@@ -596,7 +596,7 @@ void PageLibrary::createGui()
     
       /* Check box : artist image */
       ui_use_artist_image = new QCheckBox(m_main_widget);
-      ui_use_artist_image->setText(tr("Use artist image (album cover stack by default)"));
+      ui_use_artist_image->setText(tr("Use artist image (album cover stack otherwise)"));
 
       /* Check box : artist image */
       ui_rating_to_file = new QCheckBox(m_main_widget);
@@ -673,20 +673,12 @@ Q_UNUSED(which);
 Q_UNUSED(constraint);
    
   if(proxy_widget->isVisible())
-  {
-    int height = 270;
-    height += ui_folderWidgets.size()*30;
-     
-    
     return QSize(
       proxy_widget->geometry().size().width(),
-      height + 30
+      proxy_widget->geometry().size().height() + 30
       );
-  }
   else
-  {
     return QSize( proxy_widget->geometry().size().width(), 30);
-  }
 }
 
 //! ---- restoreSettings -------------------------------------------------------

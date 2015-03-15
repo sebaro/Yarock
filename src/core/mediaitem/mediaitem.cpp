@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2014 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -390,15 +390,17 @@ MEDIA::TrackPtr MEDIA::FromLocalFile(const QString url, int* p_disc)
 /* ---------------------------------------------------------------------------*/
 MEDIA::TrackPtr MEDIA::FromDataBase(const QString url)
 {
-//   Debug::debug() << " Media Item from db : " << url;
+    //Debug::debug() << " Media Item from db : " << url;
+
     /* search track info into database */
     QSqlQuery q("", *Database::instance()->db());
-    q.prepare("SELECT id,filename,trackname, \
-       number,length,artist_name,genre_name,album_name,year,last_played, \
-       albumgain,albumpeakgain,trackgain,trackpeakgain,playcount,rating \
-       FROM view_tracks WHERE filename=? LIMIT 1;");
+     q.prepare("SELECT id,filename,trackname," \
+        "number,length,artist_name,genre_name,album_name,year,last_played," \
+        "albumgain,albumpeakgain,trackgain,trackpeakgain,playcount,rating " \
+        "FROM view_tracks WHERE filename=? LIMIT 1;");
     
     q.addBindValue( QFileInfo(url).canonicalFilePath() );
+    q.exec();
     
     if (q.first()) 
     {
@@ -445,12 +447,13 @@ MEDIA::TrackPtr MEDIA::FromDataBase(int trackId)
 
   /* search track info into database */
   QSqlQuery q("", *Database::instance()->db());
-  q.prepare("SELECT id,filename,trackname, \
-       number,length,artist_name,genre_name,album_name,year,last_played, \
-       albumgain,albumpeakgain,trackgain,trackpeakgain,playcount,rating \
-       FROM view_tracks WHERE id=? LIMIT 1;");
+  q.prepare("SELECT id,filename,trackname," \
+       "number,length,artist_name,genre_name,album_name,year,last_played," \
+       "albumgain,albumpeakgain,trackgain,trackpeakgain,playcount,rating " \
+       "FROM view_tracks WHERE id=? LIMIT 1;");
     
   q.addBindValue( QString::number(trackId) );
+  q.exec();
   
   if (q.first()) 
   {

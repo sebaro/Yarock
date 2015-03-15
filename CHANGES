@@ -1,6 +1,19 @@
 # ------------------------------------------------------------------------------
                               Yarock changes 
 # ------------------------------------------------------------------------------
+  - 1.0.1  - PUBLIC RELEASE - mars 2015
+  - BugFix : database issue
+  - BugFix : fix song lenght update (#1393027)
+  - BugFix : Jumbled Text in Settings Area (#1394508) 
+  - BugFix : minor ui presentation for filesystem view
+  - BugFix : image for stream management
+  - Change : add ascending order for filesystem view
+  - Change : file dialog open user music folder by default if exists
+  - Change : file dialog in settings -> open saved directory
+  - Change : easiest first time user startup 
+  - Change : add saving position in browser view
+  - Change : update and add translation
+# ------------------------------------------------------------------------------
   - 1.0.0  - PUBLIC RELEASE - november 2014
   - New    : new clean and elegant design, new icon set, new app icon
   - New    : add support for artists images (new view, download artists images)

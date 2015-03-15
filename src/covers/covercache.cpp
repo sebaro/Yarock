@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2014 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -150,8 +150,10 @@ QPixmap CoverCache::cover(const MEDIA::TrackPtr track )
 
     if(track->type() != TYPE_TRACK)
     {
+        QString s_url = track->url;
+
         /* check if cover exist for stream */
-        QPixmapCache::Key key = m_keys.value( track );
+        QPixmapCache::Key key = m_keys_urls.value( s_url );
 
         if( key != QPixmapCache::Key() && QPixmapCache::find( key, &pixmap ) )
           return pixmap;
@@ -159,8 +161,10 @@ QPixmap CoverCache::cover(const MEDIA::TrackPtr track )
         /* check if parent have cover */
         if(track->parent())
         {
+           s_url = MEDIA::TrackPtr::staticCast(track->parent())->url;
+  
            //Debug::debug() << "CoverCache for stream with parent";
-           QPixmapCache::Key key = m_keys.value( MEDIA::TrackPtr::staticCast(track->parent()) );
+           QPixmapCache::Key key = m_keys_urls.value( s_url );
 
            if( key != QPixmapCache::Key() && QPixmapCache::find( key, &pixmap ) )
              return pixmap;          
@@ -226,10 +230,8 @@ bool CoverCache::hasCover(MEDIA::TrackPtr track)
     return m_keys.contains( track );
 }
 
-/* ---------------------------------------------------------------------------*/
-/* CoverCache::addStreamCover                                                 */
-/* ---------------------------------------------------------------------------*/  
-void CoverCache::addStreamCover( const MEDIA::TrackPtr stream, QImage image)
+
+void CoverCache::addStreamCover( const QString& url, QImage image)
 {
     QImage i = image.scaledToHeight(120, Qt::SmoothTransformation);
   
@@ -243,10 +245,8 @@ void CoverCache::addStreamCover( const MEDIA::TrackPtr stream, QImage image)
       p.end();
     }
     
-    invalidate(stream);
-     
-    QPixmapCache::Key key = m_keys.value( stream );
-    m_keys[stream] = QPixmapCache::insert( pixTemp );
+    QPixmapCache::Key key = m_keys_urls.value( url );
+    m_keys_urls[url] = QPixmapCache::insert( pixTemp );
 }
 
 /* ---------------------------------------------------------------------------*/

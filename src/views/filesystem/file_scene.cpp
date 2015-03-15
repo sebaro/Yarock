@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2014 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -183,7 +183,7 @@ void FileScene::slot_on_directory_loaded()
     categorieRow++;
     addItem(cat);
 
-    
+    m_model->sort(0, Qt::AscendingOrder	);
     QModelIndex root_idx = m_model->index(m_current_path);
     
     
@@ -194,6 +194,7 @@ void FileScene::slot_on_directory_loaded()
         QFileInfo fileInfo = m_model->fileInfo ( childIndex );
 
         const QString path = fileInfo.canonicalFilePath();
+        //Debug::debug() << "FileScene::slot_on_directory_loaded path : " << path;
 
         if(!m_filter.isEmpty() && !path.contains(m_filter,Qt::CaseInsensitive)) continue;
 
@@ -295,6 +296,7 @@ void FileScene::async_load_item()
       if(item) {
         TrackGraphicItem_v4 *trackItem = static_cast<TrackGraphicItem_v4*>(item);
         trackItem->media = track;
+
         /* trackItem->update() cause issue, so do a scene update after all */
         this->update();
       }

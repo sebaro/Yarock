@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2014 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -68,6 +68,10 @@ void AddFolderWidget::slot_open_folder()
 {
     FileDialog fd(0, FileDialog::AddDir, tr("Open folder"));
   
+    QString path = ui_file_path->text();
+    if( !path.isEmpty() )
+      fd.startWithDir( path );
+    
     if(fd.exec() == QDialog::Accepted)
     {
       ui_file_path->setText( fd.addDirectory() );

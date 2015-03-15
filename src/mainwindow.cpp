@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2014 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -81,7 +81,7 @@
 #include "dialogs/dboperationdialog.h"
 #include "dialogs/addstreamdialog.h"
 #include "dialogs/filedialog.h"
-
+#include "dialogs/first_time_dialog.h"
 
 
 MainWindow* MainWindow::INSTANCE = 0;
@@ -226,20 +226,20 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 // TEST    
 //     Debug::debug() << "####### START TEST ##############";
 //     QTimer::singleShot(4000, this, SLOT(slot_start_test()));
+// END TEST
 }
 
 
 void MainWindow::slot_start_test()
 {
-    INFO::InfoRequestData request;
-    INFO::InfoStringHash hash;
-    hash["artist"] = "Clapton";
-    hash["album"]  = "Slowhand";
-    hash["title"]  = "";
-    
-//     request = INFO::InfoRequestData(INFO::InfoArtistReleases, hash);
-    request = INFO::InfoRequestData(INFO::InfoAlbumSongs, hash);
-    InfoSystem::instance()->getInfo( request );
+//     INFO::InfoRequestData request;
+//     INFO::InfoStringHash hash;
+//     hash["artist"] = "Clapton";
+//     hash["album"]  = "Slowhand";
+//     hash["title"]  = "";
+//     
+//     request = INFO::InfoRequestData(INFO::InfoAlbumSongs, hash);
+//     InfoSystem::instance()->getInfo( request );
 }
 
 
@@ -260,6 +260,7 @@ MainWindow::~MainWindow()
     
     /* ---- Save setting ---- */
     _centralWidget->saveState();
+    m_browserView->save_view();
     SETTINGS()->_windowsGeometry = this->saveGeometry();
     SETTINGS()->_windowsState    = this->saveState();
     SETTINGS()->_playqueueShowCover  = ACTIONS()->value(PLAYQUEUE_OPTION_SHOW_COVER)->isChecked();
@@ -989,20 +990,19 @@ void MainWindow::slot_database_start()
         /* First start dialog                                        */
         /* ----------------------------------------------------------*/
         Debug::debug() << "MainWindow --> slot_database_start : first start dialog";
-
-        const QString str = tr("<b>Welcome to yarock</b>"
-                         "<p>No collection seems to be setup</p>"
-                         "<p>Do you want to setup your collection now ?</p>");
-
-        DialogMessage dlg(this,tr("Setup your music collection directory"));
-        dlg.setMessage(str);
-        dlg.resize(445, 120);
-        dlg.exec();     
-
-        m_browserView->active_view(VIEW::ViewSettings,QString(),QVariant(int(SETTINGS::LIBRARY)));
-
         /* create database */
         createDatabase();
+
+        FirstTimeDialog dialog(this);
+        if(dialog.exec() == QDialog::Accepted) 
+        {
+           Debug::debug() << "MainWindow --> slot_database_start : first start dialog ACCEPTED";
+           rebuildDatabase();
+        }
+        else
+        {
+           m_browserView->active_view(VIEW::ViewSettings,QString(), QVariant());
+        }
     }
     else if (!Database::instance()->versionOK() )
     {

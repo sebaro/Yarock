@@ -168,6 +168,7 @@ set (SOURCES
            ${CMAKE_SOURCE_DIR}/src/widgets/dialogs/dboperationdialog.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/dialogs/shortcutdialog.cpp           
            ${CMAKE_SOURCE_DIR}/src/widgets/dialogs/filedialog.cpp           
+           ${CMAKE_SOURCE_DIR}/src/widgets/dialogs/first_time_dialog.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/editors/editor_album.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/editors/editor_artist.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/editors/editor_track.cpp
@@ -323,6 +324,7 @@ SET(YAROCK_HEADERS
            ${CMAKE_SOURCE_DIR}/src/widgets/dialogs/dboperationdialog.h
            ${CMAKE_SOURCE_DIR}/src/widgets/dialogs/shortcutdialog.h           
            ${CMAKE_SOURCE_DIR}/src/widgets/dialogs/filedialog.h
+           ${CMAKE_SOURCE_DIR}/src/widgets/dialogs/first_time_dialog.h
            ${CMAKE_SOURCE_DIR}/src/widgets/editors/editor_album.h
            ${CMAKE_SOURCE_DIR}/src/widgets/editors/editor_artist.h
            ${CMAKE_SOURCE_DIR}/src/widgets/editors/editor_track.h

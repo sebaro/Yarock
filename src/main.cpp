@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2014 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -187,15 +187,16 @@ int main(int argc, char *argv[])
     qRegisterMetaType<QNetworkReply::NetworkError>("QNetworkReply::NetworkError");
     qRegisterMetaTypeStreamOperators<Equalizer::EqPreset>("Equalizer::Params");
 
-    //! DBUS
-    QDBusConnection::sessionBus().registerService("com.sebastien.yarock");
-    qDBusRegisterMetaType<QImage>();
-
     qRegisterMetaType<MEDIA::MediaPtr>();
     qRegisterMetaType<MEDIA::ArtistPtr>();
     qRegisterMetaType<MEDIA::AlbumPtr>();
     qRegisterMetaType<MEDIA::TrackPtr>();
     qRegisterMetaType<MEDIA::PlaylistPtr>();
+    
+    //! DBUS
+    QDBusConnection::sessionBus().registerService("com.sebastien.yarock");
+    qDBusRegisterMetaType<QImage>();
+    qDBusRegisterMetaType<QVariantMap>();
 
     //! mainwindows start
     //qDebug() << "== main -> start Mainwindow";

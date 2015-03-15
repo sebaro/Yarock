@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2014 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -262,7 +262,7 @@ void TuneIn::slot_stream_image_received(QByteArray bytes)
     QImage image = QImage::fromData(bytes);
     if( !image.isNull() ) 
     {
-        CoverCache::instance()->addStreamCover(stream, image);
+        CoverCache::instance()->addStreamCover(stream->url, image);
         emit dataChanged();
     }
 }

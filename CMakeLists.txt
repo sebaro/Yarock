@@ -7,7 +7,7 @@ set( CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake )
 PROJECT( yarock )
 set(YAROCK_MAJOR_VERSION 1)
 set(YAROCK_MINOR_VERSION 0)
-set(YAROCK_PATCH_VERSION 0)
+set(YAROCK_PATCH_VERSION 1)
 set(YAROCK_VERSION ${YAROCK_MAJOR_VERSION}.${YAROCK_MINOR_VERSION}.${YAROCK_PATCH_VERSION})
 
 # ------------------------------------------------------------------------------
@@ -155,16 +155,6 @@ endif (USE_SYSTEM_QXT)
 
 
 # ------------------------------------------------------------------------------
-#  TRANSLATIONS
-# ------------------------------------------------------------------------------
-# Handle Translations, take all * files from trans directory.
-file( GLOB TRANS_FILES ${CMAKE_SOURCE_DIR}/translation/yarock_*.ts)
-set(TS_FILES ${TRANS_FILES})
-
-SET(UPDATE_TRANSLATIONS OFF) # no ts update
-#SET(UPDATE_TRANSLATIONS ON) # ts update
-
-# ------------------------------------------------------------------------------
 #  SOURCES
 # ------------------------------------------------------------------------------
 add_subdirectory(src)
@@ -211,6 +201,14 @@ endif (ENABLE_QT5)
 # ------------------------------------------------------------------------------
 #  TRANSLATION
 # ------------------------------------------------------------------------------
+# Handle Translations, take all * files from trans directory.
+file( GLOB TRANS_FILES ${CMAKE_SOURCE_DIR}/translation/yarock_*.ts)
+set(TS_FILES ${TRANS_FILES})
+
+#SET(UPDATE_TRANSLATIONS OFF) # no ts update
+SET(UPDATE_TRANSLATIONS ON) # ts update
+
+
 option (UPDATE_TRANSLATIONS "Update source translation ../translation/*.ts files")
 set (FILES_TO_TRANSLATE ${FILES_TO_TRANSLATE} ${YAROCK_SOURCES})
 

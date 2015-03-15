@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2014 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -41,7 +41,7 @@ Q_OBJECT
   
   private slots:
     void slot_show_menu();
-    void slot_volume_change();
+    void slot_volume_change(bool init=false);
     void slot_mute_change();
     void slot_mute_toggle_action();
     void slot_apply_volume(int);
@@ -74,11 +74,13 @@ class PlayerToolBar : public QWidget
     QLabel           *m_totalTime;
     QLabel           *m_playingTrack;
     QLabel           *m_separator;
+    QLabel           *m_pauseState;
 
   private :
     void clear();
 
   private slots:
+    void slot_on_player_state_changed();
     void slot_update_track_playing_info();
     void slot_update_time_position(qint64);
     void slot_update_total_time(qint64);

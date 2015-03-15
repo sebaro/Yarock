@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2014 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -18,6 +18,7 @@
 #include "file_graphicitem.h"
 #include "utilities.h"
 #include "global_actions.h"
+#include "debug.h"
 
 #include <QtCore>
 #include <QPainter>    
@@ -104,14 +105,15 @@ Q_UNUSED(option)
    painter->setFont(opt.font);    
    
    const QString elided_dirname = opt.fontMetrics.elidedText ( m_dirname, Qt::ElideRight, 130);
-   painter->drawText(QRect (0,80,130, 25), Qt::AlignVCenter | Qt::AlignCenter,elided_dirname );   
+   
+   painter->drawText(QRect (0,pixmap.height()+5,130, opt.fontMetrics.height()+4), Qt::AlignTop | Qt::AlignHCenter,elided_dirname );   
 }
 
 
 void DirectoryGraphicItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
 Q_UNUSED(event)
-    //Debug::debug() << " ---- AlbumGraphicItem::hoverEnterEvent";
+    //Debug::debug() << " ---- DirectoryGraphicItem::hoverEnterEvent";
     opt.state |= QStyle::State_MouseOver;
     this->update();
 }
@@ -119,7 +121,7 @@ Q_UNUSED(event)
 void DirectoryGraphicItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
 Q_UNUSED(event)
-    //Debug::debug() << " ---- AlbumGraphicItem::hoverLeaveEvent";
+    //Debug::debug() << " ---- DirectoryGraphicItem::hoverLeaveEvent";
     opt.state &= ~QStyle::State_MouseOver;
     this->update();
 }
@@ -127,7 +129,7 @@ Q_UNUSED(event)
 void DirectoryGraphicItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
 Q_UNUSED(event)
-    //Debug::debug() << " ---- AlbumGraphicItem::mousePressEvent ";
+    //Debug::debug() << " ---- DirectoryGraphicItem::mousePressEvent ";
 }
 
 void DirectoryGraphicItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
@@ -202,7 +204,7 @@ Q_UNUSED(option)
    }    
    else
    {
-       bool isTrack       = (media->type() == TYPE_TRACK) ? true : false;
+      bool isTrack       = (media->type() == TYPE_TRACK) ? true : false;
       //! TRACK in collection
       if(isTrack && media->id != -1)
       {

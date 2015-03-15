@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2014 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -83,7 +83,8 @@ EnginePhonon::EnginePhonon() : EngineBase("phonon")
       m_preamp = new Phonon::VolumeFaderEffect( this );
       m_phononPath.insertEffect( m_preamp );
     }
-    else {
+    else 
+    {
       m_preamp = 0;
     }
 
@@ -307,7 +308,7 @@ void EnginePhonon::slot_on_phonon_state_changed(Phonon::State newState, Phonon::
 void  EnginePhonon::slot_on_duration_change(qint64 total_time_ms)
 {
 Q_UNUSED(total_time_ms)  
-    //Debug::debug() << "[PLAYER] slot_on_duration_change" ;
+    Debug::debug() << "[PLAYER] slot_on_duration_change" ;
 
     // As Amarok note: don't rely on m_currentTrack here. At least some Phonon backends first emit
     // totalTimeChanged(), then metaDataChanged() and only then currentSourceChanged()
@@ -341,6 +342,9 @@ void EnginePhonon::update_total_time()
       m_totalTime  = m_mediaObject->totalTime();
     }
     
+    Debug::debug() << "[PLAYER] update_total_time # m_totalTime" << m_totalTime;
+    if( m_currentMediaItem )
+      Debug::debug() << "[PLAYER] update_total_time # duration" << m_currentMediaItem->duration;
     emit mediaTotalTimeChanged(m_totalTime);    
 }
 

@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2014 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -121,7 +121,6 @@ BrowserView::BrowserView(QWidget *parent) : QGraphicsView(parent)
       m_scenes.insert(VIEW::ViewFavorite,       m_scenes[VIEW::ViewArtist] );
     
     /* connections */
-//     connect(MainLeftWidget::instance(), SIGNAL(explorerFilterActivated(const QString&)),this, SLOT(slot_on_search_changed(const QString&)));
     connect(MainLeftWidget::instance(), SIGNAL(browser_search_change(const QVariant&)),this, SLOT(slot_on_search_changed(const QVariant&)));
     connect(ThreadManager::instance(),  SIGNAL(modelPopulationFinished(E_MODEL_TYPE)), this, SLOT(slot_on_model_populated(E_MODEL_TYPE)));
     
@@ -182,6 +181,7 @@ void BrowserView::restore_view()
    BrowserParam param;
 
    param.mode    = VIEW::Id(SETTINGS()->_viewMode);
+   param.scroll  = SETTINGS()->_browserScroll;
    param.search  = QVariant();
    
    if(param.mode == VIEW::ViewFileSystem)
@@ -196,6 +196,12 @@ void BrowserView::restore_view()
    is_started = true;
 }
 
+void BrowserView::save_view()
+{
+    Debug::debug() << "  [BrowserView] save_view  ";
+  
+    SETTINGS()->_browserScroll = m_scrollbar->sliderPosition();
+}
 
 /*******************************************************************************
    Changing view slots 
@@ -453,7 +459,7 @@ void BrowserView::jump_to_media(MEDIA::MediaPtr media)
     QPoint p = static_cast<LocalScene*>(m_scenes[mode])->get_item_position(media);
 
     if(!p.isNull()) 
-      this->verticalScrollBar()->setSliderPosition( p.y() - 40 );
+      m_scrollbar->setSliderPosition( p.y() - 40 );
 }
 
 
@@ -671,7 +677,7 @@ void BrowserView::slot_check_slider(int action)
 
       if( categories.isEmpty() ) return;
         
-      int top = this->verticalScrollBar()->sliderPosition();
+      int top = m_scrollbar->sliderPosition();
                   
       /* ------------ navigate go up ---------------- */
       if( action == QAbstractSlider::SliderPageStepSub) 
@@ -681,7 +687,7 @@ void BrowserView::slot_check_slider(int action)
             QPoint itemPoint = categories.at(i)->scenePos().toPoint();
     
             if(top > itemPoint.y()) {
-              this->verticalScrollBar()->setSliderPosition(itemPoint.y());
+              m_scrollbar->setSliderPosition(itemPoint.y());
               break;
             }
           }
@@ -694,7 +700,7 @@ void BrowserView::slot_check_slider(int action)
             QPoint itemPoint = (item->scenePos()).toPoint();
 
             if(top < itemPoint.y()) {
-              this->verticalScrollBar()->setSliderPosition(itemPoint.y());
+              m_scrollbar->setSliderPosition(itemPoint.y());
               break;
             }
           }      
