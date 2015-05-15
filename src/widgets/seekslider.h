@@ -21,6 +21,7 @@
 #include <QProgressBar>
 #include <QMouseEvent>
 
+class SeekSliderPopup;
 /*
 ********************************************************************************
 *                                                                              *
@@ -35,22 +36,28 @@ Q_OBJECT
     explicit SeekSlider(QWidget *parent = 0);
 
   protected:
-    virtual void mousePressEvent ( QMouseEvent * event );
-
+    void mousePressEvent(QMouseEvent* event);
+    void mouseReleaseEvent(QMouseEvent* event);
+    void mouseMoveEvent(QMouseEvent* event);
+    void enterEvent(QEvent*);
+    void leaveEvent(QEvent*);
+  
+  
   private :
-    void _seek(int);
-    void _stop();
+    void seek(int);
+    void stop();
+    void updateDeltaTime();
 
   private slots:
     void slot_stateChanged();
     void slot_tick(qint64);
     void slot_length(qint64);
-    void slot_seekableChanged(bool);
-    void slot_currentSourceChanged();
-
+  
   private:
     bool        m_enable;
     bool        m_ticking;
+    int         m_mouse_hover_sec;
+    SeekSliderPopup*   m_popup;
 };
 
 #endif // _SEEKSLIDER_H_
