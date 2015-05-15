@@ -22,7 +22,7 @@
 #include "engine_base.h"
 
 namespace ENGINE {
-  enum E_ENGINE_TYPE {NO_ENGINE = 0, PHONON, VLC};
+  enum E_ENGINE_TYPE {NO_ENGINE = 0, PHONON, VLC, MPV};
 }
 
 

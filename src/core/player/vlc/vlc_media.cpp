@@ -1,6 +1,20 @@
+/****************************************************************************************
+*  YAROCK                                                                               *
+*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*                                                                                       *
+*  This program is free software; you can redistribute it and/or modify it under        *
+*  the terms of the GNU General Public License as published by the Free Software        *
+*  Foundation; either version 2 of the License, or (at your option) any later           *
+*  version.                                                                             *
+*                                                                                       *
+*  This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
+*  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
+*  PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
+*                                                                                       *
+*  You should have received a copy of the GNU General Public License along with         *
+*  this program.  If not, see <http://www.gnu.org/licenses/>.                           *
+*****************************************************************************************/
 #ifdef ENABLE_VLC
-
-
 
 
 #include "vlc_media.h"
@@ -32,7 +46,7 @@ void VlcMedia::init(const QString &location, bool isLocal)
 {
     m_currentLocation = location;
 
-    // Create a new libvlc media descriptor from location
+    /* Create a new libvlc media descriptor from location */
     if (isLocal)
       m_vlcMedia = libvlc_media_new_path(VlcLib::instance()->core(), m_currentLocation.toLocal8Bit().data());
     else
@@ -112,8 +126,6 @@ void VlcMedia::libvlc_callback(const libvlc_event_t *event,void *data)
         break;
     }
 }
-
-
 
 QString VlcMedia::meta(libvlc_meta_t meta)
 {

@@ -20,11 +20,11 @@
 
 EngineBase::EngineBase(const QString& name) : m_name(name)
 {
-    Debug::debug() << "[PLAYER] create player : " << m_name;
+    //Debug::debug() << "[PLAYER] create player : " << m_name;
 
     m_current_state    = ENGINE::STOPPED;
     m_old_state        = ENGINE::STOPPED;
-
+ 
     m_currentMediaItem = MEDIA::TrackPtr(0);
     m_nextMediaItem    = MEDIA::TrackPtr(0);
 }
@@ -34,16 +34,15 @@ EngineBase::EngineBase(const QString& name) : m_name(name)
 /* ---------------------------------------------------------------------------*/ 
 void EngineBase::stop() 
 {
-   Debug::debug() << "EngineBase::stop";
-   
-   if(m_currentMediaItem) {
+   if( m_currentMediaItem )
+   {
      MEDIA::registerTrackPlaying(m_currentMediaItem, false);
-     m_currentMediaItem.reset();
+
      m_currentMediaItem = MEDIA::TrackPtr(0);
    }
 
-   if(m_nextMediaItem) {
-     m_nextMediaItem.reset();
+   if( m_nextMediaItem )
+   {
      m_nextMediaItem    = MEDIA::TrackPtr(0);
    }
 
@@ -55,7 +54,7 @@ void EngineBase::stop()
 /* ---------------------------------------------------------------------------*/
 /* EngineBase::stateToString                                                  */
 /* ---------------------------------------------------------------------------*/
-QString EngineBase::stateToString(ENGINE::E_ENGINE_STATE state)
+QString EngineBase::stateToString(ENGINE::E_ENGINE_STATE state) 
 {
     switch(state)
     {

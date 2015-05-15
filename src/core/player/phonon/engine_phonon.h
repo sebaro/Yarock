@@ -14,33 +14,49 @@
 *  You should have received a copy of the GNU General Public License along with         *
 *  this program.  If not, see <http://www.gnu.org/licenses/>.                           *
 *****************************************************************************************/
-#ifdef ENABLE_VLC
-#ifndef _ENGINE_VLC_H_
-#define _ENGINE_VLC_H_
+#ifdef ENABLE_PHONON
 
-#include <QtCore/QObject>
-#include "engine_base.h"
+#ifndef _ENGINE_PHONON_H_
+#define _ENGINE_PHONON_H_
 
-struct libvlc_event_t;
-struct libvlc_media_player_t;
-struct libvlc_event_manager_t;
+// Qt
+#include <QObject>
+#include <QString>
+#include <QTimer>
+#include <QPointer>
+#include <QPixmap>
 
-class VlcLib;
-class VlcMedia;
+// Phonon
+#include <phonon/mediasource.h>
+#include <phonon/mediaobject.h>
+#include <phonon/audiooutput.h>
+#include <phonon/path.h>
+#include <phonon/effect.h>
+#include <phonon/volumefadereffect.h>
+
+#include "core/player/engine_base.h"
+#include "core/mediaitem/mediaitem.h"
+
+
 /*
 ********************************************************************************
 *                                                                              *
-*    Class EngineVlc                                                          *
+*    Class EnginePhonon                                                        *
 *                                                                              *
 ********************************************************************************
 */
-class EngineVlc : public EngineBase
+class EnginePhonon : public EngineBase
 {
 Q_OBJECT
+Q_INTERFACES(EngineBase)
+#if QT_VERSION >= 0x050000
+Q_PLUGIN_METADATA(IID "EnginePhonon")
+#endif 
+
 public:
-    EngineVlc();
-    ~EngineVlc();
-    
+    EnginePhonon();
+    ~EnginePhonon();
+
     /* play/pause/stop */
     void play();
     void pause();
@@ -49,7 +65,7 @@ public:
     /* media management */
     void setMediaItem(MEDIA::TrackPtr track);
     void setNextMediaItem(MEDIA::TrackPtr track);
-    
+   
     /* audio */ 
     int volume() const;
     void setVolume(const int &);
@@ -59,14 +75,21 @@ public:
     /* time */
     void seek( qint64 );
     
-private:
-    void setAudioOutput();
-    void createCoreConnections();
-    void removeCoreConnections();
-    static void libvlc_callback(const libvlc_event_t *event,void *data);
-    void setVlcMedia(const QString&);
-    void update_total_time();
+    /* effect */ 
+    bool isEqualizerAvailable();
+    void addEqualizer();
+    void removeEqualizer();
+    void applyEqualizer(QList<int>);
 
+public slots:
+    void volumeMute( );
+    void volumeInc( );
+    void volumeDec( );
+    
+private:
+    void loadEqualizerSettings();
+    void update_total_time();
+    
 private slots:
     void slot_on_media_change();
     void slot_on_duration_change(qint64);
@@ -74,13 +97,16 @@ private slots:
     void slot_on_media_finished();
     void slot_on_media_about_to_finish();
     void slot_on_metadata_change();
+
+    void slot_on_phonon_state_changed(Phonon::State, Phonon::State);
     
 private:
-    VlcLib                    *m_vlclib;
-    VlcMedia                  *m_vlc_media;
-    libvlc_media_player_t     *m_vlc_player;
-    libvlc_event_manager_t    *m_vlc_events;
+    Phonon::MediaObject     *m_mediaObject;
+    Phonon::AudioOutput     *m_audioOutput;
+    Phonon::Path             m_phononPath;
+    Phonon::Effect          *m_equalizer;
+    QPointer<Phonon::VolumeFaderEffect> m_preamp;
 };
 
-#endif // _ENGINE_VLC_H_
-#endif // ENABLE_VLC
+#endif // _ENGINE_PHONON_H_
+#endif // ENABLE_PHONON

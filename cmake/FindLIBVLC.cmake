@@ -20,6 +20,7 @@
 # and following variables are set:
 #  LIBVLC_INCLUDE_DIR
 #  LIBVLC_LIBRARY
+#  LIBVLC_VERSION
 
 
 # FIND_PATH and FIND_LIBRARY normally search standard locations
@@ -63,11 +64,36 @@ ENDIF (LIBVLC_INCLUDE_DIR AND LIBVLC_LIBRARY)
 
 IF (LIBVLC_FOUND)
     IF (NOT LIBVLC_FIND_QUIETLY)
-        MESSAGE(STATUS "Found LibVLC include-dir path: ${LIBVLC_INCLUDE_DIR}")
-        MESSAGE(STATUS "Found LibVLC library path:${LIBVLC_LIBRARY}")
+        MESSAGE(STATUS "  Found LibVLC include-dir path: ${LIBVLC_INCLUDE_DIR}")
+        MESSAGE(STATUS "  Found LibVLC library path:${LIBVLC_LIBRARY}")
     ENDIF (NOT LIBVLC_FIND_QUIETLY)
 ELSE (LIBVLC_FOUND)
     IF (LIBVLC_FIND_REQUIRED)
-        MESSAGE(FATAL_ERROR "Could not find LibVLC")
+        MESSAGE(FATAL_ERROR "  Could not find LibVLC")
     ENDIF (LIBVLC_FIND_REQUIRED)
 ENDIF (LIBVLC_FOUND)
+
+
+
+set(LIBVLC_VERSION ${PC_LIBVLC_VERSION})
+if (NOT LIBVLC_VERSION)
+    file(READ "${LIBVLC_INCLUDE_DIR}/vlc/libvlc_version.h" _libvlc_version_h)
+
+    string(REGEX MATCH "# define LIBVLC_VERSION_MAJOR +\\(([0-9])\\)" _dummy "${_libvlc_version_h}")
+    set(_version_major "${CMAKE_MATCH_1}")
+
+    string(REGEX MATCH "# define LIBVLC_VERSION_MINOR +\\(([0-9])\\)" _dummy "${_libvlc_version_h}")
+    set(_version_minor "${CMAKE_MATCH_1}")
+
+    string(REGEX MATCH "# define LIBVLC_VERSION_REVISION +\\(([0-9])\\)" _dummy "${_libvlc_version_h}")
+    set(_version_revision "${CMAKE_MATCH_1}")
+
+    # Optionally, one could also parse LIBVLC_VERSION_EXTRA, but it does not
+    # seem to be used by libvlc.pc.
+
+    set(LIBVLC_VERSION "${_version_major}.${_version_minor}.${_version_revision}")
+endif (NOT LIBVLC_VERSION)
+
+message(STATUS "  Found LibVLC version: ${LIBVLC_VERSION}")
+ 
+ 

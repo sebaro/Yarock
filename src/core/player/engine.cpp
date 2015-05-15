@@ -17,17 +17,16 @@
 
 #include "engine.h"
 #include "settings.h"
+#include "config.h"
+#include "debug.h"
 
-// vlc engine
-#ifdef ENABLE_VLC
-#include "engine_vlc.h"
-#endif
+#include <QLibrary>
+#include <QPluginLoader>
+#include <QtCore>
 
-#ifdef ENABLE_PHONON
-#include "engine_phonon.h"
-#endif
 
 EngineBase* Engine::CORE_INSTANCE = 0;
+
 
 /*
 ********************************************************************************
@@ -38,21 +37,68 @@ EngineBase* Engine::CORE_INSTANCE = 0;
 */ 
 Engine::Engine()
 {
+    /* retrieve engine name */
+    QString engine_name;
+  
+    switch ( SETTINGS()->_engine )
+    {
+      case ENGINE::VLC :    engine_name = "enginevlc";     break;
+      case ENGINE::MPV :    engine_name = "enginempv";     break;
+      case ENGINE::PHONON : engine_name = "enginephonon";  break;    
+      default:break;
+    };
 
-#ifdef ENABLE_VLC
-    if( SETTINGS()->_engine == ENGINE::VLC ) {
-      CORE_INSTANCE     = new EngineVlc();
-    }
-#endif
-
-#ifdef ENABLE_PHONON
-    if( SETTINGS()->_engine == ENGINE::PHONON ) {
-      CORE_INSTANCE    = new EnginePhonon();
-    }      
-#endif
+    /* check libraries directory */
+    QString lookup_dir;
+    //Debug::debug() << "[Engine] ###  QCoreApplication::applicationDirPath() " << QCoreApplication::applicationDirPath() ;
+    //Debug::debug() << "[Engine] ###  QString(CMAKE_INSTALL_BIN) " << QString(CMAKE_INSTALL_BIN);
     
-    if(CORE_INSTANCE==0) {
+    if ( QCoreApplication::applicationDirPath() !=  QString(CMAKE_INSTALL_BIN) )
+    {
+      lookup_dir = QCoreApplication::applicationDirPath() + "/lib";
+    }
+    else
+    {
+      lookup_dir = QString(CMAKE_INSTALL_LIB);
+    }
+
+    Debug::debug() << "[Engine] Look into library dir:" << lookup_dir;
+
+    QDir lib_dir = QDir(lookup_dir);
+
+    Debug::debug() << "[Engine] Audio engine library directory:" << lib_dir.canonicalPath();
+
+    foreach (QString fileName, lib_dir.entryList(QDir::Files)) 
+    {
+        if( !fileName.contains( engine_name ) )
+          continue;
+        
+        if( !QLibrary::isLibrary(fileName) )
+          continue;
+
+        Debug::debug() << "[Engine] Try to load " << fileName;
+
+        QPluginLoader loader( lib_dir.absoluteFilePath(fileName) );
+    
+        QObject *obj = loader.instance();
+
+        if (obj) 
+        {
+          CORE_INSTANCE = qobject_cast<EngineBase *>(obj);
+        }
+        else
+        {
+          Debug::error() << "[Engine] error loading library " << fileName << " [" << QLibrary(fileName).errorString() << "]";
+        }
+    }
+
+    if( CORE_INSTANCE == 0 )
+    {
       CORE_INSTANCE    = new EngineBase("null");
+      Debug::error() << "[Engine] no audio engine library loaded !";
     }
 }
+
+
+
  

@@ -21,8 +21,8 @@
 #include <QtCore/QObject>
 #include <QtCore/QString>
 
-#include "mediaitem.h"
 
+#include "mediaitem.h"
 
 
 namespace ENGINE {
@@ -41,7 +41,9 @@ namespace ENGINE {
 */
 class EngineBase : public QObject
 {
-  Q_OBJECT
+Q_OBJECT
+Q_DISABLE_COPY( EngineBase )
+  
 public:
     EngineBase(const QString& name);
 
@@ -53,7 +55,7 @@ public:
     /* media management*/
     virtual void setMediaItem(MEDIA::TrackPtr ) {};
     virtual void setNextMediaItem(MEDIA::TrackPtr ) {};
-    MEDIA::TrackPtr playingTrack() {return m_currentMediaItem;}
+    MEDIA::TrackPtr playingTrack() const {return m_currentMediaItem;}
     
     /* audio*/ 
     virtual int volume() const {return 0;};
@@ -62,12 +64,12 @@ public:
     virtual void setMuted( bool ) {};
 
     /* state & behavior */
-    ENGINE::E_ENGINE_STATE state() const { return m_current_state; }
-    QString stateToString(ENGINE::E_ENGINE_STATE state);
+    ENGINE::E_ENGINE_STATE state() const {return m_current_state;};
+    static QString stateToString(ENGINE::E_ENGINE_STATE state);
     
     /* time */
-    qint64 currentTime() {return m_lastTick;}
-    qint64 currentTotalTime() {return m_totalTime;}
+    qint64 currentTime() const {return m_lastTick;}
+    qint64 currentTotalTime() const {return m_totalTime;}
     virtual void seek( qint64 ) {};
 
     /* effect */
@@ -75,6 +77,11 @@ public:
     virtual void addEqualizer() {};
     virtual void removeEqualizer() {};
     virtual void applyEqualizer(QList<int>) {};
+    
+public slots:
+    virtual void volumeMute( ) {};
+    virtual void volumeInc( ) {};
+    virtual void volumeDec( ) {};
     
 public:
     ENGINE::E_ENGINE_STATE  m_current_state;
@@ -107,8 +114,8 @@ signals:
     
 private :
     QString                 m_name;
-    
-
 };
 
-#endif // _INFO_PROVIDER_H_
+Q_DECLARE_INTERFACE(EngineBase, "yarock.EngineBase/1.0")
+
+#endif // _ENGINE_BASE_H_
