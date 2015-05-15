@@ -101,7 +101,7 @@ QHash<QString,uint> DataBaseBuilder::filesFromDatabase(const QString& directory)
         files.insert(q.value(1).toString(),q.value(2).toUInt());      
     }
     
-    //Debug::debug() << "DataBaseBuilder::filesFromDatabase files:" << files;
+    //Debug::debug() << "  [DataBaseBuilder] filesFromDatabase files:" << files;
     return files;
 }
 
@@ -114,8 +114,8 @@ void DataBaseBuilder::rebuildFolder(QStringList folder)
     m_db_dirs.clear();
     m_fs_dirs.clear();
 
-    m_folders.clear();
-    m_folders.append(folder);
+    m_input_folders.clear();
+    m_input_folders.append(folder);
 }
 
 /* ---------------------------------------------------------------------------*/
@@ -146,7 +146,7 @@ void DataBaseBuilder::run() {
 /* ---------------------------------------------------------------------------*/
 void DataBaseBuilder::doScan()
 {
-    if (m_folders.isEmpty()) return;
+    if (m_input_folders.isEmpty()) return;
     int idxCount   = 0;
     int fileCount  = 0;
 
@@ -154,43 +154,59 @@ void DataBaseBuilder::doScan()
     if (!Database::instance()->open()) return;
     m_sqlDb = Database::instance()->db();
 
-    Debug::debug() << "- DataBaseBuilder -> starting Database update";
+    Debug::debug() << "  [DataBaseBuilder] starting Database update";
 
-    
-    /*-----------------------------------------------------------*/
-    /* Get directories from filesystem                           */
-    /* ----------------------------------------------------------*/    
-    foreach(const QString& root_dir, m_folders)
-    {
-      Debug::debug() << "- DataBaseBuilder -> ROOT DIR :" << root_dir;
-      m_fs_dirs << root_dir;
-      
-      QDir dir(root_dir);
-      dir.setFilter(QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks);
-
-      QDirIterator it(dir,QDirIterator::Subdirectories);
-      
-      while(it.hasNext())
-      {
-        it.next();
-        if (it.fileInfo().isDir())
-        {
-          QString dir_path = it.fileInfo().canonicalFilePath().toUtf8();
-          //Debug::debug() << "#### DataBaseBuilder -> canonicalFilePath: " << dir_path;
-          if(!m_fs_dirs.contains(dir_path))
-            m_fs_dirs << dir_path;
-        }
-      }
-    }
-
-    fileCount = m_fs_dirs.count();
-    
     /*-----------------------------------------------------------*/
     /* Get directories from database                             */
     /* ----------------------------------------------------------*/    
     QSqlQuery dirQuery("SELECT path, mtime FROM directories;",*m_sqlDb);
     while (dirQuery.next())
       m_db_dirs.insert(dirQuery.value(0).toString(),dirQuery.value(1).toUInt());
+
+    
+    /*-----------------------------------------------------------*/
+    /* Get directories from filesystem                           */
+    /* ----------------------------------------------------------*/    
+    foreach(const QString& root_dir, m_input_folders)
+    {
+      Debug::debug() << "  [DataBaseBuilder] ROOT DIR :" << root_dir;
+      m_fs_dirs.insert( root_dir );
+
+      QDir dir(root_dir);
+      
+      /* protect if root_folder are unounted or not available */
+      if(  !QDir(root_dir).exists() || !QDir(root_dir).isReadable() )
+      {
+        m_fs_dirs.remove( root_dir );
+
+        foreach ( const QString& db_dir, m_db_dirs.keys() )
+        {
+            if (db_dir.startsWith( root_dir ))
+                m_db_dirs.remove(db_dir);
+        }
+        Debug::warning() << "  [DataBaseBuilder] skipping not readable dir:"<< root_dir;
+        continue;
+      }
+      
+      
+      /* -- read childs folders -- */
+      dir.setFilter(QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks);
+
+      QDirIterator it(dir,QDirIterator::Subdirectories);
+
+      while(it.hasNext())
+      {
+        it.next();
+        if (it.fileInfo().isDir())
+        {
+          QString dir_path = it.fileInfo().canonicalFilePath().toUtf8();
+          //Debug::debug() << "  [DataBaseBuilder] canonicalFilePath: " << dir_path;
+          m_fs_dirs.insert( dir_path );
+        }
+      }
+    }
+
+    fileCount = m_fs_dirs.count();
     
     /*-----------------------------------------------------------*/
     /* Update database                                           */
@@ -212,7 +228,7 @@ void DataBaseBuilder::doScan()
       //! If the file is in database but has another mtime then update it
       else if ( m_db_dirs[dir_path] != QFileInfo(dir_path).lastModified().toTime_t() )
       {
-        updateDirectory(dir_path);
+          updateDirectory(dir_path);
       }
 
       m_db_dirs.remove(dir_path);
@@ -226,7 +242,7 @@ void DataBaseBuilder::doScan()
     
     
     
-    //! Get files that are in DB but not on filesystem
+    //! Get directories that are in DB but not on filesystem
     QHashIterator<QString, uint> i(m_db_dirs);
     while (i.hasNext()) {
         i.next();
@@ -246,7 +262,7 @@ void DataBaseBuilder::doScan()
     // Now write all data to the disk
     QSqlQuery("COMMIT TRANSACTION;",*m_sqlDb);
 
-    Debug::debug() << "- DataBaseBuilder -> end Database update";
+    Debug::debug() << "  [DataBaseBuilder] end Database update";
 
     emit buildingFinished();    
     exit();
@@ -257,7 +273,7 @@ void DataBaseBuilder::doScan()
 /* ---------------------------------------------------------------------------*/
 void DataBaseBuilder::addDirectory(const QString& path)
 {
-    Debug::debug() << "- DataBaseBuilder -> addDirectory :" << path;
+    Debug::debug() << "  [DataBaseBuilder] addDirectory :" << path;
     foreach (const QString& file, filesFromFilesystem(path) )
     {
         if (MEDIA::isAudioFile(file) )
@@ -274,7 +290,7 @@ void DataBaseBuilder::addDirectory(const QString& path)
 /* ---------------------------------------------------------------------------*/
 void DataBaseBuilder::updateDirectory(const QString& path)
 {
-    Debug::debug() << "- DataBaseBuilder -> updateDirectory :" << path;
+    Debug::debug() << "  [DataBaseBuilder] updateDirectory :" << path;
     
     QStringList files_fs = filesFromFilesystem(path);
     QHash<QString,uint> files_db = filesFromDatabase(path);  
@@ -324,7 +340,7 @@ void DataBaseBuilder::updateDirectory(const QString& path)
 /* ---------------------------------------------------------------------------*/                     
 void DataBaseBuilder::removeDirectory(const QString& path)
 {
-    Debug::debug() << "- DataBaseBuilder -> removeDirectory :" << path;
+    Debug::debug() << "  [DataBaseBuilder] removeDirectory :" << path;
 
     QSqlQuery q("", *m_sqlDb);
     q.prepare("SELECT `id` FROM `directories` WHERE `path`=?;");
@@ -353,7 +369,7 @@ void DataBaseBuilder::removeDirectory(const QString& path)
 /* ---------------------------------------------------------------------------*/  
 int DataBaseBuilder::insertDirectory(const QString & path)
 {
-    Debug::debug() << "DataBaseBuilder -> insertDirectory " << path;
+    Debug::debug() << "  [DataBaseBuilder] insertDirectory " << path;
 
     uint mtime   = QFileInfo(path).lastModified().toTime_t();
     
@@ -432,7 +448,7 @@ void DataBaseBuilder::insertTrack(const QString& filename)
 
     if ( !q.next() ) 
     {
-      Debug::debug() << "- DataBaseBuilder -> insert track :" << track->title;
+      Debug::debug() << "  [DataBaseBuilder] insert track :" << track->title;
       
       q.prepare("INSERT INTO `tracks`(`filename`,`trackname`,`number`,`length`," \
                     "`artist_id`,`album_id`,`year_id`,`genre_id`,`dir_id`,`mtime`," \
@@ -460,7 +476,7 @@ void DataBaseBuilder::insertTrack(const QString& filename)
     }
     else
     {
-      Debug::debug() << "- DataBaseBuilder -> update track :" << track->title;
+      Debug::debug() << "  [DataBaseBuilder] update track :" << track->title;
       
       int id = q.value(0).toInt();
       q.prepare("UPDATE `tracks` SET `trackname`=?,`number`=?,`length`=?," \
@@ -503,7 +519,7 @@ void DataBaseBuilder::insertTrack(const QString& filename)
 /* ---------------------------------------------------------------------------*/  
 void DataBaseBuilder::removeTrack(const QString& filename)
 {
-    Debug::debug() << "- DataBaseBuilder -> deleting track :" << filename;
+    Debug::debug() << "  [DataBaseBuilder] deleting track :" << filename;
     QFileInfo fileInfo(filename);
     QString fname = fileInfo.filePath().toUtf8();
 
@@ -523,7 +539,7 @@ void DataBaseBuilder::insertPlaylist(const QString& filename)
     QString pname = fileInfo.baseName();
     uint mtime    = fileInfo.lastModified().toTime_t();
 
-    Debug::debug() << "- DataBaseBuilder -> insert playlist :" << filename;
+    Debug::debug() << "  [DataBaseBuilder] insert playlist :" << filename;
 
     int favorite = 0;
 
@@ -575,7 +591,7 @@ void DataBaseBuilder::insertPlaylist(const QString& filename)
       QString name          = QFileInfo(url).baseName();
 
       //! Playlist Item part in database
-      Debug::debug() << "- DataBaseBuilder -> insert playlistitem url: " << url;
+      Debug::debug() << "  [DataBaseBuilder] insert playlistitem url: " << url;
 
       q.prepare("INSERT INTO `playlist_items`(`url`,`name`,`playlist_id`)" \
                     "VALUES(?," \
@@ -593,7 +609,7 @@ void DataBaseBuilder::insertPlaylist(const QString& filename)
 /* ---------------------------------------------------------------------------*/  
 void DataBaseBuilder::removePlaylist(const QString& filename)
 {
-    Debug::debug() << "- DataBaseBuilder -> deleting playlist :" << filename;
+    Debug::debug() << "  [DataBaseBuilder] deleting playlist :" << filename;
     QFileInfo fileInfo(filename);
     QString fname = fileInfo.filePath().toUtf8();
 
@@ -609,7 +625,7 @@ void DataBaseBuilder::removePlaylist(const QString& filename)
 /* ---------------------------------------------------------------------------*/
 void DataBaseBuilder::storeCoverArt(const QString& coverFilePath, const QString& trackFilename)
 {
-    //Debug::debug() << "- DataBaseBuilder -> storeCoverArt " << coverFilePath;
+    //Debug::debug() << "  [DataBaseBuilder] storeCoverArt " << coverFilePath;
 
     //! check if cover art already exist
     QFile file(coverFilePath);
@@ -626,7 +642,7 @@ void DataBaseBuilder::storeCoverArt(const QString& coverFilePath, const QString&
 /* ---------------------------------------------------------------------------*/
 void DataBaseBuilder::recupCoverArtFromDir(const QString& coverFilePath, const QString& trackFilename)
 {
-    //Debug::debug() << "- DataBaseBuilder -> recupCoverArtFromDir " << coverFilePath;
+    //Debug::debug() << "  [DataBaseBuilder] recupCoverArtFromDir " << coverFilePath;
 
     //! check if coverArt already exist
     QFile file(coverFilePath);
@@ -680,7 +696,7 @@ void DataBaseBuilder::loadArtistImage(const QString& artist)
 /* ---------------------------------------------------------------------------*/
 void DataBaseBuilder::slot_systeminfo_received(INFO::InfoRequestData request, QVariant output)
 {
-    Debug::debug() << "- DataBaseBuilder -> slot_on_image_received";
+    Debug::debug() << "  [DataBaseBuilder] slot_on_image_received";
     
     if(!m_requests_ids.contains(request.requestId))
       return;

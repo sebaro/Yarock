@@ -22,6 +22,7 @@
 #include <QThread>
 #include <QObject>
 #include <QStringList>
+#include <QSet>
 #include <QSqlDatabase>
 #include <QString>
 #include <QHash>
@@ -82,8 +83,8 @@ class DataBaseBuilder :  public QThread
     
     // filename, mtime
     QHash<QString,uint>  m_db_dirs;
-    QList<QString>       m_fs_dirs;
-    QStringList          m_folders;
+    QSet<QString>        m_fs_dirs;
+    QStringList          m_input_folders;
 
     bool                 m_exit;
 
