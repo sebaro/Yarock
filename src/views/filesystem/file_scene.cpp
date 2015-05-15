@@ -60,7 +60,7 @@ FileScene::FileScene(QWidget* parent) : SceneBase(parent)
 *******************************************************************************/
 void FileScene::initScene()
 {
-    Debug::debug() << "FileScene::initScene";
+    Debug::debug() << "   [FileScene] initScene";
     
     /* init model */
     m_model        = new FileModel(this);
@@ -183,7 +183,7 @@ void FileScene::slot_on_directory_loaded()
     categorieRow++;
     addItem(cat);
 
-    m_model->sort(0, Qt::AscendingOrder	);
+    m_model->sort(0, Qt::AscendingOrder);
     QModelIndex root_idx = m_model->index(m_current_path);
     
     
@@ -194,20 +194,22 @@ void FileScene::slot_on_directory_loaded()
         QFileInfo fileInfo = m_model->fileInfo ( childIndex );
 
         const QString path = fileInfo.canonicalFilePath();
-        //Debug::debug() << "FileScene::slot_on_directory_loaded path : " << path;
+        //Debug::debug() << "   [FileScene] slot_on_directory_loaded path : " << path;
 
         if(!m_filter.isEmpty() && !path.contains(m_filter,Qt::CaseInsensitive)) continue;
 
-        if(fileInfo.isDir()) {
+        /* ---- directory ---- */
+        if(fileInfo.isDir()) 
+        {
           DirectoryGraphicItem *item = new DirectoryGraphicItem();
           item->setPath(fileInfo.canonicalFilePath());
           item->setDirname(QDir(fileInfo.canonicalFilePath()).dirName());
           item->setPixmap(m_folder_pixmap);
           item->setPos(4+140*Column, 10 + folderRow*150 + categorieRow*50);
           addItem(item);
-          //Debug::debug() << "FileScene::PopulateScene add item : " << item->path();
+          //Debug::debug() << "   [FileScene] PopulateScene add item : " << item->path();
           m_infosize++;
-        } // isDir
+        }
         else
         {
           urls << path;
@@ -226,7 +228,7 @@ void FileScene::slot_on_directory_loaded()
     if(Column > 0)
       folderRow++;
     
-    foreach (QString url, urls) 
+    foreach (const QString& url, urls) 
     {    
         TrackGraphicItem_v4 *track_item = new TrackGraphicItem_v4();
         track_item->media = 0;
@@ -260,7 +262,7 @@ void FileScene::slot_on_directory_loaded()
 *******************************************************************************/
 void FileScene::async_load_item()
 {
-    Debug::debug() << "FileScene::async_load_item "/* << map_graphic_items*/;
+    Debug::debug() << "   [FileScene] async_load_item "/* << map_graphic_items*/;
 
     if (!Database::instance()->open())
       return;
@@ -429,20 +431,20 @@ void FileScene::startDirectoriesDrag(QGraphicsItem* i)
     {
       DirectoryGraphicItem *item = static_cast<DirectoryGraphicItem*>(i);
 
-      urls << QUrl( item->path() );
+      urls << QUrl::fromLocalFile( item->path() );
     }
     else /* multiple directory drags */
     {
       foreach(QGraphicsItem* gi, selectedItems())
       {
         DirectoryGraphicItem *item = static_cast<DirectoryGraphicItem*>(gi);      
-        urls << QUrl( item->path() );
+        urls << QUrl::fromLocalFile( item->path() );
       }
     }
     
     QMimeData* mimedata = new QMimeData();
     mimedata->setUrls(urls);                  
-                       
+    //Debug::debug() << "   [FileScene] startDirectoriesDrag:" << urls;
     
     QDrag *drag = new QDrag(parentView());
     drag->setPixmap(m_folder_pixmap);
