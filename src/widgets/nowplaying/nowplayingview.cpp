@@ -138,13 +138,13 @@ NowPlayingView::NowPlayingView(QWidget *parent) : QWidget(parent)
 /* ---------------------------------------------------------------------------*/ 
 void NowPlayingView::slot_update_widget()
 {
+    //Debug::debug() << "  [NowPlayingView] slot_update_widget";
     MEDIA::TrackPtr track = Engine::instance()->playingTrack();
-  
+
     /* update actions */
     ACTIONS()->value(PLAYING_TRACK_EDIT)->setEnabled( (track && track->id != -1) ? true : false );
     ACTIONS()->value(PLAYING_TRACK_LOVE)->setEnabled( (track && track->id != -1 && LastFmService::instance()->isAuthenticated() )
                                                 ? true : false );
-    
     /* update widget */     
     if(Engine::instance()->state() != ENGINE::STOPPED && track)
     {
@@ -160,13 +160,20 @@ void NowPlayingView::slot_update_widget()
         const QString title_or_url = track->title.isEmpty() ? track->url : track->title;
 
         int width = this->width() - 110 - 10 ;
+
         QString clippedText = QFontMetrics(ui_label_title->font()).elidedText(title_or_url, Qt::ElideRight, width);
+
         ui_label_title->setText( clippedText );
 
-        ui_label_album->setText ( QFontMetrics(ui_label_album->font()).elidedText(track->artist + " - " + track->album, Qt::ElideRight, width) );
+        const QString album = track->album.isEmpty() ? track->artist : track->artist + " - " + track->album;
+
+        clippedText = QFontMetrics(ui_label_album->font()).elidedText(album, Qt::ElideRight, width);
+
+        ui_label_album->setText ( clippedText );
 
         /* update rating */
-        if(track->id != -1 ) {
+        if(track->id != -1 )
+        {
           ui_rating->set_rating( track->rating );
           ui_rating->set_user_rating( true );
           ui_rating->set_enable( true );

@@ -35,7 +35,6 @@ ShortcutDialog::ShortcutDialog(const QString& key,const QString& shortcut, QWidg
     this->setTitle(tr("Change shortcut"));
     this->resize(400, 170);
 
-
     QLabel * label= new QLabel(this);
     label->setAlignment(Qt::AlignCenter);
     label->setWordWrap(false);
@@ -44,7 +43,6 @@ ShortcutDialog::ShortcutDialog(const QString& key,const QString& shortcut, QWidg
     m_currentShortcut = new QLabel(this);
     m_currentShortcut->setAlignment(Qt::AlignCenter);
     m_currentShortcut->setText(m_old_shortcut.toString());
-
 
     QVBoxLayout * layout = new QVBoxLayout();
     layout->addWidget(label);
@@ -56,18 +54,65 @@ ShortcutDialog::ShortcutDialog(const QString& key,const QString& shortcut, QWidg
     connect(buttonBox(), SIGNAL(rejected()),this, SLOT(close()));
     connect(buttonBox(), SIGNAL(accepted()),this, SLOT(accept()));
 
+    buttonBox()->setFocusPolicy( Qt::NoFocus );
+    
     //! List legal modifiers
-    m_modifier_keys << Qt::ControlModifier << Qt::AltModifier << Qt::MetaModifier << Qt::ShiftModifier;
+    m_modifier_keys << Qt::Key_Shift << Qt::Key_Control << Qt::Key_Meta << Qt::Key_Alt << Qt::Key_AltGr;
 }
 
-
-void ShortcutDialog::keyReleaseEvent(QKeyEvent *e)
+void ShortcutDialog::showEvent(QShowEvent* e) 
 {
-    if (m_modifier_keys.contains(e->modifiers())) {
-        m_new_shortcut = QKeySequence(e->modifiers() | e->key());
-        m_currentShortcut->setText(m_new_shortcut.toString(QKeySequence::NativeText));
-    }
+  QDialog::grabKeyboard();
+  QDialog::showEvent(e);
 }
+
+void ShortcutDialog::hideEvent(QHideEvent* e)
+{
+  QDialog::releaseKeyboard();
+  QDialog::hideEvent(e);
+}
+
+
+bool ShortcutDialog::event(QEvent* e) 
+{
+    QKeySequence tempkeyseq = QKeySequence();
+    if (e->type() == QEvent::ShortcutOverride) 
+    {
+      QKeyEvent* ke = static_cast<QKeyEvent*>(e);
+      
+      if(ke->key() == Qt::Key_Return) 
+      {
+        accept();
+        return true;
+      }
+      else if(ke->key() == Qt::Key_Space) 
+      {
+        tempkeyseq = QKeySequence();
+        accept();
+        return true;
+      }
+
+      if (m_modifier_keys.contains(ke->key()))
+        tempkeyseq = QKeySequence(ke->modifiers());
+      else
+        tempkeyseq = QKeySequence(ke->modifiers() | ke->key());
+
+      
+      m_new_shortcut = QKeySequence( tempkeyseq );
+      m_currentShortcut->setText(tempkeyseq.toString(QKeySequence::PortableText));
+
+//       Debug::debug() << "ShortcutDialog::keyReleaseEvent ke->key():" << ke->key();
+//       Debug::debug() << "ShortcutDialog::keyReleaseEvent :" << m_new_shortcut.toString(QKeySequence::PortableText);
+//      Debug::debug() << "ShortcutDialog::keyReleaseEvent :" << m_new_shortcut.toString(QKeySequence::NativeText);
+      
+      if (!m_modifier_keys.contains(ke->key()))
+        accept();
+ 
+      return true;
+    }
+    return QDialog::event(e);
+}
+
 
 
 void ShortcutDialog::accept()
@@ -77,7 +122,9 @@ void ShortcutDialog::accept()
     this->close();
 }
 
+
 QString ShortcutDialog::newShortcut()
 {
-    return m_new_shortcut.toString(QKeySequence::NativeText);
+    return m_new_shortcut.toString(QKeySequence::PortableText);
 }
+

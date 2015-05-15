@@ -71,7 +71,7 @@ QList<UltimateLyricsProvider*> UltimateLyricsReader::ParseDevice(QIODevice* devi
 
 UltimateLyricsProvider* UltimateLyricsReader::ParseProvider(QXmlStreamReader* reader) const
 {
-  //Debug::debug() << "########## UltimateLyricsReader ParseProvider";
+  //Debug::debug() << "      [UltimateLyricsReader] ParseProvider";
   
   QXmlStreamAttributes attributes = reader->attributes();
 
@@ -109,7 +109,7 @@ UltimateLyricsProvider* UltimateLyricsReader::ParseProvider(QXmlStreamReader* re
 
 UltimateLyricsProvider::Rule UltimateLyricsReader::ParseRule(QXmlStreamReader* reader) const {
   UltimateLyricsProvider::Rule ret;
-  //Debug::debug() << "########## UltimateLyricsReader ParseRule";
+  //Debug::debug() << "      [UltimateLyricsReader] ParseRule";
 
   while (!reader->atEnd()) 
   {
@@ -120,7 +120,7 @@ UltimateLyricsProvider::Rule UltimateLyricsReader::ParseRule(QXmlStreamReader* r
 
     if (reader->tokenType() == QXmlStreamReader::StartElement) {
       if (reader->name() == "item") {
-        //Debug::debug() << "########## UltimateLyricsReader ParseRule find item";
+        //Debug::debug() << "      [UltimateLyricsReader] ParseRule find item";
 
         QXmlStreamAttributes attr = reader->attributes();
         if (attr.hasAttribute("tag"))

@@ -105,7 +105,7 @@ QList<MediaSearch> list_search = QList<MediaSearch>()
 
     for (int i=0; i < p_names.size(); i++)
     {
-      Debug::debug() << "--- SMART_PLAYLIST::createDatabase -> insert smart playlist :" << p_names.at(i);
+      Debug::debug() << "  [SmartPlaylist] createDatabase -> insert smart playlist :" << p_names.at(i);
 
       QVariant variant = MediaSearch::toDatabase( list_search.at(i) );
 
@@ -129,7 +129,7 @@ QList<MediaSearch> list_search = QList<MediaSearch>()
 *******************************************************************************/
 QList<MEDIA::TrackPtr> SmartPlaylist::mediaItem(QVariant variant)
 {
-    //Debug::debug() << "SmartPlaylist--> get mediaitem start : " << QTime::currentTime().toString();
+    //Debug::debug() << "  [SmartPlaylist] get mediaitem start : " << QTime::currentTime().toString();
 
     MediaSearch search = qvariant_cast<MediaSearch>(variant);
 
@@ -146,7 +146,7 @@ QList<MEDIA::TrackPtr> SmartPlaylist::mediaItem(QVariant variant)
 *******************************************************************************/
 void SmartPlaylist::updatePlaylist(MEDIA::PlaylistPtr playlist)
 {
-    Debug::debug() << "SmartPlaylist::updatePlaylist";
+    Debug::debug() << "  [SmartPlaylist] updatePlaylist";
     
     if (!Database::instance()->open()) return;
 

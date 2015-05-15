@@ -39,7 +39,7 @@ class EditorSearch;
 *                                                                              *
 ********************************************************************************
 */
-class MainLeftWidget : public QWidget
+class MainLeftWidget : public QObject
 {
 Q_OBJECT
     static MainLeftWidget* INSTANCE;
@@ -60,6 +60,9 @@ public:
 
     CustomSplitter* splitter() {return m_viewsSplitter;}
     
+    QWidget * contentWidget() {return m_viewsSplitter;}
+    QWidget * headerWidget()  {return m_header;}
+    
 private slots:
     void slot_send_quick_filter_change();
     void slot_explorer_popup_setting_change();
@@ -76,6 +79,8 @@ signals:
 private:
     void create_header_ui();
     void create_ui_search();
+    
+    QWidget             *m_parent;            
     
     VIEW::Id              m_mode;
     HeaderWidget         *m_header;

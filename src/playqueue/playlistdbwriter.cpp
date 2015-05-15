@@ -56,8 +56,8 @@ PlaylistDbWriter::PlaylistDbWriter()
 /* ---------------------------------------------------------------------------*/
 void PlaylistDbWriter::saveToDatabase(const QString& playlist_name, int bd_id /* = -1*/)
 {
-    Debug::debug() << "PlaylistDbWriter::saveToDatabase name: " << playlist_name;
-    Debug::debug() << "PlaylistDbWriter::saveToDatabase id: " << bd_id;
+    Debug::debug() << "  [PlaylistDbWriter] saveToDatabase name: " << playlist_name;
+    Debug::debug() << "  [PlaylistDbWriter] saveToDatabase id: " << bd_id;
   
     _isSessionSaving = false;
     _playlist_name   = playlist_name;
@@ -94,7 +94,7 @@ void PlaylistDbWriter::run()
 /* ---------------------------------------------------------------------------*/
 void PlaylistDbWriter::savePlaylist()
 {
-    Debug::debug() << "PlaylistDbWriter::savePlaylist";
+    Debug::debug() << "  [PlaylistDbWriter] savePlaylist";
     
     //! playlist data for Database
     QDateTime date   = QDateTime::currentDateTime();
@@ -106,9 +106,9 @@ void PlaylistDbWriter::savePlaylist()
     if(pname.isEmpty())
       pname = tr("no name");
 
-    Debug::debug() << "    [PlaylistDbWriter] insert playlist: " << pname;
+    Debug::debug() << "  [PlaylistDbWriter] insert playlist: " << pname;
 
-    Debug::debug() << "    [PlaylistDbWriter] _database_id " << _database_id;
+    Debug::debug() << "  [PlaylistDbWriter] _database_id " << _database_id;
 
 
     if (!Database::instance()->open())
@@ -160,7 +160,7 @@ void PlaylistDbWriter::savePlaylist()
     
      _database_id = q.value(0).toInt();
 
-    Debug::debug() << "    [PlaylistDbWriter] _database_id " << _database_id;
+    Debug::debug() << "  [PlaylistDbWriter] _database_id " << _database_id;
 
     /*-----------------------------------------------------------*/
     /* PLAYLIST ITEMS part in database                           */
@@ -171,9 +171,9 @@ void PlaylistDbWriter::savePlaylist()
         const QString item_name  = MEDIA::isLocal(m_model->trackAt(i)->url) ? m_model->trackAt(i)->title : m_model->trackAt(i)->name;
        
         /* 
-           Debug::debug() << "    [PlaylistDbWriter] insert playlist item url: " << item_url;
-           Debug::debug() << "    [PlaylistDbWriter] insert playlist item name: " << m_model->trackAt(i)->name;
-           Debug::debug() << "    [PlaylistDbWriter] insert playlist item title: " << m_model->trackAt(i)->title;
+           Debug::debug() << "  [PlaylistDbWriter] insert playlist item url: " << item_url;
+           Debug::debug() << "  [PlaylistDbWriter] insert playlist item name: " << m_model->trackAt(i)->name;
+           Debug::debug() << "  [PlaylistDbWriter] insert playlist item title: " << m_model->trackAt(i)->title;
         */
 
         q.prepare("INSERT INTO `playlist_items`(`url`,`name`,`playlist_id`) VALUES(?,?,?);");
@@ -189,7 +189,7 @@ void PlaylistDbWriter::savePlaylist()
 /* ---------------------------------------------------------------------------*/
 void PlaylistDbWriter::saveSession()
 {
-    Debug::debug() << "PlaylistDbWriter::saveSession";
+    Debug::debug() << "  [PlaylistDbWriter] saveSession";
 
     //! playlist data for Database
     uint mtime       = QDateTime::currentDateTime().toTime_t();
@@ -212,7 +212,7 @@ void PlaylistDbWriter::saveSession()
     {
       _database_id = query.value(0).toString().toInt();
     
-      Debug::debug() << "PlaylistDbWriter::saveSession db id " << _database_id;
+      Debug::debug() << "  [PlaylistDbWriter] saveSession db id " << _database_id;
     
       query.prepare("DELETE FROM `playlist_items` WHERE `playlist_id`=?;");
       query.addBindValue( _database_id );
@@ -250,7 +250,7 @@ void PlaylistDbWriter::saveSession()
     }
     else                        
     {
-      Debug::warning() << " no playlist in database to operate";
+      Debug::warning() << "  [PlaylistDbWriter] no playlist in database to operate";
       return;
     }
     
@@ -264,9 +264,9 @@ void PlaylistDbWriter::saveSession()
        
         QSqlQuery itemQuery(*Database::instance()->db());
          
-//         Debug::debug() << "    [PlaylistDbWriter] insert playlist item url: " << item_url;
-//         Debug::debug() << "    [PlaylistDbWriter] insert playlist item name: " << m_model->trackAt(i)->name;
-//         Debug::debug() << "    [PlaylistDbWriter] insert playlist item title: " << m_model->trackAt(i)->title;
+//         Debug::debug() << "  [PlaylistDbWriter] insert playlist item url: " << item_url;
+//         Debug::debug() << "  [PlaylistDbWriter] insert playlist item name: " << m_model->trackAt(i)->name;
+//         Debug::debug() << "  [PlaylistDbWriter] insert playlist item title: " << m_model->trackAt(i)->title;
         
 
         query.prepare("INSERT INTO `playlist_items`(`url`,`name`,`playlist_id`) VALUES(?,?,?);");

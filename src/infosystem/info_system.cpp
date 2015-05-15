@@ -120,7 +120,7 @@ InfoSystem::InfoSystem( QObject* parent ) : QObject( parent )
 
 InfoSystem::~InfoSystem()
 {
-    Debug::debug() << Q_FUNC_INFO;
+    //Debug::debug() << Q_FUNC_INFO;
 
     if ( m_workerThread )
     {
@@ -130,7 +130,7 @@ InfoSystem::~InfoSystem()
         delete m_workerThread;
         m_workerThread = 0;
     }
-    Debug::debug() << Q_FUNC_INFO << "done deleting worker";
+    //Debug::debug() << Q_FUNC_INFO << "done deleting worker";
 }
 
 
@@ -190,13 +190,13 @@ InfoSystem::getInfo( const INFO::InfoRequestData& requestData )
 */ 
 InfoSystemWorkerThread::InfoSystemWorkerThread( QObject* parent ) : QThread( parent )
 {
-    Debug::debug() << Q_FUNC_INFO;
+    //Debug::debug() << Q_FUNC_INFO;
 }
 
 
 InfoSystemWorkerThread::~InfoSystemWorkerThread()
 {
-    Debug::debug() << Q_FUNC_INFO;
+    //Debug::debug() << Q_FUNC_INFO;
 }
 
 

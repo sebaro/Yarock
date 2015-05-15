@@ -306,6 +306,7 @@ namespace MEDIA {
   }  
   
   //! --- sort utilities -------------------------------------------------------
+  bool compareTrackNatural(const TrackPtr, const TrackPtr);
   bool compareTrackItemGenre(const TrackPtr, const TrackPtr);
   bool compareAlbumItemYear(const AlbumPtr, const AlbumPtr);
   bool compareAlbumItemPlaycount(const AlbumPtr, const AlbumPtr);

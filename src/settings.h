@@ -74,6 +74,7 @@ Q_DISABLE_COPY(YarockSettings)
     bool                 _showPlayQueuePanel;
     bool                 _showNowPlaying;
     bool                 _enableSearchPopup;
+    bool                 _enablePlayOnSearch;
 
     // interface option
     QColor               _baseColor;

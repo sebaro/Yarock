@@ -45,13 +45,13 @@ LocalTrackPopulator::LocalTrackPopulator()
 
 void LocalTrackPopulator::run()
 {
-    Debug::debug() << " --- LocalTrackPopulator--> Start " << QTime::currentTime().second() << ":" << QTime::currentTime().msec();
+    Debug::debug() << "  [LocalTrackPopulator] start " << QTime::currentTime().second() << ":" << QTime::currentTime().msec();
 
     /*-----------------------------------------------------------*/
     /* Get connection                                            */
     /* ----------------------------------------------------------*/
     if (!Database::instance()->open()) {
-        Debug::warning() << " --- LocalTrackPopulator--> db connect failed";
+        Debug::warning() << "  [LocalTrackPopulator] db connect failed";
         emit populatingFinished();
         return;
     }
@@ -99,7 +99,6 @@ void LocalTrackPopulator::run()
       if(  artist_id != query_1.value(0) )
       {
         artist_id = query_1.value(0);
-
         artistItem = MEDIA::ArtistPtr::staticCast( m_model->rootItem()->addChildren(TYPE_ARTIST) );
         artistItem->id            =  query_1.value(0).toInt();
         artistItem->name          =  query_1.value(1).toString();
@@ -184,11 +183,10 @@ void LocalTrackPopulator::run()
       }
 
       //emit populatingProgress(  (int) ( (_progress*100)/_progressMax ) );
-      //Debug::debug() << " --- LocalTrackPopulator -->populatingProgress :" <<  (int) ( (_progress*100)/_progressMax ) << " %";
+      //Debug::debug() << "  [LocalTrackPopulator] populatingProgress :" <<  (int) ( (_progress*100)/_progressMax ) << " %";
 
     } // end while
 
-    
     /*-----------------------------------------------------------*/
     /* Calculate auto rating                                     */
     /* ----------------------------------------------------------*/
@@ -215,15 +213,14 @@ void LocalTrackPopulator::run()
       }
     }
 
-    
+
     //! Sort Media Track Item list By Genre
     qSort(m_model->trackByGenre.begin(), m_model->trackByGenre.end(),MEDIA::compareTrackItemGenre);
 
-           
     /*-----------------------------------------------------------*/
     /* End                                                       */
     /* ----------------------------------------------------------*/
-    Debug::debug() << " --- LocalTrackPopulator--> End " << QTime::currentTime().second() << ":" << QTime::currentTime().msec();
+    Debug::debug() << "  [LocalTrackPopulator] end " << QTime::currentTime().second() << ":" << QTime::currentTime().msec();
     
     if(!m_exit)
       emit populatingFinished();

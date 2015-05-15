@@ -17,7 +17,6 @@
 #include "service_lastfm.h"
 #include "networkaccess.h"
 #include "debug.h"
-#include "constants.h"
 #include "utilities.h"
 
 namespace LASTFM {
@@ -40,7 +39,7 @@ static const QString API_KEY  = "b3717637c18071e1619e92ee2c3eb0f8";
 */
 ServiceLastFm::ServiceLastFm() : InfoService()
 {
-    Debug::debug() << Q_FUNC_INFO;
+    Debug::debug() << "    [ServiceLastFm] start";
 
     setName("lastfm");
     
@@ -64,7 +63,7 @@ void ServiceLastFm::getInfo( INFO::InfoRequestData request )
 
 void ServiceLastFm::fetchInfo( INFO::InfoRequestData request )
 {
-    //Debug::debug() << Q_FUNC_INFO;
+    //Debug::debug() << "    [ServiceLastFm] fetchInfo";
     switch ( request.type )
     {
         case INFO::InfoAlbumCoverArt       : fetch_album_info( request );break;
@@ -89,7 +88,7 @@ void ServiceLastFm::fetchInfo( INFO::InfoRequestData request )
 
 void ServiceLastFm::fetch_image_uri( INFO::InfoRequestData request )
 {
-    //Debug::debug() << Q_FUNC_INFO;
+    //Debug::debug() << "    [ServiceLastFm] fetch_image_uri";
     INFO::InfoStringHash hash = request.data.value< INFO::InfoStringHash >();
         
     QUrl url = QUrl( hash.value("#uri") );
@@ -102,7 +101,7 @@ void ServiceLastFm::fetch_image_uri( INFO::InfoRequestData request )
 
 void ServiceLastFm::fetch_album_info( INFO::InfoRequestData request )
 {
-    //Debug::debug() << Q_FUNC_INFO;
+    //Debug::debug() << "    [ServiceLastFm] fetch_album_info";
     
     INFO::InfoStringHash hash = request.data.value< INFO::InfoStringHash >();
     
@@ -134,7 +133,7 @@ void ServiceLastFm::fetch_album_info( INFO::InfoRequestData request )
 
 void ServiceLastFm::slot_parse_album_info(QByteArray bytes)
 {
-    Debug::debug() << Q_FUNC_INFO;
+    //Debug::debug() << "    [ServiceLastFm] slot_parse_album_info";
 
     /*-------------------------------------------------*/
     /* Get id from sender reply                        */
@@ -206,8 +205,7 @@ void ServiceLastFm::slot_parse_album_info(QByteArray bytes)
             foreach (const QVariant& track, tracksMap.value("track").toList() )
             {
               QVariantMap trackMap =  qvariant_cast<QVariantMap>(track);
-              //Debug::debug() << Q_FUNC_INFO << trackMap["name"].toString();
-
+              //Debug::debug() << "    [ServiceLastFm] " << trackMap["name"].toString();
               tracks << trackMap["name"].toString();
             }
             
@@ -226,7 +224,7 @@ void ServiceLastFm::slot_parse_album_info(QByteArray bytes)
            output["url"] = album_map.value("url");
         }
         
-        //Debug::debug() << "####" << Q_FUNC_INFO << "OUTPUT ==" << output;
+        //Debug::debug() << "    [ServiceLastFm] OUTPUT ==" << output;
         emit info( request, output);
     }
 
@@ -238,7 +236,7 @@ void ServiceLastFm::slot_parse_album_info(QByteArray bytes)
 
 void ServiceLastFm::fetch_artist_info( INFO::InfoRequestData request )
 {
-    //Debug::debug() << Q_FUNC_INFO;
+    //Debug::debug() << "    [ServiceLastFm] fetch_artist_info";
     INFO::InfoStringHash hash = request.data.value< INFO::InfoStringHash >();
 
     if(request.type == INFO::InfoArtistImages && hash.contains( "#uri" ))
@@ -262,7 +260,7 @@ void ServiceLastFm::fetch_artist_info( INFO::InfoRequestData request )
 
 void ServiceLastFm::slot_parse_artist_info( QByteArray bytes )
 {
-    //Debug::debug() << Q_FUNC_INFO;
+    //Debug::debug() << "    [ServiceLastFm] slot_parse_artist_info";
 
     /*-------------------------------------------------*/
     /* Get id from sender reply                        */
@@ -325,7 +323,7 @@ void ServiceLastFm::slot_parse_artist_info( QByteArray bytes )
 
 void ServiceLastFm::fetch_artist_similar( INFO::InfoRequestData request )
 {
-    Debug::debug() << Q_FUNC_INFO;
+    //Debug::debug() << "    [ServiceLastFm] fetch_artist_similar";
     INFO::InfoStringHash hash = request.data.value< INFO::InfoStringHash >();
 
     QUrl url("http://ws.audioscrobbler.com/2.0/");
@@ -343,7 +341,7 @@ void ServiceLastFm::fetch_artist_similar( INFO::InfoRequestData request )
 
 void ServiceLastFm::slot_parse_artist_similar( QByteArray bytes )
 {
-    //Debug::debug() << Q_FUNC_INFO;
+    //Debug::debug() << "    [ServiceLastFm] slot_parse_artist_similar";
 
     /*-------------------------------------------------*/
     /* Get id from sender reply                        */
@@ -413,7 +411,7 @@ void ServiceLastFm::slot_parse_artist_similar( QByteArray bytes )
 
 void ServiceLastFm::slot_image_received(QByteArray bytes)
 {
-    //Debug::debug() << Q_FUNC_INFO;
+    //Debug::debug() << "    [ServiceLastFm] slot_image_received";
     
     // Get id from sender reply
     QObject* reply = qobject_cast<QObject*>(sender());
@@ -429,7 +427,7 @@ void ServiceLastFm::slot_image_received(QByteArray bytes)
 
 void ServiceLastFm::slot_request_error()
 {
-    //Debug::debug() << Q_FUNC_INFO;
+    //Debug::debug() << "    [ServiceLastFm] slot_request_error";
     
     /* get sender reply */
     QObject* reply = qobject_cast<QObject*>(sender());

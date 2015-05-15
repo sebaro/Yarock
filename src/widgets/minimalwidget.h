@@ -22,6 +22,8 @@
 #include <QPaintEvent>
 #include <QLabel>
 #include <QToolBar>
+#include <QObject>
+#include <QEvent>
 
 
 /*
@@ -38,8 +40,9 @@ public:
     MinimalWidget(QWidget *parent=0);
 
 protected :
-    void paintEvent(QPaintEvent *event);
+    void paintEvent( QPaintEvent *event );
     void showEvent ( QShowEvent * event );
+    bool eventFilter( QObject *obj, QEvent *ev );
     
 private slots:
     void slot_update();
@@ -49,7 +52,7 @@ private:
     QLabel                *ui_label_title;    
     QLabel                *ui_label_album;    
     QToolBar              *ui_toolbar;
-    class RatingWidget    *ui_rating;        
+    class RatingWidget    *ui_rating;
 };
 
 

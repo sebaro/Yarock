@@ -61,11 +61,6 @@ private:
 public slots:
   void reloadSettings();
 
-private slots:
-  void incVolume();
-  void decVolume();
-  void muteVolume();
-
 private:
   QMap<QString /*id*/, Shortcut> m_shortcuts;
   QList<QxtGlobalShortcut*> m_qxt_shortcuts;

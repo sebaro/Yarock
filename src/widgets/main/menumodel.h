@@ -59,7 +59,6 @@ Q_OBJECT
     void slot_on_menu_triggered();
 
   signals :
-    void modelItemActivated(QModelIndex);
     void menu_browser_triggered(VIEW::Id, QVariant);
 };
 

@@ -113,7 +113,7 @@ void ContextScene::init_widget(Mode new_mode)
     
     if( m_mode == StreamPlay ) 
     {
-      Debug::debug() << "ContextScene init_widget StreamPlay";
+      Debug::debug() << "   [ContextScene] init_widget StreamPlay";
       m_nowplaying_info_widget->hide();
       m_album_info_widget->hide();
       m_lyrics_info_widget->show();
@@ -131,7 +131,7 @@ void ContextScene::init_widget(Mode new_mode)
     }
     else if( m_mode == TrackPlay ) 
     {
-      Debug::debug() << "ContextScene init_widget TrackPlay";
+      Debug::debug() << "   [ContextScene] init_widget TrackPlay";
       
       m_nowplaying_info_widget->hide();
       m_artist_info_widget->show();
@@ -149,7 +149,7 @@ void ContextScene::init_widget(Mode new_mode)
     }
     else if ( m_mode ==  Stopped ) 
     {
-      Debug::debug() << "ContextScene init_widget Stopped";
+      Debug::debug() << "   [ContextScene] init_widget Stopped";
       
       m_artist_info_widget->hide();
       m_similar_info_widget->hide();
@@ -309,7 +309,7 @@ void ContextScene::infoSystemInfo(INFO::InfoRequestData request, QVariant output
     if(!m_requests_ids.contains(request.requestId))
       return;
 
-    //Debug::debug() << Q_FUNC_INFO << " request.type" << request.type;
+    //Debug::debug() << "   [ContextScene] infoSystemInfo request.type" << request.type;
     
     m_requests_ids.removeOne(request.requestId);
     

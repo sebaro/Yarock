@@ -39,6 +39,10 @@
 
 #include <QtGui>
 
+#if QT_VERSION >= 0x050000
+  #include <QShortcut>
+#endif
+
 MainLeftWidget* MainLeftWidget::INSTANCE = 0;
     
 /*
@@ -48,32 +52,32 @@ MainLeftWidget* MainLeftWidget::INSTANCE = 0;
 *                                                                              *
 ********************************************************************************
 */
-MainLeftWidget::MainLeftWidget(QWidget *parent) : QWidget( parent )
+MainLeftWidget::MainLeftWidget(QWidget *parent)
 {
     INSTANCE   = this;
       
+    m_parent = parent;
+    
     /* header */
-    m_header = new HeaderWidget(this);
+    m_header = new HeaderWidget(m_parent);
     m_header->setMinimumHeight(36);
 
     create_header_ui();
     
     /* content */
-    m_viewsSplitter = new CustomSplitter(this);
+    m_viewsSplitter = new CustomSplitter(m_parent);
     m_viewsSplitter->setObjectName(QString::fromUtf8("viewsSplitter_2"));
     m_viewsSplitter->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );       
 
-    MenuWidget* m_menu_widget = new MenuWidget(this);
+    QPalette p1;
+    p1.setColor(QPalette::Background, QApplication::palette().color(QPalette::Normal, QPalette::Base));
+    m_viewsSplitter->setPalette( p1 );
+    
+    
+    MenuWidget* m_menu_widget = new MenuWidget(m_parent);
     m_menu_widget->setSplitter(m_viewsSplitter);    
     
     m_viewsSplitter->addWidget(m_menu_widget);
-    
-    /* layout */
-    QVBoxLayout* vl0 = new QVBoxLayout(this);
-    vl0->setSpacing(0);
-    vl0->setContentsMargins(0, 0, 0, 0);
-    vl0->addWidget(m_header);
-    vl0->addWidget(m_viewsSplitter);   
     
     /* init */
     ui_editor_search = 0;
@@ -116,6 +120,7 @@ void MainLeftWidget::create_header_ui()
 
       QMenu* menu = new QMenu();
       menu->addAction(ACTIONS()->value(APP_ENABLE_SEARCH_POPUP));
+      menu->addAction(ACTIONS()->value(APP_PLAY_ON_SEARCH));
       ui_search_lineedit->setCustomContextMenu(menu);
       
       /* explorer advanced search */
@@ -195,14 +200,14 @@ void MainLeftWidget::setTitle(const QString& title)
 void MainLeftWidget::slot_advance_search_clicked()
 {  
     if(!ui_editor_search) {
-      ui_editor_search = new EditorSearch(this);
+      ui_editor_search = new EditorSearch(m_parent);
       QObject::connect(ui_editor_search, SIGNAL(search_triggered()), this, SLOT(slot_advanced_search_triggered()));
     }
     
     ui_editor_search->show();
   
     ui_editor_search->move (
-      mapToGlobal(QPoint(this->width()-ui_editor_search->width(), m_header->height())) 
+      m_parent->mapToGlobal(QPoint(contentWidget()->width()-ui_editor_search->width(), m_header->height())) 
     );
 }
 
@@ -218,7 +223,7 @@ void MainLeftWidget::slot_advanced_search_triggered()
     QVariant var = ui_editor_search->get_search();
     emit browser_search_change( var );
     
-    Debug::debug() << "MainLeftWidget::slot_advanced_search_triggered: " << var;
+    //Debug::debug() << "MainLeftWidget::slot_advanced_search_triggered: " << var;
 }
 
 
@@ -243,7 +248,7 @@ void MainLeftWidget::setBrowserSearch(QVariant variant)
 
 QVariant MainLeftWidget::browserSearch()
 {
-  Debug::debug() << "MainLeftWidget::browserSearch";
+    //Debug::debug() << "MainLeftWidget::browserSearch";
   
     QVariant variant;
     if(ui_editor_search && ui_editor_search->isActive() )

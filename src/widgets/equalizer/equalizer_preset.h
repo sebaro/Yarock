@@ -31,7 +31,9 @@
 */
 namespace Equalizer {
 
-  static const int kBands = 10;
+  const int kBands = 10;
+  
+  extern const char* kGainText[kBands];// = {"60", "170", "310", "600", "1k", "3k", "6k", "12k", "14k", "16k"};
 
   struct EqPreset {
       EqPreset()

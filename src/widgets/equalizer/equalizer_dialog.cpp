@@ -28,12 +28,6 @@
 #include <QVariant>
 
 
-
-const char* kGainText[] = {
-  "60", "170", "310", "600", "1k", "3k", "6k", "12k", "14k", "16k"
-};
-
-
 /*
 ********************************************************************************
 *                                                                              *
@@ -105,7 +99,7 @@ Equalizer_Dialog::Equalizer_Dialog(QWidget *parent) : QDialog(parent)
     _slider_container->layout()->addWidget(l);
 
     for (int i=0 ; i < Equalizer::kBands ; ++i) {
-      EqualizerSlider* eq = new EqualizerSlider(kGainText[i], _slider_container);
+      EqualizerSlider* eq = new EqualizerSlider(Equalizer::kGainText[i], _slider_container);
       eqSliderList[i] = eq;
       _slider_container->layout()->addWidget(eq);
       connect(eq, SIGNAL(valueChanged(int)), SLOT(equalizerChanged()));
@@ -149,7 +143,7 @@ void Equalizer_Dialog::equalizerChanged()
 
     //! signal change
     emit newEqualizerValue(preamp, gainList);
-    Debug::debug() << "- Equalizer -> equalizerChanged emit" << gainList;
+    Debug::debug() << "- Equalizer -> new equalizer value emit" << gainList;
 }
 
 //! ----------------------- enableChanged --------------------------------------

@@ -94,8 +94,6 @@ PlaylistWidget::PlaylistWidget(QWidget *parent,PlaylistView *view, PlayqueueMode
     
     /* signals connection */
     connect(m_model, SIGNAL(updated()), this, SLOT(slot_update_playqueue_status_info()));
-    connect(m_model, SIGNAL(updated()), this, SLOT(slot_update_playqueue_actions()));
-    connect(m_view, SIGNAL(selectionChanged()), this, SLOT(slot_update_playqueue_actions()));
     connect(ACTIONS()->value(PLAYQUEUE_REMOVE_DUPLICATE), SIGNAL(triggered()), SLOT(slot_removeduplicate_changed()));
 
     connect(ui_playqueue_filter, SIGNAL(textfield_entered()),this, SLOT(slot_update_filter()));
@@ -105,7 +103,7 @@ PlaylistWidget::PlaylistWidget(QWidget *parent,PlaylistView *view, PlayqueueMode
     
     /* init state */
     ui_filter_container->setVisible( SETTINGS()->_playqueueShowFilter );
-    slot_update_playqueue_actions();
+
     slot_show_now_playing_triggered();
 }
 
@@ -118,14 +116,14 @@ void PlaylistWidget::slot_show_now_playing_triggered()
 
 void PlaylistWidget::slot_show_filter_triggered()
 {
-//     Debug::debug() << Q_FUNC_INFO;
+    //Debug::debug() << "    [PlaylistWidget] slot_show_filter_triggered"
     ui_filter_container->setVisible(m_action_show_filter->isChecked());
     SETTINGS()->_playqueueShowFilter = m_action_show_filter->isChecked(); 
 }
 
 void PlaylistWidget::slot_show_sortmenu()
 {
-//     Debug::debug() << Q_FUNC_INFO;
+    //Debug::debug() << "    [PlaylistWidget] slot_show_sortmenu"
     if(!ui_sort_widget)
     {
         ui_sort_widget = new SortWidget(m_sort_menu);
@@ -157,7 +155,7 @@ void PlaylistWidget::slot_update_filter()
 *******************************************************************************/
 void PlaylistWidget::slot_update_playqueue_status_info()
 {
-    //Debug::debug() << "--- PlaylistWidget-->slot_update_plaqueue_status_info";
+    //Debug::debug() << "    [PlaylistWidget] slot_update_plaqueue_status_info";
 
     const int rowCount = m_model->rowCount(QModelIndex());
     QString duree      = m_model->queueDuration();
@@ -174,20 +172,6 @@ void PlaylistWidget::slot_update_playqueue_status_info()
 
 
 /*******************************************************************************
-    slot_update_playqueue_actions
-*******************************************************************************/
-void PlaylistWidget::slot_update_playqueue_actions()
-{
-    //Debug::debug() << "--- PlaylistWidget-->sot_update_plaqueue_actions";
-    const bool isPlaylistEmpty = m_model->rowCount(QModelIndex()) < 1;
-
-    ACTIONS()->value(PLAYQUEUE_CLEAR)->setEnabled(!isPlaylistEmpty);
-    ACTIONS()->value(PLAYQUEUE_SAVE)->setEnabled(!isPlaylistEmpty);
-    ACTIONS()->value(PLAYQUEUE_AUTOSAVE)->setEnabled(!isPlaylistEmpty);
-    ACTIONS()->value(PLAYQUEUE_REMOVE_ITEM)->setEnabled((!isPlaylistEmpty) && m_view->isTrackSelected());
-}
-
-/*******************************************************************************
     slot_removeduplicate_changed
 *******************************************************************************/
 void PlaylistWidget::slot_removeduplicate_changed()
@@ -201,7 +185,7 @@ void PlaylistWidget::slot_removeduplicate_changed()
 *******************************************************************************/
 void PlaylistWidget::contextMenuEvent(QContextMenuEvent* e)
 {
-    //Debug::debug() << "--- PlaylistWidget-->contextMenuEvent";
+    //Debug::debug() << "    [PlaylistWidget] contextMenuEvent";
     QMap<ENUM_ACTION, QAction*> *actions = ACTIONS();
 
     /* handle stop after track action */
@@ -209,7 +193,9 @@ void PlaylistWidget::contextMenuEvent(QContextMenuEvent* e)
     QModelIndex source_idx    = m_model->proxy()->mapToSource(idx);
     const int right_click_row = source_idx.row();
 
-    if( right_click_row != -1) {
+    /* update PLAYQUEUE_STOP_AFTER */
+    if( right_click_row != -1) 
+    {
       actions->value(PLAYQUEUE_STOP_AFTER)->setEnabled(true);
 
       MEDIA::TrackPtr right_click_track = m_model->trackAt(right_click_row);
@@ -220,11 +206,22 @@ void PlaylistWidget::contextMenuEvent(QContextMenuEvent* e)
 
       actions->value(PLAYQUEUE_STOP_AFTER)->setChecked( right_click_track->isStopAfter );
     }
-    else {
+    else 
+    {
       actions->value(PLAYQUEUE_STOP_AFTER)->setEnabled(false);
       actions->value(PLAYQUEUE_STOP_AFTER)->setChecked(false);
     }
 
+    /* update actions */
+    const bool isPlaylistEmpty = m_model->rowCount(QModelIndex()) < 1;
+
+    ACTIONS()->value(PLAYQUEUE_CLEAR)->setEnabled(!isPlaylistEmpty);
+    ACTIONS()->value(PLAYQUEUE_SAVE)->setEnabled(!isPlaylistEmpty);
+    ACTIONS()->value(PLAYQUEUE_AUTOSAVE)->setEnabled(!isPlaylistEmpty);
+    ACTIONS()->value(PLAYQUEUE_REMOVE_ITEM)->setEnabled((!isPlaylistEmpty) && m_view->isTrackSelected());
+
+
+    
     /* build menu */
     if (!m_menu) {
       m_menu = new QMenu(this);

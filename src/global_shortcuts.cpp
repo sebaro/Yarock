@@ -36,27 +36,6 @@ GlobalShortcuts::GlobalShortcuts(QObject* parent) : QObject(parent)
 {
     INSTANCE = this;
 
-    //! internal action
-    QAction* action_inc_volume  = new QAction(this);
-    QAction* action_dec_volume  = new QAction(this);
-    QAction* action_mute_volume = new QAction(this);
-
-    connect(action_inc_volume, SIGNAL(triggered()),this, SLOT(incVolume()));
-    connect(action_dec_volume, SIGNAL(triggered()),this, SLOT(decVolume()));
-    connect(action_mute_volume, SIGNAL(triggered()),this, SLOT(muteVolume()));
-
-    //! init
-    addShortcut("play",          ACTIONS()->value(ENGINE_PLAY) );
-    addShortcut("stop",          ACTIONS()->value(ENGINE_STOP) );
-    addShortcut("next_track",    ACTIONS()->value(ENGINE_PLAY_NEXT) );
-    addShortcut("prev_track",    ACTIONS()->value(ENGINE_PLAY_PREV) );
-    addShortcut("inc_volume",    action_inc_volume );
-    addShortcut("dec_volume",    action_dec_volume );
-    addShortcut("mute_volume",   action_mute_volume );
-    addShortcut("jump_to_track", ACTIONS()->value(BROWSER_JUMP_TO_TRACK) );
-    addShortcut("clear_playqueue", ACTIONS()->value(PLAYQUEUE_CLEAR) );
-
-
     //! load settings
     reloadSettings();
 }
@@ -73,17 +52,28 @@ void GlobalShortcuts::addShortcut(QString id, QAction* action)
 
 void GlobalShortcuts::reloadSettings()
 {
+    Debug::debug() << "GlobalShortcuts::reloadSettings";
+  
+    addShortcut("play",            ACTIONS()->value(ENGINE_PLAY) );
+    addShortcut("stop",            ACTIONS()->value(ENGINE_STOP) );
+    addShortcut("next_track",      ACTIONS()->value(ENGINE_PLAY_NEXT) );
+    addShortcut("prev_track",      ACTIONS()->value(ENGINE_PLAY_PREV) );
+    addShortcut("inc_volume",      ACTIONS()->value(ENGINE_VOL_INC) );
+    addShortcut("dec_volume",      ACTIONS()->value(ENGINE_VOL_DEC) );
+    addShortcut("mute_volume",     ACTIONS()->value(ENGINE_VOL_MUTE) );
+    addShortcut("jump_to_track",   ACTIONS()->value(BROWSER_JUMP_TO_TRACK) );
+    addShortcut("clear_playqueue", ACTIONS()->value(PLAYQUEUE_CLEAR) );
+    
     // read settings
-    m_shortcuts["play"].key          = QKeySequence::fromString(SETTINGS()->_shortcutsKey["play"]);
-    m_shortcuts["stop"].key          = QKeySequence::fromString(SETTINGS()->_shortcutsKey["stop"]);
-    m_shortcuts["prev_track"].key    = QKeySequence::fromString(SETTINGS()->_shortcutsKey["prev_track"]);
-    m_shortcuts["next_track"].key    = QKeySequence::fromString(SETTINGS()->_shortcutsKey["next_track"]);
-    m_shortcuts["inc_volume"].key    = QKeySequence::fromString(SETTINGS()->_shortcutsKey["inc_volume"]);
-    m_shortcuts["dec_volume"].key    = QKeySequence::fromString(SETTINGS()->_shortcutsKey["dec_volume"]);
-    m_shortcuts["mute_volume"].key   = QKeySequence::fromString(SETTINGS()->_shortcutsKey["mute_volume"]);
-    m_shortcuts["jump_to_track"].key = QKeySequence::fromString(SETTINGS()->_shortcutsKey["jump_to_track"]);
+    m_shortcuts["play"].key            = QKeySequence::fromString(SETTINGS()->_shortcutsKey["play"]);
+    m_shortcuts["stop"].key            = QKeySequence::fromString(SETTINGS()->_shortcutsKey["stop"]);
+    m_shortcuts["prev_track"].key      = QKeySequence::fromString(SETTINGS()->_shortcutsKey["prev_track"]);
+    m_shortcuts["next_track"].key      = QKeySequence::fromString(SETTINGS()->_shortcutsKey["next_track"]);
+    m_shortcuts["inc_volume"].key      = QKeySequence::fromString(SETTINGS()->_shortcutsKey["inc_volume"]);
+    m_shortcuts["dec_volume"].key      = QKeySequence::fromString(SETTINGS()->_shortcutsKey["dec_volume"]);
+    m_shortcuts["mute_volume"].key     = QKeySequence::fromString(SETTINGS()->_shortcutsKey["mute_volume"]);
+    m_shortcuts["jump_to_track"].key   = QKeySequence::fromString(SETTINGS()->_shortcutsKey["jump_to_track"]);
     m_shortcuts["clear_playqueue"].key = QKeySequence::fromString(SETTINGS()->_shortcutsKey["clear_playqueue"]);
-
 
     // update Qxt shorcut
     QxtUnregister();
@@ -92,41 +82,26 @@ void GlobalShortcuts::reloadSettings()
 
 void GlobalShortcuts::QxtUnregister()
 {
-    Debug::debug() << "## GlobalShortcuts::QxtUnregister";
+    Debug::debug() << "  [GlobalShortcuts] QxtUnregister";
     qDeleteAll(m_qxt_shortcuts);
     m_qxt_shortcuts.clear();
 }
 
 void GlobalShortcuts::QxtRegister()
 {
-    Debug::debug() << "## GlobalShortcuts::QxtRegister";
+    Debug::debug() << "  [GlobalShortcuts] QxtRegister";
 
     foreach (QString id, m_shortcuts.keys())
     {
       QxtGlobalShortcut* qxt_shortcut = new QxtGlobalShortcut(this);
       bool is_OK = qxt_shortcut->setShortcut(m_shortcuts[id].key);
       m_shortcuts[id].status = is_OK;
-      //Debug::debug() << "## GlobalShortcuts::QxtRegister shortcut.status:" << m_shortcuts[id].status;
+      Debug::debug() << "  [GlobalShortcuts] QxtRegister shortcut" << m_shortcuts[id].key.toString() << " shortcut.status:" << m_shortcuts[id].status;
 
-      connect(qxt_shortcut, SIGNAL(activated()), m_shortcuts[id].action, SLOT(trigger()));
-      m_qxt_shortcuts << qxt_shortcut;
+      if(m_shortcuts[id].status) {
+        connect(qxt_shortcut, SIGNAL(activated()), m_shortcuts[id].action, SLOT(trigger()));
+        m_qxt_shortcuts << qxt_shortcut;
+      }
     }
 }
 
-
-void GlobalShortcuts::incVolume()
-{
-    int percent = Engine::instance()->volume() < 100 ? Engine::instance()->volume() + 1 : 100;
-    Engine::instance()->setVolume(percent);
-}
-
-void GlobalShortcuts::decVolume()
-{
-    int percent = Engine::instance()->volume() > 0 ? Engine::instance()->volume() -1 : 0;
-    Engine::instance()->setVolume(percent);
-}
-
-void GlobalShortcuts::muteVolume()
-{
-    Engine::instance()->setMuted( !Engine::instance()->isMuted() );
-}

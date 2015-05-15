@@ -47,6 +47,9 @@ public:
     void saveState();
     void setBrowser(BrowserView* b) {left_widget->setBrowser(b);}
 
+protected:
+    bool eventFilter(QObject *obj, QEvent *ev);
+  
 public slots:
     void restoreState();
 
@@ -61,6 +64,7 @@ private :
     MainRightWidget     *right_widget;
     
     CustomSplitter      *m_viewsSplitter_1;
+    CustomSplitter      *m_viewsSplitter_1b;
 };
 
 

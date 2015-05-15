@@ -55,7 +55,7 @@ namespace TUNEIN {
 */
 TuneIn::TuneIn() : Service("Tunein", SERVICE::TUNEIN)
 {
-    Debug::debug() << "TuneIn -> create";
+    Debug::debug() << "    [Tunein] create";
     
     /* restore settings */
     TUNEIN::partner_id   = "yvcOjvJP";
@@ -103,7 +103,7 @@ void TuneIn::reload()
 
 void TuneIn::load()
 {
-    Debug::debug() << "TuneIn::load";
+    Debug::debug() << "    [Tunein] load";
     if(state() == SERVICE::DOWNLOADING)
       return;
     
@@ -117,7 +117,7 @@ void TuneIn::load()
 
 QList<MEDIA::LinkPtr> TuneIn::links()
 {
-    Debug::debug() << "TuneIn::links";
+    Debug::debug() << "    [Tunein] links";
     QList<MEDIA::LinkPtr> links;
 
     bool found_root = false;
@@ -168,7 +168,7 @@ QList<MEDIA::TrackPtr> TuneIn::streams()
 void TuneIn::browseLink(MEDIA::LinkPtr link)
 {
     //http://opml.radiotime.com/Browse.ashx?c=local&partnerId=<partnerid>&serial=<serial>
-    Debug::debug() << "TuneIn::browseLink : " << link->url;
+    Debug::debug() << "    [Tunein] browseLink : " << link->url;
     
     QUrl url(link->url);
     if(!UTIL::urlHasQueryItem(url, "partnerId"))
@@ -184,7 +184,7 @@ void TuneIn::browseLink(MEDIA::LinkPtr link)
 
 void TuneIn::slotBrowseLinkDone(QByteArray bytes)
 {
-    Debug::debug() << "TuneIn::slotBrowseLinkDone";
+    Debug::debug() << "    [Tunein] slotBrowseLinkDone";
     QObject* reply = qobject_cast<QObject*>(sender());
     if (!reply || !m_requests.contains(reply))
       return;
@@ -202,7 +202,7 @@ void TuneIn::slotBrowseLinkDone(QByteArray bytes)
           {
             if(xml.attributes().value("type").toString() == "audio")
             {
-              //Debug::debug() << "TuneIn::stream found";
+              //Debug::debug() << "    [Tunein] stream found";
               MEDIA::TrackPtr stream = MEDIA::TrackPtr::staticCast( link->addChildren(TYPE_TRACK) );
               stream->setType(TYPE_STREAM);
               stream->name = xml.attributes().value("text").toString();
@@ -210,7 +210,7 @@ void TuneIn::slotBrowseLinkDone(QByteArray bytes)
 
               if(xml.attributes().hasAttribute("image")) {
                 QString i_url = xml.attributes().value("image").toString();
-                //Debug::debug() << "TuneIn url image " << i_url ;
+                //Debug::debug() << "    [Tunein] url image " << i_url ;
 
                   QUrl image_url = QUrl(i_url);
                   if(image_url.isValid()) {
@@ -225,7 +225,7 @@ void TuneIn::slotBrowseLinkDone(QByteArray bytes)
             }
             else if (xml.attributes().value("type").toString() == "link")
             {
-              //Debug::debug() << "TuneIn::link found";
+              //Debug::debug() << "    [Tunein] link found";
               MEDIA::LinkPtr link2 = MEDIA::LinkPtr::staticCast( link->addChildren(TYPE_LINK) );
               link2->setType(TYPE_LINK);
               link2->name  = xml.attributes().value("text").toString();
@@ -251,7 +251,7 @@ void TuneIn::slotBrowseLinkDone(QByteArray bytes)
 *******************************************************************************/
 void TuneIn::slot_stream_image_received(QByteArray bytes)
 {
-    //Debug::debug() << "     [TuneIn] slot_stream_image_received";
+    //Debug::debug() << "    [Tunein] slot_stream_image_received";
 
     // Get id from sender reply
     QObject* reply = qobject_cast<QObject*>(sender());
@@ -270,7 +270,7 @@ void TuneIn::slot_stream_image_received(QByteArray bytes)
 
 void TuneIn::slotBrowseLinkError()
 {
-    Debug::debug() << "TuneIn::slotBrowseLinkError";
+    Debug::debug() << "    [Tunein] slotBrowseLinkError";
    
     QObject* reply = qobject_cast<QObject*>(sender());
     if (!reply || !m_requests.contains(reply))
@@ -286,7 +286,7 @@ void TuneIn::slotBrowseLinkError()
 
 void TuneIn::slot_activate_link(MEDIA::LinkPtr link)
 {
-    Debug::debug() << "ShoutCast::slot_activate_link";
+    Debug::debug() << "    [Tunein] slot_activate_link";
   
     if(!link) 
     {

@@ -62,7 +62,7 @@ TaskManager::TaskManager(PlayqueueModel* model) : QObject()
 
 TaskManager::~TaskManager()
 {
-    Debug::debug() << "TaskManager -> wait to finish ...";
+    Debug::debug() << "[TaskManager] wait to finish ...";
     m_threadPool->waitForDone();
     delete m_populator;
     delete m_writer;
@@ -70,13 +70,12 @@ TaskManager::~TaskManager()
     delete m_threadPool;
 }
 
-
 /*******************************************************************************
   slot_load_async
 *******************************************************************************/
 void TaskManager::slot_load_async(MEDIA::TrackPtr track,int row)
 {
-    Debug::debug() << "TaskManager::slot_load_async";
+    Debug::debug() << "[TaskManager] slot_load_async";
   
     StreamLoader* loader = new StreamLoader(track);
     connect(loader, SIGNAL(download_done(MEDIA::TrackPtr)), this, SLOT(slot_load_async_done(MEDIA::TrackPtr)), Qt::UniqueConnection );
@@ -89,7 +88,7 @@ void TaskManager::slot_load_async_done(MEDIA::TrackPtr parent)
 {
     StreamLoader* loader = qobject_cast<StreamLoader*>(sender());
   
-    Debug::debug() << "TaskManager::slot_load_async_done";  
+    Debug::debug() << "[TaskManager] slot_load_async_done";  
     int row = -1;
     if(m_asyncloaders.keys().contains(loader))
       row = m_asyncloaders.value(loader);
@@ -137,9 +136,8 @@ void TaskManager::playlistAddMediaItems(QList<MEDIA::TrackPtr> list, int playlis
 
 void TaskManager::restorePlayqueueSession()
 {
-    if(m_populator->isRunning()) return;
-    m_populator->restoreSession();
-    m_threadPool->start (m_populator, 1);
+     if(m_populator->isRunning()) return;
+     m_populator->restoreSession();
 }
 
 

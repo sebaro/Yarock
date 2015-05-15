@@ -59,12 +59,12 @@ void DatabaseCmd::clean()
 /* ---------------------------------------------------------------------------*/  
 int DatabaseCmd::insertGenre(const QString & genre)
 {
-//     Debug::debug() << "- DatabaseCmd -> insert genre";
+    //Debug::debug() << "- DatabaseCmd -> insert genre";
   
     QSqlQuery q("",*Database::instance()->db());
     q.prepare("SELECT `id` FROM `genres` WHERE `genre`=?;");
     q.addBindValue( genre );
-    Debug::debug() << q.exec();
+    q.exec();
 
     if ( !q.next() ) {
       q.prepare("INSERT INTO `genres`(`genre`) VALUES (?);");
@@ -85,7 +85,7 @@ int DatabaseCmd::insertGenre(const QString & genre)
 /* ---------------------------------------------------------------------------*/  
 int DatabaseCmd::insertYear(int year)
 {
-//     Debug::debug() << "- DatabaseCmd -> insert year";
+    //Debug::debug() << "- DatabaseCmd -> insert year";
   
     QSqlQuery q("",*Database::instance()->db());
     q.prepare("SELECT `id` FROM `years` WHERE `year`=?;");
@@ -111,7 +111,7 @@ int DatabaseCmd::insertYear(int year)
 /* ---------------------------------------------------------------------------*/
 bool DatabaseCmd::isArtistExists(const QString & artist)
 {
-//     Debug::debug() << "- DatabaseCmd -> is artist exists";
+    //Debug::debug() << "- DatabaseCmd -> is artist exists";
     QSqlQuery q("",*Database::instance()->db());
     q.prepare("SELECT `id` FROM `artists` WHERE `name`=?;");
     q.addBindValue( artist );
@@ -128,7 +128,7 @@ bool DatabaseCmd::isArtistExists(const QString & artist)
 /* ---------------------------------------------------------------------------*/
 int DatabaseCmd::insertArtist(const QString & artist)
 {
-//     Debug::debug() << "- DatabaseCmd -> insert artist";
+    //Debug::debug() << "- DatabaseCmd -> insert artist";
   
     QSqlQuery q("",*Database::instance()->db());
     q.prepare("SELECT `id` FROM `artists` WHERE `name`=?;");
@@ -159,7 +159,7 @@ int DatabaseCmd::insertArtist(const QString & artist)
 /* ---------------------------------------------------------------------------*/
 int DatabaseCmd::updateArtist(const QString & artist, bool favorite, int playcount, float rating)
 {
-//     Debug::debug() << "- DatabaseCmd -> update artist";
+    //Debug::debug() << "- DatabaseCmd -> update artist";
   
     int id = DatabaseCmd::insertArtist(artist);
     
@@ -180,7 +180,7 @@ int DatabaseCmd::updateArtist(const QString & artist, bool favorite, int playcou
 /* ---------------------------------------------------------------------------*/  
 int DatabaseCmd::insertAlbum(const QString & album, int artist_id,int year,int disc)
 {
-//     Debug::debug() << "- DatabaseCmd -> insert album";
+    //Debug::debug() << "- DatabaseCmd -> insert album";
   
     QSqlQuery q("",*Database::instance()->db());
     q.prepare("SELECT `id` FROM `albums` WHERE `name`=? AND `artist_id`=? AND `disc`=?;");
@@ -216,7 +216,7 @@ int DatabaseCmd::insertAlbum(const QString & album, int artist_id,int year,int d
 /* ---------------------------------------------------------------------------*/  
 int DatabaseCmd::updateAlbum(const QString & album, int artist_id, int year, int disc, bool favorite, int playcount, float rating)
 {
-//     Debug::debug() << "- DatabaseCmd -> update album";
+    //Debug::debug() << "- DatabaseCmd -> update album";
   
     int id = DatabaseCmd::insertAlbum(album, artist_id, year, disc);
     
@@ -284,7 +284,7 @@ void DatabaseCmd::updateFavorite(MEDIA::MediaPtr media, bool isFavorite)
 /* ---------------------------------------------------------------------------*/
 void DatabaseCmd::rateMediaItems(QList<MEDIA::MediaPtr> list)
 {
-    Debug::debug() << "- DatabaseCmd -> rate media item";
+    //Debug::debug() << "- DatabaseCmd -> rate media item";
   
     if( !Database::instance()->open() )
       return;

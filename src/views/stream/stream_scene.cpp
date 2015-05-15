@@ -235,12 +235,10 @@ void StreamScene::populateExtendedStreamScene()
 {
     Debug::debug() << "   [StreamScene] populateExtendedStreamScene";
   
-    int streamRow      = 0;
-    int categoriesRow  = 0;
     m_infoSize         = 0;
     int Xpos = 20,Ypos = 5;
 
-
+    const int categoriesHeight = 40;
    
     /*  search field */    
     if(mode() != VIEW::ViewFavoriteRadio) {
@@ -266,14 +264,14 @@ void StreamScene::populateExtendedStreamScene()
         if(Xpos > 20 ) 
           Ypos = Ypos + 50;
         
-        //! new category
+        /*  new category */
         current_category = link->categorie;
         CategorieGraphicItem *category = new CategorieGraphicItem(qobject_cast<QGraphicsView*> (parentView())->viewport());
         category->m_name = link->categorie;
-        category->setPos(0 , Ypos + categoriesRow*40);
+        category->setPos(0 , Ypos );
 
         addItem(category);
-        categoriesRow++;
+        Ypos += categoriesHeight;
         Xpos = 20;
       }
 
@@ -290,11 +288,11 @@ void StreamScene::populateExtendedStreamScene()
         Ypos = Ypos + 30;
       }
 
-      button->setPos(Xpos ,Ypos + categoriesRow*40);
+      button->setPos(Xpos ,Ypos );
       Xpos = Xpos + button->width() + 20;
 
       addItem(button);
-    } // end foreach link
+    } /* end foreach link */
      
     if(Xpos > 20 ) 
       Ypos = Ypos + 50;
@@ -302,53 +300,55 @@ void StreamScene::populateExtendedStreamScene()
     /*--------------------------------------------------*/
     /* stream list                                      */
     /* -------------------------------------------------*/
-    //! stream model loop
+    /* stream model loop */
     for ( int i = 0; i < m_model->itemCount(); i++ )
     {
       if(!m_model->isStreamFiltered(i)) continue;
 
       if(current_category != m_model->streamAt(i)->categorie)
       {        
-        //! new category
+        /* new category */
         current_category = m_model->streamAt(i)->categorie;
         CategorieGraphicItem *category = new CategorieGraphicItem(qobject_cast<QGraphicsView*> (parentView())->viewport());
         category->m_name = current_category;
-        category->setPos(0 , Ypos + categoriesRow*40);
+        category->setPos(0 , Ypos );
 
         addItem(category);
-        categoriesRow++;
+        Ypos += categoriesHeight;
       }      
 
-      if(mode() == VIEW::ViewTuneIn) {
+      if(mode() == VIEW::ViewTuneIn)
+      {
+          StreamGraphicItem_v2 *stream_item = new StreamGraphicItem_v2();
+          stream_item->media = m_model->streamAt(i);
+          stream_item->media->isFavorite = (mode() == VIEW::ViewFavoriteRadio);
+          stream_item->setPos( 30, Ypos );
+          stream_item->_width   = parentView()->width()-30-20;
+          stream_item->setToolTip(stream_item->media->url);
 
-        StreamGraphicItem_v2 *stream_item = new StreamGraphicItem_v2();
-        stream_item->media = m_model->streamAt(i);
-        stream_item->media->isFavorite = (mode() == VIEW::ViewFavoriteRadio);
-        stream_item->setPos(30, Ypos + categoriesRow*40 + streamRow*80);
-        stream_item->_width   = parentView()->width()-30-20;
-        stream_item->setToolTip(stream_item->media->url);
-
-        addItem(stream_item);
+          addItem(stream_item);
+          Ypos += stream_item->height() + 10;
       }
-      else {
-        StreamGraphicItem *stream_item = new StreamGraphicItem();
-        stream_item->media = m_model->streamAt(i);
-        stream_item->media->isFavorite = (mode() == VIEW::ViewFavoriteRadio);
-        stream_item->setPos(30, Ypos + categoriesRow*40 + streamRow*stream_item->height());
-        stream_item->_width   = parentView()->width()-30-20;
-        stream_item->setToolTip(stream_item->media->url);
+      else 
+      {
+          StreamGraphicItem *stream_item = new StreamGraphicItem();
+          stream_item->media = m_model->streamAt(i);
+          stream_item->media->isFavorite = (mode() == VIEW::ViewFavoriteRadio);
+          stream_item->setPos( 30, Ypos );
+          stream_item->_width   = parentView()->width()-30-20;
+          stream_item->setToolTip(stream_item->media->url);
 
-        addItem(stream_item);
+          addItem(stream_item);
+          Ypos += stream_item->height();
       }
 
-      streamRow++;
       m_infoSize++;
     }
     
     if( (m_infoSize == 0 && m_model->itemCount()  != 0) || (this->items().count()  <= 1) ) {
         InfoGraphicItem *info = new InfoGraphicItem(qobject_cast<QGraphicsView*> (parentView())->viewport());
         info->_text = "no information";
-        info->setPos( 0 , Ypos + categoriesRow*40 + streamRow*20);
+        info->setPos( 0, Ypos );
         addItem(info);
     }
 }
@@ -410,7 +410,7 @@ void StreamScene::slot_streams_fetched(MEDIA::TrackPtr track)
     QList<MEDIA::TrackPtr> tracks;
     foreach(MEDIA::MediaPtr media, track->children()) {
       tracks << MEDIA::TrackPtr::staticCast(media);
-      //Debug::debug() << "   [StreamScene] slot_streams_fetched URL=" << MEDIA::TrackPtr::staticCast(media)->url;
+      Debug::debug() << "   [StreamScene] slot_streams_fetched URL=" << MEDIA::TrackPtr::staticCast(media)->url;
     }
     
     if(!tracks.isEmpty())
@@ -839,7 +839,7 @@ void StreamScene::slot_on_import_stream_clicked()
     
         xspfstream->saveToFile();
         xspfstream->reload();    
-    }      
+    }
 }
 
 

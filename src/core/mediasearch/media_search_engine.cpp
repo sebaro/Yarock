@@ -46,17 +46,17 @@ void SearchEngine::init_search_engine(const MediaSearch& search)
 {
     search_ = MediaSearch(search);
 #ifdef TEST_FLAG
-    Debug::debug() << "SearchEngine::init_search_engine search_type_ :" << (int)search_.search_type_;
+    Debug::debug() << "      [SearchEngine] init_search_engine search_type_ :" << (int)search_.search_type_;
 
     foreach(SearchQuery query, search_.query_list_) {
-      Debug::debug() << "SearchEngine::init_search_engine query_list_  query.field_ :" << SearchQuery::FieldName(query.field_);
-      Debug::debug() << "SearchEngine::init_search_engine query_list_  query.operator_ :" << query.operator_;
-      Debug::debug() << "SearchEngine::init_search_engine query_list_  query.value_ :" << query.value_;
+      Debug::debug() << "      [SearchEngine] init_search_engine query_list_  query.field_ :" << SearchQuery::FieldName(query.field_);
+      Debug::debug() << "      [SearchEngine] init_search_engine query_list_  query.operator_ :" << query.operator_;
+      Debug::debug() << "      [SearchEngine] init_search_engine query_list_  query.value_ :" << query.value_;
     }
 
-    Debug::debug() << "SearchEngine::init_search_engine sort_type_ :" << (int)search_.sort_type_;
-    Debug::debug() << "SearchEngine::init_search_engine sort_field_ :" << SearchQuery::FieldName(search_.sort_field_);
-    Debug::debug() << "SearchEngine::init_search_engine limit_ :" << (int)search_.limit_;
+    Debug::debug() << "      [SearchEngine] init_search_engine sort_type_   :" << (int)search_.sort_type_;
+    Debug::debug() << "      [SearchEngine] init_search_engine sort_field_  :" << SearchQuery::FieldName(search_.sort_field_);
+    Debug::debug() << "      [SearchEngine] init_search_engine limit_       :" << (int)search_.limit_;
 #endif
 }
 
@@ -92,7 +92,7 @@ bool SearchEngine::mediaMatch(const MediaSearch& search, MEDIA::TrackPtr track)
 
 void SearchEngine::doSearch(bool for_playqueue /*= false*/)
 {
-    Debug::debug() << "SearchEngine::doSearch";
+    Debug::debug() << "      [SearchEngine] doSearch";
 
     list_result_media_.clear();
     
@@ -177,7 +177,7 @@ void SearchEngine::doSearch(bool for_playqueue /*= false*/)
 
 QVariant SearchEngine::fieldData(SearchQuery::Search_Field field, MEDIA::TrackPtr track)
 {
-    //Debug::debug() << "SearchEngine::fieldData ";
+    //Debug::debug() << "      [SearchEngine] fieldData ";
     if(track->type() == TYPE_TRACK)
     {    
       switch(field)
@@ -247,7 +247,7 @@ bool SearchEngine::match(SearchQuery::Search_Operator op, SearchQuery::Field_Typ
 
 bool SearchEngine::match_string (SearchQuery::Search_Operator op, QString field_string, QString pattern)
 {
-    //Debug::debug() << "SearchEngine::match_string " << field_string << " pattern " << pattern;
+    //Debug::debug() << "      [SearchEngine] match_string " << field_string << " pattern " << pattern;
 
     switch (op) {
       case SearchQuery::op_StartsWith:
@@ -316,7 +316,7 @@ bool SearchEngine::match_date(SearchQuery::Search_Operator op, QDate field_date,
 
 bool SearchEngine::match_rating(SearchQuery::Search_Operator op, float field_rating, float pattern)
 {
-    //Debug::debug() << "SearchEngine::match_rating field_rating " << field_rating << " pattern " << pattern;
+    //Debug::debug() << "      [SearchEngine] match_rating field_rating " << field_rating << " pattern " << pattern;
 
     switch (op) {
       case SearchQuery::op_GreaterThan : return field_rating > pattern;
@@ -332,7 +332,7 @@ bool SearchEngine::match_rating(SearchQuery::Search_Operator op, float field_rat
 
 bool SearchEngine::sortMedia(const MEDIA::TrackPtr track1,const MEDIA::TrackPtr track2)
 {
-    //Debug::debug() << "SearchEngine::sortMedia";
+    //Debug::debug() << "      [SearchEngine] sortMedia";
 
     SearchQuery::Search_Field field = search_.sort_field_;
 
@@ -350,7 +350,7 @@ bool SearchEngine::sortMedia(const MEDIA::TrackPtr track1,const MEDIA::TrackPtr 
 // no need to use boost::bind to use class member sortMedia function
 void SearchEngine::sortMedias(media_iterator start,media_iterator end)
 {
-    //Debug::debug() << "SearchEngine::sortMedias";
+    //Debug::debug() << "      [SearchEngine] sortMedias";
 
 top:
     int span = int(end - start);

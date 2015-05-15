@@ -32,12 +32,12 @@
 */ 
 InfoSystemWorker::InfoSystemWorker() : QObject()
 {
-    Debug::debug() << Q_FUNC_INFO;
+    //Debug::debug() << Q_FUNC_INFO;
 }
 
 InfoSystemWorker::~InfoSystemWorker()
 {
-    Debug::debug() << Q_FUNC_INFO;
+    //Debug::debug() << Q_FUNC_INFO;
     
     foreach( INFO::InfoService* service, m_services )
     {
@@ -50,7 +50,7 @@ InfoSystemWorker::~InfoSystemWorker()
 void
 InfoSystemWorker::init(  )
 {
-    Debug::debug() << Q_FUNC_INFO;
+    Debug::debug() << "  [InfoSystem] init";
 
     /* create all InfoServices */
     m_services.append(new ServiceEchonest());
@@ -89,7 +89,7 @@ InfoSystemWorker::init(  )
 void InfoSystemWorker::getInfo( INFO::InfoRequestData requestData )
 {
     bool foundOne = false;
-//     Debug::debug() << Q_FUNC_INFO;
+    //Debug::debug() << "  [InfoSystem] getInfo";
     
     foreach (INFO::InfoService* service, m_services) 
     {
@@ -108,7 +108,7 @@ void InfoSystemWorker::getInfo( INFO::InfoRequestData requestData )
 
 void InfoSystemWorker::slot_checkCache(INFO::InfoRequestData requestData)
 {
-//     Debug::debug() << Q_FUNC_INFO;
+    //Debug::debug() << "  [InfoSystem] slot_checkCache";
   
     QObject* sendingObj = sender();
     

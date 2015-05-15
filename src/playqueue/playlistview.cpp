@@ -63,7 +63,7 @@ const int cst_minHeightExtended = 40;
 */
 PlaylistView::PlaylistView(QWidget *parent, PlayqueueModel* model) : QListView(parent)
 {
-    Debug::debug() << "--- PlaylistView creation";
+    //Debug::debug() << "    [PlaylistView] creation";
 
     //! Gui
     this->setFrameShape(QFrame::NoFrame);
@@ -84,7 +84,9 @@ PlaylistView::PlaylistView(QWidget *parent, PlayqueueModel* model) : QListView(p
     this->setDropIndicatorShown(true);
     this->setDragDropMode(QAbstractItemView::DragDrop);
     this->setMouseTracking(true);
+    this->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
+    
     //! vertical scrolbar setup
     this->verticalScrollBar()->setContextMenuPolicy(Qt::NoContextMenu);
 
@@ -116,7 +118,7 @@ PlaylistView::PlaylistView(QWidget *parent, PlayqueueModel* model) : QListView(p
 // gestion du doucle click sur un item
 void PlaylistView::slot_itemActivated(const QModelIndex &index)
 {
-    //Debug::debug() << "--- PlaylistView::slot_itemActivated" << index.row();
+    //Debug::debug() << "    [PlaylistView] slot_itemActivated" << index.row();
     QModelIndex source_idx = m_model->proxy()->mapToSource(index);
     if (m_model->rowExists(source_idx.row()))
     {
@@ -204,7 +206,7 @@ const MEDIA::TrackPtr PlaylistView::firstSelectedTrack()
 *******************************************************************************/
 void PlaylistView::removeSelected()
 {
-    //Debug::debug() << "--- PlaylistView::removeSelected";
+    //Debug::debug() << "    [PlaylistView] removeSelected";
 
     QItemSelection selection = selectionModel()->selection();
     if (selection.isEmpty())
@@ -382,7 +384,7 @@ void PlaylistView::mouseMoveEvent(QMouseEvent* event)
 
 void PlaylistView::leaveEvent(QEvent* event) 
 {
-    //Debug::debug() << "PlaylistView::leaveEvent";
+    //Debug::debug() << "    [PlaylistView] leaveEvent";
     
     if (m_delegate->is_mouse_over()) {
 
@@ -461,7 +463,7 @@ void PlaylistView::keyPressEvent(QKeyEvent* event)
 *******************************************************************************/
 void PlaylistView::slot_lastfm_love()
 {
-    //Debug::debug() << "--- PlaylistView : slot_lastfm_love";
+    //Debug::debug() << "    [PlaylistView] slot_lastfm_love";
     QItemSelection selection = selectionModel()->selection();
     if (selection.isEmpty())
       return;
@@ -644,7 +646,6 @@ Q_UNUSED(index)
 
     return  QSize( option.rect.width(), qMax(height + padding * 2, min) );
 }
-
 
 
 QIcon PlaylistDelegate::getIcon(const MEDIA::TrackPtr track) const

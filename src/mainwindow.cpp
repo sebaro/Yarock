@@ -68,7 +68,7 @@
 #include "covercache.h"
 
 #include "global_actions.h"
-#include "constants.h"
+#include "config.h"
 #include "utilities.h"
 #include "debug.h"
 
@@ -125,13 +125,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     //! ############### init Player #########################################
     new Engine();
+    
     _player = Engine::instance();
 
     //! Info system
     InfoSystem::instance();
 
     //! ############### init collection database ############################
-    Debug::debug() << "Mainwindow -> init database";
+    Debug::debug() << "[Mainwindow] init database";
     new Database();
 
     //! ############### global instance #####################################
@@ -139,12 +140,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     new CoverCache();
     
     //! ############### init playqueue part  ################################
+    Debug::debug() << "[Mainwindow] creation Playqueue part";
     m_playqueue = new Playqueue();
         
     _playlistView    = new PlaylistView(this, m_playqueue);
     _playlistwidget  = new PlaylistWidget(this,_playlistView, m_playqueue);
 
     //! ############### init data model  ####################################
+    Debug::debug() << "[Mainwindow] init data model";
     m_localTrackModel     = new LocalTrackModel(this);
     m_localPlaylistModel  = new LocalPlaylistModel(this);
     m_histoModel          = new HistoModel(this);
@@ -158,7 +161,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     this->setCentralWidget(_centralWidget);
 
     //! ############### init views  #########################################
-    //Debug::debug() << "MainWindow -> creation BrowserView";
+    //Debug::debug() << "[Mainwindow] creation BrowserView";
     m_virtual_queue       = new VirtualPlayqueue(this);
     m_browserView         = new BrowserView(this);
     _centralWidget->setBrowser(m_browserView); 
@@ -168,16 +171,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     _statusWidget->hide();
     
     //! Shortcuts & Signals
-    //Debug::debug() << "MainWindow -> creation global shortcut";
+    //Debug::debug() << "[Mainwindow] creation global shortcut";
     m_globalShortcuts = new GlobalShortcuts (this);
 
     //! ###############     Connection    ###################################
-    //Debug::debug() << "MainWindow -> connectSlots";
+    //Debug::debug() << "[Mainwindow] connect signals & slots";
     connectSlots();
 
     //! ############### Scrobbler ###########################################
     // le scrobbler doit être initialisé avant le fisrtStartDialog
-    //Debug::debug() << "MainWindow -> Scrobbler";
+    //Debug::debug() << "[Mainwindow] init lastFm scrobbler";
     LastFmService::instance()->init();
 
     //! ############### start database ######################################
@@ -194,11 +197,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     m_minimalwidget = NULL;
 
     //! ############### History manager #####################################
-    //Debug::debug() << "MainWindow -> m_histoManager";
+    //Debug::debug() << "[Mainwindow] m_histoManager";
     m_histoManager = new HistoManager();
 
     //! ############### DBUS & MPRIS ########################################
-    //Debug::debug() << "MainWindow -> Dbus & Mpris";
+    //Debug::debug() << "[Mainwindow] Dbus & Mpris";
     m_dbus_notifier   = new DbusNotification(this);
     m_mpris_manager   = new MprisManager(this);
 
@@ -207,7 +210,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
       restorePlayingTrack();
 
     //! ############### Restore windows geometry ############################
-    Debug::debug() << "MainWindow -> restore geometry";
+    Debug::debug() << "[Mainwindow] restore geometry";
     if( !SETTINGS()->_windowsGeometry.isEmpty() )
       restoreGeometry(SETTINGS()->_windowsGeometry);
     else
@@ -222,31 +225,24 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     if(SETTINGS()->_hideAtStartup)
       this->showMinimized();    
     
-    
-// TEST    
-//     Debug::debug() << "####### START TEST ##############";
-//     QTimer::singleShot(4000, this, SLOT(slot_start_test()));
-// END TEST
+
+#ifdef TEST_FLAG    
+    QTimer::singleShot(4000, this, SLOT(slot_start_test()));
+#endif    
 }
 
-
+#ifdef TEST_FLAG
 void MainWindow::slot_start_test()
 {
-//     INFO::InfoRequestData request;
-//     INFO::InfoStringHash hash;
-//     hash["artist"] = "Clapton";
-//     hash["album"]  = "Slowhand";
-//     hash["title"]  = "";
-//     
-//     request = INFO::InfoRequestData(INFO::InfoAlbumSongs, hash);
-//     InfoSystem::instance()->getInfo( request );
+    Debug::debug() << "####### START TEST #######";
 }
+#endif
 
 
 //! --------- ~MainWindow ------------------------------------------------------
 MainWindow::~MainWindow()
 {
-    Debug::debug() << "Mainwindow -> EXIT ";
+    Debug::debug() << "[Mainwindow] EXIT ";
     /* ---- Save playqueue content to database ---- */
     if(SETTINGS()->_restorePlayqueue)
       m_playqueue->manager()->savePlayqueueSession();
@@ -272,7 +268,7 @@ MainWindow::~MainWindow()
     Database::instance()->settings_save();
 
     /* ---- delete object ---- */
-    Debug::debug() << "Mainwindow -> EXIT delete object";
+    Debug::debug() << "[Mainwindow] EXIT delete object";
     QPixmapCache::clear();
     delete LastFmService::instance();
     delete m_dbus_notifier;
@@ -291,7 +287,7 @@ MainWindow::~MainWindow()
 
     /* ---- database close ---- */
     Database::instance()->close();
-    Debug::debug() << "Mainwindow -> EXIT Bye Bye";
+    Debug::debug() << "[Mainwindow] EXIT Bye Bye";
 }
 
 //! --------- reloadSystraySettings --------------------------------------------
@@ -377,6 +373,8 @@ void MainWindow::createActions()
     ACTIONS()->insert(ENGINE_PLAY_NEXT, new QAction(QIcon(":/images/media-next.png"), tr("Play next media"), this));
     ACTIONS()->insert(ENGINE_PLAY_PREV, new QAction(QIcon(":/images/media-prev.png"), tr("Play previous media"), this));
     ACTIONS()->insert(ENGINE_VOL_MUTE, new QAction(QIcon(":/images/volume-icon.png"),"", this));
+    ACTIONS()->insert(ENGINE_VOL_INC, new QAction(QIcon(":/images/volume-icon.png"),"", this));
+    ACTIONS()->insert(ENGINE_VOL_DEC, new QAction(QIcon(":/images/volume-icon.png"),"", this));
     ACTIONS()->insert(ENGINE_AUDIO_EQ, new QAction(QIcon(":/images/equalizer-48x48-1.png"),tr("Audio equalizer"), this));
 
     /* database action */
@@ -407,11 +405,15 @@ void MainWindow::createActions()
     ACTIONS()->insert(APP_ENABLE_SEARCH_POPUP, new QAction(QIcon(),tr("Enable search popup"), this));
     ACTIONS()->value(APP_ENABLE_SEARCH_POPUP)->setCheckable(true);
 
+    ACTIONS()->insert(APP_PLAY_ON_SEARCH, new QAction(QIcon(),tr("Enable play on search"), this));
+    ACTIONS()->value(APP_PLAY_ON_SEARCH)->setCheckable(true);
+    
     /* restore Actions states              */
     (ACTIONS()->value(APP_SHOW_PLAYQUEUE))->setChecked(SETTINGS()->_showPlayQueuePanel);
     (ACTIONS()->value(APP_SHOW_MENU))->setChecked(SETTINGS()->_showMenuPanel);
     (ACTIONS()->value(APP_SHOW_NOW_PLAYING))->setChecked(SETTINGS()->_showNowPlaying);
     (ACTIONS()->value(APP_ENABLE_SEARCH_POPUP))->setChecked(SETTINGS()->_enableSearchPopup);
+    (ACTIONS()->value(APP_PLAY_ON_SEARCH))->setChecked(SETTINGS()->_enablePlayOnSearch);
 }
 
 
@@ -438,6 +440,10 @@ void MainWindow::connectSlots()
     QObject::connect(ACTIONS()->value(ENGINE_STOP), SIGNAL(triggered()), SLOT(stopPlayer()));
     QObject::connect(ACTIONS()->value(ENGINE_AUDIO_EQ), SIGNAL(triggered()), SLOT(slot_eq_openDialog()));
 
+    QObject::connect(ACTIONS()->value(ENGINE_VOL_MUTE), SIGNAL(triggered()),Engine::instance(), SLOT(volumeMute()));
+    QObject::connect(ACTIONS()->value(ENGINE_VOL_INC), SIGNAL(triggered()), Engine::instance(), SLOT(volumeInc()));
+    QObject::connect(ACTIONS()->value(ENGINE_VOL_DEC), SIGNAL(triggered()), Engine::instance(), SLOT(volumeDec()));    
+    
     //! Connection Actions playlist
     QObject::connect(ACTIONS()->value(PLAYQUEUE_CLEAR), SIGNAL(triggered()), SLOT(slot_playqueue_clear()));
     QObject::connect(ACTIONS()->value(PLAYQUEUE_SAVE), SIGNAL(triggered()), SLOT(slot_playqueue_save()));
@@ -603,7 +609,7 @@ void MainWindow::slot_playqueue_save_auto()
     
 
     if(input.exec() == QDialog::Accepted) {
-      Debug::debug() << "MainWindow::slot_playqueue_save_auto : " << input.editValue();
+      Debug::debug() << "[Mainwindow] slot_playqueue_save_auto : " << input.editValue();
       m_playqueue->manager()->playlistSaveToDb(input.editValue());
     }
 }
@@ -643,7 +649,7 @@ void MainWindow::slot_playqueue_sort()
 *******************************************************************************/
 void MainWindow::slot_player_on_state_change()
 {
-   Debug::debug() << Q_FUNC_INFO;
+   //Debug::debug() << "[Mainwindow] slot_player_on_state_change";
    
    ENGINE::E_ENGINE_STATE state = _player->state();
 
@@ -689,16 +695,15 @@ void MainWindow::slot_player_on_state_change()
 
 void MainWindow::slot_player_on_track_change()
 {
-    Debug::debug() << "MainWindow -> slot_player_on_track_change ";
+    Debug::debug() << "[Mainwindow] slot_player_on_track_change ";
     MEDIA::TrackPtr track = Engine::instance()->playingTrack();
 
     if(!track) {
-      Debug::error() << "MainWindow -> slot_player_on_track_change track ERROR";
+      Debug::error() << "[Mainwindow] slot_player_on_track_change track ERROR";
       return;
     }
     
     /*  update playing track */
-    MEDIA::registerTrackPlaying(track, true);
     m_playqueue->updatePlayingItem(track);
     m_virtual_queue->updatePlayingItem(track);
     
@@ -707,13 +712,15 @@ void MainWindow::slot_player_on_track_change()
       set_enable_jump_to(true);
     else
       set_enable_jump_to(false);
+    
+    Debug::debug() << "[Mainwindow] slot_player_on_track_change DONE";
 }
 
 //! --------- slot_play_from_playqueue -----------------------------------------
 // a file is activated from the playlist
 void MainWindow::slot_play_from_playqueue()
 {
-    //Debug::debug() << "Mainwindow -> slot_play_from_playqueue";
+    //Debug::debug() << "[Mainwindow] slot_play_from_playqueue";
     _playRequestFrom = FromPlayQueue;
 
     const MEDIA::TrackPtr track = m_playqueue->requestedTrack();
@@ -726,7 +733,7 @@ void MainWindow::slot_play_from_playqueue()
 // a MediaItem is activated from collection browser
 void MainWindow::slot_play_from_collection()
 {
-    //Debug::debug() << "Mainwindow -> slot_play_from_collection";
+    //Debug::debug() << "[Mainwindow] slot_play_from_collection";
   
     _playRequestFrom = FromCollection;
 
@@ -768,7 +775,7 @@ void MainWindow::playOrPause()
 //! --------- stopPlayer -------------------------------------------------------
 void MainWindow::stopPlayer()
 {
-     Debug::debug() << "Mainwindow -> stopPlayer";
+     Debug::debug() << "[Mainwindow] stopPlayer";
 
     _player->stop();
 
@@ -779,7 +786,7 @@ void MainWindow::stopPlayer()
 //! --------- slot_player_enqueue_next -----------------------------------------
 void MainWindow::slot_player_enqueue_next()
 {
-    Debug::debug() << "Mainwindow -> slot_player_enqueue_next";
+    Debug::debug() << "[Mainwindow] slot_player_enqueue_next";
     MEDIA::TrackPtr media;
 
     if(_playRequestFrom == FromCollection)
@@ -800,7 +807,7 @@ void MainWindow::slot_player_enqueue_next()
 //! --------- playNext ---------------------------------------------------------
 void MainWindow::playNext()
 {
-    Debug::debug() << "Mainwindow -> playNext requested ";
+    Debug::debug() << "[Mainwindow] playNext requested ";
     MEDIA::TrackPtr media;
 
     //! We need to known if we are playing from collection or playlist
@@ -835,7 +842,7 @@ void MainWindow::playPrev()
 //! --------- savePlayingTrack -------------------------------------------------
 void MainWindow::savePlayingTrack()
 {
-    Debug::debug() << "Mainwindow -> savePlayingTrack";
+    //Debug::debug() << "[Mainwindow] savePlayingTrack";
     if (_player->state() == ENGINE::PLAYING)
     {
       SETTINGS()->_playingUrl = _player->playingTrack()->url;
@@ -850,7 +857,7 @@ void MainWindow::savePlayingTrack()
 //! --------- restorePlayingTrack ----------------------------------------------
 void MainWindow::restorePlayingTrack()
 {
-    Debug::debug() << "Mainwindow -> restorePlayingTrack";
+    //Debug::debug() << "[Mainwindow] restorePlayingTrack";
     const QString url = SETTINGS()->_playingUrl;
     if(url.isEmpty())
       return;
@@ -864,7 +871,7 @@ void MainWindow::restorePlayingTrack()
         _player->setMediaItem(media);
 
         qint64 position = SETTINGS()->_playingPosition;
-        Debug::debug() << "Mainwindow -> restorePlayingTrack TYPE_TRACK position = " << position;
+        //Debug::debug() << "[Mainwindow] restorePlayingTrack TYPE_TRACK position = " << position;
         _player->seek( position );
     }
     else
@@ -892,7 +899,7 @@ void MainWindow::restorePlayingTrack()
 *******************************************************************************/
 void MainWindow::slot_stop_after_media_triggered()
 {
-    Debug::debug() << "MainWindow::slot_stop_after_media_triggered";
+    Debug::debug() << "[MainWindow] slot_stop_after_media_triggered";
     MEDIA::TrackPtr requested_media = qvariant_cast<MEDIA::TrackPtr>( (ACTIONS()->value(PLAYQUEUE_STOP_AFTER))->data() );
 
     if(!requested_media)
@@ -909,17 +916,18 @@ void MainWindow::slot_stop_after_media_triggered()
 *******************************************************************************/
 void MainWindow::slot_on_settings_saved()
 {
-    Debug::debug() << "MainWindow --> slot_on_settings_saved";
+    Debug::debug() << "[MainWindow] slot_on_settings_saved";
 
     SETTINGS::Results r = m_browserView->settingsResults();
 
-    Debug::debug() << "MainWindow --> isSystrayChanged "    << r.isSystrayChanged;
-    Debug::debug() << "MainWindow --> isDbusChanged "       << r.isDbusChanged;
-    Debug::debug() << "MainWindow --> isMprisChanged "      << r.isMprisChanged;
-    Debug::debug() << "MainWindow --> isShorcutChanged "    << r.isShorcutChanged;
-    Debug::debug() << "MainWindow --> isScrobblerChanged "  << r.isScrobblerChanged;
-    Debug::debug() << "MainWindow --> isLibraryChanged "    << r.isLibraryChanged;
-    Debug::debug() << "MainWindow --> isViewChanged "       << r.isViewChanged;
+    Debug::debug() << "[MainWindow] isSystrayChanged   "  << r.isSystrayChanged;
+    Debug::debug() << "[MainWindow] isDbusChanged      "  << r.isDbusChanged;
+    Debug::debug() << "[MainWindow] isMprisChanged     "  << r.isMprisChanged;
+    Debug::debug() << "[MainWindow] isShorcutChanged   "  << r.isShorcutChanged;
+    Debug::debug() << "[MainWindow] isScrobblerChanged "  << r.isScrobblerChanged;
+    Debug::debug() << "[MainWindow] isEngineChanged    "  << r.isEngineChanged;
+    Debug::debug() << "[MainWindow] isLibraryChanged   "  << r.isLibraryChanged;
+    Debug::debug() << "[MainWindow] isViewChanged      "  << r.isViewChanged;
 
     if(r.isSystrayChanged)    { reloadSystraySettings();}
     if(r.isDbusChanged)       { m_dbus_notifier->reloadSettings(); }
@@ -930,7 +938,7 @@ void MainWindow::slot_on_settings_saved()
     {
       
       /* NOTE : hack pour eviter un crash de l'appli (car on ferme la connection a la 
-       base de donnée puis on relance le thread database builder). Stop des thread ajouté
+       base de donnee puis on relance le thread database builder). Stop des thread ajoute
        avant la fermeture de la db */
       if(m_thread_manager->isDbRunning()) {
         Debug::warning() << "Database builder already running, request stop all thread!!";
@@ -948,8 +956,6 @@ void MainWindow::slot_on_settings_saved()
     {
         m_thread_manager->populateLocalTrackModel();
     }
-
-    _statusWidget->startShortMessage(tr("settings saved"),STATUS::TYPE_INFO, 2500);
 }
 
 
@@ -959,7 +965,7 @@ void MainWindow::slot_on_settings_saved()
 *******************************************************************************/
 void MainWindow::createDatabase ()
 {
-    Debug::debug() << "Mainwindow -> createDatabase";
+    Debug::debug() << "[MainWindow] createDatabase";
     Database::instance()->close();
     Database::instance()->remove();
     Database::instance()->create();
@@ -967,7 +973,7 @@ void MainWindow::createDatabase ()
 
 void MainWindow::rebuildDatabase()
 {
-    Debug::debug() << "Mainwindow -> rebuildDatabase";
+    Debug::debug() << "[MainWindow] rebuildDatabase";
 
     QStringList listDir = QStringList() << Database::instance()->param()._paths;
 
@@ -980,7 +986,7 @@ void MainWindow::rebuildDatabase()
 
 void MainWindow::slot_database_start()
 {
-    Debug::debug() << "MainWindow -->  slot_database_start";
+    Debug::debug() << "[MainWindow] slot_database_start";
     Database::instance()->close();
 
     //! check new database entry
@@ -989,14 +995,14 @@ void MainWindow::slot_database_start()
         /*-----------------------------------------------------------*/
         /* First start dialog                                        */
         /* ----------------------------------------------------------*/
-        Debug::debug() << "MainWindow --> slot_database_start : first start dialog";
+        Debug::debug() << "[MainWindow] slot_database_start : first start dialog";
         /* create database */
         createDatabase();
 
         FirstTimeDialog dialog(this);
         if(dialog.exec() == QDialog::Accepted) 
         {
-           Debug::debug() << "MainWindow --> slot_database_start : first start dialog ACCEPTED";
+           Debug::debug() << "[MainWindow] slot_database_start : first start dialog ACCEPTED";
            rebuildDatabase();
         }
         else
@@ -1009,7 +1015,7 @@ void MainWindow::slot_database_start()
         /*-----------------------------------------------------------*/
         /* Database revision change                                  */
         /* ----------------------------------------------------------*/
-        Debug::debug() << "MainWindow --> slot_database_start : database revision change";
+        Debug::debug() << "[MainWindow] slot_database_start : database revision change";
         const QString str = tr("<p>Database need to be rebuilt</p>");
 
         DialogMessage dlg(this, tr("Database revision update"));
@@ -1047,7 +1053,7 @@ void MainWindow::slot_database_start()
         m_thread_manager->populateLocalTrackModel();
     }
     
-    connect(m_thread_manager, SIGNAL(modelPopulationFinished(E_MODEL_TYPE)), this, SLOT(slot_restore_playqueue()), Qt::UniqueConnection);
+    QObject::connect(m_thread_manager, SIGNAL(modelPopulationFinished(E_MODEL_TYPE)), this, SLOT(slot_restore_playqueue()), Qt::UniqueConnection);
     
     /* process command line */
     commandlineOptionsHandle();
@@ -1087,7 +1093,7 @@ void MainWindow::slot_database_dialog()
 
 void MainWindow::slot_restore_playqueue()
 {
-    if( is_first_start) 
+    if( is_first_start )
     {
       Debug::debug() << "[MainWindow] restore last playqueue content";
       if( SETTINGS()->_restorePlayqueue)
@@ -1157,20 +1163,15 @@ void MainWindow::slot_eq_openDialog()
     }
     else 
     {
-        QString str = tr("<b>Equalizer is not available</b>"
-        "<p>Equalizer wasn't found, probably you are using a backend that doesn't support it.</p>"
-        "<p>Change to another backend (gstreamer is supported) if you want to have equalizer</p>");
-
-        DialogMessage dlg(this, QString(tr("Equalizer information")));
-        dlg.setMessage(str);
-        dlg.resize(445, 120);
-        dlg.exec();      
+        StatusWidget::instance()->startShortMessage(
+            QString(tr("No equalizer available with this configuration")), STATUS::TYPE_ERROR, 2500
+        );
     }
 }
 
 void MainWindow::slot_eq_enableChange(bool eqActivated)
 {
-    Debug::debug() << "MainWindow --> slot_eq_enableChange bool" << eqActivated;
+    Debug::debug() << "[MainWindow] slot_eq_enableChange bool" << eqActivated;
     if(eqActivated) 
     {
         ACTIONS()->value(ENGINE_AUDIO_EQ)->setIcon(QIcon(":/images/equalizer-48x48-2.png"));
@@ -1186,7 +1187,7 @@ void MainWindow::slot_eq_enableChange(bool eqActivated)
 
 void MainWindow::slot_eq_paramChange(int preamp, QList<int> listGain)
 {
-    Debug::debug() << "MainWindow --> slot_eq_paramChange";
+    Debug::debug() << "[MainWindow] slot_eq_paramChange";
 
     QList<int> gains;
     gains << preamp << listGain;
@@ -1220,7 +1221,7 @@ void MainWindow::slot_commandline_received(const QByteArray& serialized_options)
 
 void MainWindow::commandlineOptionsHandle(/*const CommandlineOptions &options*/)
 {
-    Debug::debug() << "MainWindow --> commandlineOptionsHandle";
+    Debug::debug() << "[MainWindow] commandlineOptionsHandle";
   
     if (m_options.isEmpty()) {
       return;

@@ -31,7 +31,7 @@ StreamModel* StreamModel::INSTANCE = 0;
 */
 StreamModel::StreamModel(QObject *parent) : QObject(parent)
 {
-    Debug::debug() << "StreamModel -> creation";
+    //Debug::debug() << "      [StreamModel] creation";
     INSTANCE          = this;
     m_filter_pattern  = "";
     m_show_duplicate  = false;
@@ -50,7 +50,7 @@ void StreamModel::clear()
 
 void StreamModel::updateStatusOfPlayingItem(MEDIA::TrackPtr tk)
 {
-    //Debug::debug() << "#### StreamModel -> updatePlayingItem";
+    //Debug::debug() << "      [StreamModel] updatePlayingItem";
     if(!tk) return;
         
     MEDIA::TrackPtr parent_tk = tk;
@@ -72,14 +72,14 @@ void StreamModel::updateStatusOfPlayingItem(MEDIA::TrackPtr tk)
 //! ------------------ StreamModel::setStreams ---------------------------------
 void StreamModel::setStreams(const QList<MEDIA::TrackPtr> &streams)
 {
-    //Debug::debug() << "StreamModel -> setStreams";
+    //Debug::debug() << "      [StreamModel] setStreams";
     this->clear();
     
     if (!streams.empty())
       m_streams.append(streams);    
     
     if(!m_show_duplicate) {
-      //Debug::warning() << "StreamModel -> remove duplicate streams";
+      //Debug::warning() << "      [StreamModel] remove duplicate streams";
       QSet<QString> name_list;
       foreach(MEDIA::TrackPtr stream, m_streams) {
           QString name = stream->name;

@@ -68,7 +68,7 @@ void VirtualPlayqueue::addTrackAndPlay(const MEDIA::TrackPtr track)
 *****************************************************************************************/
 void VirtualPlayqueue::updatePlayingItem(MEDIA::TrackPtr tk)
 {
-    Debug::debug() << "VirtualPlayqueue -> updatePlayingItem";
+    Debug::debug() << "    [VirtualPlayqueue] updatePlayingItem";
     PlayqueueBase::setPlayingTrack(tk);
     emit signal_playing_status_change();
 }

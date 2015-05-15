@@ -110,6 +110,8 @@ Q_OBJECT
     void restoreSettings();
     void saveSettings();
 
+    bool isEngineChanged() {return _isEngineChanged;}
+    
     void setContentVisible(bool b);
     
     void update();
@@ -127,6 +129,8 @@ Q_OBJECT
     void slot_on_titlebutton_clicked();
   
   private:
+    bool                   _isEngineChanged; /* restart needed */
+      
     QCheckBox              *ui_stopOnPlayqueueClear;
     QCheckBox              *ui_restartPlayingAtStartup;
     QCheckBox              *ui_restorePlayqueue;

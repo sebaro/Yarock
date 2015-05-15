@@ -18,6 +18,8 @@
 #include "maintoolbutton.h"
 #include "threadmanager.h"
 #include "core/database/database.h"
+#include "playqueue/playqueue_model.h"
+
 #include "settings.h"
 #include "global_actions.h"
 #include "debug.h"
@@ -74,16 +76,28 @@ MainToolButton::MainToolButton( QWidget* parent ) : QToolButton(parent)
 
 void MainToolButton::slot_showMenu()
 {
-    Debug::debug() << "-- MainToolButton --> showMenu";
+    //Debug::debug() << "      [MainToolButton] slot_showMenu";
+    updatePlayqueueActions();
+
     updateMultiDbMenu();
 
     QPoint pos( 0, height() );
     m_menu->exec( mapToGlobal( pos ) );
 }
 
+void MainToolButton::updatePlayqueueActions()
+{
+    const bool isPlaylistEmpty = Playqueue::instance()->rowCount(QModelIndex()) < 1;
+    ACTIONS()->value(PLAYQUEUE_CLEAR)->setEnabled(!isPlaylistEmpty);
+    ACTIONS()->value(PLAYQUEUE_SAVE)->setEnabled(!isPlaylistEmpty);
+    ACTIONS()->value(PLAYQUEUE_AUTOSAVE)->setEnabled(!isPlaylistEmpty);
+}
+
+
+
 void MainToolButton::updateMultiDbMenu()
 {
-    //Debug::debug() << "-- MainToolButton --> updateMultiDbMenu";
+    //Debug::debug() << "      [MainToolButton] updateMultiDbMenu";
     if( !Database::instance()->isMultiDb() )
     {
         if(m_menuChooseDbAction != 0)
@@ -125,7 +139,7 @@ void MainToolButton::slot_dbNameClicked()
 
     Database::instance()->change_database( action->text() );
     
-    //Debug::debug() << "-- MainToolButton --> dbNameClicked = " << action->text();
-
+    //Debug::debug() << "      [MainToolButton] dbNameClicked = " << action->text();
+    
     emit dbNameChanged();
 }

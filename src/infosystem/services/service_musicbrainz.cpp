@@ -18,7 +18,6 @@
 #include "networkaccess.h"
 
 #include "utilities.h"
-#include "constants.h"
 #include "debug.h"
 
 #include <QtCore>
@@ -33,7 +32,7 @@
 */
 ServiceMusicBrainz::ServiceMusicBrainz() : InfoService()
 {
-    Debug::debug() << Q_FUNC_INFO;
+    Debug::debug() << "    [ServiceMusicBrainz] start";
 
     setName("musicbrainz");
     
@@ -55,7 +54,7 @@ void ServiceMusicBrainz::getInfo( INFO::InfoRequestData requestData )
 
 void ServiceMusicBrainz::fetchInfo( INFO::InfoRequestData requestData )
 {
-    //Debug::debug() << Q_FUNC_INFO;
+    //Debug::debug() << "    [ServiceMusicBrainz] fetchInfo";
 
     switch ( requestData.type )
     {
@@ -77,7 +76,7 @@ void ServiceMusicBrainz::fetchInfo( INFO::InfoRequestData requestData )
 /*------------------------------------------------------------------------------*/
 void ServiceMusicBrainz::fetch_artist_releases( INFO::InfoRequestData requestData )
 {
-    //Debug::debug() << Q_FUNC_INFO;
+    //Debug::debug() << "    [ServiceMusicBrainz] fetch_artist_releases";
     
     INFO::InfoStringHash hash = requestData.data.value< INFO::InfoStringHash >();
 
@@ -111,7 +110,7 @@ void ServiceMusicBrainz::fetch_artist_releases( INFO::InfoRequestData requestDat
 
 void ServiceMusicBrainz::slot_parse_artist_release_response(QByteArray bytes)
 {
-    Debug::debug() << Q_FUNC_INFO;
+    //Debug::debug() << "    [ServiceMusicBrainz] slot_parse_artist_release_response";
 
     /*-------------------------------------------------*/
     /* Get id from sender reply                        */
@@ -182,7 +181,7 @@ void ServiceMusicBrainz::slot_parse_artist_release_response(QByteArray bytes)
 /*------------------------------------------------------------------------------*/
 void ServiceMusicBrainz::fetch_album_info( INFO::InfoRequestData requestData )
 {
-    Debug::debug() << Q_FUNC_INFO;
+    //Debug::debug() << "    [ServiceMusicBrainz] fetch_album_info";
     
     INFO::InfoStringHash hash = requestData.data.value< INFO::InfoStringHash >();
     
@@ -210,21 +209,20 @@ void ServiceMusicBrainz::fetch_album_info( INFO::InfoRequestData requestData )
 
 void ServiceMusicBrainz::slot_parse_album_response(QByteArray bytes)
 {
-    Debug::debug() << Q_FUNC_INFO;
+    //Debug::debug() << "    [ServiceMusicBrainz] slot_parse_album_response";
 
     /*-------------------------------------------------*/
     /* Get id from sender reply                        */
     /* ------------------------------------------------*/
     QObject* reply = qobject_cast<QObject*>(sender());
     if (!reply || !m_requests.contains(reply)) {
-      Debug::debug() << Q_FUNC_INFO << " no reply found";
+      Debug::debug() << "    [ServiceMusicBrainz] no reply found";
       return;
     }
     
     INFO::InfoRequestData request =  m_requests.take(reply);
     INFO::InfoStringHash hash = request.data.value< INFO::InfoStringHash >();
     
-//     Debug::debug() << "## ServiceMusicBrainz::slot_parse_album_response" << bytes;
     
     /*-------------------------------------------------*/
     /* Parse response                                  */
@@ -274,7 +272,7 @@ void ServiceMusicBrainz::slot_parse_release_response( QByteArray bytes)
     /* ------------------------------------------------*/
     QObject* reply = qobject_cast<QObject*>(sender());
     if (!reply || !m_requests.contains(reply)) {
-      Debug::debug() << Q_FUNC_INFO << " no reply found";
+      Debug::debug() << "    [ServiceMusicBrainz] no reply found";
       return;
     }
     
@@ -299,7 +297,7 @@ void ServiceMusicBrainz::slot_parse_release_response( QByteArray bytes)
     for ( int i = 0; i < tracksNL.count(); i++ )
     {
         QString track = tracksNL.at(i).firstChildElement( "recording" ).firstChildElement( "title" ).text();
-        Debug::debug() << "$SONGS:$" << track;
+        //Debug::debug() << "$SONGS:$" << track;
         if ( !tracks.contains( track ) )
             tracks << track;
     }
@@ -318,7 +316,7 @@ void ServiceMusicBrainz::slot_parse_release_response( QByteArray bytes)
 /*------------------------------------------------------------------------------*/
 void ServiceMusicBrainz::fetch_album_cover( INFO::InfoRequestData requestData )
 {
-    //Debug::debug() << Q_FUNC_INFO;
+    //Debug::debug() << "    [ServiceMusicBrainz] fetch_album_cover";
   
     INFO::InfoStringHash hash = requestData.data.value< INFO::InfoStringHash >();
 
@@ -334,7 +332,7 @@ void ServiceMusicBrainz::fetch_album_cover( INFO::InfoRequestData requestData )
 
 void ServiceMusicBrainz::fetch_image_from_mbid( INFO::InfoRequestData requestData )
 {
-    //Debug::debug() << Q_FUNC_INFO;
+    //Debug::debug() << "    [ServiceMusicBrainz] fetch_image_from_mbid";
     
     INFO::InfoStringHash hash = requestData.data.value< INFO::InfoStringHash >();
 
@@ -355,7 +353,7 @@ void ServiceMusicBrainz::fetch_image_from_mbid( INFO::InfoRequestData requestDat
 
 void ServiceMusicBrainz::slot_image_received(QByteArray bytes)
 {
-    Debug::debug() << Q_FUNC_INFO;
+    //Debug::debug() << "    [ServiceMusicBrainz] slot_image_received";
     /*-------------------------------------------------*/
     /* Get id from sender reply                        */
     /* ------------------------------------------------*/
@@ -370,7 +368,7 @@ void ServiceMusicBrainz::slot_image_received(QByteArray bytes)
 
 void ServiceMusicBrainz::slot_request_error()
 {
-    Debug::debug() << Q_FUNC_INFO;
+    //Debug::debug() << "    [ServiceMusicBrainz] slot_request_error";
 
     /* get sender reply */
     QObject* reply = qobject_cast<QObject*>(sender());

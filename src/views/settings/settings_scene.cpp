@@ -25,6 +25,9 @@
 #include "views/item_common.h"
 #include "views/item_menu.h"
 
+/* widgets */
+#include "widgets/statuswidget.h"
+
 #include "debug.h"
 
 // Qt
@@ -182,6 +185,7 @@ void SettingsScene::restore_settings()
     m_result.isSystrayChanged       =  false;
     m_result.isDbusChanged          =  false;
     m_result.isMprisChanged         =  false;
+    m_result.isEngineChanged        =  false;
     m_result.isLibraryChanged       =  false;
     m_result.isViewChanged          =  false;
     m_result.isShorcutChanged       =  false;
@@ -211,6 +215,14 @@ void SettingsScene::slot_apply_settings()
     static_cast<PageScrobbler*>(m_pages[SETTINGS::SCROBBLER])->saveSettings();
     static_cast<PageSongInfo*>(m_pages[SETTINGS::SONGINFO])->saveSettings();
 
+    /* engine change is done on saving */
+    m_result.isEngineChanged        =  static_cast<PagePlayer*>(m_pages[SETTINGS::PLAYER])->isEngineChanged();
+    
+    if(m_result.isEngineChanged)
+      StatusWidget::instance()->startShortMessage(tr("settings saved, restart needed to change audio engine"),STATUS::TYPE_INFO, 2500);
+    else
+      StatusWidget::instance()->startShortMessage(tr("settings saved"),STATUS::TYPE_INFO, 2500);
+    
     emit settings_saved();
 }
 

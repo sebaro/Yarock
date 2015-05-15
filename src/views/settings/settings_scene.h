@@ -39,6 +39,7 @@ struct Results {
       bool    isDbusChanged;
       bool    isMprisChanged;
 
+      bool    isEngineChanged;
       bool    isLibraryChanged;
       bool    isViewChanged;
       
@@ -65,6 +66,7 @@ Q_OBJECT
 
     void setSearch(const QVariant&) {};
     void setData(const QVariant&);
+    void playSceneContents(const QVariant&) {};
     
     void restore_settings();
 

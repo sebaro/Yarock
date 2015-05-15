@@ -42,15 +42,17 @@ public:
     QString newShortcut();
 
   protected:
-    void keyReleaseEvent(QKeyEvent *e);
-
+    bool event(QEvent *);
+    void hideEvent(QHideEvent* e);
+    void showEvent(QShowEvent* e);
+  
   private:
     QLabel         *m_currentShortcut;
 
     QKeySequence    m_old_shortcut;
     QKeySequence    m_new_shortcut;
     QString         m_key;
-    QList<Qt::KeyboardModifiers> m_modifier_keys;
+    QList<int>      m_modifier_keys;
 
    private slots:
      void accept();

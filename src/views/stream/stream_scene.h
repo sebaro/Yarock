@@ -52,10 +52,12 @@ Q_OBJECT
     int   elementCount() const {return m_infoSize;}
 
     //! playing item scene method (for Mainwindow access)
-    void playSelected();
     void setSearch(const QVariant&);
     void setData(const QVariant&) {};
+    void playSceneContents(const QVariant&) {};
     
+    void playSelected();
+
     QList<QAction *> actions();
     
   /* Basic Scene virtual */      

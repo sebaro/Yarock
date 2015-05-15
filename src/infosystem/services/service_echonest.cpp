@@ -41,7 +41,7 @@ QByteArray escapeSpacesAndPluses(const QString& in);
 */
 ServiceEchonest::ServiceEchonest() : InfoService()
 {
-    Debug::debug() << Q_FUNC_INFO;
+    Debug::debug() << "    [ServiceEchonest] start";
 
     setName("echonest");
     
@@ -65,7 +65,7 @@ void ServiceEchonest::getInfo( INFO::InfoRequestData requestData )
 
 void ServiceEchonest::fetchInfo( INFO::InfoRequestData requestData )
 {
-    //Debug::debug() << Q_FUNC_INFO;
+    //Debug::debug() << "    [ServiceEchonest::] fetchInfo";
 
     switch ( requestData.type )
     {
@@ -185,7 +185,7 @@ void ServiceEchonest::slot_get_artist_biography(QByteArray bytes)
 *******************************************************************************/
 void ServiceEchonest::fetch_image_uri( INFO::InfoRequestData request )
 {
-    //Debug::debug() << Q_FUNC_INFO;
+    //Debug::debug() << "    [ServiceEchonest::] fetch_image_uri";  
     INFO::InfoStringHash hash = request.data.value< INFO::InfoStringHash >();
         
     QUrl url = QUrl( hash.value("#uri") );
@@ -281,8 +281,7 @@ void ServiceEchonest::slot_image_received(QByteArray bytes)
 *******************************************************************************/
 void ServiceEchonest::fetch_artist_similar(INFO::InfoRequestData request)
 {
-    //Debug::debug() << Q_FUNC_INFO;
-  
+    //Debug::debug() << "    [ServiceEchonest::] fetch_artist_similar";    
     INFO::InfoStringHash hash = request.data.value< INFO::InfoStringHash >();
     if ( !hash.contains( "artist" ) )
     {
@@ -361,7 +360,7 @@ void ServiceEchonest::slot_get_artist_similar(QByteArray bytes)
 
 void ServiceEchonest::slot_request_error()
 {
-    Debug::debug() << Q_FUNC_INFO;
+    //Debug::debug() << "    [ServiceEchonest::] slot_request_error";    
     /* get sender reply */
     QObject* reply = qobject_cast<QObject*>(sender());
     if (!reply || !m_requests.contains(reply))  {

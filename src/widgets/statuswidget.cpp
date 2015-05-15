@@ -84,7 +84,7 @@ static uint messageId = 0;
 *******************************************************************************/
 uint StatusWidget::startProgressMessage(const QString& action)
 {
-    //Debug::debug() << "- StatusWidget -> startProgressMessage :" << action;
+    //Debug::debug() << "      [StatusWidget] startProgressMessage :" << action;
 
     _longMessage.insert(++messageId, action);
 
@@ -98,7 +98,7 @@ uint StatusWidget::startProgressMessage(const QString& action)
 *******************************************************************************/
 void StatusWidget::stopProgressMessage(uint id)
 {
-    //Debug::debug() << "- StatusWidget -> stopProgressMessage -> id "<< id;
+    //Debug::debug() << "      [StatusWidget] stopProgressMessage -> id "<< id;
     if(_longMessage.contains(id))
       _longMessage.remove(id);
 
@@ -121,7 +121,7 @@ void StatusWidget::updateProgressMessage(uint id, const QString & message)
 *******************************************************************************/
 void StatusWidget::startShortMessage(const QString& m, STATUS::T_MESSAGE type, int ms )
 {
-    //Debug::debug() << "- StatusWidget -> startShortMessage ->"<< m;
+    //Debug::debug() << "      [StatusWidget] startShortMessage ->"<< m;
 
     //! only one short message at one time
     if(isShortMessage)
@@ -154,7 +154,7 @@ void StatusWidget::stopShortMessage()
 *******************************************************************************/
 void StatusWidget::updateMessage()
 {
-    //Debug::debug() << "- StatusWidget -> updateMessage";
+    //Debug::debug() << "      [StatusWidget] updateMessage";
 
     /*--------------------------------*/
     /* No message                     */
@@ -232,7 +232,7 @@ void StatusWidget::updateMessage()
 *******************************************************************************/
 bool StatusWidget::eventFilter(QObject *obj, QEvent *ev)
 {
-    //Debug::debug() << "StatusWidget eventFilter  obj" << obj;
+    //Debug::debug() << "      [StatusWidget] eventFilter  obj" << obj;
     int type = ev->type();
     QWidget *wid = qobject_cast<QWidget*>(obj);
 
@@ -262,7 +262,7 @@ bool StatusWidget::eventFilter(QObject *obj, QEvent *ev)
 *******************************************************************************/
 void StatusWidget::setPosition()
 {
-    //Debug::debug() << "- StatusWidget -> setPosition   m_parent->height() "  << m_parent->height();
+    //Debug::debug() << "      [StatusWidget] setPosition   m_parent->height() "  << m_parent->height();
     if(m_current_type == STATUS::TYPE_PLAYQUEUE)
     {
 

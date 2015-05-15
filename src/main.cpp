@@ -14,8 +14,6 @@
 *  You should have received a copy of the GNU General Public License along with         *
 *  this program.  If not, see <http://www.gnu.org/licenses/>.                           *
 *****************************************************************************************/
-
-
 //! Qt
 #include <QApplication>
 #include <QTextCodec>
@@ -35,13 +33,12 @@
 #include <QFontDatabase>
 #include <QDebug>
 
-
 //! local
 #include "commandlineoptions.h"
 #include "mainwindow.h"
 #include "mediaitem.h"
 #include "widgets/equalizer/equalizer_preset.h"  // type EqPreset
-#include "constants.h"
+#include "config.h"
 #include "utilities.h"
 #include "debug.h"
 
@@ -93,6 +90,7 @@ void LoadTranslation(const QString& prefix,
 */
 int main(int argc, char *argv[])
 {
+    
     //! core application settings
     QCoreApplication::setApplicationName(APP_NAME);
     QCoreApplication::setApplicationVersion(VERSION);
@@ -140,8 +138,8 @@ int main(int argc, char *argv[])
     application.setApplicationVersion(VERSION);
     application.setOrganizationName(ORG_NAME);
     application.setOrganizationDomain("yarock-player.org");
-
-
+    
+       
     //! check instance again
     // WHY : because another instance might have started by now
     if (application.isRunning() && application.sendMessage(options.Serialize(), 5000))
@@ -192,7 +190,7 @@ int main(int argc, char *argv[])
     qRegisterMetaType<MEDIA::AlbumPtr>();
     qRegisterMetaType<MEDIA::TrackPtr>();
     qRegisterMetaType<MEDIA::PlaylistPtr>();
-    
+   
     //! DBUS
     QDBusConnection::sessionBus().registerService("com.sebastien.yarock");
     qDBusRegisterMetaType<QImage>();
@@ -206,7 +204,6 @@ int main(int argc, char *argv[])
     //! connect command line option messages
     QObject::connect(&application, SIGNAL(messageReceived(QByteArray)),
                      &mainwindow, SLOT(slot_commandline_received(QByteArray)));
-
     
     mainwindow.set_command_line(options);
 

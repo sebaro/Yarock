@@ -42,7 +42,7 @@
 */
 void LocalScene::enqueueTrack(bool is_new_playqueue)
 {
-    //Debug::debug() << " ---- enqueueTrack";
+    //Debug::debug() << "   [LocalScene] enqueueTrack";
     if(!m_mouseGrabbedItem) return;
     TrackGraphicItem *item = static_cast<TrackGraphicItem*>(m_mouseGrabbedItem);
 
@@ -57,7 +57,7 @@ void LocalScene::enqueueTrack(bool is_new_playqueue)
 
 void LocalScene::enqueueAlbum(bool is_new_playqueue)
 {
-    //Debug::debug() << " ---- enqueueAlbum";
+    //Debug::debug() << "   [LocalScene] enqueueAlbum";
     if(!m_mouseGrabbedItem) return;
     AlbumGraphicItem *item = static_cast<AlbumGraphicItem*>(m_mouseGrabbedItem);
 
@@ -73,7 +73,7 @@ void LocalScene::enqueueAlbum(bool is_new_playqueue)
 
 void LocalScene::enqueueAlbumGenre(bool is_new_playqueue)
 {
-    //Debug::debug() << " ---- enqueueAlbumGenre";
+    //Debug::debug() << "   [LocalScene] enqueueAlbumGenre";
     if(!m_mouseGrabbedItem) return;
     AlbumGenreGraphicItem *item = static_cast<AlbumGenreGraphicItem*>(m_mouseGrabbedItem);
 
@@ -89,7 +89,7 @@ void LocalScene::enqueueAlbumGenre(bool is_new_playqueue)
 
 void LocalScene::enqueueArtist(bool is_new_playqueue)
 {
-    //Debug::debug() << " ---- enqueueArtist";
+    //Debug::debug() << "   [LocalScene] enqueueArtist";
     if(!m_mouseGrabbedItem) return;
     ArtistGraphicItem *item = static_cast<ArtistGraphicItem*>(m_mouseGrabbedItem);
 
@@ -131,7 +131,7 @@ void LocalScene::enqueuePlaylist(bool is_new_playqueue)
 
 void LocalScene::enqueueSelected(bool is_new_playqueue)
 {
-    //Debug::debug() << "LocalScene::enqueueSelected";
+    //Debug::debug() << "   [LocalScene] enqueueSelected";
     QList<MEDIA::TrackPtr> tracks;
 
     if(is_new_playqueue)

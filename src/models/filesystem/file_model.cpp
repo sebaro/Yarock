@@ -33,7 +33,6 @@ FileModel::FileModel(QObject *parent) : QFileSystemModel(parent)
     this->setFilter( QDir::AllDirs |QDir::System |QDir::NoDotAndDotDot | QDir::Files );
 
     this->setRootPath(QDir::rootPath());
-    
   
   
     const QStringList filters = QStringList()

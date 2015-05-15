@@ -67,7 +67,7 @@ ThreadManager::~ThreadManager()
 *******************************************************************************/
 void ThreadManager::stopThread()
 {
-    Debug::debug() << "ThreadManager -> stop running thread";
+    Debug::debug() << "[ThreadManager] stop running thread";
     if(m_databaseBuilder->isRunning())
       cancelThread(DB_THREAD);
 
@@ -91,7 +91,7 @@ void ThreadManager::databaseBuild(QStringList listDir)
     if(m_databaseBuilder->isRunning())
       cancelThread(DB_THREAD);
 
-    Debug::debug() << " ThreadManager start a database builder thread";
+    Debug::debug() << "[ThreadManager] start a database builder thread";
     m_databaseBuilder->rebuildFolder(listDir);
     m_databaseBuilder->start();
 
@@ -128,7 +128,7 @@ bool ThreadManager::isDbRunning()
 *******************************************************************************/
 void ThreadManager::populateLocalTrackModel()
 {
-   Debug::debug() << "ThreadManager -> start a new collection populator";
+   Debug::debug() << "[ThreadManager] start a new collection populator";
    if(m_localTrackPopulator->isRunning()) {
      cancelThread(POPULATOR_C_THREAD);
    }
@@ -161,7 +161,7 @@ void ThreadManager::slot_on_localtrackmodel_populated()
 *******************************************************************************/
 void ThreadManager::populateLocalPlaylistModel()
 {
-   Debug::debug() << "ThreadManager -> start a new playlist populator";
+   Debug::debug() << "[ThreadManager] start a new playlist populator";
    if(m_localPlaylistPopulator->isRunning())
      cancelThread(POPULATOR_P_THREAD);
 
@@ -179,7 +179,7 @@ void ThreadManager::slot_on_localplaylistmodel_populating_changed(int progress)
 
 void ThreadManager::slot_on_localplaylistmodel_populated()
 {
-    Debug::debug() << "ThreadManager -> slot_on_localplaylistmodel_populated";
+    Debug::debug() << "[ThreadManager] slot_on_localplaylistmodel_populated";
 
     if (messageIds.contains("LoadPlaylist"))
       StatusWidget::instance()->stopProgressMessage( messageIds.take("LoadPlaylist") );
@@ -192,7 +192,7 @@ void ThreadManager::slot_on_localplaylistmodel_populated()
 *******************************************************************************/
 void ThreadManager::startTagSearch(TagSearch::TYPE type, INFO::InfoRequestData request)
 {
-    Debug::debug() << "ThreadManager -> startTagSearch";
+    Debug::debug() << "[ThreadManager] startTagSearch";
     if(!m_tagSearchTask) {
       m_tagSearchTask = new TagSearch();
 
@@ -212,7 +212,7 @@ void ThreadManager::startTagSearch(TagSearch::TYPE type, INFO::InfoRequestData r
 
 void ThreadManager::slot_tagsearch_finished()
 {
-    Debug::debug() << "ThreadManager -> slot_tagsearch_finished";
+    Debug::debug() << "[ThreadManager] slot_tagsearch_finished";
 
     if (messageIds.contains("MediaTagSearch"))
       StatusWidget::instance()->stopProgressMessage( messageIds.take("MediaTagSearch") );

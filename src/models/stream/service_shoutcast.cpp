@@ -57,7 +57,7 @@ namespace SHOUTCAST {
 */
 ShoutCast::ShoutCast() : Service("Shoutcast", SERVICE::SHOUTCAST)
 {
-    Debug::debug() << "ShoutCast -> create";
+    Debug::debug() << "    [Shoutcast] create";
     
     SHOUTCAST::key_id   = "fa1669MuiRPorUBw";
       
@@ -104,7 +104,7 @@ void ShoutCast::reload()
 
 void ShoutCast::load()
 {
-    Debug::debug() << "ShoutCast::load";
+    Debug::debug() << "    [Shoutcast] load";
     if(state() == SERVICE::DOWNLOADING)
       return;
     
@@ -118,7 +118,7 @@ void ShoutCast::load()
 
 QList<MEDIA::LinkPtr> ShoutCast::links()
 {
-    Debug::debug() << "ShoutCast::links";
+    Debug::debug() << "    [Shoutcast] links";
     QList<MEDIA::LinkPtr> links;
 
     bool found_root = false;
@@ -175,7 +175,7 @@ void ShoutCast::browseLink(MEDIA::LinkPtr link)
     if(!UTIL::urlHasQueryItem(url, "f"))
       UTIL::urlAddQueryItem( url, "f", "xml");
 
-    Debug::debug() << "ShoutCast::browseLink " << url.toString();
+    Debug::debug() << "    [Shoutcast] browseLink " << url.toString();
     
     QObject *reply = HTTP()->get(url);
     m_requests[reply] = link;    
@@ -185,7 +185,7 @@ void ShoutCast::browseLink(MEDIA::LinkPtr link)
 
 void ShoutCast::slotBrowseLinkDone(QByteArray bytes)
 {
-    Debug::debug() << "ShoutCast::slotBrowseLinkDone ";
+    Debug::debug() << "    [Shoutcast] slotBrowseLinkDone ";
     QObject* reply = qobject_cast<QObject*>(sender());
     if (!reply || !m_requests.contains(reply))
       return;
@@ -251,7 +251,7 @@ void ShoutCast::slotBrowseLinkDone(QByteArray bytes)
 
 void ShoutCast::browseStation(MEDIA::LinkPtr link)
 {
-    Debug::debug() << "ShoutCast -> browseStation for genre" << link->name;
+    Debug::debug() << "    [Shoutcast] browseStation for genre" << link->name;
 
     QUrl url;
     url.setUrl(QString("http://api.shoutcast.com/legacy/genresearch?genre=%1").arg(link->name));
@@ -267,7 +267,7 @@ void ShoutCast::browseStation(MEDIA::LinkPtr link)
 //! ------------------  station request ----------------------------------------
 void ShoutCast::slotBrowseStationDone(QByteArray bytes)
 {
-    Debug::debug() << "ShoutCast -> slotBrowseStationDone ";
+    Debug::debug() << "    [Shoutcast] slotBrowseStationDone ";
     QObject* reply = qobject_cast<QObject*>(sender());
     if (!reply || !m_requests.contains(reply))
       return;
@@ -303,7 +303,7 @@ void ShoutCast::slotBrowseStationDone(QByteArray bytes)
 
 void ShoutCast::slot_error()
 {
-    Debug::debug() << "ShoutCast::slot_error";
+    Debug::debug() << "    [Shoutcast] slot_error";
     QObject* reply = qobject_cast<QObject*>(sender());
     if (!reply || !m_requests.contains(reply))
       return;
@@ -320,7 +320,7 @@ void ShoutCast::slot_error()
 
 void ShoutCast::slot_activate_link(MEDIA::LinkPtr link)
 {
-    Debug::debug() << "ShoutCast::slot_activate_link";
+    Debug::debug() << "    [Shoutcast] slot_activate_link";
   
     if(!link) 
     {

@@ -103,7 +103,7 @@ bool MediaSearch::operator ==(const MediaSearch& other) const
 
 QDataStream& operator <<(QDataStream& s, const MediaSearch& media_search)
 {
-    //Debug::debug() << "MediaSearch::operator <<";
+    //Debug::debug() << "      [MediaSearch] operator <<";
     s << media_search.query_list_;
     s << quint8(media_search.sort_type_);
     s << quint8(media_search.sort_field_);
@@ -114,7 +114,7 @@ QDataStream& operator <<(QDataStream& s, const MediaSearch& media_search)
 
 QDataStream& operator >>(QDataStream& s, MediaSearch& media_search)
 {
-    //Debug::debug() << "MediaSearch::operator >>";
+    //Debug::debug() << "      [MediaSearch] operator >>";
     quint8 sort_type, sort_field, search_type;
     qint32 limit;
 

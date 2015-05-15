@@ -22,8 +22,6 @@
 #include <QObject>
 #include <QMultiMap>
 
-#include "mediaitem.h"
-
 class LocalTrackModel;
 
 /*
@@ -48,7 +46,6 @@ private:
     
 private:
     bool               m_isGrouping;
-    QMultiMap<QString, MEDIA::AlbumPtr>  m_multi_albums;
   
     LocalTrackModel    *m_model;
     bool                m_exit;

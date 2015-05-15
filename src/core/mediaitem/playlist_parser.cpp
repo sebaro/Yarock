@@ -44,25 +44,24 @@ void saveXspfPlaylist(QIODevice* device, const QDir& playlist_dir, QList<MEDIA::
 /* ---------------------------------------------------------------------------*/ 
 QList<MEDIA::TrackPtr> MEDIA::PlaylistFromFile(const QString& filename)
 {
-    Debug::debug() << "[MEDIA] PlaylistFromFile--> Start "  << QTime::currentTime().second() << ":" << QTime::currentTime().msec();
-
-    //Debug::debug() << "[MEDIA] PlaylistFromFile";
     QList<MEDIA::TrackPtr>   list;
 
-    // Open the file
+    /* get file info */
     QFileInfo info(filename);
+    const QString extension = info.suffix().toLower();
+    const QDir playlist_dir = QDir(info.absoluteDir());
+
+    Debug::debug() << "  [MEDIA] PlaylistFromFile :"  << filename;
+    
+    /* test opening file */
     QFile file(filename);
 
-
     if (!file.open(QFile::ReadOnly)) {
-      Debug::warning() << "Failed to open read only file " << filename;
+      Debug::warning() << "  [MEDIA] Failed to open read only file " << filename;
       return list;
     }
 
-    QString extension = info.suffix().toLower();
-    QDir playlist_dir = QDir(info.absoluteDir());
-
-    // choose parser
+    /* choose parser */
     if( m3u_extension.contains(extension) )
       list = readM3uPlaylist( &file, playlist_dir);
     else if( pls_extension.contains(extension) )
@@ -70,9 +69,8 @@ QList<MEDIA::TrackPtr> MEDIA::PlaylistFromFile(const QString& filename)
     else if( xspf_extension.contains(extension ))
       list = readXspfPlaylist( &file, playlist_dir );
 
-    Debug::debug() << "[MEDIA] PlaylistFromFile : read " << list.size() << " entries";
+    Debug::debug() << "  [MEDIA] PlaylistFromFile : read " << list.size() << " entries";
     
-    Debug::debug() << "[MEDIA] PlaylistFromFile--> End "  << QTime::currentTime().second() << ":" << QTime::currentTime().msec();
     return list;
 }
 
@@ -82,12 +80,12 @@ QList<MEDIA::TrackPtr> MEDIA::PlaylistFromFile(const QString& filename)
 /* ---------------------------------------------------------------------------*/ 
 QList<MEDIA::TrackPtr> MEDIA::PlaylistFromBytes(QByteArray& bytes)
 {
-    Debug::debug() << "MEDIA::PlaylistFromBytes";
+    Debug::debug() << "  [MEDIA]  PlaylistFromBytes";
     QList<MEDIA::TrackPtr>   list;
 
     QBuffer buffer(&bytes);
     if (!buffer.open(QFile::ReadOnly)) {
-      Debug::debug() << "Failed to open data";
+      Debug::debug() << "  [MEDIA] Failed to open data";
       return list;
     }
 
@@ -102,7 +100,7 @@ QList<MEDIA::TrackPtr> MEDIA::PlaylistFromBytes(QByteArray& bytes)
     else
     {
       // try m3u style
-      Debug::warning() << "MEDIA::PlaylistFromBytes unknown format, trying m3u playlist...";
+      Debug::warning() << "[MEDIA] PlaylistFromBytes unknown format, trying m3u playlist...";
       list = readM3uPlaylist( &buffer ) ;
     }
 
@@ -166,7 +164,7 @@ QList<MEDIA::TrackPtr>  readM3uPlaylist(QIODevice* device, const QDir& playlist_
       }
       else if( !line.isEmpty() )
       {
-        //Debug::debug() << "---- readM3uPlaylist -> line " << line << "\n";
+        //Debug::debug() << "  [MEDIA] readM3uPlaylist -> line " << line << "\n";
         MEDIA::TrackPtr track = MEDIA::TrackPtr(new MEDIA::Track());
 
         //! Find the Track location
@@ -234,7 +232,6 @@ QList<MEDIA::TrackPtr>  readM3uPlaylist(QIODevice* device, const QDir& playlist_
 /* ---------------------------------------------------------------------------*/ 
 QList<MEDIA::TrackPtr>  readPlsPlaylist(QIODevice* device, const QDir& playlist_dir )
 {
-    Debug::debug() << "start readPlsPlaylist";
     QList<MEDIA::TrackPtr> list;
 
     MEDIA::TrackPtr mi = MEDIA::TrackPtr(0);
@@ -254,7 +251,7 @@ QList<MEDIA::TrackPtr>  readPlsPlaylist(QIODevice* device, const QDir& playlist_
         if (value.contains(QRegExp("^[a-z]+://"))) {
           QUrl url(value);
           if (url.isValid()) {
-              // Debug::debug() << "---- readPlsPlaylist -> url.isValid()" << url;
+              // Debug::debug() << "  [MEDIA] readPlsPlaylist -> url.isValid()" << url;
               mi->setType(TYPE_STREAM);
               mi->id          = -1;
               mi->url         = value;
@@ -302,7 +299,7 @@ QList<MEDIA::TrackPtr>  readPlsPlaylist(QIODevice* device, const QDir& playlist_
       }
     } // fin while
 
-    Debug::debug() << "end readPlsPlaylist";
+    //Debug::debug() << "  [MEDIA] end readPlsPlaylist";
 
     return list;
 }
@@ -313,8 +310,6 @@ QList<MEDIA::TrackPtr>  readPlsPlaylist(QIODevice* device, const QDir& playlist_
 /* ---------------------------------------------------------------------------*/ 
 QList<MEDIA::TrackPtr>  readXspfPlaylist(QIODevice* device, const QDir& playlist_dir )
 {
-    Debug::debug() << "[MEDIA] readXspfPlaylist";
-
     QList<MEDIA::TrackPtr>  list;
 
     QXmlStreamReader xml(device);
@@ -337,19 +332,19 @@ QList<MEDIA::TrackPtr>  readXspfPlaylist(QIODevice* device, const QDir& playlist
       
       if (xml.isStartElement() && xml.name() == "track")
       {
-        //Debug::debug() << "---- readXspfPlaylist -> NEW Track ";
+        //Debug::debug() << "  [MEDIA] readXspfPlaylist -> NEW Track ";
         mi = MEDIA::TrackPtr(new MEDIA::Track());
       }
       else if (xml.isStartElement() && xml.name() == "location")
       {
             QString file_path = QString(xml.readElementText());
 
-            //Debug::debug() << "---- readXspfPlaylist -> Find the Track location" << file_path;
+            //Debug::debug() << "  [MEDIA] readXspfPlaylist -> Find the Track location" << file_path;
             if (!MEDIA::isLocal(file_path)) {
               QUrl url(file_path);
               if (url.isValid()) {
 
-                //Debug::debug() << "---- readXspfPlaylist -> it's an url";
+                //Debug::debug() << "  [MEDIA] readXspfPlaylist -> it's an url";
                 if(mi) {
                   mi->setType(TYPE_STREAM);
                   mi->id          = -1;
@@ -364,20 +359,20 @@ QList<MEDIA::TrackPtr>  readXspfPlaylist(QIODevice* device, const QDir& playlist
               }
             }
             else {
-              //Debug::debug() << "---- readXspfPlaylist -> it's a local file";
+              //Debug::debug() << "  [MEDIA] readXspfPlaylist -> it's a local file";
 
               file_path = QDir::fromNativeSeparators(file_path);
-              //Debug::debug() << "---- readXspfPlaylist -> file_path" << file_path;
+              //Debug::debug() << "  [MEDIA] readXspfPlaylist -> file_path" << file_path;
 
               // Make the path absolute
               if (!QDir::isAbsolutePath(file_path))
                 file_path = playlist_dir.absoluteFilePath(file_path);
-              //Debug::debug() << "---- readXspfPlaylist -> file_path" << file_path;
+              //Debug::debug() << "  [MEDIA] readXspfPlaylist -> file_path" << file_path;
 
               // Use the canonical path
               if (QFile::exists(file_path))
                 file_path = QFileInfo(file_path).canonicalFilePath();
-              //Debug::debug() << "---- readXspfPlaylist -> file_path" << file_path;
+              //Debug::debug() << "  [MEDIA] readXspfPlaylist -> file_path" << file_path;
 
               if(mi) {
                 mi->setType(TYPE_TRACK);
@@ -404,14 +399,14 @@ QList<MEDIA::TrackPtr>  readXspfPlaylist(QIODevice* device, const QDir& playlist
       }
       else if (xml.isEndElement() && xml.name() == "track")
       {
-        //Debug::debug() << "---- readXspfPlaylist -> list.append(mi)" << mi;
+        //Debug::debug() << "  [MEDIA] readXspfPlaylist -> list.append(mi)" << mi;
         if(mi)
           list.append(mi);
         mi = MEDIA::TrackPtr(0);
       }
     }  // End while xml end
 
-    //Debug::debug() << "readXspfPlaylist -> END OK";
+    //Debug::debug() << "  [MEDIA] readXspfPlaylist -> END OK";
 
     return list;
 }
@@ -422,20 +417,21 @@ QList<MEDIA::TrackPtr>  readXspfPlaylist(QIODevice* device, const QDir& playlist
 /* ---------------------------------------------------------------------------*/ 
 void MEDIA::PlaylistToFile(const QString& filename, QList<MEDIA::TrackPtr> list)
 {
-    Debug::debug() << "[MEDIA] PlaylistToFile track count :" << list.size();
+    Debug::debug() << "  [MEDIA] PlaylistToFile track count :" << list.size();
 
-    // Open the file
-    QFileInfo info(filename);
-
+    /* test opening file */
     QFile file(filename);
     if (!file.open(QFile::WriteOnly)) {
       Debug::warning() << "Failed to open file for writing" << filename;
       return;
     }
 
-    QString extension = info.suffix().toLower();
-    QDir playlist_dir = QDir(info.absoluteDir());
+    /* get file info */
+    QFileInfo info(filename);
+    const QString extension = info.suffix().toLower();
+    const QDir playlist_dir = QDir(info.absoluteDir());
 
+    /* choose playlist parser */
     if( m3u_extension.contains(extension) )
       saveM3uPlaylist(&file, playlist_dir, list);
     else if( pls_extension.contains(extension) )

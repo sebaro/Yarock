@@ -5,7 +5,7 @@ cmake_policy(SET CMP0011 NEW)
 #  SOURCES
 # ------------------------------------------------------------------------------
 SET(YAROCK_INCLUDES  ${CMAKE_SOURCE_DIR}/src/
-		     ${CMAKE_SOURCE_DIR}/src/core
+                     ${CMAKE_SOURCE_DIR}/src/core
                      ${CMAKE_SOURCE_DIR}/src/core/database
                      ${CMAKE_SOURCE_DIR}/src/core/history
                      ${CMAKE_SOURCE_DIR}/src/core/mediaitem
@@ -74,10 +74,6 @@ set (SOURCES
 
            ${CMAKE_SOURCE_DIR}/src/core/player/engine.cpp
            ${CMAKE_SOURCE_DIR}/src/core/player/engine_base.cpp
-           ${CMAKE_SOURCE_DIR}/src/core/player/engine_phonon.cpp
-           ${CMAKE_SOURCE_DIR}/src/core/player/engine_vlc.cpp
-           ${CMAKE_SOURCE_DIR}/src/core/player/vlc/vlc_lib.cpp
-           ${CMAKE_SOURCE_DIR}/src/core/player/vlc/vlc_media.cpp
 )
 
 set (SOURCES 
@@ -199,6 +195,7 @@ set (SOURCES
            ${CMAKE_SOURCE_DIR}/src/widgets/playertoolbar.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/ratingwidget.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/seekslider.cpp
+           ${CMAKE_SOURCE_DIR}/src/widgets/seeksliderpopup.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/spacer.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/statuswidget.cpp           
            ${CMAKE_SOURCE_DIR}/src/widgets/sort_widget.cpp            
@@ -252,10 +249,6 @@ SET(YAROCK_HEADERS
            ${CMAKE_SOURCE_DIR}/src/core/mediasearch/search_query_widget.h
            ${CMAKE_SOURCE_DIR}/src/core/player/engine.h
            ${CMAKE_SOURCE_DIR}/src/core/player/engine_base.h
-           ${CMAKE_SOURCE_DIR}/src/core/player/engine_phonon.h
-           ${CMAKE_SOURCE_DIR}/src/core/player/engine_vlc.h
-           ${CMAKE_SOURCE_DIR}/src/core/player/vlc/vlc_lib.h
-           ${CMAKE_SOURCE_DIR}/src/core/player/vlc/vlc_media.h
            ${CMAKE_SOURCE_DIR}/src/covers/covercache.h
            ${CMAKE_SOURCE_DIR}/src/dbus/dbusnotification.h           
            ${CMAKE_SOURCE_DIR}/src/dbus/mpris2.h   
@@ -355,6 +348,7 @@ SET(YAROCK_HEADERS
            ${CMAKE_SOURCE_DIR}/src/widgets/playertoolbar.h
            ${CMAKE_SOURCE_DIR}/src/widgets/ratingwidget.h
            ${CMAKE_SOURCE_DIR}/src/widgets/seekslider.h
+           ${CMAKE_SOURCE_DIR}/src/widgets/seeksliderpopup.h
            ${CMAKE_SOURCE_DIR}/src/widgets/spacer.h
            ${CMAKE_SOURCE_DIR}/src/widgets/statuswidget.h           
            ${CMAKE_SOURCE_DIR}/src/widgets/sort_widget.h  

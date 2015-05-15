@@ -16,6 +16,7 @@
 *****************************************************************************************/
 
 #include "customsplitter.h"
+#include "debug.h"
 
 #include <QPaintEvent>
 #include <QPainter>
@@ -74,22 +75,23 @@ void CustomSplitterHandle::paintEvent(QPaintEvent *event)
     QPainter painter(this);
     QRect rect = event->rect();
 
-    QColor outlineColor = QApplication::palette().color(QPalette::Inactive, QPalette::AlternateBase);
+    QColor outlineColor = QApplication::palette().color( QPalette::Window );
+    
     outlineColor.setAlphaF(_alpha);
 
     QLinearGradient gradientTop;
     gradientTop.setStart(rect.left(), rect.height()/2);
-    gradientTop.setFinalStop(rect.right(), rect.top()-30);
+    gradientTop.setFinalStop(rect.left()+1, rect.top()-30);
     gradientTop.setColorAt(0, outlineColor);
     gradientTop.setColorAt(1, Qt::transparent);
-    painter.fillRect(rect.adjusted(0,0,0,-rect.height()/2), QBrush(gradientTop));
+    painter.fillRect(rect.adjusted(0,0,-rect.width()+1,-rect.height()/2), QBrush(gradientTop));
 
     QLinearGradient gradientBottom;
     gradientBottom.setStart(rect.left(), rect.height()/2 + 10);
-    gradientBottom.setFinalStop(rect.right(), rect.bottom()+30);
+    gradientBottom.setFinalStop(rect.left()+1, rect.bottom()+30);
     gradientBottom.setColorAt(0, outlineColor);
     gradientBottom.setColorAt(1, Qt::transparent);
-    painter.fillRect(rect.adjusted(0,rect.height()/2,0,0), QBrush(gradientBottom));
+    painter.fillRect(rect.adjusted(0,rect.height()/2,-rect.width()+1,0), QBrush(gradientBottom));
 }
 
 /*
@@ -103,10 +105,6 @@ CustomSplitter::CustomSplitter(QWidget *parent) : QSplitter(parent)
 {
     setHandleWidth(1);
     setChildrenCollapsible(false);
-
-    QPalette palette;
-    palette.setColor(QPalette::Background, QApplication::palette().color(QPalette::Normal, QPalette::Base));
-    setPalette(palette);
 
     setAutoFillBackground(true);
     setOrientation(Qt::Horizontal);

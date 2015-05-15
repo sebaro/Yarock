@@ -15,7 +15,7 @@
 *  this program.  If not, see <http://www.gnu.org/licenses/>.                           *
 *****************************************************************************************/
 #include "about_scene.h"
-#include "constants.h"
+#include "config.h"
 
 #include "views/item_common.h"
 #include "debug.h"
@@ -86,7 +86,7 @@ void AboutScene::populateScene()
     version->setText(VERSION);
 
     QLabel *copyright = new QLabel(main_widget);
-    copyright->setText("(c) 2010-2014 yarock author");
+    copyright->setText("(c) 2010-2015 yarock author");
 
     QLabel *icon = new QLabel(main_widget);
     icon->setPixmap( QPixmap(":/icon/yarock_64x64.png") );

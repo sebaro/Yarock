@@ -99,14 +99,14 @@ LastFmService* LastFmService::instance()
 
 LastFmService::LastFmService()
 {
-    Debug::debug() << "  [LastFmService] create";
+    Debug::debug() << "    [LastFmService] create";
     init();  
 }
 
 
 LastFmService::~LastFmService()
 {
-    Debug::debug() << "  [LastFmService] delete";
+    Debug::debug() << "    [LastFmService] delete";
     if(SETTINGS()->_useLastFmScrobbler && isAuthenticated())
       scrobble();
 }
@@ -129,7 +129,7 @@ void LastFmService::init()
     m_currentTrack    = 0;
     
     bool enable = SETTINGS()->_useLastFmScrobbler;
-    Debug::debug() << "  [LastFmService] init enable " << enable;
+    Debug::debug() << "    [LastFmService] init enable " << enable;
     
     disconnect(Engine::instance(), 0,this, 0);
 
@@ -165,7 +165,7 @@ bool LastFmService::isAuthenticated() const
 
 void LastFmService::signIn(const QString& username, const QString& password)
 {
-    Debug::debug() << "  [LastFmService] Sign In request - username" << username;
+    Debug::debug() << "    [LastFmService] Sign In request - username" << username;
     signOut();
     
     QUrl url("http://ws.audioscrobbler.com/2.0/");
@@ -192,7 +192,7 @@ void LastFmService::slot_sign_in_finished(QNetworkReply* reply)
     int status = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
     if (status != 200)
     {
-        Debug::debug() << "  [LastFmService] Sign In request failed, http error" << status;
+        Debug::debug() << "    [LastFmService] Sign In request failed, http error" << status;
         emit signInFinished();
         return;
     }
@@ -209,9 +209,9 @@ void LastFmService::slot_sign_in_finished(QNetworkReply* reply)
         LastFm::GLOBAL::session_key = key.childNodes().at(0).nodeValue();
         LastFm::GLOBAL::username    = name.childNodes().at(0).nodeValue();
 
-        Debug::debug() << "  [LastFmService] Sign in Successfull";
-        Debug::debug() << "  [LastFmService] Sign in Successfull LastFm::GLOBAL::session_key " << LastFm::GLOBAL::session_key;
-        Debug::debug() << "  [LastFmService] Sign in Successfull LastFm::GLOBAL::username " << LastFm::GLOBAL::username;
+        Debug::debug() << "    [LastFmService] Sign in Successfull";
+        Debug::debug() << "    [LastFmService] Sign in Successfull LastFm::GLOBAL::session_key " << LastFm::GLOBAL::session_key;
+        Debug::debug() << "    [LastFmService] Sign in Successfull LastFm::GLOBAL::username " << LastFm::GLOBAL::username;
     }
 
     emit signInFinished();  
@@ -219,7 +219,7 @@ void LastFmService::slot_sign_in_finished(QNetworkReply* reply)
 
 void LastFmService::signOut()
 {
-    Debug::debug() << "  [LastFmService] Sign out";
+    Debug::debug() << "    [LastFmService] Sign out";
     LastFm::GLOBAL::username.clear();
     LastFm::GLOBAL::session_key.clear();  
 }
@@ -227,7 +227,7 @@ void LastFmService::signOut()
 
 void LastFmService::love(MEDIA::TrackPtr track, bool love)
 {
-    Debug::debug() << "  [LastFmService] love";
+    Debug::debug() << "    [LastFmService] love";
 
     QUrl url("http://ws.audioscrobbler.com/2.0/");
 
@@ -254,26 +254,26 @@ void LastFmService::love(MEDIA::TrackPtr track, bool love)
 
 void LastFmService::scrobble() 
 {
-    Debug::debug() << "  [LastFmService] scrobble ";
+    Debug::debug() << "    [LastFmService] scrobble ";
   
     if(!m_currentTrack) {
-      Debug::debug() << "  [LastFmService] no current track ";
+      Debug::debug() << "    [LastFmService] no current track ";
       return;
     }
     
     if (LastFm::GLOBAL::session_key.isEmpty()) {
-        Debug::warning() <<  "Not authenticated to Last.fm";
+        Debug::warning() <<  "    [LastFmService] Not authenticated to Last.fm";
         return;
     }
     
     m_playbackLength  += QDateTime::currentDateTime().toTime_t() - m_unpauseTime;
-    //Debug::debug() << "  [LastFmService] scrobble track m_playbackLength" << m_playbackLength;
-    //Debug::debug() << "  [LastFmService] scrobble track m_trackLength" << m_trackLength;
+    //Debug::debug() << "    [LastFmService] scrobble track m_playbackLength" << m_playbackLength;
+    //Debug::debug() << "    [LastFmService] scrobble track m_trackLength" << m_trackLength;
 
     /* The track must be played for at least half of it's duration or at least 4 minutes, whatever
        occurs first and must be longer then 30 seconds to be scrobbled */
     if (((m_playbackLength < m_currentTrack->duration / 2) && (m_playbackLength < 240)) || (m_currentTrack->duration < 30)) {
-        Debug::debug() << "  [LastFmService] track " << m_currentTrack->title << "was not played long enough or is too short, not scrobbling";
+        Debug::debug() << "    [LastFmService] track " << m_currentTrack->title << "was not played long enough or is too short, not scrobbling";
         return;
     }  
     
@@ -302,9 +302,9 @@ void LastFmService::scrobble()
 
 void LastFmService::nowPlaying() 
 {
-    Debug::debug() << "  [LastFmService] now playing";
+    Debug::debug() << "    [LastFmService] now playing";
     if(!m_currentTrack) {
-      Debug::debug() << "  [LastFmService] now playing : no current track ";
+      Debug::debug() << "    [LastFmService] now playing : no current track ";
       return;
     }
     
@@ -339,7 +339,7 @@ void LastFmService::slot_lastfm_response(QNetworkReply* reply)
     int status = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
     if (status != 200)
     {
-        Debug::debug() << "  [LastFmService] http error" << status;
+        Debug::debug() << "    [LastFmService] http error" << status;
         return;
     }
 
@@ -350,18 +350,18 @@ void LastFmService::slot_lastfm_response(QNetworkReply* reply)
     QDomElement lfm = document.documentElement();
     if (lfm.attribute("status", "") == "ok") 
     {
-        Debug::debug() << "  [LastFmService] successfull";
+        Debug::debug() << "    [LastFmService] successfull";
     }
     else 
     {
-        Debug::debug() << "  [LastFmService] failed";
+        Debug::debug() << "    [LastFmService] failed";
     }  
 }     
 
 
 void LastFmService::slot_track_changed() 
 {
-    Debug::debug() << "  [LastFmService] slot_track_changed " << m_currentTrack;
+    Debug::debug() << "    [LastFmService] slot_track_changed " << m_currentTrack;
 
     if (m_currentTrack)
       scrobble();
@@ -379,7 +379,7 @@ void LastFmService::slot_track_changed()
 
 void LastFmService::slot_state_changed() 
 {
-    Debug::debug() << "  [LastFmService] slot_state_changed " << m_currentTrack;
+    Debug::debug() << "    [LastFmService] slot_state_changed " << m_currentTrack;
 
     if ( m_engineOldState == ENGINE::PAUSED && Engine::instance()->state() == ENGINE::PLAYING)
     {

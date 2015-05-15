@@ -40,7 +40,7 @@ HistoModel* HistoModel::INSTANCE = 0;
 */
 HistoModel::HistoModel(QObject *parent) : QObject(parent)
 {
-    Debug::debug() << " ---- HistoModel --> creation";
+    //Debug::debug() << "      [HistoModel] creation";
     INSTANCE            = this;
 }
 
@@ -56,7 +56,7 @@ void HistoModel::clear()
 //! ------------------ HistoModel::updateModel ---------------------------------
 void HistoModel::updateModel()
 {
-    Debug::debug() << " ---- HistoModel --> updateModel";
+    Debug::debug() << "      [HistoModel] updateModel";
     this->clear();
 
     if (!Database::instance()->open())

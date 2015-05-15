@@ -157,7 +157,7 @@ QList<QAction *> LocalScene::actions()
 *******************************************************************************/
 void LocalScene::setSearch(const QVariant& variant)
 {
-    Debug::debug() << Q_FUNC_INFO;
+    Debug::debug() << "   [LocalScene] setSearch";
     
     if(variant.canConvert<MediaSearch>())
     {
@@ -695,7 +695,7 @@ void LocalScene::populateYearScene()
 
 void LocalScene::populateFavoriteScene()
 {
-    Debug::debug() << "## LocalScene::populateFavoriteScene";
+    //Debug::debug() << "   [LocalScene] populateFavoriteScene";
     
     int categorieRow = 0;
     int artistRow    = 0;
@@ -1122,7 +1122,7 @@ void LocalScene::slot_item_mouseMove()
 
 void LocalScene::mousePressEvent ( QGraphicsSceneMouseEvent * event )
 {
-//     Debug::debug() << "   [LocalScene] mousePressEvent";  
+    //Debug::debug() << "   [LocalScene] mousePressEvent";  
     m_mouseGrabbedItem = this->itemAt(event->scenePos(), QTransform());
 
     if(m_mouseGrabbedItem && (Qt::ShiftModifier == QApplication::keyboardModifiers()) )
@@ -1209,7 +1209,7 @@ void LocalScene::mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * event )
 *******************************************************************************/
 void LocalScene::keyPressEvent ( QKeyEvent * keyEvent )
 {
-//     Debug::debug() << "  [LocalScene] keyPressEvent " << keyEvent->key();
+    //Debug::debug() << "  [LocalScene] keyPressEvent " << keyEvent->key();
 
     if( keyEvent->key() == Qt::Key_Escape ) 
     {

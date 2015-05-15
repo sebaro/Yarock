@@ -73,6 +73,8 @@ void PlayqueueBase::insertTrack(const MEDIA::TrackPtr track, int pos)
     m_tracks.insert(start, track);
 }
     
+   
+    
 MEDIA::TrackPtr PlayqueueBase::removeTrackAt(int i)
 {
     if(rowExists(i))

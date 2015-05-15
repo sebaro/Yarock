@@ -48,7 +48,6 @@ Q_OBJECT
 
   private slots:
     void slot_update_filter();
-    void slot_update_playqueue_actions();
     void slot_update_playqueue_status_info();
     void slot_removeduplicate_changed();
     

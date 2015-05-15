@@ -44,7 +44,7 @@ CentralWidget::CentralWidget(
     m_parent             = parent;
 
     /* UI setup */
-    this->setObjectName(QString::fromUtf8("Main widget"));
+    this->setObjectName(QString::fromUtf8("Central Widget"));
     this->setAutoFillBackground(true);
 
     this->setFrameShape(QFrame::StyledPanel);
@@ -52,32 +52,95 @@ CentralWidget::CentralWidget(
 
     /* right widget */
     right_widget = new MainRightWidget(this);
-    right_widget->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding );
-    right_widget->addWidget(playlistWidget);
-    
+    right_widget->addWidget( playlistWidget );
+
+
     /* left widget */
     left_widget = new MainLeftWidget(this);
 
-    /* splitter population */
+
+    /* content widget splitter population */
     m_viewsSplitter_1 = new CustomSplitter(this);
     m_viewsSplitter_1->setObjectName(QString::fromUtf8("viewsSplitter_1"));
     m_viewsSplitter_1->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
-    m_viewsSplitter_1->addWidget(left_widget);
-    m_viewsSplitter_1->addWidget(right_widget);    
+    m_viewsSplitter_1->addWidget( left_widget->contentWidget() );
+    m_viewsSplitter_1->addWidget( right_widget->contentWidget() );    
+    
+    QPalette p1;
+    p1.setColor(QPalette::Background, QApplication::palette().color(QPalette::Normal, QPalette::Base));
+    m_viewsSplitter_1->setPalette( p1 );
+        
+    /* header widget splitter population */
+    m_viewsSplitter_1b = new CustomSplitter(this);
+    m_viewsSplitter_1b->setObjectName(QString::fromUtf8("viewsSplitter_1b"));
+    m_viewsSplitter_1b->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::MinimumExpanding );
+    m_viewsSplitter_1b->addWidget( left_widget->headerWidget() );
+    m_viewsSplitter_1b->addWidget( right_widget->headerWidget() );    
+    m_viewsSplitter_1b->handle(1)->setEnabled(false);
+    m_viewsSplitter_1b->handle(1)->setAttribute( Qt::WA_TransparentForMouseEvents );
+    m_viewsSplitter_1b->handle(1)->setFocusPolicy( Qt::NoFocus );
+
+
+    QPalette p2;    
+    p2.setColor(QPalette::Background,  QApplication::palette().color( QPalette::Window ) );
+    m_viewsSplitter_1b->setPalette( p2 );
     
     /* final layout */
-    QVBoxLayout* centralWidgetLayout = new QVBoxLayout(this);
-    centralWidgetLayout->setSpacing(0);
-    centralWidgetLayout->setContentsMargins(0, 0, 0, 0);    
-    centralWidgetLayout->addWidget(m_viewsSplitter_1);
-    centralWidgetLayout->setStretch(0,1);
-    centralWidgetLayout->addWidget(new PlayerToolBar(this));
+    QVBoxLayout* layout = new QVBoxLayout(this);
+    layout->setSpacing(0);
+    layout->setContentsMargins(0, 0, 0, 0);    
+    layout->addWidget( m_viewsSplitter_1b );
+    layout->addWidget( m_viewsSplitter_1 );
+    layout->setStretch(1,1);
+    layout->addWidget( new PlayerToolBar(this) );
 
     /* signals connection */
     connect(ACTIONS()->value(APP_SHOW_PLAYQUEUE),   SIGNAL(triggered()), SLOT(slot_show_playlist()));
     connect(ACTIONS()->value(APP_SHOW_MENU),        SIGNAL(triggered()), SLOT(slot_show_menu()));
+
+    /* event filter for splitter synchro */
+    right_widget->contentWidget()->installEventFilter(this);
 }
 
+/*******************************************************************************
+    eventFilter
+*******************************************************************************/
+bool CentralWidget::eventFilter(QObject *obj, QEvent *ev)
+{
+    //Debug::debug() << "CentralWidget eventFilter  obj" << obj;
+    const int type = ev->type();
+    const QWidget *wid = qobject_cast<QWidget*>(obj);
+
+    if (obj == this)
+    {
+        return false;
+    }
+
+    // hide conditions of the SearchPopup
+    if (wid && (wid == right_widget->contentWidget() ))
+    {
+      if(type == QEvent::Resize) {
+          //Debug::debug() << "CentralWidget eventFilter  RESIZE EVENT";
+          m_viewsSplitter_1b->setSizes( m_viewsSplitter_1->sizes() );
+          return false;
+      }
+      else if(type == QEvent::Hide) {
+          //Debug::debug() << "CentralWidget eventFilter  HIDE EVENT";
+          right_widget->headerWidget()->hide();
+      }
+      else if(type == QEvent::Show) {
+          //Debug::debug() << "CentralWidget eventFilter  SHOW EVENT";
+          right_widget->headerWidget()->show();
+      }
+    }
+
+    return QWidget::eventFilter(obj, ev);
+}
+
+
+/*******************************************************************************
+    saveState
+*******************************************************************************/
 void CentralWidget::saveState()
 {
       SETTINGS()->_splitterState_1   = m_viewsSplitter_1->saveState();

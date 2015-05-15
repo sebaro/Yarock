@@ -83,11 +83,9 @@ Q_OBJECT
 
   private slots:
     void slot_insert_mediaitem(const MEDIA::TrackPtr media, int pos=-1);
-    
  
   public slots:    
     void clear();
-    void signalUpdate();
     void slot_sort(QVariant query);    
 
   signals:
@@ -95,6 +93,7 @@ Q_OBJECT
     void updated();
     void modelCleared();
     void insertTrack(const MEDIA::TrackPtr, int);
+    void insertTracks(QList<MEDIA::TrackPtr>, int);
 
   private:
     PlayqueueProxyModel     *m_proxy_model;

@@ -373,6 +373,7 @@ void BrowserView::switch_view(BrowserParam& param)
     scene->setSearch( param.search );
     scene->setData( param.data );
     scene->populateScene();
+    scene->playSceneContents( param.search );
     this->setFocus();
 
     MainLeftWidget::instance()->setMode(param.mode);

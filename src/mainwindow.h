@@ -87,8 +87,11 @@ Q_OBJECT
     void rebuildDatabase();
 
   private slots:
+
+#ifdef TEST_FLAG    
     /* Debug */
     void slot_start_test();
+#endif
     /* Mainwindow        */
     void slot_systray_clicked(QSystemTrayIcon::ActivationReason);
     void slot_widget_mode_switch();

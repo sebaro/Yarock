@@ -20,7 +20,7 @@
 #include "core/player/engine.h"
 #include "covers/covercache.h"
 
-#include "constants.h"
+#include "config.h"
 #include "mainwindow.h"
 
 #include "settings.h"
@@ -87,7 +87,7 @@ void DbusNotification::init()
 
 void DbusNotification::reloadSettings()
 {
-    Debug::debug() << "DbusNotification -> reloadSettings";
+    Debug::debug() << "  [DbusNotification] reloadSettings";
     bool isEnable   = SETTINGS()->_useDbusNotification;
 
     /*---------------------------------*/
@@ -121,13 +121,13 @@ void DbusNotification::reloadSettings()
 
 void DbusNotification::handleVolumeChanged()
 {
-    Debug::debug() << "DbusNotification -> handleVolumeChanged";
+    Debug::debug() << "  [DbusNotification] handleVolumeChanged";
 
 }
 
 void DbusNotification::handleStateChanged()
 {
-    //Debug::debug() << Q_FUNC_INFO;
+    //Debug::debug() << "  [DbusNotification] handleStateChanged";
     
 /* note 07-12-2012 :
  * les messages pour la piste de lecture ne sont pas envoyés (mandriva + phonon-gstreamer)
@@ -229,7 +229,7 @@ void DbusNotification::sendMessage(
                const QString& icon,
                const QImage& image)
 {
-    //Debug::debug() << "DbusNotification -> sendMessage" << message;
+    //Debug::debug() << "  [DbusNotification] sendMessage" << message;
 
     QVariantMap hints;
     if (!image.isNull())

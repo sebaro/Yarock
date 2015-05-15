@@ -38,16 +38,17 @@ MainRightWidget* MainRightWidget::INSTANCE = 0;
 *                                                                              *
 ********************************************************************************
 */
-MainRightWidget::MainRightWidget(QWidget *parent) : QWidget( parent )
+MainRightWidget::MainRightWidget(QWidget *parent)
 {
     INSTANCE = this;
     
+    m_parent = parent;
+    
     /* ----- header ----- */
-    m_header = new HeaderWidget(this);
+    m_header = new HeaderWidget(m_parent);
     m_header->setMinimumHeight(36);
 
-
-    QToolButton* ui_tool_button = new QToolButton();
+    QToolButton* ui_tool_button = new QToolButton(m_parent);
     ui_tool_button->setArrowType(Qt::DownArrow); 
     ui_tool_button->setAutoRaise( true );
     ui_tool_button->setPopupMode(QToolButton::InstantPopup);
@@ -61,17 +62,9 @@ MainRightWidget::MainRightWidget(QWidget *parent) : QWidget( parent )
 
     
     /* ----- content ----- */
-      /*  stacked widget */    
-      m_stackedWidget = new QStackedWidget();
+    m_stackedWidget = new QStackedWidget(m_parent);
+    m_stackedWidget->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding );
       
-    /* ----- layout ----- */
-    QVBoxLayout* vl0 = new QVBoxLayout(this);
-    vl0->setSpacing(0);
-    vl0->setContentsMargins(0, 0, 0, 0);
-    vl0->addWidget(m_header);
-    vl0->addWidget(m_stackedWidget);    
-    
-
     /* ----- init ----- */
     m_buttons = new QButtonGroup();
     m_buttons->setExclusive(true);    
@@ -101,20 +94,20 @@ void MainRightWidget::slot_onmenu_clicked()
       m_right_menu->addAction( Action_Smart_Edit );
     }
     
-    QPoint pos( m_header->width() - m_right_menu->sizeHint().width() , m_header->height() + 2 );
-    m_right_menu->exec( mapToGlobal( pos ) );
+    QPoint pos( m_parent->width() - m_right_menu->sizeHint().width() , m_header->height() + 2 );
+    m_right_menu->exec( m_parent->mapToGlobal( pos ) );
 }
 
 
 void MainRightWidget::slot_create_new_playlist_editor()
 {
-    addWidget(MainRightWidget::PLAYLIST_EDIT, new EditorPlaylist(this), true);
+    addWidget(MainRightWidget::PLAYLIST_EDIT, new EditorPlaylist(m_parent), true);
   
 }
 
 void MainRightWidget::slot_create_new_smart_editor()
 {
-    addWidget(MainRightWidget::SMART_EDIT, new EditorSmart(this), true);
+    addWidget(MainRightWidget::SMART_EDIT, new EditorSmart(m_parent), true);
 }
     
     
@@ -142,7 +135,7 @@ void MainRightWidget::addWidget(QWidget* widget, bool activate)
 void MainRightWidget::addWidget(WidgetType type, QWidget* widget, bool activate)
 {
     /* create button */
-    QPushButton* button = new QPushButton(this);
+    QPushButton* button = new QPushButton(m_parent);
     button->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum);
 
     switch (type)

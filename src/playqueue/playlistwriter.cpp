@@ -139,7 +139,7 @@ void PlaylistWriter::updateDatabase(QList<MEDIA::TrackPtr> list)
     /*-----------------------------------------------------------*/
     /* PLAYLIST part in database                                 */
     /* ----------------------------------------------------------*/ 
-    Debug::debug() << "    [PlaylistWriter] insert playlist into db" << m_fileToSave;
+    Debug::debug() << "  [PlaylistWriter] insert playlist into db" << m_fileToSave;
 
     query.prepare("INSERT INTO `playlists`(`filename`,`name`,`type`,`favorite`,`dir_id`,`mtime`)" \
                   "VALUES(?,?,?,?,?,?);");
@@ -162,7 +162,7 @@ void PlaylistWriter::updateDatabase(QList<MEDIA::TrackPtr> list)
 
       //! Playlist Item part in database
       QSqlQuery itemQuery(*Database::instance()->db());
-      //Debug::debug() << "--- PlaylistWriter -> insert playlistitem url:" << url;
+      //Debug::debug() << "  [PlaylistWriter] insert playlistitem url:" << url;
 
       itemQuery.prepare("INSERT INTO `playlist_items`(`url`,`name`,`playlist_id`)" \
                         "VALUES(?,?,(SELECT `id` FROM `playlists` WHERE `filename`=?));");

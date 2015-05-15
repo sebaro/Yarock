@@ -56,7 +56,12 @@ FirstTimeDialog::FirstTimeDialog(QWidget *parent) : DialogBase(parent, tr("Setup
     setContentLayout(layout);
     
     /* -- initialization -- */
-    QDir userMusicDir = QDir( QDesktopServices::storageLocation( QDesktopServices::MusicLocation ) );
+#if QT_VERSION < 0x050000
+     QDir userMusicDir = QDir( QDesktopServices::storageLocation( QDesktopServices::MusicLocation ) );
+#else
+    QDir userMusicDir = QDir( QStandardPaths::writableLocation( QStandardPaths::MusicLocation ) );
+#endif
+
     if(userMusicDir.exists())
       ui_add_folder->setText( userMusicDir.path() );
     else

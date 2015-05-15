@@ -79,7 +79,7 @@ bool LocalTrackModel::isEmpty() const
 //! ----------------------- Get tracks method ----------------------------------
 QList<MEDIA::TrackPtr> LocalTrackModel::getItemChildrenTracks(const MEDIA::MediaPtr parent)
 {
-    //Debug::debug() << "LocalTrackModel::getItemChildrenTracks";
+    //Debug::debug() << "      [LocalTrackModel] getItemChildrenTracks";
 
     QList<MEDIA::TrackPtr> result;
     if(!parent)

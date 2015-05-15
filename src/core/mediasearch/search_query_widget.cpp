@@ -153,12 +153,12 @@ SearchQuery Search_Query_Widget::query()
     else if (value_page == ui_page_date)
     {
       result.value_ = ui_date_edit->date();
-      //Debug::debug() << " SearchQuery  QDate :" << result.value_;
+      //Debug::debug() << "        [SearchQuery] QDate :" << result.value_;
     }
     else if (value_page == ui_page_time)
     {
       result.value_ = ui_time_edit->time();
-      //Debug::debug() << " SearchQuery  QTime :" << result.value_;
+      //Debug::debug() << "        [SearchQuery] QTime :" << result.value_;
     }
     else if (value_page == ui_page_rating)
     {
@@ -202,7 +202,7 @@ void Search_Query_Widget::set_query(SearchQuery& query)
 
 void Search_Query_Widget::slotFieldChanged(int i)
 {
-    //Debug::debug() << " SearchQuery::slotFieldChanged" << i;
+    //Debug::debug() << "        [SearchQuery] slotFieldChanged" << i;
 
     SearchQuery::Search_Field field = SearchQuery::Search_Field(
       ui_search_field->itemData(i).toInt()
@@ -244,6 +244,6 @@ void Search_Query_Widget::slotFieldChanged(int i)
 
 void Search_Query_Widget::slotOperatorChanged(int)
 {
-    //Debug::debug() << " SearchQuery::slotOperatorChanged";
+    //Debug::debug() << "        [SearchQuery] slotOperatorChanged";
 }
 

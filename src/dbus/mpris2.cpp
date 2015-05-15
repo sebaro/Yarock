@@ -23,7 +23,6 @@
 #include "widgets/audiocontrols.h"
 #include "global_actions.h"
 #include "utilities.h"
-#include "constants.h"
 #include "debug.h"
 
 #include <QApplication>
@@ -259,8 +258,6 @@ QVariantMap Mpris2::metadata() const
         metadataMap.insert( "mpris:length", static_cast<qlonglong>(track->duration) * 1000000 );
 
         const QString coverpath = UTIL::CONFIGDIR + "/albums/" + track->coverName();
-      
-        //Debug::debug() << "coverpath = " << coverpath;
       
         if( QFile(coverpath).exists() )
           metadataMap.insert( "mpris:artUrl", QString( QUrl::fromLocalFile( coverpath ).toEncoded() ) );

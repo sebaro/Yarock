@@ -6,9 +6,9 @@ set( CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake )
 
 PROJECT( yarock )
 set(YAROCK_MAJOR_VERSION 1)
-set(YAROCK_MINOR_VERSION 0)
-set(YAROCK_PATCH_VERSION 1)
-set(YAROCK_VERSION ${YAROCK_MAJOR_VERSION}.${YAROCK_MINOR_VERSION}.${YAROCK_PATCH_VERSION})
+set(YAROCK_MINOR_VERSION 1)
+set(YAROCK_PATCH_VERSION 2)
+set(YAROCK_VERSION "${YAROCK_MAJOR_VERSION}.${YAROCK_MINOR_VERSION}.${YAROCK_PATCH_VERSION}")
 
 # ------------------------------------------------------------------------------
 #  build def
@@ -20,18 +20,8 @@ ADD_DEFINITIONS(-Wall -Wextra )
 #  OPTION
 # ------------------------------------------------------------------------------
 OPTION(ENABLE_PHONON "Enable Phonon library" ON)
-OPTION(ENABLE_VLC "Enable VLC library" OFF)
-
-if (ENABLE_VLC)
-    add_definitions(-DENABLE_VLC)
-endif (ENABLE_VLC)
-
-if (ENABLE_PHONON)
-    add_definitions(-DENABLE_PHONON)
-endif (ENABLE_PHONON)
-
-MESSAGE( STATUS "Phonon system enable:" ${ENABLE_PHONON} " (use cmake .. -DENABLE_PHONON=ON/OFF)")
-MESSAGE( STATUS "Vlc audio engine enable:" ${ENABLE_VLC} " (use cmake .. -DENABLE_VLC=ON/OFF)")
+OPTION(ENABLE_VLC "Enable VLC standalone audio engine" OFF)
+OPTION(ENABLE_MPV "Enable MPV (MPlayer) standalone audio engine" OFF)
 
 # ------------------------------------------------------------------------------
 #  EXTERNAL PACKAGE
@@ -40,7 +30,8 @@ OPTION(ENABLE_QT5 "Enable build with Qt5" OFF)
 
 #-- Qt
 if (ENABLE_QT5)
-    set(CMAKE_CXX_FLAGS "${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}")
+    
     FIND_PACKAGE(Qt5Gui REQUIRED)
     FIND_PACKAGE(Qt5Widgets REQUIRED)
     FIND_PACKAGE(Qt5Xml REQUIRED)
@@ -70,7 +61,6 @@ if (ENABLE_QT5)
                      ${Qt5Network_DEFINITIONS} 
                      ${Qt5Xml_DEFINITIONS} 
                      ${Qt5Concurrent_DEFINITIONS})
-
 else (ENABLE_QT5)
     FIND_PACKAGE(Qt4 4.7.0 REQUIRED QtCore QtGui QtXml QtNetwork QtSql QtDbus)
 
@@ -82,20 +72,11 @@ else (ENABLE_QT5)
                 ${QT_QTSQL_LIBRARY})
 
     set (QTINCLUDES ${QT_INCLUDES})
-    add_definitions( -DQT_NO_STL -DQT_NO_CAST_TO_ASCII)
+    
+    add_definitions(${QT_DEFINITIONS})    
+
 endif (ENABLE_QT5)
 
-if (ENABLE_VLC)
-    FIND_PACKAGE( LIBVLC REQUIRED)
-endif (ENABLE_VLC)
-
-if (ENABLE_PHONON)
-if(ENABLE_QT5)
-    find_package(Phonon4Qt5 REQUIRED)
-else(ENABLE_QT5)
-    FIND_PACKAGE( Phonon REQUIRED )
-endif (ENABLE_QT5)    
-endif (ENABLE_PHONON)
  
 FIND_PACKAGE( Taglib 1.6.0 REQUIRED )
 
@@ -112,16 +93,7 @@ endif (TAGLIB_FOUND)
 # ------------------------------------------------------------------------------
 #  INCLUDES
 # ------------------------------------------------------------------------------
-#INCLUDE(${QT_USE_FILE})
 INCLUDE_DIRECTORIES( ${QTINCLUDES} )
-
-if (ENABLE_VLC)
-  INCLUDE_DIRECTORIES( ${LIBVLC_INCLUDE_DIR} )
-endif (ENABLE_VLC)
-
-if (ENABLE_PHONON)
-  INCLUDE_DIRECTORIES( ${PHONON_INCLUDES} )
-endif (ENABLE_PHONON)
 
 INCLUDE_DIRECTORIES( ${TAGLIB_INCLUDES} )
 INCLUDE_DIRECTORIES( ${QJSON_INCLUDE_DIR} )
@@ -153,11 +125,47 @@ else (USE_SYSTEM_QXT)
   set(QXT_LIBRARIES qxt) 
 endif (USE_SYSTEM_QXT)
 
+# ------------------------------------------------------------------------------
+#  INSTALL DIRECTORIES
+# ------------------------------------------------------------------------------
+if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+   set (CMAKE_INSTALL_PREFIX /usr CACHE PATH "default install path" FORCE )
+endif()
 
+set(CMAKE_INSTALL_BIN          "${CMAKE_INSTALL_PREFIX}/bin"         CACHE PATH "binaries installation path" FORCE)
+set(CMAKE_INSTALL_LIB          "${CMAKE_INSTALL_PREFIX}/lib/yarock"  CACHE PATH "libraries installation path" FORCE)
+
+# ------------------------------------------------------------------------------
+#  configure file
+# ------------------------------------------------------------------------------
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/config.h.in
+               ${CMAKE_CURRENT_BINARY_DIR}/config.h)
+               
 # ------------------------------------------------------------------------------
 #  SOURCES
 # ------------------------------------------------------------------------------
 add_subdirectory(src)
+
+MESSAGE(STATUS "Audio Engine Vlc.................................................  " ${ENABLE_VLC} " [use cmake .. -DENABLE_PHONON=ON/OFF]" )
+if (ENABLE_VLC)
+  MESSAGE(STATUS "  WARN:Vlc and yarock shall be build against the same Qt version" )
+  add_definitions(-DENABLE_VLC)
+  add_subdirectory(src/core/player/vlc)
+endif (ENABLE_VLC)
+
+MESSAGE(STATUS "Audio Engine Mpv.................................................  " ${ENABLE_MPV} " [use cmake .. -DENABLE_VLC=ON/OFF]")
+if (ENABLE_MPV)
+  add_definitions(-DENABLE_MPV)
+  add_subdirectory(src/core/player/mpv)
+endif (ENABLE_MPV)
+
+MESSAGE(STATUS "Audio Engine Phonon..............................................  " ${ENABLE_PHONON} " [use cmake .. -DENABLE_MPV=ON/OFF]")
+if (ENABLE_PHONON)
+  add_definitions(-DENABLE_PHONON)
+  add_subdirectory(src/core/player/phonon)
+endif (ENABLE_PHONON)
+
+
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR})
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
 INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR})
@@ -205,8 +213,8 @@ endif (ENABLE_QT5)
 file( GLOB TRANS_FILES ${CMAKE_SOURCE_DIR}/translation/yarock_*.ts)
 set(TS_FILES ${TRANS_FILES})
 
-#SET(UPDATE_TRANSLATIONS OFF) # no ts update
-SET(UPDATE_TRANSLATIONS ON) # ts update
+SET(UPDATE_TRANSLATIONS OFF) # no ts update
+#SET(UPDATE_TRANSLATIONS ON) # ts update
 
 
 option (UPDATE_TRANSLATIONS "Update source translation ../translation/*.ts files")
@@ -225,7 +233,6 @@ endif (ENABLE_QT5)
 # ------------------------------------------------------------------------------
 #  BUILDING
 # ------------------------------------------------------------------------------
-add_definitions(${QT_DEFINITIONS})
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Woverloaded-virtual -Wall -Wno-sign-compare")
     
@@ -245,41 +252,30 @@ if(NOT ENABLE_QT5)
   TARGET_LINK_LIBRARIES(yarock ${QJSON_LIBRARIES})
 endif(NOT ENABLE_QT5)
 
-  
-if (ENABLE_VLC)
-  TARGET_LINK_LIBRARIES(yarock ${LIBVLC_LIBRARY})
-endif (ENABLE_VLC)  
-
-if (ENABLE_PHONON)
-  if(ENABLE_QT5)  
-    TARGET_LINK_LIBRARIES(yarock ${PHONON4QT5_LIBRARY})
-  else(ENABLE_QT5)
-    TARGET_LINK_LIBRARIES(yarock ${PHONON_LIBS})
-  endif(ENABLE_QT5)
-endif (ENABLE_PHONON)
-
+ 
 # ------------------------------------------------------------------------------
 #  INSTALL
 # ------------------------------------------------------------------------------
 # -- install binary file
-install( TARGETS yarock DESTINATION /usr/bin/ )
+install( TARGETS yarock DESTINATION ${CMAKE_INSTALL_BIN} )
 
 # -- install translations files
-install(FILES ${YAROCK_QM_FILES} DESTINATION /usr/share/yarock/translations/)
+install(FILES ${YAROCK_QM_FILES} DESTINATION "${CMAKE_INSTALL_PREFIX}/share/yarock/translations")
 
 # -- install destop file
-install(FILES data/yarock.desktop  DESTINATION /usr/share/applications/)
+install(FILES data/yarock.desktop  DESTINATION "${CMAKE_INSTALL_PREFIX}/share/applications" )
 
 # -- install appdata file
-install(FILES data/yarock.appdata.xml  DESTINATION /usr/share/appdata/)
+install(FILES data/yarock.appdata.xml  DESTINATION "${CMAKE_INSTALL_PREFIX}/share/appdata" )
 
 # -- install icons files
-install(FILES icon/yarock_16x16.png DESTINATION share/icons/hicolor/16x16/apps/ RENAME application-x-yarock.png)
-install(FILES icon/yarock_32x32.png DESTINATION share/icons/hicolor/32x32/apps/ RENAME application-x-yarock.png)
-install(FILES icon/yarock_48x48.png DESTINATION share/icons/hicolor/48x48/apps/ RENAME application-x-yarock.png)
-install(FILES icon/yarock_64x64.png DESTINATION share/icons/hicolor/64x64/apps/ RENAME application-x-yarock.png)
-install(FILES icon/yarock_128x128.png DESTINATION share/icons/hicolor/128x128/apps/ RENAME application-x-yarock.png)
-
+install(FILES icon/yarock_16x16.png DESTINATION "${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/16x16/apps" RENAME application-x-yarock.png)
+install(FILES icon/yarock_32x32.png DESTINATION "${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/32x32/apps" RENAME application-x-yarock.png)
+install(FILES icon/yarock_48x48.png DESTINATION "${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/48x48/apps" RENAME application-x-yarock.png)
+install(FILES icon/yarock_64x64.png DESTINATION "${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/64x64/apps" RENAME application-x-yarock.png)
+install(FILES icon/yarock_128x128.png DESTINATION "${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/128x128/apps" RENAME application-x-yarock.png)
+       
+       
 
 # ------------------------------------------------------------------------------
 #  UN-INSTALL SUPPORT

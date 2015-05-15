@@ -58,7 +58,6 @@ QString UTIL::getConfigDir()
 }
 
 
-
 QString UTIL::getConfigFile()
 {
     return QString(UTIL::getConfigDir() + QDir::separator() + "yarock-1.conf");
@@ -71,19 +70,23 @@ int UTIL::randomInt(int low, int high)
     return qrand() % ((high + 1) - low) + low;
 }
 
-
-QString UTIL::durationToString(int duration_second)
+QString UTIL::deltaTimeToString(int seconds) 
 {
-    int seconds = qAbs(duration_second);
-    int hours   = seconds / (60*60);
-    int minutes = (seconds / 60) % 60;
-    seconds %= 60;
+  return (seconds >= 0 ? "+" : "-") + UTIL::durationToString(seconds);
+}
+
+QString UTIL::durationToString(int seconds)
+{
+    int sec     = qAbs(seconds);
+    int hours   = sec / (60*60);
+    int minutes = (sec / 60) % 60;
+    sec %= 60;
 
     QString ret;
     if (hours)
-      ret.sprintf("%d:%02d:%02d", hours, minutes, seconds);
+      ret.sprintf("%d:%02d:%02d", hours, minutes, sec);
     else
-      ret.sprintf("%d:%02d", minutes, seconds);
+      ret.sprintf("%d:%02d", minutes, sec);
 
     return ret;
 }

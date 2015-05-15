@@ -41,7 +41,7 @@ MprisManager::MprisManager(QObject *parent) : QObject(parent)
 *******************************************************************************/
 MprisManager::~MprisManager()
 {
-    Debug::debug() << "Mpris -> delete";
+    Debug::debug() << "  [Mpris] delete";
 
     if(m_mpris2 != 0) 
     {
@@ -55,7 +55,7 @@ MprisManager::~MprisManager()
 *******************************************************************************/
 void MprisManager::reloadSettings()
 {
-    Debug::debug() << "Mpris -> reloadSettings";
+    Debug::debug() << "  [Mpris] reloadSettings";
     if(SETTINGS()->_useMpris)
     {
       if(!m_mpris2)

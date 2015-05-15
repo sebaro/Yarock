@@ -48,6 +48,7 @@ Q_OBJECT
 
     void setSearch(const QVariant&) {};
     void setData(const QVariant&) {};
+    void playSceneContents(const QVariant&) {};
     
   /* Basic Scene virtual */      
   public slots:

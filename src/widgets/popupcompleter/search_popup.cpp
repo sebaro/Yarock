@@ -80,7 +80,7 @@ SearchPopup::~SearchPopup()
 *******************************************************************************/
 void SearchPopup::show_popup()
 {
-    Debug::debug() << "SearchPopup::show_popup";
+    Debug::debug() << "      [SearchPopup] show_popup";
 
     if(m_popup_model->rowCount() == 0)
       return;
@@ -106,7 +106,7 @@ void SearchPopup::show_popup()
 *******************************************************************************/
 void SearchPopup::slot_on_new_search()
 {
-    //Debug::debug() << "SearchPopup::slot_on_new_search";
+    //Debug::debug() << "      [SearchPopup] slot_on_new_search";
     m_timer->stop();
     this->hide();
 }
@@ -116,7 +116,7 @@ void SearchPopup::slot_on_new_search()
 *******************************************************************************/
 void SearchPopup::slot_exec_popup()
 {
-    Debug::debug() << "SearchPopup::slot_exec_popup m_enableUpdate" << m_enableUpdate;
+    Debug::debug() << "      [SearchPopup] slot_exec_popup m_enableUpdate" << m_enableUpdate;
 
     if (!m_enableUpdate) return;
     if (!m_line_edit->hasFocus()) return;
@@ -124,7 +124,7 @@ void SearchPopup::slot_exec_popup()
     const QString query = m_line_edit->text();
     m_old_search = query;
 
-    //Debug::debug() << "SearchPopup slot_exec_popup search pattern" << query;
+    //Debug::debug() << "      [SearchPopup] slot_exec_popup search pattern" << query;
     if (query.isEmpty()) {
         this->hide();
         return;
@@ -142,7 +142,7 @@ void SearchPopup::slot_exec_popup()
 *******************************************************************************/
 void SearchPopup::slot_popup_item_clicked(const QString& text)
 {
-    Debug::debug() << "SearchPopup::slot_popup_item_clicked";
+    Debug::debug() << "      [SearchPopup] slot_popup_item_clicked";
     m_timer->stop();
     this->hide();
     m_line_edit->setFocus();
@@ -156,7 +156,7 @@ void SearchPopup::slot_popup_item_clicked(const QString& text)
 *******************************************************************************/
 bool SearchPopup::eventFilter(QObject *obj, QEvent *ev)
 {
-    //Debug::debug() << "SearchPopup eventFilter  obj" << obj;
+    //Debug::debug() << "      [SearchPopup] eventFilter  obj" << obj;
     int type = ev->type();
     QWidget *wid = qobject_cast<QWidget*>(obj);
 
@@ -184,18 +184,18 @@ bool SearchPopup::eventFilter(QObject *obj, QEvent *ev)
         {
             QKeyEvent *kev = static_cast<QKeyEvent *>(ev);
             bool consumed = false;
-            //Debug::debug() << "SearchPopup Qt::KeyPress : kev->key()" << kev->key();
+            //Debug::debug() << "      [SearchPopup] Qt::KeyPress : kev->key()" << kev->key();
 
             switch (kev->key())
             {
               case Qt::Key_Enter:
               case Qt::Key_Return:
-                Debug::debug() << "SearchPopup Qt::Key_Return";
+                Debug::debug() << "      [SearchPopup] Qt::Key_Return";
                 m_popup_view->slot_item_clicked ( m_popup_view->currentIndex() );
                 consumed = true;
                 break;
               case Qt::Key_Escape:
-                Debug::debug() << "SearchPopup Qt::Key_Escape";
+                Debug::debug() << "      [SearchPopup] Qt::Key_Escape";
                 m_line_edit->setFocus();
 
                 if(m_old_search != m_line_edit->text())

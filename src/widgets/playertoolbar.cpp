@@ -98,7 +98,6 @@ VolumeToolButton::VolumeToolButton(QWidget *parent) : QToolButton( parent )
     m_menu->setPalette(palette);
     
     /* ---- signals connections ---- */
-    connect(ACTIONS()->value(ENGINE_VOL_MUTE), SIGNAL(triggered()), this, SLOT(slot_mute_toggle_action()));
     connect(Engine::instance() , SIGNAL(muteStateChanged()), this, SLOT(slot_mute_change()));
     connect(Engine::instance() , SIGNAL(volumeChanged()), this, SLOT(slot_volume_change()));
     connect(m_slider, SIGNAL(valueChanged(int)), this, SLOT(slot_apply_volume(int)));
@@ -107,7 +106,7 @@ VolumeToolButton::VolumeToolButton(QWidget *parent) : QToolButton( parent )
     
     /* ---- init  ---- */
     Engine::instance()->setMuted(false);
-    slot_volume_change(true);
+    slot_volume_change();
 }
 
 
@@ -121,25 +120,24 @@ void VolumeToolButton::slot_show_menu()
 }
 
 
-void VolumeToolButton::slot_volume_change(bool init/*=false*/)
+void VolumeToolButton::slot_volume_change()
 {
-//     Debug::debug() << "- VolumeToolButton -> slot_volume_change percent: ";
+    //Debug::debug() << "      [VolumeToolButton] slot_volume_change percent: ";
     int volume = Engine::instance()->volume();
     m_volume_label->setText( QString::number( volume ) + '%' );
-    if(init)
-       m_slider->setValue(Engine::instance()->volume());
+    m_slider->setValue(Engine::instance()->volume());
 }
 
 void VolumeToolButton::slot_apply_volume(int vol)
 {
-//     Debug::debug() << "- VolumeToolButton -> slot_apply_volume : " << vol;
+    //Debug::debug() << "      [VolumeToolButton] slot_apply_volume : " << vol;
 
     Engine::instance()->setVolume(vol);
 }
 
 void VolumeToolButton::slot_mute_change()
 {
-//     Debug::debug() << "VolumeToolButton -> volumeMuteChange()";
+    //Debug::debug() << "      [VolumeToolButton] volumeMuteChange";
 
     if (!Engine::instance()->isMuted())
     {
@@ -151,13 +149,6 @@ void VolumeToolButton::slot_mute_change()
       this->setIcon(QIcon(":/images/volume-muted.png"));
       (ACTIONS()->value(ENGINE_VOL_MUTE))->setIcon(QIcon(":/images/volume-muted.png"));
     }
-}
-
-
-void VolumeToolButton::slot_mute_toggle_action()
-{
-    bool isMuted = Engine::instance()->isMuted();
-    Engine::instance()->setMuted(!isMuted);
 }
 
 
@@ -293,8 +284,6 @@ PlayerToolBar::PlayerToolBar(QWidget *parent) : QWidget( parent )
     
     /* -- signals connection -- */
     connect(this->m_player, SIGNAL(mediaTick(qint64)), this, SLOT(slot_update_time_position(qint64)));
-//     connect(this->m_player, SIGNAL(mediaTotalTimeChanged(qint64)), this, SLOT(slot_update_total_time(qint64)));
-
     connect(this->m_player, SIGNAL(mediaMetaDataChanged()), this, SLOT(slot_update_track_playing_info()));
     connect(this->m_player, SIGNAL(mediaChanged()), this, SLOT(slot_update_track_playing_info()));
     connect(this->m_player, SIGNAL(engineStateChanged()), this, SLOT(slot_on_player_state_changed()));
@@ -303,7 +292,7 @@ PlayerToolBar::PlayerToolBar(QWidget *parent) : QWidget( parent )
 
 void PlayerToolBar::clear()
 {
-    //Debug::debug() << "    [PlayerToolBar] clear";
+    //Debug::debug() << "      [PlayerToolBar] clear";
     m_playingTrack->clear();
     m_currentTime->clear();
     m_totalTime->clear();
@@ -313,7 +302,7 @@ void PlayerToolBar::clear()
 
 void PlayerToolBar::slot_on_player_state_changed()
 {
-    //Debug::debug() << "    [PlayerToolBar] slot_on_player_state_changed";
+    //Debug::debug() << "      [PlayerToolBar] slot_on_player_state_changed";
     if( m_player->state() == ENGINE::STOPPED && !m_player->playingTrack() )
     {
         this->clear();
@@ -331,7 +320,7 @@ void PlayerToolBar::slot_on_player_state_changed()
 
 void PlayerToolBar::slot_update_track_playing_info()
 {
-    Debug::debug() << "    [PlayerToolBar] slot_update_track_playing_info";
+    //Debug::debug() << "      [PlayerToolBar] slot_update_track_playing_info";
    
     if(m_player->playingTrack())
     {
@@ -371,7 +360,7 @@ void PlayerToolBar::slot_update_track_playing_info()
 
 void PlayerToolBar::slot_update_time_position(qint64 newPos /*ms*/)
 {
-    //Debug::debug() << "    [PlayerToolBar] slot_update_time_position " << newPos;
+    //Debug::debug() << "      [PlayerToolBar] slot_update_time_position " << newPos;
 
     if (newPos <= 0) {
         m_currentTime->clear();
@@ -389,7 +378,8 @@ void PlayerToolBar::slot_update_total_time(qint64 newTotalTime /*ms*/)
         m_totalTime->clear();
         return;
     }
-    Debug::debug() << "    [PlayerToolBar] slot_update_total_time update to :" << UTIL::durationToString( newTotalTime / 1000 );
+    //Debug::debug() << "      [PlayerToolBar] slot_update_total_time update to :" << newTotalTime;
+    //Debug::debug() << "      [PlayerToolBar] slot_update_total_time update to :" << UTIL::durationToString( newTotalTime / 1000 );
 
     m_separator->show();
     m_totalTime->setText( UTIL::durationToString( newTotalTime / 1000 ) );

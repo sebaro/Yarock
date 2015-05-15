@@ -41,9 +41,8 @@ Q_OBJECT
   
   private slots:
     void slot_show_menu();
-    void slot_volume_change(bool init=false);
+    void slot_volume_change();
     void slot_mute_change();
-    void slot_mute_toggle_action();
     void slot_apply_volume(int);
     
   private:

@@ -41,7 +41,8 @@ namespace UTIL
 
   int randomInt(int low, int high);
 
-  QString durationToString(int duration_second);
+  QString deltaTimeToString(int seconds);
+  QString durationToString(int seconds);
 
   void urlAddQueryItem( QUrl& url, const QString& key, const QString& value );
   bool urlHasQueryItem( const QUrl& url, const QString& key );

@@ -1,6 +1,24 @@
 # ------------------------------------------------------------------------------
                               Yarock changes 
 # ------------------------------------------------------------------------------
+  - 1.1.2  - PUBLIC RELEASE - may 2015
+  - New    : add alternate mpv audio engine (mplayer based)
+  - New    : add plugin system for audio back-ends, in order to load at run time desire audio engine (vlc, mpv, phonon)  
+  - New    : add "search and play" option for quick playing tracks according to your search result
+  - New    : add add equalizer support for vlc audio engine (vlclib > 2.2)
+  - New    : add popup on player seek bar
+  - BugFix : vlc audio engine -> fix volume management
+  - BugFix : vlc audio engine -> fix backwards seeking
+  - BugFix : fix minor issue when dragging tracks to the bottom of playqueue
+  - BugFix : fix crash when playing stream added to user playlist
+  - Change : dirble radio use api v2 
+  - Change : improve media key support
+  - Change : improve Qt5 building support
+  - Change : improve Qt5 third party source building
+  - Change : various user interface fix and changes
+  - Change : filesystem view, add sorting of files when dragging directory to playqueue
+  - Change : no collection update if directory is not available (remote collection)
+# ------------------------------------------------------------------------------
   - 1.0.1  - PUBLIC RELEASE - mars 2015
   - BugFix : database issue
   - BugFix : fix song lenght update (#1393027)

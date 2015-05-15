@@ -17,8 +17,10 @@
 
 
 #include "networkaccess.h"
-#include "constants.h"
+#include "config.h"
 #include "debug.h"
+
+const QString USER_AGENT = QString( QString(APP_NAME) + " " + QString(VERSION) );
 
 static QMap< QThread*, QNetworkAccessManager* > s_threadNamHash;
 

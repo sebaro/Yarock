@@ -43,6 +43,7 @@
          APP_MODE_NORMAL,
 
          APP_ENABLE_SEARCH_POPUP,
+         APP_PLAY_ON_SEARCH,
 
          BROWSER_PREV,
          BROWSER_NEXT,
@@ -61,6 +62,8 @@
          ENGINE_PLAY_PREV,
          ENGINE_PLAY_NEXT,
          ENGINE_VOL_MUTE,
+         ENGINE_VOL_INC,
+         ENGINE_VOL_DEC,
          ENGINE_AUDIO_EQ,
 
          PLAYQUEUE_ADD_FILE,

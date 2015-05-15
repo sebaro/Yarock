@@ -27,6 +27,12 @@
 #include <QApplication>
 #include <QPainter>
 
+#if QT_VERSION >= 0x050000
+  #include <QScrollArea>
+  #include <QVBoxLayout>
+  #include <QLabel>
+  #include <QToolButton>
+#endif
 
 MenuWidget* MenuWidget::INSTANCE = 0;
 
@@ -46,6 +52,8 @@ MenuWidget::MenuWidget(QWidget * parent) : QWidget(parent)
     palette.setColor(QPalette::Background, palette.color(QPalette::Base));
     this->setPalette(palette);
 
+    this->setAutoFillBackground(true);
+    
     this->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::MinimumExpanding);
     this->setMinimumWidth(50);
 
@@ -57,6 +65,7 @@ MenuWidget::MenuWidget(QWidget * parent) : QWidget(parent)
 
     /*  navigator tree  */
       QScrollArea* area = new QScrollArea(this);
+      area->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
       area->setWidgetResizable(true);
       area->setFrameShape(QFrame::NoFrame);
     

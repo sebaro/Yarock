@@ -17,7 +17,6 @@
 #include "service_discogs.h"
 #include "networkaccess.h"
 #include "debug.h"
-#include "constants.h"
 #include "utilities.h"
 
 #include <QtCore>
@@ -45,7 +44,7 @@ static const QString API_KEY = "91734dd989";
 */
 ServiceDiscogs::ServiceDiscogs() : InfoService()
 {
-    Debug::debug() << Q_FUNC_INFO;
+    Debug::debug() << "    [ServiceDiscogs] start";
 
     setName("discogs");
     
@@ -67,7 +66,7 @@ void ServiceDiscogs::getInfo( INFO::InfoRequestData requestData )
 
 void ServiceDiscogs::fetchInfo( INFO::InfoRequestData requestData )
 {
-    Debug::debug() << Q_FUNC_INFO;
+    Debug::debug() << "    [ServiceDiscogs] fetchInfo";
 
     switch ( requestData.type )
     {
@@ -91,7 +90,7 @@ void ServiceDiscogs::fetchInfo( INFO::InfoRequestData requestData )
 /*------------------------------------------------------------------------------*/
 void ServiceDiscogs::fetch_artist_releases( INFO::InfoRequestData requestData )
 {
-    //Debug::debug() << Q_FUNC_INFO;
+    //Debug::debug() << "    [ServiceDiscogs] fetch_artist_releases";
     
     INFO::InfoStringHash hash = requestData.data.value< INFO::InfoStringHash >();
 
@@ -118,7 +117,7 @@ void ServiceDiscogs::fetch_artist_releases( INFO::InfoRequestData requestData )
 
 void ServiceDiscogs::slot_parse_artist_search_response(QByteArray bytes)
 {
-    Debug::debug() << Q_FUNC_INFO;
+    Debug::debug() << "    [ServiceDiscogs] slot_parse_artist_release_response";
 
     /*-------------------------------------------------*/
     /* Get id from sender reply                        */
@@ -146,7 +145,7 @@ void ServiceDiscogs::slot_parse_artist_search_response(QByteArray bytes)
     QVariantList results = reply_map["results"].toList();
 
     foreach (const QVariant& result, results) {
-      //Debug::debug() << Q_FUNC_INFO << result;
+      //Debug::debug() << "    [ServiceDiscogs] " << result;
 
       QVariantMap result_map = result.toMap();
       
@@ -167,7 +166,7 @@ void ServiceDiscogs::slot_parse_artist_search_response(QByteArray bytes)
 
 void ServiceDiscogs::slot_parse_artist_release_response(QByteArray bytes)
 {
-    Debug::debug() << Q_FUNC_INFO;
+    Debug::debug() << "    [ServiceDiscogs] slot_parse_artist_release_response";
 
     /*-------------------------------------------------*/
     /* Get id from sender reply                        */
@@ -184,7 +183,6 @@ void ServiceDiscogs::slot_parse_artist_release_response(QByteArray bytes)
     /* Parse response                                  */
     /* ------------------------------------------------*/
 #if QT_VERSION >= 0x050000
-    bool ok = true;
     QVariantMap reply_map = QJsonDocument::fromJson(bytes).toVariant().toMap();
 #else
     QJson::Parser parser;
@@ -232,7 +230,7 @@ void ServiceDiscogs::slot_parse_artist_release_response(QByteArray bytes)
 /*------------------------------------------------------------------------------*/
 void ServiceDiscogs::fetch_album_info( INFO::InfoRequestData requestData )
 {
-    Debug::debug() << Q_FUNC_INFO;
+    Debug::debug() << "    [ServiceDiscogs] fetch_album_info";
     INFO::InfoStringHash hash = requestData.data.value< INFO::InfoStringHash >();
 
     if ( !hash.contains( "artist" ) && !hash.contains( "album" ) )
@@ -249,7 +247,7 @@ void ServiceDiscogs::fetch_album_info( INFO::InfoRequestData requestData )
     UTIL::urlAddQueryItem( url, "type", "release" );
  
     
-    Debug::debug() << Q_FUNC_INFO << url;
+    Debug::debug() << "    [ServiceDiscogs] " << url;
 
     QObject* reply = HTTP()->get(url);
     m_requests[reply] = requestData;
@@ -261,7 +259,7 @@ void ServiceDiscogs::fetch_album_info( INFO::InfoRequestData requestData )
 
 void ServiceDiscogs::slot_parse_album_search_response(QByteArray bytes)
 {
-//     Debug::debug() << Q_FUNC_INFO;
+    Debug::debug() << "    [ServiceDiscogs] slot_parse_album_search_response";
 
     /*-------------------------------------------------*/
     /* Get id from sender reply                        */
@@ -322,13 +320,13 @@ void ServiceDiscogs::slot_parse_album_search_response(QByteArray bytes)
       return;
     }
     
-    Debug::debug() << Q_FUNC_INFO << " no result found";
+    Debug::debug() << "    [ServiceDiscogs] no result found";
     emit info(request, QVariant());
 }
 
 void ServiceDiscogs::slot_parse_release_response(QByteArray bytes)
 {
-//     Debug::debug() << Q_FUNC_INFO;
+    //Debug::debug() << "    [ServiceDiscogs] slot_parse_release_response";
     /*-------------------------------------------------*/
     /* Get id from sender reply                        */
     /* ------------------------------------------------*/
@@ -344,7 +342,6 @@ void ServiceDiscogs::slot_parse_release_response(QByteArray bytes)
     /* Parse response                                  */
     /* ------------------------------------------------*/
 #if QT_VERSION >= 0x050000
-    bool ok = true;
     QVariantMap reply_map = QJsonDocument::fromJson(bytes).toVariant().toMap();
 #else
     QJson::Parser parser;
@@ -386,7 +383,7 @@ void ServiceDiscogs::slot_parse_release_response(QByteArray bytes)
 
 void ServiceDiscogs::slot_request_error()
 {
-    //Debug::debug() << Q_FUNC_INFO;
+    //Debug::debug() << "    [ServiceDiscogs] slot_request_error";
 
     /* get sender reply */
     QObject* reply = qobject_cast<QObject*>(sender());

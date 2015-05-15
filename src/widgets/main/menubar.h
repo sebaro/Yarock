@@ -64,7 +64,6 @@ Q_OBJECT
 
     void setMenuWidget(QWidget* w);
 
-
   protected:
     void enterEvent(QEvent *e);
     void leaveEvent(QEvent *e);
@@ -78,6 +77,7 @@ Q_OBJECT
     QWidget  *m_menu_widget;
     bool     m_ismenumouseover;
     bool     m_ismouseover;
+    QString  m_name;
 };
 
 

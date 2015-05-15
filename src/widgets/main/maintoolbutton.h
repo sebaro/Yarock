@@ -39,6 +39,7 @@ class MainToolButton : public QToolButton
 
   private:
    void updateMultiDbMenu();
+   void updatePlayqueueActions();
 
   private slots:
      void slot_dbNameClicked();

@@ -251,8 +251,9 @@ void PageGeneral::slot_on_titlebutton_clicked()
 */
 PagePlayer::PagePlayer(QWidget* parentView) : QGraphicsWidget(0)
 {
-    m_parent       = parentView;
-    isOpen         = true;
+    m_parent         = parentView;
+    isOpen           = true;
+    _isEngineChanged = false;
     
     //! create Gui
     createGui();
@@ -289,6 +290,10 @@ void PagePlayer::createGui()
     
 #ifdef ENABLE_VLC
     ui_comboEngine->addItem("vlc", QVariant::fromValue((int)ENGINE::VLC));
+#endif
+  
+#ifdef ENABLE_MPV
+    ui_comboEngine->addItem("mpv", QVariant::fromValue((int)ENGINE::MPV));
 #endif
     
 #ifdef ENABLE_PHONON
@@ -405,14 +410,19 @@ void PagePlayer::saveSettings()
     SETTINGS()->_restorePlayqueue        = this->ui_restorePlayqueue->isChecked();
     
     if(!ui_enable_replaygain->isChecked())
-      SETTINGS()->_replaygain = 0;
+        SETTINGS()->_replaygain = 0;
     else if(ui_comboRGMode->currentIndex() == 0)
-       SETTINGS()->_replaygain = 1;
+        SETTINGS()->_replaygain = 1;
     else
-       SETTINGS()->_replaygain = 2;
+        SETTINGS()->_replaygain = 2;
     
     QVariant v  = ui_comboEngine->itemData(ui_comboEngine->currentIndex());
-    SETTINGS()->_engine = v.toInt();
+    
+    if( SETTINGS()->_engine != v.toInt() ) 
+    {
+      _isEngineChanged    = true;
+      SETTINGS()->_engine = v.toInt();
+    }
 }
 
 void PagePlayer::restoreSettings()
@@ -429,6 +439,7 @@ void PagePlayer::restoreSettings()
     switch(SETTINGS()->_engine) {
       case ENGINE::NO_ENGINE: selectedIdx = ui_comboEngine->findText("null engine");break;
       case ENGINE::VLC:       selectedIdx = ui_comboEngine->findText("vlc");break;
+      case ENGINE::MPV:       selectedIdx = ui_comboEngine->findText("mpv");break;
       case ENGINE::PHONON:    selectedIdx = ui_comboEngine->findText("phonon");break;
       default:break;
     }

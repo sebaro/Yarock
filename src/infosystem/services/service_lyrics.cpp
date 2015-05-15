@@ -21,8 +21,6 @@
 #include "settings.h"
 #include "networkaccess.h"
 #include "utilities.h"
-#include "constants.h"
-
 #include "debug.h"
 
 #include <QtCore>
@@ -41,7 +39,7 @@
 */
 ServiceLyrics::ServiceLyrics() : InfoService()
 {
-    Debug::debug() << Q_FUNC_INFO;
+    Debug::debug() << "    [ServiceLyrics] start";
 
     setName("lyrics");
     
@@ -178,7 +176,7 @@ void ServiceLyrics::getInfo( INFO::InfoRequestData requestData )
 *******************************************************************************/
 void ServiceLyrics::fetchInfo( INFO::InfoRequestData requestData )
 {
-    //Debug::debug() << Q_FUNC_INFO;
+    //Debug::debug() << "    [ServiceLyrics] fetchInfo";
 
     if ( requestData.type == INFO::InfoTrackLyrics) 
     {

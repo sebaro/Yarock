@@ -43,15 +43,8 @@
 */
 MinimalWidget::MinimalWidget(QWidget *parent) : QWidget(parent)
 {
-    setAttribute(Qt::WA_TransparentForMouseEvents);
-    setAttribute(Qt::WA_NoSystemBackground);
-    setWindowFlags(Qt::Window | Qt::MSWindowsFixedSizeDialogHint);
-    
-    setObjectName(QString::fromUtf8("MinimalWidget"));
-    setWindowTitle("yarock");
-    setContentsMargins(0, 0, 0, 0);
-    setAttribute(Qt::WA_TranslucentBackground);
-    setStyleSheet("background:transparent;");
+    setAttribute( Qt::WA_Hover );
+    setWindowFlags(Qt::Window | Qt::MSWindowsFixedSizeDialogHint | Qt::FramelessWindowHint);
 
     /* labels */
     ui_rating          = new RatingWidget();
@@ -134,12 +127,26 @@ MinimalWidget::MinimalWidget(QWidget *parent) : QWidget(parent)
     this->adjustSize();
     this->setFixedSize( sizeHint() );
     this->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
-//     this->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum);
 
     /* signals connection */    
     connect(Engine::instance(), SIGNAL(mediaChanged()), this, SLOT(slot_update()));
     connect(Engine::instance(), SIGNAL(mediaMetaDataChanged()), this, SLOT(slot_update()));
     connect(Engine::instance(), SIGNAL(engineStateChanged()), this, SLOT(slot_update()));
+    
+    installEventFilter(this);
+}
+
+bool MinimalWidget::eventFilter( QObject */*obj*/, QEvent *event )
+{
+    QEvent::Type type = event->type();
+
+    if ( type == QEvent::MouseMove )
+    {
+      move( static_cast<QMouseEvent*>( event )->globalPos() );
+      return true;
+    }
+
+    return false;
 }
 
 void MinimalWidget::slot_update()
@@ -191,6 +198,7 @@ void MinimalWidget::slot_update()
 void MinimalWidget::showEvent ( QShowEvent * event )
 {
    slot_update();
+
    QWidget::showEvent(event);
 }
 
@@ -200,12 +208,13 @@ void MinimalWidget::paintEvent(QPaintEvent *)
 {
     //! draw background
     QPainter painter(this);
-    //QColor backColor = QColor(23, 23, 34);
+
     QColor back_color = QApplication::palette().color(QPalette::Normal, QPalette::Background);
-    back_color.setAlpha(80);
+    
+    
+    back_color.setAlpha(70);
 
     painter.setBrush(QBrush(back_color));
     painter.fillRect(rect(), back_color);
 }
-
 

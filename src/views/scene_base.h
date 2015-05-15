@@ -69,6 +69,8 @@ Q_OBJECT
     virtual void setSearch(const QVariant&) = 0;
     virtual void setData(const QVariant&) = 0;
     
+    virtual void playSceneContents(const QVariant&)  = 0;
+    
   public slots :
     virtual void initScene() = 0;
     virtual void resizeScene() = 0;

@@ -365,7 +365,7 @@ float MEDIA::rating(const MediaPtr mi)
 /* ---------------------------------------------------------------------------*/
 MEDIA::TrackPtr MEDIA::FromLocalFile(const QString url, int* p_disc)
 {
-    Debug::debug() << " Media Item from local file : " << url;
+    Debug::debug() << "[MEDIA] from local file : " << url;
   
     /* URL check */
     if(url.isEmpty()) {
@@ -390,7 +390,7 @@ MEDIA::TrackPtr MEDIA::FromLocalFile(const QString url, int* p_disc)
 /* ---------------------------------------------------------------------------*/
 MEDIA::TrackPtr MEDIA::FromDataBase(const QString url)
 {
-    //Debug::debug() << " Media Item from db : " << url;
+    //Debug::debug() << "[MEDIA] from db : " << url;
 
     /* search track info into database */
     QSqlQuery q("", *Database::instance()->db());
@@ -406,7 +406,7 @@ MEDIA::TrackPtr MEDIA::FromDataBase(const QString url)
     {
       MEDIA::TrackPtr media = MEDIA::TrackPtr(new MEDIA::Track());
 
-      //Debug::debug() << " Build MediaItem FROM DATABASE ok";
+      //Debug::debug() << "[MEDIA] Build MediaItem FROM DATABASE ok";
       media->id         =  q.value(0).toInt();
       media->url        =  url;
       media->name       =  q.value(1).toString();
@@ -443,7 +443,7 @@ MEDIA::TrackPtr MEDIA::FromDataBase(const QString url)
 /* ---------------------------------------------------------------------------*/
 MEDIA::TrackPtr MEDIA::FromDataBase(int trackId)
 {
-  //Debug::debug() << " Media Item from db -> track id " << trackId;
+  //Debug::debug() << "[MEDIA] from db -> track id " << trackId;
 
   /* search track info into database */
   QSqlQuery q("", *Database::instance()->db());
@@ -459,7 +459,7 @@ MEDIA::TrackPtr MEDIA::FromDataBase(int trackId)
   {
       MEDIA::TrackPtr media = MEDIA::TrackPtr(new MEDIA::Track());
 
-      //Debug::debug() << " Build MediaItem FROM DATABASE ok";
+      //Debug::debug() << "[MEDIA] Build MediaItem FROM DATABASE ok";
       media->id         =  q.value(0).toInt();
       media->url        =  q.value(1).toString();
       media->name       =  q.value(1).toString();
@@ -571,6 +571,15 @@ bool MEDIA::isMediaPlayable(const QString& url)
 /* ---------------------------------------------------------------------------*/
 /* MEDIA compare/sorting utilities                                            */
 /* ---------------------------------------------------------------------------*/
+bool MEDIA::compareTrackNatural(const TrackPtr mi1, const TrackPtr mi2)
+{
+    const QString s1 = mi1->artist + mi1->album + QString::number(mi1->num).rightJustified(4, '0');
+    const QString s2 = mi2->artist + mi2->album + QString::number(mi2->num).rightJustified(4, '0');
+
+    return (s1 < s2);
+}
+
+
 bool MEDIA::compareTrackItemGenre(const TrackPtr mi1, const TrackPtr mi2)
 {
     const QString s1 = mi1->genre + mi1->album + QString::number(mi1->disc_number);
@@ -620,7 +629,7 @@ bool MEDIA::compareArtistItemRating(const ArtistPtr mi1, const ArtistPtr mi2)
 /* ---------------------------------------------------------------------------*/
 void MEDIA::registerTrackPlaying(MEDIA::TrackPtr tk, bool isPlaying) 
 {
-  Debug::debug() << "MEDIA::registerTrackPlaying " << isPlaying;
+    //Debug::debug() << "[MEDIA] registerTrackPlaying " << isPlaying;
     MEDIA::MediaPtr media = tk;
     
     do

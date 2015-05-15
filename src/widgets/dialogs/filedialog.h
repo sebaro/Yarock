@@ -96,4 +96,5 @@ private :
     QStringList         m_results;
 };
 
+
 #endif // _FILE_DIALOG_H_

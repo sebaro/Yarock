@@ -44,7 +44,7 @@ LocalPlaylistPopulator::LocalPlaylistPopulator()
 
 void LocalPlaylistPopulator::run()
 {
-     Debug::debug() << " --- LocalPlaylistPopulator--> Start " << QTime::currentTime().second() << ":" << QTime::currentTime().msec();
+     Debug::debug() << "  [LocalPlaylistPopulator] start " << QTime::currentTime().second() << ":" << QTime::currentTime().msec();
     /*-----------------------------------------------------------*/
     /* Get connection                                            */
     /* ----------------------------------------------------------*/
@@ -156,8 +156,8 @@ void LocalPlaylistPopulator::run()
               stream->isBroken    = false;
               stream->isPlayed    = false;
               stream->isStopAfter = false;
-              //Debug::debug() << "#### LocalPlaylistPopulator  stream->url  " << stream->url;
-              //Debug::debug() << "#### LocalPlaylistPopulator  stream->name  " << stream->name;
+              //Debug::debug() << "  [LocalPlaylistPopulator] stream->url  " << stream->url;
+              //Debug::debug() << "  [LocalPlaylistPopulator] stream->name  " << stream->name;
 
               playlistItem->insertChildren(stream);
               stream->setParent(playlistItem);
@@ -168,7 +168,7 @@ void LocalPlaylistPopulator::run()
 
         if( _progressMax != 0)  // when only smart playlist exist
           emit populatingProgress(  (int) ( (_progress*100)/_progressMax ) );
-        //Debug::debug() << " --- LocalPlaylistPopulator -->populatingProgress :" << percent << " %";
+        //Debug::debug() << "  [LocalPlaylistPopulator] populatingProgress :" << percent << " %";
 
     } //! Fin while query
 
@@ -192,7 +192,7 @@ void LocalPlaylistPopulator::run()
     /*-----------------------------------------------------------*/
     /* End                                                       */
     /* ----------------------------------------------------------*/
-    Debug::debug() << " --- LocalPlaylistPopulator--> End " << QTime::currentTime().second() << ":" << QTime::currentTime().msec();
+    Debug::debug() << "  [LocalPlaylistPopulator] end " << QTime::currentTime().second() << ":" << QTime::currentTime().msec();
     
     if(!m_exit)
       emit populatingFinished();

@@ -35,7 +35,7 @@ XspfStreams::XspfStreams() : Service(tr("Favorite streams"), SERVICE::LOCAL)
 
     /* root link */
     m_root_link = MEDIA::LinkPtr(new MEDIA::Link());
-    m_root_link->name = QString("directory");
+    m_root_link->name = QString("favorites streams");
     m_root_link->state = int (SERVICE::NO_DATA);
    
     m_active_link = m_root_link;
@@ -51,6 +51,8 @@ XspfStreams::~XspfStreams()
 
 void XspfStreams::updateItem(MEDIA::TrackPtr stream)
 {
+    Debug::debug() << "    [XspfStreams] updateItem";
+  
     if(stream->isFavorite)
     {
       /* remove it from favorite */ 
@@ -73,6 +75,8 @@ void XspfStreams::updateItem(MEDIA::TrackPtr stream)
 
 QList<MEDIA::LinkPtr> XspfStreams::links()
 {
+    Debug::debug() << "    [XspfStreams] links";
+  
     QList<MEDIA::LinkPtr> links;
 
     foreach(MEDIA::MediaPtr media, m_active_link->children()) {
@@ -101,16 +105,27 @@ QList<MEDIA::TrackPtr> XspfStreams::streams()
 {
     QList<MEDIA::TrackPtr> streams;
   
-    foreach(MEDIA::MediaPtr media, m_active_link->children()) {
-      if(media->type() == TYPE_STREAM) {
+    foreach(MEDIA::MediaPtr media, m_active_link->children())
+    {
+      if(media->type() == TYPE_STREAM) 
+      {
         MEDIA::TrackPtr stream = MEDIA::TrackPtr::staticCast(media);
         streams << stream;
+      }
+      /* !! add auto recursion to see all favorite stream when opening view */
+      else if(media->type() == TYPE_LINK) 
+      {
+         foreach(MEDIA::MediaPtr child, media->children()) {
+            if(child->type() == TYPE_STREAM) {
+              MEDIA::TrackPtr stream = MEDIA::TrackPtr::staticCast(child);
+              streams << stream;
+            }
+         }
       }
     }
       
     return streams;
 }
-
 
 void XspfStreams::reload() 
 {
@@ -119,7 +134,7 @@ void XspfStreams::reload()
     
     /* root link */
     m_root_link = MEDIA::LinkPtr(new MEDIA::Link());
-    m_root_link->name = QString("directory");
+    m_root_link->name = QString("favorites streams");
     m_root_link->state = int (SERVICE::NO_DATA);
    
     m_active_link = m_root_link;
@@ -134,7 +149,7 @@ void XspfStreams::reload()
     
 void XspfStreams::load()
 {
-    Debug::debug() << "### XspfStreams load";
+    Debug::debug() << "    [XspfStreams] load";
 
     /* read file */       
     m_streams.clear();
@@ -147,17 +162,21 @@ void XspfStreams::load()
     QString current_cat;
     foreach (MEDIA::TrackPtr stream, m_streams)
     {
+        if( stream->categorie.isEmpty() )
+        {
+            stream->categorie = "unknown";
+        }
 
         if( current_cat != stream->categorie )
         {
-              sub_link = MEDIA::LinkPtr::staticCast( m_root_link->addChildren(TYPE_LINK) );
-              sub_link->setType(TYPE_LINK);
-              sub_link->name = stream->categorie;
-              sub_link->state = int(SERVICE::DATA_OK);
-              sub_link->categorie = m_root_link->name;
-              sub_link->setParent(m_root_link);  
+            sub_link = MEDIA::LinkPtr::staticCast( m_root_link->addChildren(TYPE_LINK) );
+            sub_link->setType(TYPE_LINK);
+            sub_link->name = stream->categorie;
+            sub_link->state = int(SERVICE::DATA_OK);
+            sub_link->categorie = m_root_link->name;
+            sub_link->setParent(m_root_link);  
 
-              current_cat = stream->categorie;
+            current_cat = stream->categorie;
         }
       
         sub_link->insertChildren( stream );
@@ -173,12 +192,16 @@ void XspfStreams::load()
 
 void XspfStreams::saveToFile()
 {
+    Debug::debug() << "    [XspfStreams] saveToFile";
+  
     MEDIA::PlaylistToFile(m_filename, m_streams);
 }
 
 
 void XspfStreams::slot_activate_link(MEDIA::LinkPtr link)
 {
+    Debug::debug() << "    [XspfStreams] slot_activate_link";
+  
     MEDIA::LinkPtr activated_link;
     
     activated_link = link;

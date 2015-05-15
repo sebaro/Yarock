@@ -47,12 +47,12 @@ void UltimateLyricsProvider::FetchInfo(INFO::InfoRequestData request)
     }
 
     //! Fill in fields in the URL
-//     Debug::debug() << " ---- UltimateLyricsProvider::base url " << url_;
+    //Debug::debug() << "      [UltimateLyricsProvider] base url " << url_;
 
     lyrics_url_ = url_;
     ReplaceFields(request, &lyrics_url_);
 
-//     Debug::debug() << " ---- UltimateLyricsProvider::complete url " << lyrics_url_;
+    //Debug::debug() << "      [UltimateLyricsProvider] complete url " << lyrics_url_;
     
     
     QUrl url(lyrics_url_);
@@ -78,7 +78,7 @@ void UltimateLyricsProvider::signalFinish()
 
 void UltimateLyricsProvider::LyricsFetched(QByteArray bytes)
 {
-    Debug::debug() << "[UltimateLyricsProvider] " << name_ << " LyricsFetched";
+    Debug::debug() << "      [UltimateLyricsProvider] " << name_ << " LyricsFetched";
  
     QObject* reply = qobject_cast<QObject*>(sender());
     if (!reply || !m_requests.contains(reply))   return;
@@ -87,7 +87,7 @@ void UltimateLyricsProvider::LyricsFetched(QByteArray bytes)
 
     const QTextCodec* codec = QTextCodec::codecForName(charset_.toLatin1().constData());
     const QString original_content = codec->toUnicode(bytes);
-//     Debug::debug() << "[UltimateLyricsProvider] original_content :" << original_content;
+    //Debug::debug() << "      [UltimateLyricsProvider] original_content :" << original_content;
     
     QString lyrics;
 
@@ -123,7 +123,7 @@ void UltimateLyricsProvider::LyricsFetched(QByteArray bytes)
       ApplyExcludeRule(rule, &lyrics);
     }
 
-//     Debug::debug() << "[UltimateLyricsProvider] lyrics :" << lyrics;
+    //Debug::debug() << "      [UltimateLyricsProvider] lyrics :" << lyrics;
 
     /* add check to avoid bad detection with only html items*/
     QTextDocument doc;
@@ -131,7 +131,7 @@ void UltimateLyricsProvider::LyricsFetched(QByteArray bytes)
 
     if (!lyrics.isEmpty() && !doc.toPlainText().isEmpty()) 
     {
-//       Debug::debug() << "[UltimateLyricsProvider] :" << name_ << " emit InfoReady !!";
+      //Debug::debug() << "      [UltimateLyricsProvider] :" << name_ << " emit InfoReady !!";
       emit InfoReady(request, lyrics);
     }
     else 
@@ -145,12 +145,12 @@ void UltimateLyricsProvider::LyricsFetched(QByteArray bytes)
 
 void UltimateLyricsProvider::ApplyExtractRule(const Rule& rule, QString* content) const
 {
-    //Debug::debug() << "#### UltimateLyricsProvider::ApplyExtractRule ####";;
+    //Debug::debug() << "      [UltimateLyricsProvider] ApplyExtractRule ####";;
     foreach (const RuleItem& item, rule) {
-      //Debug::debug() << "UltimateLyricsProvider::ApplyExtractRule FIRST " << item.first << " SECOND " << item.second;
+      //Debug::debug() << "      [UltimateLyricsProvider] ApplyExtractRule FIRST " << item.first << " SECOND " << item.second;
       if (item.second.isNull()) {
         *content = ExtractXmlTag(*content, item.first);
-        //Debug::debug() << "UltimateLyricsProvider::ApplyExtractRule EXTRACTED " <<*content ;
+        //Debug::debug() << "      [UltimateLyricsProvider] ApplyExtractRule EXTRACTED " <<*content ;
       }
       else {
         *content = Extract(*content, item.first, item.second);

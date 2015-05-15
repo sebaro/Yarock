@@ -33,7 +33,7 @@
 *                                                                              *
 ********************************************************************************
 */
-class MainRightWidget : public QWidget
+class MainRightWidget: public QObject
 {
 Q_OBJECT
     static MainRightWidget* INSTANCE;
@@ -44,6 +44,9 @@ public:
     static MainRightWidget* instance() { return INSTANCE; }
       
     void addWidget(QWidget* widget, bool activate=true);
+    
+    QWidget * contentWidget() {return m_stackedWidget;}
+    QWidget * headerWidget()  {return m_header;}
     
 public slots:
     void slot_create_new_playlist_editor();
@@ -65,6 +68,7 @@ private:
     void addWidget(WidgetType type, QWidget* widget, bool activate);
 
 private:
+    QWidget             *m_parent;            
     HeaderWidget        *m_header;
     QButtonGroup        *m_buttons;
     QStackedWidget      *m_stackedWidget;

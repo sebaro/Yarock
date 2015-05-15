@@ -35,7 +35,7 @@
 */
 void LocalScene::populateDashBoardScene()
 {
-    Debug::debug() << " ---- LocalScene::populateDashBoardScene";
+    //Debug::debug() << "   [LocalScene] populateDashBoardScene";
     
     //! content    
     populateMostPlayedAlbum(itemsBoundingRect().height() + 40);

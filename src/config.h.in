@@ -14,15 +14,15 @@
 *  You should have received a copy of the GNU General Public License along with         *
 *  this program.  If not, see <http://www.gnu.org/licenses/>.                           *
 *****************************************************************************************/
-#ifndef _CONSTANTS_H_
-#define _CONSTANTS_H_
+#ifndef CONFIG_H_IN
+#define CONFIG_H_IN
 
-#include <QString>
+#define CMAKE_INSTALL_BIN "${CMAKE_INSTALL_BIN}"
+#define CMAKE_INSTALL_LIB "${CMAKE_INSTALL_LIB}"
+#define VERSION "${YAROCK_VERSION}" 
 
-static const QString APP_NAME        = "yarock";
-static const QString ORG_NAME        = "yarock";
-static const QString VERSION         = "1.0.1";
-static const QString AUTHOR_NAME     = "SÃ©bastien Amardeilh";
-static const QString USER_AGENT = APP_NAME + " " + VERSION;
+#define APP_NAME "yarock"
+#define ORG_NAME "yarock"
+#define AUTHOR_NAME "Sébastien Amardeilh"
 
-#endif // _CONSTANTS_H_
+#endif // CONFIG_H_IN

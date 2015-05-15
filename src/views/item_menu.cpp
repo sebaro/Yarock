@@ -55,12 +55,20 @@ GraphicsItemMenu::GraphicsItemMenu(QWidget *parent) : QMenu(parent)
     this->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Minimum);
     this->setAutoFillBackground(true);
     this->setContentsMargins(0,0,0,0);
-    this->setWindowFlags( Qt::Popup | Qt::FramelessWindowHint );
-    
+
     QPalette palette = QApplication::palette();
     palette.setColor(QPalette::Background, palette.color(QPalette::Base));
+    palette.setColor(QPalette::WindowText, SETTINGS()->_baseColor);
     this->setPalette(palette);
  
+    /* QMenu is based on style, stylesheet is needed */
+    this->setStyleSheet( 
+      QString("background-color: %1; color:%2;").arg(
+         QApplication::palette().color( QPalette::Base ).name(),
+         QColor(SETTINGS()->_baseColor).name()
+      ) 
+    );
+    
     /* menu actions */
     m_map_actions.insert(ALBUM_PLAY,          new QAction(QIcon(":/images/media-play.png"), tr("Play"), 0));
     m_map_actions.insert(ALBUM_QUEUE_END,     new QAction(QIcon(":/images/media-playlist-48x48.png"), tr("Enqueue to playqueue"), 0));
@@ -118,7 +126,7 @@ void GraphicsItemMenu::appendItems(QList<QGraphicsItem*> items)
 
 void GraphicsItemMenu::updateMenu(bool isSelection)
 {
-    Debug::debug() << "GraphicsItemMenu::updateMenu";
+    //Debug::debug() << "GraphicsItemMenu::updateMenu";
   
     /* delete action_widget */
     this->clear();
@@ -131,7 +139,7 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
 
 
     /* main widget*/
-    QWidget* main_widget = new QWidget();
+    QWidget* main_widget = new QWidget(this);
     main_widget->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
 
     /*-------------------------------------------------*/
@@ -150,13 +158,8 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
         default: break;
       }    
     
-      QPalette palette;
-      palette.setColor(QPalette::WindowText, SETTINGS()->_baseColor);
-
       QLabel* ui_label = new QLabel(this);
       ui_label->setFont(QFont("Arial",14,QFont::Normal));
-      ui_label->setPalette(palette);    
-    
       ui_label->setText(text);
       ui_label->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
       
@@ -178,7 +181,7 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
       /* main layout */
       QVBoxLayout * main_box = new QVBoxLayout();
       main_box->setSpacing(2);
-      main_box->setContentsMargins(0,0,0,0);
+      main_box->setContentsMargins(4,4,4,4);
       main_box->addWidget(ui_label);
       main_box->addLayout(hbox);
       main_widget->setLayout(main_box);
@@ -240,14 +243,8 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
     
       m_scene->setSceneRect ( m_scene->itemsBoundingRect().adjusted(0, 0, 10, 10) );
 
-
-      QPalette palette;
-      palette.setColor(QPalette::WindowText, SETTINGS()->_baseColor);
-
       QLabel* ui_label = new QLabel(this);
       ui_label->setFont(QFont("Arial",14,QFont::Normal));
-      ui_label->setPalette(palette);    
-    
       ui_label->setText(album->name);
       ui_label->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     
@@ -282,7 +279,7 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
       /* main layout */
       QVBoxLayout * main_box = new QVBoxLayout();
       main_box->setSpacing(0);
-      main_box->setContentsMargins(0,0,0,0);
+      main_box->setContentsMargins(4,4,4,4);
       main_box->addWidget(ui_label);
       main_box->addWidget(m_view);
       main_box->addLayout(hbox);
@@ -343,13 +340,9 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
       }    
       m_scene->setSceneRect ( m_scene->itemsBoundingRect().adjusted(0, 0, 10, 10) );
     
-      QPalette palette;
-      palette.setColor(QPalette::WindowText, SETTINGS()->_baseColor);
 
       QLabel* ui_label = new QLabel(this);
       ui_label->setFont(QFont("Arial",14,QFont::Normal));
-      ui_label->setPalette(palette);    
-    
       ui_label->setText(album->name);
       ui_label->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);      
       
@@ -378,7 +371,7 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
       /* main layout */
       QVBoxLayout * main_box = new QVBoxLayout();
       main_box->setSpacing(0);
-      main_box->setContentsMargins(0,0,0,0);
+      main_box->setContentsMargins(4,4,4,4);
       main_box->addWidget(ui_label);
       main_box->addWidget(m_view);
       main_box->addLayout(hbox);
@@ -445,12 +438,8 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
       m_scene->setSceneRect ( m_scene->itemsBoundingRect().adjusted(0, 0, 10, 10) );
       
     
-      QPalette palette;
-      palette.setColor(QPalette::WindowText, SETTINGS()->_baseColor);
-
       QLabel* ui_label = new QLabel(this);
       ui_label->setFont(QFont("Arial",14,QFont::Normal));
-      ui_label->setPalette(palette);    
       ui_label->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);    
       ui_label->setText(artist->name);
        
@@ -486,7 +475,7 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
       /* main layout */
       QVBoxLayout * main_box = new QVBoxLayout();
       main_box->setSpacing(0);
-      main_box->setContentsMargins(0,0,0,0);
+      main_box->setContentsMargins(4,4,4,4);
       main_box->addWidget(ui_label);
       main_box->addWidget(m_view);
       main_box->addLayout(hbox);
@@ -501,12 +490,9 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
       TrackGraphicItem *item = static_cast<TrackGraphicItem*>(m_items.first());
       MEDIA::TrackPtr track = MEDIA::TrackPtr::staticCast(item->media);
 
-      QPalette palette;
-      palette.setColor(QPalette::WindowText, SETTINGS()->_baseColor);
 
       QLabel* ui_label = new QLabel(this);
       ui_label->setFont(QFont("Arial",14,QFont::Normal));
-      ui_label->setPalette(palette);    
       ui_label->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
       
       /* hack for stream in playlist item */
@@ -533,7 +519,7 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
       /* main layout */
       QVBoxLayout * main_box = new QVBoxLayout();
       main_box->setSpacing(0);
-      main_box->setContentsMargins(0,0,0,0);
+      main_box->setContentsMargins(4,4,4,4);
       main_box->addWidget(ui_label);
       main_box->addLayout(hbox);
       main_widget->setLayout(main_box);
@@ -547,12 +533,9 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
       PlaylistGraphicItem *item = static_cast<PlaylistGraphicItem*>(m_items.first());
       MEDIA::PlaylistPtr playlist = MEDIA::PlaylistPtr::staticCast(item->media);
       
-      QPalette palette;
-      palette.setColor(QPalette::WindowText, SETTINGS()->_baseColor);
       
       QLabel* ui_label = new QLabel(this);
       ui_label->setFont(QFont("Arial",14,QFont::Normal));
-      ui_label->setPalette(palette);    
       ui_label->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);    
       ui_label->setText(playlist->name);
       
@@ -578,7 +561,7 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
       /* main layout */
       QVBoxLayout * main_box = new QVBoxLayout();
       main_box->setSpacing(0);
-      main_box->setContentsMargins(0,0,0,0);
+      main_box->setContentsMargins(4,4,4,4);
       main_box->addWidget(ui_label);
       main_box->addLayout(hbox);
       main_widget->setLayout(main_box);
@@ -592,12 +575,9 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
       StreamGraphicItem *item = static_cast<StreamGraphicItem*>(m_items.first());
       MEDIA::TrackPtr stream = MEDIA::TrackPtr::staticCast(item->media);
 
-      QPalette palette;
-      palette.setColor(QPalette::WindowText, SETTINGS()->_baseColor);
       
       QLabel* ui_label = new QLabel(this);
       ui_label->setFont(QFont("Arial",14,QFont::Normal));
-      ui_label->setPalette(palette);    
       ui_label->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);    
       ui_label->setText(stream->name);
       
@@ -626,7 +606,7 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
       /* main layout */
       QVBoxLayout * main_box = new QVBoxLayout();
       main_box->setSpacing(0);
-      main_box->setContentsMargins(0,0,0,0);
+      main_box->setContentsMargins(4,4,4,4);
       main_box->addWidget(ui_label);
       main_box->addLayout(hbox);
       main_widget->setLayout(main_box);
@@ -634,7 +614,7 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
 
     QWidgetAction* action_widget = new QWidgetAction(this);
     action_widget->setDefaultWidget( main_widget );
-    this->addAction( action_widget );  
+    this->addAction( action_widget );
 }
 
 
@@ -655,7 +635,7 @@ void GraphicsItemMenu::slot_actionsTriggered()
 *******************************************************************************/
 bool GraphicsItemMenu::eventFilter(QObject *obj, QEvent *ev)
 {
-    //Debug::debug() << "BrowserView eventFilter  obj" << obj;
+    //Debug::debug() << "GraphicsItemMenu eventFilter  obj" << obj;
 
     if (obj == this)
     {
@@ -665,7 +645,6 @@ bool GraphicsItemMenu::eventFilter(QObject *obj, QEvent *ev)
 
     if (wid && (wid == m_scene) && (ev->type() == QEvent::GraphicsSceneMouseDoubleClick) )
     {
-        //Debug::debug() << "###### qgraphics view event GraphicsSceneMouseDoubleClick";
         QGraphicsItem* item = m_scene->itemAt(static_cast<QGraphicsSceneMouseEvent*>(ev)->scenePos(), QTransform());
 
         if(item) {
@@ -694,7 +673,8 @@ bool GraphicsItemMenu::eventFilter(QObject *obj, QEvent *ev)
 *******************************************************************************/
 void GraphicsItemMenu::slot_updateScene()
 {
-  //Debug::debug() << "GraphicsItemMenu::slot_updateScene";
-  if(m_scene)
-    m_scene->update();
+    //Debug::debug() << "GraphicsItemMenu::slot_updateScene";
+    if(m_scene)
+      m_scene->update();
 }
+

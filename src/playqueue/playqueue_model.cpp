@@ -74,7 +74,7 @@ TaskManager* PlayqueueModel::manager() const
 *******************************************************************************/
 void PlayqueueModel::clear()
 {
-    //Debug::debug() << " --- PlayqueueModel->clear";
+    //Debug::debug() << "      [PlayqueueModel]  clear";
     beginRemoveRows(QModelIndex(), 0, PlayqueueBase::size()-1);
     PlayqueueBase::clear();    
     endRemoveRows();
@@ -102,8 +102,8 @@ Q_UNUSED(role)
 
 bool PlayqueueModel::removeRows(int position, int count, const QModelIndex & /*parent*/)
 {
-    //Debug::debug() << "--- PlayqueueModel-->removeRow position rows" << position;
-    //Debug::debug() << "--- PlayqueueModel-->removeRow position count" << count;
+    //Debug::debug() << "      [PlayqueueModel]  removeRow position rows" << position;
+    //Debug::debug() << "      [PlayqueueModel]  removeRow position count" << count;
     if( position + count - 1 >= PlayqueueBase::size()) return false;
 
     beginRemoveRows(QModelIndex(), position, position + count - 1);
@@ -121,7 +121,7 @@ bool PlayqueueModel::removeRows(int position, int count, const QModelIndex & /*p
 *******************************************************************************/
 void PlayqueueModel::updatePlayingItem(MEDIA::TrackPtr tk)
 {
-    //Debug::debug() << "PlayqueueModel -> updatePlayingItem";
+    //Debug::debug() << "      [PlayqueueModel]  updatePlayingItem";
     
     int playing_row = PlayqueueBase::rowForTrack(PlayqueueBase::playingTrack());
 
@@ -236,7 +236,7 @@ void PlayqueueModel::setStopAfterTrack(MEDIA::TrackPtr track)
 *******************************************************************************/
 void PlayqueueModel::addMediaItem(const MEDIA::TrackPtr media)
 {
-    //Debug::debug() << " --- PlayqueueModel->addMediaItem";
+    //Debug::debug() << "      [PlayqueueModel]  addMediaItem";
     beginInsertRows(QModelIndex(), PlayqueueBase::size(), PlayqueueBase::size());
     PlayqueueBase::addTrack(media);
     endInsertRows();
@@ -244,7 +244,7 @@ void PlayqueueModel::addMediaItem(const MEDIA::TrackPtr media)
 
 void PlayqueueModel::addMediaItems(QList<MEDIA::TrackPtr> list)
 {
-    //Debug::debug() << " --- PlayqueueModel->addMediaItems";
+    //Debug::debug() << "      [PlayqueueModel]  addMediaItems";
     beginInsertRows(QModelIndex(), PlayqueueBase::size(), PlayqueueBase::size());
     PlayqueueBase::addTracks(list);
     endInsertRows();
@@ -254,6 +254,7 @@ void PlayqueueModel::request_insert_track(const MEDIA::TrackPtr mediaitem, int p
 {
    emit insertTrack(mediaitem, pos);
 }
+
 
 void PlayqueueModel::slot_insert_mediaitem(const MEDIA::TrackPtr media, int pos)
 {
@@ -266,10 +267,9 @@ void PlayqueueModel::slot_insert_mediaitem(const MEDIA::TrackPtr media, int pos)
     endInsertRows();
 }
 
-
 void PlayqueueModel::removeDuplicate()
 {
-    Debug::debug() << "--- PlayqueueModel-->removeDuplicate";
+    //Debug::debug() << "      [PlayqueueModel]  removeDuplicate";
     QSet<QUrl> filenames;
 
     foreach(MEDIA::TrackPtr media, PlayqueueBase::tracks()) {
@@ -286,22 +286,12 @@ void PlayqueueModel::removeDuplicate()
     }
 }
 
-void PlayqueueModel::signalUpdate()
-{
-    //Debug::warning() << "--- PlayqueueModel-->signalUpdate";
-    // signal update est utilisé dans le cas d'un changement de mode d'affichage
-    // layoutAboutToBeChanged est obligatoire vis à vis du proxy model sinon crash
-    emit layoutAboutToBeChanged();
-    emit layoutChanged();
-    emit updated();
-}
-
 /*******************************************************************************
     PlayqueueModel::queueDuration
 *******************************************************************************/
 QString PlayqueueModel::queueDuration()
 {
-    //Debug::debug() << " --- PlayqueueModel->queueDuration";
+    //Debug::debug() << "      [PlayqueueModel]  queueDuration";
 
     int seconds = 0;
     foreach (MEDIA::TrackPtr track, PlayqueueBase::tracks()) {
@@ -366,7 +356,6 @@ QMimeData* PlayqueueModel::mimeData( const QModelIndexList &indexes ) const
             urls << QUrl(PlayqueueBase::tracks().at(row)->url);
         }
         tracks << PlayqueueBase::tracks().at(row);
-        //mime->addTrack( PlayqueueBase::tracks().at(row) );
     }    
 
     mime->setUrls(urls);    
@@ -383,29 +372,33 @@ bool PlayqueueModel::dropMimeData(const QMimeData *data,
 {
   Q_UNUSED(parent)
   Q_UNUSED(column)
-  
+    //Debug::debug() << "      [PlayqueueModel]  dropMimeData row " << row;
+
     if (action == Qt::IgnoreAction) return true;
 
+    /* ---- internal drop ---- */
     if (data->hasFormat(MEDIA_MIME)) 
     {
-      //Debug::debug() << "--- PlayqueueModel::dropMimeData --> data->hasFormat(MEDIA_MIME)";
       const MediaMimeData* mediaMimeData = dynamic_cast<const MediaMimeData*>( data );
       if(!mediaMimeData)
         return false;
 
-      // internal move
-      if(mediaMimeData->source() == SOURCE_PLAYQUEUE) {
+      /* internal move ---- */
+      if(mediaMimeData->source() == SOURCE_PLAYQUEUE)
+      {
         move(mediaMimeData, row);
       }
-      // media item from collection
-      else {
+      /* drop from collection browser ---- */
+      else
+      {
         m_task_manager->playlistAddMediaItems(mediaMimeData->getTracks(), row);
       }
       return true;
     }
+    /* ---- external drop ---- */
     else if (data->hasUrls()) 
     {
-      /* external drop */
+      //Debug::debug() << "      [PlayqueueModel]  dropMimeData HAS URLS" << data->urls();
       m_task_manager->playlistAddUrls(data->urls(), row);
       return true;
     }
@@ -416,7 +409,7 @@ bool PlayqueueModel::dropMimeData(const QMimeData *data,
 //!------------PlayqueueModel::move ---------------------------------------------
 void PlayqueueModel::move(const MediaMimeData *data, int pos)
 {
-    Debug::debug() << "PlayqueueModel::move";
+    Debug::debug() << "      [PlayqueueModel]  move";
     emit layoutAboutToBeChanged();
 
     QList<MEDIA::TrackPtr> moved_items = data->getTracks();
@@ -425,7 +418,7 @@ void PlayqueueModel::move(const MediaMimeData *data, int pos)
     qSort(moved_items.begin(), moved_items.end(),  sorter);
 
     if (pos < 0)
-      pos = moved_items.count();
+      pos = PlayqueueBase::size();
 
     int start  = pos;
     foreach (MEDIA::TrackPtr track, moved_items) {
@@ -449,7 +442,7 @@ void PlayqueueModel::move(const MediaMimeData *data, int pos)
 *******************************************************************************/
 void PlayqueueModel::slot_sort(QVariant query)
 {
-    Debug::debug() << "PlayqueueModel::slot_sort";
+    Debug::debug() << "      [PlayqueueModel]  slot_sort";
     emit layoutAboutToBeChanged();
     
     MediaSearch search = qvariant_cast<MediaSearch>( query );

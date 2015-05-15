@@ -196,7 +196,7 @@ static void init(MEDIA::TrackPtr track)
 /*----------------------------------------------------------------------------*/
 static void readID3v2Tags(TagLib::ID3v2::Tag *tag, MEDIA::TrackPtr track, QString& s_disc )
 {
-    Debug::debug() << " Tag::readID3v2Tags";  
+    Debug::debug() << " [Tag] readID3v2Tags";  
     
     const TagLib::ID3v2::FrameListMap& map = tag->frameListMap();
 
@@ -284,7 +284,7 @@ static void readID3v2Tags(TagLib::ID3v2::Tag *tag, MEDIA::TrackPtr track, QStrin
 /*----------------------------------------------------------------------------*/
 static void readOggTags(TagLib::Ogg::XiphComment *tag, MEDIA::TrackPtr track, QString& s_disc )
 {
-    Debug::debug() << " Tag::readOggTags";  
+    Debug::debug() << " [Tag] readOggTags";  
   
     const TagLib::Ogg::FieldListMap& map = tag->fieldListMap();
   
@@ -335,7 +335,7 @@ static void readOggTags(TagLib::Ogg::XiphComment *tag, MEDIA::TrackPtr track, QS
 static void readAPETags(TagLib::APE::Tag *tag, MEDIA::TrackPtr track, QString& s_disc )
 {
 Q_UNUSED(s_disc)  
-    Debug::debug() << " Tag::readAPETags";  
+    Debug::debug() << " [Tag] readAPETags";  
 
     const TagLib::APE::ItemListMap &map = tag->itemListMap();
 
@@ -372,7 +372,7 @@ Q_UNUSED(s_disc)
 static void readASFTags(TagLib::ASF::Tag *tag, MEDIA::TrackPtr track, QString& s_disc )
 {
 Q_UNUSED(s_disc)  
-    Debug::debug() << " Tag::readASFTags";  
+    Debug::debug() << " [Tag] readASFTags";  
 
     const TagLib::ASF::AttributeListMap& map = tag->attributeListMap();
     
@@ -420,7 +420,7 @@ Q_UNUSED(s_disc)
 /*----------------------------------------------------------------------------*/
 void readFile(MEDIA::TrackPtr track, const QString& url, int* p_disc)
 {
-    Debug::debug() << " Tag::readFile";
+    Debug::debug() << " [Tag] readFile";
     
     QString s_disc;
     
@@ -491,7 +491,7 @@ void readFile(MEDIA::TrackPtr track, const QString& url, int* p_disc)
     }
     else if (TagLib::MP4::File* file = dynamic_cast<TagLib::MP4::File*>( fileref.file() ))
     {
-        Debug::debug() << "[Tag] o MP4 support";
+        Debug::debug() << " [Tag] no MP4 support";
         Q_UNUSED(file)
     }
     else if (TagLib::ASF::File* file = dynamic_cast<TagLib::ASF::File*>( fileref.file() ))
@@ -516,7 +516,7 @@ void readFile(MEDIA::TrackPtr track, const QString& url, int* p_disc)
         else
           *p_disc = s_disc.toInt();
       
-        //Debug::debug() << " Media Item from local file disc number: " << *p_disc;
+        //Debug::debug() << " [Tag] Item from local file disc number: " << *p_disc;
       }
     }
     
@@ -544,7 +544,7 @@ bool writeTrackRatingToFile(const QString& url, float rating)
     if (url.isNull())
       return false;
 
-    Debug::debug() << "Saving song rating tags to" << url;
+    Debug::debug() << " [Tag] Saving song rating tags to" << url;
 
     #ifdef COMPLEX_TAGLIB_FILENAME
       const wchar_t *encodedName = reinterpret_cast< const wchar_t * >( QFileInfo(url).canonicalFilePath().utf16() );
@@ -554,14 +554,14 @@ bool writeTrackRatingToFile(const QString& url, float rating)
     #endif
     
     if (!encodedName) {
-      Debug::warning() << "media item -> encoded path error :" << url;
+      Debug::warning() << " [Tag] encoded path error :" << url;
       return false;
     }
 
     /* TagLib reference */
     TagLib::FileRef fileref = TagLib::FileRef( encodedName, true);
     if (fileref.isNull()) {
-      Debug::warning() << "media item -> taglib access failed :" << url;
+      Debug::warning() << " [Tag] taglib access failed :" << url;
       return false;
     }
 

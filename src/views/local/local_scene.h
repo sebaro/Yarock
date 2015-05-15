@@ -55,6 +55,7 @@ Q_OBJECT
     void playSelected();
     void setSearch(const QVariant&);
     void setData(const QVariant&) {};
+    void playSceneContents(const QVariant&);
 
     QList<QAction *> actions();
     

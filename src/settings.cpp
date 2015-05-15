@@ -22,6 +22,7 @@
 #include "debug.h"
 
 #include <QBuffer>
+#include <QKeySequence>
 
 YarockSettings* YarockSettings::INSTANCE = 0;
 
@@ -41,7 +42,7 @@ YarockSettings::YarockSettings()
 
 void YarockSettings::readSettings()
 {
-    Debug::debug() << "YarockSettings::readSettings";
+    Debug::debug() << "[Settings] readSettings";
     
     // window elements (Startup settings)
     _windowsGeometry     = s->value("Window/geometry").toByteArray();
@@ -53,6 +54,7 @@ void YarockSettings::readSettings()
     _showMenuPanel       = s->value("Window/showMenuPanel",     true).toBool();
     _showNowPlaying      = s->value("Window/showNowPlaying",    true).toBool();
     _enableSearchPopup   = s->value("Window/searchPopup",       true).toBool();
+    _enablePlayOnSearch  = s->value("Window/playOnSearch",      false).toBool();
 
     // session
 #ifdef ENABLE_PHONON
@@ -119,12 +121,12 @@ void YarockSettings::readSettings()
     _playingPosition          = s->value("PlaybackOption/currentPosition",  0).toDouble();
 
     // Shurtcut media key
-    _shortcutsKey["play"]        = s->value("Shortcuts/play","Meta+P").toString();
-    _shortcutsKey["stop"]        = s->value("Shortcuts/stop","Meta+S").toString();
-    _shortcutsKey["prev_track"]  = s->value("Shortcuts/prev_track","Meta+B").toString();
-    _shortcutsKey["next_track"]  = s->value("Shortcuts/next_track","Meta+F").toString();
-    _shortcutsKey["inc_volume"]  = s->value("Shortcuts/inc_volume","Meta+A").toString();
-    _shortcutsKey["dec_volume"]  = s->value("Shortcuts/dec_volume","Meta+Z").toString();
+    _shortcutsKey["play"]        = s->value("Shortcuts/play",QKeySequence(Qt::Key_MediaPlay).toString()).toString();
+    _shortcutsKey["stop"]        = s->value("Shortcuts/stop",QKeySequence(Qt::Key_MediaStop).toString()).toString();
+    _shortcutsKey["prev_track"]  = s->value("Shortcuts/prev_track","Shift+Left").toString();
+    _shortcutsKey["next_track"]  = s->value("Shortcuts/next_track","Shift+Right").toString();
+    _shortcutsKey["inc_volume"]  = s->value("Shortcuts/inc_volume","Ctrl+Up").toString();
+    _shortcutsKey["dec_volume"]  = s->value("Shortcuts/dec_volume","Ctrl+Down").toString();
     _shortcutsKey["mute_volume"] = s->value("Shortcuts/mute_volume","Meta+M").toString();
     _shortcutsKey["jump_to_track"] = s->value("Shortcuts/jump_to_track","Meta+J").toString();
     _shortcutsKey["clear_playqueue"] = s->value("Shortcuts/clear_playqueue","Ctrl+K").toString();
@@ -144,7 +146,7 @@ void YarockSettings::readSettings()
 
 void YarockSettings::writeSettings()
 {
-    Debug::debug() << "YarockSettings::writeSettings";
+    Debug::debug() << "[Settings] writeSettings";
   
     // window elements (Startup settings)
     s->beginGroup("Window");
@@ -157,6 +159,8 @@ void YarockSettings::writeSettings()
     s->setValue("showMenuPanel",      _showMenuPanel);
     s->setValue("showNowPlaying",     _showNowPlaying);
     s->setValue("searchPopup",        _enableSearchPopup);
+    s->setValue("playOnSearch",       _enablePlayOnSearch);
+    
     s->endGroup();
 
     // session

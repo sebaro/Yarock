@@ -104,7 +104,7 @@ void HistoManager::addToDatabase()
     q.exec();
 
     if ( !q.next() ) {
-      Debug::debug() << "[Histo] add a new entry" << engine_url;
+      Debug::debug() << "      [Histo] add a new entry" << engine_url;
 
       q.prepare("INSERT INTO `histo`(`url`,`name`,`date`) VALUES (:u,:n,:d);");
       q.bindValue(":u", engine_url);
@@ -119,7 +119,7 @@ void HistoManager::addToDatabase()
     }
     else
     {
-      Debug::debug() << "[Histo] update an existing entry" << engine_url;
+      Debug::debug() << "      [Histo] update an existing entry" << engine_url;
       int histo_id = q.value(0).toString().toInt();
 
       q.prepare("UPDATE `histo` SET `date`=:d WHERE `id`=:id;");
@@ -137,7 +137,7 @@ void HistoManager::addToDatabase()
 
     if (q.next())
     {
-      //Debug::debug() << "update playcount!";
+      //Debug::debug() << "      [Histo] update playcount!";
 
       const int trackId  = q.value(0).toInt();
       const int artistId = q.value(1).toInt();
@@ -190,7 +190,7 @@ void HistoManager::checkHisto()
 
     if (query.isValid()) {
       const int maxId = query.value(0).toInt();
-      //Debug::debug() << " ---- HISTO --> check table max id" << maxId;
+      //Debug::debug() << "      [Histo] check table max id" << maxId;
       if(maxId >= 100000) {
         QSqlQuery query("UPDATE `histo` SET `id` = `id` - (SELECT MIN(`id`) -1 FROM `histo`) ;", *Database::instance()->db());
         query.exec();

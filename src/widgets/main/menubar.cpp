@@ -31,7 +31,9 @@
 #include <QMenu>
 
 #include <QtGui>
-
+#if QT_VERSION >= 0x050000
+  #include <QToolButton>
+#endif
 /*
 ********************************************************************************
 *                                                                              *
@@ -79,7 +81,11 @@ MenuBar::MenuBar(QWidget * parent) : QWidget(parent)
       
       //! build menu
       QWidget* w = new QWidget();
+#if QT_VERSION >= 0x050000
+      w->setWindowFlags(Qt::ToolTip);
+#else
       w->setWindowFlags(Qt::Popup);
+#endif
 
       QVBoxLayout* vl0 = new QVBoxLayout(w);
       vl0->setSpacing(4);
@@ -115,7 +121,6 @@ MenuBar::MenuBar(QWidget * parent) : QWidget(parent)
 MenuBarButton::MenuBarButton( const QIcon &icon, const QString &text, QWidget *parent )
     : QPushButton( icon, "", parent )
 {
-Q_UNUSED(text)
     this->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );  
     this->setFocusPolicy(Qt::TabFocus);
     this->setIconSize( QSize(26,26) );
@@ -127,8 +132,7 @@ Q_UNUSED(text)
               "QPushButton:checked { background-color: %1 ;border: none;min-width: 40px;min-height: 32px;}" ) 
           .arg( QApplication::palette().color( QPalette::Window ).name() )
     );
-    
-   
+    m_name = text;
     m_ismenumouseover = false;
     m_ismouseover = false;   
 }
@@ -161,18 +165,21 @@ bool MenuBarButton::eventFilter(QObject* obj, QEvent* event)
             if(!m_ismouseover)
               activate(false);
           }
+          
+          return true;
         }
         break;
 
       case QEvent::Enter:
         m_ismenumouseover = true;
+        return true;
         break;
   
       default:break;
      }
   }
 
-  return false;
+  return QObject::eventFilter (obj, event);
 }
 
 
@@ -197,13 +204,14 @@ QSize MenuBarButton::sizeHint() const
 }
 
 
-void MenuBarButton::enterEvent(QEvent *)
+void MenuBarButton::enterEvent(QEvent *e)
 {
-     m_ismouseover = true;
-     activate(true);
+    m_ismouseover = true;
+    activate(true);
+    QPushButton::enterEvent(e);
 }
 
-void MenuBarButton::leaveEvent(QEvent *)
+void MenuBarButton::leaveEvent(QEvent *e)
 {
     m_ismouseover = false;
 
@@ -215,21 +223,26 @@ void MenuBarButton::leaveEvent(QEvent *)
       if(!m_ismenumouseover)
         activate(false);
     }
+    
+    QPushButton::leaveEvent(e);    
 }
 
 void MenuBarButton::activate(bool active)
 {
     setChecked(active);
- 
-    if(!active) {
+
+    if(!active) 
+    {
       m_menu_widget->hide();
     }
-    else if(!m_menu_widget->isVisible()) {
+    else if(!m_menu_widget->isVisible())
+    {
       QPoint location = this->mapToGlobal( QPoint(this->width(),0) );
      
       m_menu_widget->move(location);
       m_menu_widget->show();
-      
+      m_menu_widget->raise();
+       
     }
 }
 

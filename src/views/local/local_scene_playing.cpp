@@ -24,6 +24,8 @@
 #include "core/mediaitem/mediaitem.h"
 #include "smartplaylist/smartplaylist.h"
 
+#include "global_actions.h"
+
 #include "debug.h"
 
 #include <QtCore>
@@ -35,9 +37,46 @@
 *        -> playing method                                                     *
 ********************************************************************************
 */
+void LocalScene::playSceneContents(const QVariant& search)
+{
+//     Debug::debug() << "#############   [LocalScene] playSceneContents search variant " << search;
+//     Debug::debug() << "#############   [LocalScene] playSceneContents search variant " << search.toString();
+//     Debug::debug() << "#############   [LocalScene] playSceneContents search variant " << search.isValid();
+  
+    if( !ACTIONS()->value(APP_PLAY_ON_SEARCH)->isChecked() || !search.isValid() || 
+       (!search.canConvert<MediaSearch>() && search.toString().isEmpty()) )
+      return;
+    
+    Debug::debug() << "   [LocalScene] playSceneContents";
+    QList<MEDIA::TrackPtr> tracks;
+
+    if( mode() == VIEW::ViewArtist || mode() == VIEW::ViewAlbum || mode() == VIEW::ViewTrack ||
+        mode() == VIEW::ViewGenre  || mode() == VIEW::ViewYear  || mode() == VIEW::ViewFavorite )
+    {
+        tracks = m_localTrackModel->getItemChildrenTracks(m_localTrackModel->rootItem());
+    }
+    else if(mode() == VIEW::ViewPlaylist)
+    {
+        tracks = m_localPlaylistModel->getItemChildrenTracks(m_localPlaylistModel->rootItem());
+    }
+    else if(mode() == VIEW::ViewHistory)
+    {
+        for ( int i = 0; i < m_histoModel->itemCount(); i++ ) {
+          if(!m_histoModel->isMediaMatch( m_histoModel->trackAt(i) ))
+            continue;
+          tracks << m_histoModel->trackAt(i);
+        }
+    }
+
+    if( !tracks.isEmpty() )
+      VirtualPlayqueue::instance()->addTracksAndPlayAt(tracks, 0);
+}
+
+
+
 void LocalScene::playAlbum()
 {
-    Debug::debug() << "LocalScene::playAlbum";
+    Debug::debug() << "   [LocalScene] playAlbum";
     if(!m_mouseGrabbedItem) return;
     AlbumGraphicItem *item = static_cast<AlbumGraphicItem*>(m_mouseGrabbedItem);
 
@@ -49,7 +88,7 @@ void LocalScene::playAlbum()
 
 void LocalScene::playAlbumGenre()
 {
-    Debug::debug() << "LocalScene::playAlbumGenre";
+    Debug::debug() << "   [LocalScene] playAlbumGenre";
     if(!m_mouseGrabbedItem) return;
     AlbumGenreGraphicItem *item = static_cast<AlbumGenreGraphicItem*>(m_mouseGrabbedItem);
 
@@ -61,7 +100,7 @@ void LocalScene::playAlbumGenre()
 
 void LocalScene::playArtist()
 {
-    Debug::debug() << "LocalScene::playArtist";
+    Debug::debug() << "   [LocalScene] playArtist";
     if(!m_mouseGrabbedItem) return;
     ArtistGraphicItem *item = static_cast<ArtistGraphicItem*>(m_mouseGrabbedItem);
 
@@ -74,20 +113,19 @@ void LocalScene::playArtist()
 
 void LocalScene::playTrack()
 {
-    Debug::debug() << "LocalScene::playTrack";
+    Debug::debug() << "   [LocalScene] playTrack";
     if(!m_mouseGrabbedItem) return;
-    TrackGraphicItem *item = static_cast<TrackGraphicItem*>(m_mouseGrabbedItem);
 
     QList<MEDIA::TrackPtr> tracks;
     /* ------ tracks from  TRACK VIEW  ------ */
     if(mode() == VIEW::ViewTrack)
     {
-      tracks = m_localTrackModel->getItemChildrenTracks(m_localTrackModel->rootItem());
+        tracks = m_localTrackModel->getItemChildrenTracks(m_localTrackModel->rootItem());
     }
     /* ------ tracks from  PLAYLIST VIEW  ------ */
     else if(mode() == VIEW::ViewPlaylist)
     {
-      tracks = m_localPlaylistModel->getItemChildrenTracks(m_localPlaylistModel->rootItem());
+        tracks = m_localPlaylistModel->getItemChildrenTracks(m_localPlaylistModel->rootItem());
     }
     /* ------ tracks from  HISTORY VIEW  ------ */
     else if(mode() == VIEW::ViewHistory)
@@ -99,7 +137,9 @@ void LocalScene::playTrack()
         }
     }
 
+    TrackGraphicItem *item = static_cast<TrackGraphicItem*>(m_mouseGrabbedItem);
     int index = tracks.indexOf(item->media);
+    
     if( index != -1 && !tracks.isEmpty() )
       VirtualPlayqueue::instance()->addTracksAndPlayAt(tracks, index);
 }
@@ -128,7 +168,7 @@ void LocalScene::playPlaylist()
 
 void LocalScene::playSelected()
 {
-    //Debug::debug() << "LocalScene::playSelected";
+    //Debug::debug() << "   [LocalScene] playSelected";
 
     QList<MEDIA::TrackPtr> tracks;
 

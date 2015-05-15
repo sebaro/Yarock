@@ -1,19 +1,19 @@
 # ------------------------------------------------------------------------------
                               Yarock features 
 # ------------------------------------------------------------------------------
+    * Browse artist photos, album covers 
     * Music collection database (SQLite 3)
-    * Browse your local music collection based on cover art 
     * Easy search and filter music collection
     * Manage favorites item (album, artist)
     * Play music directly from collection or playqueue
     * Simple playqueue
     * Smart playlist generator       
-    * Support mp3,Ogg Vorbis,flac music files (depending on phonon backend)
+    * Support mp3,Ogg Vorbis,flac music files (depending on audio engine)
     * Support load/save playlist file (m3u, pls, xspf)
-    * Play radio stream (tunein, icecast, shoutcast,...)
+    * Play radio stream (tunein, dirble, shoutcast,...)
     * Mp3Gain tag support for volume normalization
     * Contextual info & cover art download (lastfm, echonest, musicbrainz)
-    * Last Fm scrobbler
+    * Supports scrobbling to Last.fm
     * Command line interface, Mpris interface
     * Clean and simple user interface 
     * No GNOME or KDE dependancies
@@ -21,21 +21,29 @@
                               Dependencies
 # ------------------------------------------------------------------------------
 Required dependencies:  
-    CMake 2.8.0         - http://www.cmake.org/
-    Qt 4.7.0            - http://qt.nokia.com/
-    QJson 0.7.1         - http://qjson.sourceforge.net/
-    TagLib 1.6.2        - http://developer.kde.org/~wheeler/taglib.html
+    * CMake 2.8.0                  - http://www.cmake.org/
+    * Qt 4.7.0                     - http://qt-project.org
+    * QJson 0.7.1                  - http://qjson.sourceforge.net/
+    * TagLib 1.6.2                 - http://developer.kde.org/~wheeler/taglib.html
+    
+Audio engine dependencies:  
+    You can choose to use yarock with phonon, vlc and/or mpv audio system
+    * Phonon 4.6.0  (default)      - http://phonon.kde.org/
+    * Libvlc                       - http://www.videolan.org/vlc/libvlc.html
+    * Libmpv                       - http://mpv.io/
+
+
 # ------------------------------------------------------------------------------
                               Build instructions
 # ------------------------------------------------------------------------------
 On a Debian or Ubuntu system type:
    sudo apt-get install build-essential qt4-dev-tools libphonon-dev libtag1-dev libqt4-sql-sqlite libqjson-dev
 
-Compiling
+Build
 ----------
-    $ mkdir build && cd build
-    $ cmake ..
-    $ make
+   $ mkdir build && cd build
+   $ cmake ..
+   $ make
   
 Install on Linux
 ----------------
@@ -48,7 +56,7 @@ Running
 
 Phonon
 ------
-   Yarock player use the phonon capabilities system provided by Qt. You have to 
+   By default, Yarock player use the phonon capabilities system provided by Qt. You have to 
    install a phonon backend and check your Phonon setup. 
    
    See Phonon backends : VLC, gstreamer, Xine, Mplayer... 
@@ -58,22 +66,24 @@ Phonon
      (or) ln -s /usr/lib64/kde4/plugins/phonon_backend /usr/lib64/qt4/plugins
      
      
-Audio engine system
--------------------
-  By default yarock use phonon as audio engine, since 0.9.64 you can build yarock with 
-  phonon and/or standalone vlc angine
+Alternate Audio engine 
+----------------------
+   You can build yarock with alternate audio engine (phonon is the default one)
+   If you want to disable phonon just use -DENABLE_PHONON=OFF as cmake option
 
-    cmake .. -DENABLE_VLC=ON -DENABLE_PHONON=ON
+   For vlc audio engine
+        $ mkdir build && cd build
+        $ cmake ..  -DENABLE_VLC=ON
+        $ make
+        $ make install (as root)
+   
+   For mpv audio engine
+        $ mkdir build && cd build
+        $ cmake ..  -DENABLE_MPV=ON
+        $ make
+        $ make install (as root)
 
-    -DENABLE_VLC=OFF
-        Build with vlc audio engine 
-        Default: OFF
-
-    -DENABLE_PHONON=OFF
-        Build with phonon system as audio layer (work with phonon backend vlc, gstreamer,...)
-        Default: ON
-        
-        
+       
 # ------------------------------------------------------------------------------
                                Tips & Tricks
 # ------------------------------------------------------------------------------
