@@ -279,7 +279,7 @@
     <message>
         <location filename="../src/commandlineoptions.cpp" line="152"/>
         <source>Play the &lt;n&gt;th track in the playlist</source>
-        <translation>プレイリスト内の&lt;N&gt;番目のトラックを再生する</translation>
+        <translation>プレイリスト内の&lt;n&gt;番目のトラックを再生する</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="153"/>
@@ -302,12 +302,12 @@
     <message>
         <location filename="../src/widgets/dialogs/dboperationdialog.cpp" line="42"/>
         <source>Update</source>
-        <translation>アップデート</translation>
+        <translation>楽曲の更新</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/dboperationdialog.cpp" line="43"/>
         <source>Rebuild</source>
-        <translation>再構築</translation>
+        <translation>データの再構築</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/dboperationdialog.cpp" line="44"/>
@@ -322,17 +322,17 @@
     <message>
         <location filename="../src/widgets/dialogs/dboperationdialog.cpp" line="58"/>
         <source>Rescan medias files and update database</source>
-        <translation>再スキャンマスコミファイルおよび更新データベース</translation>
+        <translation>楽曲の再スキャンとデータベースの更新</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/dboperationdialog.cpp" line="60"/>
         <source>Delete and rebuild database (*)</source>
-        <translation>（*）を削除し、データベースを再構築する</translation>
+        <translation>データベースを再構築する(*)</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/dboperationdialog.cpp" line="61"/>
         <source>* all changes into collection database will be discarded !!</source>
-        <translation>*コレクションデータベースへのすべての変更が破棄されます！</translation>
+        <translation>*データベースのすべての変更が破棄されます！！</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/dboperationdialog.cpp" line="63"/>
@@ -365,7 +365,7 @@
     <message>
         <location filename="../src/dbus/dbusnotification.cpp" line="222"/>
         <source>Volume %1%</source>
-        <translation>体積％、1％</translation>
+        <translation>音量%1%</translation>
     </message>
 </context>
 <context>
@@ -373,7 +373,7 @@
     <message>
         <location filename="../src/views/context/context_widget.cpp" line="400"/>
         <source>Discography</source>
-        <translation>ディスコグラフィー</translation>
+        <translation>作品</translation>
     </message>
 </context>
 <context>
@@ -381,7 +381,7 @@
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="120"/>
         <source>Edit album</source>
-        <translation>編集アルバム</translation>
+        <translation>アルバムを編集</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="148"/>
@@ -396,7 +396,7 @@
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="150"/>
         <source>Remove</source>
-        <translation>削除する</translation>
+        <translation>削除</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="170"/>
@@ -421,12 +421,12 @@
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="180"/>
         <source>Playcount</source>
-        <translation>Playcount</translation>
+        <translation>再生回数</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="182"/>
         <source>Rating</source>
-        <translation>定格</translation>
+        <translation>評価</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="188"/>
@@ -442,7 +442,7 @@
         <location filename="../src/widgets/editors/editor_album.cpp" line="247"/>
         <location filename="../src/widgets/editors/editor_album.cpp" line="266"/>
         <source>clear user rating</source>
-        <translation>明確なユーザの評価</translation>
+        <translation>評価をリセット</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="266"/>
@@ -480,7 +480,7 @@
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="140"/>
         <source>Remove</source>
-        <translation>削除する</translation>
+        <translation>削除</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="157"/>
@@ -490,12 +490,12 @@
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="159"/>
         <source>Playcount</source>
-        <translation>Playcount</translation>
+        <translation>再生回数</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="161"/>
         <source>Rating</source>
-        <translation>定格</translation>
+        <translation>評価</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="167"/>
@@ -506,7 +506,7 @@
         <location filename="../src/widgets/editors/editor_artist.cpp" line="211"/>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="230"/>
         <source>clear user rating</source>
-        <translation>明確なユーザの評価</translation>
+        <translation>評価をリセット</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="230"/>
@@ -529,7 +529,7 @@
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="78"/>
         <source>Edit playlist</source>
-        <translation>編集プレイリスト</translation>
+        <translation>プレイリストの編集</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="85"/>
@@ -539,12 +539,12 @@
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="93"/>
         <source>To database</source>
-        <translation>データベースへの</translation>
+        <translation>データベースに保存</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="94"/>
         <source>To file</source>
-        <translation>ファイルへ</translation>
+        <translation>ファイルに保存</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="99"/>
@@ -554,7 +554,7 @@
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="107"/>
         <source>Open</source>
-        <translation>オープン</translation>
+        <translation>開く</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="132"/>
@@ -569,12 +569,12 @@
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="237"/>
         <source>Add music directories</source>
-        <translation>音楽ディレクトリを追加</translation>
+        <translation>楽曲のディレクトリを追加</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="284"/>
         <source>Save playlist to file</source>
-        <translation>ファイルへのプレイリストを保存する</translation>
+        <translation>ファイルにプレイリストを保存</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="305"/>
@@ -594,7 +594,7 @@
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="309"/>
         <source>Clear playlist</source>
-        <translation>クリアプレイリスト</translation>
+        <translation>プレイリストをクリア</translation>
     </message>
 </context>
 <context>
@@ -607,22 +607,22 @@
     <message>
         <location filename="../src/widgets/editors/editor_search.cpp" line="46"/>
         <source>Match search term (AND)</source>
-        <translation>マッチ検索語（AND）</translation>
+        <translation>完全一致検索(AND検索)</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_search.cpp" line="48"/>
         <source>Match search term (OR)</source>
-        <translation>マッチ検索語（OR）</translation>
+        <translation>部分一致検索(OR検索)</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_search.cpp" line="51"/>
         <source>Search terms</source>
-        <translation>検索用語</translation>
+        <translation>検索する語</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_search.cpp" line="64"/>
         <source>Add search query</source>
-        <translation>検索クエリを追加します。</translation>
+        <translation>検索クエリを追加</translation>
     </message>
 </context>
 <context>
@@ -650,32 +650,32 @@
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="114"/>
         <source>Match search term (AND)</source>
-        <translation>マッチ検索語（AND）</translation>
+        <translation>完全一致検索(AND検索)</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="116"/>
         <source>Match search term (OR)</source>
-        <translation>マッチ検索語（OR）</translation>
+        <translation>部分一致検索(OR検索)</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="118"/>
         <source>Match all tracks (ALL)</source>
-        <translation>すべてのトラックに一致する（ALL）</translation>
+        <translation>完全一致検索(ALL検索)</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="128"/>
         <source>Search terms</source>
-        <translation>検索用語</translation>
+        <translation>検索する語</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="139"/>
         <source>Add search query</source>
-        <translation>検索クエリを追加します。</translation>
+        <translation>検索クエリを追加</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="148"/>
         <source>Sort result mode</source>
-        <translation>ソート結果モード</translation>
+        <translation>並び替えモード</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="154"/>
@@ -695,7 +695,7 @@
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="191"/>
         <source>Limit</source>
-        <translation>リミット</translation>
+        <translation>制限</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="198"/>
@@ -705,17 +705,17 @@
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="199"/>
         <source>Limit at</source>
-        <translation>限界</translation>
+        <translation>制限数</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="375"/>
         <source>Media Search Engine Dialog</source>
-        <translation>メディア検索エンジン·ダイアログ</translation>
+        <translation>楽曲検索エンジンダイアログ</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="376"/>
         <source>&lt;p&gt;Search query is not valid&lt;/p&gt;</source>
-        <translation>&lt;P&gt;検索クエリが有効ではありません。&lt;/ P&gt;</translation>
+        <translation>&lt;p&gt;検索クエリが有効ではありません&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -723,7 +723,7 @@
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="149"/>
         <source>Edit track</source>
-        <translation>編集トラック</translation>
+        <translation>トラックを編集</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="201"/>
@@ -748,7 +748,7 @@
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="217"/>
         <source>Year</source>
-        <translation>年</translation>
+        <translation>年代</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="221"/>
@@ -758,17 +758,17 @@
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="225"/>
         <source>Number</source>
-        <translation>数</translation>
+        <translation>ナンバー</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="229"/>
         <source>Playcount</source>
-        <translation>Playcount</translation>
+        <translation>再生回数</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="233"/>
         <source>Rating</source>
-        <translation>定格</translation>
+        <translation>評価</translation>
     </message>
 </context>
 <context>
@@ -777,7 +777,7 @@
         <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="64"/>
         <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="245"/>
         <source>Save preset</source>
-        <translation>プリセットの保存</translation>
+        <translation>プリセットを保存</translation>
     </message>
     <message>
         <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="69"/>
@@ -788,12 +788,12 @@
     <message>
         <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="81"/>
         <source>Enable equalizer</source>
-        <translation>イコライザーを有効にする</translation>
+        <translation>イコライザーを有効化</translation>
     </message>
     <message>
         <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="231"/>
         <source>Are you sure you want to delete the &quot;%1&quot; preset?</source>
-        <translation>あなたはプリセット &quot;\％1&quot; \を削除してもよろしいですか？</translation>
+        <translation>プリセット&quot;%1&quot;を削除してもよろしいですか？</translation>
     </message>
     <message>
         <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="245"/>
@@ -846,22 +846,22 @@
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="226"/>
         <source>All playlist (*.m3u *.pls *.xspf)</source>
-        <translation>すべてのプレイリスト（* .m3u再生* .PLS * .xspf）</translation>
+        <translation>すべてのプレイリスト形式(*.m3u *.pls *.xspf)</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="227"/>
         <source>m3u playlist (*.m3u)</source>
-        <translation>M3Uプレイリスト（* .m3u再生）</translation>
+        <translation>M3Uプレイリスト形式(*.m3u)</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="228"/>
         <source>pls playlist (*.pls)</source>
-        <translation>PLSプレイリスト（* .PLS）</translation>
+        <translation>PLSプレイリスト形式(*.pls)</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="229"/>
         <source>xspf playlist (*.xspf)</source>
-        <translation>XSPFプレイリスト（* .xspf）</translation>
+        <translation>XSPFプレイリスト形式(*.xspf)</translation>
     </message>
 </context>
 <context>
@@ -869,7 +869,7 @@
     <message>
         <location filename="../src/views/filesystem/file_scene.cpp" line="246"/>
         <source>No entry found</source>
-        <translation>いいえエントリが見つかりませんでした</translation>
+        <translation>楽曲が見つかりませんでした</translation>
     </message>
 </context>
 <context>
@@ -925,22 +925,22 @@
     <message>
         <location filename="../src/views/item_menu.cpp" line="146"/>
         <source>%1 albums</source>
-        <translation>％1アルバム</translation>
+        <translation>%1アルバム</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="147"/>
         <source>%1 tracks</source>
-        <translation>％1トラック</translation>
+        <translation>%1トラック</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="148"/>
         <source>%1 streams</source>
-        <translation>％1ストリーム</translation>
+        <translation>%1ストリーム</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="149"/>
         <source>%1 playlist</source>
-        <translation>％1プレイリスト</translation>
+        <translation>%1プレイリスト</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="266"/>
@@ -967,12 +967,12 @@
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="93"/>
         <source>view grid</source>
-        <translation>ビューグリッド</translation>
+        <translation>グリッド表示</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="94"/>
         <source>view by tracks</source>
-        <translation>トラックによるビュー</translation>
+        <translation>トラック別表示</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="95"/>
@@ -987,7 +987,7 @@
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="97"/>
         <source>reload history</source>
-        <translation>歴史をリロード</translation>
+        <translation>履歴を再読み込み</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="98"/>
@@ -997,7 +997,7 @@
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="257"/>
         <source>Updating music database</source>
-        <translation>更新音楽データベース</translation>
+        <translation>楽曲データベースを更新</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="759"/>
@@ -1026,7 +1026,7 @@
         <location filename="../src/views/local/local_scene_dashboard.cpp" line="225"/>
         <location filename="../src/views/local/local_scene_dashboard.cpp" line="291"/>
         <source>No entry found</source>
-        <translation>いいえエントリが見つかりませんでした</translation>
+        <translation>楽曲が見つかりませんでした</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="350"/>
@@ -1041,7 +1041,7 @@
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="527"/>
         <source>disc %1</source>
-        <translation>ディスク％1</translation>
+        <translation>ディスク%1</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="934"/>
@@ -1074,7 +1074,7 @@
     <message>
         <location filename="../src/views/context/lyricseditor.cpp" line="41"/>
         <source>Lyrics editor</source>
-        <translation>歌詞のエディタ</translation>
+        <translation>歌詞エディター</translation>
     </message>
 </context>
 <context>
@@ -1093,12 +1093,12 @@
     <message>
         <location filename="../src/views/context/context_widget.cpp" line="815"/>
         <source>No lyrics found</source>
-        <translation>いいえ歌詞が見つかりませんでした</translation>
+        <translation>歌詞が見つかりませんでした</translation>
     </message>
     <message>
         <location filename="../src/views/context/context_widget.cpp" line="786"/>
         <source>Song lyrics</source>
-        <translation>ソング歌詞</translation>
+        <translation>楽曲の歌詞</translation>
     </message>
     <message>
         <location filename="../src/views/context/context_widget.cpp" line="871"/>
@@ -1126,7 +1126,7 @@
     <message>
         <location filename="../src/widgets/main/main_left.cpp" line="104"/>
         <source>Go forward</source>
-        <translation>前進する</translation>
+        <translation>進む</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/main_left.cpp" line="105"/>
@@ -1154,17 +1154,17 @@
     <message>
         <location filename="../src/widgets/main/main_right.cpp" line="152"/>
         <source>Playqueue</source>
-        <translation>Playqueue</translation>
+        <translation>再生キュー</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/main_right.cpp" line="156"/>
         <source>Playlist editor</source>
-        <translation>プレイリストエディタ</translation>
+        <translation>プレイリストエディター</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/main_right.cpp" line="160"/>
         <source>Tag editor</source>
-        <translation>タグエディタ</translation>
+        <translation>タグエディター</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/main_right.cpp" line="164"/>
@@ -1205,7 +1205,7 @@
     <message>
         <location filename="../src/mainwindow.cpp" line="342"/>
         <source>About</source>
-        <translation>約</translation>
+        <translation>このアプリケーションについて</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="344"/>
@@ -1250,7 +1250,7 @@
     <message>
         <location filename="../src/mainwindow.cpp" line="354"/>
         <source>Stop after this track</source>
-        <translation>このトラックの後に停止します</translation>
+        <translation>この楽曲の再生後に停止</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="357"/>
@@ -1285,7 +1285,7 @@
     <message>
         <location filename="../src/mainwindow.cpp" line="382"/>
         <source>Database operation</source>
-        <translation>データベース操作</translation>
+        <translation>データベースの操作</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="385"/>
@@ -1300,12 +1300,12 @@
     <message>
         <location filename="../src/mainwindow.cpp" line="387"/>
         <source>Show now playing</source>
-        <translation>今遊んショー</translation>
+        <translation>再生中の楽曲を表示</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="393"/>
         <source>Switch to minimal mode</source>
-        <translation>最小限のモードに切り替え</translation>
+        <translation>コンパクトモードに切り替え</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="394"/>
@@ -1315,17 +1315,17 @@
     <message>
         <location filename="../src/mainwindow.cpp" line="362"/>
         <source>Send LastFm love</source>
-        <translation>LastFmの愛を送る</translation>
+        <translation>LastFmでLoveを付ける</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="365"/>
         <source>Show cover</source>
-        <translation>ショーカバー</translation>
+        <translation>カバーを表示</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="369"/>
         <source>Show rating</source>
-        <translation>ショーの評価</translation>
+        <translation>評価を表示</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="397"/>
@@ -1356,12 +1356,12 @@
     <message>
         <location filename="../src/mainwindow.cpp" line="544"/>
         <source>Add music directories</source>
-        <translation>音楽ディレクトリを追加</translation>
+        <translation>楽曲のディレクトリを追加</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="589"/>
         <source>Save playlist to file</source>
-        <translation>ファイルへのプレイリストを保存する</translation>
+        <translation>ファイルにプレイリストを保存</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="600"/>
@@ -1376,42 +1376,42 @@
     <message>
         <location filename="../src/mainwindow.cpp" line="670"/>
         <source>Playing error</source>
-        <translation>エラーを再生する</translation>
+        <translation>再生エラー</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="951"/>
         <source>settings saved</source>
-        <translation>設定が保存された</translation>
+        <translation>設定が保存されました</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="993"/>
         <source>&lt;b&gt;Welcome to yarock&lt;/b&gt;&lt;p&gt;No collection seems to be setup&lt;/p&gt;&lt;p&gt;Do you want to setup your collection now ?&lt;/p&gt;</source>
-        <translation>&lt;B&gt;へようこそyarock &lt;/ B&gt; &lt;P&gt;いいえコレクションは現在、&lt;/ P&gt; &lt;P&gt;あなたが設定しますかあなたのコレクションのセットアップであると思わない？&lt;/ P&gt;</translation>
+        <translation>&lt;b&gt;yarockへようこそ&lt;/b&gt;&lt;p&gt;楽曲が設定されていないようです&lt;/p&gt;&lt;p&gt;あなたの楽曲を設定しますか？&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="997"/>
         <source>Setup your music collection directory</source>
-        <translation>セットアップあなたの音楽コレクションディレクトリ</translation>
+        <translation>楽曲のディレクトリを設定</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1013"/>
         <source>&lt;p&gt;Database need to be rebuilt&lt;/p&gt;</source>
-        <translation>&lt;P&gt;データベースを再構築する必要が&lt;/ P&gt;</translation>
+        <translation>&lt;p&gt;データベースを再構築する必要があります&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1015"/>
         <source>Database revision update</source>
-        <translation>データベースリビジョン更新</translation>
+        <translation>データベースのリビジョンを更新</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1160"/>
         <source>&lt;b&gt;Equalizer is not available&lt;/b&gt;&lt;p&gt;Equalizer wasn&apos;t found, probably you are using a backend that doesn&apos;t support it.&lt;/p&gt;&lt;p&gt;Change to another backend (gstreamer is supported) if you want to have equalizer&lt;/p&gt;</source>
-        <translation>&lt;B&gt;イコライザーは使用できません。&lt;/ B&gt; &lt;P&gt;イコライザーが見つかりませんでした、おそらくあなたはそれをサポートしていないバックエンドを使用しています。&lt;/ p&gt; &lt;p&gt;別のバックエンドへの変更（のGStreamerがサポートされている）場合あなたはイコライザーを持ちたい&lt;/ P&gt;</translation>
+        <translation>&lt;b&gt;イコライザーは利用できません&lt;/b&gt;&lt;p&gt;イコライザーが見つかりませんでした　おそらくそれをサポートしていないバックエンドを使用しています。&lt;/p&gt;&lt;p&gt;イコライザーを使用するには別のバックエンドへ変更(GStreamerなど)してください&lt;/ P&gt;</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1164"/>
         <source>Equalizer information</source>
-        <translation>イコライザー情報</translation>
+        <translation>イコライザー</translation>
     </message>
 </context>
 <context>
@@ -1499,7 +1499,7 @@
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="146"/>
         <source>years</source>
-        <translation>年</translation>
+        <translation>年代別</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="149"/>
@@ -1540,7 +1540,7 @@
     <message>
         <location filename="../src/widgets/nowplaying/nowplayingview.cpp" line="65"/>
         <source>Send LastFm love</source>
-        <translation>LastFmの愛を送る</translation>
+        <translation>LastFmでLoveを付ける</translation>
     </message>
 </context>
 <context>
@@ -1958,12 +1958,12 @@
     <message>
         <location filename="../src/core/mediaitem/tag.cpp" line="531"/>
         <source>unknown album</source>
-        <translation>未知のアルバム</translation>
+        <translation>不明なアルバム</translation>
     </message>
     <message>
         <location filename="../src/core/mediaitem/tag.cpp" line="534"/>
         <source>unknown genre</source>
-        <translation>未知のジャンル</translation>
+        <translation>不明なジャンル</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="122"/>
@@ -1988,37 +1988,37 @@
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="126"/>
         <source>Duration</source>
-        <translation>デュレーション</translation>
+        <translation>再生時間</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="127"/>
         <source>Track Year</source>
-        <translation>トラック年</translation>
+        <translation>トラックの年代</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="128"/>
         <source>Album Year</source>
-        <translation>アルバムイヤー</translation>
+        <translation>アルバムの年代</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="129"/>
         <source>Number</source>
-        <translation>数</translation>
+        <translation>トラックナンバー</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="130"/>
         <source>Track Playcount</source>
-        <translation>トラックPlaycount</translation>
+        <translation>楽曲の再生回数</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="131"/>
         <source>Album Playcount</source>
-        <translation>アルバムPlaycount</translation>
+        <translation>アルバムの再生回数</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="132"/>
         <source>Artist Playcount</source>
-        <translation>アーティストPlaycount</translation>
+        <translation>アーティストの再生回数</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="133"/>
@@ -2048,7 +2048,7 @@
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="149"/>
         <source>after</source>
-        <translation>後に</translation>
+        <translation>後</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="150"/>
@@ -2058,22 +2058,22 @@
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="151"/>
         <source>on</source>
-        <translation>上の</translation>
+        <translation>上</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="152"/>
         <source>not on</source>
-        <translation>しないで</translation>
+        <translation>上にない</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="158"/>
         <source>contains</source>
-        <translation>含まれています</translation>
+        <translation>に含まれている</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="159"/>
         <source>does not contain</source>
-        <translation>含まれていません</translation>
+        <translation>に含まれていません</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="160"/>
@@ -2098,22 +2098,22 @@
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="164"/>
         <source>equals</source>
-        <translation>等しい</translation>
+        <translation>と等しい</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="165"/>
         <source>not equals</source>
-        <translation>等しくない</translation>
+        <translation>と等しくない</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="175"/>
         <source>A-Z</source>
-        <translation>AZ</translation>
+        <translation>A-Z</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="175"/>
         <source>Z-A</source>
-        <translation>ZA</translation>
+        <translation>Z-A</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="176"/>
@@ -2123,27 +2123,27 @@
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="176"/>
         <source>newest first</source>
-        <translation>新しいの最初に</translation>
+        <translation>新しい順</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="177"/>
         <source>shortest first</source>
-        <translation>最短最初</translation>
+        <translation>短い順</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="177"/>
         <source>longest first</source>
-        <translation>最長の最初の</translation>
+        <translation>長い順</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="179"/>
         <source>smallest first</source>
-        <translation>最小の最初の</translation>
+        <translation>小さい順</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="179"/>
         <source>biggest first</source>
-        <translation>最大の最初の</translation>
+        <translation>大きい順</translation>
     </message>
     <message>
         <location filename="../src/views/context/context_item.cpp" line="528"/>
@@ -2153,12 +2153,12 @@
     <message>
         <location filename="../src/views/stream/stream_scene.cpp" line="210"/>
         <source>downloading streams from %1....please wait...</source>
-        <translation>％1からのストリームをダウンロードする....お待ちください...</translation>
+        <translation>%1からストリームをダウンロードしています....しばらくお待ちください...</translation>
     </message>
     <message>
         <location filename="../src/views/stream/stream_scene.cpp" line="217"/>
         <source>error accessing stream from %1 !</source>
-        <translation>％1からのストリームにアクセスするときにエラー！</translation>
+        <translation>%1のストリームにアクセス時にエラーが発生しました！</translation>
     </message>
     <message>
         <location filename="../src/widgets/exlineedit.cpp" line="49"/>
@@ -2177,12 +2177,12 @@
     <message>
         <location filename="../src/widgets/audiocontrols.cpp" line="73"/>
         <source>Repeat track</source>
-        <translation>リピートトラック</translation>
+        <translation>この曲をリピート</translation>
     </message>
     <message>
         <location filename="../src/widgets/audiocontrols.cpp" line="77"/>
         <source>Repeat all</source>
-        <translation>リピートモードはオンです</translation>
+        <translation>すべてリピート</translation>
     </message>
 </context>
 <context>
@@ -2225,32 +2225,32 @@
     <message>
         <location filename="../src/smartplaylist/smartplaylist.cpp" line="58"/>
         <source>50 Random tracks</source>
-        <translation>50ランダムトラック</translation>
+        <translation>ランダムな50曲</translation>
     </message>
     <message>
         <location filename="../src/smartplaylist/smartplaylist.cpp" line="59"/>
         <source>50 last played</source>
-        <translation>最後に再生した50</translation>
+        <translation>最後に再生した50曲</translation>
     </message>
     <message>
         <location filename="../src/smartplaylist/smartplaylist.cpp" line="60"/>
         <source>50 most played</source>
-        <translation>ほとんどのプレイ50</translation>
+        <translation>再生回数が多い50曲</translation>
     </message>
     <message>
         <location filename="../src/smartplaylist/smartplaylist.cpp" line="61"/>
         <source>ever played</source>
-        <translation>今までプレイ</translation>
+        <translation>聴いたもの</translation>
     </message>
     <message>
         <location filename="../src/smartplaylist/smartplaylist.cpp" line="62"/>
         <source>never played</source>
-        <translation>プレイしたことがない</translation>
+        <translation>未再生</translation>
     </message>
     <message>
         <location filename="../src/smartplaylist/smartplaylist.cpp" line="63"/>
         <source>top rated tracks</source>
-        <translation>トップレートトラック</translation>
+        <translation>評価が高い楽曲</translation>
     </message>
 </context>
 <context>

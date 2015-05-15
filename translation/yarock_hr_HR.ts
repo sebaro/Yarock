@@ -114,114 +114,114 @@
 <context>
     <name>BrowserView</name>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="601"/>
-        <location filename="../src/views/browser_view.cpp" line="635"/>
+        <location filename="../src/views/browser_view.cpp" line="607"/>
+        <location filename="../src/views/browser_view.cpp" line="641"/>
         <source>Context</source>
         <translation>Kontekst</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="602"/>
-        <location filename="../src/views/browser_view.cpp" line="636"/>
+        <location filename="../src/views/browser_view.cpp" line="608"/>
+        <location filename="../src/views/browser_view.cpp" line="642"/>
         <source>History</source>
         <translation>Povijest</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="603"/>
+        <location filename="../src/views/browser_view.cpp" line="609"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; albums</source>
         <translation>Kolekcija : &lt;b&gt;%1&lt;/b&gt; albumi</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="604"/>
+        <location filename="../src/views/browser_view.cpp" line="610"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; artist</source>
         <translation>Kolekcija : &lt;b&gt;%1&lt;/b&gt; umjetnik</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="605"/>
+        <location filename="../src/views/browser_view.cpp" line="611"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; tracks</source>
         <translation>Kolekcija : &lt;b&gt;%1&lt;/b&gt; zapisi</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="606"/>
+        <location filename="../src/views/browser_view.cpp" line="612"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; styles</source>
         <translation>Kolekcija : &lt;b&gt;%1&lt;/b&gt; stilovi</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="607"/>
+        <location filename="../src/views/browser_view.cpp" line="613"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; years</source>
         <translation>Kolekcija : &lt;b&gt;%1&lt;/b&gt; godine</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="608"/>
+        <location filename="../src/views/browser_view.cpp" line="614"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; favorite item</source>
         <translation>Kolekcija : &lt;b&gt;%1&lt;/b&gt; omiljena stavka</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="612"/>
+        <location filename="../src/views/browser_view.cpp" line="618"/>
         <source>Playlist : &lt;b&gt;%1&lt;/b&gt; playlists</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="632"/>
+        <location filename="../src/views/browser_view.cpp" line="638"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="633"/>
+        <location filename="../src/views/browser_view.cpp" line="639"/>
         <source>Settings</source>
         <translation type="unfinished">Postavke</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="634"/>
+        <location filename="../src/views/browser_view.cpp" line="640"/>
         <source>Dashboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="637"/>
+        <location filename="../src/views/browser_view.cpp" line="643"/>
         <source>Artists</source>
         <translation type="unfinished">Umjetnici</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="638"/>
+        <location filename="../src/views/browser_view.cpp" line="644"/>
         <source>Albums</source>
         <translation type="unfinished">Albumi</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="639"/>
+        <location filename="../src/views/browser_view.cpp" line="645"/>
         <source>Tracks</source>
         <translation type="unfinished">Zapisi</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="640"/>
+        <location filename="../src/views/browser_view.cpp" line="646"/>
         <source>Genres</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="641"/>
+        <location filename="../src/views/browser_view.cpp" line="647"/>
         <source>Years</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="642"/>
+        <location filename="../src/views/browser_view.cpp" line="648"/>
         <source>Favorites</source>
         <translation type="unfinished">Omiljeni</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="643"/>
+        <location filename="../src/views/browser_view.cpp" line="649"/>
         <source>Playlists</source>
         <translation type="unfinished">Liste izvođenja</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="644"/>
+        <location filename="../src/views/browser_view.cpp" line="650"/>
         <source>Smart playlists</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="648"/>
+        <location filename="../src/views/browser_view.cpp" line="654"/>
         <source>Favorites radios</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="649"/>
+        <location filename="../src/views/browser_view.cpp" line="655"/>
         <source>Filesystem</source>
         <translation type="unfinished"></translation>
     </message>
@@ -230,7 +230,7 @@
         <translation type="obsolete">Lista izvođenja : &lt;b&gt;%1&lt;/b&gt; datoteke liste izvođenja</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="619"/>
+        <location filename="../src/views/browser_view.cpp" line="625"/>
         <source>Radio : &lt;b&gt;%1&lt;/b&gt; streams</source>
         <translation type="unfinished"></translation>
     </message>
@@ -897,62 +897,62 @@
         <translation type="obsolete">Idi gore</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="154"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="168"/>
         <source>back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="161"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="175"/>
         <source>forward</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="167"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="181"/>
         <source>go up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="173"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="187"/>
         <source>home</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="181"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="195"/>
         <source>show hidden file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="220"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="234"/>
         <source>Audio files (*.mp3 *.wav *.ogg *.flac *.m4a *.aac)</source>
         <translation>Audio datoteke (*.mp3 *.wav *.ogg *.flac *.m4a *.aac)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="221"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="235"/>
         <source>Playlists files (*.m3u *.pls *.xspf)</source>
         <translation>Datoteke liste izvođenja (*.m3u *.pls *.xspf)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="222"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="236"/>
         <source>All files (*.*)</source>
         <translation>Sve datoteke (*.*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="226"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="240"/>
         <source>All playlist (*.m3u *.pls *.xspf)</source>
         <translation>Sve liste izvođenja (*.m3u *.pls *.xspf)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="227"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="241"/>
         <source>m3u playlist (*.m3u)</source>
         <translation>m3u lista izvođenja (*.m3u)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="228"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="242"/>
         <source>pls playlist (*.pls)</source>
         <translation>pls lista izvođenja (*.pls)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="229"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="243"/>
         <source>xspf playlist (*.xspf)</source>
         <translation>xspf lista izvođenja (*.xspf)</translation>
     </message>
@@ -964,9 +964,27 @@
         <translation type="obsolete">Direktoriji</translation>
     </message>
     <message>
-        <location filename="../src/views/filesystem/file_scene.cpp" line="246"/>
+        <location filename="../src/views/filesystem/file_scene.cpp" line="247"/>
         <source>No entry found</source>
         <translation>Unos nije nađen</translation>
+    </message>
+</context>
+<context>
+    <name>FirstTimeDialog</name>
+    <message>
+        <location filename="../src/widgets/dialogs/first_time_dialog.cpp" line="34"/>
+        <source>Setup your music collection directory</source>
+        <translation type="unfinished">Postavite direktorij vaše glazbene kolekcije</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dialogs/first_time_dialog.cpp" line="42"/>
+        <source>&lt;p&gt;Welcome to yarock&lt;/p&gt;&lt;p&gt;Select the location of your music collection:&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dialogs/first_time_dialog.cpp" line="63"/>
+        <source> Choose music folder</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1358,62 +1376,62 @@
         <translation type="obsolete">O Qt-u</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="341"/>
+        <location filename="../src/mainwindow.cpp" line="342"/>
         <source>&amp;Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="342"/>
+        <location filename="../src/mainwindow.cpp" line="343"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="344"/>
+        <location filename="../src/mainwindow.cpp" line="345"/>
         <source>settings</source>
         <translation type="unfinished">postavke</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="347"/>
+        <location filename="../src/mainwindow.cpp" line="348"/>
         <source>&amp;Add media to playlist</source>
         <translation>&amp;Dodaj medij na listu izvođenja</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="348"/>
+        <location filename="../src/mainwindow.cpp" line="349"/>
         <source>&amp;Add directory to playlist</source>
         <translation>&amp;Dodaj direktorij  na listu izvođenja</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="349"/>
+        <location filename="../src/mainwindow.cpp" line="350"/>
         <source>&amp;Add Url...</source>
         <translation>&amp;Dodaj Url...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="350"/>
+        <location filename="../src/mainwindow.cpp" line="351"/>
         <source>&amp;Clear playlist</source>
         <translation>&amp;Očisti listu izvođenja</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="351"/>
+        <location filename="../src/mainwindow.cpp" line="352"/>
         <source>&amp;Save playlist to file</source>
         <translation>&amp;Spremi listu izvođenja u datoteku</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="352"/>
+        <location filename="../src/mainwindow.cpp" line="353"/>
         <source>&amp;Auto save playlist to yarock database</source>
         <translation>&amp;Samospremanje liste izvođenja u yarock bazu podataka</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="353"/>
+        <location filename="../src/mainwindow.cpp" line="354"/>
         <source>&amp;Remove media from playlist</source>
         <translation>&amp;Ukloni medij sa liste izvođenja</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="354"/>
+        <location filename="../src/mainwindow.cpp" line="355"/>
         <source>Stop after this track</source>
         <translation>Zaustavi nakon ovoga zapisa</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="357"/>
+        <location filename="../src/mainwindow.cpp" line="358"/>
         <source>Remove duplicate</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1434,57 +1452,57 @@
         <translation type="obsolete">Prošireno</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="374"/>
+        <location filename="../src/mainwindow.cpp" line="375"/>
         <source>Play or Pause media</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="375"/>
+        <location filename="../src/mainwindow.cpp" line="376"/>
         <source>Stop playing media</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="376"/>
+        <location filename="../src/mainwindow.cpp" line="377"/>
         <source>Play next media</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="377"/>
+        <location filename="../src/mainwindow.cpp" line="378"/>
         <source>Play previous media</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="379"/>
+        <location filename="../src/mainwindow.cpp" line="380"/>
         <source>Audio equalizer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="382"/>
+        <location filename="../src/mainwindow.cpp" line="383"/>
         <source>Database operation</source>
         <translation>Operacija baze podataka</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="385"/>
+        <location filename="../src/mainwindow.cpp" line="386"/>
         <source>Show playqueue panel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="386"/>
+        <location filename="../src/mainwindow.cpp" line="387"/>
         <source>Show menu panel</source>
         <translation>Pokaži ploču izbornika</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="387"/>
+        <location filename="../src/mainwindow.cpp" line="388"/>
         <source>Show now playing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="393"/>
+        <location filename="../src/mainwindow.cpp" line="394"/>
         <source>Switch to minimal mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="394"/>
+        <location filename="../src/mainwindow.cpp" line="395"/>
         <source>Switch to normal mode</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1493,85 +1511,83 @@
         <translation type="obsolete">Otvori uređivač liste izvođenja</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="362"/>
+        <location filename="../src/mainwindow.cpp" line="363"/>
         <source>Send LastFm love</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="365"/>
+        <location filename="../src/mainwindow.cpp" line="366"/>
         <source>Show cover</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="369"/>
+        <location filename="../src/mainwindow.cpp" line="370"/>
         <source>Show rating</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="397"/>
+        <location filename="../src/mainwindow.cpp" line="398"/>
         <source>Jump to artist</source>
         <translation>Skoči na umjetnika</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="398"/>
+        <location filename="../src/mainwindow.cpp" line="399"/>
         <source>Jump to album</source>
         <translation>Skoči na album</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="399"/>
-        <location filename="../src/mainwindow.cpp" line="402"/>
+        <location filename="../src/mainwindow.cpp" line="400"/>
+        <location filename="../src/mainwindow.cpp" line="403"/>
         <source>Jump to track</source>
         <translation>Skoči na zapis</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="406"/>
+        <location filename="../src/mainwindow.cpp" line="407"/>
         <source>Enable search popup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="532"/>
+        <location filename="../src/mainwindow.cpp" line="533"/>
         <source>Add music files or playlist</source>
         <translation>Dodajte glazbene datoteke na listu izvođenja</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="544"/>
+        <location filename="../src/mainwindow.cpp" line="545"/>
         <source>Add music directories</source>
         <translation>Dodaj glazbene direktorije</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="589"/>
+        <location filename="../src/mainwindow.cpp" line="590"/>
         <source>Save playlist to file</source>
         <translation>Spremi listu izvođenja u datoteku</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="600"/>
+        <location filename="../src/mainwindow.cpp" line="601"/>
         <source>Playlist name</source>
         <translation>Ime liste izvođenja</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="600"/>
+        <location filename="../src/mainwindow.cpp" line="601"/>
         <source>Save playlist</source>
         <translation>Spremi listu izvođenja</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="670"/>
+        <location filename="../src/mainwindow.cpp" line="671"/>
         <source>Playing error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="951"/>
+        <location filename="../src/mainwindow.cpp" line="952"/>
         <source>settings saved</source>
         <translation>postavke spremljene</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="993"/>
         <source>&lt;b&gt;Welcome to yarock&lt;/b&gt;&lt;p&gt;No collection seems to be setup&lt;/p&gt;&lt;p&gt;Do you want to setup your collection now ?&lt;/p&gt;</source>
-        <translation>&lt;h2&gt;Dobrodošli u yarock&lt;/h2&gt;&lt;p&gt;Nijedna kolekcija nije postavljena&lt;/p&gt;&lt;p&gt;želite li postaviti svoju kolekciju sada&lt;/p&gt;</translation>
+        <translation type="obsolete">&lt;h2&gt;Dobrodošli u yarock&lt;/h2&gt;&lt;p&gt;Nijedna kolekcija nije postavljena&lt;/p&gt;&lt;p&gt;želite li postaviti svoju kolekciju sada&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="997"/>
         <source>Setup your music collection directory</source>
-        <translation>Postavite direktorij vaše glazbene kolekcije</translation>
+        <translation type="obsolete">Postavite direktorij vaše glazbene kolekcije</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1013"/>
@@ -1857,8 +1873,8 @@
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="547"/>
-        <location filename="../src/views/settings/settings_widget.cpp" line="819"/>
-        <location filename="../src/views/settings/settings_widget.cpp" line="832"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="811"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="824"/>
         <source>New database</source>
         <translation>Nova baza podataka</translation>
     </message>
@@ -1869,7 +1885,7 @@
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="555"/>
-        <location filename="../src/views/settings/settings_widget.cpp" line="905"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="897"/>
         <source>Rename database</source>
         <translation>Preimenuj bazu podataka</translation>
     </message>
@@ -1880,7 +1896,7 @@
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="576"/>
-        <location filename="../src/views/settings/settings_widget.cpp" line="948"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="940"/>
         <source> Choose music folder</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1923,23 +1939,23 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="819"/>
-        <location filename="../src/views/settings/settings_widget.cpp" line="905"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="811"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="897"/>
         <source>Name</source>
         <translation>Ime</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="833"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="825"/>
         <source>The database  &quot;%1&quot; already exist, please try another name</source>
         <translation>Baza podataka  &quot;%1&quot; već postoji, molim probajte drugo ime</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="886"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="878"/>
         <source>Delete database properties</source>
         <translation>Izbriši svojstva baze podataka</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="887"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="879"/>
         <source>Are you sure you want to delete the &quot;%1&quot; database ?</source>
         <translation>Jeste li sigurni da želite izbrisati &quot;%1&quot; bazu podataka?</translation>
     </message>
@@ -2029,58 +2045,58 @@
 <context>
     <name>PageScrobbler</name>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1373"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1365"/>
         <source>Scrobbler settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1397"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1389"/>
         <source>Use LastFm scrobbler</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1407"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1399"/>
         <source>Account details</source>
         <translation>Pojedinosti računa</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1413"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1405"/>
         <source>username</source>
         <translation>korisničko ime</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1416"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1408"/>
         <source>password</source>
         <translation>lozinka</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1429"/>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1552"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1421"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1544"/>
         <source>Sign In</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1545"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1537"/>
         <source>You are log in lastFm service as &lt;b&gt;%1&lt;/b&gt;</source>
         <translation>Prijavljeni ste na lastFm servis kao &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1547"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1539"/>
         <source>Sign Out</source>
         <translation>Odjavi se</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1551"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1543"/>
         <source>You are not log into</source>
         <translation>NIste prijavljeni u</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1586"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1578"/>
         <source>Authentication failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1587"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1579"/>
         <source>Your Last.fm credentials were incorrect</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2088,52 +2104,52 @@
 <context>
     <name>PageShortcut</name>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1046"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1038"/>
         <source>Shortcut settings</source>
         <translation>Postavke prečaca</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1057"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1049"/>
         <source>Play/Pause</source>
         <translation>Izvodi/pauza</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1058"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1050"/>
         <source>Stop</source>
         <translation>Zaustavi</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1059"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1051"/>
         <source>Previous track</source>
         <translation>Prethodni zapis</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1060"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1052"/>
         <source>Next track</source>
         <translation>Slijedeći zapis</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1061"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1053"/>
         <source>Increase volume</source>
         <translation>Povećaj glasnoću</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1062"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1054"/>
         <source>Decrease volume</source>
         <translation>Smanji glasnoću</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1063"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1055"/>
         <source>Mute/Unmute volume</source>
         <translation>Isključi/uključi glasnoću</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1064"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1056"/>
         <source>Jump to track</source>
         <translation>Skoči na zapis</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1065"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1057"/>
         <source>Clear playqueue</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2141,22 +2157,22 @@
 <context>
     <name>PageSongInfo</name>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1633"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1625"/>
         <source>Song info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1651"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1643"/>
         <source>Choose the websites you want to use when searching for lyrics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1657"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1649"/>
         <source>move up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1658"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1650"/>
         <source>move down</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2164,13 +2180,18 @@
 <context>
     <name>PlayerToolBar</name>
     <message>
-        <location filename="../src/widgets/playertoolbar.cpp" line="318"/>
-        <location filename="../src/widgets/playertoolbar.cpp" line="326"/>
+        <location filename="../src/widgets/playertoolbar.cpp" line="208"/>
+        <source>[paused]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/playertoolbar.cpp" line="346"/>
+        <location filename="../src/widgets/playertoolbar.cpp" line="354"/>
         <source>&lt;b&gt;%1&lt;/b&gt; by &lt;b&gt;%2&lt;/b&gt; on &lt;b&gt;%3&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/playertoolbar.cpp" line="332"/>
+        <location filename="../src/widgets/playertoolbar.cpp" line="360"/>
         <source>&lt;b&gt;%1&lt;/b&gt; stream</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2186,7 +2207,7 @@
 <context>
     <name>PlaylistDelegate</name>
     <message>
-        <location filename="../src/playqueue/playlistview.cpp" line="621"/>
+        <location filename="../src/playqueue/playlistview.cpp" line="625"/>
         <source>media reading error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2249,7 +2270,7 @@
 <context>
     <name>PlaylistView</name>
     <message>
-        <location filename="../src/playqueue/playlistview.cpp" line="261"/>
+        <location filename="../src/playqueue/playlistview.cpp" line="263"/>
         <source>Add file to play or Drag and Drop File from Collection</source>
         <translation type="unfinished"></translation>
     </message>

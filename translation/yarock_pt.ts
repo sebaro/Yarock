@@ -821,7 +821,7 @@
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="173"/>
         <source>home</source>
-        <translation type="unfinished"/>
+        <translation>pasta pessoal</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="181"/>
@@ -1419,7 +1419,7 @@
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="99"/>
         <source>home</source>
-        <translation type="unfinished"/>
+        <translation>pasta pessoal</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="102"/>
