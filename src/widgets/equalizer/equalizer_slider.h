@@ -21,6 +21,7 @@
 //! qt
 #include <QWidget>
 #include <QSlider>
+#include <QLabel>
 
 /*
 ********************************************************************************
@@ -42,13 +43,14 @@ class EqualizerSlider : public QWidget {
   void valueChanged(int value);
 
  private:
-  QSlider *_slider;
-  bool _isMouseDrag;
+  QSlider    *m_slider;
+  QLabel     *l_value;
+  bool       m_isMouseDrag;
 
  private slots:
-  void emitValueChanged();
-  void startMouseDrag();
-  void endMouseDrag();
+  void slot_on_slider_value_change();
+  void slot_start_mouse_drag();
+  void slot_end_mouse_drag();
 
 };
 

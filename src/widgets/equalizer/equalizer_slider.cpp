@@ -30,66 +30,72 @@
 EqualizerSlider::EqualizerSlider(const QString& name, QWidget *parent)
   : QWidget(parent)
 {
-    //! ----- setup Gui
     this->resize(33, 224);
 
+    /* slider */
+    m_slider = new QSlider(this);
+    m_slider->setMinimum( -100 );
+    m_slider->setMaximum( 100 );
+    m_slider->setOrientation(Qt::Vertical);
+
+    /* equalizer band name */ 
+    QLabel *l_name = new QLabel(this);
+    l_name->setAlignment(Qt::AlignCenter);
+    l_name->setText( name );
+    
+    /* equalizer value */ 
+    l_value = new QLabel(this);
+    l_value->setAlignment(Qt::AlignCenter);
+
+    /*  layout */
+    QHBoxLayout *hl = new QHBoxLayout();
+    hl->addItem( new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum) );
+    hl->addWidget( m_slider) ;
+    hl->addItem( new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum) );
+        
     QVBoxLayout *verticalLayout = new QVBoxLayout(this);
-    verticalLayout->setContentsMargins(0, 0, 0, 0);
+    verticalLayout->setContentsMargins(0, 0, 0, 0);    
+    verticalLayout->addWidget( l_value );
+    verticalLayout->addLayout( hl );
+    verticalLayout->addWidget( l_name );
 
-    QHBoxLayout *horizontalLayout = new QHBoxLayout();
-    QSpacerItem *horizontalSpacer = new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
-    horizontalLayout->addItem(horizontalSpacer);
+    /* signals connection */
+    connect(m_slider, SIGNAL(valueChanged(int)), SLOT(slot_on_slider_value_change()));
+    connect(m_slider, SIGNAL(sliderPressed()), SLOT(slot_start_mouse_drag()));
+    connect(m_slider, SIGNAL(sliderReleased()), SLOT(slot_end_mouse_drag()));
 
-    _slider = new QSlider(this);
-    _slider->setMinimum(-100);
-    _slider->setMaximum(100);
-    _slider->setOrientation(Qt::Vertical);
-
-    horizontalLayout->addWidget(_slider);
-
-    QSpacerItem  *horizontalSpacer_2 = new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
-    horizontalLayout->addItem(horizontalSpacer_2);
-
-    verticalLayout->addLayout(horizontalLayout);
-
-    QLabel *label = new QLabel(this);
-    label->setAlignment(Qt::AlignCenter);
-    label->setText(name);
-
-    verticalLayout->addWidget(label);
-
-    //! ----- Connection
-    connect(_slider, SIGNAL(valueChanged(int)), SLOT(emitValueChanged()));
-    connect(_slider, SIGNAL(sliderPressed()), SLOT(startMouseDrag()));
-    connect(_slider, SIGNAL(sliderReleased()), SLOT(endMouseDrag()));
-
-    _isMouseDrag = false;
+    m_isMouseDrag = false;
 }
 
 
 int EqualizerSlider::value() const
 {
-  return _slider->value();
+    return m_slider->value();
 }
 
 void EqualizerSlider::setValue(int value)
 {
-  _slider->setSliderPosition(value);
+    m_slider->setSliderPosition(value);
 }
 
-void EqualizerSlider::emitValueChanged()
+void EqualizerSlider::slot_on_slider_value_change()
 {
-  if(!_isMouseDrag)
-    emit valueChanged(_slider->value());
+    l_value->setText( QString::number( value() ) );
+    
+    if( !m_isMouseDrag )
+      emit valueChanged( value() );
 }
 
-void EqualizerSlider::startMouseDrag()
+void EqualizerSlider::slot_start_mouse_drag()
 {
-  _isMouseDrag = true;
+    m_isMouseDrag = true;
+
+    l_value->setText( QString::number( value() ) );
 }
 
-void EqualizerSlider::endMouseDrag()
+void EqualizerSlider::slot_end_mouse_drag()
 {
-  _isMouseDrag = false;
-  emit valueChanged(_slider->value());
+    m_isMouseDrag = false;
+
+    emit valueChanged( value() );
 }
