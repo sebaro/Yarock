@@ -158,12 +158,11 @@ QPixmap CoverCache::cover(const MEDIA::TrackPtr track )
         if( key != QPixmapCache::Key() && QPixmapCache::find( key, &pixmap ) )
           return pixmap;
 
-        /* check if parent have cover */
-        if(track->parent())
+        /* check if parent have cover, need to BE a stream !!! not a playlist ITEM*/
+        if(track->parent() && track->parent()->type() == TYPE_STREAM)
         {
            s_url = MEDIA::TrackPtr::staticCast(track->parent())->url;
-  
-           //Debug::debug() << "CoverCache for stream with parent";
+      
            QPixmapCache::Key key = m_keys_urls.value( s_url );
 
            if( key != QPixmapCache::Key() && QPixmapCache::find( key, &pixmap ) )
@@ -233,6 +232,7 @@ bool CoverCache::hasCover(MEDIA::TrackPtr track)
 
 void CoverCache::addStreamCover( const QString& url, QImage image)
 {
+    Debug::debug() << "    [CoverCache] addStreamCover:" << url;
     QImage i = image.scaledToHeight(120, Qt::SmoothTransformation);
   
     QPixmap pixTemp(QSize(120,120));
