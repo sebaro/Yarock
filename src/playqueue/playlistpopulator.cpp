@@ -63,8 +63,7 @@ PlaylistPopulator::PlaylistPopulator()
 *******************************************************************************/
 void PlaylistPopulator::run()
 {
-  Debug::debug() << " --- PlaylistPopulator--> Start "  << QTime::currentTime().second() << ":" << QTime::currentTime().msec();
-  //QTime startTime = QTime::currentTime();
+  Debug::debug() << "  [PlaylistPopulator] Start "  << QTime::currentTime().second() << ":" << QTime::currentTime().msec();
 
   m_isRunning = true;
     
@@ -72,30 +71,18 @@ void PlaylistPopulator::run()
   /* Get connection                                            */
   /* ----------------------------------------------------------*/
   if (!Database::instance()->open()) {
-        Debug::warning() << " --- PlaylistPopulator--> db connect failed";
+        Debug::warning() << "  [PlaylistPopulator] db connect failed";
         return;
   }
     
   while (!m_files.isEmpty() || !m_tracks.isEmpty())
   {
-      //Debug::debug() << "PlaylistPopulator process loop";
-
       /*--------------------------------------------------*/
       /* cas des dossiers                                 */
       /* -------------------------------------------------*/
       if (m_files.size() > 0) {
         if (QFileInfo(m_files.first()).isDir()) {
-          const QString dirName = m_files.takeFirst();
-          const QStringList dirFilter  = QStringList() << "*.mp3" << "*.ogg" << "*.flac" << "*.wav" << "*.m4a" << "*.aac";
-          QDirIterator dirIterator(dirName, dirFilter ,QDir::Files | QDir::NoSymLinks, QDirIterator::Subdirectories);
-
-          QStringList readfiles;
-          while(dirIterator.hasNext()) {
-            readfiles << dirIterator.next();
-          }
-
-          readfiles.append(m_files);
-          m_files = readfiles;
+          load_dir(m_files.takeFirst(),m_playlist_row);
         }
       }
 
@@ -106,7 +93,7 @@ void PlaylistPopulator::run()
         if( !MEDIA::isLocal(m_files.first()) && !MEDIA::isMediaPlayable(m_files.first()))
         {
             //! remote playlist --> download, make it local
-            Debug::debug() << "PlaylistPopulator download remote playlist" << m_files.first();
+            Debug::debug() << "  [PlaylistPopulator] download remote playlist" << m_files.first();
 
             QString url = m_files.takeFirst();
             MEDIA::TrackPtr stream = MEDIA::TrackPtr(new MEDIA::Track());
@@ -126,7 +113,7 @@ void PlaylistPopulator::run()
       //! local playlist
         if( MEDIA::isLocal(m_files.first()) && MEDIA::isPlaylistFile(m_files.first())) {
               //! local playlist
-              Debug::debug() << "#1 PlaylistPopulator PlaylistFromFile local " << m_files.first();
+              //Debug::debug() << "  [PlaylistPopulator] PlaylistFromFile local " << m_files.first();
               QList<MEDIA::TrackPtr> list = MEDIA::PlaylistFromFile(m_files.takeFirst());
 
               foreach (MEDIA::TrackPtr track, list) 
@@ -190,17 +177,19 @@ void PlaylistPopulator::run()
 
               stream.reset();
           }
-          else {
+          else 
+          {
               //!WARNING on doit sortir les éléments non traité (si boucle while)
-              Debug::warning() << "PlaylistPopulator --> unsupported media !" << m_files.takeFirst();
+              Debug::warning() << "  [PlaylistPopulator] unsupported media !" << m_files.takeFirst();
           }
       }
 
+      
       /*--------------------------------------------------*/
       /* cas des mediaitems                               */
       /* -------------------------------------------------*/
       if(m_tracks.size() > 0) {
-        //Debug::debug() << "PlaylistPopulator m_tracks.size() :" << m_tracks.size();
+        //Debug::debug() << "  [PlaylistPopulator] m_tracks.size() :" << m_tracks.size();
 
         MEDIA::TrackPtr track = m_tracks.takeFirst();
         if( !MEDIA::isMediaPlayable(track->url) )
@@ -215,20 +204,56 @@ void PlaylistPopulator::run()
 
   } //! END !m_files.isEmpty() && !m_tracks.isEmpty()
     
-    
   if(SETTINGS()->_playqueueDuplicate == false)
     m_model->removeDuplicate();
 
   m_isRunning = false;
   emit playlistPopulated();
 
-  m_model->signalUpdate();
-
-  //Debug::debug() << " --- PlaylistPopulator--> Start "  << startTime.second() << ":" << startTime.msec();
-  Debug::debug() << " --- PlaylistPopulator--> End "  << QTime::currentTime().second() << ":" << QTime::currentTime().msec();
+  //Debug::debug() << "  [PlaylistPopulator] Start "  << startTime.second() << ":" << startTime.msec();
+  Debug::debug() << "  [PlaylistPopulator] End "  << QTime::currentTime().second() << ":" << QTime::currentTime().msec();
 }
 
+/*******************************************************************************
+  load_dir
+*******************************************************************************/
+void PlaylistPopulator::load_dir(const QString& path, int row)
+{
+    const QStringList dirFilter  = QStringList() << "*.mp3" << "*.ogg" << "*.flac" << "*.wav" << "*.m4a" << "*.aac";
+    QDirIterator dirIterator(path, dirFilter ,QDir::Files | QDir::NoSymLinks, QDirIterator::Subdirectories);
+
+    /* --- read directoy files (with subfolders) --- */
+    QStringList files;
+    while(dirIterator.hasNext()) {
+      files << dirIterator.next();
+    }
     
+    /* --- get media item from files --- */
+    QList<MEDIA::TrackPtr> list;
+    foreach (const QString & file, files)
+    {
+        const QString filename = QFileInfo(file).canonicalFilePath();
+
+        MEDIA::TrackPtr track = MEDIA::FromDataBase( filename );
+        if(!track)
+          track = MEDIA::FromLocalFile( filename );
+
+        list << track;
+    }
+      
+    /* --- sort list --- */   
+    qSort(list.begin(), list.end(),MEDIA::compareTrackNatural);
+    
+    /* --- add to playqueue --- */
+    int insert_row = row;
+    foreach(MEDIA::MediaPtr track, list) 
+    {
+        m_model->request_insert_track(track, insert_row);
+        if(insert_row != -1 )
+          insert_row++;
+    }
+}
+
 /*******************************************************************************
   User methode
 *******************************************************************************/
@@ -240,26 +265,28 @@ void PlaylistPopulator::run()
 
 void PlaylistPopulator::addFile(const QString &file)
 {
-    //Debug::debug() << "PlaylistPopulator append file :" << file;
+    //Debug::debug() << "  [PlaylistPopulator] append file :" << file;
     m_playlist_row = -1;
     m_files.append(file);
 }
 
 void PlaylistPopulator::addFiles(const QStringList &files)
 {
-    //Debug::debug() << "PlaylistPopulator append files :" << files;
+    //Debug::debug() << "  [PlaylistPopulator] append files :" << files;
     m_playlist_row = -1;
     m_files.append(files);
 }
 
 void PlaylistPopulator::addUrls(QList<QUrl> listUrl, int playlist_row)
 {
+    //Debug::debug() << "  [PlaylistPopulator] addUrls";
+  
     m_playlist_row = playlist_row;
 
-    foreach (const QUrl &url, listUrl) {
-      //Debug::debug() << "PlaylistPopulator append url :" << url.toString();
+    foreach (const QUrl &url, listUrl)
+    {
       if(MEDIA::isLocal(url.toString()))
-        m_files.append(url.toLocalFile());
+        m_files.append(QFileInfo(url.toLocalFile()).canonicalFilePath());
       else
         m_files.append(url.toString());
     }
@@ -267,7 +294,7 @@ void PlaylistPopulator::addUrls(QList<QUrl> listUrl, int playlist_row)
 
 void PlaylistPopulator::addMediaItems(QList<MEDIA::TrackPtr> list, int playlist_row)
 {
-    //Debug::debug() << "PlaylistPopulator addMediaItems " << list;
+    //Debug::debug() << "  [PlaylistPopulator] addMediaItems " << list;
     m_playlist_row = playlist_row;
     m_tracks.append(list);
 }
@@ -275,7 +302,7 @@ void PlaylistPopulator::addMediaItems(QList<MEDIA::TrackPtr> list, int playlist_
 
 void PlaylistPopulator::restoreSession()
 {
-    Debug::debug() << "PlaylistPopulator restoreSession ";
+    Debug::debug() << "  [PlaylistPopulator] restoreSession ";
     
     if (!Database::instance()->open())
       return;

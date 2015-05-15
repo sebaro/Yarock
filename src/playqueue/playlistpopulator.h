@@ -55,6 +55,9 @@ Q_OBJECT
     void restoreSession();
     
   private:
+    void load_dir(const QString& path, int row);
+    
+  private:
     PlayqueueModel          *m_model;      
     QStringList              m_files;
     QList<MEDIA::TrackPtr>   m_tracks;
