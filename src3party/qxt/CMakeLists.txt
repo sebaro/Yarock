@@ -23,6 +23,7 @@ if (ENABLE_QT5)
   FIND_PACKAGE(Qt5X11Extras REQUIRED)
   include_directories(${Qt5X11Extras_INCLUDE_DIRS})
   add_definitions( ${Qt5X11Extras_DEFINITIONS})
+  MESSAGE(STATUS "  Found qt5x11extra include-dir path: ${Qt5X11Extras_INCLUDE_DIRS}")
 endif (ENABLE_QT5)
   
 
@@ -37,3 +38,7 @@ ADD_LIBRARY(qxt
   ${QXT-SOURCES}
   ${QXT-SOURCES-MOC}
 )
+
+if (ENABLE_QT5)
+  target_link_libraries (qxt "Qt5::X11Extras")
+endif (ENABLE_QT5)

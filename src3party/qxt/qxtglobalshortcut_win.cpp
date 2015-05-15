@@ -25,7 +25,11 @@
 #include "qxtglobalshortcut_p.h"
 #include <qt_windows.h>
 
+#if QT_VERSION<0x050000
 bool QxtGlobalShortcutPrivate::eventFilter(void* message)
+#else
+bool QxtGlobalShortcutPrivate::nativeEventFilter(const QByteArray &, void *message, long *result)
+#endif
 {
     MSG* msg = static_cast<MSG*>(message);
     if (msg->message == WM_HOTKEY)
@@ -155,17 +159,15 @@ quint32 QxtGlobalShortcutPrivate::nativeKeycode(Qt::Key key)
         return VK_SUBTRACT;
     case Qt::Key_Slash:
         return VK_DIVIDE;
+
     case Qt::Key_MediaNext:
         return VK_MEDIA_NEXT_TRACK;
     case Qt::Key_MediaPrevious:
         return VK_MEDIA_PREV_TRACK;
-    case Qt::Key_MediaPlay:
-        return VK_MEDIA_PLAY_PAUSE;
     case Qt::Key_MediaStop:
         return VK_MEDIA_STOP;
-        // couldn't find those in VK_*
-        //case Qt::Key_MediaLast:
-        //case Qt::Key_MediaRecord:
+    case Qt::Key_MediaPlay:
+        return VK_MEDIA_PLAY_PAUSE;
     case Qt::Key_VolumeDown:
         return VK_VOLUME_DOWN;
     case Qt::Key_VolumeUp:

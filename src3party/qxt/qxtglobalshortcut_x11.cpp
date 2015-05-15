@@ -1,36 +1,32 @@
-#include "qxtglobalshortcut_p.h"
 /****************************************************************************
-** Copyright (c) 2006 - 2011, the LibQxt project.
-** See the Qxt AUTHORS file for a list of authors and copyright holders.
-** All rights reserved.
-**
-** Redistribution and use in source and binary forms, with or without
-** modification, are permitted provided that the following conditions are met:
-**     * Redistributions of source code must retain the above copyright
-**       notice, this list of conditions and the following disclaimer.
-**     * Redistributions in binary form must reproduce the above copyright
-**       notice, this list of conditions and the following disclaimer in the
-**       documentation and/or other materials provided with the distribution.
-**     * Neither the name of the LibQxt project nor the
-**       names of its contributors may be used to endorse or promote products
-**       derived from this software without specific prior written permission.
-**
-** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-** ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-** WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-** DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
-** DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-** (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-** LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-** ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-** SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-**
-** <http://libqxt.org>  <foundation@libqxt.org>
-*****************************************************************************/
-
+ **
+ ** Copyright (C) Qxt Foundation. Some rights reserved.
+ **
+ ** This file is part of the QxtGui module of the Qxt library.
+ **
+ ** This library is free software; you can redistribute it and/or modify it
+ ** under the terms of the Common Public License, version 1.0, as published
+ ** by IBM, and/or under the terms of the GNU Lesser General Public License,
+ ** version 2.1, as published by the Free Software Foundation.
+ **
+ ** This file is provided "AS IS", without WARRANTIES OR CONDITIONS OF ANY
+ ** KIND, EITHER EXPRESS OR IMPLIED INCLUDING, WITHOUT LIMITATION, ANY
+ ** WARRANTIES OR CONDITIONS OF TITLE, NON-INFRINGEMENT, MERCHANTABILITY OR
+ ** FITNESS FOR A PARTICULAR PURPOSE.
+ **
+ ** You should have received a copy of the CPL and the LGPL along with this
+ ** file. See the LICENSE file and the cpl1.0.txt/lgpl-2.1.txt files
+ ** included with the source distribution for more information.
+ ** If you did not receive a copy of the licenses, contact the Qxt Foundation.
+ **
+ ** <http://libqxt.org>  <foundation@libqxt.org>
+ **
+ ****************************************************************************/
+#include "qxtglobalshortcut_p.h"
 #include <QX11Info>
 #include <X11/Xlib.h>
+
+#include "keymapper_x11.h"
 
 static int (*original_x_errhandler)(Display* display, XErrorEvent* event);
 
@@ -55,10 +51,10 @@ static int qxt_x_errhandler(Display* display, XErrorEvent *event)
     }
 }
 
-#if QT_VERSION < QT_VERSION_CHECK(5,0,0)
+#if QT_VERSION<0x050000
 bool QxtGlobalShortcutPrivate::eventFilter(void* message)
 #else
-bool QxtGlobalShortcutPrivate::nativeEventFilter(const QByteArray &, void *message, long *)
+bool QxtGlobalShortcutPrivate::nativeEventFilter(const QByteArray &, void *message, long *result)
 #endif
 {
     XEvent* event = static_cast<XEvent*>(message);
@@ -72,8 +68,6 @@ bool QxtGlobalShortcutPrivate::nativeEventFilter(const QByteArray &, void *messa
     return false;
 }
 
-
-
 quint32 QxtGlobalShortcutPrivate::nativeModifiers(Qt::KeyboardModifiers modifiers)
 {
     // ShiftMask, LockMask, ControlMask, Mod1Mask, Mod2Mask, Mod3Mask, Mod4Mask, and Mod5Mask
@@ -86,9 +80,7 @@ quint32 QxtGlobalShortcutPrivate::nativeModifiers(Qt::KeyboardModifiers modifier
         native |= Mod1Mask;
     if (modifiers & Qt::MetaModifier)
         native |= Mod4Mask;
-
     // TODO: resolve these?
-    //if (modifiers & Qt::MetaModifier)
     //if (modifiers & Qt::KeypadModifier)
     //if (modifiers & Qt::GroupSwitchModifier)
     return native;
@@ -96,17 +88,29 @@ quint32 QxtGlobalShortcutPrivate::nativeModifiers(Qt::KeyboardModifiers modifier
 
 quint32 QxtGlobalShortcutPrivate::nativeKeycode(Qt::Key key)
 {
-  #if QT_VERSION < QT_VERSION_CHECK(5,0,0)
+    // (davidsansome) Try the table from QKeyMapper first - this seems to be
+    // the only way to get Keysyms for the media keys.
+    unsigned int keysym = 0;
+    int i = 0;
+    while (KeyTbl[i]) {
+      if (KeyTbl[i+1] == static_cast<uint>(key)) {
+        keysym = KeyTbl[i];
+        break;
+      }
+      i += 2;
+    }
+
+    // If that didn't work then fall back on XStringToKeysym
+    if (!keysym) {
+      keysym = XStringToKeysym(QKeySequence(key).toString().toLatin1().data());
+    }
+
     Display* display = QX11Info::display();
-    return XKeysymToKeycode(display, XStringToKeysym(QKeySequence(key).toString().toLatin1().data()));
-#else
-    return 0;
-#endif
+    return XKeysymToKeycode(display, keysym);
 }
 
 bool QxtGlobalShortcutPrivate::registerShortcut(quint32 nativeKey, quint32 nativeMods)
 {
-#if QT_VERSION < QT_VERSION_CHECK(5,0,0)
     Display* display = QX11Info::display();
     Window window = QX11Info::appRootWindow();
     Bool owner = True;
@@ -119,14 +123,10 @@ bool QxtGlobalShortcutPrivate::registerShortcut(quint32 nativeKey, quint32 nativ
     XSync(display, False);
     XSetErrorHandler(original_x_errhandler);
     return !error;
-#else
-return false;
-#endif
 }
 
 bool QxtGlobalShortcutPrivate::unregisterShortcut(quint32 nativeKey, quint32 nativeMods)
 {
-  #if QT_VERSION < QT_VERSION_CHECK(5,0,0)
     Display* display = QX11Info::display();
     Window window = QX11Info::appRootWindow();
     error = false;
@@ -136,7 +136,4 @@ bool QxtGlobalShortcutPrivate::unregisterShortcut(quint32 nativeKey, quint32 nat
     XSync(display, False);
     XSetErrorHandler(original_x_errhandler);
     return !error;
-#else
-    return false;
-#endif
 }

@@ -1,5 +1,9 @@
 cmake_minimum_required(VERSION 2.6)
 
+if (ENABLE_QT5)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}")
+endif (ENABLE_QT5)
+
 set(SINGLEAPP-SOURCES
     qtlocalpeer.cpp
     qtlockedfile.cpp
@@ -8,6 +12,7 @@ set(SINGLEAPP-SOURCES
 )
 
 set(SINGLEAPP-MOC-HEADERS
+    qtlockedfile.h
     qtlocalpeer.h
     qtsingleapplication.h
     qtsinglecoreapplication.h
@@ -31,3 +36,8 @@ ADD_LIBRARY(qtsingleapplication STATIC
     ${SINGLEAPP-SOURCES}
     ${SINGLEAPP-SOURCES-MOC}
 )
+
+if (ENABLE_QT5)
+   TARGET_LINK_LIBRARIES( qtsingleapplication ${Qt5Network_LIBRARIES}  ${Qt5Core_LIBRARIES}  )
+endif (ENABLE_QT5)
+   
