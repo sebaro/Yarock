@@ -255,6 +255,10 @@ void ServiceEchonest::slot_get_artist_images(QByteArray bytes)
         {
             QUrl url = QUrl( image.toMap().value("url").toString() );
     
+            /* skip wrong image send by lastfm */
+            if( url.toString().contains("incorrartist") )
+              continue;
+            
             QObject* reply = HTTP()->get( url );
             m_requests[reply] = request;
             connect(reply, SIGNAL(data(QByteArray)), this, SLOT(slot_image_received(QByteArray)));
