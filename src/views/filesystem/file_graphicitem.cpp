@@ -55,6 +55,8 @@ DirectoryGraphicItem::DirectoryGraphicItem()
     opt.state |= QStyle::State_Active;
     opt.state |= QStyle::State_Enabled;
     opt.state &= ~QStyle::State_Selected;
+    
+    isSymbLink = false;
 }
 
 
@@ -95,13 +97,16 @@ Q_UNUSED(option)
       p.begin(&pixTemp);
 
       //! paint cover art
-      p.drawPixmap(20,2, pixmap);
+      p.drawPixmap((130-pixmap.width())/2,2, pixmap);
       p.end();
     }
     painter->drawPixmap(0, 0, pixTemp);
     
    //! paint directory name
    painter->setPen(opt.palette.color ( QPalette::Normal, isSelected() ? QPalette::HighlightedText : QPalette::WindowText) );
+   if (isSymbLink)
+     painter->setPen(opt.palette.color ( QPalette::Normal, isSelected() ? QPalette::HighlightedText : QPalette::Link) );
+       
    painter->setFont(opt.font);    
    
    const QString elided_dirname = opt.fontMetrics.elidedText ( m_dirname, Qt::ElideRight, 130);
@@ -206,7 +211,7 @@ Q_UNUSED(option)
    {
       bool isTrack       = (media->type() == TYPE_TRACK) ? true : false;
       //! TRACK in collection
-      if(isTrack && media->id != -1)
+      if(isTrack /*&& media->id != -1*/)
       {
         painter->setPen(opt.palette.color ( QPalette::Normal, isSelected() ? QPalette::HighlightedText : QPalette::WindowText));
 

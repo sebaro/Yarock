@@ -52,7 +52,7 @@ Q_OBJECT
     void initScene();
 
   signals:
-    void load_directory(const QString&);
+    void load_directory(QVariant);
     
   private slots:
     void slot_on_directory_loaded();

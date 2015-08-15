@@ -38,6 +38,8 @@
 #include <QGraphicsView>
 #include <QDrag>
 #include <QGraphicsSceneEvent>
+#include <QFileIconProvider>
+
 
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent>
@@ -67,8 +69,10 @@ void FileScene::initScene()
     m_current_path = m_model->rootPath();
  
     /* get folder pixmap */
-    QIcon icon = m_model->fileIcon(m_model->index(m_model->rootPath()));
-    m_folder_pixmap = icon.pixmap ( QSize(90,90) ,QIcon::Normal, QIcon::On);    
+    /* add scaled because pixmap size from icon is not garantee */
+    QIcon icon = m_model->iconProvider()->icon(QFileIconProvider::Folder);
+    m_folder_pixmap = icon.pixmap ( QSize(90,90) ,QIcon::Normal, QIcon::On);
+    m_folder_pixmap = m_folder_pixmap.scaled ( QSize(90,90), Qt::KeepAspectRatio); 
 
     /* actions */
     ACTIONS()->insert(BROWSER_DIR_ITEM_MOUSE_MOVE, new QAction(this));
@@ -198,8 +202,35 @@ void FileScene::slot_on_directory_loaded()
 
         if(!m_filter.isEmpty() && !path.contains(m_filter,Qt::CaseInsensitive)) continue;
 
+        
+        /* ---- symlink ---- */
+        if ( fileInfo.isSymLink() )
+        {
+             QString new_path = fileInfo.symLinkTarget();
+             QFileInfo new_info(new_path);
+             
+             if( new_info.exists() && fileInfo.isDir() )
+             {
+                 DirectoryGraphicItem *item = new DirectoryGraphicItem();
+                 item->setSymbLink( );
+                 item->setPath( new_info.canonicalFilePath() );
+                 item->setDirname( QDir(new_info.canonicalFilePath()).dirName() );
+                 item->setPixmap( m_folder_pixmap );
+                 
+                 item->setPos(4+140*Column, 10 + folderRow*150 + categorieRow*50);
+                 addItem(item);
+                 //Debug::debug() << "   [FileScene] PopulateScene add item : " << item->path();
+                 m_infosize++;
+             }
+             else if (new_info.exists() )
+             {
+                 urls << new_info.canonicalFilePath();
+                 continue;
+             }
+        }
+                
         /* ---- directory ---- */
-        if(fileInfo.isDir()) 
+        else if(fileInfo.isDir()) 
         {
           DirectoryGraphicItem *item = new DirectoryGraphicItem();
           item->setPath(fileInfo.canonicalFilePath());
@@ -375,10 +406,12 @@ void FileScene::mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * event )
     {
       DirectoryGraphicItem *item = static_cast<DirectoryGraphicItem*>(m_mouseGrabbedItem);
       
-      QString new_path = m_model->rootPath() + "/" + item->dirname();
-      //Debug::debug() << "   [FileScene] mouseDoubleClickEvent " << item->dirname();
+      QString new_path = item->path();
+      
+      //Debug::debug() << "   [FileScene] mouseDoubleClickEvent dirname" << item->dirname();
+      //Debug::debug() << "   [FileScene] mouseDoubleClickEvent new_path" << new_path;
   
-      emit load_directory(new_path);
+      emit load_directory( QVariant(new_path) );
     }
     else if( m_mouseGrabbedItem->type() == GraphicsItem::TrackType ) 
     {

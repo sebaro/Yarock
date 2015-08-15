@@ -47,7 +47,8 @@ class DirectoryGraphicItem : public QGraphicsItem
     QString dirname() {return m_dirname;}
     QString path() {return m_path;}
         
-   
+    void setSymbLink() { isSymbLink = true;}
+        
   protected:
     // Implement QGraphicsItem method
     QRectF boundingRect() const;
@@ -63,6 +64,7 @@ class DirectoryGraphicItem : public QGraphicsItem
      QString  m_dirname;
      QString  m_path;
      QPixmap  pixmap;
+     bool     isSymbLink;
 };
 
 /*
