@@ -10,7 +10,7 @@
     * Smart playlist generator       
     * Support mp3,Ogg Vorbis,flac music files (depending on audio engine)
     * Support load/save playlist file (m3u, pls, xspf)
-    * Play radio stream (tunein, dirble, shoutcast,...)
+    * Play radio stream (tunein, dirble, radionomy,...)
     * Mp3Gain tag support for volume normalization
     * Contextual info & cover art download (lastfm, echonest, musicbrainz)
     * Supports scrobbling to Last.fm
@@ -25,6 +25,7 @@ Required dependencies:
     * Qt 4.7.0                     - http://qt-project.org
     * QJson 0.7.1                  - http://qjson.sourceforge.net/
     * TagLib 1.6.2                 - http://developer.kde.org/~wheeler/taglib.html
+    * htmlcxx                      - http://htmlcxx.sourceforge.net/
     
 Audio engine dependencies:  
     You can choose to use yarock with phonon, vlc and/or mpv audio system
@@ -37,7 +38,7 @@ Audio engine dependencies:
                               Build instructions
 # ------------------------------------------------------------------------------
 On a Debian or Ubuntu system type:
-   sudo apt-get install build-essential qt4-dev-tools libphonon-dev libtag1-dev libqt4-sql-sqlite libqjson-dev
+   sudo apt-get install build-essential qt4-dev-tools libphonon-dev libtag1-dev libqt4-sql-sqlite libqjson-dev libhtmlcxx-dev
 
 Build
 ----------

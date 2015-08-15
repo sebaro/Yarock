@@ -7,7 +7,7 @@ set( CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake )
 PROJECT( yarock )
 set(YAROCK_MAJOR_VERSION 1)
 set(YAROCK_MINOR_VERSION 1)
-set(YAROCK_PATCH_VERSION 2)
+set(YAROCK_PATCH_VERSION 3)
 set(YAROCK_VERSION "${YAROCK_MAJOR_VERSION}.${YAROCK_MINOR_VERSION}.${YAROCK_PATCH_VERSION}")
 
 # ------------------------------------------------------------------------------
@@ -28,7 +28,7 @@ OPTION(ENABLE_MPV "Enable MPV (MPlayer) standalone audio engine" OFF)
 # ------------------------------------------------------------------------------
 OPTION(ENABLE_QT5 "Enable build with Qt5" OFF)
 
-#-- Qt
+#---- Qt ----
 if (ENABLE_QT5)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}")
     
@@ -38,15 +38,17 @@ if (ENABLE_QT5)
     FIND_PACKAGE(Qt5Network REQUIRED)
     FIND_PACKAGE(Qt5Concurrent REQUIRED)
     FIND_PACKAGE(Qt5DBus REQUIRED)
-    find_package(Qt5Sql REQUIRED)
-
+    FIND_PACKAGE(Qt5Sql REQUIRED)
+    FIND_PACKAGE(Qt5X11Extras REQUIRED)
+  
     set (QTLIBS ${Qt5Core_LIBRARIES} 
                 ${Qt5Widgets_LIBRARIES} 
                 ${Qt5Network_LIBRARIES} 
                 ${Qt5Xml_LIBRARIES} 
                 ${Qt5Concurrent_LIBRARIES} 
                 ${Qt5DBus_LIBRARIES} 
-                ${Qt5Sql_LIBRARIES})
+                ${Qt5Sql_LIBRARIES}
+                ${Qt5X11Extras_LIBRARIES})
     
     set (QTINCLUDES ${Qt5Core_INCLUDE_DIRS}
                     ${Qt5Widgets_INCLUDE_DIRS}
@@ -78,25 +80,30 @@ else (ENABLE_QT5)
 endif (ENABLE_QT5)
 
  
-FIND_PACKAGE( Taglib 1.6.0 REQUIRED )
-
+# ---- QJson ----
 if(NOT ENABLE_QT5)
     FIND_PACKAGE( QJSON REQUIRED )
 endif (NOT ENABLE_QT5)
+
+# ---- Taglib ----
+FIND_PACKAGE( Taglib 1.6.0 REQUIRED )
 
 if(TAGLIB_FOUND)
     include(CheckTagLibFileName)
     check_taglib_filename(COMPLEX_TAGLIB_FILENAME)
 endif (TAGLIB_FOUND)
 
+# ---- Htmlcxx ----
+FIND_PACKAGE( HtmlCxx )
+
         
 # ------------------------------------------------------------------------------
 #  INCLUDES
 # ------------------------------------------------------------------------------
 INCLUDE_DIRECTORIES( ${QTINCLUDES} )
-
 INCLUDE_DIRECTORIES( ${TAGLIB_INCLUDES} )
 INCLUDE_DIRECTORIES( ${QJSON_INCLUDE_DIR} )
+INCLUDE_DIRECTORIES( ${HTMLCXX_INCLUDE_DIRS} )
  
 # ------------------------------------------------------------------------------
 #  SUBDIRECTORIES
@@ -132,8 +139,9 @@ if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
    set (CMAKE_INSTALL_PREFIX /usr CACHE PATH "default install path" FORCE )
 endif()
 
-set(CMAKE_INSTALL_BIN          "${CMAKE_INSTALL_PREFIX}/bin"         CACHE PATH "binaries installation path" FORCE)
-set(CMAKE_INSTALL_LIB          "${CMAKE_INSTALL_PREFIX}/lib/yarock"  CACHE PATH "libraries installation path" FORCE)
+set(CMAKE_INSTALL_BIN          "${CMAKE_INSTALL_PREFIX}/bin"         CACHE PATH "binaries install path" FORCE)
+set(CMAKE_INSTALL_LIB          "${CMAKE_INSTALL_PREFIX}/lib/yarock"  CACHE PATH "libraries install path" FORCE)
+set(CMAKE_INSTALL_TRANS        "${CMAKE_INSTALL_PREFIX}/share/yarock/translations"  CACHE PATH "translations install path" FORCE)
 
 # ------------------------------------------------------------------------------
 #  configure file
@@ -246,6 +254,7 @@ TARGET_LINK_LIBRARIES(yarock
   ${TAGLIB_LIBRARIES}
   ${QTSINGLECOREAPPLICATION_LIBRARIES} ${QTSINGLEAPPLICATION_LIBRARIES}
   ${QXT_LIBRARIES}  
+  ${HTMLCXX_LIBRARIES}
 )
 
 if(NOT ENABLE_QT5)  

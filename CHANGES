@@ -1,6 +1,31 @@
 # ------------------------------------------------------------------------------
                               Yarock changes 
 # ------------------------------------------------------------------------------
+  - 1.1.3  - PUBLIC RELEASE - august 2015
+  - New : new radionomy radio service (replace shoutcast)
+  - New : add radio cover for all radio views
+  - New : add symbolic link support for file system view
+  - New : add MP4 audio files tag reading
+  - New : add ape files import into playqueue
+  - New : add browsing history support for stream link in radio views  
+  - BugFix : fix network redirection management
+  - BugFix : fix volume slider for phonon engine
+  - BugFix : fix "lyrics.com" radio provider
+  - Bugfix : fix image catching for stream image
+  - BugFix : improve management of no sqlite driver error
+  - BugFix : improve management of audio engine initialization failure
+  - BugFix : fix playqueue ordering tracks (from filsystem without track number)
+  - BugFix : fix playqueue stop after playing track
+  - BugFix : fix now playing widget update
+  - BugFix : fix qt5 build on some system ( bad include of qt5X11Extras library)
+  - BugFix : fix qt5 folder icon for filesystem view
+  - Change : remove confusing parameter for multi-collection option
+  - Change : improve status widgets
+  - Change : improve translation lookup path with cmake user definition
+  - Change : many widgets/ui minors update
+  - Change : update translations
+  - Build info : new depandencie to htmlcxx library
+# ------------------------------------------------------------------------------
   - 1.1.2  - PUBLIC RELEASE - may 2015
   - New    : add alternate mpv audio engine (mplayer based)
   - New    : add plugin system for audio back-ends, in order to load at run time desire audio engine (vlc, mpv, phonon)  
