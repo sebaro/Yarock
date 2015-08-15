@@ -22,12 +22,10 @@
 #include "playqueue_model.h"
 
 #include <QMenu>
-#include <QSignalMapper>
-#include <QActionGroup>
+#include <QContextMenuEvent>
 #include <QAction>
 
 class ExLineEdit;
-class HeaderWidget;
 class SortWidget;
 class NowPlayingView;
 /*
@@ -50,7 +48,8 @@ Q_OBJECT
     void slot_update_filter();
     void slot_update_playqueue_status_info();
     void slot_removeduplicate_changed();
-    
+    void slot_stop_after_triggered();
+
     void slot_show_now_playing_triggered();
     void slot_show_filter_triggered();
     void slot_show_sortmenu();
@@ -64,10 +63,11 @@ Q_OBJECT
     NowPlayingView     *m_nowplaying;
     
     ExLineEdit         *ui_playqueue_filter;
+
     QAction            *m_action_show_filter;
+    QAction            *m_action_stop_after;
     
-//     HeaderWidget       *ui_filter_container;
-    QWidget  *ui_filter_container;
+    QWidget            *ui_filter_container;
 };
 
 

@@ -32,8 +32,6 @@
 #include <QToolButton>
 #include <QApplication>
 
-
-
 /*
 ********************************************************************************
 *                                                                              *
@@ -136,6 +134,9 @@ MinimalWidget::MinimalWidget(QWidget *parent) : QWidget(parent)
     installEventFilter(this);
 }
 
+/* ---------------------------------------------------------------------------*/
+/* MinimalWidget::eventFilter                                                 */
+/* ---------------------------------------------------------------------------*/
 bool MinimalWidget::eventFilter( QObject */*obj*/, QEvent *event )
 {
     QEvent::Type type = event->type();
@@ -149,6 +150,9 @@ bool MinimalWidget::eventFilter( QObject */*obj*/, QEvent *event )
     return false;
 }
 
+/* ---------------------------------------------------------------------------*/
+/* MinimalWidget::slot_update                                                 */
+/* ---------------------------------------------------------------------------*/
 void MinimalWidget::slot_update()
 {
     MEDIA::TrackPtr track = Engine::instance()->playingTrack();
@@ -195,6 +199,9 @@ void MinimalWidget::slot_update()
     this->update();
 }
 
+/* ---------------------------------------------------------------------------*/
+/* MinimalWidget::showEvent                                                   */
+/* ---------------------------------------------------------------------------*/
 void MinimalWidget::showEvent ( QShowEvent * event )
 {
    slot_update();
@@ -202,8 +209,9 @@ void MinimalWidget::showEvent ( QShowEvent * event )
    QWidget::showEvent(event);
 }
 
-    
-//! --------- paintEvent -------------------------------------------------------
+/* ---------------------------------------------------------------------------*/
+/* MinimalWidget::paintEvent                                                  */
+/* ---------------------------------------------------------------------------*/
 void MinimalWidget::paintEvent(QPaintEvent *)
 {
     //! draw background

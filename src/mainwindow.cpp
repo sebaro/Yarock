@@ -25,7 +25,7 @@
 #include "playqueue/playlistwidget.h"
 #include "widgets/main/centralwidget.h"
 #include "widgets/minimalwidget.h"
-#include "widgets/statuswidget.h"
+#include "widgets/statusmanager.h"
 #include "widgets/equalizer/equalizer_dialog.h"
 
 #include "widgets/editors/editor_playlist.h"
@@ -83,7 +83,6 @@
 #include "dialogs/filedialog.h"
 #include "dialogs/first_time_dialog.h"
 
-
 MainWindow* MainWindow::INSTANCE = 0;
 
 /*
@@ -123,8 +122,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     new GlobalActions();
     createActions();
 
-    //! ############### init Player #########################################
-    new Engine();
+    //! ###############  Player #############################################
+    Engine* engine = new Engine();
     
     _player = Engine::instance();
 
@@ -167,8 +166,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     _centralWidget->setBrowser(m_browserView); 
     
     //! ############### Status Widget     ###################################
-    _statusWidget = new StatusWidget(_centralWidget);
-    _statusWidget->hide();
+    _statusManager = new StatusManager(_centralWidget);
     
     //! Shortcuts & Signals
     //Debug::debug() << "[Mainwindow] creation global shortcut";
@@ -179,7 +177,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     connectSlots();
 
     //! ############### Scrobbler ###########################################
-    // le scrobbler doit être initialisé avant le fisrtStartDialog
+    // le scrobbler doit etre initialise avant le fisrtStartDialog
     //Debug::debug() << "[Mainwindow] init lastFm scrobbler";
     LastFmService::instance()->init();
 
@@ -225,16 +223,25 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     if(SETTINGS()->_hideAtStartup)
       this->showMinimized();    
     
-
+    /* Check startup */
+    if ( !engine->error().isEmpty() )
+      _statusManager->startMessage( engine->error(), STATUS::ERROR_CLOSE );
+    
+    
+    
 #ifdef TEST_FLAG    
     QTimer::singleShot(4000, this, SLOT(slot_start_test()));
 #endif    
 }
 
 #ifdef TEST_FLAG
+
 void MainWindow::slot_start_test()
 {
-    Debug::debug() << "####### START TEST #######";
+//     Debug::debug() << "####### START TEST #######";
+//       QWebView *view = new QWebView(this);
+//     view->load(QUrl("https://www.radionomy.com/en/style"));
+//     view->show();
 }
 #endif
 
@@ -242,7 +249,6 @@ void MainWindow::slot_start_test()
 //! --------- ~MainWindow ------------------------------------------------------
 MainWindow::~MainWindow()
 {
-    Debug::debug() << "[Mainwindow] EXIT ";
     /* ---- Save playqueue content to database ---- */
     if(SETTINGS()->_restorePlayqueue)
       m_playqueue->manager()->savePlayqueueSession();
@@ -348,9 +354,6 @@ void MainWindow::createActions()
     ACTIONS()->insert(PLAYQUEUE_SAVE, new QAction(QIcon(":/images/save-32x32.png"), tr("&Save playlist to file"), this));
     ACTIONS()->insert(PLAYQUEUE_AUTOSAVE, new QAction(QIcon(":/images/save-32x32.png"), tr("&Auto save playlist to yarock database"), this));
     ACTIONS()->insert(PLAYQUEUE_REMOVE_ITEM,new QAction(QIcon::fromTheme("edit-delete"),tr("&Remove media from playlist"), this));
-    ACTIONS()->insert(PLAYQUEUE_STOP_AFTER,new QAction(QIcon(),tr("Stop after this track"), this));
-    ACTIONS()->value(PLAYQUEUE_STOP_AFTER)->setCheckable(true);
-    ACTIONS()->insert(PLAYQUEUE_SORT,new QAction(QIcon(),"", this));
     ACTIONS()->insert(PLAYQUEUE_REMOVE_DUPLICATE,new QAction(QIcon(),tr("Remove duplicate"), this));
     
     ACTIONS()->value(PLAYQUEUE_REMOVE_DUPLICATE)->setCheckable(true);
@@ -425,9 +428,6 @@ void MainWindow::connectSlots()
     QObject::connect(ACTIONS()->value(APP_SHOW_YAROCK_ABOUT), SIGNAL(triggered()), SLOT(slot_on_aboutYarock()));
     QObject::connect(ACTIONS()->value(APP_SHOW_SETTINGS), SIGNAL(triggered()), SLOT(slot_on_show_settings()));
 
-    //! Playback option
-    QObject::connect(ACTIONS()->value(PLAYQUEUE_STOP_AFTER), SIGNAL(triggered()), SLOT(slot_stop_after_media_triggered()));
-
     //! Connection Actions player
     QObject::connect(_player, SIGNAL(mediaChanged()), this, SLOT(slot_player_on_track_change()));
     QObject::connect(_player, SIGNAL(mediaAboutToFinish()), this, SLOT(slot_player_enqueue_next()));
@@ -452,8 +452,6 @@ void MainWindow::connectSlots()
     QObject::connect(ACTIONS()->value(PLAYQUEUE_ADD_DIR), SIGNAL(triggered()), SLOT(slot_playqueue_add()));
     QObject::connect(ACTIONS()->value(PLAYQUEUE_ADD_URL), SIGNAL(triggered()), SLOT(slot_playqueue_add()));
     QObject::connect(_playlistView, SIGNAL(signal_playlist_itemDoubleClicked()), this, SLOT(slot_play_from_playqueue()));
-
-    QObject::connect(ACTIONS()->value(PLAYQUEUE_SORT), SIGNAL(triggered()), this,  SLOT(slot_playqueue_sort()));
 
     //! Connection Actions Database
     QObject::connect(ACTIONS()->value(DIALOG_DB_OPERATION), SIGNAL(triggered()), SLOT(slot_database_dialog()));
@@ -509,6 +507,15 @@ void MainWindow::slot_systray_clicked(QSystemTrayIcon::ActivationReason reason)
     }
 }
 
+void MainWindow::resizeEvent(QResizeEvent* event)
+{
+   if( _statusManager )
+     _statusManager->onResize();
+   
+    QMainWindow::resizeEvent(event);
+}
+
+    
 /*******************************************************************************
     Global actions
 *******************************************************************************/
@@ -584,7 +591,7 @@ void MainWindow::slot_playqueue_add()
           media.reset();
         }
         else {
-          _statusWidget->startShortMessage("invalid url can not be added !!", STATUS::TYPE_WARNING, 5000);
+          _statusManager->startMessage("invalid url can not be added !!", STATUS::WARNING, 5000);
         }
       }
     }
@@ -633,17 +640,6 @@ void MainWindow::slot_playqueue_clear()
 }
 
 
-void MainWindow::slot_playqueue_sort()
-{  
-    QAction *action = qobject_cast<QAction *>(sender());
-    if(!action) return;
-    
-    QVariant sort_query = action->data();
-
-    m_playqueue->slot_sort(sort_query);
-}
-
-
 /*******************************************************************************
     Player management
 *******************************************************************************/
@@ -674,7 +670,7 @@ void MainWindow::slot_player_on_state_change()
      {
          Debug::warning() << "ENGINE error";
 
-         _statusWidget->startShortMessage(tr("Playing error"), STATUS::TYPE_ERROR, 5000);
+         _statusManager->startMessage(tr("Playing error"), STATUS::ERROR, 5000);
          MEDIA::TrackPtr track = _player->playingTrack();
          if(track)
          {
@@ -810,11 +806,17 @@ void MainWindow::playNext()
     Debug::debug() << "[Mainwindow] playNext requested ";
     MEDIA::TrackPtr media;
 
-    //! We need to known if we are playing from collection or playlist
-    if(_playRequestFrom == FromCollection)
-      media = m_virtual_queue->nextTrack();
-    else
-      media = m_playqueue->nextTrack();
+    /* check if player has already the next track */
+    media = _player->nextTrack();
+
+    /* if not check from collection or playqueue */
+    if( !media )
+    {
+      if(_playRequestFrom == FromCollection)
+        media = m_virtual_queue->nextTrack();
+      else
+        media = m_playqueue->nextTrack();
+    }
 
     if(media)
       _player->setMediaItem(media);
@@ -825,6 +827,8 @@ void MainWindow::playNext()
 //! --------- playPrev ---------------------------------------------------------
 void MainWindow::playPrev()
 {
+    Debug::debug() << "[Mainwindow] playPrev requested ";
+    
     MEDIA::TrackPtr media;
 
     //! We need to known if we are playing from collection or playlist
@@ -893,23 +897,6 @@ void MainWindow::restorePlayingTrack()
         _player->setMediaItem(media);
     }
 }
-
-/*******************************************************************************
-    Playback Option
-*******************************************************************************/
-void MainWindow::slot_stop_after_media_triggered()
-{
-    Debug::debug() << "[MainWindow] slot_stop_after_media_triggered";
-    MEDIA::TrackPtr requested_media = qvariant_cast<MEDIA::TrackPtr>( (ACTIONS()->value(PLAYQUEUE_STOP_AFTER))->data() );
-
-    if(!requested_media)
-      return;
-
-    m_playqueue->setStopAfterTrack(requested_media);
-
-    ACTIONS()->value(PLAYQUEUE_STOP_AFTER)->setChecked( requested_media->isStopAfter );
-}
-
 
 /*******************************************************************************
     User settings methods
@@ -1112,7 +1099,6 @@ void MainWindow::set_enable_jump_to(bool b)
     ACTIONS()->value(BROWSER_JUMP_TO_ALBUM)->setEnabled(b);
     ACTIONS()->value(BROWSER_JUMP_TO_TRACK)->setEnabled(b);
     ACTIONS()->value(PLAYQUEUE_JUMP_TO_TRACK)->setEnabled(b);
-    
 }
 
 
@@ -1163,8 +1149,8 @@ void MainWindow::slot_eq_openDialog()
     }
     else 
     {
-        StatusWidget::instance()->startShortMessage(
-            QString(tr("No equalizer available with this configuration")), STATUS::TYPE_ERROR, 2500
+        _statusManager->startMessage(
+            QString(tr("No equalizer available with this configuration")), STATUS::ERROR, 2500
         );
     }
 }

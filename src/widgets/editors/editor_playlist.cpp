@@ -21,7 +21,7 @@
 #include "playlistview.h"
 
 #include "threadmanager.h"
-#include "widgets/statuswidget.h"
+#include "widgets/statusmanager.h"
 #include "widgets/dialogs/addstreamdialog.h"
 #include "widgets/dialogs/filedialog.h"
 
@@ -270,7 +270,7 @@ void EditorPlaylist::slot_add_url()
         media.reset();
       }
       else {
-        StatusWidget::instance()->startShortMessage("invalid url can not be added !!", STATUS::TYPE_WARNING, 5000);
+        StatusManager::instance()->startMessage("invalid url can not be added !!", STATUS::WARNING, 5000);
       }
     }
 }

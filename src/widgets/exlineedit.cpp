@@ -72,6 +72,7 @@ ExLineEdit::ExLineEdit(QWidget *parent) : QWidget(parent)
     this->setSizePolicy(m_lineEdit->sizePolicy());
     this->setBackgroundRole(m_lineEdit->backgroundRole());
     this->setMouseTracking(true);
+    
 
     setPalette(m_lineEdit->palette());
 
@@ -128,6 +129,7 @@ void ExLineEdit::addLeftIcon(QPushButton* ib)
 void ExLineEdit::clearFocus()
 {
     m_lineEdit->clearFocus();
+    QWidget::clearFocus();
 }
 
 void ExLineEdit::slotFocus()
@@ -151,6 +153,7 @@ void ExLineEdit::slotClearField()
 {
     m_lineEdit->clear();
     this->clearFocus();
+    
     emit textfield_entered();
 }
 
@@ -231,9 +234,8 @@ Q_UNUSED(event)
                        r.y() + (r.height() - fm.height() + 1) / 2,
                        r.width() - 2 * horizontalMargin, fm.height());
 
-        QPainter painter(this);
-        painter.setPen(palette().brush(QPalette::Disabled, QPalette::WindowText).color());
-        painter.drawText(lineRect, Qt::AlignLeft|Qt::AlignVCenter, m_inactiveText);
+        p.setPen(palette().brush(QPalette::Disabled, QPalette::WindowText).color());
+        p.drawText(lineRect, Qt::AlignLeft|Qt::AlignVCenter, m_inactiveText);
     }
 }
 

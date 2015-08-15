@@ -179,7 +179,7 @@ void PlaylistPopulator::run()
           }
           else 
           {
-              //!WARNING on doit sortir les éléments non traité (si boucle while)
+              //!WARNING on doit sortir les elements non traites (si boucle while)
               Debug::warning() << "  [PlaylistPopulator] unsupported media !" << m_files.takeFirst();
           }
       }
@@ -188,17 +188,19 @@ void PlaylistPopulator::run()
       /*--------------------------------------------------*/
       /* cas des mediaitems                               */
       /* -------------------------------------------------*/
-      if(m_tracks.size() > 0) {
+      if(m_tracks.size() > 0) 
+      {
         //Debug::debug() << "  [PlaylistPopulator] m_tracks.size() :" << m_tracks.size();
-
+        
         MEDIA::TrackPtr track = m_tracks.takeFirst();
+
         if( !MEDIA::isMediaPlayable(track->url) )
         {
             emit async_load(track, m_playlist_row);
         }
         else 
         {
-            m_model->request_insert_track(track, m_playlist_row);
+            m_model->request_insert_track(track, m_playlist_row++);
         }
       }
 
@@ -219,7 +221,9 @@ void PlaylistPopulator::run()
 *******************************************************************************/
 void PlaylistPopulator::load_dir(const QString& path, int row)
 {
-    const QStringList dirFilter  = QStringList() << "*.mp3" << "*.ogg" << "*.flac" << "*.wav" << "*.m4a" << "*.aac";
+    Debug::debug() << "PlaylistPopulator::load_dir";
+    
+    const QStringList dirFilter  = QStringList() << "*.mp3" << "*.ogg" << "*.flac" << "*.wav" << "*.m4a" << "*.aac" << "*.ape";
     QDirIterator dirIterator(path, dirFilter ,QDir::Files | QDir::NoSymLinks, QDirIterator::Subdirectories);
 
     /* --- read directoy files (with subfolders) --- */
@@ -294,7 +298,7 @@ void PlaylistPopulator::addUrls(QList<QUrl> listUrl, int playlist_row)
 
 void PlaylistPopulator::addMediaItems(QList<MEDIA::TrackPtr> list, int playlist_row)
 {
-    //Debug::debug() << "  [PlaylistPopulator] addMediaItems " << list;
+    Debug::debug() << "  [PlaylistPopulator] addMediaItems " << list;
     m_playlist_row = playlist_row;
     m_tracks.append(list);
 }

@@ -98,7 +98,8 @@ void SortWidget::slot_updateSortOrder(bool first_start /*=false*/)
 void SortWidget::on_buttonBox_clicked(QAbstractButton * button)
 {
     QDialogButtonBox::ButtonRole role = ui_buttonBox->buttonRole(button);
-    if(role == QDialogButtonBox::AcceptRole) {
+    if(role == QDialogButtonBox::AcceptRole)
+    {
       m_parent->close();
       
       /* build media search_query */
@@ -109,8 +110,7 @@ void SortWidget::on_buttonBox_clicked(QAbstractButton * button)
       MediaSearch media_search = MediaSearch(MediaSearch::Type_All, SearchQueryList(), sort_type, sort_field, -1);
       
       QVariant var = QVariant::fromValue<MediaSearch>( media_search );
-     
-      ACTIONS()->value(PLAYQUEUE_SORT)->setData(var);
-      ACTIONS()->value(PLAYQUEUE_SORT)->trigger();
+      
+      emit triggered(var);
     }
 }

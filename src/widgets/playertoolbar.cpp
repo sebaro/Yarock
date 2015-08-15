@@ -97,16 +97,19 @@ VolumeToolButton::VolumeToolButton(QWidget *parent) : QToolButton( parent )
     palette.setColor(QPalette::Background, palette.color(QPalette::Base));
     m_menu->setPalette(palette);
     
+    /* ---- init  ---- */
+    Engine::instance()->setMuted(false);
+    
+    int volume = Engine::instance()->volume();
+    m_volume_label->setText( QString::number( volume ) + '%' );
+    
+    m_slider->setValue( volume );
+    
     /* ---- signals connections ---- */
     connect(Engine::instance() , SIGNAL(muteStateChanged()), this, SLOT(slot_mute_change()));
     connect(Engine::instance() , SIGNAL(volumeChanged()), this, SLOT(slot_volume_change()));
     connect(m_slider, SIGNAL(valueChanged(int)), this, SLOT(slot_apply_volume(int)));
-
     connect(this, SIGNAL(clicked()), this, SLOT(slot_show_menu()));
-    
-    /* ---- init  ---- */
-    Engine::instance()->setMuted(false);
-    slot_volume_change();
 }
 
 
@@ -125,7 +128,6 @@ void VolumeToolButton::slot_volume_change()
     //Debug::debug() << "      [VolumeToolButton] slot_volume_change percent: ";
     int volume = Engine::instance()->volume();
     m_volume_label->setText( QString::number( volume ) + '%' );
-    m_slider->setValue(Engine::instance()->volume());
 }
 
 void VolumeToolButton::slot_apply_volume(int vol)

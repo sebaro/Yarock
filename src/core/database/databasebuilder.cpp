@@ -50,7 +50,7 @@ DataBaseBuilder::DataBaseBuilder()
 /* ---------------------------------------------------------------------------*/
 QStringList DataBaseBuilder::filesFromFilesystem(const QString& directory)
 {
-    qDebug() << "- DataBaseBuilder -> filesFromFilesystem";
+    qDebug() << "  [DataBaseBuilder] filesFromFilesystem";
   
     QStringList files;
     const QStringList filters = QStringList()
@@ -76,7 +76,7 @@ QStringList DataBaseBuilder::filesFromFilesystem(const QString& directory)
 /* ---------------------------------------------------------------------------*/
 QHash<QString,uint> DataBaseBuilder::filesFromDatabase(const QString& directory)
 {  
-    qDebug() << "- DataBaseBuilder -> filesFromDatabase";
+    qDebug() << "  [DataBaseBuilder] filesFromDatabase";
   
     QHash<QString,uint> files;
   
@@ -123,7 +123,7 @@ void DataBaseBuilder::rebuildFolder(QStringList folder)
 /* ---------------------------------------------------------------------------*/
 void DataBaseBuilder::run() {
 
-    qDebug() << "- DataBaseBuilder -> run()";
+    qDebug() << "  [DataBaseBuilder] run()";
     InfoSystem::instance()->activateCache( false );
     
     connect( InfoSystem::instance(),
@@ -136,7 +136,7 @@ void DataBaseBuilder::run() {
     // This makes signals and slots work
     exec();
 
-    qDebug() << "- DataBaseBuilder -> run() exited";
+    qDebug() << "  [DataBaseBuilder] run() exited";
     InfoSystem::instance()->activateCache( true );
 }
 
@@ -146,12 +146,15 @@ void DataBaseBuilder::run() {
 /* ---------------------------------------------------------------------------*/
 void DataBaseBuilder::doScan()
 {
-    if (m_input_folders.isEmpty()) return;
     int idxCount   = 0;
     int fileCount  = 0;
 
-    
-    if (!Database::instance()->open()) return;
+    if ( m_input_folders.isEmpty() || !Database::instance()->open() ) {
+      emit buildingFinished();
+      exit();
+      return;
+    }
+
     m_sqlDb = Database::instance()->db();
 
     Debug::debug() << "  [DataBaseBuilder] starting Database update";

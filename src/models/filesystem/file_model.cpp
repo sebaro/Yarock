@@ -30,7 +30,7 @@ FileModel::FileModel(QObject *parent) : QFileSystemModel(parent)
 {
     this->setReadOnly( true );
     
-    this->setFilter( QDir::AllDirs |QDir::System |QDir::NoDotAndDotDot | QDir::Files );
+    this->setFilter( QDir::AllDirs | QDir::System | QDir::NoDotAndDotDot | QDir::Files );
 
     this->setRootPath(QDir::rootPath());
   

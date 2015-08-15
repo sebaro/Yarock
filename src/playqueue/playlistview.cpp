@@ -547,19 +547,18 @@ void PlaylistDelegate::paint ( QPainter * painter, const QStyleOptionViewItem & 
 
     /* Paint Icon */
     const QIcon icon = this->getIcon(track);
-    int leftoffset  = 25;
+    int leftoffset  = 3;
     int rightoffset = 0;
 
-    if(ACTIONS()->value(PLAYQUEUE_OPTION_SHOW_COVER)->isChecked()) {
-      if(isTrack)
-        icon.paint(painter, left + 3, top+2, height-4, height-4, Qt::AlignCenter, QIcon::Normal);
-      else
-        icon.paint(painter, left + 3 + ((height-4)-16)/2, top+(height-16)/2, 16, 16, Qt::AlignCenter, QIcon::Normal);
-      leftoffset += 23; 
+    if(ACTIONS()->value(PLAYQUEUE_OPTION_SHOW_COVER)->isChecked()) 
+    {
+      icon.paint(painter, leftoffset, top+2, height-4, height-4, Qt::AlignCenter, QIcon::Normal);
+      leftoffset += height+4; //icon size = (height-4) + 8 for padding
     }
-    else {
-      icon.paint(painter, left + 3, top+(height-16)/2, 16, 16, Qt::AlignCenter, QIcon::Normal);
-      leftoffset += 0; 
+    else 
+    {
+      icon.paint(painter, leftoffset, top+(height-16)/2, 16, 16, Qt::AlignCenter, QIcon::Normal);
+      leftoffset += 16+8; //icon size = 16 + 8 for padding
     }
 
     /* Prepare rectangle for painting*/
@@ -658,16 +657,19 @@ QIcon PlaylistDelegate::getIcon(const MEDIA::TrackPtr track) const
     {
       return icon_media_broken;
     }
-    else if (track->type() == TYPE_TRACK) 
-    {
-      if (ACTIONS()->value(PLAYQUEUE_OPTION_SHOW_COVER)->isChecked())
-        return QIcon( CoverCache::instance()->cover(track) );
-      else
-        return icon_media_track;
-    }
     else
     {
-      return icon_media_stream;
+        if ( !ACTIONS()->value(PLAYQUEUE_OPTION_SHOW_COVER)->isChecked() ) 
+        {  
+            if(track->type() == TYPE_TRACK)
+              return icon_media_track;
+            else
+              return icon_media_stream;
+        }        
+        else
+        {
+            return QIcon( CoverCache::instance()->cover(track) );
+        }
     }
 }
 

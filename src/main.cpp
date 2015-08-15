@@ -164,7 +164,7 @@ int main(int argc, char *argv[])
 
     //! setup translations
     LoadTranslation("qt", QLibraryInfo::location(QLibraryInfo::TranslationsPath), language);
-    LoadTranslation("yarock", QLatin1String("/usr/share/yarock/translations"), language);
+    LoadTranslation("yarock", QLatin1String( CMAKE_INSTALL_TRANS ), language);
     LoadTranslation("yarock", application.applicationDirPath() + "../translation", language); // in case of local running
 
     #if QT_VERSION < 0x050000    

@@ -26,7 +26,7 @@
 #include "views/item_menu.h"
 
 /* widgets */
-#include "widgets/statuswidget.h"
+#include "widgets/statusmanager.h"
 
 #include "debug.h"
 
@@ -58,10 +58,8 @@ void SettingsScene::initScene()
     m_pages[SETTINGS::SCROBBLER] = new PageScrobbler(parentView());
     m_pages[SETTINGS::SONGINFO]  = new PageSongInfo(parentView());
 
-
     /* first init => always restore settings */
     restore_settings();
-
     
     /*  layout */
     m_layout    = new QGraphicsLinearLayout(Qt::Vertical);
@@ -103,7 +101,7 @@ void SettingsScene::initScene()
 *******************************************************************************/
 void SettingsScene::slot_dbBuilder_stateChange()
 {
-    //Debug::debug() << "   [SettingsScene] slot_dbBuilder_stateChange";
+    //Debug::debug() << "   [SettingsScene] slot_dbBuilder_stateChange DB RUNNING " << ThreadManager::instance()->isDbRunning();
     m_pages[SETTINGS::LIBRARY]->setEnabled( !ThreadManager::instance()->isDbRunning() );
 }
 
@@ -217,12 +215,11 @@ void SettingsScene::slot_apply_settings()
 
     /* engine change is done on saving */
     m_result.isEngineChanged        =  static_cast<PagePlayer*>(m_pages[SETTINGS::PLAYER])->isEngineChanged();
-    
+
+    StatusManager::instance()->startMessage(tr("Settings saved"),STATUS::INFO, 2500);
     if(m_result.isEngineChanged)
-      StatusWidget::instance()->startShortMessage(tr("settings saved, restart needed to change audio engine"),STATUS::TYPE_INFO, 2500);
-    else
-      StatusWidget::instance()->startShortMessage(tr("settings saved"),STATUS::TYPE_INFO, 2500);
-    
+      StatusManager::instance()->startMessage(tr("Restart needed"),STATUS::INFO_CLOSE);
+        
     emit settings_saved();
 }
 

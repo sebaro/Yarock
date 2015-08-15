@@ -284,6 +284,13 @@ namespace MEDIA {
   TrackPtr FromDataBase(const QString url);
   TrackPtr FromDataBase(int trackId);
 
+  inline QString urlHash(const QString& url)
+  {
+        QCryptographicHash hash(QCryptographicHash::Sha1);
+        hash.addData(url.toUtf8().constData());
+        return QString(hash.result().toHex() + ".png");
+  }
+  
   inline QString artistHash(const QString& artist)
   {
         QCryptographicHash hash(QCryptographicHash::Sha1);

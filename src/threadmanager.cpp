@@ -20,7 +20,7 @@
 #include "models/local/local_playlist_populator.h"
 #include "core/database/databasebuilder.h"
 
-#include "widgets/statuswidget.h"
+#include "widgets/statusmanager.h"
 
 #include "debug.h"
 
@@ -95,7 +95,7 @@ void ThreadManager::databaseBuild(QStringList listDir)
     m_databaseBuilder->rebuildFolder(listDir);
     m_databaseBuilder->start();
 
-    uint i = StatusWidget::instance()->startProgressMessage(tr("Updating music database") + " (0%)");
+    uint i = StatusManager::instance()->startMessage(tr("Updating music database") + " (0%)");
     messageIds.insert("DbUpdate", i);
     emit dbBuildStart();    
 }
@@ -103,13 +103,13 @@ void ThreadManager::databaseBuild(QStringList listDir)
 void ThreadManager::dbBuildProgressChanged(int progress)
 {
     QString message = QString(tr("Updating music database") + " (%1%)").arg(QString::number(progress));
-    StatusWidget::instance()->updateProgressMessage( messageIds.value("DbUpdate"), message );
+    StatusManager::instance()->updateMessage( messageIds.value("DbUpdate"), message );
 }
 
 void ThreadManager::dbBuildFinish()
 {
     if (messageIds.contains("DbUpdate"))
-      StatusWidget::instance()->stopProgressMessage( messageIds.take("DbUpdate") );
+      StatusManager::instance()->stopMessage( messageIds.take("DbUpdate") );
 
     emit dbBuildFinished();
     
@@ -135,20 +135,20 @@ void ThreadManager::populateLocalTrackModel()
 
    m_localTrackPopulator->start();
 
-   uint i = StatusWidget::instance()->startProgressMessage(tr("Loading music collection"));
+   uint i = StatusManager::instance()->startMessage(tr("Loading music collection"));
    messageIds.insert("LoadMusic", i);
 }
 
 void ThreadManager::slot_on_localtrackmodel_populating_changed(int progress)
 {
     QString message = QString(tr("Loading Music Collection") + " (%1%)").arg(QString::number(progress));
-    StatusWidget::instance()->updateProgressMessage( messageIds.value("LoadMusic"), message );
+    StatusManager::instance()->updateMessage( messageIds.value("LoadMusic"), message );
 }
 
 void ThreadManager::slot_on_localtrackmodel_populated()
 {
     if (messageIds.contains("LoadMusic"))
-      StatusWidget::instance()->stopProgressMessage( messageIds.take("LoadMusic") );
+      StatusManager::instance()->stopMessage( messageIds.take("LoadMusic") );
 
     emit modelPopulationFinished(MODEL_COLLECTION);
 
@@ -167,14 +167,14 @@ void ThreadManager::populateLocalPlaylistModel()
 
    m_localPlaylistPopulator->start();
 
-   uint i = StatusWidget::instance()->startProgressMessage(tr("Loading playlist files"));
+   uint i = StatusManager::instance()->startMessage(tr("Loading playlist files"));
    messageIds.insert("LoadPlaylist", i);
 }
 
 void ThreadManager::slot_on_localplaylistmodel_populating_changed(int progress)
 {
     QString message = QString(tr("Loading Playlist File") + " (%1%)").arg(QString::number(progress));
-    StatusWidget::instance()->updateProgressMessage( messageIds.value("LoadPlaylist"), message );
+    StatusManager::instance()->updateMessage( messageIds.value("LoadPlaylist"), message );
 }
 
 void ThreadManager::slot_on_localplaylistmodel_populated()
@@ -182,7 +182,7 @@ void ThreadManager::slot_on_localplaylistmodel_populated()
     Debug::debug() << "[ThreadManager] slot_on_localplaylistmodel_populated";
 
     if (messageIds.contains("LoadPlaylist"))
-      StatusWidget::instance()->stopProgressMessage( messageIds.take("LoadPlaylist") );
+      StatusManager::instance()->stopMessage( messageIds.take("LoadPlaylist") );
 
     emit modelPopulationFinished(MODEL_PLAYLIST);
 }
@@ -204,7 +204,7 @@ void ThreadManager::startTagSearch(TagSearch::TYPE type, INFO::InfoRequestData r
     if(m_tagSearchTask->isRunning())
       cancelThread(TAG_SEARCH_THREAD);
 
-    uint i = StatusWidget::instance()->startProgressMessage(tr("Fetching media info"));
+    uint i = StatusManager::instance()->startMessage(tr("Fetching media info"));
     messageIds.insert("MediaTagSearch", i);
 
     m_tagSearchTask->start(type, request);
@@ -215,7 +215,7 @@ void ThreadManager::slot_tagsearch_finished()
     Debug::debug() << "[ThreadManager] slot_tagsearch_finished";
 
     if (messageIds.contains("MediaTagSearch"))
-      StatusWidget::instance()->stopProgressMessage( messageIds.take("MediaTagSearch") );
+      StatusManager::instance()->stopMessage( messageIds.take("MediaTagSearch") );
     
     emit tagSearchFinished();
 }
@@ -223,7 +223,7 @@ void ThreadManager::slot_tagsearch_finished()
 void ThreadManager::slot_tagsearch_progress(int progress)
 {
     QString message = QString(tr("Fetching media info") + " (%1%)").arg(QString::number(progress));
-    StatusWidget::instance()->updateProgressMessage( messageIds.value("MediaTagSearch"), message );
+    StatusManager::instance()->updateMessage( messageIds.value("MediaTagSearch"), message );
 }
 
 /*******************************************************************************
@@ -238,7 +238,7 @@ void ThreadManager::cancelThread(E_THREAD thread)
         m_databaseBuilder->wait();      // wait end of thread should be fast
         m_databaseBuilder->setExit(false);
         if (messageIds.contains("DbUpdate"))
-          StatusWidget::instance()->stopProgressMessage( messageIds.take("DbUpdate") );
+          StatusManager::instance()->stopMessage( messageIds.take("DbUpdate") );
 
        break;
 
@@ -248,7 +248,7 @@ void ThreadManager::cancelThread(E_THREAD thread)
         m_localTrackPopulator->wait();      // wait end of thread should be fast
         m_localTrackPopulator->setExit(false);
         if (messageIds.contains("LoadMusic"))
-          StatusWidget::instance()->stopProgressMessage( messageIds.take("LoadMusic") );
+          StatusManager::instance()->stopMessage( messageIds.take("LoadMusic") );
 
        break;
 
@@ -259,7 +259,7 @@ void ThreadManager::cancelThread(E_THREAD thread)
         m_localPlaylistPopulator->setExit(false);
 
         if (messageIds.contains("LoadPlaylist"))
-          StatusWidget::instance()->stopProgressMessage( messageIds.take("LoadPlaylist") );
+          StatusManager::instance()->stopMessage( messageIds.take("LoadPlaylist") );
 
       break;
 
@@ -268,7 +268,7 @@ void ThreadManager::cancelThread(E_THREAD thread)
          m_tagSearchTask->setExit(true);
 
         if (messageIds.contains("MediaTagSearch"))
-          StatusWidget::instance()->stopProgressMessage( messageIds.take("MediaTagSearch") );
+          StatusManager::instance()->stopMessage( messageIds.take("MediaTagSearch") );
 
       break;
 

@@ -252,7 +252,7 @@ void PlayqueueModel::addMediaItems(QList<MEDIA::TrackPtr> list)
 
 void PlayqueueModel::request_insert_track(const MEDIA::TrackPtr mediaitem, int pos)
 {
-   emit insertTrack(mediaitem, pos);
+    emit insertTrack(mediaitem, pos);
 }
 
 

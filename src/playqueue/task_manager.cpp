@@ -23,6 +23,7 @@
 #include "playlistdbwriter.h"
 
 #include "views/stream/stream_loader.h"
+#include "covers/covercache.h"
 
 #include "debug.h"
 
@@ -53,7 +54,9 @@ TaskManager::TaskManager(PlayqueueModel* model) : QObject()
     m_db_writer->setAutoDelete(false);
 
     // connection
+    QObject::connect(m_populator,SIGNAL(playlistPopulated()),m_model,SIGNAL(updated()));
     QObject::connect(m_populator,SIGNAL(playlistPopulated()),this,SIGNAL(playlistPopulated()));
+    
     QObject::connect(m_populator,SIGNAL(async_load(MEDIA::TrackPtr,int)),this,SLOT(slot_load_async(MEDIA::TrackPtr,int)));
 
     QObject::connect(m_writer,SIGNAL(playlistSaved()),this,SIGNAL(playlistSaved()));
@@ -163,4 +166,13 @@ void TaskManager::savePlayqueueSession()
     if(m_db_writer->isRunning()) return;
     m_db_writer->saveSessionToDatabase();
     m_threadPool->start (m_db_writer);
+        
+   /* save stream image */
+   for (int i = 0; i < m_model->rowCount(QModelIndex()); i++) 
+   {
+       MEDIA::TrackPtr stream = m_model->trackAt(i);
+
+       if(stream->type() == TYPE_STREAM)
+         CoverCache::instance()->saveStreamParentCover(stream);
+   }
 }

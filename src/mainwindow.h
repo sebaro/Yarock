@@ -33,7 +33,7 @@ class PlaylistWidget;
 class BrowserView;
 class CentralWidget;
 class MinimalWidget;
-class StatusWidget;
+class StatusManager;
 
 // Model
 class PlayqueueModel;
@@ -106,7 +106,6 @@ Q_OBJECT
     void slot_playqueue_clear();
     void slot_playqueue_save();
     void slot_playqueue_save_auto();
-    void slot_playqueue_sort();
     void slot_restore_playqueue();
     void slot_play_after_playqueue_loaded();
 
@@ -116,7 +115,6 @@ Q_OBJECT
     void slot_play_from_playqueue();
     void slot_play_from_collection();
     void slot_player_on_track_change ();
-    void slot_stop_after_media_triggered();
 
     void playOrPause();
     void stopPlayer();
@@ -137,6 +135,7 @@ Q_OBJECT
 
   protected:
     void closeEvent(QCloseEvent *event);
+    void resizeEvent(QResizeEvent* event);
 
   private:
     bool                 is_first_start;
@@ -147,7 +146,7 @@ Q_OBJECT
 
     EngineBase            *_player;
 
-    StatusWidget          *_statusWidget;
+    StatusManager         *_statusManager;
 
     CentralWidget         *_centralWidget;
 

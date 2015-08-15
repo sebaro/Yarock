@@ -39,7 +39,7 @@
 /* widgets */
 #include "widgets/main/menumodel.h"
 #include "widgets/main/main_left.h"
-#include "widgets/statuswidget.h"
+#include "widgets/statusmanager.h"
 
 #include "settings.h"
 #include "global_actions.h"
@@ -90,7 +90,7 @@ BrowserView::BrowserView(QWidget *parent) : QGraphicsView(parent)
     /* Build scene */  
       /* filesystem scene */    
       m_scenes.insert(VIEW::ViewFileSystem,  new FileScene(this));
-      connect(static_cast<FileScene*>(m_scenes[VIEW::ViewFileSystem]), SIGNAL(load_directory(const QString&)), this, SLOT(slot_on_load_new_data(const QString&)));
+      connect(static_cast<FileScene*>(m_scenes[VIEW::ViewFileSystem]), SIGNAL(load_directory(QVariant)), this, SLOT(slot_on_load_new_data(QVariant)));
 
       /* about scene */    
       m_scenes.insert(VIEW::ViewAbout,  new AboutScene(this));
@@ -104,10 +104,12 @@ BrowserView::BrowserView(QWidget *parent) : QGraphicsView(parent)
  
       /* stream scene */
       m_scenes.insert(VIEW::ViewDirble,         new StreamScene(this) );
-      m_scenes.insert(VIEW::ViewShoutCast,      m_scenes[VIEW::ViewDirble] );
+      m_scenes.insert(VIEW::ViewRadionomy,      m_scenes[VIEW::ViewDirble] );
       m_scenes.insert(VIEW::ViewTuneIn,         m_scenes[VIEW::ViewDirble] );
       m_scenes.insert(VIEW::ViewFavoriteRadio,  m_scenes[VIEW::ViewDirble] );
 
+      connect(static_cast<StreamScene*>(m_scenes[VIEW::ViewDirble]), SIGNAL(linked_changed(QVariant)), this, SLOT(slot_on_load_new_data(QVariant)));
+      
       /* local scene */
       m_scenes.insert(VIEW::ViewArtist,         new LocalScene(this) );
       m_scenes.insert(VIEW::ViewAlbum,          m_scenes[VIEW::ViewArtist] );
@@ -224,6 +226,8 @@ void BrowserView::slot_on_search_changed(const QVariant& variant)
     add_history_entry(param);
 
     switch_view(param);
+
+    update_statuswidget();
 }
 
 /* slot triggered when action from menu is activated */
@@ -246,21 +250,33 @@ void BrowserView::slot_on_menu_browser_triggered(VIEW::Id view, QVariant data)
     add_history_entry(param);
 
     switch_view(param);
+    
+    update_statuswidget();
 }
 
-/* slot used by FileScene to load a directory inside view */
-void BrowserView::slot_on_load_new_data(const QString& data)
+/* slot slot_on_load_new_data                              */
+/*    -> used by FileScene to load a directory inside view */
+/*    -> used by StreamScene on new link                   */
+void BrowserView::slot_on_load_new_data(const QVariant data)
 {
-    Debug::debug() << "  [BrowserView] slot_on_load_new_data data" << data;
+    Debug::debug() << "  [BrowserView] slot_on_load_new_data";
 
+    MEDIA::LinkPtr link = qvariant_cast<MEDIA::LinkPtr>(data);
+    
     BrowserParam param = BrowserParam(
           VIEW::Id(SETTINGS()->_viewMode),
           MainLeftWidget::instance()->browserSearch(),
-          QVariant( data ));
+          data);
     
-    add_history_entry( param );
-       
+    /* hack because stream service notify every state change */
+    /* no need to record all state, i.e DOWNLOADING state    */
+    if( data.canConvert<QString>() || (qvariant_cast<MEDIA::LinkPtr>(data))->state == SERVICE::DATA_OK )
+      add_history_entry( param );
+            
     switch_view(param);
+    
+    if( data.canConvert<QString>() || (qvariant_cast<MEDIA::LinkPtr>(data))->state == SERVICE::DATA_OK )
+      update_statuswidget();
 }
 
 void BrowserView::active_view(VIEW::Id m, QString f, QVariant d)
@@ -268,7 +284,10 @@ void BrowserView::active_view(VIEW::Id m, QString f, QVariant d)
     BrowserParam param = BrowserParam(m, f, d);
 
     add_history_entry( param );
+    
     switch_view(param);
+    
+    update_statuswidget();
 }
 
     
@@ -304,6 +323,8 @@ void BrowserView::slot_on_model_populated(E_MODEL_TYPE model)
       break;
       default : break;
     }
+    
+    update_statuswidget();
 }
 
 /*******************************************************************************
@@ -318,7 +339,7 @@ void BrowserView::resizeEvent( QResizeEvent * event)
     if( scene->isInit() )
       scene->resizeScene();
      
-     event->accept();
+    event->accept();
 }
 
 /*******************************************************************************
@@ -350,6 +371,8 @@ bool BrowserView::eventFilter(QObject *obj, QEvent *ev)
     return QWidget::eventFilter(obj, ev);
 }
 
+    
+    
 /*******************************************************************************
     switch_view
 *******************************************************************************/
@@ -379,7 +402,8 @@ void BrowserView::switch_view(BrowserParam& param)
     MainLeftWidget::instance()->setMode(param.mode);
     MainLeftWidget::instance()->setBrowserSearch(param.search);
 
-    switch( VIEW::typeForView(VIEW::Id(param.mode)) ) {
+    switch( VIEW::typeForView(VIEW::Id(param.mode)) )
+    {
       case VIEW::LOCAL      : setScene(static_cast<LocalScene*>(m_scenes[param.mode]));    break;
       case VIEW::RADIO      : setScene(static_cast<StreamScene*>(m_scenes[param.mode]));   break;
       case VIEW::CONTEXT    : setScene(static_cast<ContextScene*>(m_scenes[param.mode]));  break;
@@ -391,8 +415,8 @@ void BrowserView::switch_view(BrowserParam& param)
     /* restore scroll position */
     m_scrollbar->setSliderPosition(param.scroll);
 
-    /* status widget update */
-    do_statuswidget_update();    
+    /* update page title */
+    MainLeftWidget::instance()->setTitle( name_for_view(VIEW::Id(param.mode)) );
 }
 
     
@@ -592,11 +616,11 @@ void BrowserView::keyPressEvent ( QKeyEvent * event )
 }
 
 /*******************************************************************************
-    updateStatusWidget
+    update_statuswidget
 *******************************************************************************/
-void BrowserView::do_statuswidget_update()
+void BrowserView::update_statuswidget()
 {
-    //Debug::debug() << "  [BrowserView] do_statuswidget_update";
+    //Debug::debug() << "  [BrowserView] update_statuswidget";
 
     const int collectionSize = static_cast<LocalScene*>(m_scenes[VIEW::ViewArtist])->elementCount();
     const int radioSize      = static_cast<StreamScene*>(m_scenes[VIEW::ViewTuneIn])->elementCount();
@@ -605,8 +629,6 @@ void BrowserView::do_statuswidget_update()
 
     switch( SETTINGS()->_viewMode )
     {
-      case (VIEW::ViewContext)  : text = tr("Context");break;
-      case (VIEW::ViewHistory)  : text = tr("History");break;
       case (VIEW::ViewAlbum)    : text = QString(tr("Collection : <b>%1</b> albums")).arg(QString::number(collectionSize)); break;
       case (VIEW::ViewArtist)   : text = QString(tr("Collection : <b>%1</b> artist")).arg(QString::number(collectionSize));break;
       case (VIEW::ViewTrack)    : text = QString(tr("Collection : <b>%1</b> tracks")).arg(QString::number(collectionSize));break;
@@ -620,7 +642,7 @@ void BrowserView::do_statuswidget_update()
         break;
       
       case (VIEW::ViewDirble)         :
-      case (VIEW::ViewShoutCast)      :
+      case (VIEW::ViewRadionomy)      :
       case (VIEW::ViewTuneIn)         :
       case (VIEW::ViewFavoriteRadio)  :
          text = QString(tr("Radio : <b>%1</b> streams")).arg(QString::number(radioSize));
@@ -628,13 +650,20 @@ void BrowserView::do_statuswidget_update()
       default: text = "";break;
     }
 
-    if(!text.isEmpty()) {
-      StatusWidget::instance()->startShortMessage(text, STATUS::TYPE_INFO, 2500);
+    if( (VIEW::typeForView(VIEW::Id(SETTINGS()->_viewMode)) == VIEW::LOCAL && collectionSize != 0) ||
+        (VIEW::typeForView(VIEW::Id(SETTINGS()->_viewMode)) == VIEW::RADIO && radioSize != 0) )
+    {
+        StatusManager::instance()->startMessage(text, STATUS::INFO, 2200);
     }
-    
-    
+}
+
+/*******************************************************************************
+    name_for_view
+*******************************************************************************/
+QString BrowserView::name_for_view(VIEW::Id id)
+{
     QString title;
-    switch(SETTINGS()->_viewMode)
+    switch( id )
     {
       case VIEW::ViewAbout             : title = tr("About");  break;
       case VIEW::ViewSettings          : title = tr("Settings");  break;
@@ -650,14 +679,13 @@ void BrowserView::do_statuswidget_update()
       case VIEW::ViewPlaylist          : title = tr("Playlists");  break;
       case VIEW::ViewSmartPlaylist     : title = tr("Smart playlists");  break;
       case VIEW::ViewDirble            : title = ("Dirble");  break;
-      case VIEW::ViewShoutCast         : title = ("Shoutcast");  break;
+      case VIEW::ViewRadionomy         : title = ("Radionomy");  break;
       case VIEW::ViewTuneIn            : title = ("TuneIn");  break;
       case VIEW::ViewFavoriteRadio     : title = tr("Favorites radios");  break;
       case VIEW::ViewFileSystem        : title = tr("Filesystem");  break;
       default:break;
-    }    
-    
-    MainLeftWidget::instance()->setTitle(title);
+    }     
+    return title;
 }
 
 

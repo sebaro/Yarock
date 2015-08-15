@@ -16,6 +16,8 @@
 *****************************************************************************************/
 
 #include "database.h"
+#include "statusmanager.h"
+
 #include "smartplaylist.h"
 #include "utilities.h"
 #include "debug.h"
@@ -284,24 +286,29 @@ bool Database::open(bool create/*=false*/)
     if (QSqlDatabase::contains(connection))
         return true;
 
-    /* check id dabatase file already exists */
-    const QString db_path = QString(UTIL::CONFIGDIR + "/" + m_current_id + ".db");
-
+    /* check if dabatase file already exists */
     if( !Database::exist() && create == false ) {
-      Debug::debug() << "[Database] database not alread created !";      
+      Debug::debug() << "[Database] database not already created !";      
       return false;
     }
     
     /* create Sql Database */
-    Debug::debug() << "[Database] open: new database connection";
+    Debug::debug() << "[Database] open -> new database connection";
+    if( !QSqlDatabase::isDriverAvailable("QSQLITE") ) {
+        Debug::error() << "[Database] Sqlite driver not available (check your qt install) !";
+        StatusManager::instance()->startMessage( "[Database] Sqlite driver not available", STATUS::ERROR_CLOSE );
+
+        return false;
+    }
+
     QSqlDatabase* db = new QSqlDatabase(QSqlDatabase::addDatabase("QSQLITE",connection));
     m_sqldbs[connection] = db;        
 
+    const QString db_path = QString(UTIL::CONFIGDIR + "/" + m_current_id + ".db");
     db->setDatabaseName( db_path );
 
     if (!db->open()) {
-        Debug::warning() << "[Database] Failed to establish " << db->connectionName() << " connection to database!";
-        Debug::warning() << "[Database] Reason: " << db->lastError().text();
+        Debug::warning() << "[Database] Failed to establish connection" << db->connectionName() << "Reason: " << db->lastError().text();
         return false;
     }
 
@@ -339,7 +346,7 @@ QSqlDatabase* Database::db()
 /* ---------------------------------------------------------------------------*/
 bool Database::exist()
 {
-    Debug::debug() << "[Database] check id database file exists !";
+    Debug::debug() << "[Database] check if database file exists !";
   
     const QString db_path = QString(UTIL::CONFIGDIR + "/" + m_current_id + ".db");
       

@@ -41,6 +41,8 @@ SET(YAROCK_INCLUDES  ${CMAKE_SOURCE_DIR}/src/
                      ${CMAKE_SOURCE_DIR}/src/widgets/popupcompleter
 )
 
+
+
 SET(SOURCES 
            ${CMAKE_SOURCE_DIR}/src/global_actions.cpp
            ${CMAKE_SOURCE_DIR}/src/commandlineoptions.cpp
@@ -96,7 +98,7 @@ set (SOURCES
            ${CMAKE_SOURCE_DIR}/src/models/local/local_playlist_model.cpp
            ${CMAKE_SOURCE_DIR}/src/models/local/local_playlist_populator.cpp
            ${CMAKE_SOURCE_DIR}/src/models/stream/service_base.cpp
-           ${CMAKE_SOURCE_DIR}/src/models/stream/service_shoutcast.cpp
+           ${CMAKE_SOURCE_DIR}/src/models/stream/service_radionomy.cpp
            ${CMAKE_SOURCE_DIR}/src/models/stream/service_tunein.cpp
            ${CMAKE_SOURCE_DIR}/src/models/stream/service_xspf.cpp
            ${CMAKE_SOURCE_DIR}/src/models/stream/service_dirble.cpp           
@@ -197,7 +199,7 @@ set (SOURCES
            ${CMAKE_SOURCE_DIR}/src/widgets/seekslider.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/seeksliderpopup.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/spacer.cpp
-           ${CMAKE_SOURCE_DIR}/src/widgets/statuswidget.cpp           
+           ${CMAKE_SOURCE_DIR}/src/widgets/statusmanager.cpp           
            ${CMAKE_SOURCE_DIR}/src/widgets/sort_widget.cpp            
            ${CMAKE_SOURCE_DIR}/src/widgets/header_widget.cpp            
 )
@@ -217,6 +219,7 @@ set (SOURCES
            ${CMAKE_SOURCE_DIR}/src/infosystem/tasks/tagsearch.cpp           
 )
 
+
 # ------------------------------------------------------------------------------
 #  YAROCK_HEADERS
 # ------------------------------------------------------------------------------
@@ -231,7 +234,6 @@ SET(YAROCK_HEADERS
            ${CMAKE_SOURCE_DIR}/src/settings.h
            ${CMAKE_SOURCE_DIR}/src/threadmanager.h
            ${CMAKE_SOURCE_DIR}/src/utilities.h
-           ${CMAKE_SOURCE_DIR}/src/views.h
            ${CMAKE_SOURCE_DIR}/src/core/database/database.h
            ${CMAKE_SOURCE_DIR}/src/core/database/database_cmd.h
            ${CMAKE_SOURCE_DIR}/src/core/database/databasebuilder.h
@@ -269,7 +271,7 @@ SET(YAROCK_HEADERS
            ${CMAKE_SOURCE_DIR}/src/models/local/local_playlist_model.h
            ${CMAKE_SOURCE_DIR}/src/models/local/local_playlist_populator.h
            ${CMAKE_SOURCE_DIR}/src/models/stream/service_base.h
-           ${CMAKE_SOURCE_DIR}/src/models/stream/service_shoutcast.h
+           ${CMAKE_SOURCE_DIR}/src/models/stream/service_radionomy.h
            ${CMAKE_SOURCE_DIR}/src/models/stream/service_tunein.h
            ${CMAKE_SOURCE_DIR}/src/models/stream/service_xspf.h
            ${CMAKE_SOURCE_DIR}/src/models/stream/service_dirble.h
@@ -292,6 +294,7 @@ SET(YAROCK_HEADERS
            ${CMAKE_SOURCE_DIR}/src/views/item_menu.h
            ${CMAKE_SOURCE_DIR}/src/views/browser_view.h           
            ${CMAKE_SOURCE_DIR}/src/views/scene_base.h           
+           ${CMAKE_SOURCE_DIR}/src/views/views.h
            ${CMAKE_SOURCE_DIR}/src/views/about/about_scene.h
            ${CMAKE_SOURCE_DIR}/src/views/local/qpixmapfilter.h
            ${CMAKE_SOURCE_DIR}/src/views/local/local_item.h
@@ -350,7 +353,7 @@ SET(YAROCK_HEADERS
            ${CMAKE_SOURCE_DIR}/src/widgets/seekslider.h
            ${CMAKE_SOURCE_DIR}/src/widgets/seeksliderpopup.h
            ${CMAKE_SOURCE_DIR}/src/widgets/spacer.h
-           ${CMAKE_SOURCE_DIR}/src/widgets/statuswidget.h           
+           ${CMAKE_SOURCE_DIR}/src/widgets/statusmanager.h           
            ${CMAKE_SOURCE_DIR}/src/widgets/sort_widget.h  
            ${CMAKE_SOURCE_DIR}/src/widgets/header_widget.h
 )

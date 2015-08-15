@@ -193,7 +193,6 @@ Q_OBJECT
     void newDatabaseParam();
     void delDatabaseParam();
     void renameDatabaseParam();
-    void enableMultiDatabase();
     void slot_oncheckbox_clicked();
     void slot_on_titlebutton_clicked();
 
@@ -207,7 +206,6 @@ Q_OBJECT
     QList<AddFolderWidget*>  ui_folderWidgets;
     QVBoxLayout              *ui_folders_layout;
     
-    QCheckBox              *ui_enable_multiDb;
     QCheckBox              *ui_auto_update;
     QCheckBox              *ui_search_cover;
     QCheckBox              *ui_group_albums;

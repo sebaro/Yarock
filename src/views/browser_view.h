@@ -73,12 +73,13 @@ private slots:
     void slot_check_slider(int);
 
     void slot_on_menu_browser_triggered(VIEW::Id view, QVariant data);
-    void slot_on_load_new_data(const QString&);    
+    void slot_on_load_new_data(QVariant);    
     void slot_on_history_next_activated();
     void slot_on_history_prev_activated();
 
 private:
-    void do_statuswidget_update();
+    QString name_for_view(VIEW::Id id);
+    void update_statuswidget();
     void jump_to_media(MEDIA::MediaPtr media);
 
 signals:

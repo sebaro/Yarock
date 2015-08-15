@@ -507,11 +507,6 @@ PageLibrary::PageLibrary(QWidget* parentView) : QGraphicsWidget(0)
     connect(this->ui_db_new_button, SIGNAL(clicked()), this, SLOT(newDatabaseParam()));
     connect(this->ui_db_del_button, SIGNAL(clicked()), this, SLOT(delDatabaseParam()));
     connect(this->ui_db_rename_button, SIGNAL(clicked()), this, SLOT(renameDatabaseParam()));
-
-    connect(this->ui_enable_multiDb, SIGNAL(clicked()), this, SLOT(enableMultiDatabase()));
-
-
-    enableMultiDatabase();
 }
 
 //! ----------- createGui ------------------------------------------------------
@@ -540,12 +535,8 @@ void PageLibrary::createGui()
     /* ------------------------------------------------*/
 
     //! label
-    QLabel *lbl1 = new QLabel(tr("Database Name"), m_main_widget);
+    QLabel *lbl1 = new QLabel(tr("Collection"), m_main_widget);
     lbl1->setFont(QFont("Arial",10,QFont::Bold));
-
-    //! Check box --> enable Multi Databases
-    ui_enable_multiDb = new QCheckBox(m_main_widget);
-    ui_enable_multiDb->setText(tr("Enable Multi Database support"));
 
     //! horizontal Layout (database list + save + delete)
     ui_choose_db = new QComboBox(m_main_widget);
@@ -573,7 +564,7 @@ void PageLibrary::createGui()
     hl1->addItem( new QSpacerItem(1, 1, QSizePolicy::MinimumExpanding, QSizePolicy::Fixed) );
 
     /* ----- Database Properties ----- */
-      QLabel *lbl2 = new QLabel(tr("Database Properties"), m_main_widget);
+      QLabel *lbl2 = new QLabel(tr("Properties"), m_main_widget);
       lbl2->setFont(QFont("Arial",10,QFont::Bold));
 
       
@@ -617,20 +608,17 @@ void PageLibrary::createGui()
     /* ----- Final Layout ----- */    
       QVBoxLayout* layout = new QVBoxLayout( m_main_widget );
       layout->addWidget( lbl1 );
-      layout->addWidget( ui_enable_multiDb );
       layout->addLayout( hl1 );
       layout->addItem( new QSpacerItem(20, 15, QSizePolicy::Fixed, QSizePolicy::Fixed) );
-      layout->addWidget( lbl2 );
       
+      layout->addWidget( lbl2 );      
       layout->addLayout( ui_folders_layout ,0);
       layout->addWidget( ui_add_path_button );
-
       layout->addWidget( ui_auto_update );
       layout->addWidget( ui_search_cover );
       layout->addWidget( ui_group_albums );
       layout->addWidget( ui_use_artist_image );
-      layout->addWidget( ui_rating_to_file );
-      
+      layout->addWidget( ui_rating_to_file );      
       
       layout->setSizeConstraint(QLayout::SetMinimumSize );
       layout->addItem( new QSpacerItem(20, 15, QSizePolicy::Fixed, QSizePolicy::Expanding) );
@@ -704,8 +692,6 @@ void PageLibrary::restoreSettings()
     m_db_params.clear();
     ui_choose_db->clear();
 
-    ui_enable_multiDb->setChecked( database->isMultiDb() );
-    enableMultiDatabase();
     Debug::debug() << "PageLibrary::restoreSettings database current name" << database->param()._name;
 
     foreach (const QString& name, database->param_names()) {
@@ -727,7 +713,6 @@ void PageLibrary::saveSettings()
     //! save settings file
     Database *database = Database::instance();
 
-    //database->multiDb = ui_enable_multiDb->isChecked();
     database->param_clear();
 
     foreach (const QString& name, m_db_params.keys()) {
@@ -736,17 +721,6 @@ void PageLibrary::saveSettings()
 
     database->change_database( ui_choose_db->currentText() );
     database->settings_save();
-}
-
-
-//! ---- database instance management ------------------------------------------
-void PageLibrary::enableMultiDatabase()
-{
-    //Debug::debug() << "SettingCollectionPage::enableMultiDatabase";
-    ui_choose_db->setEnabled(ui_enable_multiDb->isChecked());
-    ui_db_new_button->setEnabled(ui_enable_multiDb->isChecked());
-    ui_db_del_button->setEnabled(ui_enable_multiDb->isChecked());
-    ui_db_rename_button->setEnabled(ui_enable_multiDb->isChecked());
 }
 
 
@@ -767,7 +741,6 @@ void PageLibrary::slot_oncheckbox_clicked()
     else if ( cb == ui_auto_update )
     {
       m_db_params[db_name]._option_auto_rebuild  = ui_auto_update->isChecked();
-      
     }
     else if (cb == ui_group_albums)
     {

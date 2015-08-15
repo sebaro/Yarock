@@ -72,9 +72,6 @@ Q_OBJECT
     PlaylistWriter         *m_writer;      // QRunnable
     PlaylistDbWriter       *m_db_writer;   // QRunnable
 
-    //! messages Id for StatusWidget management
-    QMap<QString, uint>    messageIds;
-
     QMap<StreamLoader*, int/*row*/>  m_asyncloaders;
     
   signals:

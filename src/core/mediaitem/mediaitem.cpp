@@ -38,7 +38,7 @@
 #include <QPixmap>
 #include <QCryptographicHash>
 
-const QStringList mediaFilter    = QStringList() << "mp3" << "ogg" << "flac" << "wav" << "m4a" << "aac";
+const QStringList mediaFilter    = QStringList() << "mp3" << "ogg" << "flac" << "wav" << "m4a" << "aac" << "ape";
 const QStringList playlistFilter = QStringList() << "m3u" << "m3u8" << "pls" << "xspf";
 
 /*
@@ -573,9 +573,17 @@ bool MEDIA::isMediaPlayable(const QString& url)
 /* ---------------------------------------------------------------------------*/
 bool MEDIA::compareTrackNatural(const TrackPtr mi1, const TrackPtr mi2)
 {
-    const QString s1 = mi1->artist + mi1->album + QString::number(mi1->num).rightJustified(4, '0');
-    const QString s2 = mi2->artist + mi2->album + QString::number(mi2->num).rightJustified(4, '0');
-
+    QString s1, s2; 
+    if( mi1->num != 0 && mi2->num != 0)
+    {
+      s1 = mi1->artist + mi1->album + QString::number(mi1->num).rightJustified(4, '0');
+      s2 = mi2->artist + mi2->album + QString::number(mi2->num).rightJustified(4, '0');
+    }
+    else
+    {
+      s1 = mi1->artist + mi1->album + mi1->url;
+      s2 = mi2->artist + mi2->album + mi2->url;
+    }
     return (s1 < s2);
 }
 

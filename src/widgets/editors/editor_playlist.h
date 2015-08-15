@@ -32,6 +32,7 @@
 #include <QMenu>
 #include <QToolButton>
 #include <QLabel>
+#include <QContextMenuEvent>
 
 class PlayqueueModel;
 class PlaylistView;
