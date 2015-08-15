@@ -18,8 +18,8 @@
 #ifndef _ENGINE_H_
 #define _ENGINE_H_
 
-
 #include "engine_base.h"
+#include <QString>
 
 namespace ENGINE {
   enum E_ENGINE_TYPE {NO_ENGINE = 0, PHONON, VLC, MPV};
@@ -40,6 +40,11 @@ class Engine
 public:
     Engine();
     static EngineBase* instance() { return CORE_INSTANCE; }
+    
+    QString error() { return m_error;}
+
+private:
+    QString m_error;
 };
 
 #endif // _ENGINE_H_

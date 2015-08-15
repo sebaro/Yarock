@@ -46,6 +46,8 @@ Q_DISABLE_COPY( EngineBase )
   
 public:
     EngineBase(const QString& name);
+    QString name() {return m_name;}
+    bool isEngineOK() {return m_isEngineOK;}    
 
     /* play/pause/stop */
     virtual void play()  {};
@@ -56,6 +58,7 @@ public:
     virtual void setMediaItem(MEDIA::TrackPtr ) {};
     virtual void setNextMediaItem(MEDIA::TrackPtr ) {};
     MEDIA::TrackPtr playingTrack() const {return m_currentMediaItem;}
+    MEDIA::TrackPtr nextTrack() const {return m_nextMediaItem;}
     
     /* audio*/ 
     virtual int volume() const {return 0;};
@@ -84,6 +87,7 @@ public slots:
     virtual void volumeDec( ) {};
     
 public:
+    bool                    m_isEngineOK;
     ENGINE::E_ENGINE_STATE  m_current_state;
     ENGINE::E_ENGINE_STATE  m_old_state;
     

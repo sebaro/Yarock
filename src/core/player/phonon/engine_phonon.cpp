@@ -68,7 +68,7 @@ EnginePhonon::EnginePhonon() : EngineBase("phonon")
     connect(m_mediaObject,SIGNAL(tick(qint64)),this,SLOT(slot_on_time_change(qint64)));
     connect(m_mediaObject,SIGNAL(totalTimeChanged(qint64)),this,SLOT(slot_on_duration_change(qint64)));
 
-     connect(m_mediaObject,SIGNAL(currentSourceChanged( const Phonon::MediaSource & )),this,SLOT(slot_on_media_change()));
+    connect(m_mediaObject,SIGNAL(currentSourceChanged( const Phonon::MediaSource & )),this,SLOT(slot_on_media_change()));
 
     connect(m_mediaObject, SIGNAL(metaDataChanged()), this,SLOT(slot_on_metadata_change()));
 
@@ -187,8 +187,6 @@ void EnginePhonon::setMediaItem(MEDIA::TrackPtr track)
     
     
     m_mediaObject->play();
-    Debug::debug() << "[EnginePhonon] -> setMediaItem DONE";
-    
 }
 
 void EnginePhonon::setNextMediaItem(MEDIA::TrackPtr track)

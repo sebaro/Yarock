@@ -61,6 +61,7 @@ EngineVlc::EngineVlc() : EngineBase("vlc")
     
     if(!m_vlclib->init()) {
       Debug::warning() << "[EngineVlc] -> warning vlc initialisation failed !";
+      m_isEngineOK = false;
       return;
     }
 
@@ -109,12 +110,14 @@ EngineVlc::EngineVlc() : EngineBase("vlc")
 EngineVlc::~EngineVlc()
 {
     Debug::debug() << "[EngineVlc] -> delete";
-  
-    removeCoreConnections();
+    if( m_isEngineOK ) 
+    {  
+      removeCoreConnections();
 
-    libvlc_media_player_release(m_vlc_player);
+      libvlc_media_player_release(m_vlc_player);
 
-    VlcLib::print_error();
+      VlcLib::print_error();
+    }
 }
 
 

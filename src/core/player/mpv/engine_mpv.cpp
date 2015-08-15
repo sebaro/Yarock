@@ -96,8 +96,11 @@ EngineMpv::EngineMpv() : EngineBase("mpv")
     m_tickInterval = MPV::TICK_INTERVAL;
        
     /* core mpv init */
-    if( mpv_initialize(m_mpv_core) < 0 )
+    if( mpv_initialize(m_mpv_core) < 0 ) {
       Debug::warning() << "[EngineMpv] warning mpv initialisation failed !";
+      m_isEngineOK = false;
+      return;
+    }
       
     /* get updates when these properties change */
     mpv_observe_property(m_mpv_core, 1, "pause",  MPV_FORMAT_FLAG);      
@@ -115,7 +118,7 @@ EngineMpv::EngineMpv() : EngineBase("mpv")
 EngineMpv::~EngineMpv()
 {
     Debug::debug() << "[EngineMpv] delete";
-  
+
     if(m_mpv_core)
     {
         mpv_terminate_destroy(m_mpv_core);

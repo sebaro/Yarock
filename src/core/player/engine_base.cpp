@@ -21,7 +21,7 @@
 EngineBase::EngineBase(const QString& name) : m_name(name)
 {
     //Debug::debug() << "[PLAYER] create player : " << m_name;
-
+    m_isEngineOK       = true;
     m_current_state    = ENGINE::STOPPED;
     m_old_state        = ENGINE::STOPPED;
  

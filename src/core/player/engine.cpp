@@ -88,17 +88,31 @@ Engine::Engine()
         }
         else
         {
-          Debug::error() << "[Engine] error loading library " << fileName << " [" << QLibrary(fileName).errorString() << "]";
+          m_error = QString ("[Engine] error loading library " + fileName + " [" + QLibrary(fileName).errorString() + "]" );
+          Debug::error() << m_error;
         }
     }
 
-    if( CORE_INSTANCE == 0 )
+    
+    if( CORE_INSTANCE != 0 )
     {
-      CORE_INSTANCE    = new EngineBase("null");
-      Debug::error() << "[Engine] no audio engine library loaded !";
+        Debug::debug() << "[Engine] engine status OK:" << CORE_INSTANCE->isEngineOK();
+        if( !CORE_INSTANCE->isEngineOK() ) 
+        {
+            m_error = QString ("[Engine] engine " + CORE_INSTANCE->name() + " loading failure" );
+            Debug::error() << m_error;
+
+            delete CORE_INSTANCE;
+            CORE_INSTANCE    = new EngineBase("null");
+        }
+    }
+    /* no library found */
+    else if( CORE_INSTANCE == 0 )
+    {
+        CORE_INSTANCE    = new EngineBase("null");
+
+        m_error = QString("[Engine] no audio engine library loaded !");
+        Debug::error() << m_error;
     }
 }
 
-
-
- 
