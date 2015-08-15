@@ -279,6 +279,46 @@ static void readID3v2Tags(TagLib::ID3v2::Tag *tag, MEDIA::TrackPtr track, QStrin
     /* TODO ID3v2.4.0 RVA2 frame */
 }
 
+
+/*----------------------------------------------------------------------------*/
+/* readMP4Tags                                                                */
+/*----------------------------------------------------------------------------*/
+static void readMP4Tags(TagLib::MP4::Tag *tag, MEDIA::TrackPtr track, QString& s_disc )
+{
+    const TagLib::MP4::ItemListMap& items = tag->itemListMap();
+
+    /* album artists tags */
+    TagLib::MP4::ItemListMap::ConstIterator it = items.find("aART");
+    if ( it != items.end() ) 
+    {
+        TagLib::StringList album_artists = it->second.toStringList();
+        if ( !album_artists.isEmpty() )
+          track->artist = TaglibStringToQString( album_artists.front() );
+    }    
+    
+    /* disc number */
+    if ( items.contains("disk") ) {
+        s_disc = TaglibStringToQString(TagLib::String::number(items["disk"].toIntPair().first));
+    }    
+    
+    /* rating */
+    if ( items.contains(kMP4_FMPS_Rating_ID) ) {
+        float rating = TaglibStringToQString(items[kMP4_FMPS_Rating_ID].toStringList().toString('\n')).toFloat();
+        
+        if( track->rating <= 0 && rating > 0 )
+          track->rating = rating;
+    }
+    
+    /* playcount */    
+    if ( items.contains(kMP4_FMPS_Playcount_ID) ) {
+        int playcount = TaglibStringToQString(items[kMP4_FMPS_Playcount_ID].toStringList().toString('\n')).toFloat();
+        
+        if( track->playcount <= 0 && playcount > 0 )
+                track->playcount = playcount;
+    }
+}
+
+
 /*----------------------------------------------------------------------------*/
 /* readOggTags                                                                */
 /*----------------------------------------------------------------------------*/
@@ -491,8 +531,8 @@ void readFile(MEDIA::TrackPtr track, const QString& url, int* p_disc)
     }
     else if (TagLib::MP4::File* file = dynamic_cast<TagLib::MP4::File*>( fileref.file() ))
     {
-        Debug::debug() << " [Tag] no MP4 support";
-        Q_UNUSED(file)
+        if ( file->tag() )
+            readMP4Tags( file->tag(), track, s_disc );
     }
     else if (TagLib::ASF::File* file = dynamic_cast<TagLib::ASF::File*>( fileref.file() ))
     {
