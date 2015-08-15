@@ -53,10 +53,7 @@ class AlbumGraphicItem : public QGraphicsItem
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
-    //void mouseReleaseEvent(QGraphicsSceneMouseEvent *e);
-    //void mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * event );
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
-    //void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
   public:
      QStyleOptionViewItemV4 opt;
 };
@@ -170,10 +167,7 @@ class ArtistGraphicItem : public QGraphicsItem
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
-    //void mouseReleaseEvent(QGraphicsSceneMouseEvent *e);
-    //void mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * event );
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
-    //void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
   public:
      QStyleOptionViewItemV4 opt;
 };
@@ -249,10 +243,7 @@ class TrackGraphicItem : public QGraphicsItem
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
 
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
-    //void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
-    //void mouseDoubleClickEvent ( QGraphicsSceneMouseEvent *event );
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
-    //void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 
   public:
      QStyleOptionViewItemV4 opt;
@@ -312,6 +303,7 @@ class TrackGraphicItem_v3 : public TrackGraphicItem
     float hover_rating_;
 };
 
+
 /*
 ********************************************************************************
 *                                                                              *
@@ -336,10 +328,8 @@ class PlaylistGraphicItem : public QGraphicsItem
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
-    //void mouseReleaseEvent(QGraphicsSceneMouseEvent *e);
-    //void mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * event );
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
-    //void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
+
   private:
      QStyleOptionViewItemV4 opt;
 };
