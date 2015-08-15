@@ -25,7 +25,7 @@
 #include <QPainter>
 
 static const QString noCoverKey  = QString(":/images/default-cover-120x120.png");
-static const QString urlCoverKey = QString(":/images/media-url-110x110.png");
+static const QString urlCoverKey = QString(":/images/default-url-120x120.png");
 /*
 ********************************************************************************
 *                                                                              *
@@ -153,20 +153,30 @@ QPixmap CoverCache::cover(const MEDIA::TrackPtr track )
         QString s_url = track->url;
 
         /* check if cover exist for stream */
-        QPixmapCache::Key key = m_keys_urls.value( s_url );
-
+        QPixmapCache::Key key = m_keys.value( track );
         if( key != QPixmapCache::Key() && QPixmapCache::find( key, &pixmap ) )
           return pixmap;
-
+    
+        QString path = UTIL::CONFIGDIR + "/radio/" + MEDIA::urlHash( s_url );
+        if( QFile(path).exists() ) {
+            m_keys[track] = QPixmapCache::insert( QPixmap(path) );
+            return QPixmap(path);
+        }
+                
         /* check if parent have cover, need to BE a stream !!! not a playlist ITEM*/
         if(track->parent() && track->parent()->type() == TYPE_STREAM)
         {
-           s_url = MEDIA::TrackPtr::staticCast(track->parent())->url;
-      
-           QPixmapCache::Key key = m_keys_urls.value( s_url );
-
-           if( key != QPixmapCache::Key() && QPixmapCache::find( key, &pixmap ) )
-             return pixmap;          
+          QPixmapCache::Key key = m_keys.value( track->parent() );
+          if( key != QPixmapCache::Key() && QPixmapCache::find( key, &pixmap ) )
+            return pixmap;
+    
+          QString path = UTIL::CONFIGDIR + "/radio/" + MEDIA::urlHash(
+               MEDIA::TrackPtr::staticCast(track->parent())->url 
+          );
+          if( QFile(path).exists() ){
+            m_keys[track] = QPixmapCache::insert( QPixmap(path) );
+            return QPixmap(path);
+          }
         }
       
         if (QPixmapCache::find( urlCoverKey, &pixmap ) )
@@ -213,6 +223,7 @@ QPixmap CoverCache::cover(const MEDIA::TrackPtr track )
 /* ---------------------------------------------------------------------------*/
 void CoverCache::invalidate( const MEDIA::MediaPtr media )
 {
+    Debug::debug() << "CoverCache::invalidate";
     if( !m_keys.contains( media ) )
         return;
 
@@ -224,15 +235,35 @@ void CoverCache::invalidate( const MEDIA::MediaPtr media )
 /* ---------------------------------------------------------------------------*/
 /* CoverCache::hasCover                                                       */
 /* ---------------------------------------------------------------------------*/
-bool CoverCache::hasCover(MEDIA::TrackPtr track)
+void CoverCache::saveStreamParentCover(MEDIA::TrackPtr track)
 {
-    return m_keys.contains( track );
+    if (track->type() != TYPE_STREAM)
+      return;
+
+    QString s_url = track->url;
+    QString streamPath = UTIL::CONFIGDIR + "/radio/" + MEDIA::urlHash( s_url );
+    if( QFile(streamPath).exists() )
+      return;
+
+    /* check if parent have cover, need to BE a stream !!! not a playlist ITEM*/
+    if(track->parent() && track->parent()->type() == TYPE_STREAM)
+    {
+      QString parentPath = UTIL::CONFIGDIR + "/radio/" + MEDIA::urlHash(
+              MEDIA::TrackPtr::staticCast(track->parent())->url 
+          );
+
+      if( QFile(parentPath).exists() )
+        QFile(parentPath).copy(streamPath);
+    }
 }
 
 
-void CoverCache::addStreamCover( const QString& url, QImage image)
+/* ---------------------------------------------------------------------------*/
+/* CoverCache::addStreamCover                                                 */
+/* ---------------------------------------------------------------------------*/
+void CoverCache::addStreamCover( const MEDIA::TrackPtr stream, QImage image)
 {
-    Debug::debug() << "    [CoverCache] addStreamCover:" << url;
+    //Debug::debug() << "    [CoverCache] addStreamCover";
     QImage i = image.scaledToHeight(120, Qt::SmoothTransformation);
   
     QPixmap pixTemp(QSize(120,120));
@@ -240,15 +271,14 @@ void CoverCache::addStreamCover( const QString& url, QImage image)
       pixTemp.fill(Qt::transparent);
       QPainter p;
       p.begin(&pixTemp);
-      
-      p.drawPixmap( (120 - i.width())/2,0, QPixmap::fromImage(i));
+      p.drawImage( (120 - i.width())/2,0, i);
       p.end();
     }
     
-    QPixmapCache::Key key = m_keys_urls.value( url );
-    m_keys_urls[url] = QPixmapCache::insert( pixTemp );
+    m_keys[stream] = QPixmapCache::insert( pixTemp );
+    
+    pixTemp.toImage().save(UTIL::CONFIGDIR + "/radio/" + MEDIA::urlHash( stream->url ), "png", -1);
 }
-
 /* ---------------------------------------------------------------------------*/
 /* CoverCache::get_default_pixmap                                             */
 /* ---------------------------------------------------------------------------*/  
@@ -256,7 +286,7 @@ QPixmap CoverCache::get_default_pixmap(bool isStream/*=false*/)
 {
     QPixmap p_in;
     if(isStream)
-        p_in = QPixmap(":/images/media-url-110x110.png");
+        p_in = QPixmap(":/images/default-url-120x120.png");
     else
         p_in = QPixmap(":/images/default-cover-120x120.png");
     
@@ -264,7 +294,7 @@ QPixmap CoverCache::get_default_pixmap(bool isStream/*=false*/)
     QPixmap p_out(p_in.size());
     p_out.fill(Qt::transparent);
     QPainter p(&p_out);
-    p.setOpacity(0.2);
+    p.setOpacity(0.4);
     p.drawPixmap(0, 0, p_in);
     p.end();      
       

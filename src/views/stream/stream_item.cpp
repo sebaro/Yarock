@@ -184,6 +184,7 @@ Q_UNUSED(event)
 ********************************************************************************
 *                                                                              *
 *    StreamGraphicItem_v2                                                      *
+*      -> with image                                                           *
 *                                                                              *
 ********************************************************************************
 */
@@ -257,14 +258,12 @@ Q_UNUSED(option)
       
   
    //! paint image   
+   QPixmap pix = CoverCache::instance()->cover(media).scaled(QSize(64, 64), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+   painter->drawPixmap(3,3, pix);
+     
    if(media->isPlaying)
      painter->drawPixmap(70, 22,QPixmap(":/images/media-playing.png"));
    else if(media->isBroken)
      painter->drawPixmap(70, 22, QPixmap(":/images/media-broken-18x18.png"));
-   else
-   {
-     QPixmap pix = CoverCache::instance()->cover(media).scaled(QSize(64, 64), Qt::KeepAspectRatio, Qt::SmoothTransformation);
-     painter->drawPixmap(3,3, pix);
-   }
 }
 

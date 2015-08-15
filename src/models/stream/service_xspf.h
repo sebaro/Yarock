@@ -52,9 +52,6 @@ public slots:
 private:
     QString                 m_filename;
     QList<MEDIA::TrackPtr>  m_streams;
-    
-    MEDIA::LinkPtr        m_active_link;
-    MEDIA::LinkPtr        m_root_link;
 };
 
 

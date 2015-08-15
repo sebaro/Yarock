@@ -16,6 +16,7 @@
 *****************************************************************************************/
 #include "service_dirble.h"
 #include "networkaccess.h"
+#include "covers/covercache.h"
 #include "views/item_button.h"
 
 #include "utilities.h"
@@ -256,6 +257,14 @@ void Dirble::slotBrowseLinkDone(QByteArray bytes)
               stream->url  = stream_map["stream"].toString();
               stream->categorie = link->name;
               stream->setParent(link);  
+              
+              const QString cover = map["image"].toMap()["url"].toString();
+              if( !cover.isEmpty() )
+              {
+                  QObject* reply = HTTP()->get( QUrl(cover) );
+                  m_image_requests[reply] = stream;
+                  connect(reply, SIGNAL(data(QByteArray)), this, SLOT(slot_stream_image_received(QByteArray)));
+              }              
             }
         }
     }
@@ -265,13 +274,11 @@ void Dirble::slotBrowseLinkDone(QByteArray bytes)
     {
       browseStation(link);
     }
-//     else 
-//     {
-      /* register update */    
-      link->state = int(SERVICE::DATA_OK);
-      set_state(SERVICE::DATA_OK);
-      emit stateChanged();
-//     }
+
+    /* register update */    
+    link->state = int(SERVICE::DATA_OK);
+    set_state(SERVICE::DATA_OK);
+    emit stateChanged();
 }
 
 void Dirble::browseStation(MEDIA::LinkPtr link)
@@ -316,10 +323,10 @@ void Dirble::slotBrowseStationDone(QByteArray bytes)
 
     foreach (const QVariant& station, reply_list) 
     {
-        QVariantMap map = station.toMap();
+       QVariantMap map = station.toMap();
 
-        foreach (const QVariant& station_stream, map["streams"].toList())
-        {
+       foreach (const QVariant& station_stream, map["streams"].toList())
+       {
           QVariantMap stream_map = station_stream.toMap();
   
           /* check status of station */
@@ -333,6 +340,14 @@ void Dirble::slotBrowseStationDone(QByteArray bytes)
           stream->url  = stream_map["stream"].toString();
           stream->categorie = link->name;
           stream->setParent(link);  
+          
+          const QString cover = map["image"].toMap()["url"].toString();
+          if( !cover.isEmpty() )
+          {
+              QObject* reply = HTTP()->get( QUrl(cover) );
+              m_image_requests[reply] = stream;
+              connect(reply, SIGNAL(data(QByteArray)), this, SLOT(slot_stream_image_received(QByteArray)));
+          }
        }
     }
     
@@ -342,6 +357,28 @@ void Dirble::slotBrowseStationDone(QByteArray bytes)
     
     emit stateChanged();
 }
+
+/*******************************************************************************
+  Dirble::slot_stream_image_received
+*******************************************************************************/
+void Dirble::slot_stream_image_received(QByteArray bytes)
+{
+    //Debug::debug() << "    [Dirble] slot_stream_image_received";
+
+    // Get id from sender reply
+    QObject* reply = qobject_cast<QObject*>(sender());
+    if (!reply || !m_image_requests.contains(reply))   return;
+
+    MEDIA::TrackPtr stream = m_image_requests.take(reply);
+
+    QImage image = QImage::fromData(bytes);
+    if( !image.isNull() ) 
+    {
+        CoverCache::instance()->addStreamCover(stream, image);
+        emit dataChanged();
+    }
+}
+
 
 void Dirble::slot_error()
 {

@@ -262,7 +262,7 @@ void TuneIn::slot_stream_image_received(QByteArray bytes)
     QImage image = QImage::fromData(bytes);
     if( !image.isNull() ) 
     {
-        CoverCache::instance()->addStreamCover(stream->url, image);
+        CoverCache::instance()->addStreamCover(stream, image);
         emit dataChanged();
     }
 }

@@ -45,7 +45,7 @@ private slots:
     void networkError(QNetworkReply::NetworkError);
     void networkLoadFinished();
     void deletedByParent();
-  
+
 private:
     void connectReplySignals();
 
@@ -86,7 +86,7 @@ private:
   
     QNetworkAccessManager* accessManager();
     
-    static NetworkAccess* INSTANCE;    
+    static NetworkAccess* INSTANCE;
 };
 
 

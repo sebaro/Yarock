@@ -15,47 +15,52 @@
 *  this program.  If not, see <http://www.gnu.org/licenses/>.                           *
 *****************************************************************************************/
 
-#ifndef _COVER_CACHE_H_
-#define _COVER_CACHE_H_
+#ifndef _SERVICE_RADIONOMY_H_
+#define _SERVICE_RADIONOMY_H_
 
-
+#include "service_base.h"
 #include "core/mediaitem/mediaitem.h"
 
-#include <QImage>
-#include <QPixmap>
-#include <QPixmapCache>
-#include <QHash>
+#include <QList>
+#include <QMap>
+#include <QByteArray>
+#include <QObject>
+
+#include "htmlcxx/html/ParserDom.h"
 /*
 ********************************************************************************
 *                                                                              *
-*    Class CoverCache                                                          *
+*    Class Radionomy                                                           *
 *                                                                              *
 ********************************************************************************
 */
-class CoverCache
+class Radionomy : public Service
 {
+Q_OBJECT
 public:
-    CoverCache();
-    static CoverCache* instance();
-    void invalidate( const MEDIA::MediaPtr album );
+    Radionomy();
+    virtual void load();
+    virtual void reload();
+    virtual QList<MEDIA::TrackPtr> streams();
+    virtual QList<MEDIA::LinkPtr> links();
 
-    QPixmap image( MEDIA::ArtistPtr artist, QList<MEDIA::AlbumPtr> albums=QList<MEDIA::AlbumPtr>());
-    QPixmap cover( const MEDIA::AlbumPtr album);
-    QPixmap cover( const MEDIA::TrackPtr track);
-
-    void addStreamCover( const MEDIA::TrackPtr stream, QImage image);
-    void saveStreamParentCover(MEDIA::TrackPtr );
+public slots:
+    virtual void slot_activate_link(MEDIA::LinkPtr link=MEDIA::LinkPtr(0));
     
 private:
-    static CoverCache* INSTANCE;
-    ~CoverCache();
-    
-    /* hash from media Object pointer to QPixmapCache:key internal key */
-    QHash< const MEDIA::MediaPtr, QPixmapCache::Key > m_keys;
+    void browseLink(MEDIA::LinkPtr link);
 
-    QPixmap get_default_pixmap(bool isStream=false);
-    
-    Q_DISABLE_COPY( CoverCache )
+    void categoryLinkFromHtml(tree<htmlcxx::HTML::Node> dom, MEDIA::LinkPtr link, QString className);
+    void streamFromHtml(tree<htmlcxx::HTML::Node> dom, MEDIA::LinkPtr link);
+
+private slots:
+    void slotBrowseLinkDone(QByteArray);
+    void slot_error();
+    void slot_stream_image_received(QByteArray);    
+
+private:
+    QMap<QObject*, MEDIA::LinkPtr>  m_requests;
+    QMap<QObject*, MEDIA::TrackPtr>  m_image_requests;
 };
 
-#endif // _COVER_CACHE_H_
+#endif // _SERVICE_RADIONOMY_H_

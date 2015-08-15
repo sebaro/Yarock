@@ -53,11 +53,11 @@ private slots:
     void slot_error();
     void slotBrowseLinkDone(QByteArray);
     void slotBrowseStationDone(QByteArray);
+    void slot_stream_image_received(QByteArray);
     
 private:
     QMap<QObject*, MEDIA::LinkPtr>  m_requests;
-    MEDIA::LinkPtr        m_active_link;
-    MEDIA::LinkPtr        m_root_link;    
+    QMap<QObject*, MEDIA::TrackPtr>  m_image_requests;
 };
 
 #endif // _SERVICE_DIRBLE_H_

@@ -23,8 +23,10 @@
         <file>images/home-48x48.png</file>
         <file>images/album.png</file>
         <file>images/default-cover-120x120.png</file>
+        <file>images/default-url-120x120.png</file>
+        
         <file>images/dirble.png</file>
-        <file>images/shoutcast.png</file>
+        <file>images/radionomy.png</file>
         <file>images/info-48x48.png</file>
         <file>images/equalizer-48x48-1.png</file>
         <file>images/equalizer-48x48-2.png</file>
@@ -44,7 +46,6 @@
         <file>images/date-48x48.png</file>
         <file>images/media-url-48x48.png</file>
         <file>images/media-url-18x18.png</file>
-        <file>images/media-url-110x110.png</file>
         <file>images/warning-48x48.png</file>
         <file>images/media-repeat-1-48x48.png</file>
         <file>images/media-repeat-2-48x48.png</file>

@@ -56,8 +56,6 @@ private slots:
 private:
     QMap<QObject*, MEDIA::LinkPtr>   m_requests;
     QMap<QObject*, MEDIA::TrackPtr>  m_image_requests;
-    MEDIA::LinkPtr        m_active_link;
-    MEDIA::LinkPtr        m_root_link;
 };
 
 #endif // _SERVICE_TUNEIN_H_

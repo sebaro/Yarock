@@ -60,7 +60,7 @@ void PopupModel::populateModel(const QString & query)
         break;
 
       case VIEW::ViewDirble        :
-      case VIEW::ViewShoutCast     :
+      case VIEW::ViewRadionomy     :
       case VIEW::ViewTuneIn        :
       case VIEW::ViewFavoriteRadio :
         getStreamSuggestions(query);

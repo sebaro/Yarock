@@ -26,7 +26,7 @@
 
 #include "models/stream/stream_model.h"
 #include "models/stream/service_dirble.h"
-#include "models/stream/service_shoutcast.h"
+#include "models/stream/service_radionomy.h"
 #include "models/stream/service_tunein.h"
 #include "models/stream/service_xspf.h"
 
@@ -43,7 +43,7 @@
 #include "widgets/exlineedit.h"
 #include "widgets/dialogs/addstreamdialog.h"
 #include "dialogs/filedialog.h"
-#include "widgets/statuswidget.h"
+#include "widgets/statusmanager.h"
 #include "views/item_button.h"
 
 #include "global_actions.h"
@@ -54,6 +54,7 @@
 #include <QGraphicsProxyWidget>
 #include <QGraphicsWidget>
 #include <QDrag>
+#include <QColor>
 
 /*
 ********************************************************************************
@@ -83,12 +84,12 @@ void StreamScene::initScene()
 
     /* init stream services */
     m_services.insert(VIEW::ViewDirble,         new Dirble() );
-    m_services.insert(VIEW::ViewShoutCast,      new ShoutCast() );
+    m_services.insert(VIEW::ViewRadionomy,      new Radionomy() );
     m_services.insert(VIEW::ViewTuneIn,         new TuneIn() );
     m_services.insert(VIEW::ViewFavoriteRadio,  new XspfStreams() );
 
     foreach (Service* service, m_services.values() ) {
-      connect(service, SIGNAL(stateChanged()), this, SLOT(populateScene()));      
+      connect(service, SIGNAL(stateChanged()), this, SLOT(slot_on_service_state_changed()));
       connect(service, SIGNAL(dataChanged()), this, SLOT(update()));
     }    
    
@@ -114,37 +115,30 @@ void StreamScene::initScene()
     
     connect(ACTIONS()->value(BROWSER_STREAM_ITEM_MOUSE_MOVE), SIGNAL(triggered()), this, SLOT(slot_item_mouseMove()), Qt::DirectConnection);
  
-    /* search line edit */
-    ui_search_widget = new QWidget(0);
-    ui_search_widget->setPalette(QApplication::palette());
-    ui_search_widget->setAttribute(Qt::WA_NoBackground, true);
-    ui_search_widget->setAutoFillBackground(true);
-
-    QLabel* label = new QLabel(ui_search_widget);
-    label->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
-    label->setText("search");
-    label->setAlignment( Qt::AlignRight | Qt::AlignVCenter);
-
-    ui_line_edit = new QLineEdit(ui_search_widget);
-    ui_line_edit->setMinimumWidth(120);
-    ui_line_edit->setMaximumWidth(120);
-    ui_line_edit->setMinimumHeight(26);
-    ui_line_edit->setMaximumHeight(26);
-
-    QHBoxLayout* layout = new QHBoxLayout(ui_search_widget);
-    layout->setContentsMargins(0, 0, 0, 0);
-    layout->setSpacing(0);
-    layout->setMargin(0);    
-    layout->addWidget(label,Qt::AlignRight | Qt::AlignVCenter);
-    layout->addWidget(ui_line_edit, Qt::AlignRight | Qt::AlignVCenter);
-
-    ui_proxy = this->addWidget(ui_search_widget, Qt::Widget);
-
-    connect(ui_line_edit, SIGNAL(returnPressed()), this, SLOT(slot_on_search_activated()), Qt::QueuedConnection);
+    /* ---- search line edit ---- */
+    ui_ex_line_edit = new ExLineEdit(0);
+    ui_ex_line_edit->setInactiveText(tr("Search"));
     
-    ui_search_widget->hide();
+    QPalette p = QApplication::palette();
+    QColor c = SETTINGS()->_baseColor ;
+    c.setAlphaF( 0.6 );
     
-    /* end init */    
+    p.setColor( QPalette::Background, c );
+    p.setColor( QPalette::Highlight, c );
+    p.setColor( QPalette::Base, c );
+    ui_ex_line_edit->setPalette( p );
+   
+    ui_ex_line_edit->setStyleSheet( "QWidget, QWidget:focus { border: none; }" );
+    
+
+    ui_proxy = this->addWidget(ui_ex_line_edit);
+    ui_proxy->setFlag(QGraphicsItem::ItemIsFocusable); 
+
+    connect(ui_ex_line_edit, SIGNAL(textfield_entered()),this, SLOT(slot_on_search_activated()));
+
+    ui_ex_line_edit->hide();
+    
+    /* ---- end init ---- */
     setInit(true);
 }
     
@@ -171,11 +165,33 @@ void StreamScene::setSearch(const QVariant& variant)
 }
 
 /*******************************************************************************
+     setData
+*******************************************************************************/
+void StreamScene::setData(const QVariant& data)
+{
+    MEDIA::LinkPtr active_link = qvariant_cast<MEDIA::LinkPtr>(data);
+    
+    if( active_link ) {
+      Debug::debug() << "StreamScene::setData active link" << active_link->name;
+        
+      m_services[mode()]->setActiveLink(active_link);
+    }
+}
+
+
+/*******************************************************************************
      resizeScene
 *******************************************************************************/
 void StreamScene::resizeScene()
 {
     //Debug::debug() << "   [StreamScene] resizeScene";   
+    
+    if(mode() != VIEW::ViewFavoriteRadio) 
+    {
+      QWidget *w = qobject_cast<QGraphicsView*> (parentView())->viewport();
+      ui_proxy->setPos(w->width() - 13 - ui_proxy->widget()->width(), 2);
+    }
+    
     update();
 }
 
@@ -187,9 +203,10 @@ void StreamScene::populateScene()
     Debug::debug() << "   [StreamScene] PopulateScene";
 
     /* clear the scene FIRST */
-    ui_search_widget->hide();    
-    if(ui_proxy->scene())
+    ui_ex_line_edit->hide();    
+    if( ui_proxy->scene() )
       removeItem(ui_proxy);
+
     clear();
     
     /* update actions */
@@ -241,13 +258,14 @@ void StreamScene::populateExtendedStreamScene()
     const int categoriesHeight = 40;
    
     /*  search field */    
-    if(mode() != VIEW::ViewFavoriteRadio) {
+    if(mode() != VIEW::ViewFavoriteRadio)
+    {
       addItem(ui_proxy); 
      
       QWidget *w = qobject_cast<QGraphicsView*> (parentView())->viewport();
-      ui_proxy->setPos(w->width() - 20 - ui_proxy->widget()->width(), 2);
-      ui_search_widget->show();
-      ui_line_edit->setText( m_services[mode()]->searchTerm() );
+      ui_proxy->setPos(w->width() - 13 - ui_proxy->widget()->width(), 2);
+      ui_ex_line_edit->show();
+      ui_ex_line_edit->setText( m_services[mode()]->searchTerm() );
     }
     
     
@@ -317,30 +335,14 @@ void StreamScene::populateExtendedStreamScene()
         Ypos += categoriesHeight;
       }      
 
-      if(mode() == VIEW::ViewTuneIn)
-      {
-          StreamGraphicItem_v2 *stream_item = new StreamGraphicItem_v2();
-          stream_item->media = m_model->streamAt(i);
-          stream_item->media->isFavorite = (mode() == VIEW::ViewFavoriteRadio);
-          stream_item->setPos( 30, Ypos );
-          stream_item->_width   = parentView()->width()-30-20;
-          stream_item->setToolTip(stream_item->media->url);
+      StreamGraphicItem_v2 *stream_item = new StreamGraphicItem_v2();
+      stream_item->media = m_model->streamAt(i);
+      stream_item->media->isFavorite = (mode() == VIEW::ViewFavoriteRadio);
+      stream_item->setPos( 30, Ypos );
+      stream_item->_width   = parentView()->width()-30-20;
 
-          addItem(stream_item);
-          Ypos += stream_item->height() + 10;
-      }
-      else 
-      {
-          StreamGraphicItem *stream_item = new StreamGraphicItem();
-          stream_item->media = m_model->streamAt(i);
-          stream_item->media->isFavorite = (mode() == VIEW::ViewFavoriteRadio);
-          stream_item->setPos( 30, Ypos );
-          stream_item->_width   = parentView()->width()-30-20;
-          stream_item->setToolTip(stream_item->media->url);
-
-          addItem(stream_item);
-          Ypos += stream_item->height();
-      }
+      addItem(stream_item);
+      Ypos += stream_item->height() + 10;
 
       m_infoSize++;
     }
@@ -397,7 +399,7 @@ void StreamScene::playStream()
     /* playlist remote or shoutcast                     */
     /* -------------------------------------------------*/
     Debug::debug() << "   [StreamScene] playStream  it's a playlist -> download to do" ;
-    uint i = StatusWidget::instance()->startProgressMessage(tr("Loading stream"));
+    uint i = StatusManager::instance()->startMessage(tr("Loading stream"));
     m_messageIds.insert("StreamLoad", i);
     
     StreamLoader* streamloader = new StreamLoader(item->media);
@@ -420,7 +422,7 @@ void StreamScene::slot_streams_fetched(MEDIA::TrackPtr track)
     if(loader) delete loader;
     
     if (m_messageIds.contains("StreamLoad"))
-      StatusWidget::instance()->stopProgressMessage( m_messageIds.take("StreamLoad") );    
+      StatusManager::instance()->stopMessage( m_messageIds.take("StreamLoad") );    
 }
 
 /*******************************************************************************
@@ -458,7 +460,7 @@ void StreamScene::playSelected()
     /* -------------------------------------------------*/
     Debug::debug() << "   [StreamScene] playStream  it's a playlist -> download to do" ;
 
-    uint i = StatusWidget::instance()->startProgressMessage(tr("Loading stream"));
+    uint i = StatusManager::instance()->startMessage(tr("Loading stream"));
     m_messageIds.insert("StreamLoad", i);
     
     StreamLoader* streamloader = new StreamLoader(item->media);
@@ -672,6 +674,24 @@ void StreamScene::slot_item_mouseMove()
 
 
 /*******************************************************************************
+    mousePressEvent
+*******************************************************************************/
+void StreamScene::mousePressEvent ( QGraphicsSceneMouseEvent * event )
+{
+    //Debug::debug() << "   [StreamScene] mousePressEvent";  
+    m_mouseGrabbedItem = this->itemAt(event->scenePos(), QTransform());
+
+    if( !m_mouseGrabbedItem ) {
+        ui_ex_line_edit->clearFocus();
+        ui_proxy->clearFocus();
+        setFocusItem(0);
+    }
+
+    QGraphicsScene::mousePressEvent(event);
+}
+
+
+/*******************************************************************************
     mouseDoubleClickEvent
 *******************************************************************************/
 void StreamScene::mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * event )
@@ -746,7 +766,7 @@ void StreamScene::slot_on_search_activated()
 {
     Debug::debug() << "   [StreamScene] slot_on_search_activated";
     
-    QLineEdit* line_edit = qobject_cast<QLineEdit*>(sender());
+    ExLineEdit* line_edit = qobject_cast<ExLineEdit*>(sender());
     
     if (!line_edit) return;  
 
@@ -758,6 +778,21 @@ void StreamScene::slot_on_search_activated()
       m_services[mode()]->slot_activate_link( m_services[mode()]->searchLink() );
     else
       m_services[mode()]->slot_activate_link( m_services[mode()]->rootLink() );
+}
+
+/*******************************************************************************
+    slot_on_service_state_changed
+*******************************************************************************/
+void StreamScene::slot_on_service_state_changed()
+{
+    Debug::debug() << "   [StreamScene] slot_on_service_state_changed";
+
+    MEDIA::LinkPtr link = m_services[mode()]->activeLink();
+    
+    QVariant v;
+    v.setValue( static_cast<MEDIA::LinkPtr>(link) );
+       
+    emit linked_changed( v );
 }
 
 
@@ -809,7 +844,7 @@ void StreamScene::slot_on_add_stream_clicked()
           xspfstream->reload();
       }
       else {
-          StatusWidget::instance()->startShortMessage("please fill all requested fields", STATUS::TYPE_WARNING, 5000);
+          StatusManager::instance()->startMessage("please fill all requested fields", STATUS::WARNING, 5000);
       }      
     }
 }

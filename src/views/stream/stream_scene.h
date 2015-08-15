@@ -36,6 +36,7 @@
 class VirtualPlayqueue;
 class StreamModel;
 class EngineBase;
+class ExLineEdit;
 
 /*
 ********************************************************************************
@@ -53,7 +54,7 @@ Q_OBJECT
 
     //! playing item scene method (for Mainwindow access)
     void setSearch(const QVariant&);
-    void setData(const QVariant&) {};
+    void setData(const QVariant&);
     void playSceneContents(const QVariant&) {};
     
     void playSelected();
@@ -69,6 +70,7 @@ Q_OBJECT
   protected:
     void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
     void mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * event );
+    void mousePressEvent ( QGraphicsSceneMouseEvent * event );    
     void keyPressEvent ( QKeyEvent * keyEvent );
 
   private slots :
@@ -80,6 +82,8 @@ Q_OBJECT
     void slot_on_add_stream_clicked();
     void slot_on_import_stream_clicked();
     void slot_on_search_activated();
+    
+    void slot_on_service_state_changed();
     
   private:
     /* favorite */
@@ -102,8 +106,8 @@ Q_OBJECT
     void startStreamsDrag(QGraphicsItem* i=0);
     
   signals:
-    void repopulateStreamScene();
-    
+    void linked_changed(QVariant);
+
   private :
     int                      item_count;
     
@@ -119,8 +123,7 @@ Q_OBJECT
     
     /* seazrch widget */
     QGraphicsProxyWidget     *ui_proxy;
-    QWidget                  *ui_search_widget;
-    QLineEdit                *ui_line_edit;
+    ExLineEdit               *ui_ex_line_edit;
 
     QMap<QString,QAction*>    m_actions;
 

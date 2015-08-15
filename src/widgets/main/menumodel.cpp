@@ -165,8 +165,8 @@ void MenuModel::populateMenu()
    MenuItem *item41 = new MenuItem("tunein", QIcon(":/images/tunein_48x48.png"), VIEW::ViewTuneIn);
    item4->appendRow(item41);
 
-   /* add ShoutCast */
-   MenuItem *item42 = new MenuItem("shoutcast", QIcon(":/images/shoutcast.png"), VIEW::ViewShoutCast);
+   /* add Radionomy */
+   MenuItem *item42 = new MenuItem("radionomy", QIcon(":/images/radionomy.png"), VIEW::ViewRadionomy);
    item4->appendRow(item42);
 
    /* add Dirble */

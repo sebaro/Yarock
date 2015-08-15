@@ -26,7 +26,7 @@ namespace SERVICE
 
 enum Type {
     DIRBLE,
-    SHOUTCAST,
+    RADIONOMY,
     TUNEIN,
     LOCAL
   };
@@ -62,7 +62,10 @@ public:
 
     /* links access */
     MEDIA::LinkPtr rootLink() {return m_root_link;}
+    MEDIA::LinkPtr activeLink() {return m_active_link;}
     MEDIA::LinkPtr searchLink() {return m_search_link;}
+    
+    void setActiveLink(MEDIA::LinkPtr link) { m_active_link = link;}
     
     /* state */
     SERVICE::State state() { return m_state;}
@@ -93,7 +96,9 @@ private:
 
 protected:    
     MEDIA::LinkPtr     m_root_link;
+    MEDIA::LinkPtr     m_active_link;
     MEDIA::LinkPtr     m_search_link;
+
     QString            m_search_term;
 };
 
