@@ -41,6 +41,9 @@ Q_OBJECT
     void slot_on_lastfm_love();
     void slot_on_track_edit();
 
+  protected:
+    void showEvent ( QShowEvent * event );
+    
   private:
     QLabel                *ui_image;
     QLabel                *ui_label_title;    

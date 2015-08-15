@@ -126,10 +126,16 @@ NowPlayingView::NowPlayingView(QWidget *parent) : QWidget(parent)
 
     connect(ACTIONS()->value(PLAYING_TRACK_LOVE), SIGNAL(triggered()), this, SLOT(slot_on_lastfm_love()));
     connect(ACTIONS()->value(PLAYING_TRACK_EDIT), SIGNAL(triggered()), this, SLOT(slot_on_track_edit()));
+}
 
+/* ---------------------------------------------------------------------------*/
+/* NowPlayingView::showEvent                                                  */
+/* ---------------------------------------------------------------------------*/ 
+void NowPlayingView::showEvent ( QShowEvent * event )
+{
+   slot_update_widget();
 
-    /* ----- initialization ----- */    
-    slot_update_widget();
+   QWidget::showEvent(event);
 }
 
 
