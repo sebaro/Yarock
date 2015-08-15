@@ -135,7 +135,7 @@ bool CommandlineOptions::Parse()
         {
           QString translated_help_text = QString(kHelpText).arg(
             tr("Usage"), tr("options"), tr("URL(s)"), tr("Player options"),
-            tr("Start the playlist currently playing"),
+            tr("Start playback"),
             tr("Play if stopped, pause if playing"),
             tr("Pause playback"),
             tr("Stop playback"),
@@ -144,8 +144,8 @@ bool CommandlineOptions::Parse()
             tr("Set the volume to <value> percent"),
             tr("Increase the volume by 4%"),
             tr("Decrease the volume by 4%"),
-            tr("Seek the currently playing track to an absolute position"),
-            tr("Seek the currently playing track by a relative amount"),
+            tr("Seek to an absolute position"),
+            tr("Seek by a relative amount"),
             tr("Playlist options"),
             tr("Append files/URLs to the playlist"),
             tr("Loads files/URLs, replacing current playlist")).arg(
