@@ -1,20 +1,20 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="fr" version="2.0">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="sr" version="2.0">
 <context>
     <name>AddFolderWidget</name>
     <message>
         <location filename="../src/views/settings/addfolder_widget.cpp" line="50"/>
         <source>Open</source>
-        <translation>Ouvrir</translation>
+        <translation>Отвори</translation>
     </message>
     <message>
         <location filename="../src/views/settings/addfolder_widget.cpp" line="54"/>
         <source>Remove</source>
-        <translation>Supprimer</translation>
+        <translation>Уклони</translation>
     </message>
     <message>
         <location filename="../src/views/settings/addfolder_widget.cpp" line="69"/>
         <source>Open folder</source>
-        <translation>Ouvrir le dossier</translation>
+        <translation>Отвори фасциклу</translation>
     </message>
 </context>
 <context>
@@ -22,7 +22,7 @@
     <message>
         <location filename="../src/widgets/dialogs/addstreamdialog.cpp" line="34"/>
         <source>Add Stream</source>
-        <translation>Ajouter un flux</translation>
+        <translation>Додајте стрим</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/addstreamdialog.cpp" line="49"/>
@@ -32,12 +32,12 @@
     <message>
         <location filename="../src/widgets/dialogs/addstreamdialog.cpp" line="51"/>
         <source>name</source>
-        <translation>nom</translation>
+        <translation>име</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/addstreamdialog.cpp" line="59"/>
         <source>category</source>
-        <translation>catégorie</translation>
+        <translation>категорија</translation>
     </message>
 </context>
 <context>
@@ -45,7 +45,7 @@
     <message>
         <location filename="../src/views/context/context_widget.cpp" line="550"/>
         <source>Album tracks</source>
-        <translation>Pistes de l&apos;album</translation>
+        <translation>Нумере албума</translation>
     </message>
 </context>
 <context>
@@ -53,7 +53,7 @@
     <message>
         <location filename="../src/views/context/context_widget.cpp" line="164"/>
         <source>Biography</source>
-        <translation>Biographie</translation>
+        <translation>Биографија</translation>
     </message>
 </context>
 <context>
@@ -61,7 +61,7 @@
     <message>
         <location filename="../src/views/context/context_widget.cpp" line="266"/>
         <source>Similar artists</source>
-        <translation>Artistes similaires</translation>
+        <translation>Слични уметници</translation>
     </message>
 </context>
 <context>
@@ -70,118 +70,118 @@
         <location filename="../src/views/browser_view.cpp" line="607"/>
         <location filename="../src/views/browser_view.cpp" line="641"/>
         <source>Context</source>
-        <translation>Contexte de lecture</translation>
+        <translation>Контекст</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="608"/>
         <location filename="../src/views/browser_view.cpp" line="642"/>
         <source>History</source>
-        <translation>Historique</translation>
+        <translation>Историјат</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="609"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; albums</source>
-        <translation>Collection : &lt;b&gt;%1&lt;/b&gt; albums</translation>
+        <translation>Колекција : &lt;b&gt;%1&lt;/b&gt; албума</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="610"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; artist</source>
-        <translation>Collection : &lt;b&gt;%1&lt;/b&gt; artists</translation>
+        <translation>Колекција : &lt;b&gt;%1&lt;/b&gt; уметника</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="611"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; tracks</source>
-        <translation>Collection : &lt;b&gt;%1&lt;/b&gt; pistes</translation>
+        <translation>Колекција : &lt;b&gt;%1&lt;/b&gt; записа</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="612"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; styles</source>
-        <translation>Collection : &lt;b&gt;%1&lt;/b&gt; styles</translation>
+        <translation>Колекција : &lt;b&gt;%1&lt;/b&gt; жанрова</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="613"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; years</source>
-        <translation>Collection : &lt;b&gt;%1&lt;/b&gt; années</translation>
+        <translation>Колекција : &lt;b&gt;%1&lt;/b&gt; годишта</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="614"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; favorite item</source>
-        <translation>Collection : &lt;b&gt;%1&lt;/b&gt; favoris</translation>
+        <translation>Колекција : &lt;b&gt;%1&lt;/b&gt; омиљених ставки</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="618"/>
         <source>Playlist : &lt;b&gt;%1&lt;/b&gt; playlists</source>
-        <translation>Liste : &lt;b&gt;%1&lt;/b&gt; listes</translation>
+        <translation>Листа извођења : &lt;b&gt;%1&lt;/b&gt; листе извођења</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="625"/>
         <source>Radio : &lt;b&gt;%1&lt;/b&gt; streams</source>
-        <translation>Radio : &lt;b&gt;%1&lt;/b&gt; flux</translation>
+        <translation>Радио : &lt;b&gt;%1&lt;/b&gt; стримови</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="638"/>
         <source>About</source>
-        <translation>A propos</translation>
+        <translation>О</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="639"/>
         <source>Settings</source>
-        <translation>Paramètres</translation>
+        <translation>Подешавања</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="640"/>
         <source>Dashboard</source>
-        <translation>Tableau de bord</translation>
+        <translation>Контрол панел</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="643"/>
         <source>Artists</source>
-        <translation>Artistes</translation>
+        <translation>Уметници</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="644"/>
         <source>Albums</source>
-        <translation>Albums</translation>
+        <translation>Албуми</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="645"/>
         <source>Tracks</source>
-        <translation>Pistes</translation>
+        <translation>Записи</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="646"/>
         <source>Genres</source>
-        <translation>Genres</translation>
+        <translation>Жанрови</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="647"/>
         <source>Years</source>
-        <translation>Années</translation>
+        <translation>Годишта</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="648"/>
         <source>Favorites</source>
-        <translation>Favoris</translation>
+        <translation>Фаворити</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="649"/>
         <source>Playlists</source>
-        <translation>Liste de lecture</translation>
+        <translation>Листе извођења</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="650"/>
         <source>Smart playlists</source>
-        <translation>Playlistes intelligentes</translation>
+        <translation>Паметна листа извођења</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="654"/>
         <source>Favorites radios</source>
-        <translation>Radio favorites</translation>
+        <translation>Омиљени радио</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="655"/>
         <source>Filesystem</source>
-        <translation>Fichiers</translation>
+        <translation>Фајл систем</translation>
     </message>
 </context>
 <context>
@@ -189,107 +189,107 @@
     <message>
         <location filename="../src/commandlineoptions.cpp" line="137"/>
         <source>Usage</source>
-        <translation>Usage</translation>
+        <translation>Употреба</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="137"/>
         <source>options</source>
-        <translation>options</translation>
+        <translation>опције</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="137"/>
         <source>URL(s)</source>
-        <translation>URL(s)</translation>
+        <translation>интернет адресе</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="137"/>
         <source>Player options</source>
-        <translation>Options de lecture</translation>
+        <translation>Опције репродуковања</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="138"/>
         <source>Start the playlist currently playing</source>
-        <translation>Commencer la lecture de la liste</translation>
+        <translation>Покрени листу тренутних извођења</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="139"/>
         <source>Play if stopped, pause if playing</source>
-        <translation>Lancer la lecture ou mettre en pause</translation>
+        <translation>Свирај ако је заустављено, паузирај ако свира</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="140"/>
         <source>Pause playback</source>
-        <translation>Mettre en pause</translation>
+        <translation>Пузирај репродукцију</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="141"/>
         <source>Stop playback</source>
-        <translation>Stopper la lecture</translation>
+        <translation>Заустави репродукцију</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="142"/>
         <source>Skip backwards in playlist</source>
-        <translation>Piste suivante de la liste de lecture</translation>
+        <translation>Прескочи назад на листи извођења</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="143"/>
         <source>Skip forwards in playlist</source>
-        <translation>Piste précédente de la liste de lecture</translation>
+        <translation>Прескочи напред на листи извођења</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="144"/>
         <source>Set the volume to &lt;value&gt; percent</source>
-        <translation>Mettre le volume à &lt;value&gt; pourcent</translation>
+        <translation>Подесите гласноћу у &lt;value&gt; процентима</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="145"/>
         <source>Increase the volume by 4%</source>
-        <translation>Augmenter le volume de 4%</translation>
+        <translation>Повиси гласност за 4%</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="146"/>
         <source>Decrease the volume by 4%</source>
-        <translation>Diminuer le volume de 4%</translation>
+        <translation>Снизи гласност за 4%</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="147"/>
         <source>Seek the currently playing track to an absolute position</source>
-        <translation>Avance la lecture de la piste</translation>
+        <translation>Тражи тренутно репродуковану нумеру на апсолутној позицији</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="148"/>
         <source>Seek the currently playing track by a relative amount</source>
-        <translation>Avance la lecture de la piste</translation>
+        <translation>Тражи тренутно репродуковану нумеру по релативном садржају</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="149"/>
         <source>Playlist options</source>
-        <translation>Option de la liste de lecture</translation>
+        <translation>Опције листе извиђенја</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="150"/>
         <source>Append files/URLs to the playlist</source>
-        <translation>Ajouter des fichiers de musiques ou liste de lectures</translation>
+        <translation>Додај фајлове/URL-е на листу извођења</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="151"/>
         <source>Loads files/URLs, replacing current playlist</source>
-        <translation>Charge des fichiers de musiques ou liste de lectures</translation>
+        <translation>Учитај фајлове/URL-е, замени тренутну листу извођења</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="152"/>
         <source>Play the &lt;n&gt;th track in the playlist</source>
-        <translation>Jouer la piste &lt;n&gt; de la liste de lecture</translation>
+        <translation>Репродукуј &lt;n&gt;ти запис са листе извођења</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="153"/>
         <source>Other options</source>
-        <translation>Autres options</translation>
+        <translation>Остале опције</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="154"/>
         <source>Print debug information</source>
-        <translation>Afficher les information de debug</translation>
+        <translation>Штампај информације о дебаговању</translation>
     </message>
 </context>
 <context>
@@ -297,52 +297,52 @@
     <message>
         <location filename="../src/widgets/dialogs/dboperationdialog.cpp" line="34"/>
         <source>Database operation</source>
-        <translation>Opération sur la base de donnée</translation>
+        <translation>Операције базе података</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/dboperationdialog.cpp" line="42"/>
         <source>Update</source>
-        <translation>Mise à jour</translation>
+        <translation>Ажурирање</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/dboperationdialog.cpp" line="43"/>
         <source>Rebuild</source>
-        <translation>Reconstruction</translation>
+        <translation>Поновно креирање</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/dboperationdialog.cpp" line="44"/>
         <source>Cover</source>
-        <translation>Pochette</translation>
+        <translation>Омот</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/dboperationdialog.cpp" line="45"/>
         <source>Artist</source>
-        <translation>Artiste</translation>
+        <translation>Уметник</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/dboperationdialog.cpp" line="58"/>
         <source>Rescan medias files and update database</source>
-        <translation>Rechercher les fichiers et mettre à jour la base de données</translation>
+        <translation>Освежи медије датотека  и ажурирај базу података</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/dboperationdialog.cpp" line="60"/>
         <source>Delete and rebuild database (*)</source>
-        <translation>Supprimer et reconstruire la base de donnée (*)</translation>
+        <translation>Избриши и поново креирај базу података (*)</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/dboperationdialog.cpp" line="61"/>
         <source>* all changes into collection database will be discarded !!</source>
-        <translation>* tous les changements seront perdus !!</translation>
+        <translation>* све измене у бази колекције биће отказане !!</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/dboperationdialog.cpp" line="63"/>
         <source>Download missing album cover</source>
-        <translation>Télécharger les pochettes manquantes</translation>
+        <translation>Преузми недостајући омот албума</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/dboperationdialog.cpp" line="66"/>
         <source>Download missing artist image</source>
-        <translation>Télécharger les images d&apos;artistes manquantes</translation>
+        <translation>Преузми недостајућу слику уметника</translation>
     </message>
 </context>
 <context>
@@ -350,22 +350,22 @@
     <message>
         <location filename="../src/dbus/dbusnotification.cpp" line="188"/>
         <source>Paused</source>
-        <translation>En pause</translation>
+        <translation>Паузирано</translation>
     </message>
     <message>
         <location filename="../src/dbus/dbusnotification.cpp" line="198"/>
         <source>Stopped</source>
-        <translation>Stoppé</translation>
+        <translation>Заустављено</translation>
     </message>
     <message>
         <location filename="../src/dbus/dbusnotification.cpp" line="209"/>
         <source>Playlist finished</source>
-        <translation>Liste de lecture terminée</translation>
+        <translation>Листа извођења завршена</translation>
     </message>
     <message>
         <location filename="../src/dbus/dbusnotification.cpp" line="222"/>
         <source>Volume %1%</source>
-        <translation>Volume %1%</translation>
+        <translation>Јачина %1%</translation>
     </message>
 </context>
 <context>
@@ -373,7 +373,7 @@
     <message>
         <location filename="../src/views/context/context_widget.cpp" line="400"/>
         <source>Discography</source>
-        <translation>Discographie</translation>
+        <translation>Дискографија</translation>
     </message>
 </context>
 <context>
@@ -381,83 +381,83 @@
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="120"/>
         <source>Edit album</source>
-        <translation>Editer l&apos;album</translation>
+        <translation>Уреди албум</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="148"/>
         <source>Load from file</source>
-        <translation>Charger à partir d&apos;un fichier</translation>
+        <translation>Учитај из датотеке</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="149"/>
         <source>Download</source>
-        <translation>Télécharger</translation>
+        <translation>Преузето</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="150"/>
         <source>Remove</source>
-        <translation>Supprimer</translation>
+        <translation>Уклони</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="170"/>
         <source>Album</source>
-        <translation>Album</translation>
+        <translation>Албум</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="172"/>
         <source>Artist</source>
-        <translation>Artiste</translation>
+        <translation>Уметник</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="174"/>
         <source>Year</source>
-        <translation>Année</translation>
+        <translation>Година</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="177"/>
         <source>Genre</source>
-        <translation>Genre</translation>
+        <translation>Жанр</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="180"/>
         <source>Playcount</source>
-        <translation>Nombre de lecture</translation>
+        <translation>Број извођења</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="182"/>
         <source>Rating</source>
-        <translation>Note</translation>
+        <translation>Оцењивање</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="188"/>
         <source>Cover</source>
-        <translation>Pochette</translation>
+        <translation>Омот</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="194"/>
         <source>Tracks</source>
-        <translation>Pistes</translation>
+        <translation>Нумере</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="247"/>
         <location filename="../src/widgets/editors/editor_album.cpp" line="266"/>
         <source>clear user rating</source>
-        <translation>effacer la notation utilisateur</translation>
+        <translation>избриши оцене корисника</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="266"/>
         <source>auto rating</source>
-        <translation>notation automatique</translation>
+        <translation>ауто оцењивање</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="416"/>
         <source>Select image file...</source>
-        <translation>Choisir un fichier image</translation>
+        <translation>Изаберите датотеку са сликом...</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="417"/>
         <source>Files (*.png *.jpg)</source>
-        <translation>Fichiers(*.png *.jpg)</translation>
+        <translation>Датотека (*.png *.jpg)</translation>
     </message>
 </context>
 <context>
@@ -465,63 +465,63 @@
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="120"/>
         <source>Edit artist</source>
-        <translation>Editer l&apos;artiste</translation>
+        <translation>Уреди уметника</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="138"/>
         <source>Load from file</source>
-        <translation>Charger à partir d&apos;un fichier</translation>
+        <translation>Учитај из датотеке</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="139"/>
         <source>Download</source>
-        <translation>Télécharger</translation>
+        <translation>Преузето</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="140"/>
         <source>Remove</source>
-        <translation>Supprimer</translation>
+        <translation>Уклони</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="157"/>
         <source>Artist</source>
-        <translation>Artiste</translation>
+        <translation>Уметник</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="159"/>
         <source>Playcount</source>
-        <translation>Nombre de lecture</translation>
+        <translation>Број извођења</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="161"/>
         <source>Rating</source>
-        <translation>Note</translation>
+        <translation>Оцењивање</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="167"/>
         <source>Image</source>
-        <translation>Image</translation>
+        <translation>Слика</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="211"/>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="230"/>
         <source>clear user rating</source>
-        <translation>effacer la notation utilisateur</translation>
+        <translation>избриши оцене корисника</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="230"/>
         <source>auto rating</source>
-        <translation>notation automatique</translation>
+        <translation>ауто оцењивање</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="334"/>
         <source>Select image file...</source>
-        <translation>Choisir le fichier image</translation>
+        <translation>Изаберите датотеку са сликом...</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="335"/>
         <source>Files (*.png *.jpg)</source>
-        <translation>Fichiers(*.png *.jpg)</translation>
+        <translation>Датотека (*.png *.jpg)</translation>
     </message>
 </context>
 <context>
@@ -529,72 +529,72 @@
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="78"/>
         <source>Edit playlist</source>
-        <translation>Editer la liste de lecture</translation>
+        <translation>Уређивање листе извођења</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="85"/>
         <source>playlist name</source>
-        <translation>Nom de la playlist</translation>
+        <translation>име листе извођења</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="93"/>
         <source>To database</source>
-        <translation>En base de donnée</translation>
+        <translation>у базу података</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="94"/>
         <source>To file</source>
-        <translation>Dans un fichier</translation>
+        <translation>у датотеку</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="99"/>
         <source>Choose file to save playlist</source>
-        <translation>Choisir le fichier à sauver</translation>
+        <translation>Изаберите датотеку да сачувате листу извођења</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="107"/>
         <source>Open</source>
-        <translation>Ouvrir</translation>
+        <translation>Отвори</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="132"/>
         <source>Name</source>
-        <translation>Nom</translation>
+        <translation>Име</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="221"/>
         <source>Add music files or playlist</source>
-        <translation>Ajouter des fichiers de musiques ou liste de lectures</translation>
+        <translation>Додајте музичку датотеку или листу извођења</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="237"/>
         <source>Add music directories</source>
-        <translation>Ajouter des dossiers</translation>
+        <translation>Додајте директоријуме са музиком</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="284"/>
         <source>Save playlist to file</source>
-        <translation>Enregistrer la liste de lecture dans un fichier</translation>
+        <translation>Сачувајте листу извођења као датотеку</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="305"/>
         <source>&amp;Add media to playlist</source>
-        <translation>&amp;Ajouter des fichiers à la liste de lecture</translation>
+        <translation>&amp;Додајте медије на листу извођења</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="306"/>
         <source>&amp;Add directory to playlist</source>
-        <translation>Ajouter un &amp;dossier à la liste de lecture</translation>
+        <translation>&amp;Додајте директоријуме на листу извођења</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="307"/>
         <source>&amp;Add Url...</source>
-        <translation>Ajouter un &amp;flux...</translation>
+        <translation>&amp;Додајте Url...</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="309"/>
         <source>Clear playlist</source>
-        <translation>Effacer la liste</translation>
+        <translation>Избриши листу извођења</translation>
     </message>
 </context>
 <context>
@@ -602,27 +602,27 @@
     <message>
         <location filename="../src/widgets/editors/editor_search.cpp" line="41"/>
         <source>Search mode</source>
-        <translation>Mode de recherche</translation>
+        <translation>Начин претраживања</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_search.cpp" line="46"/>
         <source>Match search term (AND)</source>
-        <translation>Chercher les termes (ET)</translation>
+        <translation>Термин претраге и операнд (AND)</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_search.cpp" line="48"/>
         <source>Match search term (OR)</source>
-        <translation>Chercher les termes (OU)</translation>
+        <translation>Термин претраге и операнд (OR)</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_search.cpp" line="51"/>
         <source>Search terms</source>
-        <translation>Termes de recherche</translation>
+        <translation>Појмови претраживања</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_search.cpp" line="64"/>
         <source>Add search query</source>
-        <translation>Ajouter une requète de recherche</translation>
+        <translation>Додавање захтева за претраживање</translation>
     </message>
 </context>
 <context>
@@ -630,92 +630,92 @@
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="64"/>
         <source>Edit smart playlist</source>
-        <translation>Editer la liste intélligente</translation>
+        <translation>Уређивање паметне листе извођења</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="75"/>
         <source>playlist name</source>
-        <translation>Nom de la liste</translation>
+        <translation>име листе извођења</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="79"/>
         <source>Name</source>
-        <translation>Nom</translation>
+        <translation>Име</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="109"/>
         <source>Search mode</source>
-        <translation>Mode de recherche</translation>
+        <translation>Начин претраживања</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="114"/>
         <source>Match search term (AND)</source>
-        <translation>Chercher les termes (ET)</translation>
+        <translation>Термин претраге и операнд (AND)</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="116"/>
         <source>Match search term (OR)</source>
-        <translation>Chercher les termes (OU)</translation>
+        <translation>Термин претраге и операнд (OR)</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="118"/>
         <source>Match all tracks (ALL)</source>
-        <translation>Chercher dans toutes les pistes</translation>
+        <translation>Идентично у свим записима (ALL)</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="128"/>
         <source>Search terms</source>
-        <translation>Termes de recherche</translation>
+        <translation>Појмови претраживања</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="139"/>
         <source>Add search query</source>
-        <translation>Ajouter une requète de recherche</translation>
+        <translation>Додавање захтева за претраживање</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="148"/>
         <source>Sort result mode</source>
-        <translation>Ordre de trie des résultats</translation>
+        <translation>Начин сортирања резултата</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="154"/>
         <source>Keep original order</source>
-        <translation>Garder l&apos;ordre initial</translation>
+        <translation>Задржи оригинални поредак</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="155"/>
         <source>Random</source>
-        <translation>Aléatoire</translation>
+        <translation>Насумично</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="156"/>
         <source>Sort by</source>
-        <translation>Trier par</translation>
+        <translation>Сортирај по</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="191"/>
         <source>Limit</source>
-        <translation>Limite</translation>
+        <translation>Ограничење</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="198"/>
         <source>No limit</source>
-        <translation>Pas de limite</translation>
+        <translation>Без ограничења</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="199"/>
         <source>Limit at</source>
-        <translation>Limiter à</translation>
+        <translation>Ограничење на</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="375"/>
         <source>Media Search Engine Dialog</source>
-        <translation>Moteur de recherche de media</translation>
+        <translation>Дијалог система за претраживање медија</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="376"/>
         <source>&lt;p&gt;Search query is not valid&lt;/p&gt;</source>
-        <translation>&lt;p&gt;La recherche &apos;est pas valide&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Захтев за претрагу није валидан&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -723,52 +723,52 @@
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="149"/>
         <source>Edit track</source>
-        <translation>Editer la piste</translation>
+        <translation>Уреди нумеру</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="201"/>
         <source>File</source>
-        <translation>Fichier</translation>
+        <translation>Датотека</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="205"/>
         <source>Title</source>
-        <translation>Titre</translation>
+        <translation>Наслов</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="209"/>
         <source>Album</source>
-        <translation>Album</translation>
+        <translation>Албум</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="213"/>
         <source>Artist</source>
-        <translation>Artiste</translation>
+        <translation>Уметник</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="217"/>
         <source>Year</source>
-        <translation>Année</translation>
+        <translation>Година</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="221"/>
         <source>Genre</source>
-        <translation>Genre</translation>
+        <translation>Жанр</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="225"/>
         <source>Number</source>
-        <translation>Numéro</translation>
+        <translation>Број</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="229"/>
         <source>Playcount</source>
-        <translation>Nombre de lecture</translation>
+        <translation>Број извођења</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="233"/>
         <source>Rating</source>
-        <translation>Note</translation>
+        <translation>Оцењивање</translation>
     </message>
 </context>
 <context>
@@ -777,28 +777,28 @@
         <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="64"/>
         <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="245"/>
         <source>Save preset</source>
-        <translation>Sauver les paramètres</translation>
+        <translation>Сачувај подешавања</translation>
     </message>
     <message>
         <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="69"/>
         <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="230"/>
         <source>Delete preset</source>
-        <translation>Supprimer les paramètres</translation>
+        <translation>Избриши подешавања</translation>
     </message>
     <message>
         <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="81"/>
         <source>Enable equalizer</source>
-        <translation>Activer l&apos;equaliser</translation>
+        <translation>Омогући еквилајзер</translation>
     </message>
     <message>
         <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="231"/>
         <source>Are you sure you want to delete the &quot;%1&quot; preset?</source>
-        <translation>Etes vous sur de vouloir supprimer les paramètres &quot;%1&quot; ?</translation>
+        <translation>Да ли сте сигурни да желите да избришете&quot;%1&quot; подешавања?</translation>
     </message>
     <message>
         <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="245"/>
         <source>Name</source>
-        <translation>Nom</translation>
+        <translation>Име</translation>
     </message>
 </context>
 <context>
@@ -806,62 +806,62 @@
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="168"/>
         <source>back</source>
-        <translation>retour</translation>
+        <translation>назад</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="175"/>
         <source>forward</source>
-        <translation>précédent</translation>
+        <translation>напред</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="181"/>
         <source>go up</source>
-        <translation>monter</translation>
+        <translation>иди горе</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="187"/>
         <source>home</source>
-        <translation>Début</translation>
+        <translation>кориснички DIR</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="195"/>
         <source>show hidden file</source>
-        <translation>montrer les fichiers cachés</translation>
+        <translation>прикажи скривене датотеке</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="234"/>
         <source>Audio files (*.mp3 *.wav *.ogg *.flac *.m4a *.aac)</source>
-        <translation>Fichier audio (*.mp3 *.wav *.ogg *.flac *.m4a *.aac)</translation>
+        <translation>Аудио датотеке (*.mp3 *.wav *.ogg *.flac *.m4a *.aac)</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="235"/>
         <source>Playlists files (*.m3u *.pls *.xspf)</source>
-        <translation>Listes de lecture (*.m3u *.pls *.xspf)</translation>
+        <translation>Датотеке листе извођења (*.m3u *.pls *.xspf)</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="236"/>
         <source>All files (*.*)</source>
-        <translation>Tous les fichiers (*.*)</translation>
+        <translation>Све датотеке (*.*)</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="240"/>
         <source>All playlist (*.m3u *.pls *.xspf)</source>
-        <translation>Tous les fichiers de liste de lecture (*.m3u *.pls *.xspf)</translation>
+        <translation>Све листе извођења (*.m3u *.pls *.xspf)</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="241"/>
         <source>m3u playlist (*.m3u)</source>
-        <translation>playlist m3u (*.m3u)</translation>
+        <translation>m3u листа извођења (*.m3u)</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="242"/>
         <source>pls playlist (*.pls)</source>
-        <translation>playlist pls (*.pls)</translation>
+        <translation>pls листа извођења (*.pls)</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="243"/>
         <source>xspf playlist (*.xspf)</source>
-        <translation>playlist xspf (*.xspf)</translation>
+        <translation>xspf листа извођења (*.xspf)</translation>
     </message>
 </context>
 <context>
@@ -869,7 +869,7 @@
     <message>
         <location filename="../src/views/filesystem/file_scene.cpp" line="247"/>
         <source>No entry found</source>
-        <translation>Aucune entrée trouvée</translation>
+        <translation>Унос није нађен</translation>
     </message>
 </context>
 <context>
@@ -877,17 +877,17 @@
     <message>
         <location filename="../src/widgets/dialogs/first_time_dialog.cpp" line="34"/>
         <source>Setup your music collection directory</source>
-        <translation>Paramétrer les dossiers pour la bibliothèque</translation>
+        <translation>Подесите директоријум ваше музичке колекције</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/first_time_dialog.cpp" line="42"/>
         <source>&lt;p&gt;Welcome to yarock&lt;/p&gt;&lt;p&gt;Select the location of your music collection:&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Bienvenue&lt;/p&gt;&lt;p&gt;Choisir le répertoire pour votre bibliothèque musicale:&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Добродошли у yarock&lt;/p&gt;&lt;p&gt;Означите локацију ваше музичке колекције:&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/first_time_dialog.cpp" line="63"/>
         <source> Choose music folder</source>
-        <translation>Choix du dossier</translation>
+        <translation>Изаберите фасциклу са музиком</translation>
     </message>
 </context>
 <context>
@@ -901,12 +901,12 @@
         <location filename="../src/views/item_menu.cpp" line="86"/>
         <location filename="../src/views/item_menu.cpp" line="90"/>
         <source>Enqueue to playqueue</source>
-        <translation>Mettre dans la file de lecture</translation>
+        <translation>Додај у редослед емитовања</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="79"/>
         <source>&amp;Remove playlist from disk</source>
-        <translation>&amp;Supprimer la liste de lecture du disque</translation>
+        <translation>&amp;Уклони листу извођења са диска</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="87"/>
@@ -915,7 +915,7 @@
         <location filename="../src/views/item_menu.cpp" line="571"/>
         <location filename="../src/views/item_menu.cpp" line="618"/>
         <source>Add to favorites</source>
-        <translation>Ajouter aux favoris</translation>
+        <translation>Додај у омиљене</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="65"/>
@@ -926,45 +926,45 @@
         <location filename="../src/views/item_menu.cpp" line="84"/>
         <location filename="../src/views/item_menu.cpp" line="89"/>
         <source>Play</source>
-        <translation>Jouer</translation>
+        <translation>Изведи</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="69"/>
         <location filename="../src/views/item_menu.cpp" line="85"/>
         <location filename="../src/views/item_menu.cpp" line="91"/>
         <source>Edit</source>
-        <translation>Editer</translation>
+        <translation>Уреди</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="144"/>
         <source>%1 artists</source>
-        <translation>%1 artistes</translation>
+        <translation>%1 уметници</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="146"/>
         <source>%1 albums</source>
-        <translation>%1 albums</translation>
+        <translation>%1 албуми</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="147"/>
         <source>%1 tracks</source>
-        <translation>%1 pistes</translation>
+        <translation>%1 нумере</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="148"/>
         <source>%1 streams</source>
-        <translation>%1 flux</translation>
+        <translation>%1 стримови</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="149"/>
         <source>%1 playlist</source>
-        <translation>%1 liste de lecture</translation>
+        <translation>%1 листе извођења</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="266"/>
         <location filename="../src/views/item_menu.cpp" line="367"/>
         <source>jump to tracks</source>
-        <translation>Aller à la piste en cours de lecture</translation>
+        <translation>скочи на нумере</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="278"/>
@@ -972,12 +972,12 @@
         <location filename="../src/views/item_menu.cpp" line="569"/>
         <location filename="../src/views/item_menu.cpp" line="616"/>
         <source>Remove from favorites</source>
-        <translation>Supprimer des favoris</translation>
+        <translation>Уклони из фаворита</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="470"/>
         <source>jump to albums</source>
-        <translation>Aller à l&apos;album en cours de lecture</translation>
+        <translation>скочи на албуме</translation>
     </message>
 </context>
 <context>
@@ -985,47 +985,47 @@
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="93"/>
         <source>view grid</source>
-        <translation>vue en grille</translation>
+        <translation>прикажи грид</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="94"/>
         <source>view by tracks</source>
-        <translation>vue par piste</translation>
+        <translation>прикажи нумере</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="95"/>
         <source>new playlist</source>
-        <translation>nouvelle liste de lecture</translation>
+        <translation>нова листа извођења</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="96"/>
         <source>new smart playlist</source>
-        <translation>nouvelle liste intélligente</translation>
+        <translation>нова паметна листа извођења</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="97"/>
         <source>reload history</source>
-        <translation>recharger l&apos;historique</translation>
+        <translation>поново учитај историјат</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="98"/>
         <source>clear history</source>
-        <translation>vider l&apos;historique</translation>
+        <translation>Избриши историјат</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="257"/>
         <source>Updating music database</source>
-        <translation>Mise à jour de la bibliothèque musicale</translation>
+        <translation>Ажурирај музичку базу података</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="759"/>
         <source>Albums</source>
-        <translation>Albums</translation>
+        <translation>Албуми</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="811"/>
         <source>All playlists</source>
-        <translation>Toutes les listes</translation>
+        <translation>Све листе извођења</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="334"/>
@@ -1044,47 +1044,47 @@
         <location filename="../src/views/local/local_scene_dashboard.cpp" line="225"/>
         <location filename="../src/views/local/local_scene_dashboard.cpp" line="291"/>
         <source>No entry found</source>
-        <translation>Aucune entrée trouvée</translation>
+        <translation>Унос није нађен</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="350"/>
         <source>All Albums</source>
-        <translation>Tous les albums</translation>
+        <translation>Сви албуми</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="710"/>
         <source>Artists</source>
-        <translation>Artistes</translation>
+        <translation>Уметници</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="527"/>
         <source>disc %1</source>
-        <translation>disque %1</translation>
+        <translation>диск %1</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="934"/>
         <source>Smart playlists</source>
-        <translation>Playlistes intelligentes</translation>
+        <translation>Паметне листе извођења</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene_dashboard.cpp" line="62"/>
         <source>Most played albums</source>
-        <translation>Albums les plus joués</translation>
+        <translation>Најизвођени албуми</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene_dashboard.cpp" line="115"/>
         <source>Top rated albums</source>
-        <translation>Albums les mieux notés</translation>
+        <translation>Најпопуларнији албуми</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene_dashboard.cpp" line="171"/>
         <source>Most played artists</source>
-        <translation>Artistes les plus joués</translation>
+        <translation>Најизвођени уметници</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene_dashboard.cpp" line="240"/>
         <source>Top rated artists</source>
-        <translation>Artistes les mieux notés</translation>
+        <translation>Најпопуларнији уметници</translation>
     </message>
 </context>
 <context>
@@ -1092,7 +1092,7 @@
     <message>
         <location filename="../src/views/context/lyricseditor.cpp" line="41"/>
         <source>Lyrics editor</source>
-        <translation>Editeur de paroles</translation>
+        <translation>Уређивач стихова</translation>
     </message>
 </context>
 <context>
@@ -1101,27 +1101,27 @@
         <location filename="../src/views/context/context_widget.cpp" line="771"/>
         <location filename="../src/views/context/context_widget.cpp" line="878"/>
         <source>Add file</source>
-        <translation>Ajouter un fichier</translation>
+        <translation>Додајте датотеку</translation>
     </message>
     <message>
         <location filename="../src/views/context/context_widget.cpp" line="778"/>
         <source>Remove file</source>
-        <translation>Supprimer le fichier</translation>
+        <translation>Уклони датотеку</translation>
     </message>
     <message>
         <location filename="../src/views/context/context_widget.cpp" line="815"/>
         <source>No lyrics found</source>
-        <translation>Aucune parole trouvée</translation>
+        <translation>Стихови нису пронађени</translation>
     </message>
     <message>
         <location filename="../src/views/context/context_widget.cpp" line="786"/>
         <source>Song lyrics</source>
-        <translation>Paroles de la piste</translation>
+        <translation>Стихови песме</translation>
     </message>
     <message>
         <location filename="../src/views/context/context_widget.cpp" line="871"/>
         <source>Edit file</source>
-        <translation>Editer le fichier</translation>
+        <translation>Уреди датотеку</translation>
     </message>
 </context>
 <context>
@@ -1129,32 +1129,32 @@
     <message>
         <location filename="../src/widgets/main/main_left.cpp" line="99"/>
         <source>Apply</source>
-        <translation>Appliquer</translation>
+        <translation>Примени</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/main_left.cpp" line="100"/>
         <source>Cancel</source>
-        <translation>Annuler</translation>
+        <translation>Откажи</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/main_left.cpp" line="103"/>
         <source>Go back</source>
-        <translation>Précédent</translation>
+        <translation>Иди назад</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/main_left.cpp" line="104"/>
         <source>Go forward</source>
-        <translation>Suivant</translation>
+        <translation>Иди напред</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/main_left.cpp" line="105"/>
         <source>Go up</source>
-        <translation>Monter</translation>
+        <translation>Иди горе</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/main_left.cpp" line="111"/>
         <source>Quick filter</source>
-        <translation>Filtre rapide</translation>
+        <translation>Брзи филтер</translation>
     </message>
 </context>
 <context>
@@ -1162,32 +1162,32 @@
     <message>
         <location filename="../src/widgets/main/main_right.cpp" line="94"/>
         <source>New playlist</source>
-        <translation>Nouvelle liste</translation>
+        <translation>Нова листа извођења</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/main_right.cpp" line="95"/>
         <source>New smart playlist</source>
-        <translation>Nouvelle liste intélligente</translation>
+        <translation>Нова паметна листа извођења</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/main_right.cpp" line="152"/>
         <source>Playqueue</source>
-        <translation>Liste lecture en cours</translation>
+        <translation>Редослед емитовања</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/main_right.cpp" line="156"/>
         <source>Playlist editor</source>
-        <translation>Editeur de liste de lecture</translation>
+        <translation>Уређивач листе извођења</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/main_right.cpp" line="160"/>
         <source>Tag editor</source>
-        <translation>Editeur d&apos;étiquettes</translation>
+        <translation>Уређивач ознака</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/main_right.cpp" line="164"/>
         <source>Smart editor</source>
-        <translation>Editeur liste intélligente</translation>
+        <translation>Паметни уређивач</translation>
     </message>
 </context>
 <context>
@@ -1195,22 +1195,22 @@
     <message>
         <location filename="../src/widgets/main/maintoolbutton.cpp" line="37"/>
         <source>Tools</source>
-        <translation>Outils</translation>
+        <translation>Алати</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/maintoolbutton.cpp" line="41"/>
         <source>Choose database</source>
-        <translation>Choisir la base de données</translation>
+        <translation>Изаберите базу података</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/maintoolbutton.cpp" line="47"/>
         <source>&amp;Show/Hide panel</source>
-        <translation>&amp;Monter/Cacher les panneaux</translation>
+        <translation>&amp;Прикажи/Сакриј панел</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/maintoolbutton.cpp" line="52"/>
         <source>&amp;Add to playqueue</source>
-        <translation>&amp;Ajouter à la liste de lecture</translation>
+        <translation>&amp;Додај у редослед емитовања</translation>
     </message>
 </context>
 <context>
@@ -1218,208 +1218,208 @@
     <message>
         <location filename="../src/mainwindow.cpp" line="342"/>
         <source>&amp;Quit</source>
-        <translation>&amp;Quitter</translation>
+        <translation>&amp;Искључи</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="343"/>
         <source>About</source>
-        <translation>A propos</translation>
+        <translation>О</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="345"/>
         <source>settings</source>
-        <translation>paramètres</translation>
+        <translation>подешавања</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="348"/>
         <source>&amp;Add media to playlist</source>
-        <translation>&amp;Ajouter des fichiers à la liste de lecture</translation>
+        <translation>&amp;Додајте медије на листу извођења</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="349"/>
         <source>&amp;Add directory to playlist</source>
-        <translation>Ajouter un &amp;dossier à la liste de lecture</translation>
+        <translation>&amp;Додајте директоријуме на листу извођења</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="350"/>
         <source>&amp;Add Url...</source>
-        <translation>Ajouter un &amp;flux...</translation>
+        <translation>&amp;Додајте Url...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="351"/>
         <source>&amp;Clear playlist</source>
-        <translation>&amp;Vider la liste de lecture</translation>
+        <translation>&amp;Избриши листу извођења</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="352"/>
         <source>&amp;Save playlist to file</source>
-        <translation>Enre&amp;gistrer la liste de lecture dans un fichier</translation>
+        <translation>&amp;Сачувајте листу извођења као датотеку</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="353"/>
         <source>&amp;Auto save playlist to yarock database</source>
-        <translation>&amp;Sauvegarde automatique de la liste</translation>
+        <translation>&amp;Ауто чување листе извођења у бази yarock-а</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="354"/>
         <source>&amp;Remove media from playlist</source>
-        <translation>S&amp;upprimer la piste de la liste</translation>
+        <translation>&amp;Уклони медије са листе извођења</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="355"/>
         <source>Stop after this track</source>
-        <translation>Arreter après cette piste</translation>
+        <translation>Заустави након ове нумере</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="358"/>
         <source>Remove duplicate</source>
-        <translation>Supprimer les doublons</translation>
+        <translation>Уклони дупликате</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="375"/>
         <source>Play or Pause media</source>
-        <translation>Lecture ou Mettre en pause</translation>
+        <translation>Покрени или паузирај нумеру</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="376"/>
         <source>Stop playing media</source>
-        <translation>Arreter la lecture</translation>
+        <translation>Заустави извођење нумере</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="377"/>
         <source>Play next media</source>
-        <translation>Lecture suivante</translation>
+        <translation>Покрени следећу нумеру</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="378"/>
         <source>Play previous media</source>
-        <translation>Lecture précédente</translation>
+        <translation>Покрени предходну нумеру</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="380"/>
         <source>Audio equalizer</source>
-        <translation>Equaliser audio</translation>
+        <translation>Аудио еквилајзер</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="383"/>
         <source>Database operation</source>
-        <translation>Opération sur la base de donnée</translation>
+        <translation>Операције базе података</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="386"/>
         <source>Show playqueue panel</source>
-        <translation>Montrer le panneau de liste de lecture</translation>
+        <translation>Прикажи панел емитовања</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="387"/>
         <source>Show menu panel</source>
-        <translation>Montrer le panneau du menu</translation>
+        <translation>Прикажи навигациони панел</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="388"/>
         <source>Show now playing</source>
-        <translation>Montrer la lecture en cours</translation>
+        <translation>Прикажи тренутна извођења</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="394"/>
         <source>Switch to minimal mode</source>
-        <translation>Compact mode</translation>
+        <translation>Пређи у минимални режим</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="395"/>
         <source>Switch to normal mode</source>
-        <translation>Normal mode</translation>
+        <translation>Пређи у нормални режим</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="363"/>
         <source>Send LastFm love</source>
-        <translation>Envoyer j&apos;aime à LastFm</translation>
+        <translation>Пошаљи LastFm love</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="366"/>
         <source>Show cover</source>
-        <translation>Montrer les pochettes</translation>
+        <translation>Прикажи омот</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="370"/>
         <source>Show rating</source>
-        <translation>Montrer les notes</translation>
+        <translation>Прикажи рејтинг</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="398"/>
         <source>Jump to artist</source>
-        <translation>Aller à l&apos;artiste en cours de lecture</translation>
+        <translation>Скочи на извођаче</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="399"/>
         <source>Jump to album</source>
-        <translation>Aller à l&apos;album en cours de lecture</translation>
+        <translation>Скочи на албуме</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="400"/>
         <location filename="../src/mainwindow.cpp" line="403"/>
         <source>Jump to track</source>
-        <translation>Aller à la piste en cours de lecture</translation>
+        <translation>Скочи на нумере</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="407"/>
         <source>Enable search popup</source>
-        <translation>Autoriser le menu de completion</translation>
+        <translation>Омогући поп-ап претрживање</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="533"/>
         <source>Add music files or playlist</source>
-        <translation>Ajouter des fichiers de musiques ou liste de lectures</translation>
+        <translation>Додајте музичке датотеке или листу извођења</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="545"/>
         <source>Add music directories</source>
-        <translation>Ajouter un répertoire</translation>
+        <translation>Додајте директоријуме са музиком</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="590"/>
         <source>Save playlist to file</source>
-        <translation>Enregistrer la liste de lecture dans un fichier</translation>
+        <translation>Сачувајте листу извођења као датотеку</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="601"/>
         <source>Playlist name</source>
-        <translation>entrer un nom de liste de lecture</translation>
+        <translation>Име листе извођења</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="601"/>
         <source>Save playlist</source>
-        <translation>Enregistrer la liste de lecture dans un fichier</translation>
+        <translation>Сачувај листу извођења</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="671"/>
         <source>Playing error</source>
-        <translation>Erreur de lecture</translation>
+        <translation>Грешка током репродукције</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="952"/>
         <source>settings saved</source>
-        <translation>paramètres sauvegardés</translation>
+        <translation>подешавања сачувана</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1013"/>
         <source>&lt;p&gt;Database need to be rebuilt&lt;/p&gt;</source>
-        <translation>&lt;p&gt;La base de donnée doit être reconstruite&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Базу података треба поново креирати&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1015"/>
         <source>Database revision update</source>
-        <translation>Mise à jour de la version de la bibliothèque</translation>
+        <translation>Ажурирање измена базе података</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1160"/>
         <source>&lt;b&gt;Equalizer is not available&lt;/b&gt;&lt;p&gt;Equalizer wasn&apos;t found, probably you are using a backend that doesn&apos;t support it.&lt;/p&gt;&lt;p&gt;Change to another backend (gstreamer is supported) if you want to have equalizer&lt;/p&gt;</source>
-        <translation>&lt;b&gt;L&apos;égaliseur n&apos;est pas disponible&lt;/b&gt;&lt;p&gt;Égaliseur n&apos;a pas été trouvé, probablement vous utilisez un backend qui ne le supporte pas&lt;/p&gt;&lt;p&gt;Changer de backend (gstreamer est supporté(soutenu)) si vous voulez avoir l&apos;égaliseur&lt;p&gt;</translation>
+        <translation>&lt;b&gt;Еквилајзер није достуан&lt;/b&gt;&lt;p&gt;Еквилајзер није пронађен, вероватно користите неку библиотеку која није подржана.&lt;/p&gt;&lt;p&gt;Промените је неком другом (gstreamer је подржан) ако желите да користите еквилајзер&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1164"/>
         <source>Equalizer information</source>
-        <translation>Equaliser dialogue</translation>
+        <translation>Информације еквилајзера</translation>
     </message>
 </context>
 <context>
@@ -1427,102 +1427,102 @@
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="99"/>
         <source>home</source>
-        <translation>début</translation>
+        <translation>центар</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="102"/>
         <source>music browser</source>
-        <translation>musique locale</translation>
+        <translation>преглед музике</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="105"/>
         <source>playlist browser</source>
-        <translation>listes de lectures</translation>
+        <translation>преглед плеј листи</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="108"/>
         <source>radio browser</source>
-        <translation>radio</translation>
+        <translation>преглед радија</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="111"/>
         <source>computer</source>
-        <translation>ordinateur</translation>
+        <translation>рачунар</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="118"/>
         <source>settings</source>
-        <translation>paramètres</translation>
+        <translation>подешавања</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="121"/>
         <source>context</source>
-        <translation>contexte de lecture</translation>
+        <translation>контекст</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="124"/>
         <source>dashboard</source>
-        <translation>tableau de bord</translation>
+        <translation>контрол панел</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="127"/>
         <source>history</source>
-        <translation>historique</translation>
+        <translation>историјат</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="143"/>
         <source>genre</source>
-        <translation>genre</translation>
+        <translation>жанр</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="184"/>
         <source>home directory</source>
-        <translation>répertoire home</translation>
+        <translation>кориснички директоријум</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="187"/>
         <source>root directory</source>
-        <translation>répertoire root</translation>
+        <translation>системски директоријум</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="155"/>
         <source>playlists</source>
-        <translation>lise de lecture</translation>
+        <translation>листа извођења</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="134"/>
         <source>artists</source>
-        <translation>artists</translation>
+        <translation>уметници</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="137"/>
         <source>albums</source>
-        <translation>albums</translation>
+        <translation>албуми</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="140"/>
         <source>tracks</source>
-        <translation>pistes</translation>
+        <translation>нумере</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="146"/>
         <source>years</source>
-        <translation>années</translation>
+        <translation>годишта</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="149"/>
         <source>favorites</source>
-        <translation>favoris</translation>
+        <translation>фаворити</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="158"/>
         <source>smart playlists</source>
-        <translation>listes intélligentes</translation>
+        <translation>паметне листе извођења</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="177"/>
         <source>favorite stream</source>
-        <translation>radio favorites</translation>
+        <translation>омиљени стримови</translation>
     </message>
 </context>
 <context>
@@ -1530,12 +1530,12 @@
     <message>
         <location filename="../src/widgets/main/menuwidget.cpp" line="153"/>
         <source>show extended menu</source>
-        <translation>Menu etendu</translation>
+        <translation>прикажи проширени мени</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menuwidget.cpp" line="153"/>
         <source>show compact menu</source>
-        <translation>menu compact</translation>
+        <translation>прикажи сажети мени</translation>
     </message>
 </context>
 <context>
@@ -1543,12 +1543,12 @@
     <message>
         <location filename="../src/widgets/nowplaying/nowplayingview.cpp" line="64"/>
         <source>Edit</source>
-        <translation>Editer</translation>
+        <translation>Уреди</translation>
     </message>
     <message>
         <location filename="../src/widgets/nowplaying/nowplayingview.cpp" line="65"/>
         <source>Send LastFm love</source>
-        <translation>Envoyer j&apos;aime à LastFm</translation>
+        <translation>Пошаљи LastFm love</translation>
     </message>
 </context>
 <context>
@@ -1556,32 +1556,32 @@
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="60"/>
         <source>General</source>
-        <translation>Général</translation>
+        <translation>Опште</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="85"/>
         <source>Enable Mpris</source>
-        <translation>Activer le controle à distance par Mpris</translation>
+        <translation>Омогући пречице тастатуре</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="88"/>
         <source>Enable notification</source>
-        <translation>Activer les notifications</translation>
+        <translation>Омогући обавештења</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="92"/>
         <source>Minimize application to systray</source>
-        <translation>Réduire l&apos; application dans la barre des taches</translation>
+        <translation>Минимизуј апликацију на системску палету</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="95"/>
         <source>Hide window at startup</source>
-        <translation>Cacher la fenetre au démarrage</translation>
+        <translation>Сакриј прозор при покретању</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="107"/>
         <source>Choose color</source>
-        <translation>Choisir la color</translation>
+        <translation>Одаберите боју</translation>
     </message>
 </context>
 <context>
@@ -1589,97 +1589,97 @@
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="510"/>
         <source>Library settings</source>
-        <translation>Paramètres de la collection</translation>
+        <translation>Библиотечка подешавања</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="532"/>
         <source>Database Name</source>
-        <translation>Nom de la bibliothèque</translation>
+        <translation>Име базе података</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="537"/>
         <source>Enable Multi Database support</source>
-        <translation>Autoriser le support de bibliothèque multiples</translation>
+        <translation>Омогући подршку за вишеструке базе података</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="547"/>
         <location filename="../src/views/settings/settings_widget.cpp" line="811"/>
         <location filename="../src/views/settings/settings_widget.cpp" line="824"/>
         <source>New database</source>
-        <translation>Nouvelle base de données</translation>
+        <translation>Нова база података</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="551"/>
         <source>Delete database</source>
-        <translation>Supprimer la base de données</translation>
+        <translation>Избриши базу података</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="555"/>
         <location filename="../src/views/settings/settings_widget.cpp" line="897"/>
         <source>Rename database</source>
-        <translation>Renommer la base de données</translation>
+        <translation>Преименуј базу података</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="565"/>
         <source>Database Properties</source>
-        <translation>Propriétés de la bibliothèque</translation>
+        <translation>Својства базе података</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="576"/>
         <location filename="../src/views/settings/settings_widget.cpp" line="940"/>
         <source> Choose music folder</source>
-        <translation>Choisir le dossier</translation>
+        <translation>Изаберите фасциклу са музиком</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="583"/>
         <source>Add ...</source>
-        <translation>Ajouter...</translation>
+        <translation>Додај...</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="587"/>
         <source>Update collections automatically after start</source>
-        <translation>Mettre à jour la bibliothèque à chaque démarrage</translation>
+        <translation>Допуните колекције аутоматски након покретања</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="591"/>
         <source>Search cover art from file directory</source>
-        <translation>Rechercher les pochettes dans les dossiers</translation>
+        <translation>Претражи омоте уметника у вашем директоријуму</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="595"/>
         <source>Group multi disc albums as one album</source>
-        <translation>Grouper les albums à plusieurs disques</translation>
+        <translation>Обједини више дискова албума као један</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="599"/>
         <source>Use artist image (album cover stack otherwise)</source>
-        <translation>Utiliser les images d&apos;artistes (pile d&apos;albums sinon)</translation>
+        <translation>Користи слике уметника (уместо омота албума)</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="603"/>
         <source>Write rating to file</source>
-        <translation>Ecrire les notes dans les fichiers</translation>
+        <translation>Упиши оцене корисника у датотеку</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="811"/>
         <location filename="../src/views/settings/settings_widget.cpp" line="897"/>
         <source>Name</source>
-        <translation>Nom</translation>
+        <translation>Име</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="825"/>
         <source>The database  &quot;%1&quot; already exist, please try another name</source>
-        <translation>La bibliothèque &quot;%1&quot; existe déja, merci de choisir un autre nom</translation>
+        <translation>База података &quot;%1&quot;већ постоји, молим пробајте друго име</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="878"/>
         <source>Delete database properties</source>
-        <translation>Supprimer la bibliothèque</translation>
+        <translation>Избриши својства базе података</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="879"/>
         <source>Are you sure you want to delete the &quot;%1&quot; database ?</source>
-        <translation>Etes vous sur de vouloir supprimer la bibliothèque &quot;%1&quot; ?</translation>
+        <translation>Да ли сте сигурни да желите да избришете&quot;%1&quot; базу података ?</translation>
     </message>
 </context>
 <context>
@@ -1687,42 +1687,42 @@
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="265"/>
         <source>Player settings</source>
-        <translation>Parametres du lecteur</translation>
+        <translation>Подешавања плејера</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="301"/>
         <source>Stop playing on playqueue clear</source>
-        <translation>Arreter la lecture lorsque que la liste de lecture est vidée</translation>
+        <translation>Заустави извођење по завршетку листе</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="304"/>
         <source>Restart playing at startup</source>
-        <translation>Réprendre la lecture au démarrage</translation>
+        <translation>Понови извођења из почетка</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="307"/>
         <source>Restore last playqueue content at startup</source>
-        <translation>Recharger la liste de lecture au démarrage</translation>
+        <translation>Врати задњу листу извођења при стартовању</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="310"/>
         <source>Use ReplayGain</source>
-        <translation>Utiliser les métadonnées ReplayGain</translation>
+        <translation>Користи уједначавања звука</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="323"/>
         <source>Engine</source>
-        <translation>Moteur de recherche de media</translation>
+        <translation>Машина</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="326"/>
         <source>Replaygain</source>
-        <translation>Replaygain</translation>
+        <translation>Уједначење звука</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="329"/>
         <source>Others</source>
-        <translation>Autres</translation>
+        <translation>Остало</translation>
     </message>
 </context>
 <context>
@@ -1730,58 +1730,58 @@
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1365"/>
         <source>Scrobbler settings</source>
-        <translation>Paramètres du srobbler</translation>
+        <translation>Scrobbler подешавања</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1389"/>
         <source>Use LastFm scrobbler</source>
-        <translation>Activer le scrobbler LastFm</translation>
+        <translation>Користи LastFm scrobbler</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1399"/>
         <source>Account details</source>
-        <translation>Détails du compte</translation>
+        <translation>Детаљи налога</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1405"/>
         <source>username</source>
-        <translation>utilisateur</translation>
+        <translation>корисничко име</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1408"/>
         <source>password</source>
-        <translation>mot de passe</translation>
+        <translation>лозинка</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1421"/>
         <location filename="../src/views/settings/settings_widget.cpp" line="1544"/>
         <source>Sign In</source>
-        <translation>Se connecter</translation>
+        <translation>Пријава</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1537"/>
         <source>You are log in lastFm service as &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation>Vous etes connecté à LastFm en tant que &lt;b&gt;%1&lt;/b&gt;</translation>
+        <translation>Ви сте пријвљени на lastFm сервис као &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1539"/>
         <source>Sign Out</source>
-        <translation>Se deconnecter</translation>
+        <translation>Одјава</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1543"/>
         <source>You are not log into</source>
-        <translation>Vous etes déconnecté</translation>
+        <translation>Ви се нисте пријавили на</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1578"/>
         <source>Authentication failed</source>
-        <translation>Echec à l&apos;autentification</translation>
+        <translation>Грешка провере идентитета корисника</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1579"/>
         <source>Your Last.fm credentials were incorrect</source>
-        <translation>Vos paramètres de compte sont inccorects</translation>
+        <translation>Ваш Last.fm акредитив је некоректан</translation>
     </message>
 </context>
 <context>
@@ -1789,52 +1789,52 @@
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1038"/>
         <source>Shortcut settings</source>
-        <translation>Paramètres des raccourcis</translation>
+        <translation>Подешавање пречица</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1049"/>
         <source>Play/Pause</source>
-        <translation>Jouer/Pause</translation>
+        <translation>Пусти/Пузирај</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1050"/>
         <source>Stop</source>
-        <translation>Stopper</translation>
+        <translation>Заустави</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1051"/>
         <source>Previous track</source>
-        <translation>Lecture précédente</translation>
+        <translation>Предходна нумера</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1052"/>
         <source>Next track</source>
-        <translation>Lecture suivante</translation>
+        <translation>Следећа нумера</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1053"/>
         <source>Increase volume</source>
-        <translation>Augmenter le volume</translation>
+        <translation>Повиси јачину звука</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1054"/>
         <source>Decrease volume</source>
-        <translation>Baisser le volume</translation>
+        <translation>Снизи јачину звука</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1055"/>
         <source>Mute/Unmute volume</source>
-        <translation>Activer/désactiver coupure du son</translation>
+        <translation>Утишај/Нормализуј звук</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1056"/>
         <source>Jump to track</source>
-        <translation>Aller à la piste en cours de lecture</translation>
+        <translation>Скочи на нумере</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1057"/>
         <source>Clear playqueue</source>
-        <translation>Vider la liste de lecture</translation>
+        <translation>Избриши листу извођења</translation>
     </message>
 </context>
 <context>
@@ -1842,22 +1842,22 @@
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1625"/>
         <source>Song info</source>
-        <translation>Informations sur le morceau</translation>
+        <translation>Информације о песми</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1643"/>
         <source>Choose the websites you want to use when searching for lyrics</source>
-        <translation>Choississez les sites que vous voulez utiliser pour la recherche de paroles</translation>
+        <translation>Одаберите веб страну коју желите да користите за претрагу стихова</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1649"/>
         <source>move up</source>
-        <translation>monter</translation>
+        <translation>помери горе</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1650"/>
         <source>move down</source>
-        <translation>descendre</translation>
+        <translation>помери доле</translation>
     </message>
 </context>
 <context>
@@ -1865,18 +1865,18 @@
     <message>
         <location filename="../src/widgets/playertoolbar.cpp" line="208"/>
         <source>[paused]</source>
-        <translation>[en pause]</translation>
+        <translation>[паузирано]</translation>
     </message>
     <message>
         <location filename="../src/widgets/playertoolbar.cpp" line="346"/>
         <location filename="../src/widgets/playertoolbar.cpp" line="354"/>
         <source>&lt;b&gt;%1&lt;/b&gt; by &lt;b&gt;%2&lt;/b&gt; on &lt;b&gt;%3&lt;/b&gt;</source>
-        <translation>&lt;b&gt;%1&lt;/b&gt; de &lt;b&gt;%2&lt;/b&gt; de &lt;b&gt;%3&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt; by &lt;b&gt;%2&lt;/b&gt; on &lt;b&gt;%3&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/widgets/playertoolbar.cpp" line="360"/>
         <source>&lt;b&gt;%1&lt;/b&gt; stream</source>
-        <translation>&lt;b&gt;%1&lt;/b&gt; radio</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt; стрим</translation>
     </message>
 </context>
 <context>
@@ -1884,7 +1884,7 @@
     <message>
         <location filename="../src/playqueue/playlistdbwriter.cpp" line="107"/>
         <source>no name</source>
-        <translation>aucun nom</translation>
+        <translation>без имена</translation>
     </message>
 </context>
 <context>
@@ -1892,7 +1892,7 @@
     <message>
         <location filename="../src/playqueue/playlistview.cpp" line="625"/>
         <source>media reading error</source>
-        <translation>erreur de lecture du media</translation>
+        <translation>грешка при читању медија</translation>
     </message>
 </context>
 <context>
@@ -1900,7 +1900,7 @@
     <message>
         <location filename="../src/playqueue/playlistview.cpp" line="263"/>
         <source>Add file to play or Drag and Drop File from Collection</source>
-        <translation>Ajouter des fichiers ou glisser déposer les fichiers depuis la bibliothèque</translation>
+        <translation>Додајте датотеку за извођење или повуците и пустите датотеку из колекције</translation>
     </message>
 </context>
 <context>
@@ -1908,42 +1908,42 @@
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="57"/>
         <source>sort</source>
-        <translation>trier</translation>
+        <translation>сортирање</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="59"/>
         <source>Sort playqueue</source>
-        <translation>Trier la liste de lecture</translation>
+        <translation>Сортирај редослед емитовања</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="67"/>
         <source>Playqueue filter</source>
-        <translation>Filtrer la liste de lecture</translation>
+        <translation>Филтер редоследа емитовања</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="91"/>
         <source>Show filter</source>
-        <translation>Montrer le filtre</translation>
+        <translation>Прикажи филтер</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="168"/>
         <source>Empty Playlist</source>
-        <translation>Liste vide</translation>
+        <translation>Празна листа извођења</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="170"/>
         <source>Playlist : &lt;b&gt;%1&lt;/b&gt; tracks - %2</source>
-        <translation>Liste : &lt;b&gt;%1&lt;/b&gt; pistes - %2</translation>
+        <translation>Листа извођења: &lt;b&gt;%1&lt;/b&gt; нумера - %2</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="231"/>
         <source>Add</source>
-        <translation>Ajouter</translation>
+        <translation>Додај</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="243"/>
         <source>Display options</source>
-        <translation>Options d&apos;affichage</translation>
+        <translation>Опције приказа</translation>
     </message>
 </context>
 <context>
@@ -1951,172 +1951,172 @@
     <message>
         <location filename="../src/core/mediaitem/mediaitem.cpp" line="214"/>
         <source>Today</source>
-        <translation>Aujourd&apos;hui</translation>
+        <translation>Данас</translation>
     </message>
     <message>
         <location filename="../src/core/mediaitem/mediaitem.cpp" line="216"/>
         <source>Yesterday</source>
-        <translation>Hier</translation>
+        <translation>Јуче</translation>
     </message>
     <message>
         <location filename="../src/core/mediaitem/mediaitem.cpp" line="218"/>
         <source>%1 days ago</source>
-        <translation>il y a %1 jours</translation>
+        <translation>%1 дан пре</translation>
     </message>
     <message>
         <location filename="../src/core/mediaitem/tag.cpp" line="528"/>
         <source>unknown artist</source>
-        <translation>artiste inconnu</translation>
+        <translation>непознат уметник</translation>
     </message>
     <message>
         <location filename="../src/core/mediaitem/tag.cpp" line="531"/>
         <source>unknown album</source>
-        <translation>album inconnu</translation>
+        <translation>непознат албум</translation>
     </message>
     <message>
         <location filename="../src/core/mediaitem/tag.cpp" line="534"/>
         <source>unknown genre</source>
-        <translation>genre inconnu</translation>
+        <translation>непознат жанр</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="122"/>
         <source>Filename</source>
-        <translation>Nom de fichier</translation>
+        <translation>Име датотеке</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="123"/>
         <source>Title</source>
-        <translation>Titre</translation>
+        <translation>Наслов</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="124"/>
         <source>Album</source>
-        <translation>Album</translation>
+        <translation>Албум</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="125"/>
         <source>Genre</source>
-        <translation>Genre</translation>
+        <translation>Жанр</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="126"/>
         <source>Duration</source>
-        <translation>Durée</translation>
+        <translation>Трајање</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="127"/>
         <source>Track Year</source>
-        <translation>Année de la piste</translation>
+        <translation>Нумера годиште</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="128"/>
         <source>Album Year</source>
-        <translation>Année de l&apos;album</translation>
+        <translation>Албум годиште</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="129"/>
         <source>Number</source>
-        <translation>Numéro</translation>
+        <translation>Број</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="130"/>
         <source>Track Playcount</source>
-        <translation>Nombre de lecture de la piste</translation>
+        <translation>Нумера број извођења</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="131"/>
         <source>Album Playcount</source>
-        <translation>Nombre de lecture de l&apos;album</translation>
+        <translation>Албум број извођења</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="132"/>
         <source>Artist Playcount</source>
-        <translation>Nombre de lecture de l&apos;artiste</translation>
+        <translation>Уменик број извођења</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="133"/>
         <source>Artist</source>
-        <translation>Artiste</translation>
+        <translation>Уметник</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="134"/>
         <source>Last Played date</source>
-        <translation>Date de lecture la plus récente</translation>
+        <translation>Задњи датум извођења</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="135"/>
         <source>Track rating</source>
-        <translation>Note de la piste</translation>
+        <translation>Нумера рејтинг</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="136"/>
         <source>Album rating</source>
-        <translation>Note de l&apos;album</translation>
+        <translation>Албум рејтинг</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="137"/>
         <source>Artist rating</source>
-        <translation>Note de l&apos;artiste</translation>
+        <translation>Уметник рејтинг</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="149"/>
         <source>after</source>
-        <translation>aprés</translation>
+        <translation>после</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="150"/>
         <source>before</source>
-        <translation>avant</translation>
+        <translation>пре</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="151"/>
         <source>on</source>
-        <translation>le</translation>
+        <translation>на</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="152"/>
         <source>not on</source>
-        <translation>n&apos;est pas le</translation>
+        <translation>није на</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="158"/>
         <source>contains</source>
-        <translation>contiens</translation>
+        <translation>садржи</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="159"/>
         <source>does not contain</source>
-        <translation>ne contiens pa</translation>
+        <translation>не садржи</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="160"/>
         <source>starts with</source>
-        <translation>commence par</translation>
+        <translation>стартуј са</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="161"/>
         <source>ends with</source>
-        <translation>termine par</translation>
+        <translation>заврши са</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="162"/>
         <source>greater than</source>
-        <translation>supérieur à</translation>
+        <translation>више од</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="163"/>
         <source>less than</source>
-        <translation>inférieur à</translation>
+        <translation>мање од</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="164"/>
         <source>equals</source>
-        <translation>egal à</translation>
+        <translation>једнако</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="165"/>
         <source>not equals</source>
-        <translation>différent de</translation>
+        <translation>није једнако</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="175"/>
@@ -2131,52 +2131,52 @@
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="176"/>
         <source>oldest first</source>
-        <translation>la plus ancienne d&apos;abord</translation>
+        <translation>старије прво</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="176"/>
         <source>newest first</source>
-        <translation>la plus récente d&apos;abord</translation>
+        <translation>новије прво</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="177"/>
         <source>shortest first</source>
-        <translation>le plus petit d&apos;abord</translation>
+        <translation>најкраће прво</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="177"/>
         <source>longest first</source>
-        <translation>le plus grand d&apos;abord</translation>
+        <translation>најдуже прво</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="179"/>
         <source>smallest first</source>
-        <translation>le plus petit d&apos;abord</translation>
+        <translation>најмање прво</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="179"/>
         <source>biggest first</source>
-        <translation>le plus grand d&apos;abord</translation>
+        <translation>највеће прво</translation>
     </message>
     <message>
         <location filename="../src/views/context/context_item.cpp" line="528"/>
         <source>Player is stopped</source>
-        <translation>Lecture arrêtée</translation>
+        <translation>Плејер је стопиран</translation>
     </message>
     <message>
         <location filename="../src/views/stream/stream_scene.cpp" line="210"/>
         <source>downloading streams from %1....please wait...</source>
-        <translation>téléchargement des radio de %1...merci de patienter...</translation>
+        <translation>преузимање стрима са %1....молим сачекајте...</translation>
     </message>
     <message>
         <location filename="../src/views/stream/stream_scene.cpp" line="217"/>
         <source>error accessing stream from %1 !</source>
-        <translation>erreur d&apos;accès au radio de %1 !</translation>
+        <translation>грешка приступа стриму са %1 !</translation>
     </message>
     <message>
         <location filename="../src/widgets/exlineedit.cpp" line="49"/>
         <source>Clear</source>
-        <translation>Effacer</translation>
+        <translation>Очисти</translation>
     </message>
 </context>
 <context>
@@ -2185,17 +2185,17 @@
         <location filename="../src/widgets/audiocontrols.cpp" line="40"/>
         <location filename="../src/widgets/audiocontrols.cpp" line="69"/>
         <source>Repeat mode is off</source>
-        <translation>Pas de répétition</translation>
+        <translation>Режим понављања је искључен</translation>
     </message>
     <message>
         <location filename="../src/widgets/audiocontrols.cpp" line="73"/>
         <source>Repeat track</source>
-        <translation>Répéter la piste</translation>
+        <translation>Понови нумеру</translation>
     </message>
     <message>
         <location filename="../src/widgets/audiocontrols.cpp" line="77"/>
         <source>Repeat all</source>
-        <translation>Tous répéter</translation>
+        <translation>Понови све</translation>
     </message>
 </context>
 <context>
@@ -2203,7 +2203,7 @@
     <message>
         <location filename="../src/widgets/searchline_edit.cpp" line="104"/>
         <source>Custom search</source>
-        <translation>Recherche avancée</translation>
+        <translation>Прилагоди претраживања</translation>
     </message>
 </context>
 <context>
@@ -2211,12 +2211,12 @@
     <message>
         <location filename="../src/widgets/dialogs/shortcutdialog.cpp" line="35"/>
         <source>Change shortcut</source>
-        <translation>Changer les raccourcis</translation>
+        <translation>Промена пречица</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/shortcutdialog.cpp" line="42"/>
         <source>Press a keys that you want to set as a shortcut</source>
-        <translation>Presser une combinaison de touches</translation>
+        <translation>Притисните дугмад која желиш да подесите као пречице</translation>
     </message>
 </context>
 <context>
@@ -2225,12 +2225,12 @@
         <location filename="../src/widgets/audiocontrols.cpp" line="98"/>
         <location filename="../src/widgets/audiocontrols.cpp" line="127"/>
         <source>Shuffle mode is off</source>
-        <translation>Pas de lecture aléatoire</translation>
+        <translation>Насумични мод је искључен</translation>
     </message>
     <message>
         <location filename="../src/widgets/audiocontrols.cpp" line="131"/>
         <source>Shuffle mode is on</source>
-        <translation>Lecture aléatoire</translation>
+        <translation>Насумични мод је укључен</translation>
     </message>
 </context>
 <context>
@@ -2238,32 +2238,32 @@
     <message>
         <location filename="../src/smartplaylist/smartplaylist.cpp" line="58"/>
         <source>50 Random tracks</source>
-        <translation>50 pistes aléatoires</translation>
+        <translation>50 Насумичних нумера</translation>
     </message>
     <message>
         <location filename="../src/smartplaylist/smartplaylist.cpp" line="59"/>
         <source>50 last played</source>
-        <translation>50 dernières pistes jouées</translation>
+        <translation>50 задње извођених</translation>
     </message>
     <message>
         <location filename="../src/smartplaylist/smartplaylist.cpp" line="60"/>
         <source>50 most played</source>
-        <translation>50 pistes les plus jouées</translation>
+        <translation>50 најизвођенијих</translation>
     </message>
     <message>
         <location filename="../src/smartplaylist/smartplaylist.cpp" line="61"/>
         <source>ever played</source>
-        <translation>Pistes déja jouées</translation>
+        <translation>икада извођених</translation>
     </message>
     <message>
         <location filename="../src/smartplaylist/smartplaylist.cpp" line="62"/>
         <source>never played</source>
-        <translation>Pises jamais jouées</translation>
+        <translation>никада извођених</translation>
     </message>
     <message>
         <location filename="../src/smartplaylist/smartplaylist.cpp" line="63"/>
         <source>top rated tracks</source>
-        <translation>Pistes les mieux notées</translation>
+        <translation>најпопуларније нумере</translation>
     </message>
 </context>
 <context>
@@ -2271,12 +2271,12 @@
     <message>
         <location filename="../src/widgets/sort_widget.cpp" line="36"/>
         <source>Sort field</source>
-        <translation>Champ de trie</translation>
+        <translation>Редослед поља</translation>
     </message>
     <message>
         <location filename="../src/widgets/sort_widget.cpp" line="39"/>
         <source>Sort order</source>
-        <translation>Ordre de trie</translation>
+        <translation>Редослед слагања</translation>
     </message>
 </context>
 <context>
@@ -2284,28 +2284,28 @@
     <message>
         <location filename="../src/views/stream/stream_scene.cpp" line="104"/>
         <source>add</source>
-        <translation>ajouter</translation>
+        <translation>додај</translation>
     </message>
     <message>
         <location filename="../src/views/stream/stream_scene.cpp" line="105"/>
         <source>import</source>
-        <translation>importer</translation>
+        <translation>увези</translation>
     </message>
     <message>
         <location filename="../src/views/stream/stream_scene.cpp" line="400"/>
         <location filename="../src/views/stream/stream_scene.cpp" line="461"/>
         <source>Loading stream</source>
-        <translation>Chargement du flux</translation>
+        <translation>Учитавање стрима</translation>
     </message>
     <message>
         <location filename="../src/views/stream/stream_scene.cpp" line="822"/>
         <source>import stream file</source>
-        <translation>importer un fichier de radios</translation>
+        <translation>увези стрим датотеку</translation>
     </message>
     <message>
         <location filename="../src/views/stream/stream_scene.cpp" line="823"/>
         <source>xspf playlist (*.xspf)</source>
-        <translation>playlist xspf (*.xspf)</translation>
+        <translation>xspf листа извођења (*.xspf)</translation>
     </message>
 </context>
 <context>
@@ -2314,33 +2314,33 @@
         <location filename="../src/threadmanager.cpp" line="98"/>
         <location filename="../src/threadmanager.cpp" line="105"/>
         <source>Updating music database</source>
-        <translation>Mise à jour de la bibliothèque musicale</translation>
+        <translation>Ажурирај музичку базу података</translation>
     </message>
     <message>
         <location filename="../src/threadmanager.cpp" line="138"/>
         <source>Loading music collection</source>
-        <translation>Chargement de la collection</translation>
+        <translation>Учитавање музичке колекције</translation>
     </message>
     <message>
         <location filename="../src/threadmanager.cpp" line="144"/>
         <source>Loading Music Collection</source>
-        <translation>Chargement de la collection</translation>
+        <translation>Учитавање Музичке Колекције</translation>
     </message>
     <message>
         <location filename="../src/threadmanager.cpp" line="170"/>
         <source>Loading playlist files</source>
-        <translation>Chargement des listes de lecture</translation>
+        <translation>Учитавање датотека листи извођења</translation>
     </message>
     <message>
         <location filename="../src/threadmanager.cpp" line="176"/>
         <source>Loading Playlist File</source>
-        <translation>Chargement des liste de lecture</translation>
+        <translation>Учитавање датотеке листе извођења</translation>
     </message>
     <message>
         <location filename="../src/threadmanager.cpp" line="207"/>
         <location filename="../src/threadmanager.cpp" line="225"/>
         <source>Fetching media info</source>
-        <translation>Téléchargement des informations</translation>
+        <translation>Преузми информације о медијима</translation>
     </message>
 </context>
 <context>
@@ -2348,7 +2348,7 @@
     <message>
         <location filename="../src/models/stream/service_xspf.cpp" line="32"/>
         <source>Favorite streams</source>
-        <translation>Radio favorites</translation>
+        <translation>Омиљени стримови</translation>
     </message>
 </context>
 </TS>

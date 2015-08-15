@@ -53,7 +53,7 @@
     <message>
         <location filename="../src/views/context/context_widget.cpp" line="164"/>
         <source>Biography</source>
-        <translation>Bibliografie</translation>
+        <translation>Biografie</translation>
     </message>
 </context>
 <context>
@@ -67,119 +67,119 @@
 <context>
     <name>BrowserView</name>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="601"/>
-        <location filename="../src/views/browser_view.cpp" line="635"/>
+        <location filename="../src/views/browser_view.cpp" line="607"/>
+        <location filename="../src/views/browser_view.cpp" line="641"/>
         <source>Context</source>
         <translation>Context</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="602"/>
-        <location filename="../src/views/browser_view.cpp" line="636"/>
+        <location filename="../src/views/browser_view.cpp" line="608"/>
+        <location filename="../src/views/browser_view.cpp" line="642"/>
         <source>History</source>
         <translation>Istoric</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="603"/>
+        <location filename="../src/views/browser_view.cpp" line="609"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; albums</source>
         <translation>Colecție : &lt;b&gt;%1&lt;/b&gt; albume</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="604"/>
+        <location filename="../src/views/browser_view.cpp" line="610"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; artist</source>
         <translation>Colecție : &lt;b&gt;%1&lt;/b&gt; artist</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="605"/>
+        <location filename="../src/views/browser_view.cpp" line="611"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; tracks</source>
         <translation>Colecție : &lt;b&gt;%1&lt;/b&gt; piste</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="606"/>
+        <location filename="../src/views/browser_view.cpp" line="612"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; styles</source>
         <translation>Colecție : &lt;b&gt;%1&lt;/b&gt; stiluri</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="607"/>
+        <location filename="../src/views/browser_view.cpp" line="613"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; years</source>
         <translation>Colecție : &lt;b&gt;%1&lt;/b&gt; ani</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="608"/>
+        <location filename="../src/views/browser_view.cpp" line="614"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; favorite item</source>
         <translation>Colecție : &lt;b&gt;%1&lt;/b&gt; element favorit</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="612"/>
+        <location filename="../src/views/browser_view.cpp" line="618"/>
         <source>Playlist : &lt;b&gt;%1&lt;/b&gt; playlists</source>
         <translation>Listă de redare : &lt;b&gt;%1&lt;/b&gt; liste de redare</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="619"/>
+        <location filename="../src/views/browser_view.cpp" line="625"/>
         <source>Radio : &lt;b&gt;%1&lt;/b&gt; streams</source>
         <translation>Radio : &lt;b&gt;%1&lt;/b&gt; fluxuri</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="632"/>
+        <location filename="../src/views/browser_view.cpp" line="638"/>
         <source>About</source>
         <translation>Despre</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="633"/>
+        <location filename="../src/views/browser_view.cpp" line="639"/>
         <source>Settings</source>
         <translation>Configurări</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="634"/>
+        <location filename="../src/views/browser_view.cpp" line="640"/>
         <source>Dashboard</source>
-        <translation>Bord</translation>
+        <translation>Tablou de bord</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="637"/>
+        <location filename="../src/views/browser_view.cpp" line="643"/>
         <source>Artists</source>
         <translation>Artiști</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="638"/>
+        <location filename="../src/views/browser_view.cpp" line="644"/>
         <source>Albums</source>
         <translation>Albume</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="639"/>
+        <location filename="../src/views/browser_view.cpp" line="645"/>
         <source>Tracks</source>
         <translation>Piste</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="640"/>
+        <location filename="../src/views/browser_view.cpp" line="646"/>
         <source>Genres</source>
         <translation>Genuri</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="641"/>
+        <location filename="../src/views/browser_view.cpp" line="647"/>
         <source>Years</source>
         <translation>Ani</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="642"/>
+        <location filename="../src/views/browser_view.cpp" line="648"/>
         <source>Favorites</source>
         <translation>Favorite</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="643"/>
+        <location filename="../src/views/browser_view.cpp" line="649"/>
         <source>Playlists</source>
         <translation>Liste de redare</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="644"/>
+        <location filename="../src/views/browser_view.cpp" line="650"/>
         <source>Smart playlists</source>
         <translation>Liste de redare inteligente</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="648"/>
+        <location filename="../src/views/browser_view.cpp" line="654"/>
         <source>Favorites radios</source>
         <translation>Posturi radio favorite</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="649"/>
+        <location filename="../src/views/browser_view.cpp" line="655"/>
         <source>Filesystem</source>
         <translation>Fișier sistem</translation>
     </message>
@@ -244,7 +244,7 @@
     <message>
         <location filename="../src/commandlineoptions.cpp" line="145"/>
         <source>Increase the volume by 4%</source>
-        <translation>Mărește volumul cu 4%</translation>
+        <translation>Crește volumul cu 4%</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="146"/>
@@ -297,7 +297,7 @@
     <message>
         <location filename="../src/widgets/dialogs/dboperationdialog.cpp" line="34"/>
         <source>Database operation</source>
-        <translation>Operație în baza de date</translation>
+        <translation>Operație baza de date</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/dboperationdialog.cpp" line="42"/>
@@ -381,7 +381,7 @@
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="120"/>
         <source>Edit album</source>
-        <translation>Editare album</translation>
+        <translation>Editează albumul</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="148"/>
@@ -465,7 +465,7 @@
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="120"/>
         <source>Edit artist</source>
-        <translation>Editare artist</translation>
+        <translation>Editează artist</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="138"/>
@@ -569,7 +569,7 @@
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="237"/>
         <source>Add music directories</source>
-        <translation>Adaugă directoare muzicale</translation>
+        <translation>Adaugă directoare cu muzică</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="284"/>
@@ -705,7 +705,7 @@
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="199"/>
         <source>Limit at</source>
-        <translation>Limitare la</translation>
+        <translation>Limita la</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="375"/>
@@ -763,7 +763,7 @@
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="229"/>
         <source>Playcount</source>
-        <translation>Număr redări</translation>
+        <translation>Număr de redări</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="233"/>
@@ -788,7 +788,7 @@
     <message>
         <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="81"/>
         <source>Enable equalizer</source>
-        <translation>Activare egalizator</translation>
+        <translation>Activează egalizatorul audio</translation>
     </message>
     <message>
         <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="231"/>
@@ -804,62 +804,62 @@
 <context>
     <name>FileDialog</name>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="154"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="168"/>
         <source>back</source>
         <translation>înapoi</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="161"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="175"/>
         <source>forward</source>
         <translation>înainte</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="167"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="181"/>
         <source>go up</source>
         <translation>urcă</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="173"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="187"/>
         <source>home</source>
         <translation>acasă</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="181"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="195"/>
         <source>show hidden file</source>
         <translation>arată fișiere ascunse</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="220"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="234"/>
         <source>Audio files (*.mp3 *.wav *.ogg *.flac *.m4a *.aac)</source>
         <translation>Fișiere audio (*.mp3 *.wav *.ogg *.flac *.m4a *.aac)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="221"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="235"/>
         <source>Playlists files (*.m3u *.pls *.xspf)</source>
         <translation>Fișiere listă de redare (*.m3u *.pls *.xspf)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="222"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="236"/>
         <source>All files (*.*)</source>
         <translation>Toate fișierele (*.*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="226"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="240"/>
         <source>All playlist (*.m3u *.pls *.xspf)</source>
         <translation>Toate listele de redare (*.m3u *.pls *.xspf)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="227"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="241"/>
         <source>m3u playlist (*.m3u)</source>
         <translation>listă de redare m3u (*.m3u)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="228"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="242"/>
         <source>pls playlist (*.pls)</source>
         <translation>listă de redare pls (*.pls)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="229"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="243"/>
         <source>xspf playlist (*.xspf)</source>
         <translation>listă de redare xspf (*.xspf)</translation>
     </message>
@@ -867,9 +867,27 @@
 <context>
     <name>FileScene</name>
     <message>
-        <location filename="../src/views/filesystem/file_scene.cpp" line="246"/>
+        <location filename="../src/views/filesystem/file_scene.cpp" line="247"/>
         <source>No entry found</source>
         <translation>Nu s-a găsit nici o intrare</translation>
+    </message>
+</context>
+<context>
+    <name>FirstTimeDialog</name>
+    <message>
+        <location filename="../src/widgets/dialogs/first_time_dialog.cpp" line="34"/>
+        <source>Setup your music collection directory</source>
+        <translation>Configurați directorul colecției de muzică</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dialogs/first_time_dialog.cpp" line="42"/>
+        <source>&lt;p&gt;Welcome to yarock&lt;/p&gt;&lt;p&gt;Select the location of your music collection:&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Bine ați venit la yarock&lt;/p&gt;&lt;p&gt;Selectați amplasarea colecției de muzică:&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dialogs/first_time_dialog.cpp" line="63"/>
+        <source> Choose music folder</source>
+        <translation> Alegeți dosar cu muzică</translation>
     </message>
 </context>
 <context>
@@ -888,7 +906,7 @@
     <message>
         <location filename="../src/views/item_menu.cpp" line="79"/>
         <source>&amp;Remove playlist from disk</source>
-        <translation>&amp;Elimină lista de redare de pe disk</translation>
+        <translation>&amp;Elimină lista de redare de pe disc</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="87"/>
@@ -920,7 +938,7 @@
     <message>
         <location filename="../src/views/item_menu.cpp" line="144"/>
         <source>%1 artists</source>
-        <translation>%1 artist</translation>
+        <translation>%1 artiști</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="146"/>
@@ -987,7 +1005,7 @@
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="97"/>
         <source>reload history</source>
-        <translation>reîncarcă istoricul</translation>
+        <translation>reâncarcă istoricul</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="98"/>
@@ -997,7 +1015,7 @@
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="257"/>
         <source>Updating music database</source>
-        <translation>Actualizare baza de date muzicală</translation>
+        <translation>Se actualizează baza de date cu muzică</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="759"/>
@@ -1026,12 +1044,12 @@
         <location filename="../src/views/local/local_scene_dashboard.cpp" line="225"/>
         <location filename="../src/views/local/local_scene_dashboard.cpp" line="291"/>
         <source>No entry found</source>
-        <translation>Nu s-a găsit nici o intrare</translation>
+        <translation>Nici o intrare găsită</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="350"/>
         <source>All Albums</source>
-        <translation>Toate albumele</translation>
+        <translation>Toate Albumele</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="710"/>
@@ -1074,7 +1092,7 @@
     <message>
         <location filename="../src/views/context/lyricseditor.cpp" line="41"/>
         <source>Lyrics editor</source>
-        <translation>Editor versuri</translation>
+        <translation>Editor de versuri</translation>
     </message>
 </context>
 <context>
@@ -1187,211 +1205,201 @@
     <message>
         <location filename="../src/widgets/main/maintoolbutton.cpp" line="47"/>
         <source>&amp;Show/Hide panel</source>
-        <translation>&amp;Arată/ascunde panoul</translation>
+        <translation>A&amp;rată/Ascunde panou</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/maintoolbutton.cpp" line="52"/>
         <source>&amp;Add to playqueue</source>
-        <translation>&amp;Adaugă la redarea la coadă</translation>
+        <translation>&amp;Adaugă la coada de redare</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/mainwindow.cpp" line="341"/>
+        <location filename="../src/mainwindow.cpp" line="342"/>
         <source>&amp;Quit</source>
         <translation>&amp;Termină</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="342"/>
+        <location filename="../src/mainwindow.cpp" line="343"/>
         <source>About</source>
         <translation>Despre</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="344"/>
+        <location filename="../src/mainwindow.cpp" line="345"/>
         <source>settings</source>
         <translation>configurări</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="347"/>
+        <location filename="../src/mainwindow.cpp" line="348"/>
         <source>&amp;Add media to playlist</source>
         <translation>&amp;Adaugă media la lista de redare</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="348"/>
+        <location filename="../src/mainwindow.cpp" line="349"/>
         <source>&amp;Add directory to playlist</source>
         <translation>&amp;Adaugă director la lista de redare</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="349"/>
+        <location filename="../src/mainwindow.cpp" line="350"/>
         <source>&amp;Add Url...</source>
         <translation>&amp;Adaugă Url...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="350"/>
+        <location filename="../src/mainwindow.cpp" line="351"/>
         <source>&amp;Clear playlist</source>
         <translation>&amp;Curăță lista de redare</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="351"/>
+        <location filename="../src/mainwindow.cpp" line="352"/>
         <source>&amp;Save playlist to file</source>
-        <translation>&amp;Salvare listă de redare în fișier</translation>
+        <translation>&amp;Salvează lista de redare în fișier</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="352"/>
+        <location filename="../src/mainwindow.cpp" line="353"/>
         <source>&amp;Auto save playlist to yarock database</source>
         <translation>&amp;Salvează automat lista de redare în baza de date yarock</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="353"/>
+        <location filename="../src/mainwindow.cpp" line="354"/>
         <source>&amp;Remove media from playlist</source>
         <translation>&amp;Elimină media din lista de redare</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="354"/>
+        <location filename="../src/mainwindow.cpp" line="355"/>
         <source>Stop after this track</source>
         <translation>Oprește după această pistă</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="357"/>
+        <location filename="../src/mainwindow.cpp" line="358"/>
         <source>Remove duplicate</source>
         <translation>Elimină dublurile</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="374"/>
+        <location filename="../src/mainwindow.cpp" line="375"/>
         <source>Play or Pause media</source>
         <translation>Redare sau pauzare media</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="375"/>
+        <location filename="../src/mainwindow.cpp" line="376"/>
         <source>Stop playing media</source>
         <translation>Oprește redarea media</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="376"/>
+        <location filename="../src/mainwindow.cpp" line="377"/>
         <source>Play next media</source>
         <translation>Redare media următoare</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="377"/>
+        <location filename="../src/mainwindow.cpp" line="378"/>
         <source>Play previous media</source>
         <translation>Redare media anterioară</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="379"/>
+        <location filename="../src/mainwindow.cpp" line="380"/>
         <source>Audio equalizer</source>
         <translation>Egalizator audio</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="382"/>
+        <location filename="../src/mainwindow.cpp" line="383"/>
         <source>Database operation</source>
-        <translation>Operație baza de date</translation>
+        <translation>Operație în baza de date</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="385"/>
+        <location filename="../src/mainwindow.cpp" line="386"/>
         <source>Show playqueue panel</source>
         <translation>Arată panoul coada de redare</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="386"/>
+        <location filename="../src/mainwindow.cpp" line="387"/>
         <source>Show menu panel</source>
-        <translation>Arată meniul panou</translation>
+        <translation>Arată panoul meniu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="387"/>
+        <location filename="../src/mainwindow.cpp" line="388"/>
         <source>Show now playing</source>
         <translation>Arată se redă acum</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="393"/>
+        <location filename="../src/mainwindow.cpp" line="394"/>
         <source>Switch to minimal mode</source>
         <translation>Comută la modul minimal</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="394"/>
+        <location filename="../src/mainwindow.cpp" line="395"/>
         <source>Switch to normal mode</source>
         <translation>Comută la modul normal</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="362"/>
+        <location filename="../src/mainwindow.cpp" line="363"/>
         <source>Send LastFm love</source>
-        <translation>Trimite iubește LastFm</translation>
+        <translation>Trimite iubire LastFm</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="365"/>
+        <location filename="../src/mainwindow.cpp" line="366"/>
         <source>Show cover</source>
         <translation>Arată coperta</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="369"/>
+        <location filename="../src/mainwindow.cpp" line="370"/>
         <source>Show rating</source>
         <translation>Arată evaluarea</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="397"/>
+        <location filename="../src/mainwindow.cpp" line="398"/>
         <source>Jump to artist</source>
         <translation>Sări la artist</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="398"/>
+        <location filename="../src/mainwindow.cpp" line="399"/>
         <source>Jump to album</source>
         <translation>Sări la album</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="399"/>
-        <location filename="../src/mainwindow.cpp" line="402"/>
+        <location filename="../src/mainwindow.cpp" line="400"/>
+        <location filename="../src/mainwindow.cpp" line="403"/>
         <source>Jump to track</source>
         <translation>Sări la pistă</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="406"/>
+        <location filename="../src/mainwindow.cpp" line="407"/>
         <source>Enable search popup</source>
-        <translation>Activare căutare pop-up</translation>
+        <translation>Activare pop-up căutare</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="532"/>
+        <location filename="../src/mainwindow.cpp" line="533"/>
         <source>Add music files or playlist</source>
         <translation>Adaugă fișiere muzică sau listă de redare</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="544"/>
+        <location filename="../src/mainwindow.cpp" line="545"/>
         <source>Add music directories</source>
         <translation>Adaugă directoare cu muzică</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="589"/>
+        <location filename="../src/mainwindow.cpp" line="590"/>
         <source>Save playlist to file</source>
         <translation>Salvare listă de redare în fișier</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="600"/>
+        <location filename="../src/mainwindow.cpp" line="601"/>
         <source>Playlist name</source>
         <translation>Nume listă de redare</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="600"/>
+        <location filename="../src/mainwindow.cpp" line="601"/>
         <source>Save playlist</source>
-        <translation>Salvare listă de redare</translation>
+        <translation>Salvează lista de redare</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="670"/>
+        <location filename="../src/mainwindow.cpp" line="671"/>
         <source>Playing error</source>
         <translation>Eroare redare</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="951"/>
+        <location filename="../src/mainwindow.cpp" line="952"/>
         <source>settings saved</source>
         <translation>configurări salvate</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="993"/>
-        <source>&lt;b&gt;Welcome to yarock&lt;/b&gt;&lt;p&gt;No collection seems to be setup&lt;/p&gt;&lt;p&gt;Do you want to setup your collection now ?&lt;/p&gt;</source>
-        <translation>&lt;b&gt;Bine ați venit la yarock&lt;/b&gt;&lt;p&gt;Se pare că nu a fost configurată nici o colecție&lt;/p&gt;&lt;p&gt;Doriți să configurați colecția acum ?&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="997"/>
-        <source>Setup your music collection directory</source>
-        <translation>Configurați directorul colecției de muzică</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1013"/>
@@ -1401,7 +1409,7 @@
     <message>
         <location filename="../src/mainwindow.cpp" line="1015"/>
         <source>Database revision update</source>
-        <translation>Versiune bază de date actualizată</translation>
+        <translation>Actualizare revizie bază de date</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1160"/>
@@ -1454,7 +1462,7 @@
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="124"/>
         <source>dashboard</source>
-        <translation>bord</translation>
+        <translation>tablou de bord</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="127"/>
@@ -1553,12 +1561,12 @@
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="85"/>
         <source>Enable Mpris</source>
-        <translation>Activare Mpris</translation>
+        <translation>Activează Mpris</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="88"/>
         <source>Enable notification</source>
-        <translation>Activare notificare</translation>
+        <translation>Activează notificarea</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="92"/>
@@ -1573,7 +1581,7 @@
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="107"/>
         <source>Choose color</source>
-        <translation>Alegeți culoarea</translation>
+        <translation>Alege culoare</translation>
     </message>
 </context>
 <context>
@@ -1591,12 +1599,12 @@
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="537"/>
         <source>Enable Multi Database support</source>
-        <translation>Activare suport baze de date multiple</translation>
+        <translation>Activează suportul pentru mai multe baze de date</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="547"/>
-        <location filename="../src/views/settings/settings_widget.cpp" line="819"/>
-        <location filename="../src/views/settings/settings_widget.cpp" line="832"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="811"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="824"/>
         <source>New database</source>
         <translation>Bază de date nouă</translation>
     </message>
@@ -1607,9 +1615,9 @@
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="555"/>
-        <location filename="../src/views/settings/settings_widget.cpp" line="905"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="897"/>
         <source>Rename database</source>
-        <translation>Redenumire bază de date</translation>
+        <translation>Redenumește baza de date</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="565"/>
@@ -1618,7 +1626,7 @@
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="576"/>
-        <location filename="../src/views/settings/settings_widget.cpp" line="948"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="940"/>
         <source> Choose music folder</source>
         <translation> Alegeți dosar cu muzică</translation>
     </message>
@@ -1653,23 +1661,23 @@
         <translation>Scrie evaluarea în fișier</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="819"/>
-        <location filename="../src/views/settings/settings_widget.cpp" line="905"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="811"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="897"/>
         <source>Name</source>
         <translation>Nume</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="833"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="825"/>
         <source>The database  &quot;%1&quot; already exist, please try another name</source>
         <translation>Baza de date  &quot;%1&quot; deja există, încercați un alt nume</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="886"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="878"/>
         <source>Delete database properties</source>
         <translation>Șterge proprietățile bazei de date</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="887"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="879"/>
         <source>Are you sure you want to delete the &quot;%1&quot; database ?</source>
         <translation>Sigur doriți să ștergeți baza de date &quot;%1&quot; ?</translation>
     </message>
@@ -1720,58 +1728,58 @@
 <context>
     <name>PageScrobbler</name>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1373"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1365"/>
         <source>Scrobbler settings</source>
         <translation>Configurări Scrobbler</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1397"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1389"/>
         <source>Use LastFm scrobbler</source>
         <translation>Utilizează scrobbler LastFm</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1407"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1399"/>
         <source>Account details</source>
         <translation>Detalii cont</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1413"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1405"/>
         <source>username</source>
         <translation>nume utilizator</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1416"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1408"/>
         <source>password</source>
         <translation>parolă</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1429"/>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1552"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1421"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1544"/>
         <source>Sign In</source>
         <translation>Autentificare</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1545"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1537"/>
         <source>You are log in lastFm service as &lt;b&gt;%1&lt;/b&gt;</source>
         <translation>Sunteți autentificat la serviciul LastFm ca &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1547"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1539"/>
         <source>Sign Out</source>
         <translation>Deautentificare</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1551"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1543"/>
         <source>You are not log into</source>
         <translation>Nu sunteți autentificat</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1586"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1578"/>
         <source>Authentication failed</source>
         <translation>Autentificarea a eșuat</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1587"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1579"/>
         <source>Your Last.fm credentials were incorrect</source>
         <translation>Creditele dumneavoastră Last.Fm sunt incorecte</translation>
     </message>
@@ -1779,52 +1787,52 @@
 <context>
     <name>PageShortcut</name>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1046"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1038"/>
         <source>Shortcut settings</source>
         <translation>Configurări scurtătură</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1057"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1049"/>
         <source>Play/Pause</source>
         <translation>Redare/Pauză</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1058"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1050"/>
         <source>Stop</source>
         <translation>Oprire</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1059"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1051"/>
         <source>Previous track</source>
         <translation>Pista anterioară</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1060"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1052"/>
         <source>Next track</source>
         <translation>Pista următoare</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1061"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1053"/>
         <source>Increase volume</source>
         <translation>Mărește volumul</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1062"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1054"/>
         <source>Decrease volume</source>
         <translation>Descrește volumul</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1063"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1055"/>
         <source>Mute/Unmute volume</source>
         <translation>Amuțește/Reia volumul</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1064"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1056"/>
         <source>Jump to track</source>
         <translation>Sări la pistă</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1065"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1057"/>
         <source>Clear playqueue</source>
         <translation>Curăță coada de redare</translation>
     </message>
@@ -1832,22 +1840,22 @@
 <context>
     <name>PageSongInfo</name>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1633"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1625"/>
         <source>Song info</source>
         <translation>Informație cântec</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1651"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1643"/>
         <source>Choose the websites you want to use when searching for lyrics</source>
         <translation>Alegeți pagina site-ul web pe care doriți să-l utilizați la căutarea versurilor</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1657"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1649"/>
         <source>move up</source>
         <translation>mută în sus</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1658"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1650"/>
         <source>move down</source>
         <translation>mută în jos</translation>
     </message>
@@ -1855,15 +1863,20 @@
 <context>
     <name>PlayerToolBar</name>
     <message>
-        <location filename="../src/widgets/playertoolbar.cpp" line="318"/>
-        <location filename="../src/widgets/playertoolbar.cpp" line="326"/>
-        <source>&lt;b&gt;%1&lt;/b&gt; by &lt;b&gt;%2&lt;/b&gt; on &lt;b&gt;%3&lt;/b&gt;</source>
-        <translation>&lt;b&gt;%1&lt;/b&gt; cu &lt;b&gt;%2&lt;/b&gt; pe &lt;b&gt;%3&lt;/b&gt;</translation>
+        <location filename="../src/widgets/playertoolbar.cpp" line="208"/>
+        <source>[paused]</source>
+        <translation>[pauzat]</translation>
     </message>
     <message>
-        <location filename="../src/widgets/playertoolbar.cpp" line="332"/>
+        <location filename="../src/widgets/playertoolbar.cpp" line="346"/>
+        <location filename="../src/widgets/playertoolbar.cpp" line="354"/>
+        <source>&lt;b&gt;%1&lt;/b&gt; by &lt;b&gt;%2&lt;/b&gt; on &lt;b&gt;%3&lt;/b&gt;</source>
+        <translation>&lt;b&gt;%1&lt;/b&gt; by &lt;b&gt;%2&lt;/b&gt; on &lt;b&gt;%3&lt;/b&gt;</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/playertoolbar.cpp" line="360"/>
         <source>&lt;b&gt;%1&lt;/b&gt; stream</source>
-        <translation>&lt;b&gt;%1&lt;/b&gt; flux</translation>
+        <translation>Fluxul &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -1877,7 +1890,7 @@
 <context>
     <name>PlaylistDelegate</name>
     <message>
-        <location filename="../src/playqueue/playlistview.cpp" line="621"/>
+        <location filename="../src/playqueue/playlistview.cpp" line="625"/>
         <source>media reading error</source>
         <translation>eroare citire media</translation>
     </message>
@@ -1885,9 +1898,9 @@
 <context>
     <name>PlaylistView</name>
     <message>
-        <location filename="../src/playqueue/playlistview.cpp" line="261"/>
+        <location filename="../src/playqueue/playlistview.cpp" line="263"/>
         <source>Add file to play or Drag and Drop File from Collection</source>
-        <translation>Adăugați fișiere pentru redare sau trageți și lăsați fișierele din colecție</translation>
+        <translation>Adaugă fișierul la redare sau trageți și plasați fișierul din colecție</translation>
     </message>
 </context>
 <context>
@@ -1920,7 +1933,7 @@
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="170"/>
         <source>Playlist : &lt;b&gt;%1&lt;/b&gt; tracks - %2</source>
-        <translation>Listă de redare : &lt;b&gt;%1&lt;/b&gt; tracks - %2</translation>
+        <translation>Listă de redare : &lt;b&gt;%1&lt;/b&gt; piste - %2</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="231"/>
@@ -1938,7 +1951,7 @@
     <message>
         <location filename="../src/core/mediaitem/mediaitem.cpp" line="214"/>
         <source>Today</source>
-        <translation>Azi</translation>
+        <translation>Astăzi</translation>
     </message>
     <message>
         <location filename="../src/core/mediaitem/mediaitem.cpp" line="216"/>
@@ -1948,7 +1961,7 @@
     <message>
         <location filename="../src/core/mediaitem/mediaitem.cpp" line="218"/>
         <source>%1 days ago</source>
-        <translation>%1 zile în urmă</translation>
+        <translation>acum %1 zile</translation>
     </message>
     <message>
         <location filename="../src/core/mediaitem/tag.cpp" line="528"/>
@@ -2083,7 +2096,7 @@
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="161"/>
         <source>ends with</source>
-        <translation>termină cu</translation>
+        <translation>se termină cu</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="162"/>
@@ -2212,12 +2225,12 @@
         <location filename="../src/widgets/audiocontrols.cpp" line="98"/>
         <location filename="../src/widgets/audiocontrols.cpp" line="127"/>
         <source>Shuffle mode is off</source>
-        <translation>Modul amestecare este închis</translation>
+        <translation>Modul aleator este dezactivat</translation>
     </message>
     <message>
         <location filename="../src/widgets/audiocontrols.cpp" line="131"/>
         <source>Shuffle mode is on</source>
-        <translation>Modul amestecare este pornit</translation>
+        <translation>Modul aleator este activat</translation>
     </message>
 </context>
 <context>
@@ -2271,12 +2284,12 @@
     <message>
         <location filename="../src/views/stream/stream_scene.cpp" line="104"/>
         <source>add</source>
-        <translation>adăugare</translation>
+        <translation>adaugă</translation>
     </message>
     <message>
         <location filename="../src/views/stream/stream_scene.cpp" line="105"/>
         <source>import</source>
-        <translation>import</translation>
+        <translation>importă</translation>
     </message>
     <message>
         <location filename="../src/views/stream/stream_scene.cpp" line="400"/>
@@ -2292,7 +2305,7 @@
     <message>
         <location filename="../src/views/stream/stream_scene.cpp" line="823"/>
         <source>xspf playlist (*.xspf)</source>
-        <translation>listă de redare (*.xspf)</translation>
+        <translation>listă de redare xspf (*.xspf)</translation>
     </message>
 </context>
 <context>
@@ -2311,12 +2324,12 @@
     <message>
         <location filename="../src/threadmanager.cpp" line="144"/>
         <source>Loading Music Collection</source>
-        <translation>Se încarcă colecția d emuzică</translation>
+        <translation>Se încarcă colecția de muzică</translation>
     </message>
     <message>
         <location filename="../src/threadmanager.cpp" line="170"/>
         <source>Loading playlist files</source>
-        <translation>Se încarcă fișierul listă de redare</translation>
+        <translation>Se încarcă fișierele listă de redare</translation>
     </message>
     <message>
         <location filename="../src/threadmanager.cpp" line="176"/>

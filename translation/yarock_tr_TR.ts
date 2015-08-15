@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="tr_TR">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="tr_TR" version="2.0">
 <context>
     <name>AddFolderWidget</name>
     <message>
@@ -11,7 +9,7 @@
     <message>
         <location filename="../src/views/settings/addfolder_widget.cpp" line="54"/>
         <source>Remove</source>
-        <translation>Sil</translation>
+        <translation>Kaldır</translation>
     </message>
     <message>
         <location filename="../src/views/settings/addfolder_widget.cpp" line="69"/>
@@ -113,7 +111,7 @@
     <message>
         <location filename="../src/views/browser_view.cpp" line="618"/>
         <source>Playlist : &lt;b&gt;%1&lt;/b&gt; playlists</source>
-        <translation>Oynatma Listesi: &lt;b&gt;%1&lt;/b&gt; oynatma listeleri</translation>
+        <translation>Çalma Listesi : &lt;b&gt;%1&lt;/b&gt; çalma listeleri</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="625"/>
@@ -163,7 +161,7 @@
     <message>
         <location filename="../src/views/browser_view.cpp" line="648"/>
         <source>Favorites</source>
-        <translation>Favori albüm</translation>
+        <translation>Favoriler</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="649"/>
@@ -196,7 +194,7 @@
     <message>
         <location filename="../src/commandlineoptions.cpp" line="137"/>
         <source>options</source>
-        <translation>Ayarlar</translation>
+        <translation>Seçenekler</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="137"/>
@@ -393,7 +391,7 @@
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="149"/>
         <source>Download</source>
-        <translation>İndir</translation>
+        <translation>indir</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="150"/>
@@ -477,7 +475,7 @@
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="139"/>
         <source>Download</source>
-        <translation>indir</translation>
+        <translation>Kapak resmi indir</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="140"/>
@@ -609,7 +607,7 @@
     <message>
         <location filename="../src/widgets/editors/editor_search.cpp" line="46"/>
         <source>Match search term (AND)</source>
-        <translation>Aranan terimi eşleştir(AND)</translation>
+        <translation>Aranan terimi eşleştir(VE)</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_search.cpp" line="48"/>
@@ -879,17 +877,17 @@
     <message>
         <location filename="../src/widgets/dialogs/first_time_dialog.cpp" line="34"/>
         <source>Setup your music collection directory</source>
-        <translation type="unfinished">Müzik koleksiyonunuzun dizinini ayarlayın</translation>
+        <translation>Müzik koleksiyonunuzun dizinini ayarlayın</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/first_time_dialog.cpp" line="42"/>
         <source>&lt;p&gt;Welcome to yarock&lt;/p&gt;&lt;p&gt;Select the location of your music collection:&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;h2&gt;YaRock&apos;a hoşgeldiniz&lt;/h2&gt;&lt;p&gt;Herhangi bir koleksiyon kurulmamış görünüyor&lt;/p&gt;&lt;p&gt;Koleksiyonunuzu şimdi kurmak istermisiniz&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/first_time_dialog.cpp" line="63"/>
         <source> Choose music folder</source>
-        <translation type="unfinished">Müzik dizini seç</translation>
+        <translation>Müzik dizini seç</translation>
     </message>
 </context>
 <context>
@@ -940,12 +938,12 @@
     <message>
         <location filename="../src/views/item_menu.cpp" line="144"/>
         <source>%1 artists</source>
-        <translation>%1 Artistler</translation>
+        <translation>Artistler</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="146"/>
         <source>%1 albums</source>
-        <translation>%1 Albümler</translation>
+        <translation>Albümler</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="147"/>
@@ -960,7 +958,7 @@
     <message>
         <location filename="../src/views/item_menu.cpp" line="149"/>
         <source>%1 playlist</source>
-        <translation>%1 çalma listesi</translation>
+        <translation>Çalma Listesi</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="266"/>
@@ -1402,14 +1400,6 @@
         <location filename="../src/mainwindow.cpp" line="952"/>
         <source>settings saved</source>
         <translation>düzenleri kaydet</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Welcome to yarock&lt;/b&gt;&lt;p&gt;No collection seems to be setup&lt;/p&gt;&lt;p&gt;Do you want to setup your collection now ?&lt;/p&gt;</source>
-        <translation type="obsolete">&lt;h2&gt;YaRock&apos;a hoşgeldiniz&lt;/h2&gt;&lt;p&gt;Herhangi bir koleksiyon kurulmamış görünüyor&lt;/p&gt;&lt;p&gt;Koleksiyonunuzu şimdi kurmak istermisiniz&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <source>Setup your music collection directory</source>
-        <translation type="obsolete">Müzik koleksiyonunuzun dizinini ayarlayın</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1013"/>
@@ -1875,13 +1865,13 @@
     <message>
         <location filename="../src/widgets/playertoolbar.cpp" line="208"/>
         <source>[paused]</source>
-        <translation type="unfinished"></translation>
+        <translation>Duraklatıldı</translation>
     </message>
     <message>
         <location filename="../src/widgets/playertoolbar.cpp" line="346"/>
         <location filename="../src/widgets/playertoolbar.cpp" line="354"/>
         <source>&lt;b&gt;%1&lt;/b&gt; by &lt;b&gt;%2&lt;/b&gt; on &lt;b&gt;%3&lt;/b&gt;</source>
-        <translation>&lt;b&gt;%1&lt;/b&gt; by &lt;b&gt;%2&lt;/b&gt; on &lt;b&gt;%3&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt; tarafından &lt;b&gt;%2&lt;/b&gt; açık &lt;b&gt;%3&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/widgets/playertoolbar.cpp" line="360"/>
@@ -2081,12 +2071,12 @@
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="151"/>
         <source>on</source>
-        <translation>ilgili</translation>
+        <translation>olsun</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="152"/>
         <source>not on</source>
-        <translation>ilgili değil</translation>
+        <translation>olmasın</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="158"/>

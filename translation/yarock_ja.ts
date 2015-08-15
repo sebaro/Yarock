@@ -67,119 +67,119 @@
 <context>
     <name>BrowserView</name>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="601"/>
-        <location filename="../src/views/browser_view.cpp" line="635"/>
+        <location filename="../src/views/browser_view.cpp" line="607"/>
+        <location filename="../src/views/browser_view.cpp" line="641"/>
         <source>Context</source>
         <translation>コンテキスト</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="602"/>
-        <location filename="../src/views/browser_view.cpp" line="636"/>
+        <location filename="../src/views/browser_view.cpp" line="608"/>
+        <location filename="../src/views/browser_view.cpp" line="642"/>
         <source>History</source>
         <translation>履歴</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="603"/>
+        <location filename="../src/views/browser_view.cpp" line="609"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; albums</source>
         <translation>コレクション：アルバム数&lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="604"/>
+        <location filename="../src/views/browser_view.cpp" line="610"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; artist</source>
         <translation>コレクション：アーティスト数&lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="605"/>
+        <location filename="../src/views/browser_view.cpp" line="611"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; tracks</source>
         <translation>コレクション：トラック数&lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="606"/>
+        <location filename="../src/views/browser_view.cpp" line="612"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; styles</source>
         <translation>コレクション：ジャンル数&lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="607"/>
+        <location filename="../src/views/browser_view.cpp" line="613"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; years</source>
         <translation>コレクション：年代数&lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="608"/>
+        <location filename="../src/views/browser_view.cpp" line="614"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; favorite item</source>
         <translation>コレクション：お気に入り数&lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="612"/>
+        <location filename="../src/views/browser_view.cpp" line="618"/>
         <source>Playlist : &lt;b&gt;%1&lt;/b&gt; playlists</source>
         <translation>プレイリスト：プレイリスト数&lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="619"/>
+        <location filename="../src/views/browser_view.cpp" line="625"/>
         <source>Radio : &lt;b&gt;%1&lt;/b&gt; streams</source>
         <translation>ラジオ：ストリーム数&lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="632"/>
+        <location filename="../src/views/browser_view.cpp" line="638"/>
         <source>About</source>
         <translation>概要</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="633"/>
+        <location filename="../src/views/browser_view.cpp" line="639"/>
         <source>Settings</source>
         <translation>設定</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="634"/>
+        <location filename="../src/views/browser_view.cpp" line="640"/>
         <source>Dashboard</source>
         <translation>ダッシュボード</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="637"/>
+        <location filename="../src/views/browser_view.cpp" line="643"/>
         <source>Artists</source>
         <translation>アーティスト</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="638"/>
+        <location filename="../src/views/browser_view.cpp" line="644"/>
         <source>Albums</source>
         <translation>アルバム</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="639"/>
+        <location filename="../src/views/browser_view.cpp" line="645"/>
         <source>Tracks</source>
         <translation>トラック</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="640"/>
+        <location filename="../src/views/browser_view.cpp" line="646"/>
         <source>Genres</source>
         <translation>ジャンル</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="641"/>
+        <location filename="../src/views/browser_view.cpp" line="647"/>
         <source>Years</source>
         <translation>年代</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="642"/>
+        <location filename="../src/views/browser_view.cpp" line="648"/>
         <source>Favorites</source>
         <translation>お気に入り</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="643"/>
+        <location filename="../src/views/browser_view.cpp" line="649"/>
         <source>Playlists</source>
         <translation>プレイリスト</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="644"/>
+        <location filename="../src/views/browser_view.cpp" line="650"/>
         <source>Smart playlists</source>
         <translation>スマートプレイリスト</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="648"/>
+        <location filename="../src/views/browser_view.cpp" line="654"/>
         <source>Favorites radios</source>
         <translation>お気に入りのラジオ</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="649"/>
+        <location filename="../src/views/browser_view.cpp" line="655"/>
         <source>Filesystem</source>
         <translation>ファイルシステム</translation>
     </message>
@@ -804,62 +804,62 @@
 <context>
     <name>FileDialog</name>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="154"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="168"/>
         <source>back</source>
         <translation>戻る</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="161"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="175"/>
         <source>forward</source>
         <translation>進む</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="167"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="181"/>
         <source>go up</source>
         <translation>上の階層</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="173"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="187"/>
         <source>home</source>
         <translation>ホーム</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="181"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="195"/>
         <source>show hidden file</source>
         <translation>隠しファイルを表示する</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="220"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="234"/>
         <source>Audio files (*.mp3 *.wav *.ogg *.flac *.m4a *.aac)</source>
         <translation>オーディオファイル（* .MP3 * .WAV * oggの* .flac * .m4aの* .aac）</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="221"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="235"/>
         <source>Playlists files (*.m3u *.pls *.xspf)</source>
         <translation>プレイリストファイル（*。m3uの* .PLS * .xspf）</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="222"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="236"/>
         <source>All files (*.*)</source>
         <translation>すべてのファイル（*。*）</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="226"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="240"/>
         <source>All playlist (*.m3u *.pls *.xspf)</source>
         <translation>すべてのプレイリスト形式(*.m3u *.pls *.xspf)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="227"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="241"/>
         <source>m3u playlist (*.m3u)</source>
         <translation>M3Uプレイリスト形式(*.m3u)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="228"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="242"/>
         <source>pls playlist (*.pls)</source>
         <translation>PLSプレイリスト形式(*.pls)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="229"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="243"/>
         <source>xspf playlist (*.xspf)</source>
         <translation>XSPFプレイリスト形式(*.xspf)</translation>
     </message>
@@ -867,9 +867,27 @@
 <context>
     <name>FileScene</name>
     <message>
-        <location filename="../src/views/filesystem/file_scene.cpp" line="246"/>
+        <location filename="../src/views/filesystem/file_scene.cpp" line="247"/>
         <source>No entry found</source>
         <translation>楽曲が見つかりませんでした</translation>
+    </message>
+</context>
+<context>
+    <name>FirstTimeDialog</name>
+    <message>
+        <location filename="../src/widgets/dialogs/first_time_dialog.cpp" line="34"/>
+        <source>Setup your music collection directory</source>
+        <translation>楽曲のディレクトリを設定</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dialogs/first_time_dialog.cpp" line="42"/>
+        <source>&lt;p&gt;Welcome to yarock&lt;/p&gt;&lt;p&gt;Select the location of your music collection:&lt;/p&gt;</source>
+        <translation>&lt;p&gt;yarockへようこそ&lt;/p&gt;&lt;p&gt;楽曲のディレクトリを設定してください:&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dialogs/first_time_dialog.cpp" line="63"/>
+        <source> Choose music folder</source>
+        <translation>音楽フォルダを選択</translation>
     </message>
 </context>
 <context>
@@ -1198,200 +1216,190 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/mainwindow.cpp" line="341"/>
+        <location filename="../src/mainwindow.cpp" line="342"/>
         <source>&amp;Quit</source>
         <translation>終了(&amp;Q)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="342"/>
+        <location filename="../src/mainwindow.cpp" line="343"/>
         <source>About</source>
         <translation>このアプリケーションについて</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="344"/>
+        <location filename="../src/mainwindow.cpp" line="345"/>
         <source>settings</source>
         <translation>設定</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="347"/>
+        <location filename="../src/mainwindow.cpp" line="348"/>
         <source>&amp;Add media to playlist</source>
         <translation>プレイリストに楽曲を追加(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="348"/>
+        <location filename="../src/mainwindow.cpp" line="349"/>
         <source>&amp;Add directory to playlist</source>
         <translation>プレイリストにディレクトリを追加(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="349"/>
+        <location filename="../src/mainwindow.cpp" line="350"/>
         <source>&amp;Add Url...</source>
         <translation>URLを追加(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="350"/>
+        <location filename="../src/mainwindow.cpp" line="351"/>
         <source>&amp;Clear playlist</source>
         <translation>プレイリストをクリア(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="351"/>
+        <location filename="../src/mainwindow.cpp" line="352"/>
         <source>&amp;Save playlist to file</source>
         <translation>プレイリストをファイルに保存(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="352"/>
+        <location filename="../src/mainwindow.cpp" line="353"/>
         <source>&amp;Auto save playlist to yarock database</source>
         <translation>自動でyarockのデータベースにプレイリストを保存(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="353"/>
+        <location filename="../src/mainwindow.cpp" line="354"/>
         <source>&amp;Remove media from playlist</source>
         <translation>プレイリストから楽曲を外す(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="354"/>
+        <location filename="../src/mainwindow.cpp" line="355"/>
         <source>Stop after this track</source>
         <translation>この楽曲の再生後に停止</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="357"/>
+        <location filename="../src/mainwindow.cpp" line="358"/>
         <source>Remove duplicate</source>
         <translation>複製を削除する</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="374"/>
+        <location filename="../src/mainwindow.cpp" line="375"/>
         <source>Play or Pause media</source>
         <translation>再生または一時停止</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="375"/>
+        <location filename="../src/mainwindow.cpp" line="376"/>
         <source>Stop playing media</source>
         <translation>再生を停止</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="376"/>
+        <location filename="../src/mainwindow.cpp" line="377"/>
         <source>Play next media</source>
         <translation>次の曲を再生</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="377"/>
+        <location filename="../src/mainwindow.cpp" line="378"/>
         <source>Play previous media</source>
         <translation>前の曲を再生</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="379"/>
+        <location filename="../src/mainwindow.cpp" line="380"/>
         <source>Audio equalizer</source>
         <translation>オーディオイコライザー</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="382"/>
+        <location filename="../src/mainwindow.cpp" line="383"/>
         <source>Database operation</source>
         <translation>データベースの操作</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="385"/>
+        <location filename="../src/mainwindow.cpp" line="386"/>
         <source>Show playqueue panel</source>
         <translation>再生キューパネルを表示</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="386"/>
+        <location filename="../src/mainwindow.cpp" line="387"/>
         <source>Show menu panel</source>
         <translation>メニューパネルを表示</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="387"/>
+        <location filename="../src/mainwindow.cpp" line="388"/>
         <source>Show now playing</source>
         <translation>再生中の楽曲を表示</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="393"/>
+        <location filename="../src/mainwindow.cpp" line="394"/>
         <source>Switch to minimal mode</source>
         <translation>コンパクトモードに切り替え</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="394"/>
+        <location filename="../src/mainwindow.cpp" line="395"/>
         <source>Switch to normal mode</source>
         <translation>通常モードに切り替え</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="362"/>
+        <location filename="../src/mainwindow.cpp" line="363"/>
         <source>Send LastFm love</source>
         <translation>LastFmでLoveを付ける</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="365"/>
+        <location filename="../src/mainwindow.cpp" line="366"/>
         <source>Show cover</source>
         <translation>カバーを表示</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="369"/>
+        <location filename="../src/mainwindow.cpp" line="370"/>
         <source>Show rating</source>
         <translation>評価を表示</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="397"/>
+        <location filename="../src/mainwindow.cpp" line="398"/>
         <source>Jump to artist</source>
         <translation>アーティストへジャンプ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="398"/>
+        <location filename="../src/mainwindow.cpp" line="399"/>
         <source>Jump to album</source>
         <translation>アルバムにジャンプ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="399"/>
-        <location filename="../src/mainwindow.cpp" line="402"/>
+        <location filename="../src/mainwindow.cpp" line="400"/>
+        <location filename="../src/mainwindow.cpp" line="403"/>
         <source>Jump to track</source>
         <translation>トラックへのジャンプ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="406"/>
+        <location filename="../src/mainwindow.cpp" line="407"/>
         <source>Enable search popup</source>
         <translation>検索ポップアップを有効にする</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="532"/>
+        <location filename="../src/mainwindow.cpp" line="533"/>
         <source>Add music files or playlist</source>
         <translation>音楽ファイルやプレイリストを追加します。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="544"/>
+        <location filename="../src/mainwindow.cpp" line="545"/>
         <source>Add music directories</source>
         <translation>楽曲のディレクトリを追加</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="589"/>
+        <location filename="../src/mainwindow.cpp" line="590"/>
         <source>Save playlist to file</source>
         <translation>ファイルにプレイリストを保存</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="600"/>
+        <location filename="../src/mainwindow.cpp" line="601"/>
         <source>Playlist name</source>
         <translation>プレイリスト名</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="600"/>
+        <location filename="../src/mainwindow.cpp" line="601"/>
         <source>Save playlist</source>
         <translation>プレイリストを保存</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="670"/>
+        <location filename="../src/mainwindow.cpp" line="671"/>
         <source>Playing error</source>
         <translation>再生エラー</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="951"/>
+        <location filename="../src/mainwindow.cpp" line="952"/>
         <source>settings saved</source>
         <translation>設定が保存されました</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="993"/>
-        <source>&lt;b&gt;Welcome to yarock&lt;/b&gt;&lt;p&gt;No collection seems to be setup&lt;/p&gt;&lt;p&gt;Do you want to setup your collection now ?&lt;/p&gt;</source>
-        <translation>&lt;b&gt;yarockへようこそ&lt;/b&gt;&lt;p&gt;楽曲が設定されていないようです&lt;/p&gt;&lt;p&gt;あなたの楽曲を設定しますか？&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="997"/>
-        <source>Setup your music collection directory</source>
-        <translation>楽曲のディレクトリを設定</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1013"/>
@@ -1595,8 +1603,8 @@
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="547"/>
-        <location filename="../src/views/settings/settings_widget.cpp" line="819"/>
-        <location filename="../src/views/settings/settings_widget.cpp" line="832"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="811"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="824"/>
         <source>New database</source>
         <translation>新しいデータベース</translation>
     </message>
@@ -1607,7 +1615,7 @@
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="555"/>
-        <location filename="../src/views/settings/settings_widget.cpp" line="905"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="897"/>
         <source>Rename database</source>
         <translation>ベータベース名変更</translation>
     </message>
@@ -1618,7 +1626,7 @@
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="576"/>
-        <location filename="../src/views/settings/settings_widget.cpp" line="948"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="940"/>
         <source> Choose music folder</source>
         <translation>音楽フォルダを選択</translation>
     </message>
@@ -1653,23 +1661,23 @@
         <translation>評価をファイルに書き込む</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="819"/>
-        <location filename="../src/views/settings/settings_widget.cpp" line="905"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="811"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="897"/>
         <source>Name</source>
         <translation>データベース名</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="833"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="825"/>
         <source>The database  &quot;%1&quot; already exist, please try another name</source>
         <translation>「%1」と同じ名前のデータベースがあります。違う名前を入力してください。</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="886"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="878"/>
         <source>Delete database properties</source>
         <translation>データベースのプロパティを削除</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="887"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="879"/>
         <source>Are you sure you want to delete the &quot;%1&quot; database ?</source>
         <translation>データベース「%1」を削除してよろしいですか？</translation>
     </message>
@@ -1720,58 +1728,58 @@
 <context>
     <name>PageScrobbler</name>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1373"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1365"/>
         <source>Scrobbler settings</source>
         <translation>Scrobblerの設定</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1397"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1389"/>
         <source>Use LastFm scrobbler</source>
         <translation>LastFmのscrobblerを有効化</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1407"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1399"/>
         <source>Account details</source>
         <translation>アカウントを入力</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1413"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1405"/>
         <source>username</source>
         <translation>ユーザー名</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1416"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1408"/>
         <source>password</source>
         <translation>パスワード</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1429"/>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1552"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1421"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1544"/>
         <source>Sign In</source>
         <translation>ログイン</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1545"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1537"/>
         <source>You are log in lastFm service as &lt;b&gt;%1&lt;/b&gt;</source>
         <translation>あなたはLastFMの&lt;b&gt;%1&lt;/b&gt;サービスにログインしています</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1547"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1539"/>
         <source>Sign Out</source>
         <translation>ログアウト</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1551"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1543"/>
         <source>You are not log into</source>
         <translation>ログインできません</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1586"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1578"/>
         <source>Authentication failed</source>
         <translation>認証に失敗しました</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1587"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1579"/>
         <source>Your Last.fm credentials were incorrect</source>
         <translation>LastFMの証明書が誤っています</translation>
     </message>
@@ -1779,52 +1787,52 @@
 <context>
     <name>PageShortcut</name>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1046"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1038"/>
         <source>Shortcut settings</source>
         <translation>ショートカットの設定</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1057"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1049"/>
         <source>Play/Pause</source>
         <translation>再生/一時停止</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1058"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1050"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1059"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1051"/>
         <source>Previous track</source>
         <translation>前の曲</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1060"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1052"/>
         <source>Next track</source>
         <translation>次の曲</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1061"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1053"/>
         <source>Increase volume</source>
         <translation>音量を上げる</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1062"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1054"/>
         <source>Decrease volume</source>
         <translation>音量を下げる</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1063"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1055"/>
         <source>Mute/Unmute volume</source>
         <translation>ミュート/ミュート解除</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1064"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1056"/>
         <source>Jump to track</source>
         <translation>トラックを移動</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1065"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1057"/>
         <source>Clear playqueue</source>
         <translation>再生キューのクリア</translation>
     </message>
@@ -1832,22 +1840,22 @@
 <context>
     <name>PageSongInfo</name>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1633"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1625"/>
         <source>Song info</source>
         <translation>歌詞の設定</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1651"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1643"/>
         <source>Choose the websites you want to use when searching for lyrics</source>
         <translation>歌詞を検索するサイトを選択してください</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1657"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1649"/>
         <source>move up</source>
         <translation>上に移動</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1658"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1650"/>
         <source>move down</source>
         <translation>下に移動</translation>
     </message>
@@ -1855,13 +1863,18 @@
 <context>
     <name>PlayerToolBar</name>
     <message>
-        <location filename="../src/widgets/playertoolbar.cpp" line="318"/>
-        <location filename="../src/widgets/playertoolbar.cpp" line="326"/>
+        <location filename="../src/widgets/playertoolbar.cpp" line="208"/>
+        <source>[paused]</source>
+        <translation>[一時停止中]</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/playertoolbar.cpp" line="346"/>
+        <location filename="../src/widgets/playertoolbar.cpp" line="354"/>
         <source>&lt;b&gt;%1&lt;/b&gt; by &lt;b&gt;%2&lt;/b&gt; on &lt;b&gt;%3&lt;/b&gt;</source>
         <translation>&lt;b&gt;%1&lt;/b&gt; by &lt;b&gt;%2&lt;/b&gt; - &lt;b&gt;%3&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/widgets/playertoolbar.cpp" line="332"/>
+        <location filename="../src/widgets/playertoolbar.cpp" line="360"/>
         <source>&lt;b&gt;%1&lt;/b&gt; stream</source>
         <translation>&lt;b&gt;%1&lt;/b&gt;をストリーミング再生中</translation>
     </message>
@@ -1877,7 +1890,7 @@
 <context>
     <name>PlaylistDelegate</name>
     <message>
-        <location filename="../src/playqueue/playlistview.cpp" line="621"/>
+        <location filename="../src/playqueue/playlistview.cpp" line="625"/>
         <source>media reading error</source>
         <translation>メディアの読み込みエラー</translation>
     </message>
@@ -1885,7 +1898,7 @@
 <context>
     <name>PlaylistView</name>
     <message>
-        <location filename="../src/playqueue/playlistview.cpp" line="261"/>
+        <location filename="../src/playqueue/playlistview.cpp" line="263"/>
         <source>Add file to play or Drag and Drop File from Collection</source>
         <translation>ファイルを追加するには、再生するかコレクション内にドラッグ＆ドロップします</translation>
     </message>

@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="cs">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="cs" version="2.0">
 <context>
     <name>AddFolderWidget</name>
     <message>
@@ -879,17 +877,17 @@
     <message>
         <location filename="../src/widgets/dialogs/first_time_dialog.cpp" line="34"/>
         <source>Setup your music collection directory</source>
-        <translation type="unfinished">Nastavte adresář se svou sbírkou</translation>
+        <translation>Nastavte adresář se svou sbírkou</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/first_time_dialog.cpp" line="42"/>
         <source>&lt;p&gt;Welcome to yarock&lt;/p&gt;&lt;p&gt;Select the location of your music collection:&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Vítejte v Yarocku&lt;b&gt;&lt;p&gt;Vyberte umístění své hudební sbírky&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/first_time_dialog.cpp" line="63"/>
         <source> Choose music folder</source>
-        <translation type="unfinished">Vybrat složku s hudbou</translation>
+        <translation>Vybrat složku s hudbou</translation>
     </message>
 </context>
 <context>
@@ -1404,14 +1402,6 @@
         <translation>Nastavení uložena</translation>
     </message>
     <message>
-        <source>&lt;b&gt;Welcome to yarock&lt;/b&gt;&lt;p&gt;No collection seems to be setup&lt;/p&gt;&lt;p&gt;Do you want to setup your collection now ?&lt;/p&gt;</source>
-        <translation type="obsolete">&lt;b&gt;Vítejte v Yarocku&lt;b&gt;&lt;p&gt;Zdá se, že nejsou nastaveny žádné sbírky.&lt;/p&gt;&lt;p&gt;Chcete je nastavit nyní?&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <source>Setup your music collection directory</source>
-        <translation type="obsolete">Nastavte adresář se svou sbírkou</translation>
-    </message>
-    <message>
         <location filename="../src/mainwindow.cpp" line="1013"/>
         <source>&lt;p&gt;Database need to be rebuilt&lt;/p&gt;</source>
         <translation>&lt;p&gt;Databázi je potřeba vytvořit znovu&lt;/p&gt;</translation>
@@ -1875,7 +1865,7 @@
     <message>
         <location filename="../src/widgets/playertoolbar.cpp" line="208"/>
         <source>[paused]</source>
-        <translation type="unfinished"></translation>
+        <translation>[pozastaveno]</translation>
     </message>
     <message>
         <location filename="../src/widgets/playertoolbar.cpp" line="346"/>

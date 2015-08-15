@@ -67,119 +67,119 @@
 <context>
     <name>BrowserView</name>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="601"/>
-        <location filename="../src/views/browser_view.cpp" line="635"/>
+        <location filename="../src/views/browser_view.cpp" line="607"/>
+        <location filename="../src/views/browser_view.cpp" line="641"/>
         <source>Context</source>
         <translation>相关资料</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="602"/>
-        <location filename="../src/views/browser_view.cpp" line="636"/>
+        <location filename="../src/views/browser_view.cpp" line="608"/>
+        <location filename="../src/views/browser_view.cpp" line="642"/>
         <source>History</source>
         <translation>历史记录</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="603"/>
+        <location filename="../src/views/browser_view.cpp" line="609"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; albums</source>
         <translation>收藏 : &lt;b&gt;%1&lt;b&gt;张专辑</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="604"/>
+        <location filename="../src/views/browser_view.cpp" line="610"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; artist</source>
         <translation>收藏: &lt;b&gt;%1&lt;/b&gt; 个艺术家</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="605"/>
+        <location filename="../src/views/browser_view.cpp" line="611"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; tracks</source>
         <translation>收藏 : &lt;b&gt;%1&lt;/b&gt; 首曲目</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="606"/>
+        <location filename="../src/views/browser_view.cpp" line="612"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; styles</source>
         <translation>收藏 : &lt;b&gt;%1&lt;/b&gt; 种风格</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="607"/>
+        <location filename="../src/views/browser_view.cpp" line="613"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; years</source>
         <translation>收藏 : &lt;b&gt;%1&lt;/b&gt; 个年代</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="608"/>
+        <location filename="../src/views/browser_view.cpp" line="614"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; favorite item</source>
         <translation>收藏 : &lt;b&gt;%1&lt;/b&gt; 个喜欢的项目</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="612"/>
+        <location filename="../src/views/browser_view.cpp" line="618"/>
         <source>Playlist : &lt;b&gt;%1&lt;/b&gt; playlists</source>
         <translation>播放列表 ：&lt;b&gt;%1&lt;/b&gt; 个列表</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="619"/>
+        <location filename="../src/views/browser_view.cpp" line="625"/>
         <source>Radio : &lt;b&gt;%1&lt;/b&gt; streams</source>
         <translation>广播: &lt;b&gt;%1&lt;/b&gt; 流</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="632"/>
+        <location filename="../src/views/browser_view.cpp" line="638"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="633"/>
+        <location filename="../src/views/browser_view.cpp" line="639"/>
         <source>Settings</source>
         <translation>设置</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="634"/>
+        <location filename="../src/views/browser_view.cpp" line="640"/>
         <source>Dashboard</source>
         <translation>Dashboard</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="637"/>
+        <location filename="../src/views/browser_view.cpp" line="643"/>
         <source>Artists</source>
         <translation>艺术家</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="638"/>
+        <location filename="../src/views/browser_view.cpp" line="644"/>
         <source>Albums</source>
         <translation>专辑</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="639"/>
+        <location filename="../src/views/browser_view.cpp" line="645"/>
         <source>Tracks</source>
         <translation>曲目</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="640"/>
+        <location filename="../src/views/browser_view.cpp" line="646"/>
         <source>Genres</source>
         <translation>风格</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="641"/>
+        <location filename="../src/views/browser_view.cpp" line="647"/>
         <source>Years</source>
         <translation>年代</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="642"/>
+        <location filename="../src/views/browser_view.cpp" line="648"/>
         <source>Favorites</source>
         <translation>喜欢</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="643"/>
+        <location filename="../src/views/browser_view.cpp" line="649"/>
         <source>Playlists</source>
         <translation>播放列表</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="644"/>
+        <location filename="../src/views/browser_view.cpp" line="650"/>
         <source>Smart playlists</source>
         <translation>智能列表</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="648"/>
+        <location filename="../src/views/browser_view.cpp" line="654"/>
         <source>Favorites radios</source>
         <translation>喜欢的广播</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="649"/>
+        <location filename="../src/views/browser_view.cpp" line="655"/>
         <source>Filesystem</source>
         <translation>文件系统</translation>
     </message>
@@ -804,62 +804,62 @@
 <context>
     <name>FileDialog</name>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="154"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="168"/>
         <source>back</source>
         <translation>返回</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="161"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="175"/>
         <source>forward</source>
         <translation>前进</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="167"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="181"/>
         <source>go up</source>
         <translation>向上</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="173"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="187"/>
         <source>home</source>
         <translation>home</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="181"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="195"/>
         <source>show hidden file</source>
         <translation>显示隐藏文件</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="220"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="234"/>
         <source>Audio files (*.mp3 *.wav *.ogg *.flac *.m4a *.aac)</source>
         <translation>音频文件 (*.mp3 *.wav *.ogg *.flac *.m4a *.aac)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="221"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="235"/>
         <source>Playlists files (*.m3u *.pls *.xspf)</source>
         <translation>播放列表文件 (*.m3u *.pls *.xspf)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="222"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="236"/>
         <source>All files (*.*)</source>
         <translation>所有文件 (*.*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="226"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="240"/>
         <source>All playlist (*.m3u *.pls *.xspf)</source>
         <translation>所有播放列表文件 (*.m3u *.pls *.xspf)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="227"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="241"/>
         <source>m3u playlist (*.m3u)</source>
         <translation>m3u 列表文件 (*.m3u)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="228"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="242"/>
         <source>pls playlist (*.pls)</source>
         <translation>pls 列表文件(*.pls)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="229"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="243"/>
         <source>xspf playlist (*.xspf)</source>
         <translation>xspf 列表 (*.xspf)</translation>
     </message>
@@ -867,9 +867,27 @@
 <context>
     <name>FileScene</name>
     <message>
-        <location filename="../src/views/filesystem/file_scene.cpp" line="246"/>
+        <location filename="../src/views/filesystem/file_scene.cpp" line="247"/>
         <source>No entry found</source>
         <translation>这里什么都木有</translation>
+    </message>
+</context>
+<context>
+    <name>FirstTimeDialog</name>
+    <message>
+        <location filename="../src/widgets/dialogs/first_time_dialog.cpp" line="34"/>
+        <source>Setup your music collection directory</source>
+        <translation>设置你的音乐收藏目录</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dialogs/first_time_dialog.cpp" line="42"/>
+        <source>&lt;p&gt;Welcome to yarock&lt;/p&gt;&lt;p&gt;Select the location of your music collection:&lt;/p&gt;</source>
+        <translation>&lt;b&gt;欢迎来到 yarock&lt;/b&gt;&lt;p&gt;请选择您的音乐收藏夹:&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dialogs/first_time_dialog.cpp" line="63"/>
+        <source> Choose music folder</source>
+        <translation>选择音乐文件夹</translation>
     </message>
 </context>
 <context>
@@ -1198,200 +1216,190 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/mainwindow.cpp" line="341"/>
+        <location filename="../src/mainwindow.cpp" line="342"/>
         <source>&amp;Quit</source>
         <translation>退出(&amp;Q)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="342"/>
+        <location filename="../src/mainwindow.cpp" line="343"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="344"/>
+        <location filename="../src/mainwindow.cpp" line="345"/>
         <source>settings</source>
         <translation>设置</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="347"/>
+        <location filename="../src/mainwindow.cpp" line="348"/>
         <source>&amp;Add media to playlist</source>
         <translation>添加文件到列表(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="348"/>
+        <location filename="../src/mainwindow.cpp" line="349"/>
         <source>&amp;Add directory to playlist</source>
         <translation>添加目录到列表(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="349"/>
+        <location filename="../src/mainwindow.cpp" line="350"/>
         <source>&amp;Add Url...</source>
         <translation>添加网址... (&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="350"/>
+        <location filename="../src/mainwindow.cpp" line="351"/>
         <source>&amp;Clear playlist</source>
         <translation>清除播放列表(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="351"/>
+        <location filename="../src/mainwindow.cpp" line="352"/>
         <source>&amp;Save playlist to file</source>
         <translation>将列表保存为文件(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="352"/>
+        <location filename="../src/mainwindow.cpp" line="353"/>
         <source>&amp;Auto save playlist to yarock database</source>
         <translation>自动保存列表到 yarock 数据库(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="353"/>
+        <location filename="../src/mainwindow.cpp" line="354"/>
         <source>&amp;Remove media from playlist</source>
         <translation>从列表中移除文件(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="354"/>
+        <location filename="../src/mainwindow.cpp" line="355"/>
         <source>Stop after this track</source>
         <translation>播放完此曲目后停止</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="357"/>
+        <location filename="../src/mainwindow.cpp" line="358"/>
         <source>Remove duplicate</source>
         <translation>移除重复</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="374"/>
+        <location filename="../src/mainwindow.cpp" line="375"/>
         <source>Play or Pause media</source>
         <translation>播放或暂停</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="375"/>
+        <location filename="../src/mainwindow.cpp" line="376"/>
         <source>Stop playing media</source>
         <translation>停止播放</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="376"/>
+        <location filename="../src/mainwindow.cpp" line="377"/>
         <source>Play next media</source>
         <translation>下一首</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="377"/>
+        <location filename="../src/mainwindow.cpp" line="378"/>
         <source>Play previous media</source>
         <translation>上一首</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="379"/>
+        <location filename="../src/mainwindow.cpp" line="380"/>
         <source>Audio equalizer</source>
         <translation>均衡器</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="382"/>
+        <location filename="../src/mainwindow.cpp" line="383"/>
         <source>Database operation</source>
         <translation>数据库操作</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="385"/>
+        <location filename="../src/mainwindow.cpp" line="386"/>
         <source>Show playqueue panel</source>
         <translation>显示播放队列面板</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="386"/>
+        <location filename="../src/mainwindow.cpp" line="387"/>
         <source>Show menu panel</source>
         <translation>显示菜单栏</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="387"/>
+        <location filename="../src/mainwindow.cpp" line="388"/>
         <source>Show now playing</source>
         <translation>显示正在播放</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="393"/>
+        <location filename="../src/mainwindow.cpp" line="394"/>
         <source>Switch to minimal mode</source>
         <translation>切换到迷你模式</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="394"/>
+        <location filename="../src/mainwindow.cpp" line="395"/>
         <source>Switch to normal mode</source>
         <translation>切换到正常模式</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="362"/>
+        <location filename="../src/mainwindow.cpp" line="363"/>
         <source>Send LastFm love</source>
         <translation>在 LastFm 上设为喜欢</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="365"/>
+        <location filename="../src/mainwindow.cpp" line="366"/>
         <source>Show cover</source>
         <translation>显示封面</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="369"/>
+        <location filename="../src/mainwindow.cpp" line="370"/>
         <source>Show rating</source>
         <translation>显示评分</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="397"/>
+        <location filename="../src/mainwindow.cpp" line="398"/>
         <source>Jump to artist</source>
         <translation>跳到艺术家页</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="398"/>
+        <location filename="../src/mainwindow.cpp" line="399"/>
         <source>Jump to album</source>
         <translation>跳到专辑页</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="399"/>
-        <location filename="../src/mainwindow.cpp" line="402"/>
+        <location filename="../src/mainwindow.cpp" line="400"/>
+        <location filename="../src/mainwindow.cpp" line="403"/>
         <source>Jump to track</source>
         <translation>跳到曲目</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="406"/>
+        <location filename="../src/mainwindow.cpp" line="407"/>
         <source>Enable search popup</source>
         <translation>启用搜索预测</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="532"/>
+        <location filename="../src/mainwindow.cpp" line="533"/>
         <source>Add music files or playlist</source>
         <translation>添加文件或列表</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="544"/>
+        <location filename="../src/mainwindow.cpp" line="545"/>
         <source>Add music directories</source>
         <translation>添加音乐目录</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="589"/>
+        <location filename="../src/mainwindow.cpp" line="590"/>
         <source>Save playlist to file</source>
         <translation>将列表保存为文件</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="600"/>
+        <location filename="../src/mainwindow.cpp" line="601"/>
         <source>Playlist name</source>
         <translation>播放列表名</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="600"/>
+        <location filename="../src/mainwindow.cpp" line="601"/>
         <source>Save playlist</source>
         <translation>保存播放列表</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="670"/>
+        <location filename="../src/mainwindow.cpp" line="671"/>
         <source>Playing error</source>
         <translation>播放错误</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="951"/>
+        <location filename="../src/mainwindow.cpp" line="952"/>
         <source>settings saved</source>
         <translation>设置已保存</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="993"/>
-        <source>&lt;b&gt;Welcome to yarock&lt;/b&gt;&lt;p&gt;No collection seems to be setup&lt;/p&gt;&lt;p&gt;Do you want to setup your collection now ?&lt;/p&gt;</source>
-        <translation>&lt;b&gt;欢迎来到 yarock&lt;/b&gt;&lt;p&gt;貌似还未设置收藏库&lt;/p&gt;&lt;p&gt; 现在就想设置收藏吗？&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="997"/>
-        <source>Setup your music collection directory</source>
-        <translation>设置你的音乐收藏目录</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1013"/>
@@ -1595,8 +1603,8 @@
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="547"/>
-        <location filename="../src/views/settings/settings_widget.cpp" line="819"/>
-        <location filename="../src/views/settings/settings_widget.cpp" line="832"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="811"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="824"/>
         <source>New database</source>
         <translation>新建数据库</translation>
     </message>
@@ -1607,7 +1615,7 @@
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="555"/>
-        <location filename="../src/views/settings/settings_widget.cpp" line="905"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="897"/>
         <source>Rename database</source>
         <translation>重命名数据库</translation>
     </message>
@@ -1618,7 +1626,7 @@
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="576"/>
-        <location filename="../src/views/settings/settings_widget.cpp" line="948"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="940"/>
         <source> Choose music folder</source>
         <translation>选择音乐目录</translation>
     </message>
@@ -1653,23 +1661,23 @@
         <translation>将评分写入文件</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="819"/>
-        <location filename="../src/views/settings/settings_widget.cpp" line="905"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="811"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="897"/>
         <source>Name</source>
         <translation>名称</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="833"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="825"/>
         <source>The database  &quot;%1&quot; already exist, please try another name</source>
         <translation>数据库&quot;%1&quot;已经存在，请使用别的名称</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="886"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="878"/>
         <source>Delete database properties</source>
         <translation>删除数据库属性</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="887"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="879"/>
         <source>Are you sure you want to delete the &quot;%1&quot; database ?</source>
         <translation>确定要删除数据库&quot;%1&quot;?</translation>
     </message>
@@ -1720,58 +1728,58 @@
 <context>
     <name>PageScrobbler</name>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1373"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1365"/>
         <source>Scrobbler settings</source>
         <translation>Scrobbler 设置</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1397"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1389"/>
         <source>Use LastFm scrobbler</source>
         <translation>使用 LastFm scrobbler</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1407"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1399"/>
         <source>Account details</source>
         <translation>账户详情</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1413"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1405"/>
         <source>username</source>
         <translation>用户名</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1416"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1408"/>
         <source>password</source>
         <translation>密码</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1429"/>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1552"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1421"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1544"/>
         <source>Sign In</source>
         <translation>登录</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1545"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1537"/>
         <source>You are log in lastFm service as &lt;b&gt;%1&lt;/b&gt;</source>
         <translation>您使用&lt;b&gt;%1&lt;/b&gt;登录到LastFm</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1547"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1539"/>
         <source>Sign Out</source>
         <translation>注销</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1551"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1543"/>
         <source>You are not log into</source>
         <translation>当前未登录</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1586"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1578"/>
         <source>Authentication failed</source>
         <translation>认证失败</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1587"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1579"/>
         <source>Your Last.fm credentials were incorrect</source>
         <translation>您的Last fm 证书错误</translation>
     </message>
@@ -1779,52 +1787,52 @@
 <context>
     <name>PageShortcut</name>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1046"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1038"/>
         <source>Shortcut settings</source>
         <translation>快捷键设置</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1057"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1049"/>
         <source>Play/Pause</source>
         <translation>播放/暂停</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1058"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1050"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1059"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1051"/>
         <source>Previous track</source>
         <translation>上一首</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1060"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1052"/>
         <source>Next track</source>
         <translation>下一首</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1061"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1053"/>
         <source>Increase volume</source>
         <translation>增加音量</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1062"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1054"/>
         <source>Decrease volume</source>
         <translation>减小音量</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1063"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1055"/>
         <source>Mute/Unmute volume</source>
         <translation>静音/取消静音</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1064"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1056"/>
         <source>Jump to track</source>
         <translation>跳到曲目</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1065"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1057"/>
         <source>Clear playqueue</source>
         <translation>清除播放队列</translation>
     </message>
@@ -1832,22 +1840,22 @@
 <context>
     <name>PageSongInfo</name>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1633"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1625"/>
         <source>Song info</source>
         <translation>歌曲信息</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1651"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1643"/>
         <source>Choose the websites you want to use when searching for lyrics</source>
         <translation>选择搜索歌词要使用的网站</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1657"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1649"/>
         <source>move up</source>
         <translation>向上移动</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1658"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1650"/>
         <source>move down</source>
         <translation>向下移动</translation>
     </message>
@@ -1855,13 +1863,18 @@
 <context>
     <name>PlayerToolBar</name>
     <message>
-        <location filename="../src/widgets/playertoolbar.cpp" line="318"/>
-        <location filename="../src/widgets/playertoolbar.cpp" line="326"/>
+        <location filename="../src/widgets/playertoolbar.cpp" line="208"/>
+        <source>[paused]</source>
+        <translation>[已暂停]</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/playertoolbar.cpp" line="346"/>
+        <location filename="../src/widgets/playertoolbar.cpp" line="354"/>
         <source>&lt;b&gt;%1&lt;/b&gt; by &lt;b&gt;%2&lt;/b&gt; on &lt;b&gt;%3&lt;/b&gt;</source>
         <translation>&lt;b&gt;%2&lt;/b&gt; - &lt;b&gt;%1&lt;/b&gt; -《 &lt;b&gt;%3&lt;/b&gt;》</translation>
     </message>
     <message>
-        <location filename="../src/widgets/playertoolbar.cpp" line="332"/>
+        <location filename="../src/widgets/playertoolbar.cpp" line="360"/>
         <source>&lt;b&gt;%1&lt;/b&gt; stream</source>
         <translation>&lt;b&gt;%1&lt;/b&gt; 流</translation>
     </message>
@@ -1877,7 +1890,7 @@
 <context>
     <name>PlaylistDelegate</name>
     <message>
-        <location filename="../src/playqueue/playlistview.cpp" line="621"/>
+        <location filename="../src/playqueue/playlistview.cpp" line="625"/>
         <source>media reading error</source>
         <translation>媒体读取错误</translation>
     </message>
@@ -1885,7 +1898,7 @@
 <context>
     <name>PlaylistView</name>
     <message>
-        <location filename="../src/playqueue/playlistview.cpp" line="261"/>
+        <location filename="../src/playqueue/playlistview.cpp" line="263"/>
         <source>Add file to play or Drag and Drop File from Collection</source>
         <translation>添加外部文件 或拖拽收藏中的文件到此处</translation>
     </message>

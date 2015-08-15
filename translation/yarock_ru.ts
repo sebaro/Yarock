@@ -1,29 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="ru">
-<context>
-    <name>AboutQtDialog</name>
-    <message>
-        <source>About Qt</source>
-        <translation type="obsolete">О Qt</translation>
-    </message>
-</context>
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="ru" version="2.0">
 <context>
     <name>AddFolderWidget</name>
     <message>
         <location filename="../src/views/settings/addfolder_widget.cpp" line="50"/>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть</translation>
     </message>
     <message>
         <location filename="../src/views/settings/addfolder_widget.cpp" line="54"/>
         <source>Remove</source>
-        <translation type="unfinished">Удалить</translation>
+        <translation>Удалить</translation>
     </message>
     <message>
         <location filename="../src/views/settings/addfolder_widget.cpp" line="69"/>
         <source>Open folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть папку</translation>
     </message>
 </context>
 <context>
@@ -31,22 +22,22 @@
     <message>
         <location filename="../src/widgets/dialogs/addstreamdialog.cpp" line="34"/>
         <source>Add Stream</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавить поток</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/addstreamdialog.cpp" line="49"/>
         <source>url</source>
-        <translation type="unfinished"></translation>
+        <translation>Ссылка</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/addstreamdialog.cpp" line="51"/>
         <source>name</source>
-        <translation type="unfinished">название</translation>
+        <translation>Название</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/addstreamdialog.cpp" line="59"/>
         <source>category</source>
-        <translation type="unfinished"></translation>
+        <translation>Категория</translation>
     </message>
 </context>
 <context>
@@ -54,7 +45,7 @@
     <message>
         <location filename="../src/views/context/context_widget.cpp" line="550"/>
         <source>Album tracks</source>
-        <translation type="unfinished"></translation>
+        <translation>Дорожки альбома</translation>
     </message>
 </context>
 <context>
@@ -62,23 +53,15 @@
     <message>
         <location filename="../src/views/context/context_widget.cpp" line="164"/>
         <source>Biography</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No information found</source>
-        <translation type="obsolete">Информация не найдена</translation>
+        <translation>Биография</translation>
     </message>
 </context>
 <context>
     <name>ArtistSimilarWidget</name>
     <message>
-        <source>Similars artists</source>
-        <translation type="obsolete">Похожие артисты</translation>
-    </message>
-    <message>
         <location filename="../src/views/context/context_widget.cpp" line="266"/>
         <source>Similar artists</source>
-        <translation type="unfinished"></translation>
+        <translation>Похожие исполнители</translation>
     </message>
 </context>
 <context>
@@ -87,156 +70,118 @@
         <location filename="../src/views/browser_view.cpp" line="607"/>
         <location filename="../src/views/browser_view.cpp" line="641"/>
         <source>Context</source>
-        <translation type="unfinished"></translation>
+        <translation>Контекст</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="608"/>
         <location filename="../src/views/browser_view.cpp" line="642"/>
         <source>History</source>
-        <translation type="unfinished"></translation>
+        <translation>История</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="609"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; albums</source>
-        <translation type="unfinished"></translation>
+        <translation>Коллекция : &lt;b&gt;%1&lt;/b&gt; альбомы</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="610"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; artist</source>
-        <translation type="unfinished"></translation>
+        <translation>Коллекция : &lt;b&gt;%1&lt;/b&gt; исполнитель</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="611"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; tracks</source>
-        <translation type="unfinished"></translation>
+        <translation>Коллекция : &lt;b&gt;%1&lt;/b&gt; дорожек</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="612"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; styles</source>
-        <translation type="unfinished"></translation>
+        <translation>Коллекция : &lt;b&gt;%1&lt;/b&gt; стилей</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="613"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; years</source>
-        <translation type="unfinished"></translation>
+        <translation>Коллекция : &lt;b&gt;%1&lt;/b&gt; года</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="614"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; favorite item</source>
-        <translation type="unfinished"></translation>
+        <translation>Коллекция : &lt;b&gt;%1&lt;/b&gt; любимые</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="618"/>
         <source>Playlist : &lt;b&gt;%1&lt;/b&gt; playlists</source>
-        <translation type="unfinished"></translation>
+        <translation>Плей-лист : &lt;b&gt;%1&lt;/b&gt; песен</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="625"/>
         <source>Radio : &lt;b&gt;%1&lt;/b&gt; streams</source>
-        <translation type="unfinished"></translation>
+        <translation>Радио : &lt;b&gt;%1&lt;/b&gt; потоков</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="638"/>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>О программе</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="639"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="640"/>
         <source>Dashboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Личный кабинет</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="643"/>
         <source>Artists</source>
-        <translation type="unfinished">Исполнители</translation>
+        <translation>Исполнители</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="644"/>
         <source>Albums</source>
-        <translation type="unfinished">Альбомы</translation>
+        <translation>Альбомы</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="645"/>
         <source>Tracks</source>
-        <translation type="unfinished">Треки</translation>
+        <translation>Дорожки</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="646"/>
         <source>Genres</source>
-        <translation type="unfinished"></translation>
+        <translation>Жанры</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="647"/>
         <source>Years</source>
-        <translation type="unfinished"></translation>
+        <translation>Года</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="648"/>
         <source>Favorites</source>
-        <translation type="unfinished"></translation>
+        <translation>Избранное</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="649"/>
         <source>Playlists</source>
-        <translation type="unfinished"></translation>
+        <translation>Плей-листы</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="650"/>
         <source>Smart playlists</source>
-        <translation type="unfinished"></translation>
+        <translation>Умные плей-листы</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="654"/>
         <source>Favorites radios</source>
-        <translation type="unfinished"></translation>
+        <translation>Избранное радио</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="655"/>
         <source>Filesystem</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>CentralToolBar</name>
-    <message>
-        <source>Go back</source>
-        <translation type="obsolete">Назад</translation>
-    </message>
-    <message>
-        <source>Go forward</source>
-        <translation type="obsolete">Вперед</translation>
-    </message>
-</context>
-<context>
-    <name>CollectionScene</name>
-    <message>
-        <source>Albums</source>
-        <translation type="obsolete">Альбомы</translation>
-    </message>
-    <message>
-        <source>All Albums</source>
-        <translation type="obsolete">Все альбомы</translation>
-    </message>
-    <message>
-        <source>Artists</source>
-        <translation type="obsolete">Исполнители</translation>
-    </message>
-    <message>
-        <source>Tracks</source>
-        <translation type="obsolete">Треки</translation>
-    </message>
-    <message>
-        <source>Select cover file...</source>
-        <translation type="obsolete">Выбрать файл с обложкой...</translation>
-    </message>
-    <message>
-        <source>Files (*.png *.jpg)</source>
-        <translation type="obsolete">Изображения (*.png *.jpg)</translation>
+        <translation>Файловая система</translation>
     </message>
 </context>
 <context>
@@ -249,7 +194,7 @@
     <message>
         <location filename="../src/commandlineoptions.cpp" line="137"/>
         <source>options</source>
-        <translation>настройка</translation>
+        <translation>Настройки</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="137"/>
@@ -259,17 +204,17 @@
     <message>
         <location filename="../src/commandlineoptions.cpp" line="137"/>
         <source>Player options</source>
-        <translation>Опции плеера</translation>
+        <translation>Опции проигрывателя</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="138"/>
         <source>Start the playlist currently playing</source>
-        <translation type="unfinished"></translation>
+        <translation>Запустить список с этого места</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="139"/>
         <source>Play if stopped, pause if playing</source>
-        <translation type="unfinished"></translation>
+        <translation>Старт, если остановлено, Пауза, если проигрывается</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="140"/>
@@ -284,17 +229,17 @@
     <message>
         <location filename="../src/commandlineoptions.cpp" line="142"/>
         <source>Skip backwards in playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Перейти назад в списке</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="143"/>
         <source>Skip forwards in playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Перейти вперёд в списке</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="144"/>
         <source>Set the volume to &lt;value&gt; percent</source>
-        <translation type="unfinished"></translation>
+        <translation>Установить громкость в &lt;value&gt; процентов</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="145"/>
@@ -309,42 +254,42 @@
     <message>
         <location filename="../src/commandlineoptions.cpp" line="147"/>
         <source>Seek the currently playing track to an absolute position</source>
-        <translation type="unfinished"></translation>
+        <translation>Поиск в текущей дорожке на абсолютной позиции</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="148"/>
         <source>Seek the currently playing track by a relative amount</source>
-        <translation type="unfinished"></translation>
+        <translation>Поиск в текущей дорожке на относительное количество</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="149"/>
         <source>Playlist options</source>
-        <translation>Опции плейлиста</translation>
+        <translation>Опции списка воспроизведения</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="150"/>
         <source>Append files/URLs to the playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Применённые файлы/адреса в список воспроизведения</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="151"/>
         <source>Loads files/URLs, replacing current playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузка файлов/адресов,замена текущего списка воспроизведения</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="152"/>
         <source>Play the &lt;n&gt;th track in the playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Воспроизвести &lt;n&gt; трек в списке</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="153"/>
         <source>Other options</source>
-        <translation type="unfinished"></translation>
+        <translation>Другие настройки</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="154"/>
         <source>Print debug information</source>
-        <translation type="unfinished"></translation>
+        <translation>Печать информации отладки</translation>
     </message>
 </context>
 <context>
@@ -352,27 +297,27 @@
     <message>
         <location filename="../src/widgets/dialogs/dboperationdialog.cpp" line="34"/>
         <source>Database operation</source>
-        <translation type="unfinished">Операции с базой данных</translation>
+        <translation>Операции с базой данных</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/dboperationdialog.cpp" line="42"/>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Обновить</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/dboperationdialog.cpp" line="43"/>
         <source>Rebuild</source>
-        <translation type="unfinished"></translation>
+        <translation>Пересоздать</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/dboperationdialog.cpp" line="44"/>
         <source>Cover</source>
-        <translation type="unfinished"></translation>
+        <translation>Обложка</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/dboperationdialog.cpp" line="45"/>
         <source>Artist</source>
-        <translation type="unfinished"></translation>
+        <translation>Исполнитель</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/dboperationdialog.cpp" line="58"/>
@@ -387,17 +332,17 @@
     <message>
         <location filename="../src/widgets/dialogs/dboperationdialog.cpp" line="61"/>
         <source>* all changes into collection database will be discarded !!</source>
-        <translation type="unfinished"></translation>
+        <translation>* все изменения в базе данных коллекции будут потеряны !!</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/dboperationdialog.cpp" line="63"/>
         <source>Download missing album cover</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузить недостающую обложку альбома</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/dboperationdialog.cpp" line="66"/>
         <source>Download missing artist image</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузить недостающее изображение исполнителя</translation>
     </message>
 </context>
 <context>
@@ -415,7 +360,7 @@
     <message>
         <location filename="../src/dbus/dbusnotification.cpp" line="209"/>
         <source>Playlist finished</source>
-        <translation>Плейлист завершен</translation>
+        <translation>Плей-лист закончился</translation>
     </message>
     <message>
         <location filename="../src/dbus/dbusnotification.cpp" line="222"/>
@@ -430,93 +375,89 @@
         <source>Discography</source>
         <translation>Дискография</translation>
     </message>
-    <message>
-        <source>Discogs Link</source>
-        <translation type="obsolete">Ссылка Discogs</translation>
-    </message>
 </context>
 <context>
     <name>EditorAlbum</name>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="120"/>
         <source>Edit album</source>
-        <translation type="unfinished"></translation>
+        <translation>Редактировать альбом</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="148"/>
         <source>Load from file</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузить из файла</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="149"/>
         <source>Download</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузить</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="150"/>
         <source>Remove</source>
-        <translation type="unfinished">Удалить</translation>
+        <translation>Удалить</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="170"/>
         <source>Album</source>
-        <translation type="unfinished">Альбом</translation>
+        <translation>Альбом</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="172"/>
         <source>Artist</source>
-        <translation type="unfinished"></translation>
+        <translation>Исполнитель</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="174"/>
         <source>Year</source>
-        <translation type="unfinished">Год</translation>
+        <translation>Год</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="177"/>
         <source>Genre</source>
-        <translation type="unfinished">Жанр</translation>
+        <translation>Жанр</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="180"/>
         <source>Playcount</source>
-        <translation type="unfinished">Кол-во воспроизведений</translation>
+        <translation>Количество воспроизведений</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="182"/>
         <source>Rating</source>
-        <translation type="unfinished">Рейтинг</translation>
+        <translation>Рейтинг</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="188"/>
         <source>Cover</source>
-        <translation type="unfinished"></translation>
+        <translation>Обложка</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="194"/>
         <source>Tracks</source>
-        <translation type="unfinished">Треки</translation>
+        <translation>Дорожки</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="247"/>
         <location filename="../src/widgets/editors/editor_album.cpp" line="266"/>
         <source>clear user rating</source>
-        <translation type="unfinished"></translation>
+        <translation>Очистить рейтинг</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="266"/>
         <source>auto rating</source>
-        <translation type="unfinished"></translation>
+        <translation>Авто рейтинг</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="416"/>
         <source>Select image file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбрать файл изображения...</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="417"/>
         <source>Files (*.png *.jpg)</source>
-        <translation type="unfinished">Изображения (*.png *.jpg)</translation>
+        <translation>Изображения (*.png *.jpg)</translation>
     </message>
 </context>
 <context>
@@ -524,63 +465,63 @@
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="120"/>
         <source>Edit artist</source>
-        <translation type="unfinished"></translation>
+        <translation>Редактировать исполнителя</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="138"/>
         <source>Load from file</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузить из файла</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="139"/>
         <source>Download</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузить</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="140"/>
         <source>Remove</source>
-        <translation type="unfinished">Удалить</translation>
+        <translation>Удалить</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="157"/>
         <source>Artist</source>
-        <translation type="unfinished"></translation>
+        <translation>Исполнитель</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="159"/>
         <source>Playcount</source>
-        <translation type="unfinished">Кол-во воспроизведений</translation>
+        <translation>Количество воспроизведений</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="161"/>
         <source>Rating</source>
-        <translation type="unfinished">Рейтинг</translation>
+        <translation>Рейтинг</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="167"/>
         <source>Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Изображение</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="211"/>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="230"/>
         <source>clear user rating</source>
-        <translation type="unfinished"></translation>
+        <translation>Очистить рейтинг</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="230"/>
         <source>auto rating</source>
-        <translation type="unfinished"></translation>
+        <translation>Авто рейтинг</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="334"/>
         <source>Select image file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбрать файл изображения...</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="335"/>
         <source>Files (*.png *.jpg)</source>
-        <translation type="unfinished">Изображения (*.png *.jpg)</translation>
+        <translation>Изображения (*.png *.jpg)</translation>
     </message>
 </context>
 <context>
@@ -588,72 +529,72 @@
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="78"/>
         <source>Edit playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Изменить список</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="85"/>
         <source>playlist name</source>
-        <translation type="unfinished"></translation>
+        <translation>Название списка</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="93"/>
         <source>To database</source>
-        <translation type="unfinished"></translation>
+        <translation>В базе данных</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="94"/>
         <source>To file</source>
-        <translation type="unfinished"></translation>
+        <translation>В файле</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="99"/>
         <source>Choose file to save playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбрать файл сохранения списка</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="107"/>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="132"/>
         <source>Name</source>
-        <translation type="unfinished">Название</translation>
+        <translation>Название</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="221"/>
         <source>Add music files or playlist</source>
-        <translation type="unfinished">Добавить музыкальные файлы или плейлист</translation>
+        <translation>Добавить музыкальные файлы или список воспроизведения</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="237"/>
         <source>Add music directories</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавить каталоги с музыкой</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="284"/>
         <source>Save playlist to file</source>
-        <translation type="unfinished">Сохранить плейлист в файл</translation>
+        <translation>Сохранить список в файл</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="305"/>
         <source>&amp;Add media to playlist</source>
-        <translation type="unfinished">Добавить &amp;мультимедиа в плейлист</translation>
+        <translation>Добавить &amp;композицию в список</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="306"/>
         <source>&amp;Add directory to playlist</source>
-        <translation type="unfinished">Добавить &amp;каталог в плейлист</translation>
+        <translation>Добавить &amp;каталог в список</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="307"/>
         <source>&amp;Add Url...</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавить &amp;адрес...</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="309"/>
         <source>Clear playlist</source>
-        <translation type="unfinished">Очистить плейлист</translation>
+        <translation>Очистить список</translation>
     </message>
 </context>
 <context>
@@ -661,27 +602,27 @@
     <message>
         <location filename="../src/widgets/editors/editor_search.cpp" line="41"/>
         <source>Search mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Режим поиска</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_search.cpp" line="46"/>
         <source>Match search term (AND)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_search.cpp" line="48"/>
         <source>Match search term (OR)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_search.cpp" line="51"/>
         <source>Search terms</source>
-        <translation type="unfinished"></translation>
+        <translation>Поиск в промежутке времени</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_search.cpp" line="64"/>
         <source>Add search query</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавить поисковый запрос</translation>
     </message>
 </context>
 <context>
@@ -689,92 +630,92 @@
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="64"/>
         <source>Edit smart playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Изменить умный список</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="75"/>
         <source>playlist name</source>
-        <translation type="unfinished"></translation>
+        <translation>Название списка</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="79"/>
         <source>Name</source>
-        <translation type="unfinished">Название</translation>
+        <translation>Название</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="109"/>
         <source>Search mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Режим поиска</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="114"/>
         <source>Match search term (AND)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="116"/>
         <source>Match search term (OR)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="118"/>
         <source>Match all tracks (ALL)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="128"/>
         <source>Search terms</source>
-        <translation type="unfinished"></translation>
+        <translation>Поиск в промежутке времени</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="139"/>
         <source>Add search query</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавить поисковый запрос</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="148"/>
         <source>Sort result mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Режим сортировки результатов</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="154"/>
         <source>Keep original order</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранять исходный порядок</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="155"/>
         <source>Random</source>
-        <translation type="unfinished"></translation>
+        <translation>Случайно</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="156"/>
         <source>Sort by</source>
-        <translation type="unfinished">Сортировать по</translation>
+        <translation>Сортировать по</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="191"/>
         <source>Limit</source>
-        <translation type="unfinished"></translation>
+        <translation>Ограничение</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="198"/>
         <source>No limit</source>
-        <translation type="unfinished"></translation>
+        <translation>Без ограничения</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="199"/>
         <source>Limit at</source>
-        <translation type="unfinished"></translation>
+        <translation>Ограничить до</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="375"/>
         <source>Media Search Engine Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Диалог движка поиска</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="376"/>
         <source>&lt;p&gt;Search query is not valid&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;Не верный поисковый запрос&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -782,52 +723,52 @@
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="149"/>
         <source>Edit track</source>
-        <translation type="unfinished"></translation>
+        <translation>Редактировать дорожку</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="201"/>
         <source>File</source>
-        <translation type="unfinished">Файл</translation>
+        <translation>Файл</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="205"/>
         <source>Title</source>
-        <translation type="unfinished"></translation>
+        <translation>Название</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="209"/>
         <source>Album</source>
-        <translation type="unfinished">Альбом</translation>
+        <translation>Альбом</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="213"/>
         <source>Artist</source>
-        <translation type="unfinished"></translation>
+        <translation>Исполнитель</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="217"/>
         <source>Year</source>
-        <translation type="unfinished">Год</translation>
+        <translation>Год</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="221"/>
         <source>Genre</source>
-        <translation type="unfinished">Жанр</translation>
+        <translation>Жанр</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="225"/>
         <source>Number</source>
-        <translation type="unfinished">Номер</translation>
+        <translation>Номер</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="229"/>
         <source>Playcount</source>
-        <translation type="unfinished">Кол-во воспроизведений</translation>
+        <translation>Количество воспроизведений</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="233"/>
         <source>Rating</source>
-        <translation type="unfinished">Рейтинг</translation>
+        <translation>Рейтинг</translation>
     </message>
 </context>
 <context>
@@ -836,23 +777,23 @@
         <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="64"/>
         <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="245"/>
         <source>Save preset</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить предустановку</translation>
     </message>
     <message>
         <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="69"/>
         <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="230"/>
         <source>Delete preset</source>
-        <translation type="unfinished"></translation>
+        <translation>Удалить предустановку</translation>
     </message>
     <message>
         <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="81"/>
         <source>Enable equalizer</source>
-        <translation type="unfinished"></translation>
+        <translation>Включить эквалайзер</translation>
     </message>
     <message>
         <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="231"/>
         <source>Are you sure you want to delete the &quot;%1&quot; preset?</source>
-        <translation type="unfinished"></translation>
+        <translation>Хотите удалить предустановку &quot;%1&quot;?</translation>
     </message>
     <message>
         <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="245"/>
@@ -865,62 +806,62 @@
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="168"/>
         <source>back</source>
-        <translation type="unfinished"></translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="175"/>
         <source>forward</source>
-        <translation type="unfinished"></translation>
+        <translation>Вперед</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="181"/>
         <source>go up</source>
-        <translation type="unfinished"></translation>
+        <translation>Вверх</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="187"/>
         <source>home</source>
-        <translation type="unfinished"></translation>
+        <translation>Домой</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="195"/>
         <source>show hidden file</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать скрытые файлы</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="234"/>
         <source>Audio files (*.mp3 *.wav *.ogg *.flac *.m4a *.aac)</source>
-        <translation type="unfinished"></translation>
+        <translation>Аудио файлы (*.mp3 *.wav *.ogg *.flac *.m4a *.aac)</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="235"/>
         <source>Playlists files (*.m3u *.pls *.xspf)</source>
-        <translation type="unfinished"></translation>
+        <translation>Файлы списков воспроизведения (*.m3u *.pls *.xspf)</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="236"/>
         <source>All files (*.*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Все файлы (*.*)</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="240"/>
         <source>All playlist (*.m3u *.pls *.xspf)</source>
-        <translation type="unfinished"></translation>
+        <translation>Все списки воспроизведения (*.m3u *.pls *.xspf)</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="241"/>
         <source>m3u playlist (*.m3u)</source>
-        <translation type="unfinished"></translation>
+        <translation>Список воспроизведения m3u (*.m3u)</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="242"/>
         <source>pls playlist (*.pls)</source>
-        <translation type="unfinished"></translation>
+        <translation>Список воспроизведения pls (*.pls)</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="243"/>
         <source>xspf playlist (*.xspf)</source>
-        <translation type="unfinished"></translation>
+        <translation>Список воспроизведения xspf (*.xspf)</translation>
     </message>
 </context>
 <context>
@@ -928,7 +869,7 @@
     <message>
         <location filename="../src/views/filesystem/file_scene.cpp" line="247"/>
         <source>No entry found</source>
-        <translation type="unfinished"></translation>
+        <translation>Запись не найдена</translation>
     </message>
 </context>
 <context>
@@ -936,17 +877,17 @@
     <message>
         <location filename="../src/widgets/dialogs/first_time_dialog.cpp" line="34"/>
         <source>Setup your music collection directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Установить каталог вашей коллекции мызыки</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/first_time_dialog.cpp" line="42"/>
         <source>&lt;p&gt;Welcome to yarock&lt;/p&gt;&lt;p&gt;Select the location of your music collection:&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;Добро пожаловать в yarock&lt;/p&gt;&lt;p&gt;Выберите расположение вашей музыкальной коллекции:&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/first_time_dialog.cpp" line="63"/>
         <source> Choose music folder</source>
-        <translation type="unfinished"></translation>
+        <translation> Выбрать папку с музыкой</translation>
     </message>
 </context>
 <context>
@@ -960,12 +901,12 @@
         <location filename="../src/views/item_menu.cpp" line="86"/>
         <location filename="../src/views/item_menu.cpp" line="90"/>
         <source>Enqueue to playqueue</source>
-        <translation type="unfinished"></translation>
+        <translation>Поставить в очередь воспроизведения</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="79"/>
         <source>&amp;Remove playlist from disk</source>
-        <translation>Удалить п&amp;лейлист с диска</translation>
+        <translation>Удалить &amp;список с диска</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="87"/>
@@ -985,45 +926,45 @@
         <location filename="../src/views/item_menu.cpp" line="84"/>
         <location filename="../src/views/item_menu.cpp" line="89"/>
         <source>Play</source>
-        <translation type="unfinished"></translation>
+        <translation>Воспроизведение</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="69"/>
         <location filename="../src/views/item_menu.cpp" line="85"/>
         <location filename="../src/views/item_menu.cpp" line="91"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Изменить</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="144"/>
         <source>%1 artists</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 исполнители</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="146"/>
         <source>%1 albums</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 альбомы</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="147"/>
         <source>%1 tracks</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 дорожек</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="148"/>
         <source>%1 streams</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 потоки</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="149"/>
         <source>%1 playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 список</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="266"/>
         <location filename="../src/views/item_menu.cpp" line="367"/>
         <source>jump to tracks</source>
-        <translation type="unfinished"></translation>
+        <translation>Перейти к дорожкам</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="278"/>
@@ -1036,7 +977,7 @@
     <message>
         <location filename="../src/views/item_menu.cpp" line="470"/>
         <source>jump to albums</source>
-        <translation type="unfinished"></translation>
+        <translation>Перейти к альбомам</translation>
     </message>
 </context>
 <context>
@@ -1044,47 +985,47 @@
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="93"/>
         <source>view grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Отобразить решеткой</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="94"/>
         <source>view by tracks</source>
-        <translation type="unfinished"></translation>
+        <translation>Отобразить дорожки</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="95"/>
         <source>new playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Новый список</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="96"/>
         <source>new smart playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Новый умный список воспроизведения</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="97"/>
         <source>reload history</source>
-        <translation type="unfinished"></translation>
+        <translation>Перезагрузить историю</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="98"/>
         <source>clear history</source>
-        <translation type="unfinished"></translation>
+        <translation>Очистить историю</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="257"/>
         <source>Updating music database</source>
-        <translation type="unfinished"></translation>
+        <translation>Обновление базы данных музыки</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="759"/>
         <source>Albums</source>
-        <translation type="unfinished">Альбомы</translation>
+        <translation>Альбомы</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="811"/>
         <source>All playlists</source>
-        <translation type="unfinished"></translation>
+        <translation>Все списки</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="334"/>
@@ -1103,59 +1044,47 @@
         <location filename="../src/views/local/local_scene_dashboard.cpp" line="225"/>
         <location filename="../src/views/local/local_scene_dashboard.cpp" line="291"/>
         <source>No entry found</source>
-        <translation type="unfinished"></translation>
+        <translation>Запись не найдена</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="350"/>
         <source>All Albums</source>
-        <translation type="unfinished">Все альбомы</translation>
+        <translation>Все альбомы</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="710"/>
         <source>Artists</source>
-        <translation type="unfinished">Исполнители</translation>
-    </message>
-    <message>
-        <source>Tracks</source>
-        <translation type="obsolete">Треки</translation>
+        <translation>Исполнители</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="527"/>
         <source>disc %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Диск %1</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="934"/>
         <source>Smart playlists</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select cover file...</source>
-        <translation type="obsolete">Выбрать файл с обложкой...</translation>
-    </message>
-    <message>
-        <source>Files (*.png *.jpg)</source>
-        <translation type="obsolete">Изображения (*.png *.jpg)</translation>
+        <translation>Умные плей-листы</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene_dashboard.cpp" line="62"/>
         <source>Most played albums</source>
-        <translation type="unfinished"></translation>
+        <translation>Самые воспроизводимые альбомы</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene_dashboard.cpp" line="115"/>
         <source>Top rated albums</source>
-        <translation type="unfinished"></translation>
+        <translation>Альбомы с самым высоким рейтингом</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene_dashboard.cpp" line="171"/>
         <source>Most played artists</source>
-        <translation type="unfinished"></translation>
+        <translation>Самые воспроизводимые исполнители</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene_dashboard.cpp" line="240"/>
         <source>Top rated artists</source>
-        <translation type="unfinished"></translation>
+        <translation>Исполнители с самым высоким рейтингом</translation>
     </message>
 </context>
 <context>
@@ -1163,7 +1092,7 @@
     <message>
         <location filename="../src/views/context/lyricseditor.cpp" line="41"/>
         <source>Lyrics editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Текст песен</translation>
     </message>
 </context>
 <context>
@@ -1182,17 +1111,17 @@
     <message>
         <location filename="../src/views/context/context_widget.cpp" line="815"/>
         <source>No lyrics found</source>
-        <translation>Лирика не найдена</translation>
+        <translation>Текст песни не найден</translation>
     </message>
     <message>
         <location filename="../src/views/context/context_widget.cpp" line="786"/>
         <source>Song lyrics</source>
-        <translation>Лирика песни</translation>
+        <translation>Текст песен</translation>
     </message>
     <message>
         <location filename="../src/views/context/context_widget.cpp" line="871"/>
         <source>Edit file</source>
-        <translation>Редактировать файл</translation>
+        <translation>Изменить файл</translation>
     </message>
 </context>
 <context>
@@ -1200,32 +1129,32 @@
     <message>
         <location filename="../src/widgets/main/main_left.cpp" line="99"/>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Применить</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/main_left.cpp" line="100"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Отмена</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/main_left.cpp" line="103"/>
         <source>Go back</source>
-        <translation type="unfinished">Назад</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/main_left.cpp" line="104"/>
         <source>Go forward</source>
-        <translation type="unfinished">Вперед</translation>
+        <translation>Вперед</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/main_left.cpp" line="105"/>
         <source>Go up</source>
-        <translation type="unfinished"></translation>
+        <translation>Вверх</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/main_left.cpp" line="111"/>
         <source>Quick filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Быстрый фильтр</translation>
     </message>
 </context>
 <context>
@@ -1233,32 +1162,32 @@
     <message>
         <location filename="../src/widgets/main/main_right.cpp" line="94"/>
         <source>New playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Новый список воспроизведения</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/main_right.cpp" line="95"/>
         <source>New smart playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Новый умный список воспроизведения</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/main_right.cpp" line="152"/>
         <source>Playqueue</source>
-        <translation type="unfinished"></translation>
+        <translation>Количество воспроизведений</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/main_right.cpp" line="156"/>
         <source>Playlist editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Редактор списка воспроизведения</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/main_right.cpp" line="160"/>
         <source>Tag editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Редактор тегов</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/main_right.cpp" line="164"/>
         <source>Smart editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Интеллектуальный редактор</translation>
     </message>
 </context>
 <context>
@@ -1276,73 +1205,65 @@
     <message>
         <location filename="../src/widgets/main/maintoolbutton.cpp" line="47"/>
         <source>&amp;Show/Hide panel</source>
-        <translation>&amp;Показать/скрыть панель</translation>
+        <translation>&amp;Показывать/скрывать панель</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/maintoolbutton.cpp" line="52"/>
         <source>&amp;Add to playqueue</source>
         <translation>&amp;Добавить в очередь воспроизведения</translation>
     </message>
-    <message>
-        <source>&amp;Choose playlist mode</source>
-        <translation type="obsolete">&amp;Выбрать режим плейлиста</translation>
-    </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
-        <source>About Qt</source>
-        <translation type="obsolete">О Qt</translation>
-    </message>
-    <message>
         <location filename="../src/mainwindow.cpp" line="342"/>
         <source>&amp;Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Выход</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="343"/>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>О программе</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="345"/>
         <source>settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="348"/>
         <source>&amp;Add media to playlist</source>
-        <translation>Добавить &amp;мультимедиа в плейлист</translation>
+        <translation>Добавить &amp;композицию в список</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="349"/>
         <source>&amp;Add directory to playlist</source>
-        <translation>Добавить &amp;каталог в плейлист</translation>
+        <translation>Добавить &amp;каталог в список</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="350"/>
         <source>&amp;Add Url...</source>
-        <translation>Добавить &amp;Url...</translation>
+        <translation>Добавить &amp;адрес...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="351"/>
         <source>&amp;Clear playlist</source>
-        <translation>&amp;Очистить плейлист</translation>
+        <translation>&amp;Очистить список</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="352"/>
         <source>&amp;Save playlist to file</source>
-        <translation>&amp;Сохранить плейлист в файл</translation>
+        <translation>Сохранить &amp;список в файл</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="353"/>
         <source>&amp;Auto save playlist to yarock database</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Автосохранение списка в базу данных</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="354"/>
         <source>&amp;Remove media from playlist</source>
-        <translation>&amp;Удалить мультимедиа из плейлиста</translation>
+        <translation>&amp;Удалить композицию из списка</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="355"/>
@@ -1352,24 +1273,12 @@
     <message>
         <location filename="../src/mainwindow.cpp" line="358"/>
         <source>Remove duplicate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Title</source>
-        <translation type="obsolete">Название</translation>
-    </message>
-    <message>
-        <source>Album - Title</source>
-        <translation type="obsolete">Альбом - Название</translation>
-    </message>
-    <message>
-        <source>Artist - Album - Title</source>
-        <translation type="obsolete">Исполнитель - Альбом - Название</translation>
+        <translation>Удалять повторяющиеся</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="375"/>
         <source>Play or Pause media</source>
-        <translation type="unfinished"></translation>
+        <translation>Воспроизведение или пауза</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="376"/>
@@ -1399,7 +1308,7 @@
     <message>
         <location filename="../src/mainwindow.cpp" line="386"/>
         <source>Show playqueue panel</source>
-        <translation type="unfinished"></translation>
+        <translation>Показывать панель очереди воспроизведения</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="387"/>
@@ -1422,28 +1331,24 @@
         <translation>Переключиться в обычный режим</translation>
     </message>
     <message>
-        <source>Open playlist editor</source>
-        <translation type="obsolete">Открыть редактор плейлистов</translation>
-    </message>
-    <message>
         <location filename="../src/mainwindow.cpp" line="363"/>
         <source>Send LastFm love</source>
-        <translation type="unfinished"></translation>
+        <translation>Отправить любимое на LastFm</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="366"/>
         <source>Show cover</source>
-        <translation type="unfinished"></translation>
+        <translation>Показывать обложку</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="370"/>
         <source>Show rating</source>
-        <translation type="unfinished"></translation>
+        <translation>Показывать рейтинг</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="398"/>
         <source>Jump to artist</source>
-        <translation>Перейти к артисту</translation>
+        <translation>Перейти к исполнителю</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="399"/>
@@ -1454,47 +1359,47 @@
         <location filename="../src/mainwindow.cpp" line="400"/>
         <location filename="../src/mainwindow.cpp" line="403"/>
         <source>Jump to track</source>
-        <translation>Перейти к треку</translation>
+        <translation>Перейти к дорожке</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="407"/>
         <source>Enable search popup</source>
-        <translation type="unfinished"></translation>
+        <translation>Включить всплывающий поиск</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="533"/>
         <source>Add music files or playlist</source>
-        <translation>Добавить музыкальные файлы или плейлист</translation>
+        <translation>Добавить музыкальные файлы или список воспроизведения</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="545"/>
         <source>Add music directories</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавить каталоги с музыкой</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="590"/>
         <source>Save playlist to file</source>
-        <translation type="unfinished">Сохранить плейлист в файл</translation>
+        <translation>Сохранить список в файл</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="601"/>
         <source>Playlist name</source>
-        <translation type="unfinished"></translation>
+        <translation>Название списка</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="601"/>
         <source>Save playlist</source>
-        <translation>Сохранить плейлист</translation>
+        <translation>Сохранить список</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="671"/>
         <source>Playing error</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка воспроизведения</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="952"/>
         <source>settings saved</source>
-        <translation>настройки сохранены</translation>
+        <translation>Настройки сохранены</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1013"/>
@@ -1504,67 +1409,17 @@
     <message>
         <location filename="../src/mainwindow.cpp" line="1015"/>
         <source>Database revision update</source>
-        <translation type="unfinished"></translation>
+        <translation>Обновление базы данных</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1160"/>
         <source>&lt;b&gt;Equalizer is not available&lt;/b&gt;&lt;p&gt;Equalizer wasn&apos;t found, probably you are using a backend that doesn&apos;t support it.&lt;/p&gt;&lt;p&gt;Change to another backend (gstreamer is supported) if you want to have equalizer&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Эквалайзер не поддерживается&lt;/b&gt;&lt;p&gt;Эквалайзер не найден, вероятно используемый вами движек не поддерживает это.&lt;/p&gt;&lt;p&gt;Перейдите на другой движек (gstreamer поддерживает ) если вам необходимо иметь эквалайзер&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1164"/>
         <source>Equalizer information</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>MediaItem_Edit_Dialog</name>
-    <message>
-        <source>clear playcount</source>
-        <translation type="obsolete">очистить кол-во воспроизведений</translation>
-    </message>
-    <message>
-        <source>Artist</source>
-        <translation type="obsolete">Артист</translation>
-    </message>
-    <message>
-        <source>Playcount</source>
-        <translation type="obsolete">Кол-во воспроизведений</translation>
-    </message>
-    <message>
-        <source>Rating</source>
-        <translation type="obsolete">Рейтинг</translation>
-    </message>
-    <message>
-        <source>Album</source>
-        <translation type="obsolete">Альбом</translation>
-    </message>
-    <message>
-        <source>Year</source>
-        <translation type="obsolete">Год</translation>
-    </message>
-    <message>
-        <source>Genre</source>
-        <translation type="obsolete">Жанр</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="obsolete">Файл</translation>
-    </message>
-    <message>
-        <source>Title</source>
-        <translation type="obsolete">Заголовок</translation>
-    </message>
-    <message>
-        <source>Number</source>
-        <translation type="obsolete">Номер</translation>
-    </message>
-</context>
-<context>
-    <name>Media_Search_Dialog</name>
-    <message>
-        <source>Sort by</source>
-        <translation type="obsolete">Сортировать по</translation>
+        <translation>Сведения эквалайзера</translation>
     </message>
 </context>
 <context>
@@ -1572,97 +1427,97 @@
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="99"/>
         <source>home</source>
-        <translation type="unfinished"></translation>
+        <translation>Домой</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="102"/>
         <source>music browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Обзор музыки</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="105"/>
         <source>playlist browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Обзор списков</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="108"/>
         <source>radio browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Обзор радио</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="111"/>
         <source>computer</source>
-        <translation type="unfinished"></translation>
+        <translation>Компьютер</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="118"/>
         <source>settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="121"/>
         <source>context</source>
-        <translation type="unfinished"></translation>
+        <translation>Текущий статус</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="124"/>
         <source>dashboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Личный кабинет</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="127"/>
         <source>history</source>
-        <translation type="unfinished"></translation>
+        <translation>История</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="143"/>
         <source>genre</source>
-        <translation type="unfinished"></translation>
+        <translation>Жанр</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="184"/>
         <source>home directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Домашний каталог</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="187"/>
         <source>root directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Корневой каталог</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="155"/>
         <source>playlists</source>
-        <translation type="unfinished"></translation>
+        <translation>Плей-листы</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="134"/>
         <source>artists</source>
-        <translation type="unfinished"></translation>
+        <translation>Исполнители</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="137"/>
         <source>albums</source>
-        <translation type="unfinished"></translation>
+        <translation>Альбомы</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="140"/>
         <source>tracks</source>
-        <translation type="unfinished"></translation>
+        <translation>Дорожки</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="146"/>
         <source>years</source>
-        <translation type="unfinished"></translation>
+        <translation>Год</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="149"/>
         <source>favorites</source>
-        <translation type="unfinished"></translation>
+        <translation>Избранное</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="158"/>
         <source>smart playlists</source>
-        <translation type="unfinished"></translation>
+        <translation>Умные плей-листы</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="177"/>
@@ -1675,12 +1530,12 @@
     <message>
         <location filename="../src/widgets/main/menuwidget.cpp" line="153"/>
         <source>show extended menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать расширенное меню</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menuwidget.cpp" line="153"/>
         <source>show compact menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать компактное меню</translation>
     </message>
 </context>
 <context>
@@ -1688,12 +1543,12 @@
     <message>
         <location filename="../src/widgets/nowplaying/nowplayingview.cpp" line="64"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Изменить</translation>
     </message>
     <message>
         <location filename="../src/widgets/nowplaying/nowplayingview.cpp" line="65"/>
         <source>Send LastFm love</source>
-        <translation type="unfinished"></translation>
+        <translation>Отправить любимое на LastFm</translation>
     </message>
 </context>
 <context>
@@ -1706,17 +1561,17 @@
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="85"/>
         <source>Enable Mpris</source>
-        <translation type="unfinished"></translation>
+        <translation>Включить Mpris</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="88"/>
         <source>Enable notification</source>
-        <translation type="unfinished"></translation>
+        <translation>Включить уведомления</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="92"/>
         <source>Minimize application to systray</source>
-        <translation>Минимизировать приложение в системный трей</translation>
+        <translation>Минимизировать в системный лоток</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="95"/>
@@ -1726,7 +1581,7 @@
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="107"/>
         <source>Choose color</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбрать цвет</translation>
     </message>
 </context>
 <context>
@@ -1734,12 +1589,12 @@
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="510"/>
         <source>Library settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки библиотеки</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="532"/>
         <source>Database Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Название базы данных</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="537"/>
@@ -1773,7 +1628,7 @@
         <location filename="../src/views/settings/settings_widget.cpp" line="576"/>
         <location filename="../src/views/settings/settings_widget.cpp" line="940"/>
         <source> Choose music folder</source>
-        <translation type="unfinished"></translation>
+        <translation> Выбрать папку с музыкой</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="583"/>
@@ -1781,58 +1636,50 @@
         <translation>Добавить ...</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="599"/>
-        <source>Use artist image (album cover stack otherwise)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="obsolete">Удалить</translation>
-    </message>
-    <message>
-        <source>Remove all</source>
-        <translation type="obsolete">Удалить все</translation>
-    </message>
-    <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="587"/>
         <source>Update collections automatically after start</source>
-        <translation type="unfinished"></translation>
+        <translation>Обновлять коллекцию автоматически после старта</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="591"/>
         <source>Search cover art from file directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Поиск обложек в каталогах</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="595"/>
         <source>Group multi disc albums as one album</source>
-        <translation type="unfinished"></translation>
+        <translation>Группировать многодисковые альбомы как один альбом</translation>
+    </message>
+    <message>
+        <location filename="../src/views/settings/settings_widget.cpp" line="599"/>
+        <source>Use artist image (album cover stack otherwise)</source>
+        <translation>Использовать изображение исполнителя (в противном случае обложку альбома)</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="603"/>
         <source>Write rating to file</source>
-        <translation type="unfinished"></translation>
+        <translation>Записывать рейтинг в файл</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="811"/>
         <location filename="../src/views/settings/settings_widget.cpp" line="897"/>
         <source>Name</source>
-        <translation type="unfinished">Название</translation>
+        <translation>Название</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="825"/>
         <source>The database  &quot;%1&quot; already exist, please try another name</source>
-        <translation type="unfinished"></translation>
+        <translation>База данных  &quot;%1&quot; уже существует, попробуйте другое название</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="878"/>
         <source>Delete database properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Удалить настройки базы данных</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="879"/>
         <source>Are you sure you want to delete the &quot;%1&quot; database ?</source>
-        <translation type="unfinished"></translation>
+        <translation>Хотите удалить базу данных &quot;%1&quot;?</translation>
     </message>
 </context>
 <context>
@@ -1840,65 +1687,42 @@
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="265"/>
         <source>Player settings</source>
-        <translation>Настройки плеера</translation>
+        <translation>Настройки проигрывателя</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="301"/>
         <source>Stop playing on playqueue clear</source>
-        <translation type="unfinished"></translation>
+        <translation>Остановить воспроизведение при очистке очереди</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="304"/>
         <source>Restart playing at startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Перезапустить воспроизведение при запуске</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="307"/>
         <source>Restore last playqueue content at startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Восстановить последнюю очередь при запуске</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="310"/>
         <source>Use ReplayGain</source>
-        <translation type="unfinished"></translation>
+        <translation>Использовать выравнивание громкости</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="323"/>
         <source>Engine</source>
-        <translation type="unfinished"></translation>
+        <translation>Движек</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="326"/>
         <source>Replaygain</source>
-        <translation type="unfinished"></translation>
+        <translation>Выравнивание громкости</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="329"/>
         <source>Others</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>PageRadio</name>
-    <message>
-        <source>Radio settings</source>
-        <translation type="obsolete">Настройки радио</translation>
-    </message>
-    <message>
-        <source>Radio files</source>
-        <translation type="obsolete">Файлы радио</translation>
-    </message>
-    <message>
-        <source>Add ...</source>
-        <translation type="obsolete">Добавить ...</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="obsolete">Удалить</translation>
-    </message>
-    <message>
-        <source>Remove all</source>
-        <translation type="obsolete">Удалить все</translation>
+        <translation>Другие</translation>
     </message>
 </context>
 <context>
@@ -1916,17 +1740,17 @@
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1399"/>
         <source>Account details</source>
-        <translation type="unfinished"></translation>
+        <translation>Информация об учетной записи</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1405"/>
         <source>username</source>
-        <translation type="unfinished"></translation>
+        <translation>Имя пользователя</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1408"/>
         <source>password</source>
-        <translation type="unfinished"></translation>
+        <translation>Пароль</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1421"/>
@@ -1947,7 +1771,7 @@
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1543"/>
         <source>You are not log into</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы не авторизовались в</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1578"/>
@@ -1970,7 +1794,7 @@
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1049"/>
         <source>Play/Pause</source>
-        <translation>Воспроизведение/пауза</translation>
+        <translation>Играть/пауза</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1050"/>
@@ -1980,12 +1804,12 @@
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1051"/>
         <source>Previous track</source>
-        <translation>Предыдущий трек</translation>
+        <translation>Предыдущая дорожка</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1052"/>
         <source>Next track</source>
-        <translation>Следующий трек</translation>
+        <translation>Следующая дорожка</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1053"/>
@@ -2005,12 +1829,12 @@
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1056"/>
         <source>Jump to track</source>
-        <translation type="unfinished">Перейти к треку</translation>
+        <translation>Перейти к дорожке</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1057"/>
         <source>Clear playqueue</source>
-        <translation type="unfinished"></translation>
+        <translation>Очистить количество воспроизведений</translation>
     </message>
 </context>
 <context>
@@ -2018,22 +1842,22 @@
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1625"/>
         <source>Song info</source>
-        <translation type="unfinished"></translation>
+        <translation>Сведения о песне</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1643"/>
         <source>Choose the websites you want to use when searching for lyrics</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбрать веб-сайты, используемые для поиск текста песен</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1649"/>
         <source>move up</source>
-        <translation type="unfinished"></translation>
+        <translation>Переместить вверх</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1650"/>
         <source>move down</source>
-        <translation type="unfinished"></translation>
+        <translation>Переместить вниз</translation>
     </message>
 </context>
 <context>
@@ -2041,18 +1865,18 @@
     <message>
         <location filename="../src/widgets/playertoolbar.cpp" line="208"/>
         <source>[paused]</source>
-        <translation type="unfinished"></translation>
+        <translation>[приостановлено]</translation>
     </message>
     <message>
         <location filename="../src/widgets/playertoolbar.cpp" line="346"/>
         <location filename="../src/widgets/playertoolbar.cpp" line="354"/>
         <source>&lt;b&gt;%1&lt;/b&gt; by &lt;b&gt;%2&lt;/b&gt; on &lt;b&gt;%3&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt; из &lt;b&gt;%2&lt;/b&gt; в &lt;b&gt;%3&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/widgets/playertoolbar.cpp" line="360"/>
         <source>&lt;b&gt;%1&lt;/b&gt; stream</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt; поток</translation>
     </message>
 </context>
 <context>
@@ -2060,7 +1884,7 @@
     <message>
         <location filename="../src/playqueue/playlistdbwriter.cpp" line="107"/>
         <source>no name</source>
-        <translation type="unfinished"></translation>
+        <translation>По имени</translation>
     </message>
 </context>
 <context>
@@ -2068,46 +1892,7 @@
     <message>
         <location filename="../src/playqueue/playlistview.cpp" line="625"/>
         <source>media reading error</source>
-        <translation>ошибка чтения мультимедиа</translation>
-    </message>
-</context>
-<context>
-    <name>PlaylistEditor</name>
-    <message>
-        <source>&amp;Add media to playlist</source>
-        <translation type="obsolete">Добавить &amp;мультимедиа в плейлист</translation>
-    </message>
-    <message>
-        <source>&amp;Add directory to playlist</source>
-        <translation type="obsolete">Добавить &amp;каталог в плейлист</translation>
-    </message>
-    <message>
-        <source>&amp;Add Url...</source>
-        <translation type="obsolete">Добавить сс&amp;ылки...</translation>
-    </message>
-    <message>
-        <source>Clear playlist</source>
-        <translation type="obsolete">Очистить плейлист</translation>
-    </message>
-    <message>
-        <source>&amp;Save playlist to file</source>
-        <translation type="obsolete">Сохранить &amp;плейлист в файл</translation>
-    </message>
-    <message>
-        <source>name</source>
-        <translation type="obsolete">название</translation>
-    </message>
-    <message>
-        <source>enter a playlist name</source>
-        <translation type="obsolete">введите название плейлиста</translation>
-    </message>
-    <message>
-        <source>Add music files or playlist</source>
-        <translation type="obsolete">Добавить музыкальные файлы или плейлист</translation>
-    </message>
-    <message>
-        <source>Save playlist to file</source>
-        <translation type="obsolete">Сохранить плейлист в файл</translation>
+        <translation>Ошибка чтения файла</translation>
     </message>
 </context>
 <context>
@@ -2115,7 +1900,7 @@
     <message>
         <location filename="../src/playqueue/playlistview.cpp" line="263"/>
         <source>Add file to play or Drag and Drop File from Collection</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавить файл для воспроизведения или перетащить файл из коллекции</translation>
     </message>
 </context>
 <context>
@@ -2123,42 +1908,42 @@
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="57"/>
         <source>sort</source>
-        <translation type="unfinished"></translation>
+        <translation>Сортировать</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="59"/>
         <source>Sort playqueue</source>
-        <translation type="unfinished"></translation>
+        <translation>Сортировать количество воспроизведений</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="67"/>
         <source>Playqueue filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Фильтр очереди воспроизведения</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="91"/>
         <source>Show filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Показывать фильтр</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="168"/>
         <source>Empty Playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Плей-лист пуст</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="170"/>
         <source>Playlist : &lt;b&gt;%1&lt;/b&gt; tracks - %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Плей-лист : &lt;b&gt;%1&lt;/b&gt; %2 - дорожек</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="231"/>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавить</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="243"/>
         <source>Display options</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки отображения</translation>
     </message>
 </context>
 <context>
@@ -2166,32 +1951,32 @@
     <message>
         <location filename="../src/core/mediaitem/mediaitem.cpp" line="214"/>
         <source>Today</source>
-        <translation type="unfinished"></translation>
+        <translation>Сегодня</translation>
     </message>
     <message>
         <location filename="../src/core/mediaitem/mediaitem.cpp" line="216"/>
         <source>Yesterday</source>
-        <translation type="unfinished"></translation>
+        <translation>Вчера</translation>
     </message>
     <message>
         <location filename="../src/core/mediaitem/mediaitem.cpp" line="218"/>
         <source>%1 days ago</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 дней назад</translation>
     </message>
     <message>
         <location filename="../src/core/mediaitem/tag.cpp" line="528"/>
         <source>unknown artist</source>
-        <translation>неизвестный исполнитель</translation>
+        <translation>Неизвестный исполнитель</translation>
     </message>
     <message>
         <location filename="../src/core/mediaitem/tag.cpp" line="531"/>
         <source>unknown album</source>
-        <translation>неизвестный артист</translation>
+        <translation>Неизвестный альбом</translation>
     </message>
     <message>
         <location filename="../src/core/mediaitem/tag.cpp" line="534"/>
         <source>unknown genre</source>
-        <translation>неизвестный жанр</translation>
+        <translation>Неизвестный жанр</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="122"/>
@@ -2201,7 +1986,7 @@
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="123"/>
         <source>Title</source>
-        <translation>Заголовок</translation>
+        <translation>Название</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="124"/>
@@ -2221,12 +2006,12 @@
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="127"/>
         <source>Track Year</source>
-        <translation type="unfinished"></translation>
+        <translation>Год трека</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="128"/>
         <source>Album Year</source>
-        <translation type="unfinished"></translation>
+        <translation>Год альбома</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="129"/>
@@ -2236,17 +2021,17 @@
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="130"/>
         <source>Track Playcount</source>
-        <translation type="unfinished"></translation>
+        <translation>Количество воспроизведений дорожки</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="131"/>
         <source>Album Playcount</source>
-        <translation type="unfinished"></translation>
+        <translation>Количество воспроизведения альбома</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="132"/>
         <source>Artist Playcount</source>
-        <translation type="unfinished"></translation>
+        <translation>Количество воспроизведения исполнителя</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="133"/>
@@ -2286,52 +2071,52 @@
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="151"/>
         <source>on</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="152"/>
         <source>not on</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="158"/>
         <source>contains</source>
-        <translation>содержит</translation>
+        <translation>Содержит</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="159"/>
         <source>does not contain</source>
-        <translation>не содержит</translation>
+        <translation>Не содержит</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="160"/>
         <source>starts with</source>
-        <translation>начинается с</translation>
+        <translation>Начинается с</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="161"/>
         <source>ends with</source>
-        <translation>заканчивается на</translation>
+        <translation>Заканчивается на</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="162"/>
         <source>greater than</source>
-        <translation>больше, чем</translation>
+        <translation>Больше, чем</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="163"/>
         <source>less than</source>
-        <translation>меньше, чем</translation>
+        <translation>Меньше, чем</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="164"/>
         <source>equals</source>
-        <translation>равен</translation>
+        <translation>Равен</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="165"/>
         <source>not equals</source>
-        <translation>не равен</translation>
+        <translation>Не равен</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="175"/>
@@ -2346,52 +2131,52 @@
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="176"/>
         <source>oldest first</source>
-        <translation>старые сперва</translation>
+        <translation>Сначала старые</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="176"/>
         <source>newest first</source>
-        <translation>новые сперва</translation>
+        <translation>Сначала новые</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="177"/>
         <source>shortest first</source>
-        <translation>короткие сперва</translation>
+        <translation>Сначала короткие</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="177"/>
         <source>longest first</source>
-        <translation>длинные сперва</translation>
+        <translation>Сначала длинные</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="179"/>
         <source>smallest first</source>
-        <translation>маленькие сперва</translation>
+        <translation>Сначала маленькие</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="179"/>
         <source>biggest first</source>
-        <translation>большие сперва</translation>
+        <translation>Сначала большие</translation>
     </message>
     <message>
         <location filename="../src/views/context/context_item.cpp" line="528"/>
         <source>Player is stopped</source>
-        <translation>Плеер остановлен</translation>
+        <translation>Проигрыватель остановлен</translation>
     </message>
     <message>
         <location filename="../src/views/stream/stream_scene.cpp" line="210"/>
         <source>downloading streams from %1....please wait...</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузка потока из %1....пожалуйста подождите...</translation>
     </message>
     <message>
         <location filename="../src/views/stream/stream_scene.cpp" line="217"/>
         <source>error accessing stream from %1 !</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка получения потока из %1 !</translation>
     </message>
     <message>
         <location filename="../src/widgets/exlineedit.cpp" line="49"/>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation>Очистить</translation>
     </message>
 </context>
 <context>
@@ -2418,41 +2203,7 @@
     <message>
         <location filename="../src/widgets/searchline_edit.cpp" line="104"/>
         <source>Custom search</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Search_Query_Widget</name>
-    <message>
-        <source>Remove</source>
-        <translation type="obsolete">Удалить</translation>
-    </message>
-</context>
-<context>
-    <name>SettingsScene</name>
-    <message>
-        <source>General</source>
-        <translation type="obsolete">Основные</translation>
-    </message>
-    <message>
-        <source>Player</source>
-        <translation type="obsolete">Плеер</translation>
-    </message>
-    <message>
-        <source>Library</source>
-        <translation type="obsolete">Библиотека</translation>
-    </message>
-    <message>
-        <source>Radio</source>
-        <translation type="obsolete">Радио</translation>
-    </message>
-    <message>
-        <source>Shortcut</source>
-        <translation type="obsolete">Горячая клавиша</translation>
-    </message>
-    <message>
-        <source>Scrobbler</source>
-        <translation type="obsolete">Скробблер</translation>
+        <translation>Специальный поиск</translation>
     </message>
 </context>
 <context>
@@ -2460,12 +2211,12 @@
     <message>
         <location filename="../src/widgets/dialogs/shortcutdialog.cpp" line="35"/>
         <source>Change shortcut</source>
-        <translation type="unfinished"></translation>
+        <translation>Изменить сочетание клавишь</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/shortcutdialog.cpp" line="42"/>
         <source>Press a keys that you want to set as a shortcut</source>
-        <translation type="unfinished"></translation>
+        <translation>Нажать клавиши, что-бы установить как сочетание клавишь</translation>
     </message>
 </context>
 <context>
@@ -2474,12 +2225,12 @@
         <location filename="../src/widgets/audiocontrols.cpp" line="98"/>
         <location filename="../src/widgets/audiocontrols.cpp" line="127"/>
         <source>Shuffle mode is off</source>
-        <translation type="unfinished"></translation>
+        <translation>Режим перемешивания выключен</translation>
     </message>
     <message>
         <location filename="../src/widgets/audiocontrols.cpp" line="131"/>
         <source>Shuffle mode is on</source>
-        <translation type="unfinished"></translation>
+        <translation>Режим перемешивания включен</translation>
     </message>
 </context>
 <context>
@@ -2502,17 +2253,17 @@
     <message>
         <location filename="../src/smartplaylist/smartplaylist.cpp" line="61"/>
         <source>ever played</source>
-        <translation type="unfinished"></translation>
+        <translation>Когда-либо проигрывался</translation>
     </message>
     <message>
         <location filename="../src/smartplaylist/smartplaylist.cpp" line="62"/>
         <source>never played</source>
-        <translation type="unfinished"></translation>
+        <translation>Никогда не проигрывался</translation>
     </message>
     <message>
         <location filename="../src/smartplaylist/smartplaylist.cpp" line="63"/>
         <source>top rated tracks</source>
-        <translation type="unfinished"></translation>
+        <translation>Треки с самым высоким рейтингом</translation>
     </message>
 </context>
 <context>
@@ -2520,31 +2271,12 @@
     <message>
         <location filename="../src/widgets/sort_widget.cpp" line="36"/>
         <source>Sort field</source>
-        <translation type="unfinished"></translation>
+        <translation>Область сортировки</translation>
     </message>
     <message>
         <location filename="../src/widgets/sort_widget.cpp" line="39"/>
         <source>Sort order</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>StreamEditor</name>
-    <message>
-        <source>Category/Title</source>
-        <translation type="obsolete">Категория/Заголовок</translation>
-    </message>
-    <message>
-        <source>Url</source>
-        <translation type="obsolete">Ссылка</translation>
-    </message>
-    <message>
-        <source>Stream Editor</source>
-        <translation type="obsolete">Редактор потоков</translation>
-    </message>
-    <message>
-        <source>name</source>
-        <translation type="obsolete">название</translation>
+        <translation>Порядок сортировки</translation>
     </message>
 </context>
 <context>
@@ -2552,46 +2284,42 @@
     <message>
         <location filename="../src/views/stream/stream_scene.cpp" line="104"/>
         <source>add</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавить</translation>
     </message>
     <message>
         <location filename="../src/views/stream/stream_scene.cpp" line="105"/>
         <source>import</source>
-        <translation type="unfinished"></translation>
+        <translation>Импорт</translation>
     </message>
     <message>
         <location filename="../src/views/stream/stream_scene.cpp" line="400"/>
         <location filename="../src/views/stream/stream_scene.cpp" line="461"/>
         <source>Loading stream</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузка потока</translation>
     </message>
     <message>
         <location filename="../src/views/stream/stream_scene.cpp" line="822"/>
         <source>import stream file</source>
-        <translation type="unfinished"></translation>
+        <translation>Импорт файла потока</translation>
     </message>
     <message>
         <location filename="../src/views/stream/stream_scene.cpp" line="823"/>
         <source>xspf playlist (*.xspf)</source>
-        <translation type="unfinished"></translation>
+        <translation>Список воспроизведения xspf (*.xspf)</translation>
     </message>
 </context>
 <context>
     <name>ThreadManager</name>
     <message>
-        <source>Updating Music Collection</source>
-        <translation type="obsolete">Обновление музыкальной коллекции</translation>
-    </message>
-    <message>
         <location filename="../src/threadmanager.cpp" line="98"/>
         <location filename="../src/threadmanager.cpp" line="105"/>
         <source>Updating music database</source>
-        <translation type="unfinished"></translation>
+        <translation>Обновление базы данных музыки</translation>
     </message>
     <message>
         <location filename="../src/threadmanager.cpp" line="138"/>
         <source>Loading music collection</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузка музыкальной коллекции</translation>
     </message>
     <message>
         <location filename="../src/threadmanager.cpp" line="144"/>
@@ -2601,22 +2329,18 @@
     <message>
         <location filename="../src/threadmanager.cpp" line="170"/>
         <source>Loading playlist files</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузка файла списка воспроизведения</translation>
     </message>
     <message>
         <location filename="../src/threadmanager.cpp" line="176"/>
         <source>Loading Playlist File</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузка файла списка воспроизведения</translation>
     </message>
     <message>
         <location filename="../src/threadmanager.cpp" line="207"/>
         <location filename="../src/threadmanager.cpp" line="225"/>
         <source>Fetching media info</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fetching Album Cover</source>
-        <translation type="obsolete">Загрузка обложки альбома</translation>
+        <translation>Извлечение информации о композиции</translation>
     </message>
 </context>
 <context>
@@ -2624,7 +2348,7 @@
     <message>
         <location filename="../src/models/stream/service_xspf.cpp" line="32"/>
         <source>Favorite streams</source>
-        <translation type="unfinished"></translation>
+        <translation>Избранные потоки</translation>
     </message>
 </context>
 </TS>
