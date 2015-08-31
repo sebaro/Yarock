@@ -14,50 +14,49 @@
 *  You should have received a copy of the GNU General Public License along with         *
 *  this program.  If not, see <http://www.gnu.org/licenses/>.                           *
 *****************************************************************************************/
+#ifndef _SYSTRAY_H_
+#define _SYSTRAY_H_
 
-#ifndef _LOCAL_TRACK_POPULATOR_H_
-#define _LOCAL_TRACK_POPULATOR_H_
-
-#include "mediaitem.h"
-
-#include <QThread>
+//! Qt
+#include <QSystemTrayIcon>
 #include <QObject>
-#include <QMultiMap>
-#include <QString>
-
-class LocalTrackModel;
 
 /*
 ********************************************************************************
 *                                                                              *
-*    Class LocalTrackPopulator                                                 *
+*    Class SysTray                                                             *
 *                                                                              *
 ********************************************************************************
 */
-class LocalTrackPopulator :  public QThread
+class SysTray : public QObject 
 {
 Q_OBJECT
+
 public:
-    explicit LocalTrackPopulator();
-    void setExit(bool b) {m_exit = b;}
+  SysTray(QObject* parent = 0);
+  ~SysTray();
 
-protected:
-    void run();
+  void reloadSettings();
 
-private:
-    QString getAlbumHash(const QString&, const QString&);
-    void initGenreModel();
-    
-private:
-    QList<MEDIA::TrackPtr>      tracks_by_genre;
-    bool               m_isGrouping;
+  bool isSysTrayOn() const;
+  bool isVisible() const;
   
-    LocalTrackModel    *m_model;
-    bool                m_exit;
+private:
+    void ubuntu_unity_hack();
+    
+private slots:
+    void slot_systray_clicked(QSystemTrayIcon::ActivationReason reason);
+    
+    void slot_on_message_clicked();
 
-signals:
-    void populatingFinished();
-    void populatingProgress(int);
+    void ubuntu_unity_hack_getError();
+
+    void ubuntu_unity_hack_getFinished(int);
+
+private:
+    QSystemTrayIcon        *m_trayIcon;
+
+    QMenu                  *m_menu;
 };
 
-#endif // _LOCAL_TRACK_POPULATOR_H_
+#endif // _SYSTRAY_H_

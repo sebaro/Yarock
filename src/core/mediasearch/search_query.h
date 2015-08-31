@@ -18,7 +18,7 @@
 #ifndef _SEARCH_QUERY_H_
 #define _SEARCH_QUERY_H_
 
-
+#include <QDataStream>
 #include <QList>
 #include <QVariant>
 

@@ -19,6 +19,9 @@
 
 #include "core/mediaitem/mediaitem.h"
 #include "core/mediasearch/media_search_engine.h"
+#include "views/item_button.h"
+
+#include "models/stream/service_base.h"
 
 #include "debug.h"
 
@@ -39,20 +42,18 @@ LocalTrackModel::LocalTrackModel(QObject *parent) : QObject(parent)
     INSTANCE         = this;
 
     m_rootItem       = MEDIA::MediaPtr(new MEDIA::Media());
-    m_playing_track  = MEDIA::TrackPtr(0);
+    
+    m_rootGenreItem  = MEDIA::LinkPtr(new MEDIA::Link());
+    m_rootGenreItem->name = QString("All");    
+    
+    m_active_link = m_rootGenreItem;
 }
 
 LocalTrackModel::~LocalTrackModel()
 {
     m_rootItem.reset();
+    m_rootGenreItem.reset();
 }
-
-
-MEDIA::MediaPtr LocalTrackModel::rootItem()
-{
-    return m_rootItem;
-}
-
 
 void LocalTrackModel::clear()
 {
@@ -61,11 +62,12 @@ void LocalTrackModel::clear()
 
     trackItemHash.clear();
     albumItemList.clear();
-    trackByGenre.clear();
 
-    m_playing_track  = MEDIA::TrackPtr(0);
-
-    emit modelCleared();
+    m_rootGenreItem.reset();
+    m_rootGenreItem  = MEDIA::LinkPtr(new MEDIA::Link());
+    m_rootGenreItem->name = QString("All");    
+    
+    m_active_link = m_rootGenreItem;
 }
 
 
@@ -183,3 +185,21 @@ bool LocalTrackModel::isMediaMatch(MEDIA::MediaPtr media)
     return false;
 }
       
+void LocalTrackModel::slot_activate_link()
+{
+    Debug::debug() << "    [LocalTrackModel] slot_activate_link";
+  
+    ButtonItem* button = qobject_cast<ButtonItem*>(sender());
+    
+    if (!button) return;  
+  
+    MEDIA::LinkPtr link = qvariant_cast<MEDIA::LinkPtr>( button->data() );
+      
+    m_active_link = link;
+    
+    /* register update */        
+    m_active_link->state = SERVICE::DATA_OK;
+    
+    emit dataChanged();
+}
+

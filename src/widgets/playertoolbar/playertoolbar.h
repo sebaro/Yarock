@@ -15,42 +15,56 @@
 *  this program.  If not, see <http://www.gnu.org/licenses/>.                           *
 *****************************************************************************************/
 
-#ifndef _NOWPLAYINGVIEW_H_
-#define _NOWPLAYINGVIEW_H_
+#ifndef _PLAYER_TOOLBAR_H_
+#define _PLAYER_TOOLBAR_H_
 
-//Qt
+// Qt
 #include <QWidget>
-#include <QToolBar>
+#include <QToolButton>
 #include <QLabel>
+#include <QSlider>
+#include <QMenu>
+#include <QResizeEvent>
+
+
 /*
 ********************************************************************************
 *                                                                              *
-*    Class NowPlayingView                                                      *
+*    Class PlayerToolBar                                                       *
 *                                                                              *
 ********************************************************************************
 */
-class NowPlayingView : public QWidget
+class EngineBase;
+class PlayerToolBar : public QWidget
 {
 Q_OBJECT
-  public:
-    NowPlayingView(QWidget *parent);
+public:
+    PlayerToolBar(QWidget *parent);
 
-  private slots:
-    void slot_update_widget();
-    void slot_rating_changed(float);
-    void slot_on_lastfm_love();
-    void slot_on_track_edit();
+private:
+    EngineBase       *m_player;
 
-  protected:
-    void showEvent ( QShowEvent * event );
+    QWidget          *m_now_playing_widget;
+    QMenu            *m_now_playing_menu;
     
-  private:
-    QLabel                *ui_image;
-    QLabel                *ui_label_title;    
-    QLabel                *ui_label_album;    
-    QToolBar              *ui_toolbar;
-    class RatingWidget    *ui_rating;    
+    QLabel           *ui_image;
+    QLabel           *ui_label_title;    
+    QLabel           *ui_label_album;    
+    
+    QLabel           *m_currentTime;
+    QLabel           *m_totalTime;
+    QLabel           *m_separator;
+    QLabel           *m_pauseState;
+    
+private :
+    void clear();
+
+private slots:
+    void slot_update_track_playing_info();
+    void slot_update_time_position(qint64);
+    void slot_update_total_time(qint64);
+    
+    void slot_nowplaying_clicked();
 };
 
-
-#endif // _NOWPLAYINGVIEW_H_
+#endif // _PLAYER_TOOLBAR_H_

@@ -32,13 +32,19 @@ class MprisManager : public QObject
 {
 Q_OBJECT
 public:
-  MprisManager(QObject *parent = 0);
-  ~MprisManager();
+    MprisManager(QObject *parent = 0);
+    ~MprisManager();
 
-   void reloadSettings();
+    void reloadSettings();
 
 private:
-   Mpris2   *m_mpris2;
+    Mpris2   *m_mpris2;
+
+private slots:
+    void activateMainWindow();
+
+signals:
+    void RaiseMainWindow();
 };
 
 

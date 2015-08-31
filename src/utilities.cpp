@@ -16,6 +16,7 @@
 *****************************************************************************************/
 
 #include "utilities.h"
+#include "settings.h"
 
 #include <stdlib.h>
 
@@ -91,6 +92,7 @@ QString UTIL::durationToString(int seconds)
     return ret;
 }
 
+  
 void UTIL::urlAddQueryItem( QUrl& url, const QString& key, const QString& value )
 {
   #if QT_VERSION >= QT_VERSION_CHECK( 5, 0, 0 )
@@ -174,4 +176,37 @@ UTIL::squareCenterPixmap( const QPixmap& sourceImage )
 
     return sourceImage;
 }
+
+
+void UTIL::drawPlayingIcon(QPainter* painter, int size, int margin, QPoint pos)
+{
+    painter->save();
+    painter->setPen( SETTINGS()->_baseColor );
+    painter->setBrush(QBrush( SETTINGS()->_baseColor ));
+
+    double raHeadHeight = size-2*margin;    
+    double raHeadWidth = size-2*margin -(raHeadHeight*0.3);
+
+    QPointF raStartPoint = QPointF(pos) + QPointF(margin,margin);
+
+    QPointF raArrowPoints[3];
+
+    double x1 = raStartPoint.x();
+    double y1 = raStartPoint.y();
+    double x2 = raStartPoint.x();
+    double y2 = raStartPoint.y() + raHeadHeight;
+    double x3 = raStartPoint.x() + raHeadWidth;
+    double y3 = raStartPoint.y() + raHeadHeight/2;
+
+    raArrowPoints[0]=QPointF(x1,y1);
+    raArrowPoints[1]=QPointF(x2,y2);
+    raArrowPoints[2]=QPointF(x3,y3);
+    
+    painter->setRenderHint(QPainter::Antialiasing, true);
+    painter->drawPolygon(raArrowPoints,3);
+    painter->restore();    
+}
+
+   
+   
 

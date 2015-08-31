@@ -130,19 +130,32 @@ void FileDialog::startWithDir(QString path)
 //! --------- on_buttonBox_accepted --------------------------------------------
 void FileDialog::on_buttonBox_accepted()
 {
-    Debug::debug() << "FileDialog::on_buttonBox_accepted";
+    Debug::debug() << "  [FileDialog] on_buttonBox_accepted";
     // do something
     if(m_mode == SaveFile) 
     {
+       m_results.clear();
        QString path = m_model->filePath(ui_listView->rootIndex()) + "/" + ui_filename_lineedit->text();
        QString ext  = QFileInfo(path).suffix().toLower();
        
-       if(ext.isEmpty()) {
-         path = path + ".xspf";
+       /* no extension entered by user */
+       if( ext.isEmpty() )
+       {
+         if(ui_filter_cb->currentIndex() != 0)
+         {
+             QString filterExt = qt_clean_filter_list(ui_filter_cb->itemText(ui_filter_cb->currentIndex())).first();
+             filterExt.remove( 0, 1 );
+             path = path + filterExt;
+         }
+         else
+         {
+             //Debug::debug() << "  [FileDialog] No Extension : choose .xspf !";
+             path = path + ".xspf";
+         }
        }
   
        m_results << path;
-       Debug::debug() << "FileDialog save to file: " << path;
+       Debug::debug() << "  [FileDialog] save to file: " << path;
     }
   
     this->setResult(QDialog::Accepted);
@@ -266,6 +279,7 @@ void FileDialog::setupUi()
 
 void FileDialog::setFilters(QStringList filters)
 {
+    Debug::debug() << "  [FileDialog] setFilters:" << filters;
     if(!filters.isEmpty())
     {
      ui_filter_cb->clear();
@@ -305,8 +319,8 @@ QString FileDialog::saveFile()
     
 void FileDialog::slot_show_hidden_triggered()
 {
-    Debug::debug() << Q_FUNC_INFO;
-  
+    Debug::debug() << "  [FileDialog] slot_show_hidden_triggered";
+    
     QDir::Filters filters = m_model->filter();
     if( ui_show_hidden->isChecked() )
       filters |= QDir::Hidden;
@@ -388,8 +402,8 @@ void FileDialog::enableButton(bool enable)
 
 void FileDialog::slot_listview_itemDoubleClicked(const QModelIndex &index)
 {
-    Debug::debug() << Q_FUNC_INFO;
-  
+    Debug::debug() << "  [FileDialog] slot_listview_itemDoubleClicked";
+    
     if (index.isValid())
     {
         QFileInfo info = m_model->fileInfo(index);
@@ -418,8 +432,8 @@ void FileDialog::slot_listview_itemDoubleClicked(const QModelIndex &index)
 
 void FileDialog::slot_on_filename_textChanged(const QString & text)
 {
-    //Debug::debug() << Q_FUNC_INFO  << text;
-  
+    //Debug::debug() << "  [FileDialog] slot_on_filename_textChanged" << text;
+    
     if(m_mode == FileDialog::SaveFile && !text.isEmpty())
       enableButton(true);
 }
@@ -427,7 +441,7 @@ void FileDialog::slot_on_filename_textChanged(const QString & text)
 
 void FileDialog::updateCurrentIndex(const QModelIndex &idx)
 {
-    Debug::debug() << Q_FUNC_INFO;
+    Debug::debug() << "  [FileDialog] updateCurrentIndex";
 
     //! nouveau déclenchement --> on supprime les next
     for(int i = 0; i < m_current_index; i++) {

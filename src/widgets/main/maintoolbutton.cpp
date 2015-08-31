@@ -55,8 +55,9 @@ MainToolButton::MainToolButton( QWidget* parent ) : QToolButton(parent)
     m1->addAction(actions->value(PLAYQUEUE_ADD_FILE));
     m1->addAction(actions->value(PLAYQUEUE_ADD_DIR));
     m1->addAction(actions->value(PLAYQUEUE_ADD_URL));
+
     m_menu->addAction(actions->value(PLAYQUEUE_CLEAR));
-    m_menu->addAction(actions->value(PLAYQUEUE_SAVE));
+    m_menu->addAction(actions->value(PLAYQUEUE_EXPORT));
     m_menu->addAction(actions->value(PLAYQUEUE_AUTOSAVE));
 
     m_menu->addSeparator();
@@ -89,7 +90,7 @@ void MainToolButton::updatePlayqueueActions()
 {
     const bool isPlaylistEmpty = Playqueue::instance()->rowCount(QModelIndex()) < 1;
     ACTIONS()->value(PLAYQUEUE_CLEAR)->setEnabled(!isPlaylistEmpty);
-    ACTIONS()->value(PLAYQUEUE_SAVE)->setEnabled(!isPlaylistEmpty);
+    ACTIONS()->value(PLAYQUEUE_EXPORT)->setEnabled(!isPlaylistEmpty);
     ACTIONS()->value(PLAYQUEUE_AUTOSAVE)->setEnabled(!isPlaylistEmpty);
 }
 

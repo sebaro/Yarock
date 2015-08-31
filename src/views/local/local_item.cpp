@@ -155,10 +155,10 @@ Q_UNUSED(option)
         painter->save();
         painter->setPen(QPen( brush_color, 0.1, Qt::SolidLine, Qt::RoundCap));
         painter->setBrush(QBrush( brush_color ,Qt::SolidPattern));
-        painter->drawRoundedRect(QRect(1,26,16,16), 8.0, 8.0);
+        painter->drawRoundedRect(QRect(1,36,16,16), 8.0, 8.0);
         painter->restore();
      
-        painter->drawText(QRect(0, 25, 18, 18), Qt::AlignTop | Qt::AlignCenter, QString::number(media->disc_number));
+        painter->drawText(QRect(0, 35, 18, 18), Qt::AlignTop | Qt::AlignCenter, QString::number(media->disc_number));
     }
    
     /* paint artist name */
@@ -170,10 +170,10 @@ Q_UNUSED(option)
 
     /* paint playing or favorite attibute */
     if(media->isPlaying)
-      painter->drawPixmap(129, 5, QPixmap(":/images/media-playing.png"));
+      UTIL::drawPlayingIcon(painter,18, 0, QPoint(2,8));
 
     if(media->isFavorite)
-      painter->drawPixmap(129, 30, QPixmap(":/images/favorites-18x18.png"));
+      painter->drawPixmap(0, 60, QPixmap(":/images/favorites-18x18.png"));
 }
 
 
@@ -293,10 +293,10 @@ Q_UNUSED(option)
         painter->save();
         painter->setPen(QPen( brush_color, 0.1, Qt::SolidLine, Qt::RoundCap));
         painter->setBrush(QBrush( brush_color ,Qt::SolidPattern));
-        painter->drawRoundedRect(QRect(1,26,16,16), 8.0, 8.0);
+        painter->drawRoundedRect(QRect(1,36,16,16), 8.0, 8.0);
         painter->restore();
      
-        painter->drawText(QRect(0, 25, 18, 18), Qt::AlignTop | Qt::AlignCenter, QString::number(media->disc_number));
+        painter->drawText(QRect(0, 35, 18, 18), Qt::AlignTop | Qt::AlignCenter, QString::number(media->disc_number));
     }
   
     /* paint year */
@@ -306,10 +306,10 @@ Q_UNUSED(option)
 
     /* paint playing or favorite attibute */
     if(media->isPlaying)
-      painter->drawPixmap(129, 25, QPixmap(":/images/media-playing.png"));
+      UTIL::drawPlayingIcon(painter,18, 0, QPoint(2,8));
 
     if(media->isFavorite)
-      painter->drawPixmap(129, 5, QPixmap(":/images/favorites-18x18.png"));
+      painter->drawPixmap(0, 60, QPixmap(":/images/favorites-18x18.png"));
 }
 /*
 ********************************************************************************
@@ -443,10 +443,10 @@ Q_UNUSED(option)
 
     /* paint playing or favorite attibute */
     if(media->isPlaying)
-      painter->drawPixmap(129, 45, QPixmap(":/images/media-playing.png"));
+      UTIL::drawPlayingIcon(painter,18, 0, QPoint(2,35));
 
     if(media->isFavorite)
-      painter->drawPixmap(129, 25, QPixmap(":/images/favorites-18x18.png"));
+      painter->drawPixmap(0, 60, QPixmap(":/images/favorites-18x18.png"));
 }
 
 
@@ -530,10 +530,10 @@ Q_UNUSED(option)
 
     //! paint playing or favorite attibute
     if(media->isPlaying)
-      painter->drawPixmap(129, 45, QPixmap(":/images/media-playing.png"));
+      UTIL::drawPlayingIcon(painter,18, 0, QPoint(2,35));
 
     if(media->isFavorite)
-      painter->drawPixmap(129, 25, QPixmap(":/images/favorites-18x18.png"));
+      painter->drawPixmap(0, 60, QPixmap(":/images/favorites-18x18.png"));
 }
 
 void AlbumGraphicItem_v4::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
@@ -693,10 +693,10 @@ Q_UNUSED(option)
 
     /* affichage des attributs playing ou favorite */
     if(media->isPlaying)
-      painter->drawPixmap(120, 25, QPixmap(":/images/media-playing.png"));
-
+      UTIL::drawPlayingIcon(painter,18, 0, QPoint(2,8));
+    
     if(media->isFavorite)
-      painter->drawPixmap(121, 2, QPixmap(":/images/favorites-18x18.png"));
+      painter->drawPixmap(0, 40, QPixmap(":/images/favorites-18x18.png"));
 }
 
 void ArtistGraphicItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
@@ -827,10 +827,10 @@ Q_UNUSED(option)
     
     /* paint playing or favorite attibute */
     if(media->isPlaying)
-      painter->drawPixmap(129, 45, QPixmap(":/images/media-playing.png"));
+      UTIL::drawPlayingIcon(painter,18, 0, QPoint(2,35));
 
     if(media->isFavorite)
-      painter->drawPixmap(128, 25, QPixmap(":/images/favorites-18x18.png"));
+      painter->drawPixmap(0, 60, QPixmap(":/images/favorites-18x18.png"));
 }
 
 
@@ -906,10 +906,10 @@ Q_UNUSED(option)
 
     //! paint playing or favorite attibute
     if(media->isPlaying)
-      painter->drawPixmap(129, 45, QPixmap(":/images/media-playing.png"));
+      UTIL::drawPlayingIcon(painter,18, 0, QPoint(2,35));
 
     if(media->isFavorite)
-      painter->drawPixmap(128, 25, QPixmap(":/images/favorites-18x18.png"));
+      painter->drawPixmap(0, 60, QPixmap(":/images/favorites-18x18.png"));
 }
 
 void ArtistGraphicItem_v3::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
@@ -1084,7 +1084,7 @@ Q_UNUSED(option)
 
    //! paint activated item
    if(media->isPlaying)
-     painter->drawPixmap(0, 0,QPixmap(":/images/media-playing.png"));
+      UTIL::drawPlayingIcon(painter,18, 0, QPoint(1,1));
    else if(media->isBroken)
      painter->drawPixmap(2, 1, QPixmap(":/images/media-broken-18x18.png"));
    else if (!isTrack)
@@ -1214,7 +1214,7 @@ Q_UNUSED(option)
 
    //! paint activated item
    if(media->isPlaying)
-     painter->drawPixmap(0, 0,QPixmap(":/images/media-playing.png"));
+      UTIL::drawPlayingIcon(painter,18, 0, QPoint(1,1));
    else if(media->isBroken)
      painter->drawPixmap(0, 0, QPixmap(":/images/media-broken-18x18.png"));
 
@@ -1375,7 +1375,7 @@ Q_UNUSED(option)
 
    //! paint activated item
    if(media->isPlaying)
-     painter->drawPixmap(0, 0,QPixmap(":/images/media-playing.png"));
+      UTIL::drawPlayingIcon(painter,18, 0, QPoint(1,1));
    else if(media->isBroken)
      painter->drawPixmap(1, 1, QPixmap(":/images/media-broken-18x18.png"));
    else if (!isTrack)
@@ -1506,11 +1506,11 @@ Q_UNUSED(option)
 
    //! paint activated item
    if(media->isPlaying)
-     painter->drawPixmap(114, 20, QPixmap(":/images/media-playing.png"));
+     UTIL::drawPlayingIcon(painter,18, 0, QPoint(2,35));
 
    //! paint favorites item
    if(media->isFavorite)
-     painter->drawPixmap(114, 50, QPixmap(":/images/favorites-18x18.png"));
+     painter->drawPixmap(0, 60, QPixmap(":/images/favorites-18x18.png"));
 
    //! paint media playlist type (internal/user)
    if(media->p_type == T_FILE)
@@ -1552,6 +1552,7 @@ void PlaylistGraphicItem::startDrag(QWidget *w)
     //! playliste normale -> lecture dans le modele
     else
     {
+       mimedata->setParent( media );
        mimedata->addTracks (
          LocalPlaylistModel::instance()->getItemChildrenTracks(media)
        );

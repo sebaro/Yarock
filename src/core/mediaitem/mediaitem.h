@@ -116,7 +116,7 @@ class Link : public Media
 
     /*------ ATTRIBUTS ------*/
     QString      name;
-    QString      categorie;
+    QString      genre;
     QString      url;
     int          state;
 };
@@ -160,7 +160,7 @@ class Album : public Media
     
     /*------ ATTRIBUTS ------*/
     int          id;
-    QList<int>   ids; // for multiset grouped album
+    QList<int>   ids;         // for multiset grouped album
     QString      name;
     int          year;
     int          playcount;
@@ -192,8 +192,7 @@ class Track : public Media
     QString      title;
     QString      artist;
     QString      album;
-    QString      genre;
-    QString      categorie;
+    QString      genre;      // = stream category
 
     int          duration;   // (int) durée (second)
     uint         num;        // (uint) Numero

@@ -52,6 +52,8 @@ private:
 PlayqueueModel::PlayqueueModel(QObject* parent) : 
    QAbstractListModel(parent), PlayqueueBase()
 {
+    m_parent = parent;
+
     m_stop_after_track   =  MEDIA::TrackPtr(0);
 
     m_proxy_model = new PlayqueueProxyModel(this);
@@ -391,7 +393,14 @@ bool PlayqueueModel::dropMimeData(const QMimeData *data,
       /* drop from collection browser ---- */
       else
       {
-        m_task_manager->playlistAddMediaItems(mediaMimeData->getTracks(), row);
+        if( mediaMimeData->parent() && m_parent )
+        {
+            m_task_manager->loadEditorPlaylist(mediaMimeData->copy(),row);
+        }
+        else
+        {
+            m_task_manager->playlistAddMediaItems(mediaMimeData->getTracks(), row);
+        }
       }
       return true;
     }

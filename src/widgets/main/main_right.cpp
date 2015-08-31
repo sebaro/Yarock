@@ -110,7 +110,32 @@ void MainRightWidget::slot_create_new_smart_editor()
     addWidget(MainRightWidget::SMART_EDIT, new EditorSmart(m_parent), true);
 }
     
+QList<PlaylistWidgetBase*> MainRightWidget::playqueueList()
+{
+    //Debug::debug() << "######## MainRightWidget::playqueueList";
+    QList<PlaylistWidgetBase*> list;
     
+    foreach(QWidget* widget, m_ids.values())
+    {
+        if ( PlaylistWidgetBase *w = dynamic_cast<PlaylistWidgetBase*>(widget) )
+          list.append ( w );
+    }
+    return list;
+}     
+
+
+PlaylistWidgetBase* MainRightWidget::activePlayqueue()
+{
+    /* get current widget */
+    QWidget* widget = m_stackedWidget->currentWidget();
+    if ( PlaylistWidgetBase *w = dynamic_cast<PlaylistWidgetBase*>(widget) )
+        return w;
+    
+    return 0;
+}
+
+        
+/* public */    
 void MainRightWidget::addWidget(QWidget* widget, bool activate)
 {
     if( ! widget )
@@ -131,7 +156,7 @@ void MainRightWidget::addWidget(QWidget* widget, bool activate)
 }
 
 
-
+/* private */
 void MainRightWidget::addWidget(WidgetType type, QWidget* widget, bool activate)
 {
     /* create button */
@@ -190,6 +215,9 @@ void MainRightWidget::addWidget(WidgetType type, QWidget* widget, bool activate)
     /* connect widget close event */
     if( type != MainRightWidget::PLAYQUEUE )
       connect(widget, SIGNAL( close() ), this, SLOT(slot_widget_closed()));
+    
+    if( type == MainRightWidget::PLAYQUEUE || type == MainRightWidget::PLAYLIST_EDIT )
+      emit playqueueAdded( widget );
 }
 
 
@@ -224,5 +252,9 @@ void MainRightWidget::slot_widget_closed()
     /* remove widget */
     m_stackedWidget->removeWidget(w);
     disconnect(w, 0,this, 0);
-    w->deleteLater();
+    
+    if ( dynamic_cast<PlaylistWidgetBase*>(w) )
+        emit playqueueRemoved( w );
+    else
+        w->deleteLater();
 }

@@ -15,7 +15,7 @@
 *  this program.  If not, see <http://www.gnu.org/licenses/>.                           *
 *****************************************************************************************/
 
-#include "nowplayingview.h"
+#include "nowplayingpopup.h"
 #include "core/player/engine.h"
 #include "core/mediaitem/mediaitem.h"
 #include "core/database/database_cmd.h"
@@ -45,50 +45,49 @@
 /*
 ********************************************************************************
 *                                                                              *
-*    Class NowPlayingView                                                      *
+*    Class NowPlayingPopup                                                     *
 *                                                                              *
 ********************************************************************************
 */
-NowPlayingView::NowPlayingView(QWidget *parent) : QWidget(parent)
+NowPlayingPopup::NowPlayingPopup(QWidget *parent) : QWidget(parent)
 {
     QPalette palette = QApplication::palette();
     palette.setColor(QPalette::Background, palette.color(QPalette::Base));
     this->setPalette(palette);
 
-    this->setFixedHeight (130);
-    this->setFocusPolicy( Qt::NoFocus );
     this->setAutoFillBackground(true);
-    this->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
+    this->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
     
-    /* ----- global actions ----- */
-    ACTIONS()->insert(PLAYING_TRACK_EDIT,new QAction(QIcon(":/images/edit-48x48.png"), tr("Edit"), this));
-    ACTIONS()->insert(PLAYING_TRACK_LOVE, new QAction(QIcon(":/images/lastfm.png"), tr("Send LastFm love"), this));
-
-
     /* ----- UI ----- */
     ui_rating          = new RatingWidget();
     ui_rating->set_draw_frame( false );
     ui_rating->setMaximumWidth(75);
  
-    ui_image           = new QLabel();
+    ui_image           = new QLabel(this);
     ui_image->setAlignment(Qt::AlignCenter);
-    ui_image->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
+    ui_image->setFixedHeight (120);
+    ui_image->setFixedWidth (120);
+    ui_image->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
+
+    ui_label_title     = new QLabel(this);
+    ui_label_album     = new QLabel(this);
     
-    ui_label_title     = new QLabel();
-    ui_label_album     = new QLabel();
+    QFont font1 = QApplication::font();
+    font1.setBold( true );
+    font1.setPointSize(font1.pointSize()*1.3);
+        
+    ui_label_title->setFont( font1 );
     
-    QFont font = QApplication::font();
-    font.setBold( true );
-    ui_label_title->setFont( font );
-    ui_label_title->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
+    QFont font2 = QApplication::font();
+    font2.setPointSize(font2.pointSize()*1.3);
+
+    ui_label_album->setFont( font2 );
     
-    ui_label_album->setFont( QApplication::font() );
-    
-    ui_toolbar = new QToolBar();
+    ui_toolbar = new QToolBar(this);
     ui_toolbar->setOrientation(Qt::Horizontal);
     ui_toolbar->setIconSize( QSize( 14, 14 ) );
     ui_toolbar->addAction( ACTIONS()->value(PLAYING_TRACK_EDIT)  );
-    ui_toolbar->addAction( ACTIONS()->value(PLAYQUEUE_JUMP_TO_TRACK) );
+    ui_toolbar->addAction( ACTIONS()->value(BROWSER_JUMP_TO_TRACK) );
     ui_toolbar->addAction( ACTIONS()->value(PLAYING_TRACK_LOVE) );
 
 
@@ -98,16 +97,13 @@ NowPlayingView::NowPlayingView(QWidget *parent) : QWidget(parent)
     
     
     QVBoxLayout* labels_layout = new QVBoxLayout();
+    labels_layout->setContentsMargins(20, 10, 20, 10);
     labels_layout->setSpacing(4);
-    labels_layout->setContentsMargins(10, 0, 0, 0);
     labels_layout->addItem(new QSpacerItem(2, 2, QSizePolicy::Minimum, QSizePolicy::MinimumExpanding));
     labels_layout->addWidget( ui_label_title );
     labels_layout->addWidget( ui_label_album );
     labels_layout->addLayout( h1 );
-
     labels_layout->addWidget( ui_toolbar );
-
-    
     labels_layout->addItem(new QSpacerItem(2, 2, QSizePolicy::Minimum, QSizePolicy::MinimumExpanding));
     
     QHBoxLayout* layout = new QHBoxLayout(this);
@@ -120,31 +116,28 @@ NowPlayingView::NowPlayingView(QWidget *parent) : QWidget(parent)
     /* ----- connection ----- */
     connect(ui_rating, SIGNAL(RatingChanged(float)), this, SLOT(slot_rating_changed(float)));
      
-    connect(Engine::instance(), SIGNAL(mediaChanged()), this, SLOT(slot_update_widget()));
-    connect(Engine::instance(), SIGNAL(mediaMetaDataChanged()), this, SLOT(slot_update_widget()));
-    connect(Engine::instance(), SIGNAL(engineStateChanged()), this, SLOT(slot_update_widget()));
-
     connect(ACTIONS()->value(PLAYING_TRACK_LOVE), SIGNAL(triggered()), this, SLOT(slot_on_lastfm_love()));
     connect(ACTIONS()->value(PLAYING_TRACK_EDIT), SIGNAL(triggered()), this, SLOT(slot_on_track_edit()));
 }
 
 /* ---------------------------------------------------------------------------*/
-/* NowPlayingView::showEvent                                                  */
+/* NowPlayingPopup::updateWidget                                               */
 /* ---------------------------------------------------------------------------*/ 
-void NowPlayingView::showEvent ( QShowEvent * event )
+void NowPlayingPopup::updateWidget()
 {
-   slot_update_widget();
+     slot_update_widget();
+    
+     updateGeometry();
 
-   QWidget::showEvent(event);
+     update();
 }
 
-
 /* ---------------------------------------------------------------------------*/
-/* NowPlayingView::slot_update_widget                                         */
+/* NowPlayingPopup::slot_update_widget                                         */
 /* ---------------------------------------------------------------------------*/ 
-void NowPlayingView::slot_update_widget()
+void NowPlayingPopup::slot_update_widget()
 {
-    //Debug::debug() << "  [NowPlayingView] slot_update_widget";
+    //Debug::debug() << "  [NowPlayingPopup] slot_update_widget";
     MEDIA::TrackPtr track = Engine::instance()->playingTrack();
 
     /* update actions */
@@ -154,28 +147,25 @@ void NowPlayingView::slot_update_widget()
     /* update widget */     
     if(Engine::instance()->state() != ENGINE::STOPPED && track)
     {
-        /* update image */
-        QPixmap pix = CoverCache::instance()->cover(track);
-        QPixmap newpix = pix.scaled(QSize(100,100), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);      
-        ui_image->setPixmap( newpix );
+        // Debug::debug() << "## Now playing TITLE :" << track->title;
+        // Debug::debug() << "## Now playing NAME  :" << track->name;
+        // Debug::debug() << "## Now playing URL   :" << track->url;
+        // Debug::debug() << "## Now playing GENRE :" << track->genre;
 
-        /* update toolbar */
-        ui_toolbar->show();
+        /* update image DEFAULT SIZE IS 120x120 */
+        QPixmap pix = CoverCache::instance()->cover(track);
+        ui_image->setPixmap( pix );
 
         /* update labels title/album/artist */
-        const QString title_or_url = track->title.isEmpty() ? track->url : track->title;
+        QString title_or_url = track->title.isEmpty() ? track->url : track->title;
+        if(track->type() == TYPE_STREAM)
+          title_or_url = track->title.isEmpty() ? track->name : track->title;
 
-        int width = this->width() - 110 - 10 ;
-
-        QString clippedText = QFontMetrics(ui_label_title->font()).elidedText(title_or_url, Qt::ElideRight, width);
-
-        ui_label_title->setText( clippedText );
+        ui_label_title->setText( title_or_url/*clippedText*/ );
 
         const QString album = track->album.isEmpty() ? track->artist : track->artist + " - " + track->album;
 
-        clippedText = QFontMetrics(ui_label_album->font()).elidedText(album, Qt::ElideRight, width);
-
-        ui_label_album->setText ( clippedText );
+        ui_label_album->setText (album /*clippedText*/ );
 
         /* update rating */
         if(track->id != -1 )
@@ -193,25 +183,14 @@ void NowPlayingView::slot_update_widget()
           ui_rating->show();
         }
     }
-    else
-    {
-        ui_image->clear(); 
-        ui_toolbar->hide();
-        ui_label_title->clear();
-        ui_label_album->clear();
-        ui_rating->hide();
-    }
-
-    this->update();
 }
 
 
 /* ---------------------------------------------------------------------------*/
-/* NowPlayingView::slot_rating_changed                                        */
+/* NowPlayingPopup::slot_rating_changed                                       */
 /* ---------------------------------------------------------------------------*/ 
-void NowPlayingView::slot_rating_changed(float)
+void NowPlayingPopup::slot_rating_changed(float)
 {
-    Debug::debug() << "NowPlayingView::slot_rating_changed";
     MEDIA::TrackPtr track = Engine::instance()->playingTrack();
     if( track )
     {
@@ -227,11 +206,11 @@ void NowPlayingView::slot_rating_changed(float)
 
 
 /* ---------------------------------------------------------------------------*/
-/* NowPlayingView::slot_on_lastfm_love                                        */
+/* NowPlayingPopup::slot_on_lastfm_love                                       */
 /* ---------------------------------------------------------------------------*/ 
-void NowPlayingView::slot_on_lastfm_love()
+void NowPlayingPopup::slot_on_lastfm_love()
 {
-    Debug::debug() << "NowPlayingView::slot_on_lastfm_love";
+    //Debug::debug() << "NowPlayingPopup::slot_on_lastfm_love";
     MEDIA::TrackPtr track = Engine::instance()->playingTrack();
     
     if( track && track->type() == TYPE_TRACK )
@@ -240,9 +219,9 @@ void NowPlayingView::slot_on_lastfm_love()
 
 
 /* ---------------------------------------------------------------------------*/
-/* NowPlayingView::slot_on_track_edit                                         */
+/* NowPlayingPopup::slot_on_track_edit                                        */
 /* ---------------------------------------------------------------------------*/ 
-void NowPlayingView::slot_on_track_edit()
+void NowPlayingPopup::slot_on_track_edit()
 {
     MEDIA::TrackPtr track = Engine::instance()->playingTrack();
   

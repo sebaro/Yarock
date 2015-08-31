@@ -42,6 +42,7 @@ public:
     QPixmap image( MEDIA::ArtistPtr artist, QList<MEDIA::AlbumPtr> albums=QList<MEDIA::AlbumPtr>());
     QPixmap cover( const MEDIA::AlbumPtr album);
     QPixmap cover( const MEDIA::TrackPtr track);
+    QString coverPath( MEDIA::TrackPtr track);
 
     void addStreamCover( const MEDIA::TrackPtr stream, QImage image);
     void saveStreamParentCover(MEDIA::TrackPtr );

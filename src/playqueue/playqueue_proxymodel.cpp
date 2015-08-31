@@ -59,13 +59,13 @@ Q_UNUSED(sourceParent)
       {
         return  (track->url.startsWith ( pattern, Qt::CaseInsensitive )   ||
                  track->name.startsWith ( pattern, Qt::CaseInsensitive )  ||
-                 track->categorie.startsWith ( pattern, Qt::CaseInsensitive ));
+                 track->genre.startsWith ( pattern, Qt::CaseInsensitive ));
       }
       else
       {
         return  (track->url.contains ( pattern, Qt::CaseInsensitive )   ||
                  track->name.contains ( pattern, Qt::CaseInsensitive )  ||
-                 track->categorie.contains ( pattern, Qt::CaseInsensitive ));
+                 track->genre.contains ( pattern, Qt::CaseInsensitive ));
       }
     }
 

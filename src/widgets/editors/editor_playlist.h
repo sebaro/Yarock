@@ -18,27 +18,18 @@
 #ifndef _EDITOR_PLAYLIST_H_
 #define _EDITOR_PLAYLIST_H_
 
+#include "playqueue/playlistwidgetbase.h"
 #include "core/mediaitem/mediaitem.h"
+#include "core/mediaitem/mediamimedata.h"
+
 #include "widgets/exlineedit.h"
 
 #include <QWidget>
-#include <QComboBox>
-#include <QLineEdit>
 #include <QObject>
-#include <QList>
-#include <QUrl>
-#include <QAction>
 #include <QDialogButtonBox>
 #include <QMenu>
-#include <QToolButton>
-#include <QLabel>
-#include <QContextMenuEvent>
 
-class PlayqueueModel;
-class PlaylistView;
 class TaskManager;
-
-
 /*
 ********************************************************************************
 *                                                                              *
@@ -46,7 +37,7 @@ class TaskManager;
 *                                                                              *
 ********************************************************************************
 */
-class EditorPlaylist : public QWidget
+class EditorPlaylist : public QWidget, public PlaylistWidgetBase
 {
 Q_OBJECT
 
@@ -54,47 +45,20 @@ public:
   EditorPlaylist(QWidget* parent = 0);
   ~EditorPlaylist();
 
-  PlayqueueModel* model() {return m_model;}
-
   void setPlaylist(MEDIA::PlaylistPtr playlist);
 
-private:
-  void create_ui();
-
-  // Playlist Populator Thread
-  void playlistAddFiles(const QStringList &files);
-  void playlistAddFile(const QString &file);
-  void playlistAddUrls(QList<QUrl> listUrl, int playlist_row=-1);
-
-  // Playlist Writer Thread
-  void playlistSaveToFile(const QString &filename);
-  void playlistSaveToDb(const QString &name);
-
-protected:
-  void contextMenuEvent ( QContextMenuEvent * event );  
-
 private slots:
+  void slot_save_playlist();  
+  void slot_on_playlist_load(MediaMimeData*, int);
   void slot_on_buttonbox_clicked(QAbstractButton * button);
-  void slot_on_type_change(int);
-  void slot_dialog_file_to_save();
-  
-  void slot_add_file();
-  void slot_add_dir();
-  void slot_add_url();
 
 private:
   MEDIA::PlaylistPtr     m_playlist;
 
   TaskManager           *m_task_manager;
-  PlayqueueModel        *m_model;
-  PlaylistView          *m_view;
 
   QMenu                 *m_menu;
-  QWidget               *ui_save_to_file_widget;
   ExLineEdit            *ui_edit_name;
-  QLineEdit             *ui_file_path;
-  QToolButton           *ui_file_button;
-  QComboBox             *ui_combo_type;
   QDialogButtonBox      *ui_buttonBox;
     
 signals:
@@ -103,4 +67,3 @@ signals:
 };
 
 #endif // _EDITOR_PLAYLIST_H_
- 

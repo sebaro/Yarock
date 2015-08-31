@@ -15,49 +15,40 @@
 *  this program.  If not, see <http://www.gnu.org/licenses/>.                           *
 *****************************************************************************************/
 
-#ifndef _SERVICE_SHOUTCAST_H_
-#define _SERVICE_SHOUTCAST_H_
+#ifndef _VOLUME_BUTTON_H_
+#define _VOLUME_BUTTON_H_
 
-#include "service_base.h"
-#include "core/mediaitem/mediaitem.h"
+// Qt
+#include <QWidget>
+#include <QToolButton>
+#include <QLabel>
+#include <QSlider>
+#include <QMenu>
 
-#include <QList>
-#include <QMap>
-#include <QByteArray>
-#include <QObject>
+
 /*
 ********************************************************************************
 *                                                                              *
-*    Class ShoutCast                                                           *
+*    Class VolumeButton                                                        *
 *                                                                              *
 ********************************************************************************
 */
-class ShoutCast : public Service
+class VolumeButton : public QToolButton
 {
 Q_OBJECT
-public:
-    ShoutCast();
-    virtual void load();
-    virtual void reload();
-    virtual QList<MEDIA::TrackPtr> streams();
-    virtual QList<MEDIA::LinkPtr> links();
+  public:
+    VolumeButton(QWidget *);
+  
+  private slots:
+    void slot_show_menu();
+    void slot_volume_change();
+    void slot_mute_change();
+    void slot_apply_volume(int);
     
-public slots:
-    virtual void slot_activate_link(MEDIA::LinkPtr link=MEDIA::LinkPtr(0));
-
-private:
-    void browseLink(MEDIA::LinkPtr link);
-    void browseStation(MEDIA::LinkPtr link);
-        
-private slots:
-    void slot_error();
-    void slotBrowseLinkDone(QByteArray);
-    void slotBrowseStationDone(QByteArray);
-    
-private:
-    QMap<QObject*, MEDIA::LinkPtr>  m_requests;
-    MEDIA::LinkPtr        m_active_link;
-    MEDIA::LinkPtr        m_root_link;    
+  private:
+    QLabel       *m_volume_label;
+    QSlider      *m_slider;
+    QMenu        *m_menu;
 };
 
-#endif // _SERVICE_SHOUTCAST_H_
+#endif // _VOLUME_BUTTON_H_

@@ -20,7 +20,6 @@
 #include "widgets/main/main_right.h"
 #include "widgets/main/main_left.h"
 #include "menuwidget.h"
-#include "playlistwidget.h"
 #include "playertoolbar.h"
 
 
@@ -36,10 +35,7 @@
 *                                                                              *
 ********************************************************************************
 */
-CentralWidget::CentralWidget(
-                       QWidget *parent,
-                       PlaylistWidget     *playlistWidget
-                       ) : QFrame(parent)
+CentralWidget::CentralWidget(QWidget *parent) : QFrame(parent)
 {
     m_parent             = parent;
 
@@ -52,8 +48,6 @@ CentralWidget::CentralWidget(
 
     /* right widget */
     right_widget = new MainRightWidget(this);
-    right_widget->addWidget( playlistWidget );
-
 
     /* left widget */
     left_widget = new MainLeftWidget(this);
@@ -119,16 +113,19 @@ bool CentralWidget::eventFilter(QObject *obj, QEvent *ev)
     // hide conditions of the SearchPopup
     if (wid && (wid == right_widget->contentWidget() ))
     {
-      if(type == QEvent::Resize) {
+      if(type == QEvent::Resize) 
+      {
           //Debug::debug() << "CentralWidget eventFilter  RESIZE EVENT";
           m_viewsSplitter_1b->setSizes( m_viewsSplitter_1->sizes() );
           return false;
       }
-      else if(type == QEvent::Hide) {
+      else if(type == QEvent::Hide)
+      {
           //Debug::debug() << "CentralWidget eventFilter  HIDE EVENT";
           right_widget->headerWidget()->hide();
       }
-      else if(type == QEvent::Show) {
+      else if(type == QEvent::Show) 
+      {
           //Debug::debug() << "CentralWidget eventFilter  SHOW EVENT";
           right_widget->headerWidget()->show();
       }

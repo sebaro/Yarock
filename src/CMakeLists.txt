@@ -38,6 +38,7 @@ SET(YAROCK_INCLUDES  ${CMAKE_SOURCE_DIR}/src/
                      ${CMAKE_SOURCE_DIR}/src/widgets/equalizer
                      ${CMAKE_SOURCE_DIR}/src/widgets/nowplaying
                      ${CMAKE_SOURCE_DIR}/src/widgets/main
+                     ${CMAKE_SOURCE_DIR}/src/widgets/playertoolbar
                      ${CMAKE_SOURCE_DIR}/src/widgets/popupcompleter
 )
 
@@ -54,6 +55,7 @@ SET(SOURCES
            ${CMAKE_SOURCE_DIR}/src/settings.cpp
            ${CMAKE_SOURCE_DIR}/src/threadmanager.cpp
            ${CMAKE_SOURCE_DIR}/src/utilities.cpp
+           ${CMAKE_SOURCE_DIR}/src/systray.cpp
 )
 
 set (SOURCES 
@@ -181,7 +183,9 @@ set (SOURCES
            ${CMAKE_SOURCE_DIR}/src/widgets/main/menumodel.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/main/menuwidget.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/main/menubar.cpp
-           ${CMAKE_SOURCE_DIR}/src/widgets/nowplaying/nowplayingview.cpp
+           ${CMAKE_SOURCE_DIR}/src/widgets/playertoolbar/playertoolbar.cpp
+           ${CMAKE_SOURCE_DIR}/src/widgets/playertoolbar/volumebutton.cpp           
+           ${CMAKE_SOURCE_DIR}/src/widgets/playertoolbar/nowplayingpopup.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/popupcompleter/popup_item.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/popupcompleter/popup_model.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/popupcompleter/popup_view.cpp
@@ -194,7 +198,6 @@ set (SOURCES
            ${CMAKE_SOURCE_DIR}/src/widgets/exlineedit.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/searchline_edit.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/minimalwidget.cpp
-           ${CMAKE_SOURCE_DIR}/src/widgets/playertoolbar.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/ratingwidget.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/seekslider.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/seeksliderpopup.cpp
@@ -234,6 +237,7 @@ SET(YAROCK_HEADERS
            ${CMAKE_SOURCE_DIR}/src/settings.h
            ${CMAKE_SOURCE_DIR}/src/threadmanager.h
            ${CMAKE_SOURCE_DIR}/src/utilities.h
+           ${CMAKE_SOURCE_DIR}/src/systray.h
            ${CMAKE_SOURCE_DIR}/src/core/database/database.h
            ${CMAKE_SOURCE_DIR}/src/core/database/database_cmd.h
            ${CMAKE_SOURCE_DIR}/src/core/database/databasebuilder.h
@@ -285,6 +289,7 @@ SET(YAROCK_HEADERS
            ${CMAKE_SOURCE_DIR}/src/playqueue/playqueue_proxymodel.h
            ${CMAKE_SOURCE_DIR}/src/playqueue/playlistview.h
            ${CMAKE_SOURCE_DIR}/src/playqueue/playlistwidget.h
+           ${CMAKE_SOURCE_DIR}/src/playqueue/playlistwidgetbase.h
            ${CMAKE_SOURCE_DIR}/src/playqueue/playlistwriter.h
            ${CMAKE_SOURCE_DIR}/src/playqueue/task_manager.h  
            ${CMAKE_SOURCE_DIR}/src/playqueue/virtual_playqueue.h  
@@ -335,7 +340,9 @@ SET(YAROCK_HEADERS
            ${CMAKE_SOURCE_DIR}/src/widgets/main/menumodel.h
            ${CMAKE_SOURCE_DIR}/src/widgets/main/menuwidget.h
            ${CMAKE_SOURCE_DIR}/src/widgets/main/menubar.h
-           ${CMAKE_SOURCE_DIR}/src/widgets/nowplaying/nowplayingview.h
+           ${CMAKE_SOURCE_DIR}/src/widgets/playertoolbar/playertoolbar.h
+           ${CMAKE_SOURCE_DIR}/src/widgets/playertoolbar/volumebutton.h
+           ${CMAKE_SOURCE_DIR}/src/widgets/playertoolbar/nowplayingpopup.h           
            ${CMAKE_SOURCE_DIR}/src/widgets/popupcompleter/popup_item.h
            ${CMAKE_SOURCE_DIR}/src/widgets/popupcompleter/popup_model.h
            ${CMAKE_SOURCE_DIR}/src/widgets/popupcompleter/popup_view.h
@@ -348,7 +355,6 @@ SET(YAROCK_HEADERS
            ${CMAKE_SOURCE_DIR}/src/widgets/exlineedit.h
            ${CMAKE_SOURCE_DIR}/src/widgets/searchline_edit.h
            ${CMAKE_SOURCE_DIR}/src/widgets/minimalwidget.h
-           ${CMAKE_SOURCE_DIR}/src/widgets/playertoolbar.h
            ${CMAKE_SOURCE_DIR}/src/widgets/ratingwidget.h
            ${CMAKE_SOURCE_DIR}/src/widgets/seekslider.h
            ${CMAKE_SOURCE_DIR}/src/widgets/seeksliderpopup.h

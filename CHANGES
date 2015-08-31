@@ -1,5 +1,22 @@
 # ------------------------------------------------------------------------------
-                              Yarock changes 
+                              Yarock changes
+# ------------------------------------------------------------------------------
+  - 1.1.4  - PUBLIC RELEASE - august 2015
+  - New : improve genre tags browsing with new genre tag cloud
+  - New : allow playing tracks from playlist editor
+  - New : UI change with new now playing information widget
+  - New : add track numbers in the playqueue [#1489222]
+  - New : add user's volume restoration at startup [#1489224]
+  - New : add symobolic link support for user collection [#1486708]
+  - Change : simplified playlist editor
+  - Change : activate mpris control by default
+  - BugFix : fix ordering tracks when dragging album to playqueue [#1489222]
+  - BugFix : yarock crashes when trying to load a radio station [#1486524]
+  - BugFix : dysfunctional playlist system [#1489228]
+  - BugFix : fix mpris command to raise application [#1487730]
+  - BugFix : fix metadata update for phonon engine
+  - BugFix : add scalable icon for better desktop integration (ubuntu unity)
+  - BugFix : improve stream loader
 # ------------------------------------------------------------------------------
   - 1.1.3  - PUBLIC RELEASE - august 2015
   - New : new radionomy radio service (replace shoutcast)

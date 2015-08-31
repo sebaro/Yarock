@@ -19,17 +19,13 @@
 
 // qt
 #include <QMainWindow>
-#include <QSystemTrayIcon>
 
 #include "commandlineoptions.h"
-// class CommandlineOptions;
 
 // player engine
 class EngineBase;
 
 // widgets
-class PlaylistView;
-class PlaylistWidget;
 class BrowserView;
 class CentralWidget;
 class MinimalWidget;
@@ -49,9 +45,10 @@ class HistoManager;
 class VirtualPlayqueue;
 class GlobalShortcuts;
 
-// Dbus & Mpris
+// Dbus & Mpris & Utils
 class DbusNotification;
 class MprisManager;
+class SysTray;
 /*
 ********************************************************************************
 *                                                                              *
@@ -78,7 +75,6 @@ Q_OBJECT
     void connectSlots();
 
     /* Settings          */
-    void reloadSystraySettings();
     void savePlayingTrack();
     void restorePlayingTrack();
 
@@ -93,7 +89,6 @@ Q_OBJECT
     void slot_start_test();
 #endif
     /* Mainwindow        */
-    void slot_systray_clicked(QSystemTrayIcon::ActivationReason);
     void slot_widget_mode_switch();
     void slot_commandline_received(const QByteArray& serialized_options);
     void slot_on_settings_saved();
@@ -102,10 +97,17 @@ Q_OBJECT
     void slot_on_show_settings();
 
     /* Playqueue        */
-    void slot_playqueue_add();
-    void slot_playqueue_clear();
-    void slot_playqueue_save();
-    void slot_playqueue_save_auto();
+    PlayqueueModel* playingQueue()
+    {
+      if(m_playingModel) 
+          return m_playingModel;
+      else
+          return m_playqueue;
+          
+    }
+    void slot_playqueue_added(QWidget*);
+    void slot_playqueue_removed(QWidget*);
+    void slot_playqueue_cleared();
     void slot_restore_playqueue();
     void slot_play_after_playqueue_loaded();
 
@@ -146,15 +148,12 @@ Q_OBJECT
 
     EngineBase            *_player;
 
-    StatusManager         *_statusManager;
+    StatusManager         *m_statusManager;
 
-    CentralWidget         *_centralWidget;
+    CentralWidget         *m_centralWidget;
 
-    PlaylistView          *_playlistView;
-    
     PlayqueueModel        *m_playqueue;
-
-    PlaylistWidget        *_playlistwidget;
+    PlayqueueModel        *m_playingModel;
 
     LocalTrackModel       *m_localTrackModel;
     LocalPlaylistModel    *m_localPlaylistModel;
@@ -167,19 +166,19 @@ Q_OBJECT
 
     ThreadManager         *m_thread_manager;
 
-    QSystemTrayIcon        *m_trayIcon;
-    bool                    m_canClose;
+    SysTray               *m_systray;
+    bool                   m_canClose;
 
-    MinimalWidget          *m_minimalwidget;
-    HistoManager           *m_histoManager;
+    MinimalWidget         *m_minimalwidget;
+    HistoManager          *m_histoManager;
 
-    GlobalShortcuts        *m_globalShortcuts;
-    DbusNotification       *m_dbus_notifier;
-    MprisManager           *m_mpris_manager;
+    GlobalShortcuts       *m_globalShortcuts;
+    DbusNotification      *m_dbus_notifier;
+    MprisManager          *m_mpris_manager;
 
-    CommandlineOptions     m_options;
+    CommandlineOptions    m_options;
     
-    int                    m_playqueue_index;
+    int                   m_playqueue_index;
 
 signals:
     void playlistFinished();

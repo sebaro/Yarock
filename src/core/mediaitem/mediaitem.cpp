@@ -51,6 +51,7 @@ const QStringList playlistFilter = QStringList() << "m3u" << "m3u8" << "pls" << 
 MEDIA::Link::Link() : Media()
 {
     this->setType(TYPE_LINK);
+    this->state = 0; /* SERVICE::NO_DATA */
 };
 
 /*
@@ -592,8 +593,8 @@ bool MEDIA::compareTrackItemGenre(const TrackPtr mi1, const TrackPtr mi2)
 {
     const QString s1 = mi1->genre + mi1->album + QString::number(mi1->disc_number);
     const QString s2 = mi2->genre + mi2->album + QString::number(mi2->disc_number);
-
-    return (s1 < s2);
+    
+    return QString::compare(s1, s2, Qt::CaseInsensitive) < 0;
 }
 
 bool MEDIA::compareAlbumItemYear(const AlbumPtr mi1, const AlbumPtr mi2)
@@ -608,7 +609,7 @@ bool MEDIA::compareStreamName(const TrackPtr mi1, const TrackPtr mi2)
 
 bool MEDIA::compareStreamCategorie(const TrackPtr mi1, const TrackPtr mi2)
 {
-    return mi1->categorie.toLower() <= mi2->categorie.toLower();
+    return mi1->genre.toLower() <= mi2->genre.toLower();
 }
 
 bool MEDIA::compareAlbumItemPlaycount(const AlbumPtr mi1, const AlbumPtr mi2)

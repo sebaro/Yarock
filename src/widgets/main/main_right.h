@@ -26,6 +26,7 @@
 #include <QMap>
 #include <QMenu>
 
+class PlaylistWidgetBase;
 /*
 ********************************************************************************
 *                                                                              *
@@ -47,6 +48,10 @@ public:
     
     QWidget * contentWidget() {return m_stackedWidget;}
     QWidget * headerWidget()  {return m_header;}
+    
+    QList<PlaylistWidgetBase*> playqueueList();
+    
+    PlaylistWidgetBase* activePlayqueue();
     
 public slots:
     void slot_create_new_playlist_editor();
@@ -77,6 +82,10 @@ private:
     
     int                 m_buttonId;
     QMap<int /*buttons*/, QWidget* /*widgets*/>  m_ids;
+    
+signals:
+    void playqueueAdded(QWidget*);
+    void playqueueRemoved(QWidget*);
 };
 
 #endif // _MAIN_RIGHT_H_ 

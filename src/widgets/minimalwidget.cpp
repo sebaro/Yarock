@@ -165,7 +165,9 @@ void MinimalWidget::slot_update()
         ui_image->setPixmap( pix );
 
         /* update labels title/album/artist */
-        const QString title_or_url = track->title.isEmpty() ? track->url : track->title;
+        QString title_or_url = track->title.isEmpty() ? track->url : track->title;
+        if(track->type() == TYPE_STREAM)
+            title_or_url = track->title.isEmpty() ? track->name : track->title;
 
         int width = this->width() - 20 ;
         QString clippedText = QFontMetrics(ui_label_title->font()).elidedText(title_or_url, Qt::ElideRight, width);
@@ -191,6 +193,8 @@ void MinimalWidget::slot_update()
     else
     {
         ui_image->clear(); 
+        ui_image->setPixmap( QPixmap(":/icon/yarock_64x64.png") );
+        
         ui_label_title->clear();
         ui_label_album->clear();
         ui_rating->hide();

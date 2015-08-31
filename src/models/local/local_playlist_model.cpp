@@ -37,7 +37,6 @@ LocalPlaylistModel::LocalPlaylistModel(QObject *parent) : QObject(parent)
     INSTANCE = this;
 
     m_rootItem          = MEDIA::MediaPtr(new MEDIA::Media());
-    m_playing_track     = MEDIA::TrackPtr(0);
 }
 
 LocalPlaylistModel::~LocalPlaylistModel()
@@ -55,10 +54,6 @@ void LocalPlaylistModel::clear()
 {
     m_rootItem.reset();
     m_rootItem        = MEDIA::MediaPtr(new MEDIA::Media());
-
-    m_playing_track     = MEDIA::TrackPtr(0);
-
-    emit modelCleared();
 }
 
 //! ----------------------- Get urls method ------------------------------------

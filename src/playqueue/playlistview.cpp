@@ -90,12 +90,6 @@ PlaylistView::PlaylistView(QWidget *parent, PlayqueueModel* model) : QListView(p
     //! vertical scrolbar setup
     this->verticalScrollBar()->setContextMenuPolicy(Qt::NoContextMenu);
 
-    //! connection
-    connect(ACTIONS()->value(PLAYQUEUE_TRACK_LOVE), SIGNAL(triggered()), this, SLOT(slot_lastfm_love()));
-    connect(ACTIONS()->value(PLAYQUEUE_REMOVE_ITEM), SIGNAL(triggered()), this, SLOT(removeSelected()));
-    connect(ACTIONS()->value(PLAYQUEUE_JUMP_TO_TRACK), SIGNAL(triggered()), this, SLOT(jumpToCurrentlyPlayingTrack()));
-    connect(this, SIGNAL(doubleClicked(const QModelIndex &)), SLOT(slot_itemActivated(const QModelIndex &)));
-    
     //! model
     m_model = model;
     this->setModel(m_model->proxy());
@@ -105,6 +99,8 @@ PlaylistView::PlaylistView(QWidget *parent, PlayqueueModel* model) : QListView(p
     m_delegate->setView(this);
     this->setItemDelegate(m_delegate);
 
+    //! connection
+    connect(this, SIGNAL(doubleClicked(const QModelIndex &)), SLOT(slot_itemActivated(const QModelIndex &)));
     connect(m_model, SIGNAL(needSelectionAfterMove(QList<MEDIA::TrackPtr>)), SLOT(selectItems(QList<MEDIA::TrackPtr>)));
     connect(m_model, SIGNAL(modelCleared()), SLOT(slot_model_cleared()));
 
@@ -207,7 +203,6 @@ const MEDIA::TrackPtr PlaylistView::firstSelectedTrack()
 void PlaylistView::removeSelected()
 {
     //Debug::debug() << "    [PlaylistView] removeSelected";
-
     QItemSelection selection = selectionModel()->selection();
     if (selection.isEmpty())
       return;
@@ -265,7 +260,7 @@ void PlaylistView::paintEvent(QPaintEvent *event)
       font.setPointSize(10);
       painter.setFont(font);
 
-      const QRect textBox = rect().adjusted(10, 0, -10, 0);
+      const QRect textBox = rect().adjusted(10, this->height()/2-70, -10, 0);
 
       painter.setPen(QApplication::palette().color(QPalette::Disabled,QPalette::WindowText) );
 
@@ -279,7 +274,7 @@ void PlaylistView::paintEvent(QPaintEvent *event)
       p.setOpacity(0.2);
       p.drawPixmap(0, 0, p_in);
       p.end();
-      painter.drawPixmap(textBox.width()/2 - p_out.width()/2, 10 ,p_out);
+      painter.drawPixmap(textBox.width()/2 - p_out.width()/2, textBox.y() ,p_out);
     }
 
     if (m_drop_indicator_row != -1)
@@ -497,7 +492,6 @@ PlaylistDelegate::PlaylistDelegate(QObject *parent, PlayqueueModel* model)
 {
     m_model      = model;
 
-    icon_media_playing  = QIcon(":/images/media-playing.png");
     icon_media_broken   = QIcon(":/images/media-broken-18x18.png");
     icon_media_track    = QIcon(":/images/track-48x48.png");
     icon_media_stream   = QIcon(":/images/media-url-48x48.png");
@@ -546,19 +540,26 @@ void PlaylistDelegate::paint ( QPainter * painter, const QStyleOptionViewItem & 
 
 
     /* Paint Icon */
-    const QIcon icon = this->getIcon(track);
     int leftoffset  = 3;
     int rightoffset = 0;
 
     if(ACTIONS()->value(PLAYQUEUE_OPTION_SHOW_COVER)->isChecked()) 
     {
-      icon.paint(painter, leftoffset, top+2, height-4, height-4, Qt::AlignCenter, QIcon::Normal);
-      leftoffset += height+4; //icon size = (height-4) + 8 for padding
+        if(track->isPlaying)
+          UTIL::drawPlayingIcon(painter,height, 17, QPoint(left,top));
+        else
+          this->getIcon(track).paint(painter, leftoffset, top+2, height-4, height-4, Qt::AlignCenter, QIcon::Normal);
+
+        leftoffset += height+4; //icon size = (height-4) + 8 for padding
     }
     else 
     {
-      icon.paint(painter, leftoffset, top+(height-16)/2, 16, 16, Qt::AlignCenter, QIcon::Normal);
-      leftoffset += 16+8; //icon size = 16 + 8 for padding
+        if(track->isPlaying)
+          UTIL::drawPlayingIcon(painter,20, 0, QPoint(leftoffset, top+(height-16)/2));
+        else
+          this->getIcon(track).paint(painter, leftoffset, top+(height-16)/2, 16, 16, Qt::AlignCenter, QIcon::Normal);
+        
+        leftoffset += 16+8; //icon size = 16 + 8 for padding
     }
 
     /* Prepare rectangle for painting*/
@@ -599,14 +600,21 @@ void PlaylistDelegate::paint ( QPainter * painter, const QStyleOptionViewItem & 
 
         /* Paint track info*/
         QString info_2  = isTrack ? track->artist + " - " + track->album : track->url;
-
         info_2 = fm.elidedText ( info_2, Qt::ElideRight, width-leftoffset-rightoffset-5 );
         painter->drawText(leftoffset,top+height/2+1,width-leftoffset-rightoffset, fm.height()+2,Qt::AlignTop | Qt::AlignLeft, info_2);
 
         painter->setFont(font_bold);
         fm = QFontMetrics(font_bold);
 
-        QString track_title  = isTrack ? track->title : track->name;
+
+        QString track_title;
+        if( isTrack && ACTIONS()->value(PLAYQUEUE_OPTION_SHOW_NUMBER)->isChecked() )
+            track_title = UTIL::prettyTrackNumber(track->num ) + " - " + track->title;
+        else if( isTrack )
+            track_title = track->title;
+        else
+            track_title = track->name;
+        
         track_title = fm.elidedText ( track_title, Qt::ElideRight, width-leftoffset-rectDuree.width()-5 );
         painter->drawText(leftoffset,top+height/2-fm.height()-1,width-leftoffset-rectDuree.width(), fm.height()+2,Qt::AlignTop | Qt::AlignLeft, track_title);
     }
@@ -649,11 +657,7 @@ Q_UNUSED(index)
 
 QIcon PlaylistDelegate::getIcon(const MEDIA::TrackPtr track) const
 {
-    if(track->isPlaying)
-    {
-      return icon_media_playing;
-    }
-    else if (track->isBroken)
+    if (track->isBroken)
     {
       return icon_media_broken;
     }

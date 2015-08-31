@@ -75,6 +75,9 @@ void PlaylistPopulator::run()
         return;
   }
     
+  if( m_playlist_row < 0 )
+    m_playlist_row = m_model->rowCount();
+            
   while (!m_files.isEmpty() || !m_tracks.isEmpty())
   {
       /*--------------------------------------------------*/
@@ -102,7 +105,7 @@ void PlaylistPopulator::run()
             stream->url         = url;
             stream->name        = url;
       
-            emit async_load(stream, m_playlist_row);
+            emit async_load(stream, m_playlist_row++);
         }
       }
 
@@ -125,12 +128,13 @@ void PlaylistPopulator::run()
                     if(!track)
                       track = MEDIA::FromLocalFile(url);
 
-                    m_model->request_insert_track(track, m_playlist_row);
+                    m_model->request_insert_track(track, m_playlist_row++);
 
                     track.reset();
                 }
                 else {
-                    m_model->request_insert_track(track, m_playlist_row);
+                    m_model->request_insert_track(track, m_playlist_row++);
+                    
                     track.reset();
                 }
              } // foreach MediaItem
@@ -151,7 +155,7 @@ void PlaylistPopulator::run()
               if(!track)
                 track = MEDIA::FromLocalFile(fileName);
 
-              m_model->request_insert_track(track, m_playlist_row);
+              m_model->request_insert_track(track, m_playlist_row++);
               track.reset();
           }
           else if(!MEDIA::isLocal(m_files.first())) {
@@ -163,17 +167,8 @@ void PlaylistPopulator::run()
               stream->id          = -1;
               stream->url         = url;
               stream->name        = url;
-              stream->title       = QString();
-              stream->artist      = QString();
-              stream->album       = QString();
-              stream->categorie   = QString();
-              stream->isFavorite  = false;
-              stream->isPlaying   = false;
-              stream->isBroken    = false;
-              stream->isPlayed    = false;
-              stream->isStopAfter = false;
 
-              m_model->request_insert_track(stream, m_playlist_row);
+              m_model->request_insert_track(stream, m_playlist_row++);
 
               stream.reset();
           }
@@ -200,6 +195,8 @@ void PlaylistPopulator::run()
         }
         else 
         {
+            //Debug::warning() << "  [PlaylistPopulator] insert media item at " << m_playlist_row;
+            
             m_model->request_insert_track(track, m_playlist_row++);
         }
       }
@@ -298,7 +295,7 @@ void PlaylistPopulator::addUrls(QList<QUrl> listUrl, int playlist_row)
 
 void PlaylistPopulator::addMediaItems(QList<MEDIA::TrackPtr> list, int playlist_row)
 {
-    Debug::debug() << "  [PlaylistPopulator] addMediaItems " << list;
+    //Debug::debug() << "  [PlaylistPopulator] addMediaItems " << list;
     m_playlist_row = playlist_row;
     m_tracks.append(list);
 }
@@ -352,7 +349,7 @@ void PlaylistPopulator::restoreSession()
                 track->isStopAfter  =  false;
               }
               
-              m_model->request_insert_track( track);
+              m_model->request_insert_track(track);
             }
             else
             {

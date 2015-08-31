@@ -229,12 +229,12 @@ void PopupModel::getStreamSuggestions(const QString & query)
 
        bool found = false;
        if(query.length() < 3)
-        found = stream->categorie.startsWith ( query, Qt::CaseInsensitive );
+        found = stream->genre.startsWith ( query, Qt::CaseInsensitive );
        else
-        found = stream->categorie.contains ( query, Qt::CaseInsensitive );
+        found = stream->genre.contains ( query, Qt::CaseInsensitive );
 
-       if(found && !categories.contains(stream->categorie) && categories.count() < 5)
-         categories << stream->categorie;
+       if(found && !categories.contains(stream->genre) && categories.count() < 5)
+         categories << stream->genre;
 
        found = false;
        if(query.length() < 3)

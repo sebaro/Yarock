@@ -18,6 +18,7 @@
 #define _TASK_MANAGER_H_
 
 #include "mediaitem.h"
+#include "mediamimedata.h"
 
 #include <QObject>
 #include <QThreadPool>
@@ -57,9 +58,12 @@ Q_OBJECT
     // Playlist Writer Thread
     void playlistSaveToFile(const QString &filename);
     void playlistSaveToDb(const QString &name, int db_id=-1);
+    void playlistSaveToDb(MEDIA::PlaylistPtr playlist);
 
     void savePlayqueueSession();
     void restorePlayqueueSession();
+    
+    void loadEditorPlaylist(MediaMimeData* mimedata, int row);
     
   private slots:
     void slot_load_async(MEDIA::TrackPtr,int);
@@ -74,10 +78,13 @@ Q_OBJECT
 
     QMap<StreamLoader*, int/*row*/>  m_asyncloaders;
     
+    //! messages Id for StatusWidget management
+    QMap<QString, uint>    messageIds;
+    
   signals:
+    void loadPlaylist(MediaMimeData*,int);
     void playlistPopulated();
     void playlistSaved();
 };
 
 #endif // _TASK_MANAGER_H_
- 

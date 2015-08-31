@@ -14,72 +14,42 @@
 *  You should have received a copy of the GNU General Public License along with         *
 *  this program.  If not, see <http://www.gnu.org/licenses/>.                           *
 *****************************************************************************************/
-#ifndef _STATUS_WIDGET_H_
-#define _STATUS_WIDGET_H_
 
+#ifndef _NOWPLAYING_POPUP_H_
+#define _NOWPLAYING_POPUP_H_
 
-#include <QLabel>
-#include <QString>
+//Qt
 #include <QWidget>
-#include <QResizeEvent>
-#include <QMoveEvent>
+#include <QToolBar>
+#include <QLabel>
 #include <QTimer>
-//! Message Type to display
-
-namespace STATUS {
-typedef enum {
-               TYPE_INFO = 0,
-               TYPE_ERROR,
-               TYPE_WARNING,
-               TYPE_PLAYQUEUE,
-               } T_MESSAGE;
-};
-
-
 /*
 ********************************************************************************
 *                                                                              *
-*    Class StatusWidget                                                        *
+*    Class NowPlayingPopup                                                     *
 *                                                                              *
 ********************************************************************************
 */
-//class StatusWidget : public QWidget
-class StatusWidget : public QFrame
+class NowPlayingPopup : public QWidget
 {
 Q_OBJECT
   public:
-    static StatusWidget         *INSTANCE;
+    NowPlayingPopup(QWidget *parent);
+    void updateWidget();
 
-    StatusWidget(QWidget *parent = 0);
-    static StatusWidget* instance() { return INSTANCE; }
-
-    //! Message methode
-    void startShortMessage(const QString& m, STATUS::T_MESSAGE type, int ms );
-    uint startProgressMessage(const QString& action);
-    void stopProgressMessage(uint id);
-    void updateProgressMessage(uint id, const QString & message);
-
-  protected:
-    void resizeEvent(QResizeEvent *event);
-    void moveEvent(QMoveEvent *event);
-    bool eventFilter(QObject *obj, QEvent *ev);
-    
   private slots:
-    void updateMessage();
-    void stopShortMessage();
-    void setPosition();
+    void slot_update_widget();
+    void slot_rating_changed(float);
+    void slot_on_lastfm_love();
+    void slot_on_track_edit();
 
   private:
-    QLabel                *message;
-    QLabel                *pixmap;
-
-    STATUS::T_MESSAGE     m_current_type;
-
-    QWidget*              m_parent;
-    QMap<uint,QString>    _longMessage;
-    bool                  isShortMessage;
-    QTimer               *m_short_timer;
+    QLabel                *ui_image;
+    QLabel                *ui_label_title;    
+    QLabel                *ui_label_album;    
+    QToolBar              *ui_toolbar;
+    class RatingWidget    *ui_rating;    
 };
 
 
-#endif // _STATUS_WIDGET_H_
+#endif // _NOWPLAYING_POPUP_H_

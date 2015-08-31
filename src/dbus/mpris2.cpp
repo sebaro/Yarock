@@ -21,6 +21,7 @@
 #include "core/player/engine.h"
 #include "core/player/engine_base.h"
 #include "widgets/audiocontrols.h"
+#include "covercache.h"
 #include "global_actions.h"
 #include "utilities.h"
 #include "debug.h"
@@ -77,7 +78,7 @@ bool Mpris2::canQuit() const
 
 bool Mpris2::canRaise() const
 {
-    return false;
+    return true;
 }
 
 bool Mpris2::hasTrackList() const
@@ -109,7 +110,7 @@ QStringList Mpris2::supportedUriSchemes() const
 
 QStringList Mpris2::supportedMimeTypes() const
 {
-  static QStringList res = QStringList()
+    static QStringList res = QStringList()
                            << "application/ogg"
                            << "application/x-ogg"
                            << "application/x-ogm-audio"
@@ -135,11 +136,15 @@ QStringList Mpris2::supportedMimeTypes() const
                            << "audio/x-wav"
                            << "video/x-ms-asf"
                            << "x-content/audio-player";
-  return res;
+    return res;
 }
 
 
-void Mpris2::Raise() {}
+void Mpris2::Raise() 
+{
+//     Debug::debug() << "  [Mpris2] Raise Application";    
+    emit RaiseMainWindow();
+}
 
 
 void Mpris2::Quit()
@@ -257,9 +262,8 @@ QVariantMap Mpris2::metadata() const
         metadataMap.insert( "xesam:genre",  track->genre );
         metadataMap.insert( "mpris:length", static_cast<qlonglong>(track->duration) * 1000000 );
 
-        const QString coverpath = UTIL::CONFIGDIR + "/albums/" + track->coverName();
-      
-        if( QFile(coverpath).exists() )
+        const QString coverpath = CoverCache::instance()->coverPath( track );
+        if( !coverpath.isEmpty() )
           metadataMap.insert( "mpris:artUrl", QString( QUrl::fromLocalFile( coverpath ).toEncoded() ) );
         
         if (track->rating != -1.0)
@@ -268,7 +272,6 @@ QVariantMap Mpris2::metadata() const
 
     return metadataMap;
 }
-
 
 
 

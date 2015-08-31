@@ -105,10 +105,13 @@ Q_OBJECT
 
     //! selection
     bool isTrackSelected();
+
+    void removeSelected();
     
   public slots:
     void selectionChanged (const QItemSelection & selected, const QItemSelection & deselected);
     void jumpToCurrentlyPlayingTrack();
+    void slot_lastfm_love();
 
   protected:
     void paintEvent(QPaintEvent *event);
@@ -128,9 +131,7 @@ Q_OBJECT
             
   private slots:
     void slot_itemActivated(const QModelIndex &index);
-    void removeSelected();
     void selectItems(QList<MEDIA::TrackPtr>);
-    void slot_lastfm_love();
     void slot_model_cleared();
 
   signals:

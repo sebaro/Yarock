@@ -137,6 +137,7 @@ private:
 
 signals:
     void Seeked( qlonglong Position );
+    void RaiseMainWindow();
 };
 
 

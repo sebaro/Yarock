@@ -43,6 +43,9 @@ private slots:
   void slot_pending_task_done();
 
 private:
+    void insertTrackToParent(MEDIA::TrackPtr track);
+
+private:
   MEDIA::TrackPtr      m_parent;
   QList<StreamLoader*> m_pending_task;
   QTimer               *m_timeout_timer;

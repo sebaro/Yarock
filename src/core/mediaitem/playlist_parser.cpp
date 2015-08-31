@@ -103,6 +103,7 @@ QList<MEDIA::TrackPtr> MEDIA::PlaylistFromBytes(QByteArray& bytes)
       Debug::warning() << "[MEDIA] PlaylistFromBytes unknown format, trying m3u playlist...";
       list = readM3uPlaylist( &buffer ) ;
     }
+    Debug::debug() << "  [MEDIA]  PlaylistFromBytes END";
 
     return list;
 }
@@ -174,7 +175,7 @@ QList<MEDIA::TrackPtr>  readM3uPlaylist(QIODevice* device, const QDir& playlist_
               track->setType(TYPE_STREAM);
               track->id          = -1;
               track->url         = url.toString();
-              track->name        = title.isEmpty() ? url.toString() : title;
+              track->name        = title.isEmpty() ? QString() : title;
               track->isFavorite  = false;
               track->isPlaying   = false;
               track->isBroken    = false;
@@ -232,76 +233,81 @@ QList<MEDIA::TrackPtr>  readM3uPlaylist(QIODevice* device, const QDir& playlist_
 /* ---------------------------------------------------------------------------*/ 
 QList<MEDIA::TrackPtr>  readPlsPlaylist(QIODevice* device, const QDir& playlist_dir )
 {
+    QMap<int, MEDIA::TrackPtr> tracks;
+  
     QList<MEDIA::TrackPtr> list;
 
-    MEDIA::TrackPtr mi = MEDIA::TrackPtr(0);
+    QRegExp n_re("\\d+$");
 
-    while (!device->atEnd()) {
+    while ( !device->atEnd() )
+    {
       QString line = QString::fromUtf8(device->readLine()).trimmed();
-      int equals = line.indexOf('=');
-      QString key = line.left(equals).toLower();
+      
+      int equals    = line.indexOf('=');
+      QString key   = line.left(equals).toLower();
       QString value = line.mid(equals + 1);
 
+      n_re.indexIn(key);
+      int n = n_re.cap(0).toInt();
+      if( !tracks.contains(n) && n > 0 )
+      {
+        tracks[n] = MEDIA::TrackPtr(new MEDIA::Track());
+        
+        tracks.value(n)->setType(TYPE_STREAM);
+        tracks.value(n)->id          = -1;
+        tracks.value(n)->isFavorite  = false;
+        tracks.value(n)->isPlaying   = false;
+        tracks.value(n)->isBroken    = false;
+        tracks.value(n)->isPlayed    = false;
+        tracks.value(n)->isStopAfter = false;
+      }
+    
+      //Debug::debug() << "  [MEDIA] readPlsPlaylist -> key:" << key << " value:" << value;
+      
       if (key.startsWith("file"))
       {
-        mi = MEDIA::TrackPtr(new MEDIA::Track());
-        list.append(mi);
-
         //! Find the Track location
-        if (value.contains(QRegExp("^[a-z]+://"))) {
+        if (value.contains(QRegExp("^[a-z]+://")))
+        {
           QUrl url(value);
           if (url.isValid()) {
-              // Debug::debug() << "  [MEDIA] readPlsPlaylist -> url.isValid()" << url;
-              mi->setType(TYPE_STREAM);
-              mi->id          = -1;
-              mi->url         = value;
-              mi->name        = value;
-              mi->isFavorite  = false;
-              mi->isPlaying   = false;
-              mi->isBroken    = false;
-              mi->isPlayed    = false;
-              mi->isStopAfter = false;
+              //Debug::debug() << "  [MEDIA] readPlsPlaylist -> url.isValid()" << url;
+              tracks.value(n)->setType(TYPE_STREAM);
+              tracks.value(n)->url         = value;
           }
         }
-        else {
+        else 
+        {
           QString file_path = value;
 
           file_path = QDir::fromNativeSeparators(file_path);
 
           // Make the path absolute
           if (!QDir::isAbsolutePath(file_path))
-            file_path = playlist_dir.absoluteFilePath(file_path);
+              file_path = playlist_dir.absoluteFilePath(file_path);
 
           // Use the canonical path
           if (QFile::exists(file_path))
-            file_path = QFileInfo(file_path).canonicalFilePath();
+              file_path = QFileInfo(file_path).canonicalFilePath();
 
-          mi->setType(TYPE_TRACK);
-          mi->id          =  -1;
-          mi->url         =  file_path;
-          mi->isPlaying   =  false;
-          mi->isBroken    =  QFile::exists(file_path) ? false : true;
-          mi->isPlayed    =  false;
-          mi->isStopAfter =  false;
+          tracks.value(n)->setType(TYPE_TRACK);
+          tracks.value(n)->url         =  file_path;
+          tracks.value(n)->isBroken    =  QFile::exists(file_path) ? false : true;
         }
       } // key is filename
       else if (key.startsWith("title"))
       {
-        if(mi->type() == TYPE_TRACK)
-          mi->title = value;
-        else
-          mi->name = value;
+        tracks.value(n)->title = value;
+        tracks.value(n)->name  = value;
       }
       else if (key.startsWith("length"))
       {
-        if(mi->type() == TYPE_TRACK)
-          mi->duration = value.toInt();
+        if( value.toInt() > 0 )
+            tracks.value(n)->duration = value.toInt();
       }
     } // fin while
 
-    //Debug::debug() << "  [MEDIA] end readPlsPlaylist";
-
-    return list;
+    return tracks.values();
 }
 
 
@@ -392,10 +398,18 @@ QList<MEDIA::TrackPtr>  readXspfPlaylist(QIODevice* device, const QDir& playlist
           else
             mi->name = QString(xml.readElementText());
       }
+      else if (xml.isStartElement() && xml.name() == "creator")
+      {
+          mi->artist = QString(xml.readElementText());
+      }
+      else if (xml.isStartElement() && xml.name() == "album")
+      {
+          mi->album = QString(xml.readElementText());
+      }
       else if (xml.isStartElement() && xml.name() == "category")
       {
           if(mi->type() == TYPE_STREAM)
-            mi->categorie = QString(xml.readElementText());
+            mi->genre = QString(xml.readElementText());
       }
       else if (xml.isEndElement() && xml.name() == "track")
       {
@@ -459,7 +473,7 @@ void saveM3uPlaylist(QIODevice* device, const QDir& playlist_dir, QList<MEDIA::T
       if (media->type() == TYPE_TRACK ) {
         info = QString("#EXTINF:%1,%2 - %3\n").arg(QString::number(media->duration))
                                               .arg(media->artist)
-                                              .arg(media->album);
+                                              .arg(media->title);
         device->write(info.toUtf8());
 
         //! Get the path to MediaItem relative to the Playlist File directory
@@ -554,11 +568,11 @@ void saveXspfPlaylist(QIODevice* device, const QDir& playlist_dir, QList<MEDIA::
         xml.writeTextElement("location", media_path);
         xml.writeTextElement("title", media->name);
         
-        if( !media->categorie.isEmpty() )
+        if( !media->genre.isEmpty() )
         {
           xml.writeStartElement("extension");
           xml.writeAttribute("application", "yarock");
-          xml.writeTextElement("category",  media->categorie);
+          xml.writeTextElement("category",  media->genre);
           xml.writeEndElement(); //extension  
         }
       }

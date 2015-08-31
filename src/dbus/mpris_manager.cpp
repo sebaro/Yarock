@@ -21,6 +21,7 @@
 #include "settings.h"
 #include "debug.h"
 
+#include <QMainWindow>
 /*
 ********************************************************************************
 *                                                                              *
@@ -59,16 +60,27 @@ void MprisManager::reloadSettings()
     if(SETTINGS()->_useMpris)
     {
       if(!m_mpris2)
-        m_mpris2 =  new Mpris2(this);
+      {
+          m_mpris2 =  new Mpris2(this);
+          connect(m_mpris2, SIGNAL(RaiseMainWindow()), this, SLOT(activateMainWindow()));
+      }
     }
     else
     {
-      if(m_mpris2 != 0) {
-        delete m_mpris2;
-        m_mpris2 = 0;
+      if(m_mpris2 != 0) 
+      {
+          delete m_mpris2;
+          m_mpris2 = 0;
       }
     }
 }
 
-
-
+/*******************************************************************************
+    activateMainWindow
+*******************************************************************************/
+void MprisManager::activateMainWindow()
+{
+    QMainWindow* w = qobject_cast<QMainWindow*>(this->parent());
+    w->activateWindow();
+    w->showNormal();
+}

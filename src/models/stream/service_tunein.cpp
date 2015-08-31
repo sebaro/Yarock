@@ -220,7 +220,7 @@ void TuneIn::slotBrowseLinkDone(QByteArray bytes)
                   }
               }
 
-              stream->categorie = link->name;
+              stream->genre = link->name;
               stream->setParent(link);
             }
             else if (xml.attributes().value("type").toString() == "link")
@@ -228,10 +228,10 @@ void TuneIn::slotBrowseLinkDone(QByteArray bytes)
               //Debug::debug() << "    [Tunein] link found";
               MEDIA::LinkPtr link2 = MEDIA::LinkPtr::staticCast( link->addChildren(TYPE_LINK) );
               link2->setType(TYPE_LINK);
-              link2->name  = xml.attributes().value("text").toString();
-              link2->url   = xml.attributes().value("URL").toString();
-              link2->state = int(SERVICE::NO_DATA);
-              link2->categorie = link->name;
+              link2->name   = xml.attributes().value("text").toString();
+              link2->url    = xml.attributes().value("URL").toString();
+              link2->state  = int(SERVICE::NO_DATA);
+              link2->genre  = link->name;
               link2->setParent(link);
             }
           }

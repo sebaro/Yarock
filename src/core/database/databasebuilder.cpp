@@ -132,8 +132,8 @@ void DataBaseBuilder::run() {
 
     this->doScan();
 
-    // Start thread event loop
-    // This makes signals and slots work
+    /* Start thread event loop           */
+    /* This makes signals and slots work */
     exec();
 
     qDebug() << "  [DataBaseBuilder] run() exited";
@@ -173,12 +173,13 @@ void DataBaseBuilder::doScan()
     foreach(const QString& root_dir, m_input_folders)
     {
       Debug::debug() << "  [DataBaseBuilder] ROOT DIR :" << root_dir;
-      m_fs_dirs.insert( root_dir );
 
       QDir dir(root_dir);
+
+      m_fs_dirs.insert( root_dir );
       
-      /* protect if root_folder are unounted or not available */
-      if(  !QDir(root_dir).exists() || !QDir(root_dir).isReadable() )
+      /* ----- protect if dir is not mounted or not available - */
+      if(  !dir.exists() || !dir.isReadable() )
       {
         m_fs_dirs.remove( root_dir );
 
@@ -189,18 +190,27 @@ void DataBaseBuilder::doScan()
         }
         Debug::warning() << "  [DataBaseBuilder] skipping not readable dir:"<< root_dir;
         continue;
-      }
+      }      
       
-      
-      /* -- read childs folders -- */
-      dir.setFilter(QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks);
+      /* ----- read childs folders ---------------------------- */
+      dir.setFilter(QDir::Dirs | QDir::NoDotAndDotDot);
 
       QDirIterator it(dir,QDirIterator::Subdirectories);
 
       while(it.hasNext())
       {
         it.next();
-        if (it.fileInfo().isDir())
+        
+        if ( it.fileInfo().isSymLink() )
+        {
+          QString new_path = it.fileInfo().symLinkTarget();
+
+          new_path = QFileInfo(new_path).canonicalFilePath().toUtf8();
+          
+          if( QFileInfo(new_path).isDir() )
+            m_fs_dirs.insert( new_path );
+        }
+        else if ( it.fileInfo().isDir() )
         {
           QString dir_path = it.fileInfo().canonicalFilePath().toUtf8();
           //Debug::debug() << "  [DataBaseBuilder] canonicalFilePath: " << dir_path;
@@ -223,12 +233,12 @@ void DataBaseBuilder::doScan()
       if(m_exit)
         break;
 
-      //! If the directory is NOT in database then insert
-      if (!m_db_dirs.contains(dir_path) )
+      /* If the directory is NOT in database then insert */
+      if ( !m_db_dirs.contains(dir_path) )
       {
         addDirectory(dir_path);
       }
-      //! If the file is in database but has another mtime then update it
+      /* If the file is in database but has another mtime then update it */
       else if ( m_db_dirs[dir_path] != QFileInfo(dir_path).lastModified().toTime_t() )
       {
           updateDirectory(dir_path);
@@ -236,16 +246,16 @@ void DataBaseBuilder::doScan()
 
       m_db_dirs.remove(dir_path);
 
-       //! signal progress
+       /* signal progress */
        if(fileCount > 0) {
          int percent = 100 - ((fileCount - ++idxCount) * 100 / fileCount);
          emit buildingProgress(percent);
        }
-    } // end foreach file in filesystem    
+    } /* end foreach file in filesystem */
     
     
     
-    //! Get directories that are in DB but not on filesystem
+    /* Get directories that are in DB but not on filesystem */
     QHashIterator<QString, uint> i(m_db_dirs);
     while (i.hasNext()) {
         i.next();
@@ -254,15 +264,15 @@ void DataBaseBuilder::doScan()
 
     m_db_dirs.clear();
 
-    // Check for interprets/albums/genres... that are not used anymore
+    /* Check for interprets/albums/genres... that are not used anymore */
     DatabaseCmd::clean();
 
-    // Store last update time
+    /* Store last update time */
     QSqlQuery q("UPDATE `db_attribute` SET `value`=:date WHERE `name`=lastUpdate;",*m_sqlDb);
     q.bindValue(":date", QDateTime::currentDateTime().toTime_t());
     q.exec();
 
-    // Now write all data to the disk
+    /* Now write all data to the disk */
     QSqlQuery("COMMIT TRANSACTION;",*m_sqlDb);
 
     Debug::debug() << "  [DataBaseBuilder] end Database update";

@@ -110,13 +110,13 @@ bool StreamModel::isStreamFiltered(const int row)
     if(m_filter_pattern.length() < 3)
     {
       if ( stream->name.startsWith(m_filter_pattern, Qt::CaseInsensitive)    ||
-           stream->categorie.startsWith(m_filter_pattern, Qt::CaseInsensitive))
+           stream->genre.startsWith(m_filter_pattern, Qt::CaseInsensitive))
       return true;
     }
     else 
     {
       if ( stream->name.contains(m_filter_pattern, Qt::CaseInsensitive)    ||
-           stream->categorie.contains(m_filter_pattern, Qt::CaseInsensitive))
+           stream->genre.contains(m_filter_pattern, Qt::CaseInsensitive))
       return true;
     }
 

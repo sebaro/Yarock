@@ -68,6 +68,7 @@
 #include "covercache.h"
 
 #include "global_actions.h"
+#include "systray.h"
 #include "config.h"
 #include "utilities.h"
 #include "debug.h"
@@ -76,11 +77,8 @@
 #include "dbus/dbusnotification.h"
 #include "dbus/mpris_manager.h"
 
-
 // dialog
 #include "dialogs/dboperationdialog.h"
-#include "dialogs/addstreamdialog.h"
-#include "dialogs/filedialog.h"
 #include "dialogs/first_time_dialog.h"
 
 MainWindow* MainWindow::INSTANCE = 0;
@@ -140,10 +138,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     
     //! ############### init playqueue part  ################################
     Debug::debug() << "[Mainwindow] creation Playqueue part";
-    m_playqueue = new Playqueue();
-        
-    _playlistView    = new PlaylistView(this, m_playqueue);
-    _playlistwidget  = new PlaylistWidget(this,_playlistView, m_playqueue);
+    PlaylistWidget* playlistWidget  = new PlaylistWidget(this);
+    m_playqueue      = playlistWidget->model();
 
     //! ############### init data model  ####################################
     Debug::debug() << "[Mainwindow] init data model";
@@ -156,17 +152,21 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     m_thread_manager = new ThreadManager();
     
     //! ############### End Gui Stuff     ###################################
-    _centralWidget = new CentralWidget(this,_playlistwidget);
-    this->setCentralWidget(_centralWidget);
+    m_centralWidget = new CentralWidget(this);
+    this->setCentralWidget(m_centralWidget);
 
+    QObject::connect(MainRightWidget::instance(), SIGNAL(playqueueAdded(QWidget*)), SLOT(slot_playqueue_added(QWidget*)));
+    QObject::connect(MainRightWidget::instance(), SIGNAL(playqueueRemoved(QWidget*)), SLOT(slot_playqueue_removed(QWidget*)));
+    MainRightWidget::instance()->addWidget( playlistWidget );
+    
     //! ############### init views  #########################################
     //Debug::debug() << "[Mainwindow] creation BrowserView";
     m_virtual_queue       = new VirtualPlayqueue(this);
     m_browserView         = new BrowserView(this);
-    _centralWidget->setBrowser(m_browserView); 
+    m_centralWidget->setBrowser(m_browserView); 
     
     //! ############### Status Widget     ###################################
-    _statusManager = new StatusManager(_centralWidget);
+    m_statusManager = new StatusManager(m_centralWidget);
     
     //! Shortcuts & Signals
     //Debug::debug() << "[Mainwindow] creation global shortcut";
@@ -188,8 +188,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     //! ############### Systray Icon ########################################
     m_canClose = false;
-    m_trayIcon = 0;
-    reloadSystraySettings();
+    m_systray = new SysTray(this);
 
     //! ############### Minimal window ######################################
     m_minimalwidget = NULL;
@@ -214,7 +213,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     else
       resize(1200, 800);
 
-    QTimer::singleShot(50, _centralWidget, SLOT(restoreState()));
+    QTimer::singleShot(50, m_centralWidget, SLOT(restoreState()));
     
     /* use time to have good Browser width before populating the scene */
     QTimer::singleShot(100, m_browserView, SLOT(restore_view()));
@@ -225,9 +224,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     
     /* Check startup */
     if ( !engine->error().isEmpty() )
-      _statusManager->startMessage( engine->error(), STATUS::ERROR_CLOSE );
+      m_statusManager->startMessage( engine->error(), STATUS::ERROR_CLOSE );
     
     
+    set_enable_jump_to(false);
     
 #ifdef TEST_FLAG    
     QTimer::singleShot(4000, this, SLOT(slot_start_test()));
@@ -257,16 +257,18 @@ MainWindow::~MainWindow()
     if(SETTINGS()->_restartPlayingAtStartup)
       savePlayingTrack();
 
-    /* ---- Save setting ---- */
+    /* ---- Stop player ---- */
+    SETTINGS()->_volumeLevel = _player->volume();
     _player->stop();
     
-    /* ---- Save setting ---- */
-    _centralWidget->saveState();
+    /* ---- Save widget option setting ---- */
+    m_centralWidget->saveState();
     m_browserView->save_view();
     SETTINGS()->_windowsGeometry = this->saveGeometry();
     SETTINGS()->_windowsState    = this->saveState();
     SETTINGS()->_playqueueShowCover  = ACTIONS()->value(PLAYQUEUE_OPTION_SHOW_COVER)->isChecked();
     SETTINGS()->_playqueueShowRating = ACTIONS()->value(PLAYQUEUE_OPTION_SHOW_RATING)->isChecked();
+    SETTINGS()->_playqueueShowNumber = ACTIONS()->value(PLAYQUEUE_OPTION_SHOW_NUMBER)->isChecked();
     SETTINGS()->_playqueueDuplicate  = !ACTIONS()->value(PLAYQUEUE_REMOVE_DUPLICATE)->isChecked();
 
     SETTINGS()->writeSettings();
@@ -296,79 +298,21 @@ MainWindow::~MainWindow()
     Debug::debug() << "[Mainwindow] EXIT Bye Bye";
 }
 
-//! --------- reloadSystraySettings --------------------------------------------
-void MainWindow::reloadSystraySettings()
-{
-    // systray de-activated
-    if(!SETTINGS()->_useTrayIcon)
-    {
-      if(m_trayIcon != 0) {
-          disconnect(m_trayIcon, 0,this, 0);
-          delete m_trayIcon;
-          m_trayIcon = 0;
-      }
-    }
-    // systray activated
-    else
-    {
-      if(!m_trayIcon) {
-        QMenu *trayIconMenu = new QMenu(this);
-        //QAction *focus_action = new QAction(tr("set focus"),this);
-        trayIconMenu->addAction(ACTIONS()->value(ENGINE_PLAY_PREV));
-        trayIconMenu->addAction(ACTIONS()->value(ENGINE_PLAY));
-        trayIconMenu->addAction(ACTIONS()->value(ENGINE_STOP));
-        trayIconMenu->addAction(ACTIONS()->value(ENGINE_PLAY_NEXT));
-        trayIconMenu->addSeparator();
-        trayIconMenu->addAction(ACTIONS()->value(PLAYING_TRACK_LOVE));
-        trayIconMenu->addSeparator();
-        trayIconMenu->addAction(ACTIONS()->value(APP_QUIT));
-
-        m_trayIcon = new QSystemTrayIcon(this);
-
-        m_trayIcon->setIcon( QApplication::windowIcon() );
-        m_trayIcon->setToolTip("Yarock");
-        m_trayIcon->setContextMenu(trayIconMenu);
-        m_trayIcon->show();
-
-        connect(m_trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(slot_systray_clicked(QSystemTrayIcon::ActivationReason)));
-        connect(m_trayIcon, SIGNAL(messageClicked()), this, SLOT(setFocus()));
-      }
-    }
-}
 
 
 //! --------- createActions ----------------------------------------------------
 void MainWindow::createActions()
 {
+    Debug::debug() << "[Mainwindow] createActions";
+    
     /* yarock global actions */
     ACTIONS()->insert(APP_QUIT, new QAction(QIcon::fromTheme("application-exit"),tr("&Quit"), this));
     ACTIONS()->insert(APP_SHOW_YAROCK_ABOUT, new QAction(QIcon(":/images/about-48x48.png"),tr("About"), this));
 
     ACTIONS()->insert(APP_SHOW_SETTINGS, new QAction(QIcon(":/images/settings-48x48.png"), tr("settings"), this));
     
-    /* playlist action */
-    ACTIONS()->insert(PLAYQUEUE_ADD_FILE, new QAction(QIcon(":/images/track-48x48.png"),tr("&Add media to playlist"), this));
-    ACTIONS()->insert(PLAYQUEUE_ADD_DIR, new QAction(QIcon(":/images/folder-48x48.png"),tr("&Add directory to playlist"), this));
-    ACTIONS()->insert(PLAYQUEUE_ADD_URL, new QAction(QIcon(":/images/media-url-48x48.png"),tr("&Add Url..."), this));
-    ACTIONS()->insert(PLAYQUEUE_CLEAR, new QAction(QIcon::fromTheme("edit-clear-list"), tr("&Clear playlist"), this));    
-    ACTIONS()->insert(PLAYQUEUE_SAVE, new QAction(QIcon(":/images/save-32x32.png"), tr("&Save playlist to file"), this));
-    ACTIONS()->insert(PLAYQUEUE_AUTOSAVE, new QAction(QIcon(":/images/save-32x32.png"), tr("&Auto save playlist to yarock database"), this));
-    ACTIONS()->insert(PLAYQUEUE_REMOVE_ITEM,new QAction(QIcon::fromTheme("edit-delete"),tr("&Remove media from playlist"), this));
-    ACTIONS()->insert(PLAYQUEUE_REMOVE_DUPLICATE,new QAction(QIcon(),tr("Remove duplicate"), this));
-    
-    ACTIONS()->value(PLAYQUEUE_REMOVE_DUPLICATE)->setCheckable(true);
-    ACTIONS()->value(PLAYQUEUE_REMOVE_DUPLICATE)->setChecked( !SETTINGS()->_playqueueDuplicate );
-
-    ACTIONS()->insert(PLAYQUEUE_TRACK_LOVE, new QAction(QIcon(":/images/lastfm.png"), tr("Send LastFm love"), this));
-    
-    /* Option d'affichage de la playlist */
-      ACTIONS()->insert(PLAYQUEUE_OPTION_SHOW_COVER, new QAction(tr("Show cover"), this));
-      ACTIONS()->value(PLAYQUEUE_OPTION_SHOW_COVER)->setCheckable(true);
-      ACTIONS()->value(PLAYQUEUE_OPTION_SHOW_COVER)->setChecked( SETTINGS()->_playqueueShowCover );
-
-      ACTIONS()->insert(PLAYQUEUE_OPTION_SHOW_RATING, new QAction(tr("Show rating"), this));
-      ACTIONS()->value(PLAYQUEUE_OPTION_SHOW_RATING)->setCheckable(true);
-      ACTIONS()->value(PLAYQUEUE_OPTION_SHOW_RATING)->setChecked( SETTINGS()->_playqueueShowRating );
+    ACTIONS()->insert(PLAYING_TRACK_EDIT,new QAction(QIcon(":/images/edit-48x48.png"), tr("Edit"), this));
+    ACTIONS()->insert(PLAYING_TRACK_LOVE, new QAction(QIcon(":/images/lastfm.png"), tr("Send LastFm love"), this));
     
     /* player action*/
     ACTIONS()->insert(ENGINE_PLAY, new QAction(QIcon(":/images/media-play.png"), tr("Play or Pause media"), this));
@@ -386,10 +330,9 @@ void MainWindow::createActions()
     /* Show/hide MenuBar / PlayQueue / Menu */
     ACTIONS()->insert(APP_SHOW_PLAYQUEUE, new QAction(QIcon(),tr("Show playqueue panel"), this));
     ACTIONS()->insert(APP_SHOW_MENU, new QAction(QIcon(),tr("Show menu panel"), this));
-    ACTIONS()->insert(APP_SHOW_NOW_PLAYING, new QAction(QIcon(),tr("Show now playing"), this));
+    
     ACTIONS()->value(APP_SHOW_PLAYQUEUE)->setCheckable(true);
     ACTIONS()->value(APP_SHOW_MENU)->setCheckable(true);
-    ACTIONS()->value(APP_SHOW_NOW_PLAYING)->setCheckable(true);
 
     /* Screen mode Switch actions */
     ACTIONS()->insert(APP_MODE_COMPACT, new QAction(QIcon(":/images/screen-minimalmode.png"), tr("Switch to minimal mode"), this));
@@ -401,10 +344,6 @@ void MainWindow::createActions()
     ACTIONS()->insert(BROWSER_JUMP_TO_TRACK,  new QAction(QIcon(":/images/jump_to_32x32.png"),tr("Jump to track"), this));
     ACTIONS()->insert(BROWSER_JUMP_TO_MEDIA,  new QAction(QIcon(":/images/jump_to_32x32.png"),QString(), this));
     
-    ACTIONS()->insert(PLAYQUEUE_JUMP_TO_TRACK, new QAction(QIcon(":/images/jump_to_32x32.png"),tr("Jump to track"), this));
-    
-    set_enable_jump_to(false);
-
     ACTIONS()->insert(APP_ENABLE_SEARCH_POPUP, new QAction(QIcon(),tr("Enable search popup"), this));
     ACTIONS()->value(APP_ENABLE_SEARCH_POPUP)->setCheckable(true);
 
@@ -414,7 +353,6 @@ void MainWindow::createActions()
     /* restore Actions states              */
     (ACTIONS()->value(APP_SHOW_PLAYQUEUE))->setChecked(SETTINGS()->_showPlayQueuePanel);
     (ACTIONS()->value(APP_SHOW_MENU))->setChecked(SETTINGS()->_showMenuPanel);
-    (ACTIONS()->value(APP_SHOW_NOW_PLAYING))->setChecked(SETTINGS()->_showNowPlaying);
     (ACTIONS()->value(APP_ENABLE_SEARCH_POPUP))->setChecked(SETTINGS()->_enableSearchPopup);
     (ACTIONS()->value(APP_PLAY_ON_SEARCH))->setChecked(SETTINGS()->_enablePlayOnSearch);
 }
@@ -444,15 +382,6 @@ void MainWindow::connectSlots()
     QObject::connect(ACTIONS()->value(ENGINE_VOL_INC), SIGNAL(triggered()), Engine::instance(), SLOT(volumeInc()));
     QObject::connect(ACTIONS()->value(ENGINE_VOL_DEC), SIGNAL(triggered()), Engine::instance(), SLOT(volumeDec()));    
     
-    //! Connection Actions playlist
-    QObject::connect(ACTIONS()->value(PLAYQUEUE_CLEAR), SIGNAL(triggered()), SLOT(slot_playqueue_clear()));
-    QObject::connect(ACTIONS()->value(PLAYQUEUE_SAVE), SIGNAL(triggered()), SLOT(slot_playqueue_save()));
-    QObject::connect(ACTIONS()->value(PLAYQUEUE_AUTOSAVE), SIGNAL(triggered()), SLOT(slot_playqueue_save_auto()));
-    QObject::connect(ACTIONS()->value(PLAYQUEUE_ADD_FILE), SIGNAL(triggered()), SLOT(slot_playqueue_add()));
-    QObject::connect(ACTIONS()->value(PLAYQUEUE_ADD_DIR), SIGNAL(triggered()), SLOT(slot_playqueue_add()));
-    QObject::connect(ACTIONS()->value(PLAYQUEUE_ADD_URL), SIGNAL(triggered()), SLOT(slot_playqueue_add()));
-    QObject::connect(_playlistView, SIGNAL(signal_playlist_itemDoubleClicked()), this, SLOT(slot_play_from_playqueue()));
-
     //! Connection Actions Database
     QObject::connect(ACTIONS()->value(DIALOG_DB_OPERATION), SIGNAL(triggered()), SLOT(slot_database_dialog()));
 
@@ -464,7 +393,6 @@ void MainWindow::connectSlots()
 
     //! ThreadManager connection
     QObject::connect(MainLeftWidget::instance(), SIGNAL(dbNameChanged()), this, SLOT(slot_database_start()));;
-    QObject::connect(m_playqueue->manager(), SIGNAL(playlistSaved()), m_thread_manager, SLOT(populateLocalPlaylistModel()));
     
     //! Screen mode connection
     QObject::connect(ACTIONS()->value(APP_MODE_COMPACT), SIGNAL(triggered()), SLOT(slot_widget_mode_switch()));;
@@ -481,36 +409,25 @@ void MainWindow::slot_on_yarock_quit()
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    if(!m_trayIcon) {
+    if( m_systray->isSysTrayOn() == false) 
+    {
       this->close();
     }
-    else {
-      // only hide app is tray is running
-      if (m_trayIcon->isVisible() && (m_canClose == false)) {
-        this->hide();
-        event->ignore();
+    else /* only hide app is tray is running  */
+    {
+      if (m_systray->isVisible() && (m_canClose == false)) 
+      {
+          this->hide();
+          event->ignore();
       }
     }
 }
 
-//! -------------- Systray methods ---------------------------------------------
-void MainWindow::slot_systray_clicked(QSystemTrayIcon::ActivationReason reason)
-{
-    if (reason == QSystemTrayIcon::Trigger)
-    {
-        bool is_visible = !this->isVisible();
-        this->setVisible(is_visible);
-        if (is_visible) {
-          activateWindow();
-          showNormal();
-        }
-    }
-}
 
 void MainWindow::resizeEvent(QResizeEvent* event)
 {
-   if( _statusManager )
-     _statusManager->onResize();
+   if( m_statusManager )
+     m_statusManager->onResize();
    
     QMainWindow::resizeEvent(event);
 }
@@ -531,111 +448,50 @@ void MainWindow::slot_on_show_settings()
 
 
 /*******************************************************************************
-    File management
+    Playqueue Management
 *******************************************************************************/
-void MainWindow::slot_playqueue_add()
+void MainWindow::slot_playqueue_added(QWidget* w)
 {
-    QAction *action = qobject_cast<QAction *>(sender());
-    if(!action) return;
-
-    /*--------------------------------------------------*/
-    /* add file to playqueue                            */
-    /* -------------------------------------------------*/
-    if( action == ACTIONS()->value(PLAYQUEUE_ADD_FILE) )
-    {
-      FileDialog fd(this, FileDialog::AddFiles, tr("Add music files or playlist"));
-
-      if(fd.exec() == QDialog::Accepted) {
-        QStringList files  = fd.addFiles();
-        m_playqueue->manager()->playlistAddFiles(files);
-      }      
-    }
-    /*--------------------------------------------------*/
-    /* add dir to playqueue                             */
-    /* -------------------------------------------------*/
-    else if ( action == ACTIONS()->value(PLAYQUEUE_ADD_DIR) )
-    {
-      FileDialog fd(this, FileDialog::AddDirs, tr("Add music directories"));
-
-      if(fd.exec() == QDialog::Accepted) {
-        QStringList dirs  = fd.addDirectories();
-        m_playqueue->manager()->playlistAddFiles(dirs);
-      }    
-    }
-    /*--------------------------------------------------*/
-    /* add url to playqueue                             */
-    /* -------------------------------------------------*/
-    else if ( action == ACTIONS()->value(PLAYQUEUE_ADD_URL) )
-    {
-      AddStreamDialog stream_dialog(this,false);
-
-      if(stream_dialog.exec() == QDialog::Accepted)
-      {
-        const QString url   = stream_dialog.url();
-
-        if(!QUrl(url).isEmpty() && QUrl(url).isValid()) {
-          const QString name  = stream_dialog.name();
-
-          MEDIA::TrackPtr media = MEDIA::TrackPtr(new MEDIA::Track());
-          media->setType(TYPE_STREAM);
-          media->id          = -1;
-          media->url         = url;
-          media->name        = !name.isEmpty() ? name : url ;
-          media->isFavorite  = false;
-          media->isPlaying   = false;
-          media->isBroken    = false;
-          media->isPlayed    = false;
-          media->isStopAfter = false;
-
-          m_playqueue->addMediaItem(media);
-          media.reset();
-        }
-        else {
-          _statusManager->startMessage("invalid url can not be added !!", STATUS::WARNING, 5000);
-        }
-      }
-    }
-}
-
-
-void MainWindow::slot_playqueue_save()
-{
-    FileDialog fd(this, FileDialog::SaveFile, tr("Save playlist to file"));
-
-    if(fd.exec() == QDialog::Accepted) {
-      QString file  = fd.saveFile();
-      if (!file.isEmpty())
-        m_playqueue->manager()->playlistSaveToFile(file);
-    }  
-}
-
-void MainWindow::slot_playqueue_save_auto()
-{
-    DialogInput input(this, tr("Playlist name"), tr("Save playlist"));
-    input.setFixedSize(480,140);
+    Debug::debug() << "[Mainwindow] slot_playqueue_added";
     
-
-    if(input.exec() == QDialog::Accepted) {
-      Debug::debug() << "[Mainwindow] slot_playqueue_save_auto : " << input.editValue();
-      m_playqueue->manager()->playlistSaveToDb(input.editValue());
+    if ( PlaylistWidgetBase *widget = dynamic_cast<PlaylistWidgetBase*>(w) )
+    {
+      QObject::connect(widget->view(), SIGNAL(signal_playlist_itemDoubleClicked()), this, SLOT(slot_play_from_playqueue()));
+      QObject::connect(widget->model()->manager(), SIGNAL(playlistSaved()), m_thread_manager, SLOT(populateLocalPlaylistModel()));
+      QObject::connect(widget->model(), SIGNAL(modelCleared()), this, SLOT(slot_playqueue_cleared()));
     }
 }
 
-
-/*******************************************************************************
-    Playlist
-*******************************************************************************/
-void MainWindow::slot_playqueue_clear()
+void MainWindow::slot_playqueue_removed(QWidget* w)
 {
-    m_playqueue->clear();
-
-    // on arrete la lecture seulement si il n'y a pas de lecture a partir
-    // de la collection
-    if((_playRequestFrom == FromPlayQueue) && SETTINGS()->_stopOnPlayqueueClear) 
+    Debug::debug() << "[Mainwindow] slot_playqueue_removed";
+    
+    if ( PlaylistWidgetBase *widget = dynamic_cast<PlaylistWidgetBase*>(w) )
     {
-      m_playqueue->updatePlayingItem(MEDIA::TrackPtr(0));
-      m_virtual_queue->updatePlayingItem(MEDIA::TrackPtr(0));
-      this->stopPlayer();
+      if ( widget->model() == m_playingModel )
+      {
+          _player->stop();
+          m_playingModel  = 0;
+      }
+      disconnect(w, 0,this, 0);
+      w->deleteLater();
+    }
+}
+
+void MainWindow::slot_playqueue_cleared()
+{
+    Debug::debug() << "[Mainwindow] slot_playqueue_cleared";
+    if ( PlayqueueModel *model = dynamic_cast<PlayqueueModel*>(sender()) )
+    {        
+       if ( (m_playqueue == model) && (m_playqueue == m_playingModel) )
+       {
+           if((_playRequestFrom == FromPlayQueue) && SETTINGS()->_stopOnPlayqueueClear) 
+           {
+               m_playqueue->updatePlayingItem(MEDIA::TrackPtr(0));
+               m_virtual_queue->updatePlayingItem(MEDIA::TrackPtr(0));
+               this->stopPlayer();
+           }
+       }
     }
 }
 
@@ -670,7 +526,7 @@ void MainWindow::slot_player_on_state_change()
      {
          Debug::warning() << "ENGINE error";
 
-         _statusManager->startMessage(tr("Playing error"), STATUS::ERROR, 5000);
+         m_statusManager->startMessage(tr("Playing error"), STATUS::ERROR, 5000);
          MEDIA::TrackPtr track = _player->playingTrack();
          if(track)
          {
@@ -679,7 +535,7 @@ void MainWindow::slot_player_on_state_change()
            if(_playRequestFrom == FromCollection)
              m_virtual_queue->updatePlayingItem(track);
            else
-             m_playqueue->updatePlayingItem(track);
+             playingQueue()->updatePlayingItem(track);
          }
          stopPlayer();
       }
@@ -700,9 +556,9 @@ void MainWindow::slot_player_on_track_change()
     }
     
     /*  update playing track */
-    m_playqueue->updatePlayingItem(track);
+    playingQueue()->updatePlayingItem(track);
     m_virtual_queue->updatePlayingItem(track);
-    
+
     /*  update jump to action */
     if ( (track->type() == TYPE_TRACK) && (track->id != -1) )
       set_enable_jump_to(true);
@@ -716,10 +572,17 @@ void MainWindow::slot_player_on_track_change()
 // a file is activated from the playlist
 void MainWindow::slot_play_from_playqueue()
 {
-    //Debug::debug() << "[Mainwindow] slot_play_from_playqueue";
+    Debug::debug() << "[Mainwindow] slot_play_from_playqueue";
+    
+    PlaylistView* view = qobject_cast<PlaylistView*>(sender());
+    
+    PlaylistWidgetBase* widget = dynamic_cast<PlaylistWidgetBase*>(view->parent());
+    
+    m_playingModel = widget->model();
+    
     _playRequestFrom = FromPlayQueue;
 
-    const MEDIA::TrackPtr track = m_playqueue->requestedTrack();
+    const MEDIA::TrackPtr track = playingQueue()->requestedTrack();
 
     if(track)
       _player->setMediaItem( track );
@@ -732,13 +595,13 @@ void MainWindow::slot_play_from_collection()
     //Debug::debug() << "[Mainwindow] slot_play_from_collection";
   
     _playRequestFrom = FromCollection;
+    m_playingModel = 0;
 
     const MEDIA::TrackPtr track = m_virtual_queue->requestedTrack();
 
     if(track)
       _player->setMediaItem( track );
 }
-
 
 
 //! --------- playOrPause ------------------------------------------------------
@@ -754,14 +617,23 @@ void MainWindow::playOrPause()
     }
     else
     {
-        if(m_browserView->playSelectedItems())
-          return;
-
         MEDIA::TrackPtr media;
-        if( _playlistView->isTrackSelected() )
-          media = _playlistView->firstSelectedTrack();
+        /* check first browser selection */
+        if(m_browserView->playSelectedItems())
+        {
+          return;
+        }
+        /* check if one playlist is opened with selection */
+        else if( PlaylistWidgetBase* p = MainRightWidget::instance()->activePlayqueue() )
+        {
+            if( p->view()->isTrackSelected() )
+              media = p->view()->firstSelectedTrack();
+        }
+        /* check if one playlist is opened with selection */
         else
-          media = m_playqueue->trackAt(0);
+        {
+            media = m_playqueue->trackAt(0);
+        }
 
         if(media)
           _player->setMediaItem( media );
@@ -776,7 +648,7 @@ void MainWindow::stopPlayer()
     _player->stop();
 
     m_virtual_queue->updatePlayingItem(MEDIA::TrackPtr(0));
-    m_playqueue->updatePlayingItem(MEDIA::TrackPtr(0));
+    playingQueue()->updatePlayingItem(MEDIA::TrackPtr(0));
 }
 
 //! --------- slot_player_enqueue_next -----------------------------------------
@@ -788,7 +660,7 @@ void MainWindow::slot_player_enqueue_next()
     if(_playRequestFrom == FromCollection)
       media = m_virtual_queue->nextTrack();
     else
-      media = m_playqueue->nextTrack();
+      media = playingQueue()->nextTrack();
 
     if(media)
       _player->setNextMediaItem(media);
@@ -815,7 +687,7 @@ void MainWindow::playNext()
       if(_playRequestFrom == FromCollection)
         media = m_virtual_queue->nextTrack();
       else
-        media = m_playqueue->nextTrack();
+        media = playingQueue()->nextTrack();
     }
 
     if(media)
@@ -835,7 +707,7 @@ void MainWindow::playPrev()
     if(_playRequestFrom == FromCollection)
       media = m_virtual_queue->prevTrack();
     else
-      media = m_playqueue->prevTrack();
+      media = playingQueue()->prevTrack();
 
     if(media)
       _player->setMediaItem(media);
@@ -843,7 +715,9 @@ void MainWindow::playPrev()
       stopPlayer();
 }
 
-//! --------- savePlayingTrack -------------------------------------------------
+/*******************************************************************************
+    Save / Restore playing track
+*******************************************************************************/
 void MainWindow::savePlayingTrack()
 {
     //Debug::debug() << "[Mainwindow] savePlayingTrack";
@@ -858,7 +732,6 @@ void MainWindow::savePlayingTrack()
     }
 }
 
-//! --------- restorePlayingTrack ----------------------------------------------
 void MainWindow::restorePlayingTrack()
 {
     //Debug::debug() << "[Mainwindow] restorePlayingTrack";
@@ -885,14 +758,6 @@ void MainWindow::restorePlayingTrack()
         media->id        = -1;
         media->url       = url;
         media->name      = url;
-        media->title     = QString();
-        media->artist    = QString();
-        media->album     = QString();
-        media->categorie = QString();
-        media->isFavorite= false;
-        media->isPlaying = false;
-        media->isBroken  = false;
-        media->isPlayed  = false;
 
         _player->setMediaItem(media);
     }
@@ -916,7 +781,7 @@ void MainWindow::slot_on_settings_saved()
     Debug::debug() << "[MainWindow] isLibraryChanged   "  << r.isLibraryChanged;
     Debug::debug() << "[MainWindow] isViewChanged      "  << r.isViewChanged;
 
-    if(r.isSystrayChanged)    { reloadSystraySettings();}
+    if(r.isSystrayChanged)    { m_systray->reloadSettings();}
     if(r.isDbusChanged)       { m_dbus_notifier->reloadSettings(); }
     if(r.isMprisChanged)      { m_mpris_manager->reloadSettings(); }
     if(r.isShorcutChanged)    { m_globalShortcuts->reloadSettings();}
@@ -1098,7 +963,11 @@ void MainWindow::set_enable_jump_to(bool b)
     ACTIONS()->value(BROWSER_JUMP_TO_ARTIST)->setEnabled(b);
     ACTIONS()->value(BROWSER_JUMP_TO_ALBUM)->setEnabled(b);
     ACTIONS()->value(BROWSER_JUMP_TO_TRACK)->setEnabled(b);
-    ACTIONS()->value(PLAYQUEUE_JUMP_TO_TRACK)->setEnabled(b);
+    
+    foreach(PlaylistWidgetBase* widget, MainRightWidget::instance()->playqueueList())
+    {
+        widget->menuActions()->value(PLAYQUEUE_JUMP_TO_TRACK)->setEnabled(b);  
+    }
 }
 
 
@@ -1149,7 +1018,7 @@ void MainWindow::slot_eq_openDialog()
     }
     else 
     {
-        _statusManager->startMessage(
+        m_statusManager->startMessage(
             QString(tr("No equalizer available with this configuration")), STATUS::ERROR, 2500
         );
     }
@@ -1191,6 +1060,7 @@ void MainWindow::set_command_line(const CommandlineOptions& options)
 
 void MainWindow::slot_commandline_received(const QByteArray& serialized_options)
 {
+    //Debug::debug() << "[MainWindow] slot_commandline_received";
     if(m_minimalwidget != NULL)
        m_minimalwidget->hide();     
      
@@ -1201,14 +1071,13 @@ void MainWindow::slot_commandline_received(const QByteArray& serialized_options)
     CommandlineOptions options;
     options.Load(serialized_options);
 
-    set_command_line(options);
-    commandlineOptionsHandle();
+    if( !serialized_options.isEmpty() )
+        commandlineOptionsHandle();
 }
 
-void MainWindow::commandlineOptionsHandle(/*const CommandlineOptions &options*/)
+void MainWindow::commandlineOptionsHandle()
 {
     Debug::debug() << "[MainWindow] commandlineOptionsHandle";
-  
     if (m_options.isEmpty()) {
       return;
     }
@@ -1227,19 +1096,24 @@ void MainWindow::commandlineOptionsHandle(/*const CommandlineOptions &options*/)
     switch (m_options.playlist_action())
     {
       case CommandlineOptions::Playlist_Load:
-        this->slot_playqueue_clear(); // no break !
+        m_playqueue->clear(); // no break !
       case CommandlineOptions::Playlist_Append:
-        m_playqueue->manager()->playlistAddUrls(m_options.urls());
+        if( !m_options.urls().isEmpty() )
+          m_playqueue->manager()->playlistAddUrls(m_options.urls());
         break;
       
-       case CommandlineOptions::Playlist_Default:
+      case CommandlineOptions::Playlist_Default:
         /* new case to handle Open with yarock simple case (enqueue and play the new tracks) */
-        m_playqueue_index = m_playqueue->size() -1;
-        m_playqueue->manager()->playlistAddUrls(m_options.urls());
-        connect(m_playqueue->manager(), SIGNAL(playlistPopulated()), this, SLOT(slot_play_after_playqueue_loaded()), Qt::UniqueConnection);
+        if( !m_options.urls().isEmpty() )
+        {
+            m_playqueue_index = m_playqueue->size() -1;
+            m_playqueue->manager()->playlistAddUrls(m_options.urls());
+            connect(m_playqueue->manager(), SIGNAL(playlistPopulated()), this, SLOT(slot_play_after_playqueue_loaded()), Qt::UniqueConnection);
+        }
         break;
+      default:break;  
     }    
-    
+
     if (m_options.set_volume() != -1)
       _player->setVolume(m_options.set_volume()); //! shall be in percent !
 
@@ -1262,7 +1136,7 @@ void MainWindow::commandlineOptionsHandle(/*const CommandlineOptions &options*/)
 }
 
 /* specific case to handle open with yarock + url   */
-/* => enqueue knew tracks + play first enqueued one */
+/* => enqueue new tracks + play first enqueued one */
 void MainWindow::slot_play_after_playqueue_loaded()
 {
      this->stopPlayer();

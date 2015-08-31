@@ -254,7 +254,7 @@ using namespace htmlcxx;
                                 link2->setType(TYPE_LINK);
                                 link2->name = name;
                                 link2->state = int(SERVICE::NO_DATA);
-                                link2->categorie = link->name;
+                                link2->genre = link->name;
                                 link2->setParent(link);      
                         
                                 link2->url = href;
@@ -309,9 +309,9 @@ using namespace htmlcxx;
     MEDIA::TrackPtr stream = MEDIA::TrackPtr::staticCast( link->addChildren(TYPE_TRACK) );
     stream->setType(TYPE_STREAM);
 
-    stream->name = name;
-    stream->url  = url;
-    stream->categorie = link->name;
+    stream->name  = name;
+    stream->url   = url;
+    stream->genre = link->name;
     stream->setParent(link);    
     
     QObject* reply = HTTP()->get( QUrl(cover) );

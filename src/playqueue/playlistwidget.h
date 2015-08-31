@@ -18,8 +18,8 @@
 #ifndef _PLAYLISTWIDGET_H_
 #define _PLAYLISTWIDGET_H_
 
-#include "playlistview.h"
-#include "playqueue_model.h"
+#include "playlistwidgetbase.h"
+
 
 #include <QMenu>
 #include <QContextMenuEvent>
@@ -27,7 +27,6 @@
 
 class ExLineEdit;
 class SortWidget;
-class NowPlayingView;
 /*
 ********************************************************************************
 *                                                                              *
@@ -35,40 +34,43 @@ class NowPlayingView;
 *                                                                              *
 ********************************************************************************
 */
-class PlaylistWidget : public QWidget
+class PlaylistWidget : public QWidget, public PlaylistWidgetBase
 {
 Q_OBJECT
   public:
-    PlaylistWidget(QWidget *parent, PlaylistView *view, PlayqueueModel* model);
+    PlaylistWidget(QWidget *parent);
+    PlaylistWidget(QWidget *parent, PlayqueueModel* model);
 
   private:
     void contextMenuEvent ( QContextMenuEvent * event );
 
   private slots:
+    void init(PlayqueueModel* model);
     void slot_update_filter();
     void slot_update_playqueue_status_info();
     void slot_removeduplicate_changed();
     void slot_stop_after_triggered();
 
-    void slot_show_now_playing_triggered();
     void slot_show_filter_triggered();
     void slot_show_sortmenu();
 
+    void slot_playqueue_clear();
+    void slot_add_to_playqueue();
+    void slot_playqueue_export();
+    void slot_playqueue_save_auto();
+    void slot_remove_selected_tracks();
+
   private :
-    PlaylistView       *m_view;
-    PlayqueueModel     *m_model;
     QMenu              *m_menu;
     QMenu              *m_sort_menu;
     SortWidget         *ui_sort_widget;
-    NowPlayingView     *m_nowplaying;
     
     ExLineEdit         *ui_playqueue_filter;
 
     QAction            *m_action_show_filter;
     QAction            *m_action_stop_after;
-    
+
     QWidget            *ui_filter_container;
 };
-
 
 #endif // _PLAYLISTWIDGET_H_

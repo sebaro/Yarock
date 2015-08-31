@@ -17,6 +17,7 @@
 #ifdef ENABLE_MPV
 
 #include "engine_mpv.h"
+#include "settings.h" 
 #include "debug.h"
 
 #include <QCoreApplication>
@@ -55,7 +56,7 @@ EngineMpv::EngineMpv() : EngineBase("mpv")
 {
     setlocale(LC_NUMERIC, "C"); 
      
-    /* create mpv instance */
+    /* ----- create mpv instance ----- */
     m_mpv_core = mpv_create();
 
     if( !m_mpv_core ) {
@@ -63,7 +64,7 @@ EngineMpv::EngineMpv() : EngineBase("mpv")
       return;
     }
 
-    /* core mpv setup  [see mpv file DOCS/man/options.rst] */
+    /* ----- core mpv setup  [see mpv file DOCS/man/options.rst] ----- */
     mpv_set_option_string(m_mpv_core, "config", "no");    
     mpv_set_option_string(m_mpv_core, "audio-display", "no");          /* do not show image for audio tracks */
 
@@ -87,26 +88,26 @@ EngineMpv::EngineMpv() : EngineBase("mpv")
     mpv_set_option_string(m_mpv_core, "audio-client-name", "yarock");
     
         
-    /* log message (none, info, trace)*/
+    /* ----- log message (none, info, trace) ----- */
     mpv_request_log_messages(m_mpv_core, /*"info"*/"v");
     
-    /* setup callback event handling */
+    /* ----- setup callback event handling ----- */
     mpv_set_wakeup_callback(m_mpv_core, wakeup, this);
     
     m_tickInterval = MPV::TICK_INTERVAL;
        
-    /* core mpv init */
+    /* ----- core mpv init ----- */
     if( mpv_initialize(m_mpv_core) < 0 ) {
       Debug::warning() << "[EngineMpv] warning mpv initialisation failed !";
       m_isEngineOK = false;
       return;
     }
       
-    /* get updates when these properties change */
+    /* ----- get updates when these properties change ----- */
     mpv_observe_property(m_mpv_core, 1, "pause",  MPV_FORMAT_FLAG);      
 
-    /* internal volume & mute */
-    m_internal_volume   = 75;
+    /* ----- internal volume & mute ----- */
+    m_internal_volume   = SETTINGS()->_volumeLevel;
     m_internal_is_mute  = false;
     
     m_is_volume_changed = true;
@@ -550,6 +551,8 @@ void EngineMpv::setVolume(const int &volume_in_percent)
 
 void EngineMpv::applyInternalVolume()
 {
+    //Debug::debug() << "[EngineMpv] -> applyInternalVolume";
+    
     /* mpv can not handle volume if no playing output is active */  
     if( m_current_state == ENGINE::PLAYING || m_current_state == ENGINE::PAUSED ) 
     {

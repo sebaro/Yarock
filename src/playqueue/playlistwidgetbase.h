@@ -15,74 +15,38 @@
 *  this program.  If not, see <http://www.gnu.org/licenses/>.                           *
 *****************************************************************************************/
 
-#ifndef _PLAYER_TOOLBAR_H_
-#define _PLAYER_TOOLBAR_H_
+#ifndef _PLAYLISTWIDGETBASE_H_
+#define _PLAYLISTWIDGETBASE_H_
 
-// Qt
-#include <QWidget>
-#include <QToolButton>
-#include <QLabel>
-#include <QSlider>
-#include <QMenu>
+#include "playlistview.h"
+#include "playqueue_model.h"
+#include "global_actions.h"
 
-
+#include <QAction>
 /*
 ********************************************************************************
 *                                                                              *
-*    Class VolumeToolButton                                                    *
+*    Class PlaylistWidgetBase                                                  *
 *                                                                              *
 ********************************************************************************
 */
-class VolumeToolButton : public QToolButton
+class PlaylistWidgetBase
 {
-Q_OBJECT
-  public:
-    VolumeToolButton(QWidget *);
-  
-  private slots:
-    void slot_show_menu();
-    void slot_volume_change();
-    void slot_mute_change();
-    void slot_apply_volume(int);
+public:
+    PlaylistWidgetBase() {};
     
-  private:
-    QLabel       *m_volume_label;
-    QSlider      *m_slider;
-    QMenu        *m_menu;
+    PlaylistView* view() { return m_view;}
+
+    PlayqueueModel* model() { return m_model;}
+
+    QMap<ENUM_ACTION, QAction*>* menuActions() {return m_actions;}
+    
+protected :
+    QMap<ENUM_ACTION, QAction*>* m_actions;      
+    
+    PlaylistView       *m_view;
+    PlayqueueModel     *m_model;
 };
 
 
-/*
-********************************************************************************
-*                                                                              *
-*    Class PlayerToolBar                                                       *
-*                                                                              *
-********************************************************************************
-*/
-class EngineBase;
-class PlayerToolBar : public QWidget
-{
-  Q_OBJECT
-  public:
-    PlayerToolBar(QWidget *parent);
-
-  private:
-    EngineBase       *m_player;
-
-    QLabel           *m_currentTime;
-    QLabel           *m_totalTime;
-    QLabel           *m_playingTrack;
-    QLabel           *m_separator;
-    QLabel           *m_pauseState;
-
-  private :
-    void clear();
-
-  private slots:
-    void slot_on_player_state_changed();
-    void slot_update_track_playing_info();
-    void slot_update_time_position(qint64);
-    void slot_update_total_time(qint64);
-};
-
-#endif // _PLAYER_TOOLBAR_H_
+#endif // _PLAYLISTWIDGETBASE_H_

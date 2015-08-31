@@ -20,7 +20,7 @@
 #include "playlist_parser.h"
 #include "debug.h"
 
-const int Loader_Timeout = 5000;
+const int Loader_Timeout = 7500;
 
 /*
 ********************************************************************************
@@ -87,7 +87,11 @@ void StreamLoader::slot_download_done(QByteArray bytes)
       /* ------------------------------*/
       else
       {
-        // WARNING : can be recursive 
+        /* get parent name if no name found */
+        if( track->name.isEmpty() )
+          track->name = m_parent->name;
+          
+        /* remote playlist found in playlist WARNING (can be recursive) */
         if( !MEDIA::isMediaPlayable(track->url) )
         {
           Debug::debug() << "StreamLoader remote playlist found :" << track->url;
@@ -99,8 +103,7 @@ void StreamLoader::slot_download_done(QByteArray bytes)
         else 
         {
           Debug::debug() << "StreamLoader track found :" << track->url;
-          m_parent->insertChildren(track);
-          track->setParent(m_parent);
+          insertTrackToParent(track);
         }
       }
       track.reset();
@@ -120,15 +123,36 @@ void StreamLoader::slot_download_error()
     emit download_done(m_parent);
 }
 
+void StreamLoader::insertTrackToParent(MEDIA::TrackPtr track)
+{
+    QSet<QString> urls;
+    
+    for (int i=0; i < m_parent->childCount(); i++)
+    {
+        QString url = static_cast<MEDIA::TrackPtr>(m_parent->child(i))->url;
+        
+        if( !urls.contains( url ) )
+           urls.insert( url );
+    }    
+    
+    if( !urls.contains( track->url ) )
+    {
+      m_parent->insertChildren(track);
+      track->setParent(m_parent);
+    }
+}
+
+
 void StreamLoader::slot_pending_task_done()
 {
-    //Debug::debug() << "StreamLoader slot_pending_task_done";
+    Debug::debug() << "StreamLoader slot_pending_task_done";
     StreamLoader* loader = qobject_cast<StreamLoader*>(sender());
     int idx = m_pending_task.indexOf(loader);
     if(idx != -1) {
       m_pending_task.removeAt(idx);
     }
 
+    /* emit dowload DONE */
     if(m_pending_task.isEmpty())
       emit download_done(m_parent);
 }

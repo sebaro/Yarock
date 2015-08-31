@@ -61,22 +61,5 @@ class StreamGraphicItem : public QGraphicsItem
      QStyleOptionViewItemV4 opt;
 };
 
-/*
-********************************************************************************
-*                                                                              *
-*    Class StreamGraphicItem_v2                                                *
-*                                                                              *
-********************************************************************************
-*/
-class StreamGraphicItem_v2 : public StreamGraphicItem
-{
-  public:
-    StreamGraphicItem_v2();
-
-  protected:
-    // Implement QGraphicsItem method
-    QRectF boundingRect() const;
-    void paint(QPainter *p, const QStyleOptionGraphicsItem *, QWidget *);
-};
 
 #endif // _STREAM_ITEM_H_

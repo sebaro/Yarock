@@ -41,6 +41,7 @@ public:
     virtual void reload();
     virtual QList<MEDIA::TrackPtr> streams();
     virtual QList<MEDIA::LinkPtr> links();
+    virtual bool hasMoreLink();
     
 public slots:
     virtual void slot_activate_link(MEDIA::LinkPtr link=MEDIA::LinkPtr(0));
@@ -56,8 +57,9 @@ private slots:
     void slot_stream_image_received(QByteArray);
     
 private:
-    QMap<QObject*, MEDIA::LinkPtr>  m_requests;
+    QMap<QObject*, MEDIA::LinkPtr>   m_requests;
     QMap<QObject*, MEDIA::TrackPtr>  m_image_requests;
+    QMap<MEDIA::LinkPtr, int>        m_pages;
 };
 
 #endif // _SERVICE_DIRBLE_H_

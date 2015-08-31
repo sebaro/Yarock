@@ -57,7 +57,6 @@ Q_OBJECT
 
   private:
     QList<MEDIA::TrackPtr>   m_tracks;
-    MEDIA::TrackPtr          m_playing_track;
     QMutex                   m_mutex;
     QVariant                 m_search;
 };

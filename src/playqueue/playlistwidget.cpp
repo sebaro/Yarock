@@ -14,18 +14,21 @@
 *  You should have received a copy of the GNU General Public License along with         *
 *  this program.  If not, see <http://www.gnu.org/licenses/>.                           *
 *****************************************************************************************/
-
 #include "playlistwidget.h"
+
 #include "playqueue_proxymodel.h"
+#include "task_manager.h"
+
 #include "widgets/statusmanager.h"
 #include "widgets/exlineedit.h"
 #include "widgets/header_widget.h"
 #include "widgets/sort_widget.h"
-#include "widgets/nowplaying/nowplayingview.h"
 
-#include "settings.h"
+#include "widgets/dialogs/addstreamdialog.h"
+#include "widgets/dialogs/filedialog.h"
 
 #include "global_actions.h"
+#include "settings.h"
 #include "debug.h"
 
 #include <QLayout>
@@ -41,52 +44,92 @@
 *                                                                              *
 ********************************************************************************
 */
-PlaylistWidget::PlaylistWidget(QWidget *parent,PlaylistView *view, PlayqueueModel* model) : QWidget(parent)
+PlaylistWidget::PlaylistWidget(QWidget *parent) : QWidget(parent), PlaylistWidgetBase()
 {
-    /* init */
-    m_menu     = 0;
-    m_view     = view;
+    m_actions  = ACTIONS();
+
+    init(new Playqueue());
+}
+    
+PlaylistWidget::PlaylistWidget(QWidget *parent, PlayqueueModel* model) : QWidget(parent), PlaylistWidgetBase()
+{    
+    m_actions  = new QMap<ENUM_ACTION, QAction*>;
+
+    init(model);
+}
+
+void PlaylistWidget::init(PlayqueueModel* model)
+{
     m_model    = model;
-
-    /* playqueue sorter widget */
-      m_sort_menu = new QMenu();
-      ui_sort_widget = 0;
-
-      QToolButton *button = new QToolButton();
-      button->setText(tr("sort"));
-      button->setAutoRaise(true);
-      button->setToolTip(tr("Sort playqueue"));
-      button->setMenu(m_sort_menu);
-      button->setContextMenuPolicy( Qt::CustomContextMenu );
-      connect( button, SIGNAL( clicked ( bool ) ), this, SLOT( slot_show_sortmenu() ) );
-
-    /* playqueue filter widget */
-      ui_playqueue_filter = new ExLineEdit();
-      ui_playqueue_filter->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
-      ui_playqueue_filter->setInactiveText(tr("Playqueue filter"));
+    m_view     = new PlaylistView(this, m_model);
     
-      ui_filter_container = new QWidget(this);
-      ui_filter_container->setMinimumHeight(30);
+    /* ------- menu & actions ------------------ */
+    m_menu     = 0;
+    
+    m_actions->insert(PLAYQUEUE_JUMP_TO_TRACK, new QAction(QIcon(":/images/jump_to_32x32.png"),tr("Jump to track"), this));
+    
+    m_actions->insert(PLAYQUEUE_ADD_FILE, new QAction(QIcon(":/images/track-48x48.png"),tr("&Add media to playlist"), this));
+    m_actions->insert(PLAYQUEUE_ADD_DIR, new QAction(QIcon(":/images/folder-48x48.png"),tr("&Add directory to playlist"), this));
+    m_actions->insert(PLAYQUEUE_ADD_URL, new QAction(QIcon(":/images/media-url-48x48.png"),tr("&Add Url..."), this));
+    m_actions->insert(PLAYQUEUE_CLEAR, new QAction(QIcon::fromTheme("edit-clear-list"), tr("&Clear playlist"), this));    
+    m_actions->insert(PLAYQUEUE_EXPORT, new QAction(QIcon(":/images/save-32x32.png"), tr("&Export playlist to file"), this));
+    m_actions->insert(PLAYQUEUE_AUTOSAVE, new QAction(QIcon(":/images/save-32x32.png"), tr("&Save playlist"), this));
+    m_actions->insert(PLAYQUEUE_REMOVE_ITEM,new QAction(QIcon::fromTheme("edit-delete"),tr("&Remove media from playlist"), this));
+    m_actions->insert(PLAYQUEUE_REMOVE_DUPLICATE,new QAction(QIcon(),tr("Remove duplicate"), this));
+    
+    m_actions->value(PLAYQUEUE_REMOVE_DUPLICATE)->setCheckable(true);
+    m_actions->value(PLAYQUEUE_REMOVE_DUPLICATE)->setChecked( !SETTINGS()->_playqueueDuplicate );
+
+    m_actions->insert(PLAYQUEUE_TRACK_LOVE, new QAction(QIcon(":/images/lastfm.png"), tr("Send LastFm love"), this));
+    
+    m_actions->insert(PLAYQUEUE_OPTION_SHOW_COVER, new QAction(tr("Show cover"), this));
+    m_actions->value(PLAYQUEUE_OPTION_SHOW_COVER)->setCheckable(true);
+    m_actions->value(PLAYQUEUE_OPTION_SHOW_COVER)->setChecked( SETTINGS()->_playqueueShowCover );
+
+    m_actions->insert(PLAYQUEUE_OPTION_SHOW_RATING, new QAction(tr("Show rating"), this));
+    m_actions->value(PLAYQUEUE_OPTION_SHOW_RATING)->setCheckable(true);
+    m_actions->value(PLAYQUEUE_OPTION_SHOW_RATING)->setChecked( SETTINGS()->_playqueueShowRating );
+
+    m_actions->insert(PLAYQUEUE_OPTION_SHOW_NUMBER, new QAction(tr("Show track number"), this));
+    m_actions->value(PLAYQUEUE_OPTION_SHOW_NUMBER)->setCheckable(true);
+    m_actions->value(PLAYQUEUE_OPTION_SHOW_NUMBER)->setChecked( SETTINGS()->_playqueueShowNumber );
+    
+
+    /* ------- playqueue sorter widget --------- */
+    m_sort_menu = new QMenu();
+    ui_sort_widget = 0;
+
+    QToolButton *button = new QToolButton();
+    button->setText(tr("sort"));
+    button->setAutoRaise(true);
+    button->setToolTip(tr("Sort playqueue"));
+    button->setMenu(m_sort_menu);
+    button->setContextMenuPolicy( Qt::CustomContextMenu );
+    connect( button, SIGNAL( clicked ( bool ) ), this, SLOT( slot_show_sortmenu() ) );
+
+    /* ------- playqueue filter widget --------- */
+    ui_playqueue_filter = new ExLineEdit();
+    ui_playqueue_filter->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
+    ui_playqueue_filter->setInactiveText(tr("Playqueue filter"));
+    
+    ui_filter_container = new QWidget(this);
+    ui_filter_container->setMinimumHeight(30);
   
-      QHBoxLayout* h1 = new QHBoxLayout(ui_filter_container);
-      h1->setSpacing(0);
-      h1->setContentsMargins(2, 2, 2, 2);   
-      h1->addWidget(ui_playqueue_filter); 
-      h1->addWidget(button); 
+    QHBoxLayout* h1 = new QHBoxLayout(ui_filter_container);
+    h1->setSpacing(0);
+    h1->setContentsMargins(2, 2, 2, 2);   
+    h1->addWidget(ui_playqueue_filter); 
+    h1->addWidget(button); 
 
 
-    /* now playing */
-    m_nowplaying = new NowPlayingView(this);
-    
-    /* main layout */
+    /* ------- main layout --------------------- */
     QVBoxLayout *main_layout = new QVBoxLayout(this);
     main_layout->setSpacing(0);
     main_layout->setContentsMargins(0, 0, 0, 0);
     main_layout->addWidget(ui_filter_container);
-    main_layout->addWidget(m_nowplaying);
     main_layout->addWidget(m_view);
     
-    /* ---------- actions ---------- */
+    /* ------- actions ------------------------- */
     m_action_show_filter = new QAction(QIcon(),tr("Show filter"), this);
     m_action_show_filter->setCheckable(true);    
     m_action_show_filter->setChecked( SETTINGS()->_playqueueShowFilter );
@@ -94,37 +137,38 @@ PlaylistWidget::PlaylistWidget(QWidget *parent,PlaylistView *view, PlayqueueMode
     m_action_stop_after = new QAction(QIcon(),tr("Stop after this track"), this);
     m_action_stop_after->setCheckable(true);
     
-    
-    
-    /* signals connection */
+    /* ------- signals connection -------------- */
     connect(m_model, SIGNAL(updated()), this, SLOT(slot_update_playqueue_status_info()));
-    connect(ACTIONS()->value(PLAYQUEUE_REMOVE_DUPLICATE), SIGNAL(triggered()), SLOT(slot_removeduplicate_changed()));
+
+    connect(m_actions->value(PLAYQUEUE_TRACK_LOVE), SIGNAL(triggered()), m_view, SLOT(slot_lastfm_love()));    
+    connect(m_actions->value(PLAYQUEUE_JUMP_TO_TRACK), SIGNAL(triggered()), m_view, SLOT(jumpToCurrentlyPlayingTrack()));
+    
+    connect(m_actions->value(PLAYQUEUE_REMOVE_DUPLICATE), SIGNAL(triggered()), SLOT(slot_removeduplicate_changed()));
+    connect(m_actions->value(PLAYQUEUE_CLEAR), SIGNAL(triggered()), SLOT(slot_playqueue_clear()));
+    
+    connect(m_actions->value(PLAYQUEUE_ADD_FILE), SIGNAL(triggered()), SLOT(slot_add_to_playqueue()));
+    connect(m_actions->value(PLAYQUEUE_ADD_DIR), SIGNAL(triggered()), SLOT(slot_add_to_playqueue()));
+    connect(m_actions->value(PLAYQUEUE_ADD_URL), SIGNAL(triggered()), SLOT(slot_add_to_playqueue()));
+    connect(m_actions->value(PLAYQUEUE_EXPORT), SIGNAL(triggered()), SLOT(slot_playqueue_export()));
+    connect(m_actions->value(PLAYQUEUE_AUTOSAVE), SIGNAL(triggered()), SLOT(slot_playqueue_save_auto()));
+    connect(m_actions->value(PLAYQUEUE_REMOVE_ITEM), SIGNAL(triggered()), this, SLOT(slot_remove_selected_tracks()));
 
     connect(ui_playqueue_filter, SIGNAL(textfield_entered()),this, SLOT(slot_update_filter()));
 
     connect(m_action_show_filter, SIGNAL(triggered()), this, SLOT(slot_show_filter_triggered()));
     connect(m_action_stop_after, SIGNAL(triggered()), this, SLOT(slot_stop_after_triggered()));
 
-    connect(ACTIONS()->value(APP_SHOW_NOW_PLAYING), SIGNAL(triggered()), SLOT(slot_show_now_playing_triggered()));
-    
-    /* ---------- init state ---------- */
+    /* ------- init state ---------------------- */
     ui_filter_container->setVisible( SETTINGS()->_playqueueShowFilter );
-
-    m_nowplaying->setVisible( SETTINGS()->_showNowPlaying );
 }
 
-
-void PlaylistWidget::slot_show_now_playing_triggered()
-{
-    SETTINGS()->_showNowPlaying = ACTIONS()->value(APP_SHOW_NOW_PLAYING)->isChecked();
-    m_nowplaying->setVisible(SETTINGS()->_showNowPlaying);
-}
 
 void PlaylistWidget::slot_show_filter_triggered()
 {
     //Debug::debug() << "    [PlaylistWidget] slot_show_filter_triggered"
-    ui_filter_container->setVisible(m_action_show_filter->isChecked());
     SETTINGS()->_playqueueShowFilter = m_action_show_filter->isChecked(); 
+
+    ui_filter_container->setVisible(SETTINGS()->_playqueueShowFilter);
 }
 
 /*******************************************************************************
@@ -207,13 +251,19 @@ void PlaylistWidget::slot_removeduplicate_changed()
 }
 
 /*******************************************************************************
+    PlaylistWidget::slot_remove_selected_tracks
+*******************************************************************************/
+void PlaylistWidget::slot_remove_selected_tracks()
+{
+    m_view->removeSelected();
+}
+
+/*******************************************************************************
     PlaylistWidget::contextMenuEvent
 *******************************************************************************/
 void PlaylistWidget::contextMenuEvent(QContextMenuEvent* e)
 {
     //Debug::debug() << "    [PlaylistWidget] contextMenuEvent";
-    QMap<ENUM_ACTION, QAction*> *actions = ACTIONS();
-
     /* ---- update playqueue STOP AFTER action ---- */
     const QModelIndex idx           = m_view->indexAt( m_view->mapFromParent(e->pos()) );
     const QModelIndex source_idx    = m_model->proxy()->mapToSource(idx);
@@ -240,37 +290,148 @@ void PlaylistWidget::contextMenuEvent(QContextMenuEvent* e)
     /* ---- update actions ---- */
     const bool isPlaylistEmpty = m_model->rowCount(QModelIndex()) < 1;
 
-    ACTIONS()->value(PLAYQUEUE_CLEAR)->setEnabled(!isPlaylistEmpty);
-    ACTIONS()->value(PLAYQUEUE_SAVE)->setEnabled(!isPlaylistEmpty);
-    ACTIONS()->value(PLAYQUEUE_AUTOSAVE)->setEnabled(!isPlaylistEmpty);
-    ACTIONS()->value(PLAYQUEUE_REMOVE_ITEM)->setEnabled((!isPlaylistEmpty) && m_view->isTrackSelected());
+    m_actions->value(PLAYQUEUE_CLEAR)->setEnabled(!isPlaylistEmpty);
+    m_actions->value(PLAYQUEUE_EXPORT)->setEnabled(!isPlaylistEmpty);
+    m_actions->value(PLAYQUEUE_AUTOSAVE)->setEnabled(!isPlaylistEmpty);
+    m_actions->value(PLAYQUEUE_REMOVE_ITEM)->setEnabled((!isPlaylistEmpty) && m_view->isTrackSelected());
 
 
     /* ---- build menu ---- */
     if (!m_menu) {
       m_menu = new QMenu(this);
       QMenu *m1 = m_menu->addMenu(QIcon(":/images/add_32x32.png"), tr("Add"));
-      m1->addAction(actions->value(PLAYQUEUE_ADD_FILE));
-      m1->addAction(actions->value(PLAYQUEUE_ADD_DIR));
-      m1->addAction(actions->value(PLAYQUEUE_ADD_URL));
-      m_menu->addAction(actions->value(PLAYQUEUE_CLEAR));
-      m_menu->addAction(actions->value(PLAYQUEUE_SAVE));
-      m_menu->addAction(actions->value(PLAYQUEUE_AUTOSAVE));
-      m_menu->addAction(actions->value(PLAYQUEUE_REMOVE_ITEM));
+      m1->addAction(m_actions->value(PLAYQUEUE_ADD_FILE));
+      m1->addAction(m_actions->value(PLAYQUEUE_ADD_DIR));
+      m1->addAction(m_actions->value(PLAYQUEUE_ADD_URL));
+
+      m_menu->addSeparator();
+      m_menu->addAction(m_actions->value(PLAYQUEUE_REMOVE_ITEM));
+      m_menu->addAction(m_actions->value(PLAYQUEUE_CLEAR));
+      m_menu->addAction(m_actions->value(PLAYQUEUE_EXPORT));
+      m_menu->addAction(m_actions->value(PLAYQUEUE_AUTOSAVE));
       m_menu->addAction( m_action_stop_after );
-      m_menu->addAction(actions->value(PLAYQUEUE_REMOVE_DUPLICATE));
-      m_menu->addAction(actions->value(PLAYQUEUE_JUMP_TO_TRACK));
+
       m_menu->addSeparator();
+      m_menu->addAction(m_actions->value(PLAYQUEUE_JUMP_TO_TRACK));
+      m_menu->addAction(m_actions->value(PLAYQUEUE_REMOVE_DUPLICATE));
+
       QMenu *m2 = m_menu->addMenu(tr("Display options"));
-      m2->addAction(actions->value(PLAYQUEUE_OPTION_SHOW_COVER));
-      m2->addAction(actions->value(PLAYQUEUE_OPTION_SHOW_RATING));
-      m_menu->addAction(actions->value(APP_SHOW_NOW_PLAYING));
-      m_menu->addAction(m_action_show_filter);
+      m2->addAction(m_actions->value(PLAYQUEUE_OPTION_SHOW_COVER));
+      m2->addAction(m_actions->value(PLAYQUEUE_OPTION_SHOW_RATING));
+      m2->addAction(m_actions->value(PLAYQUEUE_OPTION_SHOW_NUMBER));
+      
+      QMenu *m3 = m_menu->addMenu(tr("Widgets options"));
+      m3->addAction(m_action_show_filter);
+      
       m_menu->addSeparator();
-      m_menu->addAction(actions->value(PLAYQUEUE_TRACK_LOVE));
+      m_menu->addAction(m_actions->value(PLAYQUEUE_TRACK_LOVE));
     }
 
     /* build menu */
     m_menu->popup(e->globalPos());
     e->accept();
+}
+
+
+/*******************************************************************************
+    PlaylistWidget::slot_playqueue_clear
+*******************************************************************************/
+void PlaylistWidget::slot_playqueue_clear()
+{
+    m_model->clear();
+}
+
+
+/*******************************************************************************
+    PlaylistWidget::slot_add_to_playqueue
+*******************************************************************************/
+void PlaylistWidget::slot_add_to_playqueue()
+{
+    QAction *action = qobject_cast<QAction *>(sender());
+    if(!action) return;
+
+    /*--------------------------------------------------*/
+    /* add file to playqueue                            */
+    /* -------------------------------------------------*/
+    if( action == m_actions->value(PLAYQUEUE_ADD_FILE) )
+    {
+      FileDialog fd(this, FileDialog::AddFiles, tr("Add music files or playlist"));
+
+      if(fd.exec() == QDialog::Accepted) {
+        QStringList files  = fd.addFiles();
+        m_model->manager()->playlistAddFiles(files);
+      }      
+    }
+    /*--------------------------------------------------*/
+    /* add dir to playqueue                             */
+    /* -------------------------------------------------*/
+    else if ( action == m_actions->value(PLAYQUEUE_ADD_DIR) )
+    {
+      FileDialog fd(this, FileDialog::AddDirs, tr("Add music directories"));
+
+      if(fd.exec() == QDialog::Accepted) {
+        QStringList dirs  = fd.addDirectories();
+        m_model->manager()->playlistAddFiles(dirs);
+      }    
+    }
+    /*--------------------------------------------------*/
+    /* add url to playqueue                             */
+    /* -------------------------------------------------*/
+    else if ( action == m_actions->value(PLAYQUEUE_ADD_URL) )
+    {
+      AddStreamDialog stream_dialog(this,false);
+
+      if(stream_dialog.exec() == QDialog::Accepted)
+      {
+        const QString url   = stream_dialog.url();
+
+        if(!QUrl(url).isEmpty() && QUrl(url).isValid()) 
+        {
+          const QString name  = stream_dialog.name();
+
+          MEDIA::TrackPtr media = MEDIA::TrackPtr(new MEDIA::Track());
+          media->setType(TYPE_STREAM);
+          media->id          = -1;
+          media->url         = url;
+          media->name        = !name.isEmpty() ? name : url ;
+          media->isFavorite  = false;
+          media->isPlaying   = false;
+          media->isBroken    = false;
+          media->isPlayed    = false;
+          media->isStopAfter = false;
+
+          m_model->addMediaItem(media);
+          media.reset();
+        }
+        else 
+        {
+          StatusManager::instance()->startMessage("invalid url can not be added !!", STATUS::WARNING, 5000);
+        }
+      }
+    }
+}
+
+
+void PlaylistWidget::slot_playqueue_export()
+{
+    FileDialog fd(this, FileDialog::SaveFile, tr("Export playlist to file"));
+
+    if(fd.exec() == QDialog::Accepted) 
+    {
+      QString file  = fd.saveFile();
+      if (!file.isEmpty())
+        m_model->manager()->playlistSaveToFile(file);
+    }  
+}
+
+void PlaylistWidget::slot_playqueue_save_auto()
+{
+    DialogInput input(this, tr("name"), tr("Save playlist"));
+    input.setFixedSize(480,140);
+        
+    if(input.exec() == QDialog::Accepted) 
+    {
+      //Debug::debug() << "[PlaylistWidget] slot_playqueue_save_auto : " << input.editValue();
+      m_model->manager()->playlistSaveToDb(input.editValue());
+    }
 }

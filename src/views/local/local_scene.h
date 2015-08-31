@@ -54,7 +54,7 @@ Q_OBJECT
 
     void playSelected();
     void setSearch(const QVariant&);
-    void setData(const QVariant&) {};
+    void setData(const QVariant&);
     void playSceneContents(const QVariant&);
 
     QList<QAction *> actions();
@@ -89,10 +89,9 @@ Q_OBJECT
     void slot_item_mouseMove();
     void slot_item_ratingclick();
     void slot_contextmenu_triggered(ENUM_ACTION_ITEM_MENU);
-
     void slot_change_view_settings();
-
     void slot_clear_history();
+    void slot_on_model_data_changed();
 
   private :
     //! selection
@@ -146,6 +145,9 @@ Q_OBJECT
     void edit_media_dialog_selection();
     void updateMediaFavorite();
     void removePlaylistFromDisk();
+    
+  signals:
+    void linked_changed(QVariant);
 };
 
 #endif // _LOCAL_SCENE_H_

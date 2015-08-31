@@ -54,12 +54,10 @@ Q_OBJECT
      bool isMediaMatch(MEDIA::MediaPtr);
      
   signals:
-    void signalFavoriteStatusChanged();
-    void modelCleared();
+    void dataChanged();
 
   private:
      MEDIA::MediaPtr        m_rootItem;
-     MEDIA::TrackPtr        m_playing_track;
      QVariant               m_search;
 };
 

@@ -32,10 +32,10 @@ enum Type {
   };
 
 enum State {
-    NO_DATA,
-    DATA_OK,
-    DOWNLOADING,
-    ERROR
+    NO_DATA      = 0,
+    DATA_OK      = 1,
+    DOWNLOADING  = 2,
+    ERROR        = 3
   };
   
 } // end namespace
@@ -64,6 +64,7 @@ public:
     MEDIA::LinkPtr rootLink() {return m_root_link;}
     MEDIA::LinkPtr activeLink() {return m_active_link;}
     MEDIA::LinkPtr searchLink() {return m_search_link;}
+    MEDIA::LinkPtr moreLink() {return m_more_link;}
     
     void setActiveLink(MEDIA::LinkPtr link) { m_active_link = link;}
     
@@ -80,6 +81,7 @@ public:
     virtual QList<MEDIA::LinkPtr> links() = 0;
     virtual void load() = 0;
     virtual void reload() = 0;
+    virtual bool hasMoreLink() {return false;}
 
 public slots:
     virtual void slot_activate_link(MEDIA::LinkPtr link=MEDIA::LinkPtr(0)) = 0;
@@ -98,6 +100,7 @@ protected:
     MEDIA::LinkPtr     m_root_link;
     MEDIA::LinkPtr     m_active_link;
     MEDIA::LinkPtr     m_search_link;
+    MEDIA::LinkPtr     m_more_link;    
 
     QString            m_search_term;
 };

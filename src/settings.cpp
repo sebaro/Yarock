@@ -53,6 +53,7 @@ void YarockSettings::readSettings()
     _showPlayQueuePanel  = s->value("Window/showPlaylistPanel", true).toBool();
     _showMenuPanel       = s->value("Window/showMenuPanel",     true).toBool();
     _showNowPlaying      = s->value("Window/showNowPlaying",    true).toBool();
+    _autoHideNowPlaying  = s->value("Window/autoHideNowPlaying",true).toBool();
     _enableSearchPopup   = s->value("Window/searchPopup",       true).toBool();
     _enablePlayOnSearch  = s->value("Window/playOnSearch",      false).toBool();
 
@@ -70,10 +71,11 @@ void YarockSettings::readSettings()
     _album_view_type     = s->value("Session/album_view_type",     1).toInt();    // extended default
     _playlist_view_type  = s->value("Session/playlist_view_type",  0).toInt();    // overview default
 
-    _playqueueShowCover  = s->value("Session/playqueueShowCover", true).toBool();
-    _playqueueShowRating = s->value("Session/playqueueShowRating", true).toBool();
-    _playqueueDuplicate  = s->value("Session/playqueueDuplicate", true).toBool();
-    _playqueueShowFilter = s->value("Session/playqueueShowFilter", false).toBool();
+    _playqueueShowCover  = s->value("Session/playqueueShowCover",   true).toBool();
+    _playqueueShowRating = s->value("Session/playqueueShowRating",  true).toBool();
+    _playqueueShowNumber = s->value("Session/playqueueShowNumber",  false).toBool();
+    _playqueueDuplicate  = s->value("Session/playqueueDuplicate",   true).toBool();
+    _playqueueShowFilter = s->value("Session/playqueueShowFilter",  false).toBool();
 
     _filesystem_path     = s->value("Session/filesystem",     "").toString();
     
@@ -97,7 +99,7 @@ void YarockSettings::readSettings()
 
     // features activations (Dynamic settings)
     _useTrayIcon         = s->value("Features/systray", false).toBool();
-    _useMpris            = s->value("Features/mpris",   false).toBool();
+    _useMpris            = s->value("Features/mpris",   true).toBool();
     _useDbusNotification = s->value("Features/dbus",    false).toBool();
     _useLastFmScrobbler  = s->value("Features/lastFm",  false).toBool();
     _useShortcut         = s->value("Features/shortcut", false).toBool();
@@ -108,7 +110,7 @@ void YarockSettings::readSettings()
     // audio controler (Startup settings)
     _repeatMode          = s->value("AudioControl/repeat",  0).toInt();
     _shuffleMode         = s->value("AudioControl/shuffle", 0).toInt();
-    _volumeLevel         = s->value("AudioControl/volume",  50).toInt();
+    _volumeLevel         = s->value("AudioControl/volume",  75).toInt();
     _replaygain          = s->value("AudioControl/replaygain", 0).toInt();
 
     // playback option
@@ -158,6 +160,7 @@ void YarockSettings::writeSettings()
     s->setValue("showPlaylistPanel",  _showPlayQueuePanel);
     s->setValue("showMenuPanel",      _showMenuPanel);
     s->setValue("showNowPlaying",     _showNowPlaying);
+    s->setValue("autoHideNowPlaying", _autoHideNowPlaying);
     s->setValue("searchPopup",        _enableSearchPopup);
     s->setValue("playOnSearch",       _enablePlayOnSearch);
     
@@ -172,6 +175,7 @@ void YarockSettings::writeSettings()
     s->setValue("playlist_view_type", _playlist_view_type);
     s->setValue("playqueueShowCover", _playqueueShowCover);
     s->setValue("playqueueShowRating",_playqueueShowRating);
+    s->setValue("playqueueShowNumber",_playqueueShowNumber);
     s->setValue("playqueueDuplicate", _playqueueDuplicate);
     s->setValue("playqueueShowFilter",_playqueueShowFilter);
     s->setValue("hideAtStartup",      _hideAtStartup);

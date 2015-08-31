@@ -65,3 +65,21 @@ void MediaMimeData::addTracks(QList<MEDIA::TrackPtr> tracks)
 {
     m_tracks.append(tracks);
 }
+
+
+MediaMimeData* MediaMimeData::copy() const
+{
+    MediaMimeData * mimeCopy = new MediaMimeData(this->source());
+
+    foreach(QString format, this->formats())
+    {
+        // Retrieving data
+        QByteArray data = this->data(format);
+
+        mimeCopy->setData(format, data);
+    }
+    
+    mimeCopy->setParent( this->parent() );
+    
+    return mimeCopy;
+}

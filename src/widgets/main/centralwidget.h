@@ -30,7 +30,6 @@
 #include <QWidget>
 #include <QFrame>
 
-class PlaylistWidget;
 /*
 ********************************************************************************
 *                                                                              *
@@ -42,7 +41,7 @@ class CentralWidget : public QFrame
 {
 Q_OBJECT
 public:
-    CentralWidget(QWidget *,PlaylistWidget*);
+    CentralWidget(QWidget *);
 
     void saveState();
     void setBrowser(BrowserView* b) {left_widget->setBrowser(b);}

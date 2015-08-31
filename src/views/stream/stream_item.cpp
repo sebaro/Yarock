@@ -34,6 +34,7 @@
 ********************************************************************************
 *                                                                              *
 *    StreamGraphicItem                                                         *
+*      -> with image                                                           *
 *                                                                              *
 ********************************************************************************
 */
@@ -69,139 +70,14 @@ StreamGraphicItem::StreamGraphicItem()
 
 QRectF StreamGraphicItem::boundingRect() const
 {
-    int height  = opt.fontMetrics.height()*2 + 4 ;
-
-    if(_width < 530)
-      return QRectF(0, 0, 530, height + 4 * 2 );
-    
-    
-    return QRectF(0, 0, _width, height + 4 * 2 );
-}
-
-
-void StreamGraphicItem::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget *widget)
-{
-Q_UNUSED(option)
-   //! get Model data
-   if(!media) return;
-   const int width       = _width < 530 ? 530 : _width;
-   const int height      = boundingRect().toRect().height();
-    
-   //! Get color for state
-   QColor c = QApplication::palette().color(QPalette::Normal,QPalette::Highlight);
-
-   if(isSelected())
-   {
-     opt.state |= QStyle::State_Selected;
-     opt.palette.setColor(QPalette::Normal, QPalette::Highlight, c);
-   }
-   else if (opt.state & QStyle::State_MouseOver) {
-     opt.state |= QStyle::State_Selected;
-     c.setAlpha(100);
-     opt.palette.setColor(QPalette::Normal, QPalette::Highlight, c);
-   }
-   else {
-     opt.state &= ~QStyle::State_Selected;
-   }
-
-   //! Draw frame for State_HasFocus item
-   opt.rect = boundingRect().toRect().adjusted(0,0,-15,0);
-   UTIL::getStyle()->drawControl(QStyle::CE_ItemViewItem, &opt, painter, widget);
-
-   //! paint stream name
-   QFont bold_font = opt.font;
-   bold_font.setBold(true);
-   QFontMetrics fm = QFontMetrics(bold_font);
-
-   painter->setFont(bold_font);
-   painter->setPen(opt.palette.color ( QPalette::Normal, isSelected() ? QPalette::HighlightedText : QPalette::WindowText));
-
-   const QString name_elided = fm.elidedText ( media->name, Qt::ElideRight, width-20);
-   painter->drawText(QRect(30, height/2-fm.height(), width-20, fm.height()), Qt::AlignLeft | Qt::AlignVCenter,name_elided);
-
-   //! paint stream url
-   painter->setPen(opt.palette.color ( QPalette::Disabled, isSelected() ? QPalette::HighlightedText : QPalette::WindowText) );
-   painter->setFont(opt.font);
-
-   const QString url_elided = opt.fontMetrics.elidedText ( media->url, Qt::ElideRight, width-20);
-   painter->drawText(QRect(30, height/2+1, width-20, height/2), Qt::AlignLeft | Qt::AlignVCenter,url_elided);
-   
-   //! paint activated item
-   if(media->isPlaying)
-     painter->drawPixmap(0, height/2-10,QPixmap(":/images/media-playing.png"));
-   else if(media->isBroken)
-     painter->drawPixmap(2, height/2-10, QPixmap(":/images/media-broken-18x18.png"));
-}
-
-void StreamGraphicItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
-{
-Q_UNUSED(event)
-    //Debug::debug() << " ---- StreamGraphicItem::hoverEnterEvent";
-    opt.state |= QStyle::State_MouseOver;
-    this->update();
-}
-
-void StreamGraphicItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
-{
-Q_UNUSED(event)
-    //Debug::debug() << " ---- StreamGraphicItem::hoverLeaveEvent";
-    opt.state &= ~QStyle::State_MouseOver;
-    this->update();
-}
-
-void StreamGraphicItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
-{
-    event->accept();
-}
-
-
-void StreamGraphicItem::startDrag(QWidget* w)
-{
-    setCursor(Qt::OpenHandCursor);
-
-    MediaMimeData* mimedata = new MediaMimeData(SOURCE_COLLECTION);
-    mimedata->addTrack(this->media);
-
-    QDrag *drag = new QDrag(w);
-    drag->setMimeData(mimedata);
-    drag->exec();
-}
-
-void StreamGraphicItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
-{
-Q_UNUSED(event)
-    QVariant v;
-    v.setValue(static_cast<QGraphicsItem*>(this));
-
-    (ACTIONS()->value(BROWSER_STREAM_ITEM_MOUSE_MOVE))->setData(v);
-    (ACTIONS()->value(BROWSER_STREAM_ITEM_MOUSE_MOVE))->trigger();
-}
-
-
-
-
-/*
-********************************************************************************
-*                                                                              *
-*    StreamGraphicItem_v2                                                      *
-*      -> with image                                                           *
-*                                                                              *
-********************************************************************************
-*/
-StreamGraphicItem_v2::StreamGraphicItem_v2()
-{
-
-}
-
-QRectF StreamGraphicItem_v2::boundingRect() const
-{
     if(_width < 530)
       return QRectF(0, 0, 530, 70);
 
     return QRectF(0, 0, _width, 70);
 }
 
-void StreamGraphicItem_v2::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)
+
+void StreamGraphicItem::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget *widget)
 {
 Q_UNUSED(option)
    //! get Model data
@@ -262,8 +138,52 @@ Q_UNUSED(option)
    painter->drawPixmap(3,3, pix);
      
    if(media->isPlaying)
-     painter->drawPixmap(70, 22,QPixmap(":/images/media-playing.png"));
+      UTIL::drawPlayingIcon(painter,18, 0, QPoint(70,22));
    else if(media->isBroken)
      painter->drawPixmap(70, 22, QPixmap(":/images/media-broken-18x18.png"));
+}
+
+void StreamGraphicItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
+{
+Q_UNUSED(event)
+    //Debug::debug() << " ---- StreamGraphicItem::hoverEnterEvent";
+    opt.state |= QStyle::State_MouseOver;
+    this->update();
+}
+
+void StreamGraphicItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
+{
+Q_UNUSED(event)
+    //Debug::debug() << " ---- StreamGraphicItem::hoverLeaveEvent";
+    opt.state &= ~QStyle::State_MouseOver;
+    this->update();
+}
+
+void StreamGraphicItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    event->accept();
+}
+
+
+void StreamGraphicItem::startDrag(QWidget* w)
+{
+    setCursor(Qt::OpenHandCursor);
+
+    MediaMimeData* mimedata = new MediaMimeData(SOURCE_COLLECTION);
+    mimedata->addTrack(this->media);
+
+    QDrag *drag = new QDrag(w);
+    drag->setMimeData(mimedata);
+    drag->exec();
+}
+
+void StreamGraphicItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+{
+Q_UNUSED(event)
+    QVariant v;
+    v.setValue(static_cast<QGraphicsItem*>(this));
+
+    (ACTIONS()->value(BROWSER_STREAM_ITEM_MOUSE_MOVE))->setData(v);
+    (ACTIONS()->value(BROWSER_STREAM_ITEM_MOUSE_MOVE))->trigger();
 }
 

@@ -441,10 +441,11 @@ void FileScene::mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * event )
 *******************************************************************************/
 void FileScene::slot_item_mouseMove()
 {
-    //Debug::debug() << "   [FileScene] slot_item_mouseMove";
+    Debug::debug() << "   [FileScene] slot_item_mouseMove";
 
     // single drag and drop
     QGraphicsItem *gItem = qvariant_cast<QGraphicsItem *>( (ACTIONS()->value(BROWSER_DIR_ITEM_MOUSE_MOVE))->data() );
+    Debug::debug() << "   [FileScene] slot_item_mouseMove gItem->type()" << gItem->type();
 
     switch(gItem->type()) 
     {
@@ -493,7 +494,24 @@ void FileScene::startTracksDrag(QGraphicsItem* i)
     if(this->selectedItems().isEmpty() || !selectedItems().contains(i))
     {
         TrackGraphicItem *item = static_cast<TrackGraphicItem *>(i);
-        item->startDrag(parentView());
+        
+        MEDIA::TrackPtr track = item->media;        
+        
+        if( MEDIA::isPlaylistFile(track->url) )
+        {
+            QList<MEDIA::TrackPtr> list = MEDIA::PlaylistFromFile(track->url);
+           
+            MediaMimeData* mimedata = new MediaMimeData(SOURCE_COLLECTION);
+            mimedata->addTracks( list );
+ 
+            QDrag *drag = new QDrag(parentView());
+            drag->setMimeData(mimedata);
+            drag->exec();
+        }
+        else
+        {
+            item->startDrag(parentView());
+        }
     }  
     else /* multiple tracks drags */
     {
@@ -501,8 +519,19 @@ void FileScene::startTracksDrag(QGraphicsItem* i)
 
       foreach(QGraphicsItem* gi, selectedItems())
       {
-        TrackGraphicItem *item = static_cast<TrackGraphicItem *>(gi);
-        mimedata->addTrack(item->media);
+          TrackGraphicItem *item = static_cast<TrackGraphicItem *>(gi);
+  
+          MEDIA::TrackPtr track = item->media;
+          
+          if( MEDIA::isPlaylistFile(track->url) )
+          {
+              QList<MEDIA::TrackPtr> list = MEDIA::PlaylistFromFile(track->url);
+              mimedata->addTracks( list );
+          }
+          else
+          {
+              mimedata->addTrack(item->media);
+          }
       }
 
       QDrag *drag = new QDrag(parentView());

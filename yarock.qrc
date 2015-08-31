@@ -8,7 +8,6 @@
         <file>images/volume-icon.png</file>
         <file>images/volume-muted.png</file>
         <file>images/save-32x32.png</file>
-        <file>images/media-playing.png</file>
         <file>images/media-next.png</file>
         <file>images/media-pause.png</file>
         <file>images/media-play.png</file>
@@ -24,7 +23,6 @@
         <file>images/album.png</file>
         <file>images/default-cover-120x120.png</file>
         <file>images/default-url-120x120.png</file>
-        
         <file>images/dirble.png</file>
         <file>images/radionomy.png</file>
         <file>images/info-48x48.png</file>

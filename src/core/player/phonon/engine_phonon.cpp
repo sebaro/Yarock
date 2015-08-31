@@ -50,13 +50,13 @@ EnginePhonon::EnginePhonon() : EngineBase("phonon")
     m_mediaObject = new Phonon::MediaObject(this);
     m_audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory, this);
 
-    /* By default tick every 1 second */
+    /* ----- by default tick every 1 second ----- */
     m_mediaObject->setTickInterval(100);
     Debug::debug() << "[EnginePhonon] -> tick Interval (actual): " << m_mediaObject->tickInterval();
     
 
-    /* Get the next track when there is 2 seconds left on the current one */
-    /* in case of playing track from track view */
+    /* ----- get the next track when there is 2 seconds left on the current one ----- */
+    /*       in case of playing track from track view */
     m_mediaObject->setPrefinishMark( 2000 );
     m_mediaObject->setTransitionTime(100);  /* GAPLESS/CROSSFADE */
 
@@ -79,7 +79,7 @@ EnginePhonon::EnginePhonon() : EngineBase("phonon")
     m_phononPath  = Phonon::createPath(m_mediaObject,m_audioOutput);
 
 
-    /* only create pre-amp if we have replaygain on, VolumeFaderEffect can cause phonon issues */
+    /* ----- only create pre-amp if we have replaygain on, VolumeFaderEffect can cause phonon issues */
     m_preamp = 0;
     if( SETTINGS()->_replaygain != SETTING::ReplayGainOff )
     {
@@ -87,7 +87,7 @@ EnginePhonon::EnginePhonon() : EngineBase("phonon")
       m_phononPath.insertEffect( m_preamp );
     }
 
-    /* add an equalizer effect if available */
+    /* ----- add an equalizer effect if available */
     m_equalizer   = 0;
     QList<Phonon::EffectDescription> mEffectDescriptions = Phonon::BackendCapabilities::availableAudioEffects();
     foreach ( const Phonon::EffectDescription &mDescr, mEffectDescriptions )
@@ -103,8 +103,8 @@ EnginePhonon::EnginePhonon() : EngineBase("phonon")
       }
     }
 
-    /* initial volume setup */
-    setVolume( 75 );
+    /* ----- initial volume setup ----- */
+    setVolume( SETTINGS()->_volumeLevel );
         
     m_current_state    = ENGINE::STOPPED;
     m_old_state        = ENGINE::STOPPED;
@@ -435,10 +435,15 @@ void EnginePhonon::slot_on_metadata_change()
 
     const QMap<QString, QString> &metaData = m_mediaObject->metaData();
 
-    m_currentMediaItem->title  = (metaData.value("TITLE") != "Streaming Data") ? metaData.value("TITLE") : "";
-    m_currentMediaItem->album  = (metaData.value("ALBUM") != "Streaming Data") ? metaData.value("ALBUM") : "";
-    m_currentMediaItem->artist = (metaData.value("ARTIST") != "Streaming Data") ? metaData.value("ARTIST") : "";
+    if( !metaData.value("TITLE").isEmpty() && metaData.value("TITLE") != "Streaming Data" )
+      m_currentMediaItem->title = metaData.value("TITLE");
 
+    if( !metaData.value("ALBUM").isEmpty() && metaData.value("ALBUM") != "Streaming Data" )
+      m_currentMediaItem->album = metaData.value("ALBUM");
+    
+    if( !metaData.value("ARTIST").isEmpty() && metaData.value("ARTIST") != "Streaming Data" )
+      m_currentMediaItem->artist = metaData.value("ARTIST");
+        
     if(metaData.value("TITLE").contains("-")) 
     {
       QStringList list = metaData.value("TITLE").split(" - ");
@@ -474,8 +479,9 @@ void EnginePhonon::slot_on_media_about_to_finish()
 /* ---------------------------------------------------------------------------*/
 void  EnginePhonon::slot_on_media_finished()
 {
-    //! FIXME VLC phonon backend not emit about to finish every time (source is not taken from the queue)
     //Debug::debug() << "[EnginePhonon] slot_on_media_finished";
+    emit mediaFinished();
+
     if(m_nextMediaItem)
     {
       Debug::debug() << "[EnginePhonon] -> slot_on_media_finished next mediaitem present !!";

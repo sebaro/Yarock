@@ -247,7 +247,7 @@ Q_UNUSED(option)
       
       //! paint activated item
       if(media->isPlaying)
-        painter->drawPixmap(0, 0,QPixmap(":/images/media-playing.png"));
+        UTIL::drawPlayingIcon(painter,18, 1, QPoint(5,2));
       else if(media->isBroken)
         painter->drawPixmap(1, 1, QPixmap(":/images/media-broken-18x18.png"));
       else if (!isTrack)

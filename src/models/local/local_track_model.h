@@ -43,7 +43,11 @@ Q_OBJECT
      static LocalTrackModel* instance() { return INSTANCE; }
 
      //! custom method
-     MEDIA::MediaPtr rootItem();
+     MEDIA::MediaPtr rootItem() {return m_rootItem;}
+     MEDIA::LinkPtr  rootLink() {return m_rootGenreItem;}
+     MEDIA::LinkPtr  activeLink() {return m_active_link;}
+     void setActiveLink(MEDIA::LinkPtr link) {m_active_link = link;}
+     
      void clear();
      bool isEmpty() const;
 
@@ -60,17 +64,18 @@ Q_OBJECT
 
      //! list of MediaItem
      QHash<int, MEDIA::TrackPtr> trackItemHash;
-     QList<MEDIA::TrackPtr>      trackByGenre;
      QList<MEDIA::AlbumPtr>      albumItemList;
 
   signals:
-    void signalFavoriteStatusChanged();
-    void signalPlaycountChanged();
-    void modelCleared();
+    void dataChanged();
+
+  public slots:
+    void slot_activate_link();
 
   private:
+     MEDIA::LinkPtr   m_rootGenreItem;
+     MEDIA::LinkPtr   m_active_link;
      MEDIA::MediaPtr  m_rootItem;
-     MEDIA::TrackPtr  m_playing_track;
      QVariant         m_search;
 };
 

@@ -101,7 +101,10 @@ void MainLeftWidget::create_header_ui()
 
       /* settings button */
       ui_save_button   = new QPushButton(QIcon(":/images/save-32x32.png"), tr("Apply"), 0);
+      ui_save_button->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+
       ui_cancel_button = new QPushButton(QIcon::fromTheme("dialog-cancel"), tr("Cancel"), 0);      
+      ui_cancel_button->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
       
       /*  prev/next browsing actions  */
       ACTIONS()->insert(BROWSER_PREV, new QAction(QIcon::fromTheme("go-previous", QIcon(":/images/go-previous.png")),tr("Go back"),this));
@@ -118,6 +121,10 @@ void MainLeftWidget::create_header_ui()
       ui_search_lineedit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
       new QShortcut(QKeySequence("Ctrl+F"), ui_search_lineedit, SLOT(slotFocus()));
 
+      ui_save_button->setMaximumHeight(ui_search_lineedit->height());
+      ui_cancel_button->setMaximumHeight(ui_search_lineedit->height());
+
+      
       QMenu* menu = new QMenu();
       menu->addAction(ACTIONS()->value(APP_ENABLE_SEARCH_POPUP));
       menu->addAction(ACTIONS()->value(APP_PLAY_ON_SEARCH));

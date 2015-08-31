@@ -277,15 +277,15 @@ void StreamScene::populateExtendedStreamScene()
     
     foreach(MEDIA::LinkPtr link, links) 
     {
-      if(current_category != link->categorie)
+      if(current_category != link->genre)
       {        
         if(Xpos > 20 ) 
           Ypos = Ypos + 50;
         
         /*  new category */
-        current_category = link->categorie;
+        current_category = link->genre;
         CategorieGraphicItem *category = new CategorieGraphicItem(qobject_cast<QGraphicsView*> (parentView())->viewport());
-        category->m_name = link->categorie;
+        category->m_name = link->genre;
         category->setPos(0 , Ypos );
 
         addItem(category);
@@ -323,10 +323,10 @@ void StreamScene::populateExtendedStreamScene()
     {
       if(!m_model->isStreamFiltered(i)) continue;
 
-      if(current_category != m_model->streamAt(i)->categorie)
+      if(current_category != m_model->streamAt(i)->genre)
       {        
         /* new category */
-        current_category = m_model->streamAt(i)->categorie;
+        current_category = m_model->streamAt(i)->genre;
         CategorieGraphicItem *category = new CategorieGraphicItem(qobject_cast<QGraphicsView*> (parentView())->viewport());
         category->m_name = current_category;
         category->setPos(0 , Ypos );
@@ -335,7 +335,7 @@ void StreamScene::populateExtendedStreamScene()
         Ypos += categoriesHeight;
       }      
 
-      StreamGraphicItem_v2 *stream_item = new StreamGraphicItem_v2();
+      StreamGraphicItem *stream_item = new StreamGraphicItem();
       stream_item->media = m_model->streamAt(i);
       stream_item->media->isFavorite = (mode() == VIEW::ViewFavoriteRadio);
       stream_item->setPos( 30, Ypos );
@@ -347,6 +347,21 @@ void StreamScene::populateExtendedStreamScene()
       m_infoSize++;
     }
     
+    if(m_services[mode()]->hasMoreLink())
+    {
+      ButtonItem* button = new ButtonItem();
+      button->setText("more");
+      QVariant v;
+      v.setValue(static_cast<MEDIA::LinkPtr>(m_services[mode()]->moreLink()));
+      button->setData(v);
+  
+      connect(button, SIGNAL(clicked()), m_services[mode()], SLOT(slot_activate_link()));      
+      
+      button->setPos(40 ,Ypos );
+      addItem(button);      
+    }
+        
+        
     if( (m_infoSize == 0 && m_model->itemCount()  != 0) || (this->items().count()  <= 1) ) {
         InfoGraphicItem *info = new InfoGraphicItem(qobject_cast<QGraphicsView*> (parentView())->viewport());
         info->_text = "no information";
@@ -390,7 +405,7 @@ void StreamScene::playStream()
     if( MEDIA::isMediaPlayable(streamUrl) )
     {
       Debug::debug() << "   [StreamScene] playStream  we can play it's an url"<< streamUrl;
-
+        
       VirtualPlayqueue::instance()->addTrackAndPlay(item->media);
       return;
     }
@@ -831,7 +846,7 @@ void StreamScene::slot_on_add_stream_clicked()
           media->id          = -1;
           media->url         = url;
           media->name        = !name.isEmpty() ? name : url ;
-          media->categorie   = category;
+          media->genre       = category;
           media->isFavorite  = false;
           media->isPlaying   = false;
           media->isBroken    = false;
@@ -888,9 +903,9 @@ void StreamScene::editStream()
     MEDIA::TrackPtr stream = MEDIA::TrackPtr::staticCast(item->media);
 
     AddStreamDialog dialog(this->parentView(),true);
-    dialog.setCategory(stream->categorie);
-    dialog.setName(stream->name);
-    dialog.setUrl(stream->url);
+    dialog.setCategory( stream->genre );
+    dialog.setName( stream->name );
+    dialog.setUrl( stream->url );
     
     if(dialog.exec() == QDialog::Accepted)
     {
@@ -900,7 +915,7 @@ void StreamScene::editStream()
 
       stream->url         = url;
       stream->name        = !name.isEmpty() ? name : url ;
-      stream->categorie   = category;
+      stream->genre       = category;
 
       XspfStreams* xspfstream = static_cast<XspfStreams*>(m_services[VIEW::ViewFavoriteRadio]);
 

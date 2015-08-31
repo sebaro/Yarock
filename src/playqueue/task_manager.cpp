@@ -25,6 +25,8 @@
 #include "views/stream/stream_loader.h"
 #include "covers/covercache.h"
 
+#include "widgets/statusmanager.h"
+
 #include "debug.h"
 
 /*
@@ -83,6 +85,9 @@ void TaskManager::slot_load_async(MEDIA::TrackPtr track,int row)
     StreamLoader* loader = new StreamLoader(track);
     connect(loader, SIGNAL(download_done(MEDIA::TrackPtr)), this, SLOT(slot_load_async_done(MEDIA::TrackPtr)), Qt::UniqueConnection );
 
+    uint i = StatusManager::instance()->startMessage(tr("Loading remote files"));
+    messageIds.insert("LoadAsync", i);
+   
     m_asyncloaders[loader] = row;
     loader->start_asynchronous_download(track->url);
 }
@@ -103,6 +108,9 @@ void TaskManager::slot_load_async_done(MEDIA::TrackPtr parent)
     
     m_asyncloaders.remove(loader);
     delete loader;
+    
+    if (messageIds.contains("LoadAsync"))
+      StatusManager::instance()->stopMessage( messageIds.take("LoadAsync") );    
 }
 
 
@@ -149,6 +157,13 @@ void TaskManager::restorePlayqueueSession()
 *******************************************************************************/
 void TaskManager::playlistSaveToFile(const QString &filename)
 {
+    Debug::debug() << "[TaskManager] playlistSaveToFile:" << filename;
+    if( filename.isEmpty()) 
+    {
+        StatusManager::instance()->startMessage( "Cannot save : filename is empty", STATUS::WARNING, 5000);
+        return;
+    }
+    
     if(m_writer->isRunning()) return;
     m_writer->saveToFile(filename);
     m_threadPool->start (m_writer);
@@ -160,6 +175,13 @@ void TaskManager::playlistSaveToDb(const QString &name, int bd_id)
     m_db_writer->saveToDatabase(name, bd_id);
     m_threadPool->start (m_db_writer);
 }
+
+void TaskManager::playlistSaveToDb(MEDIA::PlaylistPtr playlist)
+{
+    if(m_db_writer->isRunning()) return;
+    m_db_writer->saveToDatabase(playlist);
+    m_threadPool->start (m_db_writer);
+}    
 
 void TaskManager::savePlayqueueSession()
 {
@@ -175,4 +197,12 @@ void TaskManager::savePlayqueueSession()
        if(stream->type() == TYPE_STREAM)
          CoverCache::instance()->saveStreamParentCover(stream);
    }
+}
+
+/*******************************************************************************
+ Playlist EDITOR dialog specific method
+*******************************************************************************/
+void TaskManager::loadEditorPlaylist(MediaMimeData* mimedata, int row)
+{
+    emit loadPlaylist ( mimedata, row );
 }

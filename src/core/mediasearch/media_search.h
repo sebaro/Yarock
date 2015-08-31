@@ -20,6 +20,8 @@
 
 #include "core/mediasearch/search_query.h"
 
+#include <QDataStream>
+
 /*
 ********************************************************************************
 *                                                                              *

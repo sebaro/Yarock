@@ -25,6 +25,7 @@
 #endif
 
 #include <QPixmap>
+#include <QPainter>
 #include <QSize>
 #include <QUrl>
 
@@ -43,6 +44,13 @@ namespace UTIL
 
   QString deltaTimeToString(int seconds);
   QString durationToString(int seconds);
+
+  static inline QString prettyTrackNumber(int number)
+  {
+    QString ret;
+    ret.sprintf("%02d", number);
+    return ret;
+  }  
 
   void urlAddQueryItem( QUrl& url, const QString& key, const QString& value );
   bool urlHasQueryItem( const QUrl& url, const QString& key );
@@ -66,6 +74,8 @@ namespace UTIL
    QPixmap createRoundedImage( const QPixmap& avatar, const QSize& size=QSize(), float frameWidthPct = 0.10 );  
    
    QPixmap squareCenterPixmap( const QPixmap& sourceImage );
+   
+   void drawPlayingIcon(QPainter* painter, int size, int margin, QPoint pos);
 }
 
 #endif // _UTIL_H_

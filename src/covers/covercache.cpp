@@ -109,7 +109,7 @@ QPixmap CoverCache::image( MEDIA::ArtistPtr artist, QList<MEDIA::AlbumPtr> album
 }
     
 /* ---------------------------------------------------------------------------*/
-/* CoverCache::cover                                                          */
+/* CoverCache::cover for Album                                                */
 /* ---------------------------------------------------------------------------*/
 QPixmap CoverCache::cover( const MEDIA::AlbumPtr album )
 {
@@ -139,7 +139,7 @@ QPixmap CoverCache::cover( const MEDIA::AlbumPtr album )
 }
 
 /* ---------------------------------------------------------------------------*/
-/* CoverCache::cover                                                          */
+/* CoverCache::cover for Tracks                                               */
 /* ---------------------------------------------------------------------------*/
 QPixmap CoverCache::cover(const MEDIA::TrackPtr track )
 {
@@ -219,6 +219,40 @@ QPixmap CoverCache::cover(const MEDIA::TrackPtr track )
 }
 
 /* ---------------------------------------------------------------------------*/
+/* CoverCache::coverPath for Tracks                                           */
+/* ---------------------------------------------------------------------------*/
+QString CoverCache::coverPath( MEDIA::TrackPtr track)
+{
+    QString path;
+    if(track->type() != TYPE_TRACK)
+    {
+        path = UTIL::CONFIGDIR + "/radio/" + MEDIA::urlHash( track->url );
+
+        if( QFile(path).exists() )
+          return path;
+
+        /* check if parent have cover, need to BE a stream !!! not a playlist ITEM*/
+        if(track->parent() && track->parent()->type() == TYPE_STREAM)
+        {
+          path = UTIL::CONFIGDIR + "/radio/" + MEDIA::urlHash(
+               MEDIA::TrackPtr::staticCast(track->parent())->url 
+          );
+          
+          if( QFile(path).exists() )
+            return path;
+        }       
+    }
+    else
+    {
+        path = UTIL::CONFIGDIR + "/albums/" + track->coverName();
+
+        if( QFile(path).exists() )
+          return path;
+    }
+    return QString();
+}
+
+/* ---------------------------------------------------------------------------*/
 /* CoverCache::invalidate                                                     */
 /* ---------------------------------------------------------------------------*/
 void CoverCache::invalidate( const MEDIA::MediaPtr media )
@@ -233,7 +267,7 @@ void CoverCache::invalidate( const MEDIA::MediaPtr media )
 
 
 /* ---------------------------------------------------------------------------*/
-/* CoverCache::hasCover                                                       */
+/* CoverCache::saveStreamParentCover                                          */
 /* ---------------------------------------------------------------------------*/
 void CoverCache::saveStreamParentCover(MEDIA::TrackPtr track)
 {

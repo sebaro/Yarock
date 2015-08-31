@@ -54,9 +54,15 @@ class MediaMimeData : public QMimeData
     MEDIA_SOURCE source() const {return m_source;} 
     void setSource(MEDIA_SOURCE  so) {m_source = so;}
 
+    MEDIA::MediaPtr parent() const {return m_parent;}
+    void setParent(MEDIA::MediaPtr parent) {m_parent = parent;}
+    
+    MediaMimeData* copy() const;
+    
   private:
     MEDIA_SOURCE           m_source;
     QList<MEDIA::TrackPtr> m_tracks;
+    MEDIA::MediaPtr        m_parent;
 };
 
 #endif // _MEDIAMIMEDATA_H

@@ -162,21 +162,21 @@ void XspfStreams::load()
     QString current_cat;
     foreach (MEDIA::TrackPtr stream, m_streams)
     {
-        if( stream->categorie.isEmpty() )
+        if( stream->genre.isEmpty() )
         {
-            stream->categorie = "unknown";
+            stream->genre = "unknown";
         }
 
-        if( current_cat != stream->categorie )
+        if( current_cat != stream->genre )
         {
             sub_link = MEDIA::LinkPtr::staticCast( m_root_link->addChildren(TYPE_LINK) );
             sub_link->setType(TYPE_LINK);
-            sub_link->name = stream->categorie;
-            sub_link->state = int(SERVICE::DATA_OK);
-            sub_link->categorie = m_root_link->name;
+            sub_link->name   = stream->genre;
+            sub_link->state  = int(SERVICE::DATA_OK);
+            sub_link->genre  = m_root_link->name;
             sub_link->setParent(m_root_link);  
 
-            current_cat = stream->categorie;
+            current_cat = stream->genre;
         }
       
         sub_link->insertChildren( stream );

@@ -121,6 +121,7 @@ BrowserView::BrowserView(QWidget *parent) : QGraphicsView(parent)
       m_scenes.insert(VIEW::ViewPlaylist,       m_scenes[VIEW::ViewArtist] );
       m_scenes.insert(VIEW::ViewSmartPlaylist,  m_scenes[VIEW::ViewArtist] );
       m_scenes.insert(VIEW::ViewFavorite,       m_scenes[VIEW::ViewArtist] );
+      connect(static_cast<LocalScene*>(m_scenes[VIEW::ViewArtist]), SIGNAL(linked_changed(QVariant)), this, SLOT(slot_on_load_new_data(QVariant)));
     
     /* connections */
     connect(MainLeftWidget::instance(), SIGNAL(browser_search_change(const QVariant&)),this, SLOT(slot_on_search_changed(const QVariant&)));

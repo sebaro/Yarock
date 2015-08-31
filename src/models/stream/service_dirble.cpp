@@ -46,8 +46,9 @@
 *                                                                              *
 ********************************************************************************
 */
-namespace DIRBLE {
-    QString key_id;
+namespace DIRBLE
+{
+    const QString key_id ="b6909ed70f32338fe171e4df174c1eb6e388ca98";
 }
 
 
@@ -61,20 +62,19 @@ namespace DIRBLE {
 Dirble::Dirble() : Service("Dirble", SERVICE::DIRBLE)
 {
     Debug::debug() << "    [Dirble] create";
-    
-    DIRBLE::key_id   = "b6909ed70f32338fe171e4df174c1eb6e388ca98";
-      
+
     /* root link */
     m_root_link = MEDIA::LinkPtr(new MEDIA::Link());
     m_root_link->url  = QString("http://api.dirble.com/v2/categories/primary?token=%1").arg(DIRBLE::key_id);
     m_root_link->name = QString("dirble directory");
-    m_root_link->state = int (SERVICE::NO_DATA);
    
     /* search link */
     m_search_link = MEDIA::LinkPtr(new MEDIA::Link());
     m_search_link->name = QString("search result");
-    m_search_link->state = int (SERVICE::NO_DATA);
       
+    /* more link */
+    m_more_link = MEDIA::LinkPtr(new MEDIA::Link());
+    
     /* register state */
     m_active_link = m_root_link;
     set_state(SERVICE::NO_DATA);
@@ -89,22 +89,27 @@ void Dirble::reload()
     m_root_link = MEDIA::LinkPtr(new MEDIA::Link());
     m_root_link->url  = QString("http://api.dirble.com/v2/categories/primary?token=%1").arg(DIRBLE::key_id);
     m_root_link->name = QString("dirble directory");
-    m_root_link->state = int (SERVICE::NO_DATA);
    
     /* search link */
     m_search_term.clear();
     
     m_search_link = MEDIA::LinkPtr(new MEDIA::Link());
     m_search_link->name = QString("search result");
-    m_search_link->state = int (SERVICE::NO_DATA);
     
     /* register update */    
     m_active_link = m_root_link;
-    m_active_link->state = int(SERVICE::NO_DATA);
     set_state(SERVICE::NO_DATA);    
     
     emit stateChanged();
 }
+
+bool Dirble::hasMoreLink()
+{
+    //Debug::debug() << "    [Dirble] hasMoreLink:" << ( m_active_link != m_root_link );
+    
+    return (m_active_link != m_root_link );
+}
+
 
 void Dirble::load()
 {
@@ -174,6 +179,13 @@ QList<MEDIA::TrackPtr> Dirble::streams()
 void Dirble::browseLink(MEDIA::LinkPtr link)
 {
     Debug::debug() << "    [Dirble] browseLink " << link->url;
+    
+    if(link == m_search_link || m_pages[m_active_link] > 0)
+    {
+        browseStation(link);
+        return;
+    }
+        
     QUrl url(link->url);
 
     QObject *reply = HTTP()->get(url);
@@ -217,7 +229,7 @@ void Dirble::slotBrowseLinkDone(QByteArray bytes)
               link2->url   = QString("http://api.dirble.com/v2/category/%1/childs?token=%2").
                              arg(map["id"].toString(), DIRBLE::key_id);
               link2->state = int(SERVICE::NO_DATA);
-              link2->categorie = link->name;
+              link2->genre = link->name;
               link2->setParent(link);
         }
         else if (link->url.contains("childs")) 
@@ -229,51 +241,13 @@ void Dirble::slotBrowseLinkDone(QByteArray bytes)
               link2->url   = QString("http://api.dirble.com/v2/category/%1/stations?token=%2").
                                arg(map["id"].toString(), DIRBLE::key_id);
               link2->state = int(SERVICE::NO_DATA);
-              link2->categorie = link->name;
+              link2->genre = link->name;
               link2->setParent(link);
         }
     }
 
-    if(link == m_search_link) 
-    {
-        Debug::debug() << "    [Dirble] slotBrowseLinkDone search link : station found";
-      
-        foreach (const QVariant& station, reply_list) 
-        {
-            QVariantMap map = station.toMap();
-
-            foreach (const QVariant& station_stream, map["streams"].toList())
-            {
-              QVariantMap stream_map = station_stream.toMap();
-
-              /* check status of station */
-              if(stream_map["status"].toInt() != 1) continue;
-              /* check if url of stream is empty */
-              if(stream_map["stream"].toString().isEmpty()) continue;
-      
-              MEDIA::TrackPtr stream = MEDIA::TrackPtr::staticCast( link->addChildren(TYPE_TRACK) );
-              stream->setType(TYPE_STREAM);
-              stream->name = map["name"].toString();
-              stream->url  = stream_map["stream"].toString();
-              stream->categorie = link->name;
-              stream->setParent(link);  
-              
-              const QString cover = map["image"].toMap()["url"].toString();
-              if( !cover.isEmpty() )
-              {
-                  QObject* reply = HTTP()->get( QUrl(cover) );
-                  m_image_requests[reply] = stream;
-                  connect(reply, SIGNAL(data(QByteArray)), this, SLOT(slot_stream_image_received(QByteArray)));
-              }              
-            }
-        }
-    }
-
-    /* if link is not root or search link => request stations */
-    if(link != m_root_link && link != m_search_link) 
-    {
+    if(link != m_root_link )
       browseStation(link);
-    }
 
     /* register update */    
     link->state = int(SERVICE::DATA_OK);
@@ -283,16 +257,27 @@ void Dirble::slotBrowseLinkDone(QByteArray bytes)
 
 void Dirble::browseStation(MEDIA::LinkPtr link)
 {
-     QStringList list = link->url.split("/");
-     list.removeLast();
+    //Debug::debug() << "    [Dirble] browseStation " << link->url;
+    
+    QUrl url;
+    if (link->url.contains("childs")) 
+    {
+       QStringList list = link->url.split("/");
+       list.removeLast();
      
-     QString station_id = list.last();
+       QString station_id = list.last();
      
-     QUrl url;
-     url.setUrl( 
-         QString("http://api.dirble.com/v2/category/%1/stations?token=%2").
-         arg(station_id, DIRBLE::key_id)
-     );
+       url.setUrl( 
+         QString("http://api.dirble.com/v2/category/%1/stations?token=%2&page=%3")
+                    .arg(station_id, DIRBLE::key_id, QString::number(m_pages[m_active_link]))
+       );        
+    }
+    else
+    {
+        url.setUrl( link->url );
+    }
+
+    m_more_link->url = url.toString();
     
     QObject *reply = HTTP()->get(url);
     m_requests[reply] = link;
@@ -336,9 +321,9 @@ void Dirble::slotBrowseStationDone(QByteArray bytes)
   
           MEDIA::TrackPtr stream = MEDIA::TrackPtr::staticCast( link->addChildren(TYPE_TRACK) );
           stream->setType(TYPE_STREAM);
-          stream->name = map["name"].toString();
-          stream->url  = stream_map["stream"].toString();
-          stream->categorie = link->name;
+          stream->name  = map["name"].toString();
+          stream->url   = stream_map["stream"].toString();
+          stream->genre = link->name;
           stream->setParent(link);  
           
           const QString cover = map["image"].toMap()["url"].toString();
@@ -399,29 +384,49 @@ void Dirble::slot_activate_link(MEDIA::LinkPtr link)
 {
     Debug::debug() << "    [Dirble] slot_activate_link";
   
+    /* it's a button */
     if(!link) 
     {
       ButtonItem* button = qobject_cast<ButtonItem*>(sender());
     
       if (!button) return;  
   
-      m_active_link = qvariant_cast<MEDIA::LinkPtr>( button->data() );
+      MEDIA::LinkPtr buttonLink = qvariant_cast<MEDIA::LinkPtr>( button->data() );
+      
+      if(buttonLink == m_more_link )
+      {
+          /* increment page number of m_active_link */
+          m_pages[m_active_link]++;
+          m_active_link->state = int(SERVICE::NO_DATA);
+          set_state(SERVICE::NO_DATA);
+      }
+      else
+      {
+          m_active_link = buttonLink;
+          m_pages[m_active_link] = 0;
+      }
     }
+    /* it's a link */
     else
     {
-      m_active_link = link;
+        m_active_link = link;
+        m_pages[m_active_link] = 0;
     }
-
-
+    
+    
     if(m_active_link == m_search_link )
     {
-      m_search_link->url   = QString("http://api.dirble.com/v2/search/%1?token=%2").arg(m_search_term, DIRBLE::key_id);
-      m_search_link->state = int (SERVICE::NO_DATA);
-      m_search_link->deleteChildren();
+        m_search_link->url   = QString("http://api.dirble.com/v2/search/%1?token=%2&page=%3")
+              .arg(m_search_term, DIRBLE::key_id, QString::number(m_pages[m_active_link]) );
+      
+        m_search_link->state = int (SERVICE::NO_DATA);
+       
+        if( m_pages[m_active_link] == 0 )
+          m_search_link->deleteChildren();
     }
     else
     {
-      m_search_term.clear();      
+        m_search_term.clear();      
     }
     
     /* register update */        

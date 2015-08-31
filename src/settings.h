@@ -73,6 +73,7 @@ Q_DISABLE_COPY(YarockSettings)
     bool                 _showMenuPanel;
     bool                 _showPlayQueuePanel;
     bool                 _showNowPlaying;
+    bool                 _autoHideNowPlaying;
     bool                 _enableSearchPopup;
     bool                 _enablePlayOnSearch;
 
@@ -94,6 +95,7 @@ Q_DISABLE_COPY(YarockSettings)
     int                  _playlist_view_type;  // 0 : overview, 1: by_tracks
     bool                 _playqueueShowCover; 
     bool                 _playqueueShowRating;
+    bool                 _playqueueShowNumber;
     bool                 _playqueueDuplicate;  // false = remove duplicate
     bool                 _playqueueShowFilter;
     bool                 _hideAtStartup;
@@ -101,7 +103,7 @@ Q_DISABLE_COPY(YarockSettings)
     
 
     // song info 
-    QStringList         _lyrics_providers;
+    QStringList          _lyrics_providers;
 
     // audio controler (Startup settings)
     int                  _repeatMode;

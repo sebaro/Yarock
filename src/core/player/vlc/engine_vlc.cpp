@@ -56,7 +56,7 @@ EngineVlc::EngineVlc() : EngineBase("vlc")
 {
     qRegisterMetaType<ENGINE::E_ENGINE_STATE>("ENGINE::E_ENGINE_STATE");
 
-    /* create vlc lib instance */
+    /* ----- create vlc lib instance ----- */
     m_vlclib = new VlcLib();
     
     if(!m_vlclib->init()) {
@@ -65,11 +65,11 @@ EngineVlc::EngineVlc() : EngineBase("vlc")
       return;
     }
 
-    /* create vlc media player */
+    /* ----- create vlc media player ----- */
     m_vlc_player = libvlc_media_player_new(m_vlclib->core());
     m_vlc_events = libvlc_media_player_event_manager(m_vlc_player);
  
-    /* Disable mouse and keyboard events */
+    /* ----- disable mouse and keyboard events ----- */
     libvlc_video_set_key_input(m_vlc_player, false);
     libvlc_video_set_mouse_input(m_vlc_player, false);
     
@@ -78,21 +78,21 @@ EngineVlc::EngineVlc() : EngineBase("vlc")
     else
       Debug::debug() << "[EngineVlc] vlc initialisation OK !";
     
-    /* internal vlc connection */
+    /* ----- internal vlc connection ----- */
     createCoreConnections();
     
-    /* internal inits */
+    /* ----- internal inits ----- */
     m_vlc_media         = 0;
     m_tickInterval      = TICK_INTERVAL;    
     
-    /* internal volume & mute */
-    m_internal_volume   = 75;
+    /* ----- internal volume & mute ----- */
+    m_internal_volume   = SETTINGS()->_volumeLevel;
     m_internal_is_mute  = false;
     
     m_is_volume_changed = true;
     m_is_muted_changed  = true;
     
-    /* init equalizer */
+    /* ----- init equalizer ----- */
     m_equalizer = 0;
 #if (LIBVLC_VERSION_INT >= LIBVLC_VERSION(2, 2, 0, 0))    
     m_equalizer = libvlc_audio_equalizer_new();
@@ -252,13 +252,19 @@ void EngineVlc::applyInternalVolume()
     Debug::debug() << "[EngineVlc] -> applyInternalVolume";
   
     /* vlc can not handle volume if no playing output is active */  
+    libvlc_clearerr();
     if( m_current_state == ENGINE::PLAYING ) 
     {
         libvlc_audio_set_volume(m_vlc_player, m_internal_volume);
         
-        VlcLib::print_error();
-        
-        m_is_volume_changed = false;
+        if(libvlc_errmsg()) 
+        {
+          VlcLib::print_error();
+        }
+        else
+        {
+            m_is_volume_changed = false;
+        }
     }
 }
 

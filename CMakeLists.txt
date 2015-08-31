@@ -7,7 +7,7 @@ set( CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake )
 PROJECT( yarock )
 set(YAROCK_MAJOR_VERSION 1)
 set(YAROCK_MINOR_VERSION 1)
-set(YAROCK_PATCH_VERSION 3)
+set(YAROCK_PATCH_VERSION 4)
 set(YAROCK_VERSION "${YAROCK_MAJOR_VERSION}.${YAROCK_MINOR_VERSION}.${YAROCK_PATCH_VERSION}")
 
 # ------------------------------------------------------------------------------
@@ -154,20 +154,20 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/config.h.in
 # ------------------------------------------------------------------------------
 add_subdirectory(src)
 
-MESSAGE(STATUS "Audio Engine Vlc.................................................  " ${ENABLE_VLC} " [use cmake .. -DENABLE_PHONON=ON/OFF]" )
+MESSAGE(STATUS "Audio Engine Vlc.................................................  " ${ENABLE_VLC} " [use cmake .. -DENABLE_VLC=ON/OFF]" )
 if (ENABLE_VLC)
   MESSAGE(STATUS "  WARN:Vlc and yarock shall be build against the same Qt version" )
   add_definitions(-DENABLE_VLC)
   add_subdirectory(src/core/player/vlc)
 endif (ENABLE_VLC)
 
-MESSAGE(STATUS "Audio Engine Mpv.................................................  " ${ENABLE_MPV} " [use cmake .. -DENABLE_VLC=ON/OFF]")
+MESSAGE(STATUS "Audio Engine Mpv.................................................  " ${ENABLE_MPV} " [use cmake .. -DENABLE_MPV=ON/OFF]")
 if (ENABLE_MPV)
   add_definitions(-DENABLE_MPV)
   add_subdirectory(src/core/player/mpv)
 endif (ENABLE_MPV)
 
-MESSAGE(STATUS "Audio Engine Phonon..............................................  " ${ENABLE_PHONON} " [use cmake .. -DENABLE_MPV=ON/OFF]")
+MESSAGE(STATUS "Audio Engine Phonon..............................................  " ${ENABLE_PHONON} " [use cmake .. -DENABLE_PHONON=ON/OFF]")
 if (ENABLE_PHONON)
   add_definitions(-DENABLE_PHONON)
   add_subdirectory(src/core/player/phonon)
@@ -278,13 +278,12 @@ install(FILES data/yarock.desktop  DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ap
 install(FILES data/yarock.appdata.xml  DESTINATION "${CMAKE_INSTALL_PREFIX}/share/appdata" )
 
 # -- install icons files
-install(FILES icon/yarock_16x16.png DESTINATION "${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/16x16/apps" RENAME application-x-yarock.png)
-install(FILES icon/yarock_32x32.png DESTINATION "${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/32x32/apps" RENAME application-x-yarock.png)
-install(FILES icon/yarock_48x48.png DESTINATION "${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/48x48/apps" RENAME application-x-yarock.png)
-install(FILES icon/yarock_64x64.png DESTINATION "${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/64x64/apps" RENAME application-x-yarock.png)
-install(FILES icon/yarock_128x128.png DESTINATION "${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/128x128/apps" RENAME application-x-yarock.png)
-       
-       
+INSTALL( FILES ${CMAKE_SOURCE_DIR}/icon/yarock_16x16.png DESTINATION "${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/16x16/apps" RENAME application-x-yarock.png)
+INSTALL( FILES ${CMAKE_SOURCE_DIR}/icon/yarock_32x32.png DESTINATION "${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/32x32/apps" RENAME application-x-yarock.png)
+INSTALL( FILES ${CMAKE_SOURCE_DIR}/icon/yarock_48x48.png DESTINATION "${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/48x48/apps" RENAME application-x-yarock.png)
+INSTALL( FILES ${CMAKE_SOURCE_DIR}/icon/yarock_64x64.png DESTINATION "${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/64x64/apps" RENAME application-x-yarock.png)
+INSTALL( FILES ${CMAKE_SOURCE_DIR}/icon/yarock_128x128.png DESTINATION "${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/128x128/apps" RENAME application-x-yarock.png)
+INSTALL( FILES ${CMAKE_SOURCE_DIR}/icon/yarock.svg DESTINATION "${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/apps" RENAME application-x-yarock.svg)
 
 # ------------------------------------------------------------------------------
 #  UN-INSTALL SUPPORT

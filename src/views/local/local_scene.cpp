@@ -73,6 +73,7 @@ LocalScene::LocalScene(QWidget *parent) : SceneBase(parent)
     m_histoModel          = HistoModel::instance();
 
     connect(VirtualPlayqueue::instance(), SIGNAL(signal_playing_status_change()),  this, SLOT(update()));
+    connect(m_localTrackModel, SIGNAL(dataChanged()), this, SLOT(slot_on_model_data_changed()));
 }
 
 /*******************************************************************************
@@ -183,6 +184,24 @@ void LocalScene::setSearch(const QVariant& variant)
     }
 }
 
+/*******************************************************************************
+     setData
+*******************************************************************************/
+void LocalScene::setData(const QVariant& data)
+{
+    MEDIA::LinkPtr active_link = qvariant_cast<MEDIA::LinkPtr>(data);
+    
+    if( active_link )
+    {
+      Debug::debug() << "LocalScene::setData active link" << active_link->name;
+        
+      m_localTrackModel->setActiveLink(active_link);
+    }
+    else if (mode() == VIEW::ViewGenre)
+    {
+      m_localTrackModel->setActiveLink(m_localTrackModel->rootLink());
+    }
+}
 
 /*******************************************************************************
      resizeScene
@@ -212,6 +231,22 @@ void LocalScene::slot_change_view_settings()
     
     populateScene();
 }
+
+/*******************************************************************************
+    slot_on_model_data_changed
+*******************************************************************************/
+void LocalScene::slot_on_model_data_changed()
+{
+    Debug::debug() << "   [LocalScene] slot_on_model_data_changed";
+
+    MEDIA::LinkPtr link = m_localTrackModel->activeLink();
+    
+    QVariant v;
+    v.setValue( static_cast<MEDIA::LinkPtr>(link) );
+       
+    emit linked_changed( v );
+}
+
 
 /*******************************************************************************
     populateScene
@@ -571,57 +606,94 @@ void LocalScene::populateGenreScene()
     m_infosize       = 0;
     item_count = (parentView()->width()/160 > 2) ? parentView()->width()/160 : 2;
 
-
-
-    QString s_genre     = "";
-    MEDIA::MediaPtr     media;
     
-
-    foreach (MEDIA::TrackPtr track, m_localTrackModel->trackByGenre)
-    {
-      if( s_genre == track->genre && media == track->parent()) continue;
+    int Xpos = 20,Ypos = 10;
+    
+    /* -------------- add ROOT button ------------------ */
+    ButtonItem* button = new ButtonItem();
+    button->setText(m_localTrackModel->rootLink()->name);
+    QVariant v;
+    v.setValue(static_cast<MEDIA::LinkPtr>(m_localTrackModel->rootLink()));
+    button->setData(v);
+  
+    connect(button, SIGNAL(clicked()), m_localTrackModel, SLOT(slot_activate_link()));
       
-      if(!m_localTrackModel->isMediaMatch(track)) continue;
+    button->setPos(Xpos ,Ypos );
+    Xpos = Xpos + button->width() + 20;
+
+    addItem(button);    
+    
+    /* -------------- add CHILD GENRE button ----------- */
+    for ( int i = 0; i < m_localTrackModel->rootLink()->childCount(); i++ )
+    {
+      MEDIA::LinkPtr link = MEDIA::LinkPtr::staticCast( m_localTrackModel->rootLink()->child(i) );
+        
+      ButtonItem* button = new ButtonItem();
+      button->setText(link->name);
+      QVariant v;
+      v.setValue(static_cast<MEDIA::LinkPtr>(link));
+      button->setData(v);
+  
+      connect(button, SIGNAL(clicked()), m_localTrackModel, SLOT(slot_activate_link()));
+      
+      if(Xpos + button->width() > parentView()->width()-20) {
+        Xpos = 20;
+        Ypos = Ypos + 30;
+      }
+
+      button->setPos(Xpos ,Ypos );
+      Xpos = Xpos + button->width() + 20;
+
+      addItem(button);
+    }      
+    
+    /* -------------- add ALBUMS by GENRE ------------- */
+    categorieRow++;
+    for ( int i = 0; i < m_localTrackModel->rootLink()->childCount(); i++ )
+    {
+      MEDIA::LinkPtr link = MEDIA::LinkPtr::staticCast( m_localTrackModel->rootLink()->child(i) );
+
+      if(m_localTrackModel->activeLink() != m_localTrackModel->rootLink())
+          if( m_localTrackModel->activeLink() != link ) continue;
+      
+      if(!m_localTrackModel->isMediaMatch(link)) continue;
 
       /* ------- New Genre ------- */
-      if(s_genre != track->genre)
+      if(Column>0) albumRow++;
+
+      CategorieGraphicItem *category = new CategorieGraphicItem(qobject_cast<QGraphicsView*> (parentView())->viewport());
+      category->m_name = link->name;
+      category->setPos( 0 , Ypos + 10 + categorieRow*50 + albumRow*170);
+      addItem(category);
+
+      m_infosize++; // on compte les categorie = genre
+      categorieRow++;
+      Column     = 0;
+      
+      for ( int j = 0; j < link->childCount(); j++ )
       {
-          s_genre = track->genre;
+          if(!m_localTrackModel->isMediaMatch(link->child(j))) continue;
+      
+          AlbumGenreGraphicItem *album_item = new AlbumGenreGraphicItem();
+          album_item->media    = MEDIA::AlbumPtr::staticCast( link->child(j) );
+          album_item->_genre   = link->name;
+          album_item->setPos(4+160*Column, Ypos + categorieRow*50 + albumRow*170);
+          addItem(album_item);
 
-          if(Column>0) albumRow++;
-
-          CategorieGraphicItem *category = new CategorieGraphicItem(qobject_cast<QGraphicsView*> (parentView())->viewport());
-          category->m_name = s_genre;
-          category->setPos( 0 , 10 + categorieRow*50 + albumRow*170);
-          addItem(category);
-
-          m_infosize++; // on compte les categorie = genre
-          categorieRow++;
-          Column     = 0;
+          if(Column < (item_count-1)) {
+              Column++;
+          }
+          else {
+            Column = 0;
+            albumRow++;
+          }
       }
-
-      /* ------- New Album ------- */
-      media = track->parent();
-
-      AlbumGenreGraphicItem *album_item = new AlbumGenreGraphicItem();
-      album_item->media    = MEDIA::AlbumPtr::staticCast(track->parent());
-      album_item->_genre   = s_genre;
-      album_item->setPos(4+160*Column, categorieRow*50 + albumRow*170);
-      addItem(album_item);
-
-      if(Column < (item_count-1)) {
-        Column++;
-      }
-      else {
-        Column = 0;
-        albumRow++;
-      }
-    } /* end foreach track */
+    }
 
     if(m_infosize==0) {
       InfoGraphicItem *info = new InfoGraphicItem(qobject_cast<QGraphicsView*> (parentView())->viewport());
       info->_text = tr("No entry found");
-      info->setPos( 0 , 10 + categorieRow*50);
+      info->setPos( 0 , Ypos + 10 + categorieRow*50);
       addItem(info);
     }
 }

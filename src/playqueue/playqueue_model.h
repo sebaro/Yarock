@@ -41,6 +41,8 @@ Q_OBJECT
   public:
     PlayqueueModel(QObject* parent = 0);
 
+    QObject* parentObject() {return m_parent;}
+
     //! inherited from QAbstractListModel
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     QVariant data(const QModelIndex &index, int role) const;
@@ -81,6 +83,7 @@ Q_OBJECT
     //! TaskManager
     TaskManager* manager() const;    
 
+    
   private slots:
     void slot_insert_mediaitem(const MEDIA::TrackPtr media, int pos=-1);
  
@@ -100,6 +103,10 @@ Q_OBJECT
     TaskManager             *m_task_manager;
 
     MEDIA::TrackPtr          m_stop_after_track;
+    
+    QObject                 *m_parent;
+    Q_DISABLE_COPY( PlayqueueModel )
+    
 };
 
 

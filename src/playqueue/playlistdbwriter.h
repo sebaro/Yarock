@@ -17,6 +17,8 @@
 #ifndef _PLAYLISTDBWRITER_H_
 #define _PLAYLISTDBWRITER_H_
 
+#include "mediaitem.h"
+
 #include <QRunnable>
 #include <QObject>
 #include <QString>
@@ -42,6 +44,7 @@ Q_OBJECT
     void run();
 
     void saveToDatabase(const QString& playlist_name, int bd_id = -1);
+    void saveToDatabase(MEDIA::PlaylistPtr playlist);
     void saveSessionToDatabase();
     
   private:
@@ -54,6 +57,8 @@ Q_OBJECT
     bool              _isSessionSaving;
     QString           _playlist_name;
     int               _database_id;
+
+    MEDIA::PlaylistPtr   m_playlist;
 
   signals:
     void playlistSaved();
