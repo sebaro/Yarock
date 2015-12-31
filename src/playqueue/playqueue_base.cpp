@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -90,7 +90,7 @@ void PlayqueueBase::setPlayingTrack(MEDIA::TrackPtr tk)
 }
 
 
-MEDIA::TrackPtr PlayqueueBase::playingTrack()
+MEDIA::TrackPtr PlayqueueBase::playingTrack() const
 {
     return m_playing_track;
 }

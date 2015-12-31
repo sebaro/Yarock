@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -86,13 +86,13 @@ void ThreadManager::stopThread()
 /*******************************************************************************
     Database Scanner Thread
 *******************************************************************************/
-void ThreadManager::databaseBuild(QStringList listDir)
+void ThreadManager::databaseBuild(QStringList listDir,bool doRebuild/*=false*/)
 {
     if(m_databaseBuilder->isRunning())
       cancelThread(DB_THREAD);
 
     Debug::debug() << "[ThreadManager] start a database builder thread";
-    m_databaseBuilder->rebuildFolder(listDir);
+    m_databaseBuilder->updateFolder(listDir,doRebuild);
     m_databaseBuilder->start();
 
     uint i = StatusManager::instance()->startMessage(tr("Updating music database") + " (0%)");

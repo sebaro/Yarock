@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -320,8 +320,8 @@ void EditorAlbum::do_changes_album()
     Debug::debug() << "change done --> apply";
 
     /* recover album cover */
-    const QString  old_cover_name  = album->coverpath();
-    const QString  new_cover_name  = MEDIA::coverName(ui_artist_name->text(),ui_album_name->text());
+    const QString  old_cover_name  = album->coverHash();
+    const QString  new_cover_name  = MEDIA::coverHash(ui_artist_name->text(),ui_album_name->text());
     recoverCoverImage(new_cover_name,old_cover_name);
     
     /* apply new metada values */
@@ -441,7 +441,7 @@ void EditorAlbum::slot_download_image()
     
     hash["artist"]     = MEDIA::ArtistPtr::staticCast( m_album->parent() )->name;
     hash["album"]      = m_album->name;
-    hash["covername"]  = MEDIA::coverName( hash["artist"], hash["album"] );
+    hash["covername"]  = MEDIA::coverHash( hash["artist"], hash["album"] );
 
     request = INFO::InfoRequestData(INFO::InfoAlbumCoverArt, hash);
 
@@ -498,14 +498,14 @@ void EditorAlbum::slot_image_remove()
 void EditorAlbum::save_new_image()
 {
     /* get image location */
-    QString path = m_album->coverpath();
+    const QString path = UTIL::CONFIGDIR + "/albums/" + m_album->coverHash();
       
     /* removing existing image file */
     if(QFile::exists(path)) {
       QFile::remove(path);
     }
 
-    if( ! m_new_image.isNull() ) 
+    if( !m_new_image.isNull() ) 
     {
        /* save new image to location*/
        m_new_image.save(path, "png", -1);

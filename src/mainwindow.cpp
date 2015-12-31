@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -29,6 +29,7 @@
 #include "widgets/equalizer/equalizer_dialog.h"
 
 #include "widgets/editors/editor_playlist.h"
+#include "widgets/iconloader.h"
 
 
 // data model
@@ -59,9 +60,8 @@
 #include "online/lastfm.h"
 
 #include "threadmanager.h"
-#include "widgets/audiocontrols.h"
 #include "commandlineoptions.h"
-#include "global_shortcuts.h"
+#include "shortcuts_manager.h"
 #include "settings.h"
 
 #include "networkaccess.h"
@@ -78,8 +78,8 @@
 #include "dbus/mpris_manager.h"
 
 // dialog
-#include "dialogs/dboperationdialog.h"
-#include "dialogs/first_time_dialog.h"
+#include "dialogs/database_operation.h"
+#include "dialogs/database_add.h"
 
 MainWindow* MainWindow::INSTANCE = 0;
 
@@ -95,7 +95,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     INSTANCE       = this;
     is_first_start = true;
 
-    //Debug::debug() << "line :"<< __LINE__ <<  " MainWindow -> start";
+    Debug::debug() << "line :"<< __LINE__ <<  " MainWindow -> start";
     setObjectName(QString::fromUtf8("yarock player"));
     setWindowTitle(QString::fromUtf8("yarock player"));
 
@@ -170,7 +170,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     
     //! Shortcuts & Signals
     //Debug::debug() << "[Mainwindow] creation global shortcut";
-    m_globalShortcuts = new GlobalShortcuts (this);
+    m_shortcutsManager = new ShortcutsManager (this);
 
     //! ###############     Connection    ###################################
     //Debug::debug() << "[Mainwindow] connect signals & slots";
@@ -222,26 +222,27 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     if(SETTINGS()->_hideAtStartup)
       this->showMinimized();    
     
+    Debug::debug() << "[Mainwindow] check engine startup";
+    
     /* Check startup */
     if ( !engine->error().isEmpty() )
       m_statusManager->startMessage( engine->error(), STATUS::ERROR_CLOSE );
-    
-    
-    set_enable_jump_to(false);
+
+    slot_player_on_state_change();
+
+    m_playingModel = 0;
     
 #ifdef TEST_FLAG    
     QTimer::singleShot(4000, this, SLOT(slot_start_test()));
 #endif    
+    Debug::debug() << "[Mainwindow] constructor end";
 }
 
 #ifdef TEST_FLAG
 
 void MainWindow::slot_start_test()
 {
-//     Debug::debug() << "####### START TEST #######";
-//       QWebView *view = new QWebView(this);
-//     view->load(QUrl("https://www.radionomy.com/en/style"));
-//     view->show();
+    //Debug::debug() << "####### START TEST #######";
 }
 #endif
 
@@ -306,13 +307,18 @@ void MainWindow::createActions()
     Debug::debug() << "[Mainwindow] createActions";
     
     /* yarock global actions */
-    ACTIONS()->insert(APP_QUIT, new QAction(QIcon::fromTheme("application-exit"),tr("&Quit"), this));
+    ACTIONS()->insert(APP_QUIT, new QAction(IconLoader::Load("application-exit"),tr("&Quit"), this));
     ACTIONS()->insert(APP_SHOW_YAROCK_ABOUT, new QAction(QIcon(":/images/about-48x48.png"),tr("About"), this));
 
     ACTIONS()->insert(APP_SHOW_SETTINGS, new QAction(QIcon(":/images/settings-48x48.png"), tr("settings"), this));
     
     ACTIONS()->insert(PLAYING_TRACK_EDIT,new QAction(QIcon(":/images/edit-48x48.png"), tr("Edit"), this));
     ACTIONS()->insert(PLAYING_TRACK_LOVE, new QAction(QIcon(":/images/lastfm.png"), tr("Send LastFm love"), this));
+    
+    ACTIONS()->insert(NEW_PLAYLIST, new QAction(QIcon(":/images/add_32x32.png"),tr("new playlist"), this));
+    ACTIONS()->insert(NEW_SMART_PLAYLIST, new QAction(QIcon(":/images/add_32x32.png"),tr("new smart playlist"), this));
+   
+    ACTIONS()->insert(TAG_CLICKED, new QAction(QIcon(),"TAG_CLICKED", this));
     
     /* player action*/
     ACTIONS()->insert(ENGINE_PLAY, new QAction(QIcon(":/images/media-play.png"), tr("Play or Pause media"), this));
@@ -325,14 +331,12 @@ void MainWindow::createActions()
     ACTIONS()->insert(ENGINE_AUDIO_EQ, new QAction(QIcon(":/images/equalizer-48x48-1.png"),tr("Audio equalizer"), this));
 
     /* database action */
-    ACTIONS()->insert(DIALOG_DB_OPERATION, new QAction(QIcon(":/images/rebuild.png"),tr("Database operation"), this));
+    ACTIONS()->insert(DATABASE_OPERATION, new QAction(QIcon(":/images/rebuild.png"),tr("Database operation"), this));
+    ACTIONS()->insert(DATABASE_ADD, new QAction(QIcon(":/images/add_32x32.png"),tr("Database add"), this));
 
-    /* Show/hide MenuBar / PlayQueue / Menu */
+    /* Show/hide playqueue panel */
     ACTIONS()->insert(APP_SHOW_PLAYQUEUE, new QAction(QIcon(),tr("Show playqueue panel"), this));
-    ACTIONS()->insert(APP_SHOW_MENU, new QAction(QIcon(),tr("Show menu panel"), this));
-    
     ACTIONS()->value(APP_SHOW_PLAYQUEUE)->setCheckable(true);
-    ACTIONS()->value(APP_SHOW_MENU)->setCheckable(true);
 
     /* Screen mode Switch actions */
     ACTIONS()->insert(APP_MODE_COMPACT, new QAction(QIcon(":/images/screen-minimalmode.png"), tr("Switch to minimal mode"), this));
@@ -352,7 +356,6 @@ void MainWindow::createActions()
     
     /* restore Actions states              */
     (ACTIONS()->value(APP_SHOW_PLAYQUEUE))->setChecked(SETTINGS()->_showPlayQueuePanel);
-    (ACTIONS()->value(APP_SHOW_MENU))->setChecked(SETTINGS()->_showMenuPanel);
     (ACTIONS()->value(APP_ENABLE_SEARCH_POPUP))->setChecked(SETTINGS()->_enableSearchPopup);
     (ACTIONS()->value(APP_PLAY_ON_SEARCH))->setChecked(SETTINGS()->_enablePlayOnSearch);
 }
@@ -383,7 +386,8 @@ void MainWindow::connectSlots()
     QObject::connect(ACTIONS()->value(ENGINE_VOL_DEC), SIGNAL(triggered()), Engine::instance(), SLOT(volumeDec()));    
     
     //! Connection Actions Database
-    QObject::connect(ACTIONS()->value(DIALOG_DB_OPERATION), SIGNAL(triggered()), SLOT(slot_database_dialog()));
+    QObject::connect(ACTIONS()->value(DATABASE_OPERATION), SIGNAL(triggered()), SLOT(slot_database_ope_dialog()));
+    QObject::connect(ACTIONS()->value(DATABASE_ADD), SIGNAL(triggered()), SLOT(slot_database_add_dialog()));
 
     //! Connection signaux COLLECTION
     QObject::connect(m_virtual_queue, SIGNAL(signal_collection_playTrack()), this, SLOT(slot_play_from_collection()));
@@ -392,11 +396,15 @@ void MainWindow::connectSlots()
     QObject::connect(m_browserView, SIGNAL(settings_saved()), SLOT(slot_on_settings_saved()));
 
     //! ThreadManager connection
-    QObject::connect(MainLeftWidget::instance(), SIGNAL(dbNameChanged()), this, SLOT(slot_database_start()));;
-    
+    QObject::connect(MainLeftWidget::instance(), SIGNAL(dbNameChanged()), this, SLOT(slot_database_start()));
+
     //! Screen mode connection
-    QObject::connect(ACTIONS()->value(APP_MODE_COMPACT), SIGNAL(triggered()), SLOT(slot_widget_mode_switch()));;
+    QObject::connect(ACTIONS()->value(APP_MODE_COMPACT), SIGNAL(triggered()), SLOT(slot_widget_mode_switch()));
     QObject::connect(ACTIONS()->value(APP_MODE_NORMAL), SIGNAL(triggered()), SLOT(slot_widget_mode_switch()));
+    
+    // main application widget actions
+    QObject::connect(ACTIONS()->value(NEW_PLAYLIST), SIGNAL(triggered()), MainRightWidget::instance(), SLOT(slot_create_new_playlist_editor()));
+    QObject::connect(ACTIONS()->value(NEW_SMART_PLAYLIST), SIGNAL(triggered()), MainRightWidget::instance(), SLOT(slot_create_new_smart_editor()));
 }
 
 
@@ -456,9 +464,9 @@ void MainWindow::slot_playqueue_added(QWidget* w)
     
     if ( PlaylistWidgetBase *widget = dynamic_cast<PlaylistWidgetBase*>(w) )
     {
-      QObject::connect(widget->view(), SIGNAL(signal_playlist_itemDoubleClicked()), this, SLOT(slot_play_from_playqueue()));
-      QObject::connect(widget->model()->manager(), SIGNAL(playlistSaved()), m_thread_manager, SLOT(populateLocalPlaylistModel()));
-      QObject::connect(widget->model(), SIGNAL(modelCleared()), this, SLOT(slot_playqueue_cleared()));
+      connect(widget->view(), SIGNAL(signal_playlist_itemDoubleClicked()), this, SLOT(slot_play_from_playqueue()));
+      connect(widget->model()->manager(), SIGNAL(playlistSaved()), m_thread_manager, SLOT(populateLocalPlaylistModel()));
+      connect(widget->model(), SIGNAL(modelCleared()), this, SLOT(slot_playqueue_cleared()));
     }
 }
 
@@ -757,7 +765,6 @@ void MainWindow::restorePlayingTrack()
         media->setType(TYPE_STREAM);
         media->id        = -1;
         media->url       = url;
-        media->name      = url;
 
         _player->setMediaItem(media);
     }
@@ -784,7 +791,7 @@ void MainWindow::slot_on_settings_saved()
     if(r.isSystrayChanged)    { m_systray->reloadSettings();}
     if(r.isDbusChanged)       { m_dbus_notifier->reloadSettings(); }
     if(r.isMprisChanged)      { m_mpris_manager->reloadSettings(); }
-    if(r.isShorcutChanged)    { m_globalShortcuts->reloadSettings();}
+    if(r.isShorcutChanged)    { m_shortcutsManager->reloadSettings();}
     if(r.isScrobblerChanged)  { LastFmService::instance()->init();}
     if(r.isLibraryChanged)
     {
@@ -802,7 +809,7 @@ void MainWindow::slot_on_settings_saved()
       if(!Database::instance()->exist())
         createDatabase();
 
-      rebuildDatabase();
+      rebuildDatabase( false );
     }
     else if (r.isViewChanged) 
     {
@@ -823,16 +830,16 @@ void MainWindow::createDatabase ()
     Database::instance()->create();
 }
 
-void MainWindow::rebuildDatabase()
+void MainWindow::rebuildDatabase(bool doRebuild)
 {
     Debug::debug() << "[MainWindow] rebuildDatabase";
 
     QStringList listDir = QStringList() << Database::instance()->param()._paths;
+    Debug::debug() << "[MainWindow] rebuildDatabase listDir" << listDir;
 
     // Database Building
-    if (!listDir.isEmpty()) {
-      m_thread_manager->databaseBuild(listDir);
-    }
+    if (!listDir.isEmpty())
+      m_thread_manager->databaseBuild(listDir,doRebuild);
 }
 
 
@@ -848,17 +855,24 @@ void MainWindow::slot_database_start()
         /* First start dialog                                        */
         /* ----------------------------------------------------------*/
         Debug::debug() << "[MainWindow] slot_database_start : first start dialog";
-        /* create database */
-        createDatabase();
 
-        FirstTimeDialog dialog(this);
+        DatabaseAddDialog dialog(this);
+        dialog.setTitle( tr("Setup your music collection directory") );
+        dialog.setFirstStart();
+        
         if(dialog.exec() == QDialog::Accepted) 
         {
+           /* create database */
+           createDatabase();
+        
            Debug::debug() << "[MainWindow] slot_database_start : first start dialog ACCEPTED";
-           rebuildDatabase();
+           rebuildDatabase( true );
         }
         else
         {
+           /* create default database */
+           createDatabase();
+           
            m_browserView->active_view(VIEW::ViewSettings,QString(), QVariant());
         }
     }
@@ -888,14 +902,14 @@ void MainWindow::slot_database_start()
 
         /* create database */
         createDatabase();
-        rebuildDatabase();
+        rebuildDatabase( true );
     }
     else if ( Database::instance()->param()._option_auto_rebuild)
     {
         /*-----------------------------------------------------------*/
-        /* Start existing database with auto rebuild at startup      */
+        /* Start existing database with auto update at startup       */
         /* ----------------------------------------------------------*/
-        rebuildDatabase();
+        rebuildDatabase( false );
     }
     else
     {
@@ -911,29 +925,47 @@ void MainWindow::slot_database_start()
     commandlineOptionsHandle();
 }
 
-void MainWindow::slot_database_dialog()
+void MainWindow::slot_database_add_dialog()
+{
+    DatabaseAddDialog dialog(this);
+    if( dialog.exec() == QDialog::Accepted)
+    {
+        /* create database */
+        createDatabase();
+        rebuildDatabase( false );
+        
+//         rebuildDatabase( true );
+//         m_browserView->active_view(VIEW::ViewSettings,QString(), QVariant());
+    }
+}
+
+
+
+void MainWindow::slot_database_ope_dialog()
 {
     /* case 1 : remove database and rescan all collection directories */
     /* case 2 : scan directory changes and update database */
-    DbOperationDialog dialog(this);
+    DatabaseOperationDialog dialog(this);
 
     if( dialog.exec() == QDialog::Accepted)
     {
       Debug::debug() << "OPERATION = " << dialog.operation();
       switch( dialog.operation() )
       {
-        case DbOperationDialog::OPE_REBUILD:
+        case DatabaseOperationDialog::OPE_REBUILD:
           createDatabase();
-        case DbOperationDialog::OPE_RESCAN:
-          rebuildDatabase();
+          rebuildDatabase( true );
           break;
-        case DbOperationDialog::OPE_COVER:
+        case DatabaseOperationDialog::OPE_RESCAN:
+          rebuildDatabase( false );
+          break;
+        case DatabaseOperationDialog::OPE_COVER:
           m_thread_manager->startTagSearch(TagSearch::ALBUM_COVER_FULL);
           break;
-        case DbOperationDialog::OPE_ARTIST_IMAGE:
+        case DatabaseOperationDialog::OPE_ARTIST_IMAGE:
           m_thread_manager->startTagSearch(TagSearch::ARTIST_IMAGE_FULL);
           break;
-        case DbOperationDialog::OPE_GENRE_TAG:
+        case DatabaseOperationDialog::OPE_GENRE_TAG:
           m_thread_manager->startTagSearch(TagSearch::ALBUM_GENRE_FULL);
           break;
 
@@ -1058,29 +1090,17 @@ void MainWindow::set_command_line(const CommandlineOptions& options)
     m_options = options;
 }
 
-void MainWindow::slot_commandline_received(const QByteArray& serialized_options)
-{
-    //Debug::debug() << "[MainWindow] slot_commandline_received";
-    if(m_minimalwidget != NULL)
-       m_minimalwidget->hide();     
-     
-    this->show();     
-    this->activateWindow();
-    this->showNormal();
-     
-    CommandlineOptions options;
-    options.Load(serialized_options);
-
-    if( !serialized_options.isEmpty() )
-        commandlineOptionsHandle();
-}
-
 void MainWindow::commandlineOptionsHandle()
 {
     Debug::debug() << "[MainWindow] commandlineOptionsHandle";
     if (m_options.isEmpty()) {
       return;
     }
+
+    this->showNormal();
+    this->raise();     
+    this->activateWindow();
+
 
     switch (m_options.player_action())
     {

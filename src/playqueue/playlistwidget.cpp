@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -299,6 +299,8 @@ void PlaylistWidget::contextMenuEvent(QContextMenuEvent* e)
     /* ---- build menu ---- */
     if (!m_menu) {
       m_menu = new QMenu(this);
+      m_menu->setPalette(QApplication::palette());
+
       QMenu *m1 = m_menu->addMenu(QIcon(":/images/add_32x32.png"), tr("Add"));
       m1->addAction(m_actions->value(PLAYQUEUE_ADD_FILE));
       m1->addAction(m_actions->value(PLAYQUEUE_ADD_DIR));
@@ -393,7 +395,7 @@ void PlaylistWidget::slot_add_to_playqueue()
           media->setType(TYPE_STREAM);
           media->id          = -1;
           media->url         = url;
-          media->name        = !name.isEmpty() ? name : url ;
+          media->extra["station"] = !name.isEmpty() ? name : url ;
           media->isFavorite  = false;
           media->isPlaying   = false;
           media->isBroken    = false;

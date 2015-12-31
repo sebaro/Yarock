@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -178,6 +178,7 @@ void SearchEngine::doSearch(bool for_playqueue /*= false*/)
 QVariant SearchEngine::fieldData(SearchQuery::Search_Field field, MEDIA::TrackPtr track)
 {
     //Debug::debug() << "      [SearchEngine] fieldData ";
+    /* ------------------- TRACK -------------------  */
     if(track->type() == TYPE_TRACK)
     {    
       switch(field)
@@ -214,13 +215,14 @@ QVariant SearchEngine::fieldData(SearchQuery::Search_Field field, MEDIA::TrackPt
           default :break;
         }
       }
-    } /* end TYPE_TRACK */
+    }
+    /* ------------------- STREAM -------------------  */
     else if(track->type() == TYPE_STREAM)
     {
       switch(field)
       {      
         case SearchQuery::field_track_filename  : return QVariant(track->url);       break;
-        case SearchQuery::field_track_trackname : return QVariant(track->name);      break;
+        case SearchQuery::field_track_trackname : return track->extra["station"];    break;
         default:break;
       }
     }

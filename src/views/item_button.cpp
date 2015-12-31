@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -165,28 +165,13 @@ void ButtonStateItem::paint(QPainter * painter, const QStyleOptionGraphicsItem *
 {
 Q_UNUSED(option)
 Q_UNUSED(widget)
-    m_brush_color = SETTINGS()->_baseColor;
 
     if(m_checked)
-      m_brush_color.setAlphaF(0.8);
+      m_brush_color = SETTINGS()->_checkedColor;
     else
-      m_brush_color.setAlphaF(m_alpha);
+      m_brush_color = SETTINGS()->_baseColor;
 
-
-    QRect rect = boundingRect().toRect();
-    painter->setPen(QPen( m_brush_color, 0.1, Qt::SolidLine, Qt::RoundCap));
-    painter->setBrush(QBrush( m_brush_color ,Qt::SolidPattern));
-    painter->drawRoundedRect(rect, 4.0, 4.0);
-
-    //! draw pixmap
-    painter->drawPixmap(4,4,m_pixmap);
-
-    //! draw text
-    QFont font = QApplication::font();
-    font.setBold( true );
-    painter->setFont(font);
-    painter->setPen(QColor(Qt::white));
-    painter->drawText(rect.adjusted(m_pixmap.width(), 0, 0, 0), Qt::AlignCenter | Qt::AlignVCenter, m_text);
+    ButtonItem::paint(painter,option,widget);
 }
 
 void ButtonStateItem::mousePressEvent(QGraphicsSceneMouseEvent *event)

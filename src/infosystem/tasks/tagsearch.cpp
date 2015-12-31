@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -192,7 +192,7 @@ void TagSearch::set_requests_cover_search()
         INFO::InfoStringHash hash;
         hash["artist"]     = query.value(1).toString();
         hash["album"]      = query.value(0).toString();
-        hash["covername"]  = MEDIA::coverName(hash["artist"], hash["album"]);
+        hash["covername"]  = MEDIA::coverHash(hash["artist"], hash["album"]);
 
         const QString path = UTIL::CONFIGDIR + "/albums/" + hash["covername"];
         if(QFile::exists(path))
@@ -298,30 +298,12 @@ void TagSearch::handle_artist_search_result(INFO::InfoStringHash hash, QVariant 
     }
     else
     {
-        const QByteArray bytes = output.toByteArray();
-/*
-        QImage image = QImage::fromData(bytes);
-        image = image.scaled(QSize(120, 120), Qt::KeepAspectRatio, Qt::SmoothTransformation);
-        image.save(filePath, "png", -1);*/
+        /* get data */  
+        QImage image = UTIL::artistImageFromByteArray( output.toByteArray() );
+    
+        if( image.isNull() )
+            return;
 
-        int ITEM_HEIGHT = 120;
-        int ITEM_WIDTH  = 120;
-        int MAX_SIZE    = 250;
-
-        QImage image = QImage::fromData(bytes);
-
-        const int width = image.size().width();
-        const int height = image.size().height();
-        if (width > MAX_SIZE || height > MAX_SIZE)
-          image = image.scaled(MAX_SIZE, MAX_SIZE, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-
-        int xOffset = 0;
-        int wDiff = image.width() - ITEM_WIDTH;
-        if (wDiff > 0) xOffset = wDiff / 2;
-        int yOffset = 0;
-        int hDiff = image.height() - ITEM_HEIGHT;
-        if (hDiff > 0) yOffset = hDiff / 4;
-        image = image.copy(xOffset, yOffset, ITEM_WIDTH, ITEM_HEIGHT);
         image.save(filePath, "png", -1);
     }
 }

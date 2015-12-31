@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -95,7 +95,7 @@ void CommandlineOptions::RemoveArg(const QString& starts_with, int count)
 
 bool CommandlineOptions::Parse()
 {
-    //Debug::debug() << "CommandlineOptions::Parse";
+    //qDebug("CommandlineOptions::Parse");
 
     static const struct option kOptions[] = {
       {"help",        no_argument,       0, 'h'},
@@ -195,7 +195,7 @@ bool CommandlineOptions::Parse()
 
         case '?':
         default:
-        return false;
+          return false;
       }
     }
 

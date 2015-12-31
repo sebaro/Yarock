@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -111,7 +111,7 @@ int DatabaseCmd::insertYear(int year)
 /* ---------------------------------------------------------------------------*/
 bool DatabaseCmd::isArtistExists(const QString & artist)
 {
-    //Debug::debug() << "- DatabaseCmd -> is artist exists";
+    Debug::debug() << "- DatabaseCmd -> is artist exists NAME:" << artist;
     QSqlQuery q("",*Database::instance()->db());
     q.prepare("SELECT `id` FROM `artists` WHERE `name`=?;");
     q.addBindValue( artist );
@@ -120,7 +120,7 @@ bool DatabaseCmd::isArtistExists(const QString & artist)
     if ( !q.next() )
       return false;
     else
-      return  true;
+      return true;
 } 
 
 /* ---------------------------------------------------------------------------*/
@@ -168,12 +168,31 @@ int DatabaseCmd::updateArtist(const QString & artist, bool favorite, int playcou
     q.addBindValue( artist );
     q.addBindValue( favorite );
     q.addBindValue( playcount );
-    q.addBindValue( rating );    
+    q.addBindValue( rating );
     q.addBindValue( id );
     q.exec();
     
     return id;
 }      
+
+/* ---------------------------------------------------------------------------*/
+/* DatabaseCmd::isAlbumExists                                                 */
+/* ---------------------------------------------------------------------------*/
+bool DatabaseCmd::isAlbumExists(const QString & album,int artist_id)
+{
+    //Debug::debug() << "- DatabaseCmd -> is album exists NAME:" << album << " ARTIST_ID:"<<artist_id;
+    QSqlQuery q("",*Database::instance()->db());
+    q.prepare("SELECT `id` FROM `albums` WHERE `name`=? AND `artist_id`=?;");
+    q.addBindValue( album );
+    q.addBindValue( artist_id );
+    Debug::debug() <<  q.exec();
+
+    if ( !q.next() )
+      return false;
+    else
+      return true;
+} 
+
 
 /* ---------------------------------------------------------------------------*/
 /* DatabaseCmd::insertAlbum                                                   */
@@ -278,6 +297,35 @@ void DatabaseCmd::updateFavorite(MEDIA::MediaPtr media, bool isFavorite)
     }
 }
 
+/* ---------------------------------------------------------------------------*/
+/* DatabaseCmd::addStreamToFavorite                                           */
+/* ---------------------------------------------------------------------------*/
+void DatabaseCmd::addStreamToFavorite(MEDIA::TrackPtr stream)
+{
+    QSqlQuery q("",*Database::instance()->db());
+    q.prepare("SELECT `id` FROM `favorite_stream` WHERE `url`=? AND `name`=?;");
+    q.addBindValue( stream->url );
+    q.addBindValue( stream->extra["station"].toString() );
+    
+    q.exec();
+
+    if ( !q.next() )
+    {
+        if( stream->genre.isEmpty() )
+            stream->genre = "Unkown";
+            
+        q.prepare("INSERT INTO `favorite_stream`(`url`,`name`,`genre`,`website`,`provider`) VALUES(?,?,?,?,?);");
+        
+        q.addBindValue( stream->url );
+        q.addBindValue( stream->extra["station"].toString() );
+        q.addBindValue( stream->genre );
+        q.addBindValue( stream->extra["website"].toString() );
+        q.addBindValue( stream->extra["provider"].toString() );
+        
+        Debug::debug() << "exec " << q.exec();
+    }
+}
+
 
 /* ---------------------------------------------------------------------------*/
 /* DatabaseCmd::rateMediaItems                                                */
@@ -315,13 +363,19 @@ void DatabaseCmd::rateTrack(MEDIA::TrackPtr track)
       q.addBindValue( track->id );
       q.exec();
 
-      MEDIA::AlbumPtr album = MEDIA::AlbumPtr::staticCast(track->parent());
-      if(!album->isUserRating)
-         album->rating = LocalTrackModel::instance()->getItemAutoRating(album);
+      if(track->parent())
+      {
+         MEDIA::AlbumPtr album = MEDIA::AlbumPtr::staticCast(track->parent());
+         if(album && !album->isUserRating)
+           album->rating = LocalTrackModel::instance()->getItemAutoRating(album);
 
-      MEDIA::ArtistPtr artist = MEDIA::ArtistPtr::staticCast(album->parent());
-      if(!artist->isUserRating)
-         artist->rating = LocalTrackModel::instance()->getItemAutoRating(artist);
+         if(album->parent())
+         {
+           MEDIA::ArtistPtr artist = MEDIA::ArtistPtr::staticCast(album->parent());
+           if(artist && !artist->isUserRating)
+             artist->rating = LocalTrackModel::instance()->getItemAutoRating(artist);
+         }
+      }
       
       if( Database::instance()->param()._option_wr_rating_to_file )
         Tag::writeTrackRatingToFile( track->url, track->rating );

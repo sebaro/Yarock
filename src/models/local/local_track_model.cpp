@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -44,7 +44,7 @@ LocalTrackModel::LocalTrackModel(QObject *parent) : QObject(parent)
     m_rootItem       = MEDIA::MediaPtr(new MEDIA::Media());
     
     m_rootGenreItem  = MEDIA::LinkPtr(new MEDIA::Link());
-    m_rootGenreItem->name = QString("All");    
+    m_rootGenreItem->name = QString(tr("All"));
     
     m_active_link = m_rootGenreItem;
 }
@@ -65,7 +65,7 @@ void LocalTrackModel::clear()
 
     m_rootGenreItem.reset();
     m_rootGenreItem  = MEDIA::LinkPtr(new MEDIA::Link());
-    m_rootGenreItem->name = QString("All");    
+    m_rootGenreItem->name = QString(tr("All"));
     
     m_active_link = m_rootGenreItem;
 }

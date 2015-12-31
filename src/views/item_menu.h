@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -50,6 +50,7 @@ enum ENUM_ACTION_ITEM_MENU {
       STREAM_EDIT,
       STREAM_QUEUE_END,
       STREAM_FAVORITE,
+      STREAM_WEBSITE,
 
       SELECTION_PLAY,
       SELECTION_QUEUE_END, 
@@ -86,7 +87,7 @@ private:
     QWidget                 *m_browserview;
     QGraphicsView           *m_view;
     QGraphicsScene          *m_scene;
-    
+
     QList<QGraphicsItem*>    m_items;
     bool                     is_selection;
     VIEW::Id                 m_view_mode;

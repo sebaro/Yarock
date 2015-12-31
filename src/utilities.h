@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -24,6 +24,7 @@
 #include <QCleanlooksStyle>
 #endif
 
+#include <QImage>
 #include <QPixmap>
 #include <QPainter>
 #include <QSize>
@@ -33,49 +34,74 @@ static QStyle *custom_style = 0;
 
 namespace UTIL 
 {
-  QString getConfigDir();
-  QString getConfigFile();
+/* ---------------------------------------------------------------------------*/
+/*      common math method                                                    */
+/* ---------------------------------------------------------------------------*/        
+    int randomInt(int low, int high);
 
-  static const QString CONFIGDIR  = getConfigDir();
+/* ---------------------------------------------------------------------------*/
+/*      configuration static method                                           */
+/* ---------------------------------------------------------------------------*/    
+    QString getConfigDir();
+    QString getConfigFile();
 
-  static const QString CONFIGFILE = getConfigFile();
+    static const QString CONFIGDIR  = getConfigDir();
 
-  int randomInt(int low, int high);
+    static const QString CONFIGFILE = getConfigFile();
 
-  QString deltaTimeToString(int seconds);
-  QString durationToString(int seconds);
 
-  static inline QString prettyTrackNumber(int number)
-  {
-    QString ret;
-    ret.sprintf("%02d", number);
-    return ret;
-  }  
+/* ---------------------------------------------------------------------------*/
+/*      string helper method                                                  */
+/* ---------------------------------------------------------------------------*/    
+    QString deltaTimeToString(int seconds);
+    QString durationToString(int seconds);
 
-  void urlAddQueryItem( QUrl& url, const QString& key, const QString& value );
-  bool urlHasQueryItem( const QUrl& url, const QString& key );
-    
-  static inline QStyle* getStyle()
-  {
-
-    if(!custom_style) {
-    #if QT_VERSION >= 0x050000
-        custom_style = QApplication::style();
-    #else
-      if(QApplication::style()->inherits("QGtkStyle"))
-        custom_style = new QCleanlooksStyle();
-      else
-        custom_style = QApplication::style();
-    #endif
+    static inline QString prettyTrackNumber(int number)
+    {
+        QString ret;
+        ret.sprintf("%02d", number);
+        return ret;
     }
-    return  custom_style;
-  }
-  
-   QPixmap createRoundedImage( const QPixmap& avatar, const QSize& size=QSize(), float frameWidthPct = 0.10 );  
+
+/* ---------------------------------------------------------------------------*/
+/*      url common method                                                     */
+/* ---------------------------------------------------------------------------*/
+    void urlAddQueryItem( QUrl& url, const QString& key, const QString& value );
+    bool urlHasQueryItem( const QUrl& url, const QString& key );
+    
+/* ---------------------------------------------------------------------------*/
+/*      image and pixmap method                                               */
+/* ---------------------------------------------------------------------------*/
+    QPixmap createRoundedImage( const QPixmap& avatar, const QSize& size=QSize(), float frameWidthPct = 0.10 );  
    
-   QPixmap squareCenterPixmap( const QPixmap& sourceImage );
+    QPixmap squareCenterPixmap( const QPixmap& sourceImage );
    
-   void drawPlayingIcon(QPainter* painter, int size, int margin, QPoint pos);
+    QImage artistImageFromByteArray(QByteArray array);
+
+   
+/* ---------------------------------------------------------------------------*/
+/*      painting method                                                       */
+/* ---------------------------------------------------------------------------*/
+    void drawPlayingIcon(QPainter* painter, int size, int margin, QPoint pos);
+    
+/* ---------------------------------------------------------------------------*/
+/*      style helper method                                                   */
+/* ---------------------------------------------------------------------------*/    
+    static inline QStyle* getStyle()
+    {
+      if(!custom_style) 
+      {
+        #if QT_VERSION >= 0x050000
+          custom_style = QApplication::style();
+        #else
+          if(QApplication::style()->inherits("QGtkStyle"))
+            custom_style = new QCleanlooksStyle();
+          else
+            custom_style = QApplication::style();
+        #endif
+      }
+      return  custom_style;
+    }    
 }
 
 #endif // _UTIL_H_

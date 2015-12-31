@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -51,9 +51,6 @@ void YarockSettings::readSettings()
     _splitterState_2     = s->value("Window/splitter2").toByteArray();
 
     _showPlayQueuePanel  = s->value("Window/showPlaylistPanel", true).toBool();
-    _showMenuPanel       = s->value("Window/showMenuPanel",     true).toBool();
-    _showNowPlaying      = s->value("Window/showNowPlaying",    true).toBool();
-    _autoHideNowPlaying  = s->value("Window/autoHideNowPlaying",true).toBool();
     _enableSearchPopup   = s->value("Window/searchPopup",       true).toBool();
     _enablePlayOnSearch  = s->value("Window/playOnSearch",      false).toBool();
 
@@ -80,10 +77,10 @@ void YarockSettings::readSettings()
     _filesystem_path     = s->value("Session/filesystem",     "").toString();
     
     _hideAtStartup       = s->value("Session/hideAtStartup", false).toBool();
-    _is_menu_bar         = s->value("Session/ismenubar", true).toBool();
 
     /* handle color */
-    if(s->contains("Session/color")) {
+    if(s->contains("Session/color")) 
+    {
       QByteArray bytes = s->value("Session/color").toByteArray();
     
       QBuffer buf(&bytes);
@@ -94,8 +91,9 @@ void YarockSettings::readSettings()
     }
     else
     {
-      _baseColor = QColor(0xfca822);
+      _baseColor = QColor(0xfca822);      
     }
+    updateCheckedColor();
 
     // features activations (Dynamic settings)
     _useTrayIcon         = s->value("Features/systray", false).toBool();
@@ -158,9 +156,6 @@ void YarockSettings::writeSettings()
     s->setValue("splitter2",          _splitterState_2);
 
     s->setValue("showPlaylistPanel",  _showPlayQueuePanel);
-    s->setValue("showMenuPanel",      _showMenuPanel);
-    s->setValue("showNowPlaying",     _showNowPlaying);
-    s->setValue("autoHideNowPlaying", _autoHideNowPlaying);
     s->setValue("searchPopup",        _enableSearchPopup);
     s->setValue("playOnSearch",       _enablePlayOnSearch);
     
@@ -179,7 +174,6 @@ void YarockSettings::writeSettings()
     s->setValue("playqueueDuplicate", _playqueueDuplicate);
     s->setValue("playqueueShowFilter",_playqueueShowFilter);
     s->setValue("hideAtStartup",      _hideAtStartup);
-    s->setValue("ismenubar",          _is_menu_bar);
     s->setValue("filesystem",         _filesystem_path);
         
       /* handle color */
@@ -258,4 +252,19 @@ void YarockSettings::writeSettings()
     // final sync to write setting to file
     s->sync ();
 }
+
+void YarockSettings::updateCheckedColor()
+{
+    QRgb rgb = _baseColor.rgb();
+    
+    if( qBlue(rgb) > qRed(rgb) && qBlue(rgb) > qGreen(rgb) )
+        _checkedColor = QColor(0x000099);
+    else if ( qGreen(rgb) > qRed(rgb) && qGreen(rgb) > qBlue(rgb) )
+        _checkedColor = QColor(0x009900);
+    else if ( qRed(rgb) > qBlue(rgb) && qRed(rgb) > qGreen(rgb) )
+        _checkedColor = QColor(0x990000);
+    else
+        _checkedColor = QColor(0x990000);
+}
+
 

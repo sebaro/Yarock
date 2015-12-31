@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -25,6 +25,8 @@
 #include "playqueue/virtual_playqueue.h"
 
 #include "core/player/engine.h"
+#include "covercache.h"
+
 
 #include "mediaitem.h"
 #include "global_actions.h"
@@ -56,46 +58,36 @@ GraphicsItemMenu::GraphicsItemMenu(QWidget *parent) : QMenu(parent)
     this->setAutoFillBackground(true);
     this->setContentsMargins(0,0,0,0);
 
-    QPalette palette = QApplication::palette();
-    palette.setColor(QPalette::Background, palette.color(QPalette::Base));
-    palette.setColor(QPalette::WindowText, SETTINGS()->_baseColor);
-    this->setPalette(palette);
- 
-    /* QMenu is based on style, stylesheet is needed */
-    this->setStyleSheet( 
-      QString("background-color: %1; color:%2;").arg(
-         QApplication::palette().color( QPalette::Base ).name(),
-         QColor(SETTINGS()->_baseColor).name()
-      ) 
-    );
-    
+    this->setStyleSheet( "QMenu {background-color: none;border: none;}");
+         
     /* menu actions */
     m_map_actions.insert(ALBUM_PLAY,          new QAction(QIcon(":/images/media-play.png"), tr("Play"), 0));
-    m_map_actions.insert(ALBUM_QUEUE_END,     new QAction(QIcon(":/images/media-playlist-48x48.png"), tr("Enqueue to playqueue"), 0));
+    m_map_actions.insert(ALBUM_QUEUE_END,     new QAction(QIcon(":/images/media-playlist-48x48.png"), tr("Add to play queue"), 0));
     
     m_map_actions.insert(UPDATE_FAVORITE,     new QAction(QIcon(":/images/favorites-48x48.png"), "", 0));
     m_map_actions.insert(EDIT,                new QAction(QIcon(":/images/edit-48x48.png"), tr("Edit"), 0));
 
     m_map_actions.insert(GENRE_PLAY,          new QAction(QIcon(":/images/media-play.png"), tr("Play"), 0));
-    m_map_actions.insert(GENRE_QUEUE_END,     new QAction(QIcon(":/images/media-playlist-48x48.png"), tr("Enqueue to playqueue"), 0));
+    m_map_actions.insert(GENRE_QUEUE_END,     new QAction(QIcon(":/images/media-playlist-48x48.png"), tr("Add to play queue"), 0));
 
     m_map_actions.insert(ARTIST_PLAY,         new QAction(QIcon(":/images/media-play.png"), tr("Play"), 0));
-    m_map_actions.insert(ARTIST_QUEUE_END,    new QAction(QIcon(":/images/media-playlist-48x48.png"), tr("Enqueue to playqueue"), 0));
+    m_map_actions.insert(ARTIST_QUEUE_END,    new QAction(QIcon(":/images/media-playlist-48x48.png"), tr("Add to play queue"), 0));
 
     m_map_actions.insert(PLAYLIST_PLAY,       new QAction(QIcon(":/images/media-play.png"), tr("Play"), 0));
-    m_map_actions.insert(PLAYLIST_QUEUE_END,  new QAction(QIcon(":/images/media-playlist-48x48.png"), tr("Enqueue to playqueue"), 0));
+    m_map_actions.insert(PLAYLIST_QUEUE_END,  new QAction(QIcon(":/images/media-playlist-48x48.png"), tr("Add to play queue"), 0));
     m_map_actions.insert(PLAYLIST_REMOVE,     new QAction(QIcon::fromTheme("edit-delete"),tr("&Remove playlist from disk"), 0));
 
     m_map_actions.insert(TRACK_PLAY,          new QAction(QIcon(":/images/media-play.png"), tr("Play"), 0));
-    m_map_actions.insert(TRACK_QUEUE_END,     new QAction(QIcon(":/images/media-playlist-48x48.png"), tr("Enqueue to playqueue"), 0));
+    m_map_actions.insert(TRACK_QUEUE_END,     new QAction(QIcon(":/images/media-playlist-48x48.png"), tr("Add to play queue"), 0));
 
     m_map_actions.insert(STREAM_PLAY,          new QAction(QIcon(":/images/media-play.png"), tr("Play"), 0));
     m_map_actions.insert(STREAM_EDIT,          new QAction(QIcon(":/images/edit-48x48.png"), tr("Edit"), 0));
-    m_map_actions.insert(STREAM_QUEUE_END,     new QAction(QIcon(":/images/media-playlist-48x48.png"), tr("Enqueue to playqueue"), 0));
+    m_map_actions.insert(STREAM_QUEUE_END,     new QAction(QIcon(":/images/media-playlist-48x48.png"), tr("Add to play queue"), 0));
     m_map_actions.insert(STREAM_FAVORITE,      new QAction(QIcon(":/images/favorites-48x48.png"), tr("Add to favorites"), 0));
-
+    m_map_actions.insert(STREAM_WEBSITE,       new QAction(QIcon(":/images/media-url-48x48.png"), tr("Website"), 0));
+    
     m_map_actions.insert(SELECTION_PLAY,       new QAction(QIcon(":/images/media-play.png"), tr("Play"), 0));
-    m_map_actions.insert(SELECTION_QUEUE_END,  new QAction(QIcon(":/images/media-playlist-48x48.png"), tr("Enqueue to playqueue"), 0));
+    m_map_actions.insert(SELECTION_QUEUE_END,  new QAction(QIcon(":/images/media-playlist-48x48.png"), tr("Add to play queue"), 0));
     m_map_actions.insert(SELECTION_TRACK_EDIT, new QAction(QIcon(":/images/edit-48x48.png"), tr("Edit"), 0));
 
 
@@ -141,7 +133,14 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
     /* main widget*/
     QWidget* main_widget = new QWidget(this);
     main_widget->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
-
+             
+    QLabel* ui_label = new QLabel(this);
+    ui_label->setFont(QFont("Arial",14,QFont::Normal));
+    ui_label->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    ui_label->setStyleSheet(
+        QString("QLabel { color : %1; }").arg(QColor(SETTINGS()->_baseColor).name())
+    );
+    
     /*-------------------------------------------------*/
     /* Selected items                                  */
     /* ------------------------------------------------*/
@@ -158,10 +157,7 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
         default: break;
       }    
     
-      QLabel* ui_label = new QLabel(this);
-      ui_label->setFont(QFont("Arial",14,QFont::Normal));
       ui_label->setText(text);
-      ui_label->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
       
 
       /* tool bar content */
@@ -193,7 +189,8 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
     {
       m_scene = new QGraphicsScene(main_widget);
       m_view = new QGraphicsView(main_widget);
-    
+      m_view->setStyleSheet("background: transparent");
+      
       /* QGraphicsView setup */  
       m_view->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
       m_view->setAutoFillBackground(false);
@@ -243,10 +240,7 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
     
       m_scene->setSceneRect ( m_scene->itemsBoundingRect().adjusted(0, 0, 10, 10) );
 
-      QLabel* ui_label = new QLabel(this);
-      ui_label->setFont(QFont("Arial",14,QFont::Normal));
       ui_label->setText(album->name);
-      ui_label->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     
       /* tool bar content */
       QToolBar *tool_bar = new QToolBar(main_widget);
@@ -292,6 +286,7 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
     {
       m_scene = new QGraphicsScene(main_widget);
       m_view = new QGraphicsView(main_widget);
+      m_view->setStyleSheet("background: transparent");
     
       /* QGraphicsView setup */  
       m_view->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
@@ -340,11 +335,7 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
       }    
       m_scene->setSceneRect ( m_scene->itemsBoundingRect().adjusted(0, 0, 10, 10) );
     
-
-      QLabel* ui_label = new QLabel(this);
-      ui_label->setFont(QFont("Arial",14,QFont::Normal));
       ui_label->setText(album->name);
-      ui_label->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);      
       
       
       /* tool bar content */
@@ -385,6 +376,7 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
       //Debug::debug() << "GraphicsItemMenu::ArtistType";
       m_scene = new QGraphicsScene(main_widget);
       m_view = new QGraphicsView(main_widget);
+      m_view->setStyleSheet("background: transparent");
     
       /* QGraphicsView setup */  
       m_view->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
@@ -437,12 +429,7 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
       
       m_scene->setSceneRect ( m_scene->itemsBoundingRect().adjusted(0, 0, 10, 10) );
       
-    
-      QLabel* ui_label = new QLabel(this);
-      ui_label->setFont(QFont("Arial",14,QFont::Normal));
-      ui_label->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);    
       ui_label->setText(artist->name);
-       
 
       /* tool bar content */
       QToolBar *tool_bar = new QToolBar(main_widget);
@@ -490,16 +477,12 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
       TrackGraphicItem *item = static_cast<TrackGraphicItem*>(m_items.first());
       MEDIA::TrackPtr track = MEDIA::TrackPtr::staticCast(item->media);
 
-
-      QLabel* ui_label = new QLabel(this);
-      ui_label->setFont(QFont("Arial",14,QFont::Normal));
-      ui_label->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
       
       /* hack for stream in playlist item */
       if( MEDIA::isLocal(item->media->url) )
-        ui_label->setText(track->title);      
+        ui_label->setText( track->title );
       else
-        ui_label->setText(track->name); /* for stream */
+        ui_label->setText( track->extra["station"].toString() );
       
       /* tool bar content */
       QToolBar *tool_bar = new QToolBar(main_widget);
@@ -534,9 +517,6 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
       MEDIA::PlaylistPtr playlist = MEDIA::PlaylistPtr::staticCast(item->media);
       
       
-      QLabel* ui_label = new QLabel(this);
-      ui_label->setFont(QFont("Arial",14,QFont::Normal));
-      ui_label->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);    
       ui_label->setText(playlist->name);
       
       QToolBar *tool_bar = new QToolBar(main_widget);
@@ -576,10 +556,12 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
       MEDIA::TrackPtr stream = MEDIA::TrackPtr::staticCast(item->media);
 
       
-      QLabel* ui_label = new QLabel(this);
-      ui_label->setFont(QFont("Arial",14,QFont::Normal));
-      ui_label->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);    
-      ui_label->setText(stream->name);
+      ui_label->setText( stream->extra["station"].toString() );
+      
+      QLabel* ui_pix = new QLabel(this);
+      ui_pix->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);    
+      ui_pix->setPixmap( CoverCache::instance()->cover(stream).scaled(QSize(48,48), Qt::KeepAspectRatio, Qt::SmoothTransformation) );
+      
       
       
       QToolBar *tool_bar = new QToolBar(main_widget);
@@ -591,6 +573,7 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
       if(m_view_mode == VIEW::ViewFavoriteRadio)
         tool_bar->addAction( m_map_actions.value(STREAM_EDIT) );
 
+      tool_bar->addAction( m_map_actions.value(STREAM_WEBSITE) );
       
       if(item->media->isFavorite)
         m_map_actions.value(STREAM_FAVORITE)->setText( tr("Remove from favorites") );
@@ -603,13 +586,18 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
       hbox->addWidget(tool_bar);
       hbox->addItem(new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
 
+      
+      QVBoxLayout * vbox = new QVBoxLayout();
+      vbox->setSpacing(0);
+      vbox->setContentsMargins(4,4,4,4);
+      vbox->addWidget(ui_label);
+      vbox->addLayout(hbox);
+      
       /* main layout */
-      QVBoxLayout * main_box = new QVBoxLayout();
-      main_box->setSpacing(0);
-      main_box->setContentsMargins(4,4,4,4);
-      main_box->addWidget(ui_label);
-      main_box->addLayout(hbox);
-      main_widget->setLayout(main_box);
+      QHBoxLayout * main_layout = new QHBoxLayout();
+      main_layout->addWidget( ui_pix );
+      main_layout->addLayout( vbox );
+      main_widget->setLayout(main_layout);
     }
 
     QWidgetAction* action_widget = new QWidgetAction(this);

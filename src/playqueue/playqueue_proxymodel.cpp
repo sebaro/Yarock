@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -58,13 +58,13 @@ Q_UNUSED(sourceParent)
       if(pattern.length() < 3) 
       {
         return  (track->url.startsWith ( pattern, Qt::CaseInsensitive )   ||
-                 track->name.startsWith ( pattern, Qt::CaseInsensitive )  ||
+                 track->extra["station"].toString().startsWith ( pattern, Qt::CaseInsensitive )  ||
                  track->genre.startsWith ( pattern, Qt::CaseInsensitive ));
       }
       else
       {
         return  (track->url.contains ( pattern, Qt::CaseInsensitive )   ||
-                 track->name.contains ( pattern, Qt::CaseInsensitive )  ||
+                 track->extra["station"].toString().contains ( pattern, Qt::CaseInsensitive )  ||
                  track->genre.contains ( pattern, Qt::CaseInsensitive ));
       }
     }

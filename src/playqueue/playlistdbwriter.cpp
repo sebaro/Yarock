@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -185,11 +185,12 @@ void PlaylistDbWriter::savePlaylist()
     for (int i = 0; i < m_model->rowCount(QModelIndex()); i++) 
     {
         const QString item_url   = m_model->trackAt(i)->url;
-        const QString item_name  = MEDIA::isLocal(m_model->trackAt(i)->url) ? m_model->trackAt(i)->title : m_model->trackAt(i)->name;
+        const QString item_name  = MEDIA::isLocal(m_model->trackAt(i)->url) ? 
+          m_model->trackAt(i)->title : m_model->trackAt(i)->extra["station"].toString();
        
-        //Debug::debug() << "  [PlaylistDbWriter] insert playlist item url: " << item_url;
-        //Debug::debug() << "  [PlaylistDbWriter] insert playlist item name: " << m_model->trackAt(i)->name;
-        //Debug::debug() << "  [PlaylistDbWriter] insert playlist item title: " << m_model->trackAt(i)->title;
+        Debug::debug() << "  [PlaylistDbWriter] insert playlist item url: " << item_url;
+        Debug::debug() << "  [PlaylistDbWriter] insert playlist item title: " << m_model->trackAt(i)->title;
+        Debug::debug() << "  [PlaylistDbWriter] insert playlist item station: " << m_model->trackAt(i)->extra["station"].toString();
 
         q.prepare("INSERT INTO `playlist_items`(`url`,`name`,`playlist_id`) VALUES(?,?,?);");
         q.addBindValue( item_url );
@@ -282,7 +283,8 @@ void PlaylistDbWriter::saveSession()
     for (int i = 0; i < m_model->rowCount(QModelIndex()); i++) 
     {
         const QString item_url   = m_model->trackAt(i)->url;
-        const QString item_name  = MEDIA::isLocal(m_model->trackAt(i)->url) ? m_model->trackAt(i)->title : m_model->trackAt(i)->name;
+        const QString item_name  = MEDIA::isLocal(m_model->trackAt(i)->url) ?
+          m_model->trackAt(i)->title : m_model->trackAt(i)->extra["station"].toString();
 
         QSqlQuery itemQuery(*Database::instance()->db());
 

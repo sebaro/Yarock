@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -85,32 +85,11 @@ void LocalScene::initScene()
     m_mouseGrabbedItem  = 0;
     item_count          = 0;
     
-    //! graphic item context menu
+    /*  graphic item context menu */
     m_graphic_item_menu = new GraphicsItemMenu(0);
     m_graphic_item_menu->setBrowserView(this->parentView());
     QObject::connect(m_graphic_item_menu, SIGNAL(menu_action_triggered(ENUM_ACTION_ITEM_MENU)), this, SLOT(slot_contextmenu_triggered(ENUM_ACTION_ITEM_MENU)), Qt::DirectConnection);
 
-    /*  scene actions */
-    m_actions.insert("album_grid", new QAction(QIcon(),QString(tr("view grid")),this));
-    m_actions.insert("playlist_tracks", new QAction(QIcon(),QString(tr("view by tracks")),this));
-    m_actions.insert("new_playlist",new QAction(QIcon(":/images/add_32x32.png"),QString(tr("new playlist")),this));
-    m_actions.insert("new_smart",new QAction(QIcon(":/images/add_32x32.png"),QString(tr("new smart playlist")),this));
-    m_actions.insert("reload_histo", new QAction(QIcon(":/images/rebuild.png"),QString(tr("reload history")),this));
-    m_actions.insert("clear_histo", new QAction(QIcon(),QString(tr("clear history")),this));
-    
-    m_actions.value("album_grid")->setCheckable(true);
-    m_actions.value("album_grid")->setChecked( SETTINGS()->_album_view_type == 0);
-    
-    m_actions.value("playlist_tracks")->setCheckable(true);
-    m_actions.value("playlist_tracks")->setChecked(SETTINGS()->_playlist_view_type ==1);
-
-    connect(m_actions.value("album_grid"), SIGNAL(triggered()), this, SLOT(slot_change_view_settings()));
-    connect(m_actions.value("playlist_tracks"), SIGNAL(triggered()), this, SLOT(slot_change_view_settings()));
-    connect(m_actions.value("new_playlist"), SIGNAL(triggered()), MainRightWidget::instance(), SLOT(slot_create_new_playlist_editor()));
-    connect(m_actions.value("new_smart"), SIGNAL(triggered()), MainRightWidget::instance(), SLOT(slot_create_new_smart_editor()));
-    connect(m_actions.value("reload_histo"), SIGNAL(triggered()), this, SLOT(populateScene()));
-    connect(m_actions.value("clear_histo"), SIGNAL(triggered()), this, SLOT(slot_clear_history()));
-        
     //! gestion du double click par action globale et data
     ACTIONS()->insert(BROWSER_ITEM_RATING_CLICK, new QAction(this));
     ACTIONS()->insert(BROWSER_LOCAL_ITEM_MOUSE_MOVE, new QAction(this));
@@ -127,6 +106,29 @@ void LocalScene::initScene()
 *******************************************************************************/
 QList<QAction *> LocalScene::actions() 
 {
+    if(m_actions.isEmpty())
+    {
+        /*  scene actions */
+        m_actions.insert("album_grid",      new QAction(QIcon(),QString(tr("view grid")),this));
+        m_actions.insert("playlist_tracks", new QAction(QIcon(),QString(tr("view by tracks")),this));
+        m_actions.insert("new_playlist",    ACTIONS()->value(NEW_PLAYLIST));
+        m_actions.insert("new_smart",       ACTIONS()->value(NEW_SMART_PLAYLIST));
+        m_actions.insert("reload_histo",    new QAction(QIcon(":/images/rebuild.png"),QString(tr("reload history")),this));
+        m_actions.insert("clear_histo",     new QAction(QIcon(),QString(tr("clear history")),this));
+        
+        m_actions.value("album_grid")->setCheckable(true);
+        m_actions.value("album_grid")->setChecked( SETTINGS()->_album_view_type == 0);
+        
+        m_actions.value("playlist_tracks")->setCheckable(true);
+        m_actions.value("playlist_tracks")->setChecked(SETTINGS()->_playlist_view_type ==1);
+
+        connect(m_actions.value("album_grid"), SIGNAL(triggered()), this, SLOT(slot_change_view_settings()));
+        connect(m_actions.value("playlist_tracks"), SIGNAL(triggered()), this, SLOT(slot_change_view_settings()));
+
+        connect(m_actions.value("reload_histo"), SIGNAL(triggered()), this, SLOT(populateScene()));
+        connect(m_actions.value("clear_histo"), SIGNAL(triggered()), this, SLOT(slot_clear_history()));     
+    }
+
     QList<QAction*> list;
    
     switch(this->mode())
@@ -610,8 +612,9 @@ void LocalScene::populateGenreScene()
     int Xpos = 20,Ypos = 10;
     
     /* -------------- add ROOT button ------------------ */
-    ButtonItem* button = new ButtonItem();
+    ButtonStateItem* button = new ButtonStateItem();
     button->setText(m_localTrackModel->rootLink()->name);
+    button->setChecked(m_localTrackModel->rootLink() == m_localTrackModel->activeLink());
     QVariant v;
     v.setValue(static_cast<MEDIA::LinkPtr>(m_localTrackModel->rootLink()));
     button->setData(v);
@@ -628,8 +631,9 @@ void LocalScene::populateGenreScene()
     {
       MEDIA::LinkPtr link = MEDIA::LinkPtr::staticCast( m_localTrackModel->rootLink()->child(i) );
         
-      ButtonItem* button = new ButtonItem();
+      ButtonStateItem* button = new ButtonStateItem();
       button->setText(link->name);
+      button->setChecked(link == m_localTrackModel->activeLink());
       QVariant v;
       v.setValue(static_cast<MEDIA::LinkPtr>(link));
       button->setData(v);

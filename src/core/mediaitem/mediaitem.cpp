@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -83,16 +83,9 @@ QString MEDIA::Album::yearToString() const
 }
 
 
-QPixmap MEDIA::Album::pixmap() const
+QString MEDIA::Album::coverHash() const
 {
-    return QPixmap(coverpath());
-}
-
-
-QString MEDIA::Album::coverpath() const
-{
-    return QString(UTIL::CONFIGDIR + "/albums/" +
-             MEDIA::coverName(MEDIA::ArtistPtr::staticCast( parent() )->name, this->name));
+    return MEDIA::coverHash(MEDIA::ArtistPtr::staticCast( parent() )->name, this->name);
 }
 
 QList<int> MEDIA::Album::dbIds()
@@ -140,15 +133,9 @@ MEDIA::Artist::Artist() : Media()
 };
 
 
-QPixmap MEDIA::Artist::pixmap() const
+QString MEDIA::Artist::imageHash() const
 {
-    return QPixmap(coverpath());
-}
-
-
-QString MEDIA::Artist::coverpath() const
-{
-    return QString(UTIL::CONFIGDIR + "/artists/" + MEDIA::artistHash( this->name ));
+    return MEDIA::artistHash( this->name );
 }
 
 /*
@@ -198,9 +185,9 @@ QString MEDIA::Track::path(const QString& filename)
 }
 
 
-QString MEDIA::Track::coverName() const
+QString MEDIA::Track::coverHash() const
 {
-    return MEDIA::coverName(artist, album);
+    return MEDIA::coverHash(artist, album);
 }
 
 QString MEDIA::Track::lastplayed_ago() const
@@ -378,7 +365,6 @@ MEDIA::TrackPtr MEDIA::FromLocalFile(const QString url, int* p_disc)
 
     media->id         = -1;
     media->url        = QFileInfo(url).absoluteFilePath().toUtf8();
-    media->name       = QFileInfo(url).baseName();
     
     Tag::readFile(media, url, p_disc);
     
@@ -397,7 +383,7 @@ MEDIA::TrackPtr MEDIA::FromDataBase(const QString url)
     QSqlQuery q("", *Database::instance()->db());
      q.prepare("SELECT id,filename,trackname," \
         "number,length,artist_name,genre_name,album_name,year,last_played," \
-        "albumgain,albumpeakgain,trackgain,trackpeakgain,playcount,rating " \
+        "playcount,rating " \
         "FROM view_tracks WHERE filename=? LIMIT 1;");
     
     q.addBindValue( QFileInfo(url).canonicalFilePath() );
@@ -410,7 +396,6 @@ MEDIA::TrackPtr MEDIA::FromDataBase(const QString url)
       //Debug::debug() << "[MEDIA] Build MediaItem FROM DATABASE ok";
       media->id         =  q.value(0).toInt();
       media->url        =  url;
-      media->name       =  q.value(1).toString();
       media->title      =  q.value(2).toString();
       media->num        =  q.value(3).toUInt();
       media->duration   =  q.value(4).toInt();
@@ -419,12 +404,8 @@ MEDIA::TrackPtr MEDIA::FromDataBase(const QString url)
       media->album      =  q.value(7).toString();
       media->year       =  q.value(8).toUInt();
       media->lastPlayed =  q.value(9).toInt();
-      media->albumGain  =  q.value(10).value<qreal>();
-      media->albumPeak  =  q.value(11).value<qreal>();
-      media->trackGain  =  q.value(12).value<qreal>();
-      media->trackPeak  =  q.value(13).value<qreal>();
-      media->playcount  =  q.value(14).toInt();
-      media->rating     =  q.value(15).toFloat();
+      media->playcount  =  q.value(10).toInt();
+      media->rating     =  q.value(11).toFloat();
 
       //! default state value
       media->isPlaying    =  false;
@@ -450,7 +431,7 @@ MEDIA::TrackPtr MEDIA::FromDataBase(int trackId)
   QSqlQuery q("", *Database::instance()->db());
   q.prepare("SELECT id,filename,trackname," \
        "number,length,artist_name,genre_name,album_name,year,last_played," \
-       "albumgain,albumpeakgain,trackgain,trackpeakgain,playcount,rating " \
+       "playcount,rating " \
        "FROM view_tracks WHERE id=? LIMIT 1;");
     
   q.addBindValue( QString::number(trackId) );
@@ -463,7 +444,6 @@ MEDIA::TrackPtr MEDIA::FromDataBase(int trackId)
       //Debug::debug() << "[MEDIA] Build MediaItem FROM DATABASE ok";
       media->id         =  q.value(0).toInt();
       media->url        =  q.value(1).toString();
-      media->name       =  q.value(1).toString();
       media->title      =  q.value(2).toString();
       media->num        =  q.value(3).toUInt();
       media->duration   =  q.value(4).toInt();
@@ -472,12 +452,8 @@ MEDIA::TrackPtr MEDIA::FromDataBase(int trackId)
       media->album      =  q.value(7).toString();
       media->year       =  q.value(8).toUInt();
       media->lastPlayed =  q.value(9).toInt();
-      media->albumGain  =  q.value(10).value<qreal>();
-      media->albumPeak  =  q.value(11).value<qreal>();
-      media->trackGain  =  q.value(12).value<qreal>();
-      media->trackPeak  =  q.value(13).value<qreal>();
-      media->playcount  =  q.value(14).toInt();
-      media->rating     =  q.value(15).toFloat();
+      media->playcount  =  q.value(10).toInt();
+      media->rating     =  q.value(11).toFloat();
 
       //! default state value
       media->isPlaying    =  false;
@@ -489,6 +465,54 @@ MEDIA::TrackPtr MEDIA::FromDataBase(int trackId)
   }
 
   return MEDIA::TrackPtr(0);
+}
+
+/* ---------------------------------------------------------------------------*/
+/* MEDIA::ReplayGainFromDataBase                                              */
+/*      -> with trackid                                                       */
+/* ---------------------------------------------------------------------------*/
+void MEDIA::ReplayGainFromDataBase(MEDIA::TrackPtr track)
+{
+  //Debug::debug() << "[MEDIA] from db -> track id " << trackId;
+
+  /* search track info into database */
+  QSqlQuery q("", *Database::instance()->db());
+  q.prepare("SELECT albumgain,albumpeakgain,trackgain,trackpeakgain FROM tracks WHERE id=? LIMIT 1;");
+    
+  q.addBindValue( QString::number(track->id) );
+  q.exec();
+  
+  if (q.first()) 
+  {
+      track->albumGain  =  q.value(0).value<qreal>();
+      track->albumPeak  =  q.value(1).value<qreal>();
+      track->trackGain  =  q.value(2).value<qreal>();
+      track->trackPeak  =  q.value(3).value<qreal>();
+  }
+}
+
+/* ---------------------------------------------------------------------------*/
+/* MEDIA::ExtraFromDataBase                                                   */
+/*      -> with trackid                                                       */
+/* ---------------------------------------------------------------------------*/
+void MEDIA::ExtraFromDataBase(MEDIA::TrackPtr track)
+{
+  //Debug::debug() << "[MEDIA] from db -> track id " << trackId;
+
+  /* search track info into database */
+  QSqlQuery q("", *Database::instance()->db());
+  q.prepare("SELECT bitrate,samplerate,bpm FROM tracks WHERE id=? LIMIT 1;");
+    
+  q.addBindValue( QString::number(track->id) );
+  q.exec();
+  
+  if (q.first()) 
+  {
+      track->extra["bitrate"]    =  q.value(0).toInt();
+      track->extra["samplerate"] =  q.value(1).toInt();
+      track->extra["bpm"]        =  q.value(2).isNull() ? -1 : q.value(2).toDouble();
+      
+  }
 }
 
 /* ---------------------------------------------------------------------------*/
@@ -600,11 +624,6 @@ bool MEDIA::compareTrackItemGenre(const TrackPtr mi1, const TrackPtr mi2)
 bool MEDIA::compareAlbumItemYear(const AlbumPtr mi1, const AlbumPtr mi2)
 {
     return mi1->year > mi2->year;
-}
-
-bool MEDIA::compareStreamName(const TrackPtr mi1, const TrackPtr mi2)
-{
-    return mi1->name.toLower() < mi2->name.toLower();
 }
 
 bool MEDIA::compareStreamCategorie(const TrackPtr mi1, const TrackPtr mi2)

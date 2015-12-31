@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -167,7 +167,7 @@ void MinimalWidget::slot_update()
         /* update labels title/album/artist */
         QString title_or_url = track->title.isEmpty() ? track->url : track->title;
         if(track->type() == TYPE_STREAM)
-            title_or_url = track->title.isEmpty() ? track->name : track->title;
+            title_or_url = track->title.isEmpty() ? track->extra["station"].toString() : track->title;
 
         int width = this->width() - 20 ;
         QString clippedText = QFontMetrics(ui_label_title->font()).elidedText(title_or_url, Qt::ElideRight, width);

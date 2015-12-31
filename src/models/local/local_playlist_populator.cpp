@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -132,7 +132,6 @@ void LocalPlaylistPopulator::run()
                 track = MEDIA::TrackPtr(new MEDIA::Track());
                 track->id           = -1;
                 track->url          = query.value(6).toString();
-                track->name         = query.value(7).toString();
                 track->title        = query.value(7).toString();
 
                 //! default value
@@ -150,7 +149,7 @@ void LocalPlaylistPopulator::run()
               stream->setType(TYPE_STREAM);
               stream->id          = -1;
               stream->url         = query.value(6).toString();
-              stream->name        = query.value(7).toString();
+              stream->extra["station"] = query.value(7).toString();
               stream->isFavorite  = false;
               stream->isPlaying   = false;
               stream->isBroken    = false;

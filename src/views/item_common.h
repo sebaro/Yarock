@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -37,50 +37,7 @@ namespace GraphicsItem {
   };
 }
 
-/*
-********************************************************************************
-*                                                                              *
-*    Class HeaderItem                                                          *
-*                                                                              *
-********************************************************************************
-*/
-class HeaderItem : public QGraphicsItem
-{
-  public:
-    HeaderItem(QWidget* parentView = 0);
-    HeaderItem(int height, QWidget* parentView = 0);
 
-    void setText(const QString& t);
-    
-  protected:
-    // Implement QGraphicsItem method
-    QRectF boundingRect() const;
-    void paint(QPainter *p, const QStyleOptionGraphicsItem *, QWidget *);
-
-  protected:
-    QWidget    *m_parent;
-    QString     m_text;
-    int         m_height;
-};
-
-
-/*
-********************************************************************************
-*                                                                              *
-*    Class HeaderLayoutItem                                                    *
-*                                                                              *
-********************************************************************************
-*/
-class HeaderLayoutItem : public HeaderItem, public QGraphicsLayoutItem
-{
-  public:
-    HeaderLayoutItem(QWidget* parentView = 0);
-
-  protected:
-    // Inherited from QGraphicsLayoutItem
-    void setGeometry(const QRectF &geom);
-    QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint = QSizeF()) const;
-};
 
 
 /*
@@ -101,6 +58,26 @@ class InfoGraphicItem : public QGraphicsItem
     void paint(QPainter *p, const QStyleOptionGraphicsItem *, QWidget *);
     QWidget    *m_parent;    
 };
+
+
+/*
+********************************************************************************
+*                                                                              *
+*    Class InfoLayoutItem                                                      *
+*                                                                              *
+********************************************************************************
+*/
+class InfoLayoutItem : public InfoGraphicItem, public QGraphicsLayoutItem
+{
+  public:
+    InfoLayoutItem(QWidget* parentView = 0);
+
+  protected:
+    // Inherited from QGraphicsLayoutItem
+    void setGeometry(const QRectF &geom);
+    QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint = QSizeF()) const;
+};
+
 
 /*
 ********************************************************************************

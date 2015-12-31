@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -72,6 +72,7 @@ private slots:
     void slot_jump_to_media();
     void slot_check_slider(int);
 
+    void slot_on_tag_clicked();
     void slot_on_menu_browser_triggered(VIEW::Id view, QVariant data);
     void slot_on_load_new_data(QVariant);    
     void slot_on_history_next_activated();

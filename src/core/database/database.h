@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -97,6 +97,9 @@ public:
     /* database parameters managment */
     QMap<QString /*database ID */, Database::Param>   m_params;
     QString m_current_id;
+    
+signals:
+    void settingsChanged();
 };
 
 #endif // _DATABASE_H_

@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -61,6 +61,8 @@ Q_DISABLE_COPY(YarockSettings)
     void writeSettings();
     void readSettings();
 
+    void updateCheckedColor();
+    
   public:
     // features activations (Dynamic settings)
     bool                 _useTrayIcon;
@@ -70,16 +72,13 @@ Q_DISABLE_COPY(YarockSettings)
     bool                 _useShortcut; // To be done
 
     // show/hide widget (Startup settings)
-    bool                 _showMenuPanel;
     bool                 _showPlayQueuePanel;
-    bool                 _showNowPlaying;
-    bool                 _autoHideNowPlaying;
     bool                 _enableSearchPopup;
     bool                 _enablePlayOnSearch;
 
     // interface option
     QColor               _baseColor;
-    bool                 _is_menu_bar; // tree view or menu bar
+    QColor               _checkedColor;
     
     //  session elements (Startup settings)
     int                  _engine;

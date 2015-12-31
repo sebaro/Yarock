@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -43,7 +43,7 @@ class HistoModel;
 class ThreadManager;
 class HistoManager;
 class VirtualPlayqueue;
-class GlobalShortcuts;
+class ShortcutsManager;
 
 // Dbus & Mpris & Utils
 class DbusNotification;
@@ -80,7 +80,7 @@ Q_OBJECT
 
     /* Database Method   */
     void createDatabase();
-    void rebuildDatabase();
+    void rebuildDatabase(bool doRebuild);
 
   private slots:
 
@@ -90,7 +90,6 @@ Q_OBJECT
 #endif
     /* Mainwindow        */
     void slot_widget_mode_switch();
-    void slot_commandline_received(const QByteArray& serialized_options);
     void slot_on_settings_saved();
     void slot_on_aboutYarock();
     void slot_on_yarock_quit();
@@ -125,7 +124,8 @@ Q_OBJECT
 
     /* Database slots    */
     void slot_database_start();
-    void slot_database_dialog();
+    void slot_database_ope_dialog();
+    void slot_database_add_dialog();
 
     /* Jump to item slot */
     void set_enable_jump_to(bool b);
@@ -172,7 +172,7 @@ Q_OBJECT
     MinimalWidget         *m_minimalwidget;
     HistoManager          *m_histoManager;
 
-    GlobalShortcuts       *m_globalShortcuts;
+    ShortcutsManager      *m_shortcutsManager;
     DbusNotification      *m_dbus_notifier;
     MprisManager          *m_mpris_manager;
 

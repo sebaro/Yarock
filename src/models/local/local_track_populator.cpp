@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -59,7 +59,7 @@ void LocalTrackPopulator::run()
     /*-----------------------------------------------------------*/
     /* Get file count from database                              */
     /* ----------------------------------------------------------*/
-    QSqlQuery queryCount("SELECT COUNT(*) FROM `view_tracks`",*Database::instance()->db());
+    QSqlQuery queryCount("SELECT COUNT(*) FROM `tracks`",*Database::instance()->db());
     queryCount.next();
     if (queryCount.value(0).toInt() == 0) {
       emit populatingFinished();
@@ -91,7 +91,7 @@ void LocalTrackPopulator::run()
 
     QSqlQuery query_1("SELECT artist_id,artist_name,artist_favorite,artist_playcount,artist_rating, \
                               album_id,album_name,album_year,album_favorite,album_playcount,album_rating,album_disc, \
-                              id,trackname,filename,number,genre_name,length,albumgain,albumpeakgain,trackgain,trackpeakgain,last_played,playcount,rating \
+                              id,trackname,filename,number,genre_name,length,last_played,playcount,rating \
                        FROM view_tracks \
                        ORDER BY artist_name COLLATE NOCASE ASC,album_year ASC,album_name ASC,album_disc ASC, number ASC",*Database::instance()->db());
 
@@ -165,17 +165,9 @@ void LocalTrackPopulator::run()
         trackItem->year       =  albumItem->year;
         trackItem->genre      =  query_1.value(16).toString();
         trackItem->duration   =  query_1.value(17).toInt();
-        /* can save a little memory if needed */
-        if(SETTINGS()->_replaygain != 0) 
-        {
-          trackItem->albumGain  =  query_1.value(18).toFloat();
-          trackItem->albumPeak  =  query_1.value(19).toFloat();
-          trackItem->trackGain  =  query_1.value(20).toFloat();
-          trackItem->trackPeak  =  query_1.value(21).toFloat();
-        }
-        trackItem->lastPlayed =  !query_1.value(22).isNull() ? query_1.value(22).toInt() : -1;
-        trackItem->playcount  =  query_1.value(23).toInt();
-        trackItem->rating     =  query_1.value(24).toFloat();
+        trackItem->lastPlayed =  !query_1.value(18).isNull() ? query_1.value(18).toInt() : -1;
+        trackItem->playcount  =  query_1.value(19).toInt();
+        trackItem->rating     =  query_1.value(20).toFloat();
         trackItem->disc_number = query_1.value(11).toInt();
         trackItem->setParent(albumItem);
         m_model->trackItemHash[trackItem->id] = trackItem;
@@ -243,8 +235,9 @@ void LocalTrackPopulator::initGenreModel()
       if( QString::compare(s_genre, track->genre, Qt::CaseInsensitive)  == 0 &&
           media == track->parent()
       )
+      {
           continue;
-      //if( s_genre == track->genre && media == track->parent()) continue;
+      }
       
       /* ------- New Genre ------- */
       if(QString::compare(s_genre, track->genre, Qt::CaseInsensitive)  != 0)

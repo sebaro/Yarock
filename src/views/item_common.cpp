@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -21,117 +21,6 @@
 #include <QPainter>
 #include <QStaticText>
 #include <QApplication>
-
-/*
-********************************************************************************
-*                                                                              *
-*    Class HeaderItem                                                          *
-*                                                                              *
-********************************************************************************
-*/
-HeaderItem::HeaderItem(QWidget* parentView)
-{
-#if QT_VERSION < 0x050000
-    setAcceptsHoverEvents(true);
-#else
-    setAcceptHoverEvents(true);
-#endif     
-    setAcceptDrops(false);
-    setFlag(QGraphicsItem::ItemIsSelectable, false);
-    setFlag(QGraphicsItem::ItemIsMovable, false);
-    setFlag(QGraphicsItem::ItemIgnoresTransformations, true);
-
-    m_parent = parentView;
-    
-    m_height = 26;
-}
-
-HeaderItem::HeaderItem(int height, QWidget* parentView)
-{
-#if QT_VERSION < 0x050000
-    setAcceptsHoverEvents(true);
-#else
-    setAcceptHoverEvents(true);
-#endif       
-    setAcceptDrops(false);
-    setFlag(QGraphicsItem::ItemIsSelectable, false);
-    setFlag(QGraphicsItem::ItemIsMovable, false);
-    setFlag(QGraphicsItem::ItemIgnoresTransformations, true);
-
-    m_parent = parentView;
-    
-    m_height = height; 
-}
-
-    
-    
-void HeaderItem::setText(const QString& t)
-{
-    m_text = t;
-}
-
-QRectF HeaderItem::boundingRect() const
-{
-  
-    const int w_parent  = m_parent->width() - 10;
-    const int width = w_parent < 100 ? 100 : w_parent;
-
-    return QRectF(0, 0, width, m_height);
-}
-
-void HeaderItem::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)
-{
-Q_UNUSED(option)
-Q_UNUSED(widget)
-
-    QColor m_brush_color = SETTINGS()->_baseColor;
-    m_brush_color.setAlphaF(0.6);
-    
-    QRect rect = boundingRect().toRect();
-    painter->setPen(QPen( m_brush_color, 0.1, Qt::SolidLine, Qt::RoundCap));
-    painter->setBrush(QBrush( m_brush_color ,Qt::SolidPattern));
-    painter->drawRoundedRect(rect, 4.0, 4.0);
-
-    //! draw text
-    QFont font = QApplication::font();
-    font.setBold( true );
-    painter->setFont(font);
-    painter->setPen(QColor(Qt::white));
-
-    QFontMetrics metric( painter->font() );
-    const QString elided = metric.elidedText ( m_text, Qt::ElideRight, boundingRect().toRect().width() -50);
-    
-    painter->drawText(rect, Qt::AlignCenter | Qt::AlignVCenter, elided);
-}
-
-
-/*
-********************************************************************************
-*                                                                              *
-*    Class HeaderLayoutItem                                                    *
-*                                                                              *
-********************************************************************************
-*/
-HeaderLayoutItem::HeaderLayoutItem(QWidget* parentView) : HeaderItem(parentView)
-{
-    setGraphicsItem(this);
-    setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
-}
-
-
-// Inherited from QGraphicsLayoutItem
-void HeaderLayoutItem::setGeometry(const QRectF &geom)
-{
-    setPos(geom.topLeft());
-}
-
-// Inherited from QGraphicsLayoutItem
-QSizeF HeaderLayoutItem::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
-{
-Q_UNUSED(which);
-Q_UNUSED(constraint);
-    return boundingRect().size();
-}
 
 /*
 ********************************************************************************
@@ -192,6 +81,35 @@ Q_UNUSED(option)
     painter->drawText(rect.adjusted(70,6,-100,-10), Qt::AlignVCenter, elided);
 
 }
+
+/*
+********************************************************************************
+*                                                                              *
+*    InfoLayoutItem                                                            *
+*                                                                              *
+********************************************************************************
+*/
+InfoLayoutItem::InfoLayoutItem(QWidget* parentView) :  InfoGraphicItem(parentView)
+{
+    setGraphicsItem(this);
+    setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
+}
+
+
+// Inherited from QGraphicsLayoutItem
+void InfoLayoutItem::setGeometry(const QRectF &geom)
+{
+    setPos(geom.topLeft());
+}
+
+// Inherited from QGraphicsLayoutItem
+QSizeF InfoLayoutItem::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
+{
+Q_UNUSED(which);
+Q_UNUSED(constraint);
+    return boundingRect().size();
+}
+
 
 /*
 ********************************************************************************
@@ -316,7 +234,7 @@ Q_UNUSED(option)
 
     //BEGIN: horizontal line
     {
-      QPoint start(boundingRect().toRect().left()+3, boundingRect().toRect().top() + 22);
+      QPoint start(boundingRect().toRect().left()+3, boundingRect().toRect().top() + 24);
       QPoint horizontalGradTop(boundingRect().toRect().topLeft());
       horizontalGradTop.rx() += boundingRect().toRect().width() - 6;
       QLinearGradient gradient(start, horizontalGradTop);

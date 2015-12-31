@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -526,11 +526,16 @@ void PlaylistDelegate::paint ( QPainter * painter, const QStyleOptionViewItem & 
   
     /* draw background */
     QStyleOptionViewItemV4 opt(option);
+    opt.state = option.state;
+    opt.showDecorationSelected = true;
+    opt.state &= ~(QStyle::State_Selected | QStyle::State_MouseOver);
+    opt.state |= QStyle::State_Enabled;
     opt.state |= QStyle::State_Active;
     opt.state |= QStyle::State_HasFocus;
-
-    QStyle *style = opt.widget ? opt.widget->style() : QApplication::style();
-    style->drawPrimitive(QStyle::PE_PanelItemViewItem, &opt, painter, opt.widget);
+    if( isSelected )
+      opt.state |= QStyle::State_Selected;
+    
+    UTIL::getStyle()->drawPrimitive(QStyle::PE_PanelItemViewItem, &opt, painter, opt.widget);
 
     /* set painter font & color*/
     painter->setFont(font_normal);
@@ -570,19 +575,22 @@ void PlaylistDelegate::paint ( QPainter * painter, const QStyleOptionViewItem & 
         if(isTrack)
         {
             /* track in collection -> draw painting */
-            if(ACTIONS()->value(PLAYQUEUE_OPTION_SHOW_RATING)->isChecked() && track->id != -1)
+            if(ACTIONS()->value(PLAYQUEUE_OPTION_SHOW_RATING)->isChecked())
             {
-               rightoffset = 75;
-               float hover_rating = -1.0;
-               if(m_mouse_over_index == index || (
-                   m_view->selectionModel()->selectedIndexes().contains(m_mouse_over_index) &&
-                   m_view->selectionModel()->selectedIndexes().contains(index)))
-               {
-                 hover_rating = RatingPainter::RatingForPos(m_mouse_over_pos, QRect(m_view->viewport()->width()-75, 0, 80, 16));
-               }
-          
+              rightoffset = 75;
+              float hover_rating = -1.0;
+              if(track->id != -1)
+              {
+                  if(m_mouse_over_index == index || (
+                     m_view->selectionModel()->selectedIndexes().contains(m_mouse_over_index) &&
+                     m_view->selectionModel()->selectedIndexes().contains(index)))
+                  {
+                      hover_rating = RatingPainter::RatingForPos(m_mouse_over_pos, QRect(m_view->viewport()->width()-75, 0, 80, 16));
+                  }
+              }
+
               RatingPainter::instance()->Paint(painter, QRect(width-75, top+height/2, 75, 16), hover_rating == -1.0 ? track->rating : hover_rating, true);
-            
+
               /* paint duration */
               const QString durationText = track->durationToString();
               painter->drawText(width - 50,top+height/2-fm.height()-1, 49, fm.height()+2, Qt::AlignTop | Qt::AlignRight, durationText);
@@ -613,7 +621,7 @@ void PlaylistDelegate::paint ( QPainter * painter, const QStyleOptionViewItem & 
         else if( isTrack )
             track_title = track->title;
         else
-            track_title = track->name;
+            track_title = track->extra["station"].toString();
         
         track_title = fm.elidedText ( track_title, Qt::ElideRight, width-leftoffset-rectDuree.width()-5 );
         painter->drawText(leftoffset,top+height/2-fm.height()-1,width-leftoffset-rectDuree.width(), fm.height()+2,Qt::AlignTop | Qt::AlignLeft, track_title);

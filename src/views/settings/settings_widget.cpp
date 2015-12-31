@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -26,7 +26,7 @@
 #include "online/lastfm.h"
 #include "infosystem/services/service_lyrics.h"
 
-#include "global_shortcuts.h"
+#include "shortcuts_manager.h"
 #include "utilities.h"
 #include "settings.h"
 #include "debug.h"
@@ -36,6 +36,9 @@
 #include <QGraphicsView>
 #include <QGraphicsProxyWidget>
 #include <QCryptographicHash>
+
+#include <QMenu>
+
 /*
 ********************************************************************************
 *                                                                              *
@@ -208,6 +211,7 @@ void PageGeneral::slot_color_button_clicked()
     if (color.isValid())
     {
        SETTINGS()->_baseColor = color;
+       SETTINGS()->updateCheckedColor();
       
        QPalette  pal;
        pal.setColor( QPalette::Active, QPalette::Button, color );
@@ -282,26 +286,71 @@ void PagePlayer::createGui()
     /*-------------------------------------------------*/
     /* Player settings                                 */
     /* ------------------------------------------------*/
+    ui_engineButton = new QPushButton(main_widget);
+    ui_engineButton->setMaximumWidth(150);
+    ui_engineButton->setMinimumWidth(150);
     
-    ui_comboEngine = new QComboBox(main_widget);
-    ui_comboEngine->setMaximumWidth(150);
-    ui_comboEngine->setMinimumWidth(150);
-    ui_comboEngine->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Minimum);
+    QMenu *menu = new QMenu(ui_engineButton);
+    menu->setMaximumWidth(150);
+    menu->setMinimumWidth(150);    
+    menu->setContentsMargins(8,8,8,8);
+    menu->setStyleSheet(
+        QString ("QMenu {icon-size: 32px; background-color: none;border: none;} ")                 
+    );
+#if QT_VERSION < 0x050000
+        menu->setStyleSheet(QString("QMenu::item:disabled { color : gray; }"));
+#endif    
+    ui_engineButton->setMenu(menu);
     
-#ifdef ENABLE_VLC
-    ui_comboEngine->addItem("vlc", QVariant::fromValue((int)ENGINE::VLC));
+    ui_engineGroup = new QActionGroup(this);
+    ui_engineGroup->setExclusive(true);    
+
+        QAction *a1 = new QAction(QIcon(), "vlc", this);
+        a1->setData(QVariant::fromValue((int)ENGINE::VLC));
+        a1->setIconVisibleInMenu(true);
+        a1->setCheckable(true);
+#ifndef ENABLE_VLC
+        a1->setEnabled(false);
 #endif
-  
-#ifdef ENABLE_MPV
-    ui_comboEngine->addItem("mpv", QVariant::fromValue((int)ENGINE::MPV));
+        QAction *a2 = new QAction(QIcon(), "mpv", this);
+        a2->setData(QVariant::fromValue((int)ENGINE::MPV));
+        a2->setIconVisibleInMenu(true);        
+        a2->setCheckable(true);
+#ifndef ENABLE_MPV
+        a2->setEnabled(false);
 #endif
-    
-#ifdef ENABLE_PHONON
-    ui_comboEngine->addItem("phonon",  QVariant::fromValue((int)ENGINE::PHONON));   
-#endif
-    ui_comboEngine->addItem("null engine",  QVariant::fromValue((int)ENGINE::NO_ENGINE));
-    
-    
+        QAction *a3 = new QAction(QIcon(), "phonon", this);
+        a3->setData(QVariant::fromValue((int)ENGINE::PHONON));
+        a3->setIconVisibleInMenu(true);        
+        a3->setCheckable(true);
+#ifndef ENABLE_PHONON
+        a3->setEnabled(false);
+#endif    
+//         QAction *a4 = new QAction(QIcon(), "qtmultimedia", this);
+//         a4->setData(QVariant::fromValue((int)ENGINE::QTMULTIMEDIA));
+//         a4->setIconVisibleInMenu(true);        
+//         a4->setCheckable(true);
+// #ifndef ENABLE_QTMULTIMEDIA
+//         a4->setEnabled(false);
+// #endif
+        QAction *a5 = new QAction(QIcon(), "no engine", this);
+        a5->setData(QVariant::fromValue((int)ENGINE::NO_ENGINE));
+        a5->setIconVisibleInMenu(true);        
+        a5->setCheckable(true);
+        
+        ui_engineGroup->addAction(a1);
+        ui_engineGroup->addAction(a2);
+        ui_engineGroup->addAction(a3);
+        //ui_engineGroup->addAction(a4);
+        ui_engineGroup->addAction(a5);
+        menu->addActions(ui_engineGroup->actions());
+
+        foreach(QAction* a, ui_engineGroup->actions())
+        {
+           connect(a, SIGNAL(triggered()), this, SLOT(slot_engineClicked()));
+        }
+ 
+
     ui_stopOnPlayqueueClear = new QCheckBox(main_widget);
     ui_stopOnPlayqueueClear->setText(tr("Stop playing on playqueue clear"));
 
@@ -336,16 +385,16 @@ void PagePlayer::createGui()
     
     QVBoxLayout* vl0 = new QVBoxLayout(main_widget);
     vl0->addWidget( lbl1 );
-    vl0->addWidget( ui_comboEngine );
+    vl0->addWidget( ui_engineButton );
     vl0->addItem( new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Expanding) );
     vl0->addWidget( lbl2 );
-    vl0->addWidget(ui_enable_replaygain);
-    vl0->addWidget(ui_comboRGMode);
+    vl0->addWidget( ui_enable_replaygain );
+    vl0->addWidget( ui_comboRGMode );
     vl0->addItem( new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Expanding) );
     vl0->addWidget( lbl3 );
-    vl0->addWidget(ui_stopOnPlayqueueClear);
-    vl0->addWidget(ui_restartPlayingAtStartup);
-    vl0->addWidget(ui_restorePlayqueue);
+    vl0->addWidget( ui_stopOnPlayqueueClear );
+    vl0->addWidget( ui_restartPlayingAtStartup );
+    vl0->addWidget( ui_restorePlayqueue );
     
 
     // proxy widget
@@ -416,17 +465,21 @@ void PagePlayer::saveSettings()
     else
         SETTINGS()->_replaygain = 2;
     
-    QVariant v  = ui_comboEngine->itemData(ui_comboEngine->currentIndex());
-    
-    if( SETTINGS()->_engine != v.toInt() ) 
+    /* save active engine */
+    foreach(QAction* a, ui_engineGroup->actions())
     {
-      _isEngineChanged    = true;
-      SETTINGS()->_engine = v.toInt();
-    }
+       if( a->isChecked() && (SETTINGS()->_engine != a->data().toInt()) )
+       {
+           SETTINGS()->_engine = a->data().toInt();
+           break;
+       }
+    }    
 }
 
 void PagePlayer::restoreSettings()
 {
+    Debug::debug() << "PagePlayer::restoreSettings";
+    
     this->ui_stopOnPlayqueueClear->setChecked( SETTINGS()->_stopOnPlayqueueClear );
     this->ui_restartPlayingAtStartup->setChecked( SETTINGS()->_restartPlayingAtStartup );
     this->ui_restorePlayqueue->setChecked( SETTINGS()->_restorePlayqueue );
@@ -435,16 +488,25 @@ void PagePlayer::restoreSettings()
     this->ui_comboRGMode->setCurrentIndex(SETTINGS()->_replaygain == 1 ? 0 : 1);
     this->ui_comboRGMode->setEnabled(ui_enable_replaygain->isChecked());
 
-    int selectedIdx = -1; 
-    switch(SETTINGS()->_engine) {
-      case ENGINE::NO_ENGINE: selectedIdx = ui_comboEngine->findText("null engine");break;
-      case ENGINE::VLC:       selectedIdx = ui_comboEngine->findText("vlc");break;
-      case ENGINE::MPV:       selectedIdx = ui_comboEngine->findText("mpv");break;
-      case ENGINE::PHONON:    selectedIdx = ui_comboEngine->findText("phonon");break;
-      default:break;
-    }
-    ui_comboEngine->setCurrentIndex(selectedIdx);
+    /* restore active engine */
+    foreach(QAction* a, ui_engineGroup->actions())
+    {
+        if( a->data().toInt() == Engine::activeEngine())
+        {
+            a->setChecked(true);
+            ui_engineButton->setText(a->text());
+            break;
+        }
+    }    
 }
+
+void PagePlayer::slot_engineClicked()
+{
+    QAction *action = qobject_cast<QAction *>(sender());
+
+    ui_engineButton->setText( action->text() );
+}
+
 
 void PagePlayer::slot_enable_replaygain()
 {
@@ -806,7 +868,7 @@ void PageLibrary::newDatabaseParam()
        if (m_db_params.contains(name)) 
        {
           DialogMessage dlg(0,tr("New database"));
-          dlg.setMessage(tr("The database  \"%1\" already exist, please try another name").arg(name));
+          dlg.setMessage(tr("The database  \"%1\" already exists, please try another name").arg(name));
           dlg.resize(445, 120);
           dlg.exec();  
           return;
@@ -860,7 +922,7 @@ void PageLibrary::delDatabaseParam()
     if (!m_db_params.contains(name) || name.isEmpty()) return;
 
     DialogQuestion dlg(0,tr("Delete database properties"));
-    dlg.setQuestion(tr("Are you sure you want to delete the \"%1\" database ?").arg(name));
+    dlg.setQuestion(tr("Are you sure you want to delete the \"%1\" database?").arg(name));
     dlg.resize(445, 120);
 
     if(dlg.exec() == QDialog::Accepted) 
@@ -1139,15 +1201,15 @@ void PageShortcut::restoreSettings()
     m_items["clear_playqueue"]->m_key = SETTINGS()->_shortcutsKey["clear_playqueue"];
 
 
-    m_items["play"]->m_status = GlobalShortcuts::instance()->shortcuts().value("play").status;
-    m_items["stop"]->m_status = GlobalShortcuts::instance()->shortcuts().value("stop").status;
-    m_items["prev_track"]->m_status = GlobalShortcuts::instance()->shortcuts().value("prev_track").status;
-    m_items["next_track"]->m_status = GlobalShortcuts::instance()->shortcuts().value("next_track").status;
-    m_items["inc_volume"]->m_status = GlobalShortcuts::instance()->shortcuts().value("inc_volume").status;
-    m_items["dec_volume"]->m_status = GlobalShortcuts::instance()->shortcuts().value("dec_volume").status;
-    m_items["mute_volume"]->m_status = GlobalShortcuts::instance()->shortcuts().value("mute_volume").status;
-    m_items["jump_to_track"]->m_status = GlobalShortcuts::instance()->shortcuts().value("jump_to_track").status;
-    m_items["clear_playqueue"]->m_status = GlobalShortcuts::instance()->shortcuts().value("clear_playqueue").status;
+    m_items["play"]->m_status            = ShortcutsManager::instance()->shortcuts().value("play").status;
+    m_items["stop"]->m_status            = ShortcutsManager::instance()->shortcuts().value("stop").status;
+    m_items["prev_track"]->m_status      = ShortcutsManager::instance()->shortcuts().value("prev_track").status;
+    m_items["next_track"]->m_status      = ShortcutsManager::instance()->shortcuts().value("next_track").status;
+    m_items["inc_volume"]->m_status      = ShortcutsManager::instance()->shortcuts().value("inc_volume").status;
+    m_items["dec_volume"]->m_status      = ShortcutsManager::instance()->shortcuts().value("dec_volume").status;
+    m_items["mute_volume"]->m_status     = ShortcutsManager::instance()->shortcuts().value("mute_volume").status;
+    m_items["jump_to_track"]->m_status   = ShortcutsManager::instance()->shortcuts().value("jump_to_track").status;
+    m_items["clear_playqueue"]->m_status = ShortcutsManager::instance()->shortcuts().value("clear_playqueue").status;
 
     _isChanged = false;
     update();
@@ -1518,13 +1580,13 @@ void PageScrobbler::updateSignInStatus()
       lineEdit_2->clear();
       statusPixmap->setPixmap(QPixmap(":/images/checkmark-48x48.png").scaled(QSize(24,24)));
       //statusPixmap->setPixmap(QPixmap(":/images/signal_accepted-48x48.png").scaled(QSize(24,24)));
-      statusLabel->setText(QString(tr("You are log in lastFm service as <b>%1</b>").arg(LastFmService::instance()->username())));
+      statusLabel->setText(QString(tr("You are log in Last.fm service as <b>%1</b>").arg(LastFmService::instance()->username())));
 
       signInButton->setText(tr("Sign Out"));
     }
     else {
       statusPixmap->setPixmap(QPixmap(":/images/warning-48x48.png").scaled(QSize(24,24)));
-      statusLabel->setText(tr("You are not log into"));
+      statusLabel->setText(tr("You are not logged in"));
       signInButton->setText(tr("Sign In"));
     }
 }

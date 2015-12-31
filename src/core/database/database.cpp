@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -30,7 +30,7 @@
 #include <QMap>
 #include <QSettings>
 
-#define CST_DATABASE_REV    19
+#define CST_DATABASE_REV  20
 
 
 
@@ -108,6 +108,9 @@ void Database::create()
                  "    `mtime` INTEGER, "                                \
                  "    `playcount` INTEGER DEFAULT 0,"                   \
                  "    `rating`  INTEGER DEFAULT 0,"                     \
+                 "    `bitrate` INTEGER DEFAULT 0,"                     \
+                 "    `samplerate` INTEGER DEFAULT 0,"                  \
+                 "    `bpm` REAL NULL,"                                 \
                  "    `albumgain` REAL NULL,"                           \
                  "    `albumpeakgain` REAL NULL,"                       \
                  "    `trackgain` REAL NULL,"                           \
@@ -140,25 +143,9 @@ void Database::create()
                  "           `histo`.`url`,"                                 \
                  "           `histo`.`name`,"                                \
                  "           `histo`.`date`,"                                \
-                 "           `tracks`.`id` AS `track_id`,"                   \
-                 "           `tracks`.`trackname`,"                          \
-                 "           `tracks`.`number`,"                             \
-                 "           `tracks`.`length`,"                             \
-                 "           `tracks`.`playcount`,"                          \
-                 "           `tracks`.`albumgain`,"                          \
-                 "           `tracks`.`albumpeakgain`,"                      \
-                 "           `tracks`.`trackgain`,"                          \
-                 "           `tracks`.`trackpeakgain`,"                      \
-                 "           `artists`.`name` AS `artist_name`,"             \
-                 "           `albums`.`name` AS `album_name`,"               \
-                 "           `genres`.`genre` AS `genre_name`,"              \
-                 "           `years`.`year`"                                 \
+                 "           `tracks`.`id` AS `track_id`"                    \
                  "    FROM `histo`"                                          \
-                 "    LEFT OUTER JOIN `tracks` ON `histo`.`url` = `tracks`.`filename`" \
-                 "    LEFT JOIN `artists` ON `tracks`.`artist_id` = `artists`.`id`" \
-                 "    LEFT JOIN `albums` ON `tracks`.`album_id` = `albums`.`id`" \
-                 "    LEFT JOIN `genres` ON `tracks`.`genre_id` = `genres`.`id`" \
-                 "    LEFT JOIN `years` ON `tracks`.`year_id` = `years`.`id`;");
+                 "    LEFT OUTER JOIN `tracks` ON `histo`.`url` = `tracks`.`filename`;");
 
     //! VIEW_TRACKS
     Debug::debug() << query.exec("CREATE VIEW `view_tracks` AS"                \
@@ -172,10 +159,6 @@ void Database::create()
                  "           `tracks`.`artist_id`,"                            \
                  "           `tracks`.`album_id`,"                             \
                  "           `tracks`.`genre_id`,"                             \
-                 "           `tracks`.`albumgain`,"                            \
-                 "           `tracks`.`albumpeakgain`,"                        \
-                 "           `tracks`.`trackgain`,"                            \
-                 "           `tracks`.`trackpeakgain`,"                        \
                  "           `artists`.`name` AS `artist_name`,"               \
                  "           `artists`.`favorite` AS `artist_favorite`,"       \
                  "           `artists`.`playcount` AS `artist_playcount`,"     \
@@ -249,6 +232,16 @@ void Database::create()
                  "    `type` INTEGER,"                                      \
                  "    `favorite` INTEGER);");
 
+    // favorite stream
+    query.exec("CREATE TABLE `favorite_stream` ("                           \
+                 "    `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"     \
+                 "    `url` TEXT NOT NULL,"                                 \
+                 "    `name` TEXT NOT NULL,"                                \
+                 "    `genre` TEXT,"                                        \
+                 "    `website` TEXT,"                                      \
+                 "    `provider` TEXT);");
+
+    
     //! Smart Playlist
     SmartPlaylist::createDatabase( );
 }
@@ -498,6 +491,8 @@ void Database::settings_save()
     s.endArray();
     s.endGroup();
     s.sync();
+    
+    emit settingsChanged();
 }
 
 /* ---------------------------------------------------------------------------*/

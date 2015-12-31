@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -38,11 +38,15 @@ public:
   static bool isArtistExists(const QString & artist);
   static int  insertArtist(const QString & artist);
   static int  updateArtist(const QString & artist, bool favorite, int playcount, float rating);
+  
+  static bool isAlbumExists(const QString & album,int artist_id);
   static int  insertAlbum(const QString & album, int artist_id,int year,int disc);
   static int  updateAlbum(const QString & album, int artist_id,int year, int disc, bool favorite, int playcount, float rating);
   static void clean();
   
   static void updateFavorite(MEDIA::MediaPtr media, bool isFavorite);
+  static void addStreamToFavorite(MEDIA::TrackPtr stream);
+  
   static void rateMediaItems(QList<MEDIA::MediaPtr> list);
   
 private:

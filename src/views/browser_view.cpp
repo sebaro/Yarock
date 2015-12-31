@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -132,6 +132,7 @@ BrowserView::BrowserView(QWidget *parent) : QGraphicsView(parent)
     connect(ACTIONS()->value(BROWSER_NEXT), SIGNAL(triggered()), this, SLOT(slot_on_history_next_activated()));
 
     connect(MenuModel::instance(),SIGNAL(menu_browser_triggered(VIEW::Id, QVariant)),this, SLOT(slot_on_menu_browser_triggered(VIEW::Id, QVariant)));
+    connect(ACTIONS()->value(TAG_CLICKED), SIGNAL(triggered()), this, SLOT(slot_on_tag_clicked()));
     
     connect (m_scrollbar, SIGNAL(actionTriggered(int)), this, SLOT(slot_check_slider(int)));
       
@@ -279,6 +280,29 @@ void BrowserView::slot_on_load_new_data(const QVariant data)
     if( data.canConvert<QString>() || (qvariant_cast<MEDIA::LinkPtr>(data))->state == SERVICE::DATA_OK )
       update_statuswidget();
 }
+
+
+void BrowserView::slot_on_tag_clicked()
+{
+    Debug::debug() << "  [BrowserView] slot_on_tag_clicked";
+    BrowserParam current_param;
+    if(m_browser_params_idx != -1)
+      current_param = m_browser_params.at(m_browser_params_idx);
+
+  
+    BrowserParam param = BrowserParam(
+           VIEW::ViewGenre,
+           ACTIONS()->value(TAG_CLICKED)->data(),
+           QVariant());
+    
+    add_history_entry(param);
+
+    switch_view(param);
+
+    update_statuswidget();
+    
+}
+
 
 void BrowserView::active_view(VIEW::Id m, QString f, QVariant d)
 {
@@ -568,8 +592,14 @@ void BrowserView::contextMenuEvent ( QContextMenuEvent * event )
     }
     else 
     {
-       if(!m_menu)
+       if(!m_menu) 
+       {
          m_menu = new QMenu(this);
+         
+         m_menu->setStyleSheet(
+             QString("QMenu {icon-size: 32px; background-color: none;border: none;}"
+                     "QMenu::item {background-color: none;}") );         
+       }
        
        m_menu->clear();
        m_menu->addActions(scene->actions());

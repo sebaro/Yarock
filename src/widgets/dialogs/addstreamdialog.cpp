@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -22,6 +22,7 @@
 #include <QGridLayout>
 #include <QVBoxLayout>
 #include <QLabel>
+#include <QApplication>
 
 
 /*
@@ -36,16 +37,15 @@ AddStreamDialog::AddStreamDialog(QWidget *parent,bool active_category) : DialogB
     //create ui
     this->setFixedSize(480,160);
 
-    ui_edit_url   = new QLineEdit();
+    ui_edit_url   = new QLineEdit(this);
     ui_edit_url->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
     ui_edit_url->setText("http://");
-
-    ui_edit_name  = new QLineEdit();
+    
+    ui_edit_name  = new QLineEdit(this);
     ui_edit_name->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
 
     QGridLayout *ui_grid_layout = new QGridLayout();
     ui_grid_layout->setContentsMargins(0, 0, 0, 0);
-
     ui_grid_layout->addWidget(new QLabel(tr("url")), 0, 0, 1, 1);
     ui_grid_layout->addWidget(ui_edit_url, 0, 1, 1, 1);
     ui_grid_layout->addWidget(new QLabel(tr("name")), 1, 0, 1, 1);
@@ -55,7 +55,7 @@ AddStreamDialog::AddStreamDialog(QWidget *parent,bool active_category) : DialogB
     
     if(active_category) 
     {
-      ui_edit_category  = new QLineEdit();
+      ui_edit_category  = new QLineEdit(this);
       ui_grid_layout->addWidget(new QLabel(tr("category")), 2, 0, 1, 1);
       ui_grid_layout->addWidget(ui_edit_category, 2, 1, 1, 1);
     }

@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -238,12 +238,12 @@ void PopupModel::getStreamSuggestions(const QString & query)
 
        found = false;
        if(query.length() < 3)
-        found = stream->name.startsWith ( query, Qt::CaseInsensitive );
+        found = stream->extra["station"].toString().startsWith ( query, Qt::CaseInsensitive );
        else
-        found = stream->name.contains ( query, Qt::CaseInsensitive );
+        found = stream->extra["station"].toString().contains ( query, Qt::CaseInsensitive );
 
-       if(found && !names.contains(stream->name) && names.count() < 5)
-         names << stream->name;
+       if(found && !names.contains(stream->extra["station"].toString()) && names.count() < 5)
+         names << stream->extra["station"].toString();
 
         if(categories.count() == 5 && names.count() == 5)
           break;

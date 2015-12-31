@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -116,7 +116,6 @@ class Link : public Media
 
     /*------ ATTRIBUTS ------*/
     QString      name;
-    QString      genre;
     QString      url;
     int          state;
 };
@@ -128,8 +127,7 @@ class Artist : public Media
     Artist();
     ~Artist(){};
 
-    QPixmap pixmap() const;    
-    QString coverpath() const;
+    QString imageHash() const;
 
     /*------ ATTRIBUTS ------*/
     int          id;
@@ -151,9 +149,8 @@ class Album : public Media
 
     QStringList genres();
     QString yearToString() const;
-    QPixmap pixmap() const;
-    
-    QString coverpath() const;
+
+    QString coverHash() const;
     
     bool isMultiset() {return !ids.isEmpty();}
     QList<int> dbIds();
@@ -182,14 +179,13 @@ class Track : public Media
     QString durationToString() const;
     QString yearToString() const;
     static QString path(const QString& filename);
-    QString coverName() const;
+    QString coverHash() const;
     QString lastplayed_ago() const;
 
     /*------ ATTRIBUTS ------*/
     int          id;
     QString      url;
-    QString      name;
-    QString      title;
+    QString      title;      // or stream name
     QString      artist;
     QString      album;
     QString      genre;      // = stream category
@@ -211,6 +207,8 @@ class Track : public Media
     bool         isPlayed;
     bool         isStopAfter;
     int          disc_number;
+    
+    QHash <QString, QVariant> extra;
 };
 
 class Playlist : public Media
@@ -282,6 +280,9 @@ namespace MEDIA {
   TrackPtr FromLocalFile(const QString url, int* p_disc=0);
   TrackPtr FromDataBase(const QString url);
   TrackPtr FromDataBase(int trackId);
+  void ReplayGainFromDataBase(MEDIA::TrackPtr track);
+  void ExtraFromDataBase(MEDIA::TrackPtr track);
+
 
   inline QString urlHash(const QString& url)
   {
@@ -298,7 +299,7 @@ namespace MEDIA {
   }
   
   //! ------ cover utilities ---------------------------------------------------
-  inline QString coverName(const QString& artist,const QString& album)
+  inline QString coverHash(const QString& artist,const QString& album)
   {
       if( (!artist.isEmpty()) && (!album.isEmpty()) )
       {
@@ -319,7 +320,6 @@ namespace MEDIA {
   bool compareAlbumItemRating(const AlbumPtr, const AlbumPtr);
   bool compareArtistItemPlaycount(const ArtistPtr, const ArtistPtr);
   bool compareArtistItemRating(const ArtistPtr, const ArtistPtr);
-  bool compareStreamName(const TrackPtr, const TrackPtr);
   bool compareStreamCategorie(const TrackPtr, const TrackPtr);
 } // end namespace MEDIA
 

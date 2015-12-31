@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -103,7 +103,7 @@ void PlaylistPopulator::run()
             stream->setType(TYPE_STREAM);
             stream->id          = -1;
             stream->url         = url;
-            stream->name        = url;
+//             stream->name        = url;
       
             emit async_load(stream, m_playlist_row++);
         }
@@ -166,7 +166,7 @@ void PlaylistPopulator::run()
               stream->setType(TYPE_STREAM);
               stream->id          = -1;
               stream->url         = url;
-              stream->name        = url;
+//               stream->name        = url;
 
               m_model->request_insert_track(stream, m_playlist_row++);
 
@@ -339,7 +339,6 @@ void PlaylistPopulator::restoreSession()
                 track = MEDIA::TrackPtr(new MEDIA::Track());
                 track->id           = -1;
                 track->url          = query.value(0).toString();
-                track->name         = query.value(1).toString();
                 track->title        = query.value(1).toString();
 
                 //! default value
@@ -357,7 +356,7 @@ void PlaylistPopulator::restoreSession()
               stream->setType(TYPE_STREAM);
               stream->id          = -1;
               stream->url         = query.value(0).toString();
-              stream->name        = query.value(1).toString();
+              stream->extra["station"] = query.value(1).toString();
               stream->isFavorite  = false;
               stream->isPlaying   = false;
               stream->isBroken    = false;

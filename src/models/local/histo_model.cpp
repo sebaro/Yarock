@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -62,9 +62,7 @@ void HistoModel::updateModel()
     if (!Database::instance()->open())
         return;
 
-    QSqlQuery query("SELECT id,url,name,date, \
-                            track_id,trackname,number,length,playcount,albumgain,albumpeakgain,trackgain,trackpeakgain, \
-                            artist_name,album_name,genre_name,year FROM view_histo ORDER BY date DESC",*Database::instance()->db());
+    QSqlQuery query("SELECT id,url,name,date,track_id FROM view_histo ORDER BY date DESC",*Database::instance()->db());
 
     while (query.next())
     {
@@ -78,11 +76,8 @@ void HistoModel::updateModel()
                LocalTrackModel::instance()->trackItemHash.value(track_id.toInt())
                );
 
-          if(media) {
-            // keep name from histo
-            media->name       = query.value(2).toString();
+          if(media)
             media->lastPlayed = (query.value(3).isNull() ? -1 : query.value(3).toInt());
-          }
 
           addItem(media);
       }
@@ -95,7 +90,6 @@ void HistoModel::updateModel()
             MEDIA::TrackPtr media = MEDIA::TrackPtr(new MEDIA::Track());
             media->id           = -1;
             media->url          = query.value(1).toString();
-            media->name         = query.value(2).toString();
             media->title        = query.value(2).toString();
             media->lastPlayed   = (query.value(3).isNull() ? -1 : query.value(3).toInt());
 
@@ -112,7 +106,7 @@ void HistoModel::updateModel()
             media->setType(TYPE_STREAM);
             media->id          = -1;
             media->url         = query.value(1).toString();
-            media->name        = query.value(2).toString();
+            media->extra["station"]  = query.value(2).toString();
             media->lastPlayed  = (query.value(3).isNull() ? -1 : query.value(3).toInt());
             media->isFavorite  = false;
             media->isPlaying   = false;

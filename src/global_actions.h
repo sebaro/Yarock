@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -35,7 +35,6 @@
          APP_QUIT,
          APP_SHOW_YAROCK_ABOUT,
          APP_SHOW_PLAYQUEUE,
-         APP_SHOW_MENU,
          APP_SHOW_SETTINGS,
 
          APP_MODE_COMPACT,
@@ -44,6 +43,9 @@
          APP_ENABLE_SEARCH_POPUP,
          APP_PLAY_ON_SEARCH,
 
+         NEW_PLAYLIST,
+         NEW_SMART_PLAYLIST,
+         
          BROWSER_PREV,
          BROWSER_NEXT,
          BROWSER_UP, 
@@ -82,7 +84,10 @@
          PLAYING_TRACK_EDIT,
          PLAYING_TRACK_LOVE,
 
-         DIALOG_DB_OPERATION
+         DATABASE_OPERATION,
+         DATABASE_ADD,
+         
+         TAG_CLICKED
     };
 
 

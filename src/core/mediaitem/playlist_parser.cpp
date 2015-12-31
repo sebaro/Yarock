@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -175,7 +175,7 @@ QList<MEDIA::TrackPtr>  readM3uPlaylist(QIODevice* device, const QDir& playlist_
               track->setType(TYPE_STREAM);
               track->id          = -1;
               track->url         = url.toString();
-              track->name        = title.isEmpty() ? QString() : title;
+              track->extra["station"]  = title.isEmpty() ? QString() : title;
               track->isFavorite  = false;
               track->isPlaying   = false;
               track->isBroken    = false;
@@ -298,7 +298,6 @@ QList<MEDIA::TrackPtr>  readPlsPlaylist(QIODevice* device, const QDir& playlist_
       else if (key.startsWith("title"))
       {
         tracks.value(n)->title = value;
-        tracks.value(n)->name  = value;
       }
       else if (key.startsWith("length"))
       {
@@ -355,7 +354,6 @@ QList<MEDIA::TrackPtr>  readXspfPlaylist(QIODevice* device, const QDir& playlist
                   mi->setType(TYPE_STREAM);
                   mi->id          = -1;
                   mi->url         = file_path;
-                  mi->name        = file_path;
                   mi->isFavorite  = false;
                   mi->isPlaying   = false;
                   mi->isBroken    = false;
@@ -393,10 +391,10 @@ QList<MEDIA::TrackPtr>  readXspfPlaylist(QIODevice* device, const QDir& playlist
       } // end location
       else if (xml.isStartElement() && xml.name() == "title")
       {
-          if(mi->type() == TYPE_TRACK)
+         if(mi->type() == TYPE_TRACK)
             mi->title = QString(xml.readElementText());
-          else
-            mi->name = QString(xml.readElementText());
+         else
+            mi->extra["station"] = QString(xml.readElementText());
       }
       else if (xml.isStartElement() && xml.name() == "creator")
       {
@@ -483,7 +481,7 @@ void saveM3uPlaylist(QIODevice* device, const QDir& playlist_dir, QList<MEDIA::T
         info = QString("#EXTINF:\n");
         info = QString("#EXTINF:%1,%2 - %3\n").arg(0)
                                               .arg("")
-                                              .arg(media->name);
+                                              .arg(media->extra["station"].toString());
 
         device->write(info.toUtf8());
         media_path = media->url;
@@ -511,8 +509,9 @@ void savePlsPlaylist(QIODevice* device, const QDir& playlist_dir, QList<MEDIA::T
       if (!media) continue;
       if (media->type() != TYPE_TRACK && media->type() != TYPE_STREAM) continue;
 
-      // write metadata
-      if (media->type() == TYPE_TRACK ) {
+      /* TYPE_TRACK */
+      if (media->type() == TYPE_TRACK ) 
+      {
         QString media_path = media->url;
         media_path = playlist_dir.relativeFilePath(media_path).toUtf8();
 
@@ -521,9 +520,10 @@ void savePlsPlaylist(QIODevice* device, const QDir& playlist_dir, QList<MEDIA::T
         stream << "Length" << n << "=" << media->duration << endl;
         ++n;
       }
-      else { // TYPE_STREAM
+      else /* TYPE_STREAM */
+      { 
         stream << "File" << n << "=" << QString(media->url).toUtf8() << endl;
-        stream << "Title" << n << "=" << QString(media->name).toUtf8() << endl;
+        stream << "Title" << n << "=" << QString(media->extra["station"].toString()).toUtf8() << endl;
         stream << "Length" << n << "=" << endl;
         ++n;
       }
@@ -553,7 +553,8 @@ void saveXspfPlaylist(QIODevice* device, const QDir& playlist_dir, QList<MEDIA::
 
       QString media_path;
       // write metadata
-      if (media->type() == TYPE_TRACK ) {
+      if (media->type() == TYPE_TRACK )
+      {
         media_path = playlist_dir.relativeFilePath(media->url).toUtf8();
 
         xml.writeTextElement("location", media_path);
@@ -562,11 +563,12 @@ void saveXspfPlaylist(QIODevice* device, const QDir& playlist_dir, QList<MEDIA::
         xml.writeTextElement("album", media->album);
         xml.writeTextElement("duration", QString::number(media->duration* 1000));
       }
-      else { // TYPE_STREAM
+      else /* TYPE_STREAM */ 
+      { 
         media_path = media->url;
 
         xml.writeTextElement("location", media_path);
-        xml.writeTextElement("title", media->name);
+        xml.writeTextElement("title", media->extra["station"].toString());
         
         if( !media->genre.isEmpty() )
         {

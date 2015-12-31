@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -34,7 +34,7 @@
 #include <QToolButton>
 #include <QPushButton>
 #include <QVBoxLayout>
-
+#include <QActionGroup>
 
 class CategorieLayoutItem;
 class ButtonItem;
@@ -125,6 +125,7 @@ Q_OBJECT
     QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint = QSizeF()) const;
     
   private slots:
+    void slot_engineClicked();
     void slot_enable_replaygain();
     void slot_on_titlebutton_clicked();
   
@@ -138,7 +139,9 @@ Q_OBJECT
     QGroupBox              *ui_groupBox;
     QRadioButton           *ui_mode_track;
     QRadioButton           *ui_mode_album;
-    QComboBox              *ui_comboEngine;
+
+    QPushButton            *ui_engineButton;
+    QActionGroup           *ui_engineGroup;
     
     QCheckBox              *ui_enable_replaygain;
     QComboBox              *ui_comboRGMode;

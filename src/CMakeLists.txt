@@ -51,8 +51,9 @@ SET(SOURCES
            ${CMAKE_SOURCE_DIR}/src/main.cpp
            ${CMAKE_SOURCE_DIR}/src/mainwindow.cpp
            ${CMAKE_SOURCE_DIR}/src/networkaccess.cpp           
-           ${CMAKE_SOURCE_DIR}/src/global_shortcuts.cpp
+           ${CMAKE_SOURCE_DIR}/src/shortcuts_manager.cpp
            ${CMAKE_SOURCE_DIR}/src/settings.cpp
+           ${CMAKE_SOURCE_DIR}/src/starter.cpp
            ${CMAKE_SOURCE_DIR}/src/threadmanager.cpp
            ${CMAKE_SOURCE_DIR}/src/utilities.cpp
            ${CMAKE_SOURCE_DIR}/src/systray.cpp
@@ -100,10 +101,10 @@ set (SOURCES
            ${CMAKE_SOURCE_DIR}/src/models/local/local_playlist_model.cpp
            ${CMAKE_SOURCE_DIR}/src/models/local/local_playlist_populator.cpp
            ${CMAKE_SOURCE_DIR}/src/models/stream/service_base.cpp
+           ${CMAKE_SOURCE_DIR}/src/models/stream/service_dirble.cpp
+           ${CMAKE_SOURCE_DIR}/src/models/stream/service_favorite.cpp
            ${CMAKE_SOURCE_DIR}/src/models/stream/service_radionomy.cpp
            ${CMAKE_SOURCE_DIR}/src/models/stream/service_tunein.cpp
-           ${CMAKE_SOURCE_DIR}/src/models/stream/service_xspf.cpp
-           ${CMAKE_SOURCE_DIR}/src/models/stream/service_dirble.cpp           
            ${CMAKE_SOURCE_DIR}/src/models/stream/stream_model.cpp 
            ${CMAKE_SOURCE_DIR}/src/models/filesystem/file_model.cpp
 )
@@ -164,11 +165,11 @@ set (SOURCES
 set (SOURCES 
            ${SOURCES}           
            ${CMAKE_SOURCE_DIR}/src/widgets/dialogs/dialog_base.cpp
+           ${CMAKE_SOURCE_DIR}/src/widgets/dialogs/database_add.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/dialogs/addstreamdialog.cpp           
-           ${CMAKE_SOURCE_DIR}/src/widgets/dialogs/dboperationdialog.cpp
+           ${CMAKE_SOURCE_DIR}/src/widgets/dialogs/database_operation.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/dialogs/shortcutdialog.cpp           
            ${CMAKE_SOURCE_DIR}/src/widgets/dialogs/filedialog.cpp           
-           ${CMAKE_SOURCE_DIR}/src/widgets/dialogs/first_time_dialog.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/editors/editor_album.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/editors/editor_artist.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/editors/editor_track.cpp
@@ -183,28 +184,31 @@ set (SOURCES
            ${CMAKE_SOURCE_DIR}/src/widgets/main/menumodel.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/main/menuwidget.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/main/menubar.cpp
+           ${CMAKE_SOURCE_DIR}/src/widgets/playertoolbar/audiocontrols.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/playertoolbar/playertoolbar.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/playertoolbar/volumebutton.cpp           
            ${CMAKE_SOURCE_DIR}/src/widgets/playertoolbar/nowplayingpopup.cpp
+           ${CMAKE_SOURCE_DIR}/src/widgets/playertoolbar/seekslider.cpp
+           ${CMAKE_SOURCE_DIR}/src/widgets/playertoolbar/seeksliderpopup.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/popupcompleter/popup_item.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/popupcompleter/popup_model.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/popupcompleter/popup_view.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/popupcompleter/search_popup.cpp
-           ${CMAKE_SOURCE_DIR}/src/widgets/audiocontrols.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/customsplitter.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/equalizer/equalizer_dialog.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/equalizer/equalizer_preset.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/equalizer/equalizer_slider.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/exlineedit.cpp
-           ${CMAKE_SOURCE_DIR}/src/widgets/searchline_edit.cpp
+           ${CMAKE_SOURCE_DIR}/src/widgets/flowlayout.cpp
+           ${CMAKE_SOURCE_DIR}/src/widgets/header_widget.cpp
+           ${CMAKE_SOURCE_DIR}/src/widgets/iconloader.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/minimalwidget.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/ratingwidget.cpp
-           ${CMAKE_SOURCE_DIR}/src/widgets/seekslider.cpp
-           ${CMAKE_SOURCE_DIR}/src/widgets/seeksliderpopup.cpp
+           ${CMAKE_SOURCE_DIR}/src/widgets/searchline_edit.cpp
+           ${CMAKE_SOURCE_DIR}/src/widgets/statusmanager.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/spacer.cpp
-           ${CMAKE_SOURCE_DIR}/src/widgets/statusmanager.cpp           
-           ${CMAKE_SOURCE_DIR}/src/widgets/sort_widget.cpp            
-           ${CMAKE_SOURCE_DIR}/src/widgets/header_widget.cpp            
+           ${CMAKE_SOURCE_DIR}/src/widgets/sort_widget.cpp
+           ${CMAKE_SOURCE_DIR}/src/widgets/tagwidget.cpp
 )
 
 set (SOURCES 
@@ -230,11 +234,12 @@ SET(YAROCK_HEADERS
            ${CMAKE_SOURCE_DIR}/src/commandlineoptions.h
            ${CMAKE_SOURCE_DIR}/src/debug.h
            ${CMAKE_SOURCE_DIR}/src/global_actions.h
-           ${CMAKE_SOURCE_DIR}/src/global_shortcuts.h
+           ${CMAKE_SOURCE_DIR}/src/shortcuts_manager.h
            ${CMAKE_SOURCE_DIR}/src/main.h
            ${CMAKE_SOURCE_DIR}/src/mainwindow.h
            ${CMAKE_SOURCE_DIR}/src/networkaccess.h           
            ${CMAKE_SOURCE_DIR}/src/settings.h
+           ${CMAKE_SOURCE_DIR}/src/starter.h           
            ${CMAKE_SOURCE_DIR}/src/threadmanager.h
            ${CMAKE_SOURCE_DIR}/src/utilities.h
            ${CMAKE_SOURCE_DIR}/src/systray.h
@@ -275,10 +280,10 @@ SET(YAROCK_HEADERS
            ${CMAKE_SOURCE_DIR}/src/models/local/local_playlist_model.h
            ${CMAKE_SOURCE_DIR}/src/models/local/local_playlist_populator.h
            ${CMAKE_SOURCE_DIR}/src/models/stream/service_base.h
+           ${CMAKE_SOURCE_DIR}/src/models/stream/service_dirble.h
+           ${CMAKE_SOURCE_DIR}/src/models/stream/service_favorite.h
            ${CMAKE_SOURCE_DIR}/src/models/stream/service_radionomy.h
            ${CMAKE_SOURCE_DIR}/src/models/stream/service_tunein.h
-           ${CMAKE_SOURCE_DIR}/src/models/stream/service_xspf.h
-           ${CMAKE_SOURCE_DIR}/src/models/stream/service_dirble.h
            ${CMAKE_SOURCE_DIR}/src/models/stream/stream_model.h           
            ${CMAKE_SOURCE_DIR}/src/models/filesystem/file_model.h
            ${CMAKE_SOURCE_DIR}/src/online/lastfm.h
@@ -321,11 +326,11 @@ SET(YAROCK_HEADERS
            ${CMAKE_SOURCE_DIR}/src/views/settings/settings_widget.h             
            ${CMAKE_SOURCE_DIR}/src/views/settings/addfolder_widget.h
            ${CMAKE_SOURCE_DIR}/src/widgets/dialogs/dialog_base.h
+           ${CMAKE_SOURCE_DIR}/src/widgets/dialogs/database_add.h
            ${CMAKE_SOURCE_DIR}/src/widgets/dialogs/addstreamdialog.h           
-           ${CMAKE_SOURCE_DIR}/src/widgets/dialogs/dboperationdialog.h
+           ${CMAKE_SOURCE_DIR}/src/widgets/dialogs/database_operation.h
            ${CMAKE_SOURCE_DIR}/src/widgets/dialogs/shortcutdialog.h           
            ${CMAKE_SOURCE_DIR}/src/widgets/dialogs/filedialog.h
-           ${CMAKE_SOURCE_DIR}/src/widgets/dialogs/first_time_dialog.h
            ${CMAKE_SOURCE_DIR}/src/widgets/editors/editor_album.h
            ${CMAKE_SOURCE_DIR}/src/widgets/editors/editor_artist.h
            ${CMAKE_SOURCE_DIR}/src/widgets/editors/editor_track.h
@@ -340,28 +345,32 @@ SET(YAROCK_HEADERS
            ${CMAKE_SOURCE_DIR}/src/widgets/main/menumodel.h
            ${CMAKE_SOURCE_DIR}/src/widgets/main/menuwidget.h
            ${CMAKE_SOURCE_DIR}/src/widgets/main/menubar.h
+           ${CMAKE_SOURCE_DIR}/src/widgets/playertoolbar/audiocontrols.h
            ${CMAKE_SOURCE_DIR}/src/widgets/playertoolbar/playertoolbar.h
            ${CMAKE_SOURCE_DIR}/src/widgets/playertoolbar/volumebutton.h
            ${CMAKE_SOURCE_DIR}/src/widgets/playertoolbar/nowplayingpopup.h           
+           ${CMAKE_SOURCE_DIR}/src/widgets/playertoolbar/seekslider.h
+           ${CMAKE_SOURCE_DIR}/src/widgets/playertoolbar/seeksliderpopup.h
+           ${CMAKE_SOURCE_DIR}/src/widgets/playertoolbar/toolbuttonbase.h
            ${CMAKE_SOURCE_DIR}/src/widgets/popupcompleter/popup_item.h
            ${CMAKE_SOURCE_DIR}/src/widgets/popupcompleter/popup_model.h
            ${CMAKE_SOURCE_DIR}/src/widgets/popupcompleter/popup_view.h
            ${CMAKE_SOURCE_DIR}/src/widgets/popupcompleter/search_popup.h
-           ${CMAKE_SOURCE_DIR}/src/widgets/audiocontrols.h
            ${CMAKE_SOURCE_DIR}/src/widgets/customsplitter.h
            ${CMAKE_SOURCE_DIR}/src/widgets/equalizer/equalizer_dialog.h
            ${CMAKE_SOURCE_DIR}/src/widgets/equalizer/equalizer_preset.h
            ${CMAKE_SOURCE_DIR}/src/widgets/equalizer/equalizer_slider.h
            ${CMAKE_SOURCE_DIR}/src/widgets/exlineedit.h
-           ${CMAKE_SOURCE_DIR}/src/widgets/searchline_edit.h
+           ${CMAKE_SOURCE_DIR}/src/widgets/flowlayout.h
+           ${CMAKE_SOURCE_DIR}/src/widgets/header_widget.h
+           ${CMAKE_SOURCE_DIR}/src/widgets/iconloader.h
            ${CMAKE_SOURCE_DIR}/src/widgets/minimalwidget.h
            ${CMAKE_SOURCE_DIR}/src/widgets/ratingwidget.h
-           ${CMAKE_SOURCE_DIR}/src/widgets/seekslider.h
-           ${CMAKE_SOURCE_DIR}/src/widgets/seeksliderpopup.h
-           ${CMAKE_SOURCE_DIR}/src/widgets/spacer.h
+           ${CMAKE_SOURCE_DIR}/src/widgets/searchline_edit.h
            ${CMAKE_SOURCE_DIR}/src/widgets/statusmanager.h           
-           ${CMAKE_SOURCE_DIR}/src/widgets/sort_widget.h  
-           ${CMAKE_SOURCE_DIR}/src/widgets/header_widget.h
+           ${CMAKE_SOURCE_DIR}/src/widgets/spacer.h
+           ${CMAKE_SOURCE_DIR}/src/widgets/sort_widget.h
+           ${CMAKE_SOURCE_DIR}/src/widgets/tagwidget.h
 )
 
      

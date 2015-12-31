@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -80,7 +80,10 @@ void SettingsScene::initScene()
     /* il faut interdire la modification des parametres de collection si un database builder est en cours */
     connect(ThreadManager::instance(), SIGNAL(dbBuildStart()), this, SLOT(slot_dbBuilder_stateChange()));
     connect(ThreadManager::instance(), SIGNAL(dbBuildFinished()), this, SLOT(slot_dbBuilder_stateChange()));
+
+    connect(Database::instance(), SIGNAL(settingsChanged()), this, SLOT(slot_database_settingsChanged()));
     
+    connect(MainLeftWidget::instance(), SIGNAL(dbNameChanged()), this, SLOT(slot_database_settingsChanged()));
     connect(MainLeftWidget::instance(), SIGNAL(settings_save_clicked()), this, SLOT(slot_apply_settings()));
     connect(MainLeftWidget::instance(), SIGNAL(settings_cancel_clicked()), this, SLOT(slot_cancel_settings()));
         
@@ -95,13 +98,20 @@ void SettingsScene::initScene()
     setInit(true);
 }
 
+void SettingsScene::slot_database_settingsChanged()
+{
+    static_cast<PageLibrary*>(m_pages[SETTINGS::LIBRARY])->restoreSettings();
+
+    populateScene();
+}
+
 
 /*******************************************************************************
     slot_dbBuilder_stateChange
 *******************************************************************************/
 void SettingsScene::slot_dbBuilder_stateChange()
 {
-    //Debug::debug() << "   [SettingsScene] slot_dbBuilder_stateChange DB RUNNING " << ThreadManager::instance()->isDbRunning();
+    //Debug::debug() << "#######   [SettingsScene] slot_dbBuilder_stateChange DB RUNNING " << ThreadManager::instance()->isDbRunning();
     m_pages[SETTINGS::LIBRARY]->setEnabled( !ThreadManager::instance()->isDbRunning() );
 }
 

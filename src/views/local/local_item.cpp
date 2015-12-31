@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -1074,12 +1074,22 @@ Q_UNUSED(option)
         const QString duree_elided = opt.fontMetrics.elidedText ( media->durationToString(), Qt::ElideRight, 50);
         painter->drawText(QRect(60+title_width*3, 0, 50, 22), Qt::AlignRight | Qt::AlignVCenter,duree_elided);
    }
-   else {
+   else 
+   {
         painter->setPen( opt.palette.color ( isSelected() ? QPalette::Normal : QPalette::Disabled, isSelected() ? QPalette::HighlightedText : QPalette::WindowText) );
         painter->setFont( opt.font );
 
-        const QString name_elided = opt.fontMetrics.elidedText ( media->url, Qt::ElideRight, width -20);
-        painter->drawText(QRect(30, 0,  width -20, 22), Qt::AlignLeft | Qt::AlignVCenter, name_elided);
+        if(isTrack) {
+          const QString name_elided = opt.fontMetrics.elidedText ( media->url, Qt::ElideRight, width -20);
+          painter->drawText(QRect(30, 0,  width -20, 22), Qt::AlignLeft | Qt::AlignVCenter, name_elided);
+        }
+        else
+        {
+          QString info = !media->extra["station"].toString().isEmpty() ? media->extra["station"].toString() : media->url;
+          
+          const QString name_elided = opt.fontMetrics.elidedText ( info, Qt::ElideRight, width -20);
+          painter->drawText(QRect(30, 0,  width -20, 22), Qt::AlignLeft | Qt::AlignVCenter, name_elided);
+        }
    }
 
    //! paint activated item
@@ -1365,12 +1375,23 @@ Q_UNUSED(option)
      const float rating_ = media->rating;
      RatingPainter::instance()->Paint(painter, QRect(title_width*3-50 + 115, 0, 80, 22), hover_rating_ == -1.0 ? rating_ : hover_rating_, true);
    }
-   else {
+   else 
+   {
      painter->setPen( opt.palette.color ( isSelected() ? QPalette::Normal : QPalette::Disabled, isSelected() ? QPalette::HighlightedText : QPalette::WindowText) );
      painter->setFont(opt.font);
 
-     const QString name_elided = opt.fontMetrics.elidedText ( media->url, Qt::ElideRight, width -20);
-     painter->drawText(QRect(30, 0,  width -20, 22), Qt::AlignLeft | Qt::AlignVCenter, name_elided);
+     if(isTrack) 
+     {
+         const QString name_elided = opt.fontMetrics.elidedText ( media->url, Qt::ElideRight, width -20);
+         painter->drawText(QRect(30, 0,  width -20, 22), Qt::AlignLeft | Qt::AlignVCenter, name_elided);
+     }
+     else
+     {
+         QString info = !media->extra["station"].toString().isEmpty() ? media->extra["station"].toString() : media->url;
+          
+         const QString name_elided = opt.fontMetrics.elidedText ( info, Qt::ElideRight, width -20);
+         painter->drawText(QRect(30, 0,  width -20, 22), Qt::AlignLeft | Qt::AlignVCenter, name_elided);
+     }
    }
 
    //! paint activated item

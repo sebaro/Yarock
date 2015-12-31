@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -57,7 +57,7 @@ Q_OBJECT
     void stopThread();
 
     // Database Builder Thread
-    void databaseBuild(QStringList listDir);
+    void databaseBuild(QStringList listDir, bool doRebuild=false);
     bool isDbRunning();
 
     // Tag/Metadata/Image Search thread

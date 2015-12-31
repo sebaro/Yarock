@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -288,10 +288,9 @@ void EditorArtist::do_changes_artist()
       {
         //Debug::debug() << "QSet value " << value;
 
-        const QString  old_cover_name = MEDIA::coverName(old_artist_name,album->name);
-        const QString  new_cover_name = MEDIA::coverName(artist->name,album->name);
-        if(old_cover_name != new_cover_name)
-          recoverCoverImage(new_cover_name,old_cover_name);
+        const QString  old_cover_name = MEDIA::coverHash(old_artist_name,album->name);
+        const QString  new_cover_name = MEDIA::coverHash(artist->name,album->name);
+        recoverCoverImage(new_cover_name,old_cover_name);
 
         int new_album_id = DatabaseCmd::updateAlbum(album->name, new_artist_id,album->year, disc_number, album->isFavorite, album->playcount, album->rating);
 
@@ -341,22 +340,14 @@ void EditorArtist::slot_load_image_from_file()
     /* get new cover file */
     m_new_image = QImage(fd.addFile());
  
-    int ITEM_HEIGHT = 120;
-    int ITEM_WIDTH  = 120;
-    int MAX_SIZE    = 250;
+    QByteArray ba;
+    QBuffer buffer(&ba);
 
-    const int width = m_new_image.size().width();
-    const int height = m_new_image.size().height();
-    if (width > MAX_SIZE || height > MAX_SIZE)
-      m_new_image = m_new_image.scaled(MAX_SIZE, MAX_SIZE, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-
-    int xOffset = 0;
-    int wDiff = m_new_image.width() - ITEM_WIDTH;
-    if (wDiff > 0) xOffset = wDiff / 2;
-    int yOffset = 0;
-    int hDiff = m_new_image.height() - ITEM_HEIGHT;
-    if (hDiff > 0) yOffset = hDiff / 4;
-    m_new_image = m_new_image.copy(xOffset, yOffset, ITEM_WIDTH, ITEM_HEIGHT);
+    buffer.open(QIODevice::WriteOnly);
+    
+    m_new_image.save(&buffer, "PNG");
+    
+    m_new_image = UTIL::artistImageFromByteArray( ba );
 
     ui_image->setPixmap( QPixmap::fromImage(m_new_image) );
     ui_image->update();
@@ -392,34 +383,17 @@ void EditorArtist::slot_download_image()
 /* ---------------------------------------------------------------------------*/
 void EditorArtist::slot_on_image_received(INFO::InfoRequestData request, QVariant output)
 {
-    Debug::debug() << "   [EditorArtist] slot_on_image_received";
+    //Debug::debug() << "   [EditorArtist] slot_on_image_received " << output;
     /* check request */
     if(!m_requests_ids.contains(request.requestId))
       return;
 
     /* get data */  
-    m_new_image = QImage::fromData(output.toByteArray());
+    m_new_image = UTIL::artistImageFromByteArray( output.toByteArray() );
     if(m_new_image.isNull())
       return;
 
     m_requests_ids.removeOne(request.requestId);
-
-    int ITEM_HEIGHT = 120;
-    int ITEM_WIDTH  = 120;
-    int MAX_SIZE    = 250;
-
-    const int width = m_new_image.size().width();
-    const int height = m_new_image.size().height();
-    if (width > MAX_SIZE || height > MAX_SIZE)
-      m_new_image = m_new_image.scaled(MAX_SIZE, MAX_SIZE, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-
-    int xOffset = 0;
-    int wDiff = m_new_image.width() - ITEM_WIDTH;
-    if (wDiff > 0) xOffset = wDiff / 2;
-    int yOffset = 0;
-    int hDiff = m_new_image.height() - ITEM_HEIGHT;
-    if (hDiff > 0) yOffset = hDiff / 4;
-    m_new_image = m_new_image.copy(xOffset, yOffset, ITEM_WIDTH, ITEM_HEIGHT);
 
     ui_image->setPixmap( QPixmap::fromImage(m_new_image) );
     ui_image->update();
@@ -431,7 +405,7 @@ void EditorArtist::slot_on_image_received(INFO::InfoRequestData request, QVarian
 /* ---------------------------------------------------------------------------*/
 void EditorArtist::slot_image_remove()
 {
-    Debug::debug() << "   [EditorArtist] slot_image_remove";
+    //Debug::debug() << "   [EditorArtist] slot_image_remove";
     ui_image->setPixmap( QPixmap(":/images/default-cover-120x120.png") );
     ui_image->update();
     
@@ -445,8 +419,8 @@ void EditorArtist::slot_image_remove()
 void EditorArtist::save_new_image()
 {
     /* get image location */
-    QString path = m_artist->coverpath();
-      
+    const QString path = UTIL::CONFIGDIR + "/artists/" + m_artist->imageHash();
+    
     /* removing existing image file */
     if(QFile::exists(path)) {
       QFile::remove(path);

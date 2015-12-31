@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -34,6 +34,20 @@
 *                                                                              *
 ********************************************************************************
 */
+
+/* ---------------------------------------------------------------------------*/
+/*      common math method                                                    */
+/* ---------------------------------------------------------------------------*/        
+int UTIL::randomInt(int low, int high)
+{
+    // Random number between low and high
+    return qrand() % ((high + 1) - low) + low;
+}
+
+
+/* ---------------------------------------------------------------------------*/
+/*      configuration static method                                           */
+/* ---------------------------------------------------------------------------*/    
 QString UTIL::getConfigDir()
 {
     QString configdir;
@@ -64,13 +78,9 @@ QString UTIL::getConfigFile()
     return QString(UTIL::getConfigDir() + QDir::separator() + "yarock-1.conf");
 }
 
-
-int UTIL::randomInt(int low, int high)
-{
-    // Random number between low and high
-    return qrand() % ((high + 1) - low) + low;
-}
-
+/* ---------------------------------------------------------------------------*/
+/*      string helper method                                                  */
+/* ---------------------------------------------------------------------------*/    
 QString UTIL::deltaTimeToString(int seconds) 
 {
   return (seconds >= 0 ? "+" : "-") + UTIL::durationToString(seconds);
@@ -92,7 +102,10 @@ QString UTIL::durationToString(int seconds)
     return ret;
 }
 
-  
+
+/* ---------------------------------------------------------------------------*/
+/*      url common method                                                     */
+/* ---------------------------------------------------------------------------*/
 void UTIL::urlAddQueryItem( QUrl& url, const QString& key, const QString& value )
 {
   #if QT_VERSION >= QT_VERSION_CHECK( 5, 0, 0 )
@@ -113,6 +126,9 @@ bool UTIL::urlHasQueryItem( const QUrl& url, const QString& key )
 #endif
 }
 
+/* ---------------------------------------------------------------------------*/
+/*      image and pixmap method                                               */
+/* ---------------------------------------------------------------------------*/
 QPixmap
 UTIL::createRoundedImage( const QPixmap& pixmap, const QSize& size, float frameWidthPct )
 {
@@ -177,7 +193,34 @@ UTIL::squareCenterPixmap( const QPixmap& sourceImage )
     return sourceImage;
 }
 
+QImage 
+UTIL::artistImageFromByteArray(QByteArray array)
+{
+    QImage image = QImage::fromData( array );
+    
+    int ITEM_HEIGHT = 120;
+    int ITEM_WIDTH  = 120;
+    int MAX_SIZE    = 250;
 
+    const int width = image.size().width();
+    const int height = image.size().height();
+    if (width > MAX_SIZE || height > MAX_SIZE)
+      image = image.scaled(MAX_SIZE, MAX_SIZE, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+
+    int xOffset = 0;
+    int wDiff = image.width() - ITEM_WIDTH;
+    if (wDiff > 0) xOffset = wDiff / 2;
+    int yOffset = 0;
+    int hDiff = image.height() - ITEM_HEIGHT;
+    if (hDiff > 0) yOffset = hDiff / 4;
+    
+    return image.copy(xOffset, yOffset, ITEM_WIDTH, ITEM_HEIGHT);    
+}
+
+   
+/* ---------------------------------------------------------------------------*/
+/*      painting method                                                       */
+/* ---------------------------------------------------------------------------*/
 void UTIL::drawPlayingIcon(QPainter* painter, int size, int margin, QPoint pos)
 {
     painter->save();
@@ -206,7 +249,3 @@ void UTIL::drawPlayingIcon(QPainter* painter, int size, int margin, QPoint pos)
     painter->drawPolygon(raArrowPoints,3);
     painter->restore();    
 }
-
-   
-   
-
