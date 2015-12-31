@@ -7,7 +7,7 @@ set( CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake )
 PROJECT( yarock )
 set(YAROCK_MAJOR_VERSION 1)
 set(YAROCK_MINOR_VERSION 1)
-set(YAROCK_PATCH_VERSION 4)
+set(YAROCK_PATCH_VERSION 5)
 set(YAROCK_VERSION "${YAROCK_MAJOR_VERSION}.${YAROCK_MINOR_VERSION}.${YAROCK_PATCH_VERSION}")
 
 # ------------------------------------------------------------------------------
@@ -19,14 +19,19 @@ ADD_DEFINITIONS(-Wall -Wextra )
 # ------------------------------------------------------------------------------
 #  OPTION
 # ------------------------------------------------------------------------------
-OPTION(ENABLE_PHONON "Enable Phonon library" ON)
-OPTION(ENABLE_VLC "Enable VLC standalone audio engine" OFF)
-OPTION(ENABLE_MPV "Enable MPV (MPlayer) standalone audio engine" OFF)
+# Since yarock 1.1.5 change default audio engine to VLC
+OPTION(ENABLE_PHONON "Enable/disable Phonon audio engine" OFF)
+OPTION(ENABLE_VLC "Enable/disable VLC audio engine" ON)
+OPTION(ENABLE_MPV "Enable/disable MPV audio engine" OFF)
+# OPTION(ENABLE_QTMULTIMEDIA "Enable/disable QtMultimedia audio engine" OFF)
+
+# Since yarock 1.1.5 change default qt5 
+OPTION(ENABLE_QT5 "Enable/disable Qt5 build" ON)
+OPTION(ENABLE_SHORTCUT "Enable/disable global shortcut manager" ON)
 
 # ------------------------------------------------------------------------------
 #  EXTERNAL PACKAGE
 # ------------------------------------------------------------------------------
-OPTION(ENABLE_QT5 "Enable build with Qt5" OFF)
 
 #---- Qt ----
 if (ENABLE_QT5)
@@ -40,7 +45,8 @@ if (ENABLE_QT5)
     FIND_PACKAGE(Qt5DBus REQUIRED)
     FIND_PACKAGE(Qt5Sql REQUIRED)
     FIND_PACKAGE(Qt5X11Extras REQUIRED)
-  
+    FIND_PACKAGE(Qt5LinguistTools REQUIRED)
+    
     set (QTLIBS ${Qt5Core_LIBRARIES} 
                 ${Qt5Widgets_LIBRARIES} 
                 ${Qt5Network_LIBRARIES} 
@@ -102,35 +108,25 @@ FIND_PACKAGE( HtmlCxx )
 # ------------------------------------------------------------------------------
 INCLUDE_DIRECTORIES( ${QTINCLUDES} )
 INCLUDE_DIRECTORIES( ${TAGLIB_INCLUDES} )
-INCLUDE_DIRECTORIES( ${QJSON_INCLUDE_DIR} )
+if(NOT ENABLE_QT5)
+  INCLUDE_DIRECTORIES( ${QJSON_INCLUDE_DIR} )
+endif (NOT ENABLE_QT5)
 INCLUDE_DIRECTORIES( ${HTMLCXX_INCLUDE_DIRS} )
  
 # ------------------------------------------------------------------------------
 #  SUBDIRECTORIES
 # ------------------------------------------------------------------------------
-option(USE_SYSTEM_QTSINGLEAPPLICATION "Use system QtSingleApplication library." OFF)
-if(USE_SYSTEM_QTSINGLEAPPLICATION)
-  find_path(QTSINGLEAPPLICATION_INCLUDE_DIRS qtsingleapplication.h PATH_SUFFIXES QtSolutions)
-  find_library(QTSINGLEAPPLICATION_LIBRARIES QtSolutions_SingleApplication-2.6)
-  find_library(QTSINGLECOREAPPLICATION_LIBRARIES QtSolutions_SingleCoreApplication-2.6)
-else(USE_SYSTEM_QTSINGLEAPPLICATION)
-  add_subdirectory(src3party/qtsingleapplication)
-  INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src3party/qtsingleapplication)
-  set(QTSINGLEAPPLICATION_LIBRARIES qtsingleapplication)
-endif(USE_SYSTEM_QTSINGLEAPPLICATION)
+# global shortcut
+if(ENABLE_SHORTCUT)
+  add_definitions(-DENABLE_SHORTCUT)
 
-option(USE_SYSTEM_QXT "Use system Qxt library" OFF)
-if (USE_SYSTEM_QXT)
-  find_path(QXTCORE_INCLUDE_DIRS qxtglobal.h PATH_SUFFIXES QxtCore)
-  find_path(QXTGUI_INCLUDE_DIRS qxtglobalshortcut.h PATH_SUFFIXES QxtGui)
-  set(QXT_INCLUDE_DIRS ${QXTCORE_INCLUDE_DIRS} ${QXTGUI_INCLUDE_DIRS})
-  # We only need its header. We don't need to link to QxtCore.
-  find_library(QXT_LIBRARIES QxtGui)
-else (USE_SYSTEM_QXT)
-  add_subdirectory(src3party/qxt)
-  INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src3party/qxt)
-  set(QXT_LIBRARIES qxt) 
-endif (USE_SYSTEM_QXT)
+  add_subdirectory(src/shortcuts)
+
+  INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src/shortcuts)
+  
+  set(LIB_INTERNAL_STATIC_SHORTCUT yarock_shortchut)
+
+endif(ENABLE_SHORTCUT)
 
 # ------------------------------------------------------------------------------
 #  INSTALL DIRECTORIES
@@ -140,7 +136,7 @@ if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 endif()
 
 set(CMAKE_INSTALL_BIN          "${CMAKE_INSTALL_PREFIX}/bin"         CACHE PATH "binaries install path" FORCE)
-set(CMAKE_INSTALL_LIB          "${CMAKE_INSTALL_PREFIX}/lib/yarock"  CACHE PATH "libraries install path" FORCE)
+set(CMAKE_INSTALL_LIB          "${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX}/yarock"  CACHE PATH "libraries install path" FORCE)
 set(CMAKE_INSTALL_TRANS        "${CMAKE_INSTALL_PREFIX}/share/yarock/translations"  CACHE PATH "translations install path" FORCE)
 
 # ------------------------------------------------------------------------------
@@ -156,7 +152,6 @@ add_subdirectory(src)
 
 MESSAGE(STATUS "Audio Engine Vlc.................................................  " ${ENABLE_VLC} " [use cmake .. -DENABLE_VLC=ON/OFF]" )
 if (ENABLE_VLC)
-  MESSAGE(STATUS "  WARN:Vlc and yarock shall be build against the same Qt version" )
   add_definitions(-DENABLE_VLC)
   add_subdirectory(src/core/player/vlc)
 endif (ENABLE_VLC)
@@ -172,6 +167,16 @@ if (ENABLE_PHONON)
   add_definitions(-DENABLE_PHONON)
   add_subdirectory(src/core/player/phonon)
 endif (ENABLE_PHONON)
+
+# MESSAGE(STATUS "Audio Engine QtMultimedia........................................  " ${ENABLE_QTMULTIMEDIA} " [use cmake .. -DENABLE_QTMULTIMEDIA=ON/OFF]")
+# if (ENABLE_QTMULTIMEDIA)
+#     if (ENABLE_QT5)
+#       add_definitions(-DENABLE_QTMULTIMEDIA)
+#       add_subdirectory(src/core/player/qtmultimedia)
+#     else (ENABLE_QT5)
+#       MESSAGE(WARNING "QtMultimedia can be set with QT5")
+#     endif (ENABLE_QT5)
+# endif (ENABLE_QTMULTIMEDIA)
 
 
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR})
@@ -229,7 +234,11 @@ option (UPDATE_TRANSLATIONS "Update source translation ../translation/*.ts files
 set (FILES_TO_TRANSLATE ${FILES_TO_TRANSLATE} ${YAROCK_SOURCES})
 
 if (ENABLE_QT5)
-# TODO
+  if (UPDATE_TRANSLATIONS)
+    QT5_CREATE_TRANSLATION(YAROCK_QM_FILES ${FILES_TO_TRANSLATE} ${TS_FILES})
+  else (UPDATE_TRANSLATIONS)
+    QT5_ADD_TRANSLATION(YAROCK_QM_FILES ${TS_FILES})
+  endif (UPDATE_TRANSLATIONS)
 else (ENABLE_QT5)
   if (UPDATE_TRANSLATIONS)
     QT4_CREATE_TRANSLATION(YAROCK_QM_FILES ${FILES_TO_TRANSLATE} ${TS_FILES})
@@ -246,14 +255,19 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Woverloaded-virtual -Wall -Wno-sign-com
     
 ADD_EXECUTABLE(yarock ${YAROCK_SOURCES} ${YAROCK_RESOURCES_RCC} ${YAROCK_QM_FILES})
 
-set_target_properties(yarock PROPERTIES AUTOMOC TRUE)
+SET_TARGET_PROPERTIES(yarock PROPERTIES AUTOMOC TRUE)
+
+SET_PROPERTY(TARGET  ${LIB_INTERNAL_STATIC_SHORTCUT} PROPERTY IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/shortcuts)
+
+if(ENABLE_SHORTCUT)
+  TARGET_LINK_LIBRARIES(yarock ${LIB_INTERNAL_STATIC_SHORTCUT})
+endif(ENABLE_SHORTCUT)
+
 
 TARGET_LINK_LIBRARIES(yarock
   X11
   ${QTLIBS}
   ${TAGLIB_LIBRARIES}
-  ${QTSINGLECOREAPPLICATION_LIBRARIES} ${QTSINGLEAPPLICATION_LIBRARIES}
-  ${QXT_LIBRARIES}  
   ${HTMLCXX_LIBRARIES}
 )
 
