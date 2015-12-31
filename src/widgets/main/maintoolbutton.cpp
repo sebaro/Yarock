@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -24,7 +24,7 @@
 #include "global_actions.h"
 #include "debug.h"
 
-
+#include <QApplication>
 /*
 ********************************************************************************
 *                                                                              *
@@ -34,6 +34,7 @@
 */
 MainToolButton::MainToolButton( QWidget* parent ) : QToolButton(parent)
 {
+    this->setPalette(QApplication::palette());
     this->setAutoRaise(true);
     this->setIcon(QIcon(":/images/menu_48x48.png"));
     this->setToolTip(tr("Tools"));
@@ -44,11 +45,10 @@ MainToolButton::MainToolButton( QWidget* parent ) : QToolButton(parent)
 
     QMap<ENUM_ACTION, QAction*> *actions = ACTIONS();
 
-    m_menu = new QMenu();
+    m_menu = new QMenu(this);
 
     QMenu *m0 = m_menu->addMenu(tr("&Show/Hide panel"));
     m0->addAction(actions->value(APP_SHOW_PLAYQUEUE));
-    m0->addAction(actions->value(APP_SHOW_MENU));
     m_menu->addSeparator();
 
     QMenu *m1 = m_menu->addMenu(tr("&Add to playqueue"));
@@ -61,7 +61,7 @@ MainToolButton::MainToolButton( QWidget* parent ) : QToolButton(parent)
     m_menu->addAction(actions->value(PLAYQUEUE_AUTOSAVE));
 
     m_menu->addSeparator();
-    m_menu->addAction(actions->value(DIALOG_DB_OPERATION));
+    m_menu->addAction(actions->value(DATABASE_OPERATION));
     m_menu->addSeparator();
     m_menu->addAction(actions->value(APP_SHOW_SETTINGS));
     m_menu->addAction(actions->value(APP_SHOW_YAROCK_ABOUT));
@@ -128,7 +128,7 @@ void MainToolButton::updateMultiDbMenu()
     m_menuChooseDb->addActions(group->actions());
 
     if(!m_menuChooseDbAction)
-       m_menuChooseDbAction = m_menu->insertMenu ( ACTIONS()->value(DIALOG_DB_OPERATION), m_menuChooseDb );
+       m_menuChooseDbAction = m_menu->insertMenu ( ACTIONS()->value(DATABASE_OPERATION), m_menuChooseDb );
 
     m_menuChooseDb->setEnabled(!ThreadManager::instance()->isDbRunning());
 }

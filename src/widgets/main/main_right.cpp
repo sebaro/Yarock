@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -48,10 +48,9 @@ MainRightWidget::MainRightWidget(QWidget *parent)
     m_header = new HeaderWidget(m_parent);
     m_header->setMinimumHeight(36);
 
-    QToolButton* ui_tool_button = new QToolButton(m_parent);
-    ui_tool_button->setArrowType(Qt::DownArrow); 
-    ui_tool_button->setAutoRaise( true );
-    ui_tool_button->setPopupMode(QToolButton::InstantPopup);
+    QPushButton* ui_tool_button = new QPushButton(m_parent);
+    ui_tool_button->setIcon(QIcon(":/images/go-down_48x48.png"));
+    ui_tool_button->setFlat(true);
     
     /* ----- header layout ----- */
     QHBoxLayout* h1 = new QHBoxLayout(m_header);
@@ -83,10 +82,25 @@ void MainRightWidget::slot_onmenu_clicked()
     if( !m_right_menu )
     {
       m_right_menu = new QMenu();
-  
+      m_right_menu->setContentsMargins(8,8,8,8);
+
+      m_right_menu->setStyleSheet(
+          QString("QMenu {icon-size: 32px;border: none;background-color: none;}"
+                  "QMenu::item {padding: 4px 30px 4px 30px;background-color: none;}"
+                  "QMenu::item:selected {color: %1;background-color: %2}"
+                 ).arg(
+                     QApplication::palette().color(QPalette::Normal, QPalette::HighlightedText).name(),
+                     QApplication::palette().color(QPalette::Normal, QPalette::Highlight).name()
+                 )
+      );
+
+
       QAction* Action_Playlist_Edit = new QAction(QIcon(":/images/edit-48x48.png"),tr("New playlist"), this);
       QAction* Action_Smart_Edit    = new QAction(QIcon(":/images/smart-playlist-48x48.png"),tr("New smart playlist"), this);
       
+      Action_Playlist_Edit->setIconVisibleInMenu(true);
+      Action_Smart_Edit->setIconVisibleInMenu(true);
+
       connect(Action_Playlist_Edit, SIGNAL(triggered()), SLOT(slot_create_new_playlist_editor()));
       connect(Action_Smart_Edit, SIGNAL(triggered()), SLOT(slot_create_new_smart_editor()));
       

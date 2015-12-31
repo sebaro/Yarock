@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -19,6 +19,7 @@
 // for content
 #include "views/browser_view.h"
 #include "widgets/main/menuwidget.h"
+#include "widgets/main/menumodel.h"
 
 
 // for header
@@ -28,6 +29,7 @@
 #include "widgets/searchline_edit.h"
 #include "widgets/spacer.h"
 #include "widgets/popupcompleter/search_popup.h"
+#include "widgets/iconloader.h"
 
 #include "widgets/editors/editor_search.h"
 #include "core/mediasearch/media_search.h"
@@ -58,12 +60,6 @@ MainLeftWidget::MainLeftWidget(QWidget *parent)
       
     m_parent = parent;
     
-    /* header */
-    m_header = new HeaderWidget(m_parent);
-    m_header->setMinimumHeight(36);
-
-    create_header_ui();
-    
     /* content */
     m_viewsSplitter = new CustomSplitter(m_parent);
     m_viewsSplitter->setObjectName(QString::fromUtf8("viewsSplitter_2"));
@@ -75,9 +71,13 @@ MainLeftWidget::MainLeftWidget(QWidget *parent)
     
     
     MenuWidget* m_menu_widget = new MenuWidget(m_parent);
-    m_menu_widget->setSplitter(m_viewsSplitter);    
-    
     m_viewsSplitter->addWidget(m_menu_widget);
+
+    /* header */
+    m_header = new HeaderWidget(m_parent);
+    m_header->setMinimumHeight(36);
+
+    create_header_ui();
     
     /* init */
     ui_editor_search = 0;
@@ -107,9 +107,10 @@ void MainLeftWidget::create_header_ui()
       ui_cancel_button->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
       
       /*  prev/next browsing actions  */
-      ACTIONS()->insert(BROWSER_PREV, new QAction(QIcon::fromTheme("go-previous", QIcon(":/images/go-previous.png")),tr("Go back"),this));
-      ACTIONS()->insert(BROWSER_NEXT, new QAction(QIcon::fromTheme("go-next", QIcon(":/images/go-next.png")),tr("Go forward"),this));
-      ACTIONS()->insert(BROWSER_UP,   new QAction(QIcon::fromTheme("go-up", QIcon(":/images/go-up.png")),tr("Go up"),this));
+      ACTIONS()->insert(BROWSER_PREV, new QAction(QIcon(":/images/go-previous_48x48.png"),tr("Go back"),this));
+      ACTIONS()->insert(BROWSER_NEXT, new QAction(QIcon(":/images/go-next_48x48.png"),tr("Go forward"),this));
+      ACTIONS()->insert(BROWSER_UP,   new QAction(QIcon(":/images/go-up_48x48.png"),tr("Go up"),this));
+      
       ACTIONS()->value(BROWSER_PREV)->setEnabled(false);
       ACTIONS()->value(BROWSER_NEXT)->setEnabled(false);
     
@@ -149,17 +150,17 @@ void MainLeftWidget::create_header_ui()
       /* navigation button */
       ui_button_prev = new QToolButton(m_header);
       ui_button_prev->setAutoRaise(true);
-      ui_button_prev->setArrowType(Qt::LeftArrow);
+      //ui_button_prev->setArrowType(Qt::LeftArrow);
       ui_button_prev->setDefaultAction( ACTIONS()->value(BROWSER_PREV) );
     
       ui_button_next = new QToolButton(m_header);
       ui_button_next->setAutoRaise(true);
-      ui_button_next->setArrowType(Qt::RightArrow);
+      //ui_button_next->setArrowType(Qt::RightArrow);
       ui_button_next->setDefaultAction( ACTIONS()->value(BROWSER_NEXT) );
 
       ui_button_up = new QToolButton(m_header);
       ui_button_up->setAutoRaise(true);
-      ui_button_up->setArrowType(Qt::UpArrow);
+      //ui_button_up->setArrowType(Qt::UpArrow);
       ui_button_up->setDefaultAction( ACTIONS()->value(BROWSER_UP) );
 
     
@@ -185,6 +186,7 @@ void MainLeftWidget::create_header_ui()
     /*--------------------------------*/      
     connect(ui_advance_search_button, SIGNAL(clicked ()), this, SLOT(slot_advance_search_clicked()));
     
+    connect(MenuModel::instance(), SIGNAL(dbNameChanged()), this, SIGNAL(dbNameChanged()));
     connect(main_tb, SIGNAL(dbNameChanged()), this, SIGNAL(dbNameChanged()));
     connect(ui_search_lineedit, SIGNAL(textfield_entered()), this, SLOT(slot_send_quick_filter_change()));
     connect(ACTIONS()->value(APP_ENABLE_SEARCH_POPUP), SIGNAL(triggered()), this, SLOT(slot_explorer_popup_setting_change()));

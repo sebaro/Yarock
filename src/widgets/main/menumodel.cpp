@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -16,10 +16,11 @@
 *****************************************************************************************/
 
 #include "menumodel.h"
+#include "core/database/database.h"
 #include "views.h"
+
 #include "global_actions.h"
 #include "debug.h"
-
 
 #include <QDir>
 #include <QMap>
@@ -41,12 +42,21 @@ class MenuItem: public QStandardItem
 {
   public:
      MenuItem(const QString & text, const QIcon & icon);
+     MenuItem(QAction* action, MenuItemRole role);
      MenuItem(const QString & text, const QIcon & icon , VIEW::Id id, QVariant data=QVariant()); 
 };
 
 
 MenuItem::MenuItem(const QString & text, const QIcon & icon ) : QStandardItem(icon,text)
 {
+    setEditable(false);
+    setSelectable(true);
+}
+
+MenuItem::MenuItem(QAction *action, MenuItemRole role) : QStandardItem(action->icon(),action->text())
+{
+    setData(QVariant::fromValue(action), role);
+
     setEditable(false);
     setSelectable(true);
 }
@@ -77,8 +87,12 @@ MenuModel* MenuModel::INSTANCE = 0;
 MenuModel::MenuModel(QObject *parent) : QStandardItemModel(parent)
 {
     INSTANCE = this;
+
     populateMenu();
+
     configureMenuAction();
+    
+    connect(Database::instance(), SIGNAL(settingsChanged()), this, SLOT(slot_database_settingsChanged()));
 }
 
 
@@ -86,9 +100,31 @@ MenuModel::~MenuModel()
 {
 }
 
-/*******************************************************************************
-    populateMenu
-*******************************************************************************/
+
+/* ---------------------------------------------------------------------------*/
+/* MenuModel::modelIndexAction                                                */
+/* ---------------------------------------------------------------------------*/ 
+QAction* MenuModel::modelIndexAction(QModelIndex idx)
+{
+    if( idx.data(GlobalActionRole).value<QAction*>() )
+    {
+        return idx.data(GlobalActionRole).value<QAction*>();
+    }
+    else if (idx.data(MenuActionRole).value<QAction*>() )
+    {
+        return idx.data(MenuActionRole).value<QAction*>();        
+    }
+    else if (idx.data(DatabaseChooseRole).value<QAction*>() )
+    {
+        return idx.data(DatabaseChooseRole).value<QAction*>();        
+    }
+    
+    return 0;
+}
+
+/* ---------------------------------------------------------------------------*/
+/* MenuModel::populateMenu                                                    */
+/* ---------------------------------------------------------------------------*/ 
 void MenuModel::populateMenu()
 {
    QStandardItem *rootItem = this->invisibleRootItem();
@@ -111,13 +147,14 @@ void MenuModel::populateMenu()
    MenuItem* item5 = new MenuItem(tr("computer"), QIcon(":/images/computer-48x48.png"));
    rootItem->appendRow(item5);
    
+   MenuItem* item6 = new MenuItem(tr("settings"), QIcon(":/images/settings-48x48.png"));
+   rootItem->appendRow(item6);
+
+   m_settings_item = item6;
    
    /* -----------------------*/
    /* populate Home Item     */
    /* -----------------------*/   
-   MenuItem* item10 = new MenuItem(tr("settings"), QIcon(":/images/settings-48x48.png"), VIEW::ViewSettings);
-   item1->appendRow(item10);
-
    MenuItem* item11 = new MenuItem(tr("context"), QIcon(":/images/info-48x48.png"), VIEW::ViewContext);
    item1->appendRow(item11);
 
@@ -158,6 +195,12 @@ void MenuModel::populateMenu()
    MenuItem* item32 = new MenuItem(tr("smart playlists"), QIcon(":/images/smart-playlist-48x48.png"), VIEW::ViewSmartPlaylist);
    item3->appendRow(item32);
 
+   MenuItem* item33 = new MenuItem( ACTIONS()->value(NEW_PLAYLIST), GlobalActionRole);
+   item3->appendRow(item33);
+
+   MenuItem* item34 = new MenuItem( ACTIONS()->value(NEW_SMART_PLAYLIST), GlobalActionRole);
+   item3->appendRow(item34);   
+   
    /* -----------------------*/
    /* populate Radio Item    */
    /* -----------------------*/    
@@ -186,13 +229,77 @@ void MenuModel::populateMenu()
 
    MenuItem* item52 = new MenuItem(tr("root directory"), QIcon(":/images/folder-48x48.png"), VIEW::ViewFileSystem, QVariant(QDir::rootPath()));
    item5->appendRow(item52);
+   
+   
+   /* -----------------------*/
+   /* populate Settings Item */
+   /* -----------------------*/   
+   MenuItem* item60 = new MenuItem(tr("settings"), QIcon(":/images/settings-48x48.png"), VIEW::ViewSettings);
+   item6->appendRow(item60);
+
+   MenuItem* item61 = new MenuItem(tr("about"), QIcon(":/images/about-48x48.png"), VIEW::ViewAbout);
+   item6->appendRow(item61);   
+   
+
+   MenuItem* item63 = new MenuItem( ACTIONS()->value(DATABASE_OPERATION), GlobalActionRole);
+   item6->appendRow( item63 );
+   
+   MenuItem* item64 = new MenuItem( ACTIONS()->value(DATABASE_ADD), GlobalActionRole);
+   item6->appendRow( item64 );
+   
+   m_db_item = new MenuItem(tr("choose database"), QIcon() );
+   item6->appendRow( m_db_item );
+
+   populateChooseDatabase();
+}
+
+/* ---------------------------------------------------------------------------*/
+/* MenuModel::populateChooseDatabase                                          */
+/* ---------------------------------------------------------------------------*/ 
+void MenuModel::populateChooseDatabase()
+{
+    m_db_item->removeRows(0, m_db_item->rowCount() );
+    
+    QActionGroup* group = new QActionGroup(this);
+
+    foreach ( const QString& name, Database::instance()->param_names() )
+    {
+        QAction *a = new QAction(QIcon(), name, this);
+        a->setCheckable(true);
+
+        if(name == Database::instance()->param()._name)
+          a->setChecked(true);
+
+         group->addAction(a);
+
+        MenuItem* mi = new MenuItem( a, DatabaseChooseRole);
+        m_db_item->appendRow( mi );
+        
+        connect(a, SIGNAL(triggered()), this, SLOT(slot_dbNameClicked()));
+    }
+}
+
+QModelIndex MenuModel::settingsModelIdx()
+{
+    return indexFromItem( m_settings_item );
+}
+
+/* ---------------------------------------------------------------------------*/
+/* MenuModel::slot_database_settingsChanged                                   */
+/* ---------------------------------------------------------------------------*/ 
+void MenuModel::slot_database_settingsChanged()
+{
+    //Debug::debug() << "MenuModel::slot_database_settingsChanged()";
+
+    populateChooseDatabase();
+    
+    emit databaseMenuChanged();
 }
 
 
-
-/*******************************************************************************
-    configureMenuAction
-*******************************************************************************/
+/* ---------------------------------------------------------------------------*/
+/* MenuModel::configureMenuAction                                             */
+/* ---------------------------------------------------------------------------*/ 
 void MenuModel::configureMenuAction()
 {
    for (int i=0; i < this->rowCount(QModelIndex()); i++)
@@ -201,20 +308,38 @@ void MenuModel::configureMenuAction()
 
     QStandardItem *childItem = itemFromIndex( childIdx );
 
-    for (int j=0; j < childItem->rowCount(); j++) {
+    for (int j=0; j < childItem->rowCount(); j++)
+    {
          const QModelIndex child2Idx = this->index(j, 0, childIdx);
-         QAction *a = child2Idx.data(MenuActionRole).value<QAction*>();
-         a->setData(QVariant::fromValue(child2Idx));
-         connect(a, SIGNAL(triggered()),this, SLOT(slot_on_menu_triggered()));
+
+         if( QAction *a = child2Idx.data(MenuActionRole).value<QAction*>() )
+         {
+           a->setData(QVariant::fromValue(child2Idx));
+           connect(a, SIGNAL(triggered()),this, SLOT(slot_on_menu_triggered()));
+         }
       }
   }
 }
 
-/*******************************************************************************
-    slot_on_menu_triggered
-     -> Quand une action provenant du menu (action associé au item et visible
-     par les menu de la menubar --> on retrouve l'index dans le modele
-*******************************************************************************/
+/* ---------------------------------------------------------------------------*/
+/* MenuModel::slot_dbNameClicked                                              */
+/* ---------------------------------------------------------------------------*/ 
+void MenuModel::slot_dbNameClicked()
+{
+     QAction *action = qobject_cast<QAction *>(sender());
+ 
+     Database::instance()->change_database( action->text() );
+     
+     //Debug::debug() << "      [MainToolButton] dbNameClicked = " << action->text();
+     
+     emit dbNameChanged();
+}
+
+/* ---------------------------------------------------------------------------*/
+/* MenuModel::slot_on_menu_triggered                                          */
+/*   -> Quand une action provenant du menu (action associé au item et visible */
+/*   par les menu de la menubar --> on retrouve l'index dans le modele        */
+/* ---------------------------------------------------------------------------*/
 void MenuModel::slot_on_menu_triggered()
 {
    QAction *action = qobject_cast<QAction *>(sender());
