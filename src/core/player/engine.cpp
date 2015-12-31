@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -42,9 +42,10 @@ Engine::Engine()
   
     switch ( SETTINGS()->_engine )
     {
-      case ENGINE::VLC :    engine_name = "enginevlc";     break;
-      case ENGINE::MPV :    engine_name = "enginempv";     break;
-      case ENGINE::PHONON : engine_name = "enginephonon";  break;    
+      case ENGINE::VLC          :    engine_name = "enginevlc";     break;
+      case ENGINE::MPV          :    engine_name = "enginempv";     break;
+      case ENGINE::PHONON       :    engine_name = "enginephonon";  break;    
+      case ENGINE::QTMULTIMEDIA :    engine_name = "engineqtmultimedia";  break;    
       default:break;
     };
 
@@ -78,10 +79,18 @@ Engine::Engine()
 
         Debug::debug() << "[Engine] Try to load " << fileName;
 
-        QPluginLoader loader( lib_dir.absoluteFilePath(fileName) );
+        QObject* obj =0;
+        try
+        {
+          QPluginLoader loader( lib_dir.absoluteFilePath(fileName) );
     
-        QObject *obj = loader.instance();
-
+          obj = loader.instance();
+        }
+        catch(...)
+        {
+          Debug::debug() << "########### Loading library failed ";
+        }
+        
         if (obj) 
         {
           CORE_INSTANCE = qobject_cast<EngineBase *>(obj);
@@ -103,16 +112,28 @@ Engine::Engine()
             Debug::error() << m_error;
 
             delete CORE_INSTANCE;
-            CORE_INSTANCE    = new EngineBase("null");
+            CORE_INSTANCE    = new EngineBase();
         }
     }
     /* no library found */
     else if( CORE_INSTANCE == 0 )
     {
-        CORE_INSTANCE    = new EngineBase("null");
+        CORE_INSTANCE    = new EngineBase();
 
         m_error = QString("[Engine] no audio engine library loaded !");
         Debug::error() << m_error;
     }
+}
+
+
+ENGINE::E_ENGINE_TYPE Engine::activeEngine()
+{
+    if(CORE_INSTANCE)
+    {
+        Debug::debug() << "CORE_INSTANCE->type()" << CORE_INSTANCE->type();
+        return CORE_INSTANCE->type();
+    }
+    
+    return ENGINE::NO_ENGINE;
 }
 

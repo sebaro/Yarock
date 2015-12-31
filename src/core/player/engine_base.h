@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -30,7 +30,16 @@ namespace ENGINE {
 }
 
 
-
+namespace ENGINE {
+  enum E_ENGINE_TYPE 
+  {
+      NO_ENGINE = 0, 
+      PHONON,
+      VLC,
+      MPV,
+      QTMULTIMEDIA
+  };
+}
 
 /*
 ********************************************************************************
@@ -45,8 +54,13 @@ Q_OBJECT
 Q_DISABLE_COPY( EngineBase )
   
 public:
+    EngineBase();
     EngineBase(const QString& name);
+
     QString name() {return m_name;}
+    QString version() {return m_version;}
+    
+    ENGINE::E_ENGINE_TYPE type() {return m_type;}
     bool isEngineOK() {return m_isEngineOK;}    
 
     /* play/pause/stop */
@@ -116,8 +130,11 @@ signals:
     void volumeChanged();
     void muteStateChanged();
     
-private :
+    
+protected :
     QString                 m_name;
+    QString                 m_version;
+    ENGINE::E_ENGINE_TYPE   m_type;
 };
 
 Q_DECLARE_INTERFACE(EngineBase, "yarock.EngineBase/1.0")

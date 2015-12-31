@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -54,6 +54,8 @@ static void wakeup(void *ctx)
 
 EngineMpv::EngineMpv() : EngineBase("mpv")
 {
+    m_type = ENGINE::MPV;
+
     setlocale(LC_NUMERIC, "C"); 
      
     /* ----- create mpv instance ----- */
@@ -89,8 +91,12 @@ EngineMpv::EngineMpv() : EngineBase("mpv")
     
         
     /* ----- log message (none, info, trace) ----- */
-    mpv_request_log_messages(m_mpv_core, /*"info"*/"v");
-    
+#ifdef TEST_FLAG 
+    mpv_request_log_messages(m_mpv_core, "v");
+#else
+    mpv_request_log_messages(m_mpv_core, "info");    
+#endif    
+
     /* ----- setup callback event handling ----- */
     mpv_set_wakeup_callback(m_mpv_core, wakeup, this);
     
@@ -107,13 +113,14 @@ EngineMpv::EngineMpv() : EngineBase("mpv")
     mpv_observe_property(m_mpv_core, 1, "pause",  MPV_FORMAT_FLAG);      
 
     /* ----- internal volume & mute ----- */
-    m_internal_volume   = SETTINGS()->_volumeLevel;
-    m_internal_is_mute  = false;
+    m_internal_volume = -1;
+    setVolume(SETTINGS()->_volumeLevel);
     
-    m_is_volume_changed = true;
-    m_is_muted_changed  = true;
+    m_internal_is_mute  = true;
+    setMuted(false);
     
     Debug::debug() << "[EngineMpv] libmpv client version:" << MPV_CLIENT_API_VERSION_STRING;
+    m_version = MPV_CLIENT_API_VERSION_STRING;
 }
 
 EngineMpv::~EngineMpv()
@@ -168,8 +175,12 @@ bool EngineMpv::event(QEvent *event)
 #if ( MPV_CLIENT_API_VERSION >= MPV_MAKE_VERSION(1, 9) )
               Debug::debug() << "[EngineMpv] event MPV_EVENT_END_FILE REASON:" << eof_event->reason;
               if( eof_event->reason ==  MPV_END_FILE_REASON_EOF)
+                  on_media_finished();
+              else if (eof_event->reason ==  MPV_END_FILE_REASON_ERROR)
+                  on_media_error();                  
+#else                  
+              on_media_finished();
 #endif
-                on_media_finished();
             }
         }
         return true;
@@ -181,8 +192,9 @@ bool EngineMpv::event(QEvent *event)
 void EngineMpv::handle_mpv_property_change(mpv_event *event)
 {
     mpv_event_property *prop = (mpv_event_property*)event->data;
-    
-    //Debug::debug() << "EngineMpv::handle_mpv_property_change:" << QString(prop->name);
+// #ifdef TEST_FLAG
+//     Debug::debug() << "EngineMpv::handle_mpv_property_change:" << QString(prop->name);
+// #endif    
 
     /* on pause change */
     if(QString(prop->name) == "pause")
@@ -229,6 +241,7 @@ void EngineMpv::handle_mpv_property_change(mpv_event *event)
     {
         on_metadata_change();
     }
+    
                 
     if(this->m_old_state != this->m_current_state)
     {
@@ -340,7 +353,7 @@ void EngineMpv::on_metadata_change()
     mpv_node node;
     mpv_get_property(m_mpv_core, "metadata", MPV_FORMAT_NODE, &node);
     
-    QString title,album,artist,nowPlaying;
+    QString title,album,artist,nowPlaying,icy_br;
     if(node.format == MPV_FORMAT_NODE_MAP)
     {
         for(int n = 0; n < node.u.list->num; n++)
@@ -349,7 +362,9 @@ void EngineMpv::on_metadata_change()
             {
                 QString s_key   =  node.u.list->keys[n];
                 QString s_value =  node.u.list->values[n].u.string;
+#ifdef TEST_FLAG                 
                 Debug::debug() << "[EngineMpv] -> on_metadata_change " << s_key << ":" << s_value;
+#endif                
                 
                 if( s_key == "title")
                   title = s_value;
@@ -359,6 +374,8 @@ void EngineMpv::on_metadata_change()
                   artist = s_value;
                 else if ( s_key == "icy-title")
                   nowPlaying = s_value;
+                else if ( s_key == "icy-br")
+                  icy_br = s_value;
             }
         }
      }           
@@ -371,6 +388,30 @@ void EngineMpv::on_metadata_change()
           title = list.last().trimmed();
     }
 
+    if( !icy_br.isEmpty() )
+    {
+        m_currentMediaItem->extra["bitrate"] = QString(icy_br);
+    }
+    else
+    {
+        double bitrate;
+        mpv_get_property(m_mpv_core, "audio-bitrate", MPV_FORMAT_DOUBLE, &bitrate);
+
+        if(bitrate != 0)
+            m_currentMediaItem->extra["bitrate"] = bitrate;
+    }
+    
+    uint samplingrate;
+    mpv_get_property(m_mpv_core, "audio-samplerate", MPV_FORMAT_INT64, &samplingrate);
+
+    if(samplingrate != 0)
+      m_currentMediaItem->extra["samplerate"] = samplingrate;
+    
+    char *cformat = NULL;
+    mpv_get_property(m_mpv_core, "audio-format", MPV_FORMAT_STRING, &cformat);
+    m_currentMediaItem->extra["format"] = QString(cformat);
+   
+    
     m_currentMediaItem->title  = title;
     m_currentMediaItem->album  = album;
     m_currentMediaItem->artist = artist;
@@ -453,6 +494,15 @@ void EngineMpv::on_media_finished()
     {
        emit engineRequestStop();
     }
+}
+
+/* ---------------------------------------------------------------------------*/
+/* EngineMpv::on_media_error                                                  */
+/* ---------------------------------------------------------------------------*/
+void EngineMpv::on_media_error()
+{
+      m_current_state = ENGINE::ERROR;
+      emit engineStateChanged();
 }
 
 /* ---------------------------------------------------------------------------*/

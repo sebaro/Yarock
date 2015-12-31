@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -54,11 +54,18 @@ Q_EXPORT_PLUGIN2(enginevlc, EngineVlc)
 */
 EngineVlc::EngineVlc() : EngineBase("vlc")
 {
+    m_type = ENGINE::VLC;
     qRegisterMetaType<ENGINE::E_ENGINE_STATE>("ENGINE::E_ENGINE_STATE");
 
+#if (LIBVLC_VERSION_INT < LIBVLC_VERSION(2, 2, 0, 0))
+    Debug::debug() << "[EngineVlc] -> if vlc engine fails to start, try to regenerate VLC's plugin cache !";
+    // NOTE : Under ubuntu running "/usr/lib/vlc/vlc-cache-gen -f /usr/lib/vlc/plugins/" 
+    //        as root fixes the crash
+#endif    
+    
     /* ----- create vlc lib instance ----- */
     m_vlclib = new VlcLib();
-    
+
     if(!m_vlclib->init()) {
       Debug::warning() << "[EngineVlc] -> warning vlc initialisation failed !";
       m_isEngineOK = false;
@@ -86,11 +93,11 @@ EngineVlc::EngineVlc() : EngineBase("vlc")
     m_tickInterval      = TICK_INTERVAL;    
     
     /* ----- internal volume & mute ----- */
-    m_internal_volume   = SETTINGS()->_volumeLevel;
-    m_internal_is_mute  = false;
+    m_internal_volume = -1;
+    setVolume(SETTINGS()->_volumeLevel);
     
-    m_is_volume_changed = true;
-    m_is_muted_changed  = true;
+    m_internal_is_mute  = true;
+    setMuted(false);
     
     /* ----- init equalizer ----- */
     m_equalizer = 0;
@@ -105,6 +112,8 @@ EngineVlc::EngineVlc() : EngineBase("vlc")
 #if (LIBVLC_VERSION_INT >= LIBVLC_VERSION(2, 1, 0, 0))
     libvlc_media_player_set_video_title_display(m_vlc_player, libvlc_position_disable, 0);
 #endif
+    
+    m_version = QString(libvlc_get_version());
 }
 
 EngineVlc::~EngineVlc()
@@ -498,6 +507,9 @@ void EngineVlc::slot_on_media_finished()
 {
     Debug::debug() << "[EngineVlc] -> slot_on_media_finished";
     
+    if(VlcLib::isError())
+      VlcLib::print_error();
+    
     emit mediaFinished();
     
     if(m_nextMediaItem)
@@ -610,7 +622,6 @@ void EngineVlc::slot_on_metadata_change()
     if(m_currentMediaItem->type() != TYPE_STREAM) 
       return;
     
-    
     const QString artist     = m_vlc_media->meta(libvlc_meta_Artist);
     const QString album      = m_vlc_media->meta(libvlc_meta_Album);
     const QString title      = m_vlc_media->meta(libvlc_meta_Title);
@@ -625,6 +636,23 @@ void EngineVlc::slot_on_metadata_change()
           m_currentMediaItem->artist = list.first();
           m_currentMediaItem->title = list.last();
         }
+    }
+    
+    libvlc_media_track_t **arrayVlcTracks = new libvlc_media_track_t *[5];
+
+    int numberOfTracks = libvlc_media_tracks_get(m_vlc_media->core(), &arrayVlcTracks);
+
+    if(numberOfTracks == 1)
+    { 
+        libvlc_media_track_t* track = arrayVlcTracks[0];
+
+        m_currentMediaItem->extra["bitrate"] = track->i_bitrate/1000;
+        m_currentMediaItem->extra["samplerate"] = track->audio->i_rate;
+#if (LIBVLC_VERSION_INT >= LIBVLC_VERSION(3, 0, 0, 0))
+        const char* codecDesc = libvlc_media_get_codec_description(track->i_type,track->i_codec);
+        m_currentMediaItem->extra["format"] = QString(codecDesc);
+#endif
+         libvlc_media_tracks_release(arrayVlcTracks,1);
     }
 
     emit mediaMetaDataChanged();

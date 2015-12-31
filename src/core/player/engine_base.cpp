@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -18,9 +18,17 @@
 #include "engine_base.h"
 #include "debug.h"
 
-EngineBase::EngineBase(const QString& name) : m_name(name)
+EngineBase::EngineBase()
+{
+    m_name = "no engine";
+    m_type = ENGINE::NO_ENGINE;
+}
+
+EngineBase::EngineBase(const QString& name)
 {
     //Debug::debug() << "[PLAYER] create player : " << m_name;
+    m_name = name;
+    
     m_isEngineOK       = true;
     m_current_state    = ENGINE::STOPPED;
     m_old_state        = ENGINE::STOPPED;

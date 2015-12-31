@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -53,13 +53,14 @@ bool VlcLib::init()
     //! init args for vlc libs
     QList<QByteArray> args;
 
-    /* warning from vlc doc : There is absolutely no warranty or 
+    /* NOTE 1: warning from vlc doc : There is absolutely no warranty or 
     promise of forward, backward and cross-platform compatibility with regards 
     to libvlc_new() arguments. We recommend that you do not use them,
-     other than when debugging. */
+    other than when debugging. */
+      
+    /* NOTE 2: --no-plugins-cache CRASH on ubuntu 15.10 frash install */
     args << "--no-media-library"
          << "--no-one-instance"
-         << "--no-plugins-cache"
          << "--no-stats"
          << "--no-osd"
          << "--no-loop"

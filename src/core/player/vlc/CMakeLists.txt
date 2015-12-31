@@ -77,7 +77,7 @@ if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
    set (CMAKE_INSTALL_PREFIX /usr CACHE PATH "default install path" FORCE )
 endif()
 
-set(CMAKE_INSTALL_LIB "${CMAKE_INSTALL_PREFIX}/lib/yarock"  CACHE PATH "libraries installation path" FORCE)
+set(CMAKE_INSTALL_LIB "${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX}/yarock"  CACHE PATH "libraries installation path" FORCE)
 
 install(TARGETS enginevlc DESTINATION ${CMAKE_INSTALL_LIB} )
 

@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -47,6 +47,8 @@ Q_EXPORT_PLUGIN2(enginephonon, EnginePhonon)
 */
 EnginePhonon::EnginePhonon() : EngineBase("phonon")
 {
+    m_type = ENGINE::PHONON;
+    
     m_mediaObject = new Phonon::MediaObject(this);
     m_audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory, this);
 
@@ -108,6 +110,8 @@ EnginePhonon::EnginePhonon() : EngineBase("phonon")
         
     m_current_state    = ENGINE::STOPPED;
     m_old_state        = ENGINE::STOPPED;
+    
+    m_version = QString();
 }
 
 EnginePhonon::~EnginePhonon()
@@ -177,9 +181,15 @@ void EnginePhonon::setMediaItem(MEDIA::TrackPtr track)
     }
     /* END */
 
+    
+    /* get replay gain info */
+    if ( (m_currentMediaItem->type() == TYPE_TRACK) && 
+         (SETTINGS()->_replaygain != SETTING::ReplayGainOff ) )
+    {
+        MEDIA::ReplayGainFromDataBase(m_currentMediaItem);    
+    }
+     
     //const QString path = MEDIA::Track::path(track->url);
-    //Debug::debug() << "[EnginePhonon] -> set url " << path;
-
     if( MEDIA::isLocal(track->url) )
       m_mediaObject->setCurrentSource( QUrl::fromLocalFile(QFileInfo(track->url).canonicalFilePath()) );
     else
@@ -202,6 +212,13 @@ void EnginePhonon::setNextMediaItem(MEDIA::TrackPtr track)
     /* // DEBUG check queue
     foreach (Phonon::MediaSource source, m_mediaObject->queue() )
       Debug::debug() << "[EnginePhonon] -> #queue -> url :" << source.url() ;*/
+    
+    /* get replay gain info */
+    if ( (m_nextMediaItem->type() == TYPE_TRACK) && 
+         (SETTINGS()->_replaygain != SETTING::ReplayGainOff ) )
+    {
+        MEDIA::ReplayGainFromDataBase(m_nextMediaItem);    
+    }    
 }
 
 
@@ -452,9 +469,8 @@ void EnginePhonon::slot_on_metadata_change()
     }
     
 #ifdef TEST_FLAG    
-     Debug::debug() << "[EnginePhonon] -> slotMetaDataChanged title   :" << m_currentMediaItem->title;
-     Debug::debug() << "[EnginePhonon] -> slotMetaDataChanged album   :" << m_currentMediaItem->album;
-     Debug::debug() << "[EnginePhonon] -> slotMetaDataChanged artist  :" << m_currentMediaItem->artist;
+    foreach(QString key, metaData.keys())
+      Debug::debug() << "[EnginePhonon] -> on_metadata_change " << key << ":" << metaData[key];
 #endif
     emit mediaMetaDataChanged();
 }

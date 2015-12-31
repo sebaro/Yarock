@@ -1,6 +1,6 @@
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 2.8.3)
 
-project(enginempv)
+project(engineqtmultimedia)
 # ------------------------------------------------------------------------------
 #  build def (QT PLUGIN)
 # ------------------------------------------------------------------------------
@@ -11,47 +11,44 @@ ADD_DEFINITIONS(-DQT_SHARED)
 ADD_DEFINITIONS(-DQT_THREAD)
 
 
-ADD_DEFINITIONS( -DENABLE_MPV )
+ADD_DEFINITIONS( -DENABLE_QTMULTIMEDIA )
 
 # ------------------------------------------------------------------------------
 #  EXTERNAL LIB
 # ------------------------------------------------------------------------------
-FIND_PACKAGE( LIBMPV REQUIRED)
-
+if(ENABLE_QT5)
+  FIND_PACKAGE( Qt5Multimedia REQUIRED)
+endif (ENABLE_QT5)    
+ 
 
 # ------------------------------------------------------------------------------
 #  INCLUDES
 # ------------------------------------------------------------------------------
 INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/player/
-                     ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/player/mpv
+                     ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/player/qtmultimedia
                      ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/mediaitem
                      ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src
 )
 
-INCLUDE_DIRECTORIES( ${LIBMPV_INCLUDE_DIR} )
-  
 if (ENABLE_QT5)
-    set (QTLIBS ${Qt5Core_LIBRARIES})
+    set (QTLIBS ${Qt5Core_LIBRARIES} 
+                ${Qt5Multimedia_LIBRARIES})
     
-    set (QTINCLUDES ${Qt5Core_INCLUDE_DIRS})
+    set (QTINCLUDES ${Qt5Core_INCLUDE_DIRS}
+                    ${Qt5Multimedia_INCLUDE_DIRS} )
 
-    add_definitions( ${Qt5Core_DEFINITIONS})
+    add_definitions( ${Qt5Core_DEFINITIONS} 
+                     ${Qt5Multimedia_DEFINITIONS} )
 
-else (ENABLE_QT5)
-    set (QTLIBS ${QT_QTCORE_LIBRARY})
-
-    set (QTINCLUDES ${QT_INCLUDES})
+    INCLUDE_DIRECTORIES( ${QTINCLUDES} )
     
-    add_definitions(${QT_DEFINITIONS})    
-endif (ENABLE_QT5)
-
-INCLUDE_DIRECTORIES( ${QTINCLUDES} )
+endif(ENABLE_QT5)
 
 # ------------------------------------------------------------------------------
 #  SOURCES
 # ------------------------------------------------------------------------------
 SET(SOURCES
-    ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/player/mpv/engine_mpv.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/player/qtmultimedia/engine_qtmultimedia.cpp
 )
 
 # ------------------------------------------------------------------------------
@@ -59,13 +56,15 @@ SET(SOURCES
 # ------------------------------------------------------------------------------
 set( CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib )
 
-ADD_LIBRARY( enginempv SHARED ${SOURCES} )
+ADD_LIBRARY( engineqtmultimedia SHARED ${SOURCES} )
 
-SET_TARGET_PROPERTIES(enginempv PROPERTIES AUTOMOC TRUE)
+SET_TARGET_PROPERTIES(engineqtmultimedia PROPERTIES AUTOMOC TRUE)
 
-ADD_DEPENDENCIES(enginempv yarock)
+ADD_DEPENDENCIES(engineqtmultimedia yarock)
 
-TARGET_LINK_LIBRARIES(enginempv ${LIBMPV_LIBRARY} ${QTLIBS})
+if(ENABLE_QT5)  
+    TARGET_LINK_LIBRARIES(engineqtmultimedia ${QTLIBS})
+endif(ENABLE_QT5)
 
 # ------------------------------------------------------------------------------
 #  INSTALL
@@ -76,5 +75,7 @@ endif()
 
 set(CMAKE_INSTALL_LIB "${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX}/yarock"  CACHE PATH "libraries installation path" FORCE)
 
-install(TARGETS enginempv DESTINATION ${CMAKE_INSTALL_LIB} )
+install(TARGETS engineqtmultimedia DESTINATION ${CMAKE_INSTALL_LIB} )
+
+
 

@@ -14,44 +14,38 @@
 *  You should have received a copy of the GNU General Public License along with         *
 *  this program.  If not, see <http://www.gnu.org/licenses/>.                           *
 *****************************************************************************************/
-#ifdef ENABLE_VLC
-#ifndef _ENGINE_VLC_H_
-#define _ENGINE_VLC_H_
+#ifdef ENABLE_QTMULTIMEDIA
+
+#ifndef _ENGINE_QTMULTIMEDIA_H_
+#define _ENGINE_QTMULTIMEDIA_H_
+
+// Qt
+#include <QObject>
+#include <QMediaPlayer>
+
+#include "core/player/engine_base.h"
+#include "core/mediaitem/mediaitem.h"
 
 
-#include <QtCore/QObject>
-
-#include "engine_base.h"
-#include "vlc/libvlc_version.h"
-
-
-struct libvlc_event_t;
-struct libvlc_media_player_t;
-struct libvlc_event_manager_t;
-#if (LIBVLC_VERSION_INT >= LIBVLC_VERSION(2, 2, 0, 0))
-struct libvlc_equalizer_t;
-#endif
-class VlcLib;
-class VlcMedia;
 /*
 ********************************************************************************
 *                                                                              *
-*    Class EngineVlc                                                          *
+*    Class EngineQtMultimedia                                                  *
 *                                                                              *
 ********************************************************************************
 */
-class EngineVlc : public EngineBase
+class EngineQtMultimedia : public EngineBase
 {
 Q_OBJECT
 Q_INTERFACES(EngineBase)
 #if QT_VERSION >= 0x050000
-Q_PLUGIN_METADATA(IID "EngineVlc")
+Q_PLUGIN_METADATA(IID "EngineQtMultimedia")
 #endif 
 
 public:
-    EngineVlc();
-    ~EngineVlc();
-    
+    EngineQtMultimedia();
+    ~EngineQtMultimedia();
+
     /* play/pause/stop */
     void play();
     void pause();
@@ -60,7 +54,7 @@ public:
     /* media management */
     void setMediaItem(MEDIA::TrackPtr track);
     void setNextMediaItem(MEDIA::TrackPtr track);
-    
+   
     /* audio */ 
     int volume() const;
     void setVolume(const int &);
@@ -71,53 +65,34 @@ public:
     void seek( qint64 );
     
     /* effect */ 
-#if (LIBVLC_VERSION_INT >= LIBVLC_VERSION(2, 2, 0, 0))    
     bool isEqualizerAvailable();
     void addEqualizer();
     void removeEqualizer();
-    void applyEqualizer(QList<int>);    
-#endif
-    
+    void applyEqualizer(QList<int>);
+
 public slots:
     void volumeMute( );
     void volumeInc( );
     void volumeDec( );
     
 private:
-    void applyInternalVolume();
-    void applyInternalMute();
-    void createCoreConnections();
-    void removeCoreConnections();
-    static void libvlc_callback(const libvlc_event_t *event,void *data);
-    void setVlcMedia(const QString&);
-    void update_total_time();
     void loadEqualizerSettings();
+    void update_total_time();
     
 private slots:
+    void slot_on_player_state_change(QMediaPlayer::State);
+    void slot_on_media_status_changed(QMediaPlayer::MediaStatus);
     void slot_on_media_change();
     void slot_on_duration_change(qint64);
     void slot_on_time_change(qint64);
     void slot_on_media_finished();
     void slot_on_media_about_to_finish();
     void slot_on_metadata_change();
-    void internal_vlc_stateChanged(ENGINE::E_ENGINE_STATE state);
-    
+
 private:
-    VlcLib                    *m_vlclib;
-    VlcMedia                  *m_vlc_media;
-    libvlc_media_player_t     *m_vlc_player;
-    libvlc_event_manager_t    *m_vlc_events;
-#if (LIBVLC_VERSION_INT >= LIBVLC_VERSION(2, 2, 0, 0))
-    libvlc_equalizer_t        *m_equalizer;
-#else
-    void                      *m_equalizer;
-#endif
-    int                        m_internal_volume;
-    bool                       m_is_volume_changed;
-    
-    bool                       m_internal_is_mute;
-    bool                       m_is_muted_changed;
+    QMediaPlayer      *m_player;
+
 };
 
-#endif // _ENGINE_VLC_H_
-#endif // ENABLE_VLC
+#endif // _ENGINE_QTMULTIMEDIA_H_
+#endif // ENABLE_QTMULTIMEDIA

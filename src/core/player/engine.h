@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -21,9 +21,7 @@
 #include "engine_base.h"
 #include <QString>
 
-namespace ENGINE {
-  enum E_ENGINE_TYPE {NO_ENGINE = 0, PHONON, VLC, MPV};
-}
+
 
 
 /*
@@ -43,6 +41,8 @@ public:
     
     QString error() { return m_error;}
 
+    static ENGINE::E_ENGINE_TYPE activeEngine();
+    
 private:
     QString m_error;
 };

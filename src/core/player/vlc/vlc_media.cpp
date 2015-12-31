@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -48,9 +48,14 @@ void VlcMedia::init(const QString &location, bool isLocal)
 
     /* Create a new libvlc media descriptor from location */
     if (isLocal)
+    {
       m_vlcMedia = libvlc_media_new_path(VlcLib::instance()->core(), m_currentLocation.toLocal8Bit().data());
+      setOption("-no-auto-preparse");
+    }
     else
+    {
       m_vlcMedia = libvlc_media_new_location(VlcLib::instance()->core(), m_currentLocation.toLocal8Bit().data());
+    }
             
     m_vlcEvents = libvlc_media_event_manager( m_vlcMedia );
     
