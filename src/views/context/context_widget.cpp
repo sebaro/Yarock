@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -19,7 +19,7 @@
 
 #include "lyricseditor.h"
 #include "core/player/engine.h"
-#include "utilities.h"      // CONFIGDIR
+#include "utilities.h"
 #include "debug.h"
 #include "covercache.h"
 
@@ -105,8 +105,8 @@ QSizeF ArtistInfoWidget::sizeHint(Qt::SizeHint which, const QSizeF &constraint) 
 Q_UNUSED(which);
 Q_UNUSED(constraint);
     return QSizeF( m_parent->width(),
-                   qMax(/*title*/ 30 + m_image->sizeHint().height(), 
-                        /*title*/ 30 + m_bio->height() + m_button->height())
+                   qMax(/*title*/ 30 + m_image->sizeHint().height() + 30 /*margin*/, 
+                        /*title*/ 30 + m_bio->height() + m_button->height()+ 30 /*margin*/)
                  );
 }
 
@@ -201,21 +201,18 @@ ArtistSimilarWidget::ArtistSimilarWidget(QWidget* parentView) :
 {
     m_parent       = parentView;
 
-    m_subtitle = new TextGraphicItem();
-    m_subtitle->setPos(20,0);
-    m_subtitle->setParentItem(this);
-    
-    QFont font = QApplication::font();
-    font.setPointSize( font.pointSize() + 1 );
-    font.setBold( true );
-    m_subtitle->setFont(font);
+    m_title   = new CategorieLayoutItem(qobject_cast<QGraphicsView*> (m_parent)->viewport());
+    m_title->setPos(0,0);
+    m_title->setParentItem(this);
 }
 
 void ArtistSimilarWidget::clear()
 {
     qDeleteAll(m_artists);
     m_artists.clear();
-    m_subtitle->clear();
+
+    m_title->hide();
+    m_title->m_name.clear();
     
     update();
 }
@@ -262,8 +259,10 @@ void ArtistSimilarWidget::setData(INFO::InfoRequestData request, QVariant data)
             m_artists[artistMap["name"].toString()] = item;
         }
         
-        if(!data.toList().isEmpty())
-          m_subtitle->setPlainText(tr("Similar artists"));
+        if(!data.toList().isEmpty()) {
+          m_title->m_name = tr("Similar artists");
+          m_title->show();
+        }
     }
     else if(request.type == INFO::InfoArtistImages ) 
     {
@@ -281,7 +280,7 @@ void ArtistSimilarWidget::setData(INFO::InfoRequestData request, QVariant data)
 
             if(!cover.isNull()) {
               m_artists[hash["artist"]]->m_pix = 
-              QPixmap( UTIL::squareCenterPixmap( cover ) ).scaled(QSize(80,80), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+              QPixmap( UTIL::squareCenterPixmap( cover ) ).scaled(QSize(120,120), Qt::KeepAspectRatio, Qt::SmoothTransformation);
               m_artists[hash["artist"]]->update(); 
             }
         }
@@ -293,9 +292,11 @@ void ArtistSimilarWidget::setData(INFO::InfoRequestData request, QVariant data)
 
 QSizeF ArtistSimilarWidget::doLayout(bool redraw) const
 {
-     if(m_subtitle->toPlainText().isEmpty())
+     if(m_title->m_name.isEmpty())
        return QSize(0,0);
      
+     m_title->show();
+
      qreal left, top, right, bottom;
      getContentsMargins(&left, &top, &right, &bottom);
 
@@ -315,7 +316,8 @@ QSizeF ArtistSimilarWidget::doLayout(bool redraw) const
 
      QList<ArtistThumbGraphicItem*> artists = m_artists.values();
 
-     for (int i = 0; i < artists.count(); ++i) {
+     for (int i = 0; i < artists.count(); ++i) 
+     {
          ArtistThumbGraphicItem* artist = artists.at(i);
          pref = artist->effectiveSizeHint(Qt::PreferredSize);
          maxRowHeight = qMax(maxRowHeight, pref.height());
@@ -357,22 +359,14 @@ DiscoInfoWidget::DiscoInfoWidget(QWidget* parentView) :
 {
     m_parent       = parentView;
 
-    m_subtitle = new TextGraphicItem();
-    m_subtitle->setPos(20,0);
-    m_subtitle->setParentItem(this);
-    
-    QFont font = QApplication::font();
-    font.setPointSize( font.pointSize() + 1 );
-    font.setBold( true );
-    m_subtitle->setFont(font);
-
-//     m_button  = new WebLinkItem();
-//     m_button->setParentItem(this);
+    m_title   = new CategorieLayoutItem(qobject_cast<QGraphicsView*> (m_parent)->viewport());
+    m_title->setPos(0,0);
+    m_title->setParentItem(this);
 }
 
 void DiscoInfoWidget::setData(INFO::InfoRequestData request , QVariant data)
 {
-    //Debug::debug() << Q_FUNC_INFO;
+    //Debug::debug() << "######" << Q_FUNC_INFO;
     INFO::InfoStringHash input = request.data.value< INFO::InfoStringHash >();
          
     if(request.type == INFO::InfoArtistReleases ) 
@@ -397,10 +391,8 @@ void DiscoInfoWidget::setData(INFO::InfoRequestData request , QVariant data)
         }
         
         if(!vmap.value("releases").toList().isEmpty()) {
-          m_subtitle->setPlainText(tr("Discography"));
-//           m_button->setLink( vmap.value("ressource_url").toString() );
-//           m_button->setText(tr("link"));        
-//           m_button->setPos(m_subtitle->width() + 30, 4);
+          m_title->m_name = tr("Discography");
+          m_title->show();
         }        
     }
     else if(request.type == INFO::InfoAlbumCoverArt ) 
@@ -409,8 +401,7 @@ void DiscoInfoWidget::setData(INFO::InfoRequestData request , QVariant data)
             
         if(m_albums.contains( akey ))
         {
-            //Debug::debug() << Q_FUNC_INFO << "INFO::InfoAlbumCoverArt : album found " << input.value("album");
-
+            //Debug::debug() << "#####" << Q_FUNC_INFO << "INFO::InfoAlbumCoverArt : album found " << input.value("album");
             const QByteArray bytes = data.toByteArray();
 
             if( !bytes.isEmpty() ) {
@@ -418,7 +409,7 @@ void DiscoInfoWidget::setData(INFO::InfoRequestData request , QVariant data)
               cover.loadFromData( bytes );
 
               if(!cover.isNull()) {
-                m_albums[akey]->m_pix = cover.scaled(QSize(110, 110), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+                m_albums[akey]->m_pix = cover.scaled(QSize(120, 120), Qt::KeepAspectRatio, Qt::SmoothTransformation);
                 m_albums[akey]->update();
               }
             }
@@ -433,9 +424,8 @@ void DiscoInfoWidget::clear()
     //Debug::debug() << "DiscoInfoWidget::clear ";
     qDeleteAll(m_albums);
     m_albums.clear();
-
-//     m_button->clear();
-    m_subtitle->clear();
+    m_title->hide();
+    m_title->m_name.clear();
     
     update();    
 }
@@ -455,8 +445,7 @@ void DiscoInfoWidget::update()
 
 QSizeF DiscoInfoWidget::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
 {
-Q_UNUSED(which)//     m_services.append(new ServiceEchonest());
-;
+Q_UNUSED(which)
 Q_UNUSED(constraint);
     return doLayout(false);
 }
@@ -469,20 +458,21 @@ Q_UNUSED(event)
 
 QSizeF DiscoInfoWidget::doLayout(bool redraw) const
 {
-     if(m_subtitle->toPlainText().isEmpty())
+     if(m_title->m_name.isEmpty())
        return QSize(0,0);
      
+     m_title->show();
      //Debug::debug() << "DiscoInfoWidget::doLayout ";
      qreal left, top, right, bottom;
      getContentsMargins(&left, &top, &right, &bottom);
 
-     const int HSpacing = 10;
+     const int HSpacing = 20;
      const int VSpacing = 20;
      left   += 40;
      right  += 40;
      top    += 40;
      bottom += 20;
-
+     
      const qreal maxw = m_parent->width() - left - right;
 
      qreal x = 0;
@@ -518,223 +508,9 @@ QSizeF DiscoInfoWidget::doLayout(bool redraw) const
      }
      maxRowHeight = qMax(maxRowHeight, pref.height());
 
-     return QSizeF(maxw, top + y + maxRowHeight + bottom /*+ m_button->height() */);
+     return QSizeF(maxw, top + y + maxRowHeight + bottom );
 }
 
-
-
-/*
-********************************************************************************
-*                                                                              *
-*    Class AlbumInfoWidget                                                     *
-*                                                                              *
-********************************************************************************
-*/
-AlbumInfoWidget::AlbumInfoWidget(QWidget* parentView) :
-  QGraphicsWidget(0)
-{
-    m_parent       = parentView;
-
-    m_title   =  new CategorieLayoutItem(qobject_cast<QGraphicsView*> (m_parent)->viewport());
-    
-    /* tracks part */
-    m_songs     =  new TextGraphicItem();
-    m_songs->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::Expanding );
-
-    m_subtitle = new TextGraphicItem();
-    
-    QFont font = QApplication::font();
-    font.setPointSize( font.pointSize() + 1 );
-    font.setBold( true );
-    m_subtitle->setFont(font);
-    m_subtitle->setPlainText(tr("Album tracks"));
-
-    /* album info part */
-    m_wiki     =  new TextGraphicItem();
-    m_wiki->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::Expanding );    
-    
-    m_button  = new WebLinkItem();
-    
-    /* album cover part */    
-    m_image = new QLabel;
-    m_image->setAttribute( Qt::WA_NoSystemBackground, true );
-    m_image->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
-    m_image->setMaximumWidth( 200 );
-    m_image->setMaximumHeight( 200 );
-
-    QGraphicsProxyWidget *image_proxy_widget = new QGraphicsProxyWidget( this );
-    image_proxy_widget->setWidget( m_image );
-    image_proxy_widget->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
-
-    /* layout */  
-    QGraphicsLinearLayout* m_layout_v = new QGraphicsLinearLayout( Qt::Vertical );
-    m_layout_v->setContentsMargins(20,0,0,0);
-    m_layout_v->addItem( m_subtitle );
-    m_layout_v->addItem( m_songs );
-
-    QGraphicsLinearLayout* m_layout_v2 = new QGraphicsLinearLayout( Qt::Vertical );
-    m_layout_v2->setSpacing(5);
-    m_layout_v2->addItem( m_button );
-    m_layout_v2->addItem( m_wiki );
-    
-    QGraphicsLinearLayout* m_layout_h = new QGraphicsLinearLayout( Qt::Horizontal );
-    m_layout_h->addItem( m_layout_v );
-    m_layout_h->addItem( m_layout_v2 );
-    m_layout_h->addItem( image_proxy_widget );
-    m_layout_h->setAlignment( image_proxy_widget, Qt::AlignTop );
-
-    QGraphicsLinearLayout* m_layout   = new QGraphicsLinearLayout( Qt::Vertical , this);
-    m_layout->setContentsMargins(0,0,0,0);
-    m_layout->addItem( m_title );
-    m_layout->addItem( m_layout_h );
-}
-
-void AlbumInfoWidget::clear()
-{
-    m_image->clear();
-    m_songs->clear();
-    m_wiki->clear();
-    m_button->clear();
-    m_track_count = 0;
-    update();
-}
-
-void AlbumInfoWidget::update()
-{
-    prepareGeometryChange();
-
-    updateGeometry();
-
-    this->layout()->invalidate();
-
-    QGraphicsWidget::update();
-
-    emit updated();
-}
-
-void AlbumInfoWidget::resizeEvent( QGraphicsSceneResizeEvent *event )
-{
-Q_UNUSED(event)
-    m_songs->setTextWidth((m_parent->width() - m_image->width() -60)/2);
-    m_wiki->setTextWidth((m_parent->width() - m_image->width() -60)/2);    
-    this->update();
-}
-
-void AlbumInfoWidget::set_track(MEDIA::TrackPtr track)
-{
-    m_album_key = INFO::albumKey(track->artist, track->album);
-
-    m_title->m_name = track->album;
-
-    if(track->parent() && track->parent()->type() == TYPE_ALBUM)  
-    {
-        MEDIA::AlbumPtr album = MEDIA::AlbumPtr::staticCast(track->parent());
-      
-        QString html_text;
-        m_track_count = album->childCount();
-        for (int i = 0; i < album->childCount(); i++) {
-            MEDIA::TrackPtr track = MEDIA::TrackPtr::staticCast(album->child(i));
-            html_text += "<p>" + QString::number(track->num) + " " + track->title + "</p>";
-        } 
-      
-        m_image->setPixmap( CoverCache::instance()->cover(album) );
-      
-        m_songs->setHtml(html_text);
-        m_songs->updateItem();
-
-        m_songs->setTextWidth((m_parent->width() - m_image->width() -60)/2);
-        m_wiki->setTextWidth((m_parent->width() - m_image->width() -60)/2);
-        this->update();
-    }
-}
-
-
-
-QSizeF AlbumInfoWidget::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
-{
-Q_UNUSED(which);
-Q_UNUSED(constraint);
-    int max =  qMax(m_songs->height(), m_wiki->height()) + 20;
-
-    return QSizeF( m_parent->width(), 
-                   30 /* title*/ + qMax(max , m_image->height()) );
-}
-
-
-void AlbumInfoWidget::setData(INFO::InfoRequestData request, QVariant data)
-{
-    INFO::InfoStringHash input = request.data.value< INFO::InfoStringHash >();
-
-    if(request.type == INFO::InfoAlbumCoverArt ) 
-    {
-      if(m_album_key != INFO::albumKey(input.value("artist"), input.value("album")))
-        return;
-
-
-      const QByteArray bytes = data.toByteArray();
-
-      QPixmap cover;
-      cover.loadFromData( bytes );
-
-      if(!cover.isNull()) 
-      {
-        QPixmap pix = UTIL::squareCenterPixmap( cover ).scaled(QSize(200,200), Qt::KeepAspectRatio, Qt::SmoothTransformation);
-
-        m_image->setPixmap( UTIL::createRoundedImage( pix ) );
-        m_image->adjustSize();
-        this->update();     
-      }
-      
-      m_songs->setTextWidth((m_parent->width() - m_image->width() -60)/2);
-      m_wiki->setTextWidth((m_parent->width() - m_image->width() -60)/2);
-    }
-    else if (request.type ==  INFO::InfoAlbumInfo)
-    {
-        QVariantMap map =  qvariant_cast<QVariantMap>(data);
-       
-        if(map.contains("wiki") ) 
-        {
-          QString bio = map["wiki"].toString();
-
-          int split = bio.indexOf('\n', 512);
-          if (split == -1)
-            split = bio.indexOf(". ", 512);
-
-          QString html_text = QString("<p align=\"justify\">");
-          html_text += bio.left(split);
-          html_text += "</p>";
-
-          /* update album bio */
-          m_wiki->setHtml(html_text);
-          m_wiki->updateItem();
-  
-          if (map.contains("url"))
-          {
-            m_button->setLink(map["url"].toString()); 
-            m_button->setText(map["site"].toString()); 
-            m_button->update();
-          }  
-        }
-        if(map.contains("tracks") ) 
-        {
-          if(m_track_count < map.value("tracks").toList().size())
-          {
-            QString html_text;
-
-            foreach (QVariant track, map.value("tracks").toList()) 
-              html_text += "<p>" + track.toString() + "</p>";
-
-            m_songs->setHtml(html_text);
-            m_songs->updateItem();
-
-            m_songs->setTextWidth((m_parent->width() - m_image->width() -60)/2);
-            m_wiki->setTextWidth((m_parent->width() - m_image->width() -60)/2);
-          }
-        }
-
-        this->update();
-    }
-}
 
 
 /*
@@ -753,18 +529,10 @@ LyricsInfoWidget::LyricsInfoWidget(QWidget* parentView) :
     m_lyrics_found   = false;
 
     m_title         = new CategorieLayoutItem(qobject_cast<QGraphicsView*> (m_parent)->viewport());
+    m_title->m_name = tr("Song lyrics");
     
     m_lyrics        = new TextGraphicItem();
     m_lyrics->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Expanding );
-
-    m_subtitle = new TextGraphicItem();
-    m_subtitle->setPos(20,0);
-    m_subtitle->setParentItem(this);
-    
-    QFont font = QApplication::font();
-    font.setPointSize( font.pointSize() + 1 );
-    font.setBold( true );
-    m_subtitle->setFont(font);
 
 
     m_button_add    = new ButtonItem();
@@ -783,16 +551,11 @@ LyricsInfoWidget::LyricsInfoWidget(QWidget* parentView) :
     m_button_link->setText("Lyrics Link");
     m_button_link->hide();
 
-    m_subtitle->setPlainText(tr("Song lyrics"));
-    m_subtitle->adjustSize();
-
     QGraphicsLinearLayout* m_layout_h0 = new QGraphicsLinearLayout( Qt::Horizontal);
-    m_layout_h0->addItem( m_subtitle );
     m_layout_h0->addItem( m_button_link );
     m_layout_h0->addItem( m_button_add );
     m_layout_h0->addItem( m_button_remove );
 
-    m_layout_h0->setAlignment(m_subtitle, Qt::AlignVCenter);
     m_layout_h0->setAlignment(m_button_link, Qt::AlignVCenter);
     m_layout_h0->setAlignment(m_button_add, Qt::AlignVCenter);
     m_layout_h0->setAlignment(m_button_remove, Qt::AlignVCenter);
@@ -846,12 +609,6 @@ Q_UNUSED(event)
     m_lyrics->setTextWidth(m_parent->width() -30);
 
     this->update();
-}
-
-void LyricsInfoWidget::set_song_name(const QString &name)
-{
-    m_title->m_name = name;
-    m_lyrics->updateItem();
 }
 
 void LyricsInfoWidget::setData(INFO::InfoRequestData request , QVariant data)
@@ -942,54 +699,5 @@ void LyricsInfoWidget::slot_remove_lyrics()
 
       m_lyrics_found = false;
     }
-}
-
-
-
-
-/*
-********************************************************************************
-*                                                                              *
-*    Class NowPlayingInfoWidget                                                *
-*                                                                              *
-********************************************************************************
-*/
-NowPlayingInfoWidget::NowPlayingInfoWidget(QWidget* parentView) : QGraphicsWidget(0)
-{
-    m_parent       = parentView;
-
-    m_info    = new NowPlayingGraphicItem();
-    m_info->setParentItem(this);
-    m_info->setPos(30,10);
-}
-
-void NowPlayingInfoWidget::resizeEvent( QGraphicsSceneResizeEvent *event )
-{
-Q_UNUSED(event)
-    update();
-}
-
-QSizeF NowPlayingInfoWidget::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
-{
-  switch (which) {
-     case Qt::MinimumSize:
-       return QSizeF( 0, 0);
-       break;
-     case Qt::PreferredSize:
-     case Qt::MaximumSize:
-         return QSizeF( m_parent->width()-20, 10 + 180 );
-     default:
-         break;
-     }
-     return constraint;
-}
-
-void NowPlayingInfoWidget::update()
-{
-    m_info->update();
-
-    QGraphicsWidget::update();
-
-    emit updated();
 }
 

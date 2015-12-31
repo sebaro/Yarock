@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -98,7 +98,7 @@ Q_OBJECT
 
   private :
     QWidget                 *m_parent;
-    TextGraphicItem         *m_subtitle;
+    CategorieLayoutItem     *m_title;
     
     /* map <provider release id, ArtistThumbGraphicItem*> */
     QMap<QString /*id*/, ArtistThumbGraphicItem*>   m_artists;
@@ -111,45 +111,6 @@ Q_OBJECT
     void updated();
 };
 
-/*
-********************************************************************************
-*                                                                              *
-*    Class AlbumInfoWidget                                                     *
-*                                                                              *
-********************************************************************************
-*/
-class AlbumInfoWidget : public QGraphicsWidget
-{
-Q_OBJECT
-
-  public:
-    AlbumInfoWidget(QWidget* parentView = 0);
-    void set_track(MEDIA::TrackPtr track);
-    void setData(INFO::InfoRequestData request, QVariant data);
-    
-    void clear();
-    void update();
-
-  private :
-    QWidget                 *m_parent;
-
-    CategorieLayoutItem     *m_title;
-    QLabel                  *m_image;
-    TextGraphicItem         *m_subtitle;
-    TextGraphicItem         *m_songs;
-    TextGraphicItem         *m_wiki;
-    WebLinkItem             *m_button;
-
-    QString                  m_album_key;
-    int                      m_track_count;
-
-  protected:
-    void resizeEvent( QGraphicsSceneResizeEvent *event );
-    QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint = QSizeF()) const;
-
-  signals:
-    void updated();
-};
 
 /*
 ********************************************************************************
@@ -173,10 +134,8 @@ Q_OBJECT
 
   private :
     QWidget                 *m_parent;
-    //WebLinkItem             *m_button;
-    QLabel                  *m_header;
-    TextGraphicItem         *m_subtitle;
-
+    CategorieLayoutItem     *m_title;
+    
     /* map <artist-album hash, AlbumThumbGraphicItem*> */
     QMap<QString, AlbumThumbGraphicItem*>   m_albums;
 
@@ -202,7 +161,6 @@ Q_OBJECT
   public:
     LyricsInfoWidget(QWidget* parentView = 0);
 
-    void set_song_name(const QString &);
     void clear();
     void update();
 
@@ -230,37 +188,6 @@ Q_OBJECT
   private slots:
     void slot_add_lyrics();
     void slot_remove_lyrics();
-
-  signals:
-    void updated();
-};
-
-
-/*
-********************************************************************************
-*                                                                              *
-*    Class NowPlayingInfoWidget                                                *
-*                                                                              *
-********************************************************************************
-*/
-class NowPlayingInfoWidget : public QGraphicsWidget
-{
-Q_OBJECT
-  public:
-    NowPlayingInfoWidget(QWidget* parentView = 0);
-
-  protected:
-    void resizeEvent( QGraphicsSceneResizeEvent *event );
-    QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint = QSizeF()) const;
-
-  public slots:
-    void update();
-
-  private :
-    QWidget                 *m_parent;
-
-    NowPlayingGraphicItem   *m_info;
-    QGraphicsLinearLayout   *m_layout;
 
   signals:
     void updated();

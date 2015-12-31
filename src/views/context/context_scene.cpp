@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -46,7 +46,7 @@ void ContextScene::initScene()
 {
     //! set engine player for update
     m_engine_player = Engine::instance();
-    connect(m_engine_player, SIGNAL(mediaChanged()), this, SLOT(slot_filter_metadata_change()));
+    connect(m_engine_player, SIGNAL(mediaChanged()), this, SLOT(slot_filter_media_change()));
     connect(m_engine_player, SIGNAL(engineStateChanged()), this, SLOT(slot_filter_enginestate_change()));
     connect(m_engine_player, SIGNAL(mediaMetaDataChanged()), this, SLOT(populateScene()));
 
@@ -57,44 +57,38 @@ void ContextScene::initScene()
     /* init contexte scene */
     m_mode = ContextScene::Stopped;
     
-    //!  Playing scene widgets
+    /* playing scene widgets */
     m_artist_info_widget  = new ArtistInfoWidget(parentView());
     m_similar_info_widget = new ArtistSimilarWidget(parentView());
     m_disco_info_widget   = new DiscoInfoWidget(parentView());
-    m_album_info_widget   = new AlbumInfoWidget( parentView() );
     m_lyrics_info_widget  = new LyricsInfoWidget( parentView() );
 
     connect(m_artist_info_widget, SIGNAL(updated()), this, SLOT(slot_update_draw()));
     connect(m_similar_info_widget, SIGNAL(updated()), this, SLOT(slot_update_draw()));
     connect(m_disco_info_widget, SIGNAL(updated()), this, SLOT(slot_update_draw()));
-    connect(m_album_info_widget, SIGNAL(updated()), this, SLOT(slot_update_draw()));
     connect(m_lyrics_info_widget, SIGNAL(updated()), this, SLOT(slot_update_draw()));
 
     m_artist_info_widget->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
     m_similar_info_widget->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
     m_disco_info_widget->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
-    m_album_info_widget->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
     m_lyrics_info_widget->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
 
     
-    //! now playing widget
-    m_nowplaying_info_widget = new NowPlayingInfoWidget(parentView());
-    connect(m_engine_player, SIGNAL(mediaMetaDataChanged()), m_nowplaying_info_widget, SLOT(update()));
-    m_nowplaying_info_widget->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
-
-    //! layout 
+    m_info_widget= new InfoLayoutItem(qobject_cast<QGraphicsView*> (parentView())->viewport());
+    
+    /* layout */
     m_layout    = new QGraphicsLinearLayout(Qt::Vertical);
     m_layout->setSpacing(20);
-    m_layout->addItem(m_nowplaying_info_widget);    
+    m_layout->addItem(m_info_widget);    
 
     m_container = new QGraphicsWidget();
     m_container->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
     m_container->setLayout(m_layout);
     m_container->setPos(0,5);
 
-    m_mode = Stopped;
     this->addItem(m_container);
 
+    m_mode = TrackPlay;
     init_widget(Stopped);
       
     setInit(true);
@@ -114,38 +108,49 @@ void ContextScene::init_widget(Mode new_mode)
     if( m_mode == StreamPlay ) 
     {
       Debug::debug() << "   [ContextScene] init_widget StreamPlay";
-      m_nowplaying_info_widget->hide();
-      m_album_info_widget->hide();
+      m_info_widget->hide();
+       
       m_lyrics_info_widget->show();
       m_artist_info_widget->show();
       m_similar_info_widget->show();
       m_disco_info_widget->show();      
-      
-      m_layout->removeItem(m_nowplaying_info_widget);
-      m_layout->removeItem(m_album_info_widget);
 
-      m_layout->addItem(m_artist_info_widget);
-      m_layout->addItem(m_similar_info_widget);
-      m_layout->addItem(m_disco_info_widget);
-      m_layout->addItem(m_lyrics_info_widget);
+      m_layout->removeItem( m_info_widget );
+      m_layout->addItem( m_artist_info_widget );
+      m_layout->addItem( m_similar_info_widget );
+      m_layout->addItem( m_disco_info_widget );
+      m_layout->addItem( m_lyrics_info_widget );
     }
     else if( m_mode == TrackPlay ) 
     {
       Debug::debug() << "   [ContextScene] init_widget TrackPlay";
-      
-      m_nowplaying_info_widget->hide();
+      m_info_widget->hide();
       m_artist_info_widget->show();
       m_similar_info_widget->show();
       m_disco_info_widget->show();
-      m_album_info_widget->show();
       m_lyrics_info_widget->show(); 
       
-      m_layout->removeItem(m_nowplaying_info_widget);      
-      m_layout->addItem(m_artist_info_widget);
-      m_layout->addItem(m_similar_info_widget);
-      m_layout->addItem(m_disco_info_widget);
-      m_layout->addItem(m_album_info_widget);
-      m_layout->addItem(m_lyrics_info_widget);
+      m_layout->removeItem( m_info_widget );
+      m_layout->addItem( m_artist_info_widget );
+      m_layout->addItem( m_similar_info_widget );
+      m_layout->addItem( m_disco_info_widget );
+      m_layout->addItem( m_lyrics_info_widget );
+    }
+    else if ( m_mode ==  StreamPlayNoTrack ) 
+    {
+      m_artist_info_widget->hide();
+      m_similar_info_widget->hide();
+      m_disco_info_widget->hide();
+      m_lyrics_info_widget->hide();
+      
+      m_info_widget->_text = QObject::tr("Wait for information");
+      m_info_widget->show();
+
+      m_layout->removeItem( m_artist_info_widget );
+      m_layout->removeItem( m_similar_info_widget );
+      m_layout->removeItem( m_disco_info_widget );
+      m_layout->removeItem( m_lyrics_info_widget );
+      m_layout->addItem( m_info_widget );        
     }
     else if ( m_mode ==  Stopped ) 
     {
@@ -154,16 +159,16 @@ void ContextScene::init_widget(Mode new_mode)
       m_artist_info_widget->hide();
       m_similar_info_widget->hide();
       m_disco_info_widget->hide();
-      m_album_info_widget->hide();
-      m_lyrics_info_widget->hide();  
-      m_nowplaying_info_widget->show();
+      m_lyrics_info_widget->hide();
+      
+      m_info_widget->_text = QObject::tr("Player is stopped");
+      m_info_widget->show();
 
-      m_layout->removeItem(m_artist_info_widget);
-      m_layout->removeItem(m_similar_info_widget);
-      m_layout->removeItem(m_disco_info_widget);
-      m_layout->removeItem(m_album_info_widget);
-      m_layout->removeItem(m_lyrics_info_widget);
-      m_layout->addItem(m_nowplaying_info_widget);
+      m_layout->removeItem( m_artist_info_widget );
+      m_layout->removeItem( m_similar_info_widget );
+      m_layout->removeItem( m_disco_info_widget );
+      m_layout->removeItem( m_lyrics_info_widget );
+      m_layout->addItem( m_info_widget );
     }
 }
 
@@ -178,11 +183,11 @@ void ContextScene::resizeScene()
 } 
 
 /*******************************************************************************
-  ContextScene::slot_filter_metadata_change
+  ContextScene::slot_filter_media_change
 *******************************************************************************/
-void ContextScene::slot_filter_metadata_change()
+void ContextScene::slot_filter_media_change()
 {
-     Debug::debug () << "   [ContextScene] slot_filter_metadata_change " << m_engine_player->stateToString(m_engine_player->state());
+     Debug::debug () << "   [ContextScene] slot_filter_media_change " << m_engine_player->stateToString(m_engine_player->state());
      /* vlc and gstreamer send first state change to PLAYING then metadatachange signal */
      /* not working for Mplayer phonon backend (first metadat after STOPPED state is lost) */  
      if( m_engine_player->state() == ENGINE::PLAYING )
@@ -198,9 +203,10 @@ void ContextScene::slot_filter_enginestate_change()
 }
 
 
-/*******************************************************************************
-  ContextScene::populateScene
-*******************************************************************************/
+
+/*-----------------------------------------------------------------------------*/
+/* ContextScene::populateScene                                                 */ 
+/*-----------------------------------------------------------------------------*/
 void ContextScene::populateScene()
 {
     if(SETTINGS()->_viewMode != VIEW::ViewContext)
@@ -214,7 +220,12 @@ void ContextScene::populateScene()
     if(m_engine_player->state() == ENGINE::PLAYING && m_engine_player->playingTrack())
     {
       /* set widget */
-      init_widget(m_engine_player->playingTrack()->type() == TYPE_TRACK ? TrackPlay : StreamPlay);
+      if( m_engine_player->playingTrack()->type() != TYPE_TRACK && m_engine_player->playingTrack()->artist.contains("http://") )
+          init_widget( StreamPlayNoTrack );
+      else if( m_engine_player->playingTrack()->type() != TYPE_TRACK  )
+          init_widget( StreamPlay );
+      else
+          init_widget( TrackPlay );
 
       /* init request for InfoSystem */
       m_requests_ids.clear();
@@ -254,11 +265,11 @@ void ContextScene::populateScene()
         && (m_mode != StreamPlay) ) 
       {
           Debug::warning() << "   [ContextScene] new album";
-          requests << INFO::InfoRequestData(INFO::InfoAlbumInfo, hash);
-          requests << INFO::InfoRequestData(INFO::InfoAlbumCoverArt, hash);
-
-          m_album_info_widget->clear();
-          m_album_info_widget->set_track( m_engine_player->playingTrack() );
+//           requests << INFO::InfoRequestData(INFO::InfoAlbumInfo, hash);
+//           requests << INFO::InfoRequestData(INFO::InfoAlbumCoverArt, hash);
+// 
+//           m_album_info_widget->clear();
+//           m_album_info_widget->set_track( m_engine_player->playingTrack() );
       }
 
       if(m_metadata["TITLE"] != m_engine_player->playingTrack()->title) 
@@ -268,14 +279,8 @@ void ContextScene::populateScene()
 
           m_lyrics_info_widget->clear();
 
-          if(!hash["title"].isEmpty()) 
-          {
-            m_lyrics_info_widget->set_song_name( m_engine_player->playingTrack()->title );
-          }
-          else
-          {
+          if( hash["title"].isEmpty() )
             m_lyrics_info_widget->hide();
-          }
       }
 
       /* trigger info system request */
@@ -304,6 +309,10 @@ void ContextScene::populateScene()
     slot_update_draw();
 }
 
+
+/*-----------------------------------------------------------------------------*/
+/* ContextScene::infoSystemInfo                                                */ 
+/*-----------------------------------------------------------------------------*/
 void ContextScene::infoSystemInfo(INFO::InfoRequestData request, QVariant output )
 {
     if(!m_requests_ids.contains(request.requestId))
@@ -372,18 +381,12 @@ void ContextScene::infoSystemInfo(INFO::InfoRequestData request, QVariant output
    }
    else if (request.type == INFO::InfoAlbumCoverArt )
    {
-       m_album_info_widget->setData(request, output);
        m_disco_info_widget->setData(request, output);
    }
    else if (request.type == INFO::InfoTrackLyrics )
    {
        m_lyrics_info_widget->setData(request, output);
    }     
-   else if (request.type == INFO::InfoAlbumInfo)
-   {
-       m_album_info_widget->setData(request, output);
-   }
-
 
     /* trigger info system request */
     foreach(INFO::InfoRequestData request, requests)
@@ -395,10 +398,9 @@ void ContextScene::infoSystemInfo(INFO::InfoRequestData request, QVariant output
 
 
 
-
-/*******************************************************************************
-  ContextScene::slot_update_draw
-*******************************************************************************/
+/*-----------------------------------------------------------------------------*/
+/* ContextScene::slot_update_draw                                              */ 
+/*-----------------------------------------------------------------------------*/
 void ContextScene::slot_update_draw()
 {
     //Debug::debug() << "   [ContextScene] slot_update_draw ";

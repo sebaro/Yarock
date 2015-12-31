@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -134,30 +134,6 @@ class ArtistThumbGraphicItem : public QGraphicsItem, public QGraphicsLayoutItem
 
     QString      m_name;
     QPixmap      m_pix;
-
-  protected:
-    // Inherited from QGraphicsLayoutItem
-    void setGeometry(const QRectF &geom);
-    QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint = QSizeF()) const;
-
-    // Implement QGraphicsItem method
-    QRectF boundingRect() const;
-    void paint(QPainter *p, const QStyleOptionGraphicsItem *, QWidget *);
-};
-
-
-/*
-********************************************************************************
-*                                                                              *
-*    Class NowPlayingGraphicItem                                               *
-*                                                                              *
-********************************************************************************
-*/
-class NowPlayingGraphicItem : public QGraphicsItem, public QGraphicsLayoutItem
-{
-  public:
-    NowPlayingGraphicItem();
-    void updateItem();
 
   protected:
     // Inherited from QGraphicsLayoutItem

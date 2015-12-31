@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -60,6 +60,7 @@ Q_OBJECT
     enum Mode
     {
         TrackPlay = 0,
+        StreamPlayNoTrack,
         StreamPlay,
         Stopped
     };
@@ -67,7 +68,7 @@ Q_OBJECT
     void init_widget(Mode mode);
     
   private slots:
-    void slot_filter_metadata_change();
+    void slot_filter_media_change();
     void slot_filter_enginestate_change();
 
     void slot_update_draw();
@@ -87,12 +88,12 @@ Q_OBJECT
     QGraphicsWidget           *m_container;
     QGraphicsWidget           *m_container_now_playing;
 
-    NowPlayingInfoWidget      *m_nowplaying_info_widget;
     ArtistInfoWidget          *m_artist_info_widget;
     ArtistSimilarWidget       *m_similar_info_widget;
     DiscoInfoWidget           *m_disco_info_widget;
-    AlbumInfoWidget           *m_album_info_widget;
     LyricsInfoWidget          *m_lyrics_info_widget;
+    
+    InfoLayoutItem            *m_info_widget;
 };
 
 #endif // _CONTEXT_SCENE_H_
