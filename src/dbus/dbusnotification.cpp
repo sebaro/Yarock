@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -165,8 +165,8 @@ void DbusNotification::sendNowPlayingNotif()
       message = QString("%1 - %2").arg(track->artist,track->album);
     }
     else if(track->type() == TYPE_STREAM) {
-      summary =  track->name;
-      message = "";
+      summary =  track->extra["station"].toString();
+      message = QString("%1 - %2").arg(track->artist,track->title);
     }
 
     //! send message

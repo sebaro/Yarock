@@ -27,6 +27,8 @@
 		<property name='Rate' type='d' access='readwrite'/>
 		<property name='Shuffle' type='b' access='readwrite'/>
 		<property name='Metadata' type='a{sv}' access='read'>
+                    <!-- Ubuntu 12.04 need com.trolltech annotation ## tested on 27/12/15 ## -->
+			<annotation name="com.trolltech.QtDBus.QtTypeName" value="QVariantMap"/>
 			<annotation name="org.qtproject.QtDBus.QtTypeName" value="QVariantMap"/>
 		</property>
 		<property name='Volume' type='d' access='readwrite'/>
