@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="pt_BR">
+<TS version="2.1" language="pt_BR">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -13,6 +13,44 @@
     <message>
         <source>About Qt</source>
         <translation type="obsolete">Sobre o Qt</translation>
+    </message>
+</context>
+<context>
+    <name>AboutScene</name>
+    <message>
+        <location filename="../src/views/about/about_scene.cpp" line="142"/>
+        <source>Yarock is a Qt4 modern music player designed to provide an easy and pretty music collection browser based on cover art.&lt;br&gt;It&apos;s a Free Software distributed under the &lt;a href=&quot;http://www.gnu.org/licenses/gpl-3.0.en.html&quot;&gt;(GPLv3)&lt;/a&gt; license.&lt;br&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/views/about/about_scene.cpp" line="154"/>
+        <source>Contribute</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/views/about/about_scene.cpp" line="177"/>
+        <source>Yarock is developped by &lt;b&gt;Sebastien Amardeilh&lt;/b&gt; %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/views/about/about_scene.cpp" line="188"/>
+        <source>Please use %1 to report bugs.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/views/about/about_scene.cpp" line="201"/>
+        <source>Please use %1 for translations.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/views/about/about_scene.cpp" line="214"/>
+        <source>If you can, please %1 (or %2) to support the development</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/views/about/about_scene.cpp" line="223"/>
+        <source>Debug Information</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -36,7 +74,7 @@
 <context>
     <name>AddStreamDialog</name>
     <message>
-        <location filename="../src/widgets/dialogs/addstreamdialog.cpp" line="34"/>
+        <location filename="../src/widgets/dialogs/addstreamdialog.cpp" line="35"/>
         <source>Add Stream</source>
         <translation>Adicionar Stream</translation>
     </message>
@@ -66,11 +104,6 @@
         <source>No information found</source>
         <translation type="obsolete">Nenhuma informação encontrada</translation>
     </message>
-    <message>
-        <location filename="../src/views/context/context_widget.cpp" line="550"/>
-        <source>Album tracks</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ArtistInfoWidget</name>
@@ -95,7 +128,7 @@
         <translation type="obsolete">Artistas similares</translation>
     </message>
     <message>
-        <location filename="../src/views/context/context_widget.cpp" line="266"/>
+        <location filename="../src/views/context/context_widget.cpp" line="263"/>
         <source>Similar artists</source>
         <translation type="unfinished"></translation>
     </message>
@@ -114,114 +147,112 @@
 <context>
     <name>BrowserView</name>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="607"/>
-        <location filename="../src/views/browser_view.cpp" line="641"/>
+        <location filename="../src/views/browser_view.cpp" line="702"/>
         <source>Context</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="608"/>
-        <location filename="../src/views/browser_view.cpp" line="642"/>
+        <location filename="../src/views/browser_view.cpp" line="703"/>
         <source>History</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="609"/>
+        <location filename="../src/views/browser_view.cpp" line="663"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; albums</source>
         <translation type="unfinished">Coleção: &lt;b&gt;%1&lt;/b&gt; álbuns</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="610"/>
+        <location filename="../src/views/browser_view.cpp" line="664"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; artist</source>
         <translation type="unfinished">Coleção: &lt;b&gt;%1&lt;/b&gt; artistas</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="611"/>
+        <location filename="../src/views/browser_view.cpp" line="665"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; tracks</source>
         <translation type="unfinished">Coleção: &lt;b&gt;%1&lt;/b&gt; músicas</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="612"/>
+        <location filename="../src/views/browser_view.cpp" line="666"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; styles</source>
         <translation type="unfinished">Coleção: &lt;b&gt;%1&lt;/b&gt; estilos</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="613"/>
+        <location filename="../src/views/browser_view.cpp" line="667"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; years</source>
         <translation type="unfinished">Coleção: &lt;b&gt;%1&lt;/b&gt; anos</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="614"/>
+        <location filename="../src/views/browser_view.cpp" line="668"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; favorite item</source>
         <translation type="unfinished">Coleção: &lt;b&gt;%1&lt;/b&gt; item de favorito</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="618"/>
+        <location filename="../src/views/browser_view.cpp" line="672"/>
         <source>Playlist : &lt;b&gt;%1&lt;/b&gt; playlists</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="638"/>
+        <location filename="../src/views/browser_view.cpp" line="699"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="639"/>
+        <location filename="../src/views/browser_view.cpp" line="700"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="640"/>
+        <location filename="../src/views/browser_view.cpp" line="701"/>
         <source>Dashboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="643"/>
+        <location filename="../src/views/browser_view.cpp" line="704"/>
         <source>Artists</source>
         <translation type="unfinished">Artistas</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="644"/>
+        <location filename="../src/views/browser_view.cpp" line="705"/>
         <source>Albums</source>
         <translation type="unfinished">Álbuns</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="645"/>
+        <location filename="../src/views/browser_view.cpp" line="706"/>
         <source>Tracks</source>
         <translation type="unfinished">Faixas</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="646"/>
+        <location filename="../src/views/browser_view.cpp" line="707"/>
         <source>Genres</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="647"/>
+        <location filename="../src/views/browser_view.cpp" line="708"/>
         <source>Years</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="648"/>
+        <location filename="../src/views/browser_view.cpp" line="709"/>
         <source>Favorites</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="649"/>
+        <location filename="../src/views/browser_view.cpp" line="710"/>
         <source>Playlists</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="650"/>
+        <location filename="../src/views/browser_view.cpp" line="711"/>
         <source>Smart playlists</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="654"/>
+        <location filename="../src/views/browser_view.cpp" line="715"/>
         <source>Favorites radios</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="655"/>
+        <location filename="../src/views/browser_view.cpp" line="716"/>
         <source>Filesystem</source>
         <translation type="unfinished"></translation>
     </message>
@@ -242,7 +273,7 @@
         <translation type="obsolete">Rádio : &lt;b&gt;%1&lt;/b&gt; streams do showcast</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="625"/>
+        <location filename="../src/views/browser_view.cpp" line="679"/>
         <source>Radio : &lt;b&gt;%1&lt;/b&gt; streams</source>
         <translation type="unfinished">Rádio : &lt;b&gt;%1&lt;/b&gt; streams</translation>
     </message>
@@ -356,9 +387,13 @@
         <translation>Opções do reprodutor</translation>
     </message>
     <message>
-        <location filename="../src/commandlineoptions.cpp" line="138"/>
         <source>Start the playlist currently playing</source>
-        <translation>Iniciar a lista de reprodução atualmente reproduzindo</translation>
+        <translation type="vanished">Iniciar a lista de reprodução atualmente reproduzindo</translation>
+    </message>
+    <message>
+        <location filename="../src/commandlineoptions.cpp" line="138"/>
+        <source>Start playback</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="139"/>
@@ -402,13 +437,21 @@
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="147"/>
-        <source>Seek the currently playing track to an absolute position</source>
-        <translation>Procurar a música que está tocando atualmente para uma posição absoluta</translation>
+        <source>Seek to an absolute position</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="148"/>
+        <source>Seek by a relative amount</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Seek the currently playing track to an absolute position</source>
+        <translation type="vanished">Procurar a música que está tocando atualmente para uma posição absoluta</translation>
+    </message>
+    <message>
         <source>Seek the currently playing track by a relative amount</source>
-        <translation>Procurar a música que está tocando atualmente por uma quantidade relativa</translation>
+        <translation type="vanished">Procurar a música que está tocando atualmente por uma quantidade relativa</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="149"/>
@@ -453,60 +496,117 @@
     </message>
 </context>
 <context>
-    <name>DbOperationDialog</name>
+    <name>DatabaseAddDialog</name>
     <message>
-        <location filename="../src/widgets/dialogs/dboperationdialog.cpp" line="34"/>
+        <location filename="../src/widgets/dialogs/database_add.cpp" line="37"/>
+        <source>Add music collection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dialogs/database_add.cpp" line="47"/>
+        <source>Choose collection name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dialogs/database_add.cpp" line="61"/>
+        <source>Name</source>
+        <translation type="unfinished">Nome</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dialogs/database_add.cpp" line="64"/>
+        <source>Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dialogs/database_add.cpp" line="81"/>
+        <source> Choose music folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dialogs/database_add.cpp" line="131"/>
+        <source> Collection name cannot be empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dialogs/database_add.cpp" line="139"/>
+        <source> Collection name already exists </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DatabaseOperationDialog</name>
+    <message>
+        <location filename="../src/widgets/dialogs/database_operation.cpp" line="34"/>
         <source>Database operation</source>
         <translation type="unfinished">Operação da base de dados</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dialogs/database_operation.cpp" line="42"/>
+        <source>Update</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dialogs/database_operation.cpp" line="43"/>
+        <source>Rebuild</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dialogs/database_operation.cpp" line="44"/>
+        <source>Cover</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dialogs/database_operation.cpp" line="45"/>
+        <source>Artist</source>
+        <translation type="unfinished">Artista</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dialogs/database_operation.cpp" line="58"/>
+        <source>Rescan medias files and update database</source>
+        <translation type="unfinished">Procurar novamente arquivos de mídia e atualizar a base de dados</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dialogs/database_operation.cpp" line="60"/>
+        <source>Delete and rebuild database (*)</source>
+        <translation type="unfinished">Excluir e reconstruir a base de dados (*)</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dialogs/database_operation.cpp" line="61"/>
+        <source>* all changes into collection database will be discarded !!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dialogs/database_operation.cpp" line="63"/>
+        <source>Download missing album cover</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dialogs/database_operation.cpp" line="66"/>
+        <source>Download missing artist image</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DbOperationDialog</name>
+    <message>
+        <source>Database operation</source>
+        <translation type="obsolete">Operação da base de dados</translation>
     </message>
     <message>
         <source>Choose database operation</source>
         <translation type="obsolete">Escolher a operação da base de dados</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/dboperationdialog.cpp" line="42"/>
-        <source>Update</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/dialogs/dboperationdialog.cpp" line="43"/>
-        <source>Rebuild</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/dialogs/dboperationdialog.cpp" line="44"/>
-        <source>Cover</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/dialogs/dboperationdialog.cpp" line="45"/>
         <source>Artist</source>
-        <translation type="unfinished">Artista</translation>
+        <translation type="obsolete">Artista</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/dboperationdialog.cpp" line="58"/>
         <source>Rescan medias files and update database</source>
-        <translation>Procurar novamente arquivos de mídia e atualizar a base de dados</translation>
+        <translation type="vanished">Procurar novamente arquivos de mídia e atualizar a base de dados</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/dboperationdialog.cpp" line="60"/>
         <source>Delete and rebuild database (*)</source>
-        <translation>Excluir e reconstruir a base de dados (*)</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/dialogs/dboperationdialog.cpp" line="61"/>
-        <source>* all changes into collection database will be discarded !!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/dialogs/dboperationdialog.cpp" line="63"/>
-        <source>Download missing album cover</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/dialogs/dboperationdialog.cpp" line="66"/>
-        <source>Download missing artist image</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Excluir e reconstruir a base de dados (*)</translation>
     </message>
 </context>
 <context>
@@ -535,7 +635,7 @@
 <context>
     <name>DiscoInfoWidget</name>
     <message>
-        <location filename="../src/views/context/context_widget.cpp" line="400"/>
+        <location filename="../src/views/context/context_widget.cpp" line="394"/>
         <source>Discography</source>
         <translation>Discografia</translation>
     </message>
@@ -682,12 +782,12 @@
         <translation type="unfinished">auto avaliar</translation>
     </message>
     <message>
-        <location filename="../src/widgets/editors/editor_artist.cpp" line="334"/>
+        <location filename="../src/widgets/editors/editor_artist.cpp" line="333"/>
         <source>Select image file...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/editors/editor_artist.cpp" line="335"/>
+        <location filename="../src/widgets/editors/editor_artist.cpp" line="334"/>
         <source>Files (*.png *.jpg)</source>
         <translation type="unfinished">Arquivos (*.png *.jpg)</translation>
     </message>
@@ -695,74 +795,22 @@
 <context>
     <name>EditorPlaylist</name>
     <message>
-        <location filename="../src/widgets/editors/editor_playlist.cpp" line="78"/>
+        <location filename="../src/widgets/editors/editor_playlist.cpp" line="57"/>
         <source>Edit playlist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/editors/editor_playlist.cpp" line="85"/>
+        <location filename="../src/widgets/editors/editor_playlist.cpp" line="63"/>
         <source>playlist name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/editors/editor_playlist.cpp" line="93"/>
-        <source>To database</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/editors/editor_playlist.cpp" line="94"/>
-        <source>To file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/editors/editor_playlist.cpp" line="99"/>
-        <source>Choose file to save playlist</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/editors/editor_playlist.cpp" line="107"/>
-        <source>Open</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/editors/editor_playlist.cpp" line="132"/>
         <source>Name</source>
-        <translation type="unfinished">Nome</translation>
+        <translation type="obsolete">Nome</translation>
     </message>
     <message>
-        <location filename="../src/widgets/editors/editor_playlist.cpp" line="221"/>
-        <source>Add music files or playlist</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/editors/editor_playlist.cpp" line="237"/>
-        <source>Add music directories</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/editors/editor_playlist.cpp" line="284"/>
-        <source>Save playlist to file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/editors/editor_playlist.cpp" line="305"/>
-        <source>&amp;Add media to playlist</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/editors/editor_playlist.cpp" line="306"/>
-        <source>&amp;Add directory to playlist</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/editors/editor_playlist.cpp" line="307"/>
-        <source>&amp;Add Url...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/editors/editor_playlist.cpp" line="309"/>
         <source>Clear playlist</source>
-        <translation type="unfinished">Limpar lista de reprodução</translation>
+        <translation type="obsolete">Limpar lista de reprodução</translation>
     </message>
 </context>
 <context>
@@ -942,92 +990,106 @@
 <context>
     <name>Equalizer_Dialog</name>
     <message>
-        <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="64"/>
-        <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="245"/>
+        <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="58"/>
+        <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="240"/>
         <source>Save preset</source>
         <translation>Salvar predefinição</translation>
     </message>
     <message>
-        <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="69"/>
-        <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="230"/>
+        <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="63"/>
+        <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="225"/>
         <source>Delete preset</source>
         <translation>Excluir predefinição</translation>
     </message>
     <message>
-        <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="81"/>
+        <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="75"/>
         <source>Enable equalizer</source>
         <translation>Habiltar equalizador</translation>
     </message>
     <message>
-        <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="231"/>
+        <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="226"/>
         <source>Are you sure you want to delete the &quot;%1&quot; preset?</source>
         <translation>Tem certeza que deseja excluir a predefinição &quot;%1&quot;?</translation>
     </message>
     <message>
-        <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="245"/>
+        <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="240"/>
         <source>Name</source>
         <translation>Nome</translation>
     </message>
 </context>
 <context>
+    <name>FavoriteStreams</name>
+    <message>
+        <location filename="../src/models/stream/service_favorite.cpp" line="35"/>
+        <source>Favorite streams</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/models/stream/service_favorite.cpp" line="39"/>
+        <location filename="../src/models/stream/service_favorite.cpp" line="146"/>
+        <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>FileDialog</name>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="168"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="187"/>
         <source>back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="175"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="194"/>
         <source>forward</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="181"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="200"/>
         <source>go up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="187"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="206"/>
         <source>home</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="195"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="214"/>
         <source>show hidden file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="234"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="253"/>
         <source>Audio files (*.mp3 *.wav *.ogg *.flac *.m4a *.aac)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="235"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="254"/>
         <source>Playlists files (*.m3u *.pls *.xspf)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="236"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="255"/>
         <source>All files (*.*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="240"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="259"/>
         <source>All playlist (*.m3u *.pls *.xspf)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="241"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="260"/>
         <source>m3u playlist (*.m3u)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="242"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="261"/>
         <source>pls playlist (*.pls)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/filedialog.cpp" line="243"/>
+        <location filename="../src/widgets/dialogs/filedialog.cpp" line="262"/>
         <source>xspf playlist (*.xspf)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1035,7 +1097,7 @@
 <context>
     <name>FileScene</name>
     <message>
-        <location filename="../src/views/filesystem/file_scene.cpp" line="247"/>
+        <location filename="../src/views/filesystem/file_scene.cpp" line="280"/>
         <source>No entry found</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1043,19 +1105,8 @@
 <context>
     <name>FirstTimeDialog</name>
     <message>
-        <location filename="../src/widgets/dialogs/first_time_dialog.cpp" line="34"/>
         <source>Setup your music collection directory</source>
-        <translation type="unfinished">Configurar o seu diretório de coleção de músicas</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/dialogs/first_time_dialog.cpp" line="42"/>
-        <source>&lt;p&gt;Welcome to yarock&lt;/p&gt;&lt;p&gt;Select the location of your music collection:&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/dialogs/first_time_dialog.cpp" line="63"/>
-        <source> Choose music folder</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Configurar o seu diretório de coleção de músicas</translation>
     </message>
 </context>
 <context>
@@ -1108,33 +1159,37 @@
 <context>
     <name>GraphicsItemMenu</name>
     <message>
-        <location filename="../src/views/item_menu.cpp" line="66"/>
-        <location filename="../src/views/item_menu.cpp" line="72"/>
-        <location filename="../src/views/item_menu.cpp" line="75"/>
-        <location filename="../src/views/item_menu.cpp" line="78"/>
-        <location filename="../src/views/item_menu.cpp" line="82"/>
-        <location filename="../src/views/item_menu.cpp" line="86"/>
-        <location filename="../src/views/item_menu.cpp" line="90"/>
         <source>Enqueue to playqueue</source>
-        <translation>Enfileirar à lista de reprodução</translation>
+        <translation type="vanished">Enfileirar à lista de reprodução</translation>
     </message>
     <message>
         <source>Enqueue as new playqueue</source>
         <translation type="obsolete">Enfileirar uma nova lista de reprodução</translation>
     </message>
     <message>
-        <location filename="../src/views/item_menu.cpp" line="79"/>
+        <location filename="../src/views/item_menu.cpp" line="78"/>
         <source>&amp;Remove playlist from disk</source>
         <translation>&amp;Remover lista de reprodução do disco</translation>
     </message>
     <message>
-        <location filename="../src/views/item_menu.cpp" line="87"/>
-        <location filename="../src/views/item_menu.cpp" line="280"/>
-        <location filename="../src/views/item_menu.cpp" line="484"/>
-        <location filename="../src/views/item_menu.cpp" line="571"/>
-        <location filename="../src/views/item_menu.cpp" line="618"/>
+        <location filename="../src/views/item_menu.cpp" line="86"/>
+        <location filename="../src/views/item_menu.cpp" line="271"/>
+        <location filename="../src/views/item_menu.cpp" line="460"/>
+        <location filename="../src/views/item_menu.cpp" line="534"/>
+        <location filename="../src/views/item_menu.cpp" line="581"/>
         <source>Add to favorites</source>
         <translation>Adicionar aos favoritos</translation>
+    </message>
+    <message>
+        <location filename="../src/views/item_menu.cpp" line="64"/>
+        <location filename="../src/views/item_menu.cpp" line="70"/>
+        <location filename="../src/views/item_menu.cpp" line="73"/>
+        <location filename="../src/views/item_menu.cpp" line="76"/>
+        <location filename="../src/views/item_menu.cpp" line="80"/>
+        <location filename="../src/views/item_menu.cpp" line="83"/>
+        <location filename="../src/views/item_menu.cpp" line="89"/>
+        <source>Play</source>
+        <translation>Reproduzir</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="65"/>
@@ -1142,59 +1197,64 @@
         <location filename="../src/views/item_menu.cpp" line="74"/>
         <location filename="../src/views/item_menu.cpp" line="77"/>
         <location filename="../src/views/item_menu.cpp" line="81"/>
-        <location filename="../src/views/item_menu.cpp" line="84"/>
-        <location filename="../src/views/item_menu.cpp" line="89"/>
-        <source>Play</source>
-        <translation>Reproduzir</translation>
+        <location filename="../src/views/item_menu.cpp" line="85"/>
+        <location filename="../src/views/item_menu.cpp" line="90"/>
+        <source>Add to play queue</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/item_menu.cpp" line="69"/>
-        <location filename="../src/views/item_menu.cpp" line="85"/>
+        <location filename="../src/views/item_menu.cpp" line="68"/>
+        <location filename="../src/views/item_menu.cpp" line="84"/>
         <location filename="../src/views/item_menu.cpp" line="91"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/item_menu.cpp" line="144"/>
+        <location filename="../src/views/item_menu.cpp" line="87"/>
+        <source>Website</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/views/item_menu.cpp" line="151"/>
         <source>%1 artists</source>
         <translation type="unfinished">%1 artistas</translation>
     </message>
     <message>
-        <location filename="../src/views/item_menu.cpp" line="146"/>
+        <location filename="../src/views/item_menu.cpp" line="153"/>
         <source>%1 albums</source>
         <translation type="unfinished">%1 álbuns</translation>
     </message>
     <message>
-        <location filename="../src/views/item_menu.cpp" line="147"/>
+        <location filename="../src/views/item_menu.cpp" line="154"/>
         <source>%1 tracks</source>
         <translation type="unfinished">%1 faixas</translation>
     </message>
     <message>
-        <location filename="../src/views/item_menu.cpp" line="148"/>
+        <location filename="../src/views/item_menu.cpp" line="155"/>
         <source>%1 streams</source>
         <translation type="unfinished">%1 streams</translation>
     </message>
     <message>
-        <location filename="../src/views/item_menu.cpp" line="149"/>
+        <location filename="../src/views/item_menu.cpp" line="156"/>
         <source>%1 playlist</source>
         <translation type="unfinished">%1 lista de reprodução</translation>
     </message>
     <message>
-        <location filename="../src/views/item_menu.cpp" line="266"/>
-        <location filename="../src/views/item_menu.cpp" line="367"/>
+        <location filename="../src/views/item_menu.cpp" line="257"/>
+        <location filename="../src/views/item_menu.cpp" line="351"/>
         <source>jump to tracks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/item_menu.cpp" line="278"/>
-        <location filename="../src/views/item_menu.cpp" line="482"/>
-        <location filename="../src/views/item_menu.cpp" line="569"/>
-        <location filename="../src/views/item_menu.cpp" line="616"/>
+        <location filename="../src/views/item_menu.cpp" line="269"/>
+        <location filename="../src/views/item_menu.cpp" line="458"/>
+        <location filename="../src/views/item_menu.cpp" line="532"/>
+        <location filename="../src/views/item_menu.cpp" line="579"/>
         <source>Remove from favorites</source>
         <translation>Remover dos favoritos</translation>
     </message>
     <message>
-        <location filename="../src/views/item_menu.cpp" line="470"/>
+        <location filename="../src/views/item_menu.cpp" line="446"/>
         <source>jump to albums</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1236,76 +1296,74 @@
 <context>
     <name>LocalScene</name>
     <message>
-        <location filename="../src/views/local/local_scene.cpp" line="93"/>
+        <location filename="../src/views/local/local_scene.cpp" line="112"/>
         <source>view grid</source>
         <translation type="unfinished">visualizar grade</translation>
     </message>
     <message>
-        <location filename="../src/views/local/local_scene.cpp" line="94"/>
+        <location filename="../src/views/local/local_scene.cpp" line="113"/>
         <source>view by tracks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/local/local_scene.cpp" line="95"/>
         <source>new playlist</source>
-        <translation type="unfinished">nova lista de reprodução</translation>
+        <translation type="obsolete">nova lista de reprodução</translation>
     </message>
     <message>
-        <location filename="../src/views/local/local_scene.cpp" line="96"/>
         <source>new smart playlist</source>
-        <translation type="unfinished">nova lista de reprodução inteligente</translation>
+        <translation type="obsolete">nova lista de reprodução inteligente</translation>
     </message>
     <message>
-        <location filename="../src/views/local/local_scene.cpp" line="97"/>
+        <location filename="../src/views/local/local_scene.cpp" line="116"/>
         <source>reload history</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/local/local_scene.cpp" line="98"/>
+        <location filename="../src/views/local/local_scene.cpp" line="117"/>
         <source>clear history</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/local/local_scene.cpp" line="257"/>
+        <location filename="../src/views/local/local_scene.cpp" line="294"/>
         <source>Updating music database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/local/local_scene.cpp" line="759"/>
+        <location filename="../src/views/local/local_scene.cpp" line="835"/>
         <source>Albums</source>
         <translation type="unfinished">Álbuns</translation>
     </message>
     <message>
-        <location filename="../src/views/local/local_scene.cpp" line="811"/>
+        <location filename="../src/views/local/local_scene.cpp" line="887"/>
         <source>All playlists</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/local/local_scene.cpp" line="334"/>
-        <location filename="../src/views/local/local_scene.cpp" line="389"/>
-        <location filename="../src/views/local/local_scene.cpp" line="467"/>
-        <location filename="../src/views/local/local_scene.cpp" line="558"/>
-        <location filename="../src/views/local/local_scene.cpp" line="623"/>
-        <location filename="../src/views/local/local_scene.cpp" line="688"/>
-        <location filename="../src/views/local/local_scene.cpp" line="746"/>
-        <location filename="../src/views/local/local_scene.cpp" line="789"/>
-        <location filename="../src/views/local/local_scene.cpp" line="847"/>
-        <location filename="../src/views/local/local_scene.cpp" line="915"/>
-        <location filename="../src/views/local/local_scene.cpp" line="1017"/>
         <location filename="../src/views/local/local_scene_dashboard.cpp" line="101"/>
         <location filename="../src/views/local/local_scene_dashboard.cpp" line="151"/>
         <location filename="../src/views/local/local_scene_dashboard.cpp" line="225"/>
         <location filename="../src/views/local/local_scene_dashboard.cpp" line="291"/>
+        <location filename="../src/views/local/local_scene.cpp" line="371"/>
+        <location filename="../src/views/local/local_scene.cpp" line="426"/>
+        <location filename="../src/views/local/local_scene.cpp" line="504"/>
+        <location filename="../src/views/local/local_scene.cpp" line="595"/>
+        <location filename="../src/views/local/local_scene.cpp" line="699"/>
+        <location filename="../src/views/local/local_scene.cpp" line="764"/>
+        <location filename="../src/views/local/local_scene.cpp" line="822"/>
+        <location filename="../src/views/local/local_scene.cpp" line="865"/>
+        <location filename="../src/views/local/local_scene.cpp" line="923"/>
+        <location filename="../src/views/local/local_scene.cpp" line="991"/>
+        <location filename="../src/views/local/local_scene.cpp" line="1093"/>
         <source>No entry found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/local/local_scene.cpp" line="350"/>
+        <location filename="../src/views/local/local_scene.cpp" line="387"/>
         <source>All Albums</source>
         <translation type="unfinished">Todos Os Álbuns</translation>
     </message>
     <message>
-        <location filename="../src/views/local/local_scene.cpp" line="710"/>
+        <location filename="../src/views/local/local_scene.cpp" line="786"/>
         <source>Artists</source>
         <translation type="unfinished">Artistas</translation>
     </message>
@@ -1314,7 +1372,7 @@
         <translation type="obsolete">Faixas</translation>
     </message>
     <message>
-        <location filename="../src/views/local/local_scene.cpp" line="527"/>
+        <location filename="../src/views/local/local_scene.cpp" line="564"/>
         <source>disc %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1327,7 +1385,7 @@
         <translation type="obsolete">Arquivos da lista de reprodução da coleção do usuário</translation>
     </message>
     <message>
-        <location filename="../src/views/local/local_scene.cpp" line="934"/>
+        <location filename="../src/views/local/local_scene.cpp" line="1010"/>
         <source>Smart playlists</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1361,6 +1419,15 @@
     </message>
 </context>
 <context>
+    <name>LocalTrackModel</name>
+    <message>
+        <location filename="../src/models/local/local_track_model.cpp" line="47"/>
+        <location filename="../src/models/local/local_track_model.cpp" line="68"/>
+        <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LyricsEditor</name>
     <message>
         <location filename="../src/views/context/lyricseditor.cpp" line="41"/>
@@ -1371,28 +1438,28 @@
 <context>
     <name>LyricsInfoWidget</name>
     <message>
-        <location filename="../src/views/context/context_widget.cpp" line="771"/>
-        <location filename="../src/views/context/context_widget.cpp" line="878"/>
+        <location filename="../src/views/context/context_widget.cpp" line="539"/>
+        <location filename="../src/views/context/context_widget.cpp" line="635"/>
         <source>Add file</source>
         <translation>Adicionar arquivo</translation>
     </message>
     <message>
-        <location filename="../src/views/context/context_widget.cpp" line="778"/>
+        <location filename="../src/views/context/context_widget.cpp" line="546"/>
         <source>Remove file</source>
         <translation>Remover arquivo</translation>
     </message>
     <message>
-        <location filename="../src/views/context/context_widget.cpp" line="815"/>
+        <location filename="../src/views/context/context_widget.cpp" line="578"/>
         <source>No lyrics found</source>
         <translation>Nenhuma letra encontrada</translation>
     </message>
     <message>
-        <location filename="../src/views/context/context_widget.cpp" line="786"/>
+        <location filename="../src/views/context/context_widget.cpp" line="532"/>
         <source>Song lyrics</source>
         <translation>Letras de músicas</translation>
     </message>
     <message>
-        <location filename="../src/views/context/context_widget.cpp" line="871"/>
+        <location filename="../src/views/context/context_widget.cpp" line="628"/>
         <source>Edit file</source>
         <translation>Editar arquivo</translation>
     </message>
@@ -1400,32 +1467,32 @@
 <context>
     <name>MainLeftWidget</name>
     <message>
-        <location filename="../src/widgets/main/main_left.cpp" line="99"/>
+        <location filename="../src/widgets/main/main_left.cpp" line="103"/>
         <source>Apply</source>
         <translation type="unfinished">Aplicar</translation>
     </message>
     <message>
-        <location filename="../src/widgets/main/main_left.cpp" line="100"/>
+        <location filename="../src/widgets/main/main_left.cpp" line="106"/>
         <source>Cancel</source>
         <translation type="unfinished">Cancelar</translation>
     </message>
     <message>
-        <location filename="../src/widgets/main/main_left.cpp" line="103"/>
+        <location filename="../src/widgets/main/main_left.cpp" line="110"/>
         <source>Go back</source>
         <translation type="unfinished">Voltar</translation>
     </message>
     <message>
-        <location filename="../src/widgets/main/main_left.cpp" line="104"/>
+        <location filename="../src/widgets/main/main_left.cpp" line="111"/>
         <source>Go forward</source>
         <translation type="unfinished">Avançar</translation>
     </message>
     <message>
-        <location filename="../src/widgets/main/main_left.cpp" line="105"/>
+        <location filename="../src/widgets/main/main_left.cpp" line="112"/>
         <source>Go up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/main/main_left.cpp" line="111"/>
+        <location filename="../src/widgets/main/main_left.cpp" line="119"/>
         <source>Quick filter</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1433,32 +1500,32 @@
 <context>
     <name>MainRightWidget</name>
     <message>
-        <location filename="../src/widgets/main/main_right.cpp" line="94"/>
+        <location filename="../src/widgets/main/main_right.cpp" line="98"/>
         <source>New playlist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/main/main_right.cpp" line="95"/>
+        <location filename="../src/widgets/main/main_right.cpp" line="99"/>
         <source>New smart playlist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/main/main_right.cpp" line="152"/>
+        <location filename="../src/widgets/main/main_right.cpp" line="184"/>
         <source>Playqueue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/main/main_right.cpp" line="156"/>
+        <location filename="../src/widgets/main/main_right.cpp" line="188"/>
         <source>Playlist editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/main/main_right.cpp" line="160"/>
+        <location filename="../src/widgets/main/main_right.cpp" line="192"/>
         <source>Tag editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/main/main_right.cpp" line="164"/>
+        <location filename="../src/widgets/main/main_right.cpp" line="196"/>
         <source>Smart editor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1466,22 +1533,22 @@
 <context>
     <name>MainToolButton</name>
     <message>
-        <location filename="../src/widgets/main/maintoolbutton.cpp" line="37"/>
+        <location filename="../src/widgets/main/maintoolbutton.cpp" line="40"/>
         <source>Tools</source>
         <translation>Ferrementas</translation>
     </message>
     <message>
-        <location filename="../src/widgets/main/maintoolbutton.cpp" line="41"/>
+        <location filename="../src/widgets/main/maintoolbutton.cpp" line="44"/>
         <source>Choose database</source>
         <translation>Escolher base de dados</translation>
     </message>
     <message>
-        <location filename="../src/widgets/main/maintoolbutton.cpp" line="47"/>
+        <location filename="../src/widgets/main/maintoolbutton.cpp" line="50"/>
         <source>&amp;Show/Hide panel</source>
         <translation>&amp;Mostrar/Ocultar painel</translation>
     </message>
     <message>
-        <location filename="../src/widgets/main/maintoolbutton.cpp" line="52"/>
+        <location filename="../src/widgets/main/maintoolbutton.cpp" line="54"/>
         <source>&amp;Add to playqueue</source>
         <translation>&amp;Adicionar à fila de reprodução</translation>
     </message>
@@ -1505,64 +1572,51 @@
         <translation type="obsolete">Sobre o Qt</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="342"/>
+        <location filename="../src/mainwindow.cpp" line="310"/>
         <source>&amp;Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="343"/>
+        <location filename="../src/mainwindow.cpp" line="311"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="345"/>
+        <location filename="../src/mainwindow.cpp" line="313"/>
         <source>settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="348"/>
         <source>&amp;Add media to playlist</source>
-        <translation>&amp;Adicionar a mídia à lista de reprodução</translation>
+        <translation type="vanished">&amp;Adicionar a mídia à lista de reprodução</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="349"/>
         <source>&amp;Add directory to playlist</source>
-        <translation>&amp;Adicionar o diretório à lista de reprodução</translation>
+        <translation type="vanished">&amp;Adicionar o diretório à lista de reprodução</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="350"/>
         <source>&amp;Add Url...</source>
-        <translation>&amp;Adicionar Url...</translation>
+        <translation type="vanished">&amp;Adicionar Url...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="351"/>
         <source>&amp;Clear playlist</source>
-        <translation>&amp;Limpar a lista de reprodução</translation>
+        <translation type="vanished">&amp;Limpar a lista de reprodução</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="352"/>
         <source>&amp;Save playlist to file</source>
-        <translation>&amp;Salvar a lista de reprodução em arquivo</translation>
+        <translation type="vanished">&amp;Salvar a lista de reprodução em arquivo</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="353"/>
         <source>&amp;Auto save playlist to yarock database</source>
-        <translation>Salvar &amp;automaticamente na base de dados yarock</translation>
+        <translation type="vanished">Salvar &amp;automaticamente na base de dados yarock</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="354"/>
         <source>&amp;Remove media from playlist</source>
-        <translation>&amp;Remover a mídia da lista de reprodução</translation>
+        <translation type="vanished">&amp;Remover a mídia da lista de reprodução</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="355"/>
         <source>Stop after this track</source>
-        <translation>Parar depois desta música</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="358"/>
-        <source>Remove duplicate</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Parar depois desta música</translation>
     </message>
     <message>
         <source>Title</source>
@@ -1581,57 +1635,85 @@
         <translation type="obsolete">Extendido</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="375"/>
+        <location filename="../src/mainwindow.cpp" line="315"/>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="318"/>
+        <source>new playlist</source>
+        <translation type="unfinished">nova lista de reprodução</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="319"/>
+        <source>new smart playlist</source>
+        <translation type="unfinished">nova lista de reprodução inteligente</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="324"/>
         <source>Play or Pause media</source>
         <translation>Reproduzir ou Pausar mídia</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="376"/>
+        <location filename="../src/mainwindow.cpp" line="325"/>
         <source>Stop playing media</source>
         <translation>Parar mídia que está reproduzindo</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="377"/>
+        <location filename="../src/mainwindow.cpp" line="326"/>
         <source>Play next media</source>
         <translation>Reproduzir próxima mídia</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="378"/>
+        <location filename="../src/mainwindow.cpp" line="327"/>
         <source>Play previous media</source>
         <translation>Reproduzir mídia anterior</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="380"/>
+        <location filename="../src/mainwindow.cpp" line="331"/>
         <source>Audio equalizer</source>
         <translation>Equalizador de áudio</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="383"/>
+        <location filename="../src/mainwindow.cpp" line="334"/>
         <source>Database operation</source>
         <translation>Operação da base de dados</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="386"/>
+        <location filename="../src/mainwindow.cpp" line="335"/>
+        <source>Database add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="338"/>
         <source>Show playqueue panel</source>
         <translation>Mostrar o painel da fila de reprodução</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="387"/>
+        <location filename="../src/mainwindow.cpp" line="354"/>
+        <source>Enable play on search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1054"/>
+        <source>No equalizer available with this configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Show menu panel</source>
-        <translation>Mostrar o painel do menu</translation>
+        <translation type="vanished">Mostrar o painel do menu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="388"/>
         <source>Show now playing</source>
-        <translation>Mostrar reproduzindo agora</translation>
+        <translation type="vanished">Mostrar reproduzindo agora</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="394"/>
+        <location filename="../src/mainwindow.cpp" line="342"/>
         <source>Switch to minimal mode</source>
         <translation>Alternar para o modo simples</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="395"/>
+        <location filename="../src/mainwindow.cpp" line="343"/>
         <source>Switch to normal mode</source>
         <translation>Alternar para o modo normal</translation>
     </message>
@@ -1644,99 +1726,69 @@
         <translation type="obsolete">Abrir editor de lista de reproduação</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="363"/>
+        <location filename="../src/mainwindow.cpp" line="316"/>
         <source>Send LastFm love</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="366"/>
-        <source>Show cover</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="370"/>
-        <source>Show rating</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="398"/>
+        <location filename="../src/mainwindow.cpp" line="346"/>
         <source>Jump to artist</source>
         <translation>Ir para artista</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="399"/>
+        <location filename="../src/mainwindow.cpp" line="347"/>
         <source>Jump to album</source>
         <translation>Ir para álbum</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="400"/>
-        <location filename="../src/mainwindow.cpp" line="403"/>
+        <location filename="../src/mainwindow.cpp" line="348"/>
         <source>Jump to track</source>
         <translation>Ir para faixa</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="407"/>
+        <location filename="../src/mainwindow.cpp" line="351"/>
         <source>Enable search popup</source>
         <translation>Habilitar popup localizar</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="533"/>
         <source>Add music files or playlist</source>
-        <translation>Adicionar os arquivos de música ou à lista de reprodução</translation>
+        <translation type="vanished">Adicionar os arquivos de música ou à lista de reprodução</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="545"/>
-        <source>Add music directories</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="590"/>
         <source>Save playlist to file</source>
-        <translation>Salvar a lista de reprodução em arquivo</translation>
+        <translation type="vanished">Salvar a lista de reprodução em arquivo</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="601"/>
-        <source>Playlist name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="601"/>
         <source>Save playlist</source>
-        <translation>Salvar lista de reprodução</translation>
+        <translation type="vanished">Salvar lista de reprodução</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="671"/>
+        <location filename="../src/mainwindow.cpp" line="537"/>
         <source>Playing error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="952"/>
         <source>settings saved</source>
-        <translation>configurações salvas</translation>
+        <translation type="vanished">configurações salvas</translation>
     </message>
     <message>
+        <location filename="../src/mainwindow.cpp" line="860"/>
         <source>Setup your music collection directory</source>
-        <translation type="obsolete">Configurar o seu diretório de coleção de músicas</translation>
+        <translation type="unfinished">Configurar o seu diretório de coleção de músicas</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1013"/>
+        <location filename="../src/mainwindow.cpp" line="885"/>
         <source>&lt;p&gt;Database need to be rebuilt&lt;/p&gt;</source>
         <translation>&lt;p&gt;A base de dados precisa ser reconstruída&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1015"/>
+        <location filename="../src/mainwindow.cpp" line="887"/>
         <source>Database revision update</source>
         <translation>Revisão da base de dados atualizada</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1160"/>
-        <source>&lt;b&gt;Equalizer is not available&lt;/b&gt;&lt;p&gt;Equalizer wasn&apos;t found, probably you are using a backend that doesn&apos;t support it.&lt;/p&gt;&lt;p&gt;Change to another backend (gstreamer is supported) if you want to have equalizer&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="1164"/>
         <source>Equalizer information</source>
-        <translation>Informações do equalizador</translation>
+        <translation type="vanished">Informações do equalizador</translation>
     </message>
 </context>
 <context>
@@ -1856,161 +1908,159 @@
 <context>
     <name>MenuModel</name>
     <message>
-        <location filename="../src/widgets/main/menumodel.cpp" line="99"/>
+        <location filename="../src/widgets/main/menumodel.cpp" line="135"/>
         <source>home</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/main/menumodel.cpp" line="102"/>
+        <location filename="../src/widgets/main/menumodel.cpp" line="138"/>
         <source>music browser</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/main/menumodel.cpp" line="105"/>
+        <location filename="../src/widgets/main/menumodel.cpp" line="141"/>
         <source>playlist browser</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/main/menumodel.cpp" line="108"/>
+        <location filename="../src/widgets/main/menumodel.cpp" line="144"/>
         <source>radio browser</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/main/menumodel.cpp" line="111"/>
+        <location filename="../src/widgets/main/menumodel.cpp" line="147"/>
         <source>computer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/main/menumodel.cpp" line="118"/>
+        <location filename="../src/widgets/main/menumodel.cpp" line="150"/>
+        <location filename="../src/widgets/main/menumodel.cpp" line="237"/>
         <source>settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/main/menumodel.cpp" line="121"/>
+        <location filename="../src/widgets/main/menumodel.cpp" line="158"/>
         <source>context</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/main/menumodel.cpp" line="124"/>
+        <location filename="../src/widgets/main/menumodel.cpp" line="161"/>
         <source>dashboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/main/menumodel.cpp" line="127"/>
+        <location filename="../src/widgets/main/menumodel.cpp" line="164"/>
         <source>history</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/main/menumodel.cpp" line="143"/>
+        <location filename="../src/widgets/main/menumodel.cpp" line="180"/>
         <source>genre</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/main/menumodel.cpp" line="184"/>
+        <location filename="../src/widgets/main/menumodel.cpp" line="227"/>
         <source>home directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/main/menumodel.cpp" line="187"/>
+        <location filename="../src/widgets/main/menumodel.cpp" line="230"/>
         <source>root directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/main/menumodel.cpp" line="155"/>
+        <location filename="../src/widgets/main/menumodel.cpp" line="240"/>
+        <source>about</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/main/menumodel.cpp" line="250"/>
+        <source>choose database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/main/menumodel.cpp" line="192"/>
         <source>playlists</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/main/menumodel.cpp" line="134"/>
+        <location filename="../src/widgets/main/menumodel.cpp" line="171"/>
         <source>artists</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/main/menumodel.cpp" line="137"/>
+        <location filename="../src/widgets/main/menumodel.cpp" line="174"/>
         <source>albums</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/main/menumodel.cpp" line="140"/>
+        <location filename="../src/widgets/main/menumodel.cpp" line="177"/>
         <source>tracks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/main/menumodel.cpp" line="146"/>
+        <location filename="../src/widgets/main/menumodel.cpp" line="183"/>
         <source>years</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/main/menumodel.cpp" line="149"/>
+        <location filename="../src/widgets/main/menumodel.cpp" line="186"/>
         <source>favorites</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/main/menumodel.cpp" line="158"/>
+        <location filename="../src/widgets/main/menumodel.cpp" line="195"/>
         <source>smart playlists</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/main/menumodel.cpp" line="177"/>
+        <location filename="../src/widgets/main/menumodel.cpp" line="220"/>
         <source>favorite stream</source>
         <translation>stream do favorito</translation>
     </message>
 </context>
 <context>
-    <name>MenuWidget</name>
+    <name>NowPlayingPopup</name>
     <message>
-        <location filename="../src/widgets/main/menuwidget.cpp" line="153"/>
-        <source>show extended menu</source>
+        <location filename="../src/widgets/playertoolbar/nowplayingpopup.cpp" line="138"/>
+        <source>Add to play queue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/main/menuwidget.cpp" line="153"/>
-        <source>show compact menu</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>NowPlayingView</name>
-    <message>
-        <location filename="../src/widgets/nowplaying/nowplayingview.cpp" line="64"/>
-        <source>Edit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/nowplaying/nowplayingview.cpp" line="65"/>
-        <source>Send LastFm love</source>
-        <translation type="unfinished"></translation>
+        <location filename="../src/widgets/playertoolbar/nowplayingpopup.cpp" line="141"/>
+        <source>Add to favorites</source>
+        <translation type="unfinished">Adicionar aos favoritos</translation>
     </message>
 </context>
 <context>
     <name>PageGeneral</name>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="60"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="63"/>
         <source>General</source>
         <translation>Geral</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="85"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="88"/>
         <source>Enable Mpris</source>
         <translation>Habilitar Mpris</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="88"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="91"/>
         <source>Enable notification</source>
         <translation>Habilitar noticação</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="92"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="95"/>
         <source>Minimize application to systray</source>
         <translation>Minimizar programa para o notificador do sistema</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="95"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="98"/>
         <source>Hide window at startup</source>
         <translation>Ocultar janela ao iniciar</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="107"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="110"/>
         <source>Choose color</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2018,56 +2068,53 @@
 <context>
     <name>PageLibrary</name>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="510"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="578"/>
         <source>Library settings</source>
         <translation>Configurações da biblioteca</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="532"/>
         <source>Database Name</source>
-        <translation>Nome Da Base De Dados</translation>
+        <translation type="vanished">Nome Da Base De Dados</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="537"/>
         <source>Enable Multi Database support</source>
-        <translation>Habilitar suporte a Multi-Base De Dados</translation>
+        <translation type="vanished">Habilitar suporte a Multi-Base De Dados</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="547"/>
-        <location filename="../src/views/settings/settings_widget.cpp" line="811"/>
-        <location filename="../src/views/settings/settings_widget.cpp" line="824"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="611"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="857"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="870"/>
         <source>New database</source>
         <translation>Nova base de dados</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="551"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="615"/>
         <source>Delete database</source>
         <translation>Excluir base de dados</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="555"/>
-        <location filename="../src/views/settings/settings_widget.cpp" line="897"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="619"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="943"/>
         <source>Rename database</source>
         <translation>Renomear base de dados</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="565"/>
         <source>Database Properties</source>
-        <translation>Propriedades Da Base De Dados</translation>
+        <translation type="vanished">Propriedades Da Base De Dados</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="576"/>
-        <location filename="../src/views/settings/settings_widget.cpp" line="940"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="640"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="986"/>
         <source> Choose music folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="583"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="647"/>
         <source>Add ...</source>
         <translation>Adicionar ...</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="599"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="663"/>
         <source>Use artist image (album cover stack otherwise)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2080,86 +2127,104 @@
         <translation type="obsolete">Remover tudo</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="587"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="600"/>
+        <source>Collection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/views/settings/settings_widget.cpp" line="629"/>
+        <source>Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/views/settings/settings_widget.cpp" line="651"/>
         <source>Update collections automatically after start</source>
         <translation>Atualizar automaticamente as coleções depois de iniciar</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="591"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="655"/>
         <source>Search cover art from file directory</source>
         <translation>Pesquisar arte da capa a partir do diretório do arquivo</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="595"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="659"/>
         <source>Group multi disc albums as one album</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="603"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="667"/>
         <source>Write rating to file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="811"/>
-        <location filename="../src/views/settings/settings_widget.cpp" line="897"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="857"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="943"/>
         <source>Name</source>
         <translation>Nome</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="825"/>
-        <source>The database  &quot;%1&quot; already exist, please try another name</source>
-        <translation>A base de dados &quot;%1&quot; já existe, por favor, tente outro nome</translation>
+        <location filename="../src/views/settings/settings_widget.cpp" line="871"/>
+        <source>The database  &quot;%1&quot; already exists, please try another name</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="878"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="925"/>
+        <source>Are you sure you want to delete the &quot;%1&quot; database?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The database  &quot;%1&quot; already exist, please try another name</source>
+        <translation type="vanished">A base de dados &quot;%1&quot; já existe, por favor, tente outro nome</translation>
+    </message>
+    <message>
+        <location filename="../src/views/settings/settings_widget.cpp" line="924"/>
         <source>Delete database properties</source>
         <translation>Excluir as propriedades da base de dados</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="879"/>
         <source>Are you sure you want to delete the &quot;%1&quot; database ?</source>
-        <translation>Tem certeza que deseja execluir a base de dados &quot;%1&quot;?</translation>
+        <translation type="vanished">Tem certeza que deseja execluir a base de dados &quot;%1&quot;?</translation>
     </message>
 </context>
 <context>
     <name>PagePlayer</name>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="265"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="270"/>
         <source>Player settings</source>
         <translation>Configurações do reprodutor</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="301"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="355"/>
         <source>Stop playing on playqueue clear</source>
         <translation>Parar reprodução ao limpar lista de reprodução</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="304"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="358"/>
         <source>Restart playing at startup</source>
         <translation>Reiniciar reprodução ao iniciar</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="307"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="361"/>
         <source>Restore last playqueue content at startup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="310"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="364"/>
         <source>Use ReplayGain</source>
         <translation>Usar ReplayGain</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="323"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="377"/>
         <source>Engine</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="326"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="380"/>
         <source>Replaygain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="329"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="383"/>
         <source>Others</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2190,58 +2255,66 @@
 <context>
     <name>PageScrobbler</name>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1365"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1411"/>
         <source>Scrobbler settings</source>
         <translation>Configurações do scrobbler</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1389"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1435"/>
         <source>Use LastFm scrobbler</source>
         <translation>Usar scrobbler do LastFm</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1399"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1445"/>
         <source>Account details</source>
         <translation>Detalhes da conta</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1405"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1451"/>
         <source>username</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1408"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1454"/>
         <source>password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1421"/>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1544"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1467"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1590"/>
         <source>Sign In</source>
         <translation>Entrar</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1537"/>
-        <source>You are log in lastFm service as &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation>Você está registrado no serviço lastFm como &lt;b&gt;%1&lt;/b&gt;</translation>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1583"/>
+        <source>You are log in Last.fm service as &lt;b&gt;%1&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1539"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1589"/>
+        <source>You are not logged in</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You are log in lastFm service as &lt;b&gt;%1&lt;/b&gt;</source>
+        <translation type="vanished">Você está registrado no serviço lastFm como &lt;b&gt;%1&lt;/b&gt;</translation>
+    </message>
+    <message>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1585"/>
         <source>Sign Out</source>
         <translation>Sair</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1543"/>
         <source>You are not log into</source>
-        <translation>Você não está registrar em</translation>
+        <translation type="vanished">Você não está registrar em</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1578"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1624"/>
         <source>Authentication failed</source>
         <translation>Autenticação falhou</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1579"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1625"/>
         <source>Your Last.fm credentials were incorrect</source>
         <translation>Suas credenciais do Last.fm estão incorretas</translation>
     </message>
@@ -2249,52 +2322,52 @@
 <context>
     <name>PageShortcut</name>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1038"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1084"/>
         <source>Shortcut settings</source>
         <translation>Configurações de atalho</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1049"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1095"/>
         <source>Play/Pause</source>
         <translation>Reproduzir/Pausar</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1050"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1096"/>
         <source>Stop</source>
         <translation>Parar</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1051"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1097"/>
         <source>Previous track</source>
         <translation>Faixa anterior</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1052"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1098"/>
         <source>Next track</source>
         <translation>Próxima faixa</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1053"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1099"/>
         <source>Increase volume</source>
         <translation>Aumentar volume</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1054"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1100"/>
         <source>Decrease volume</source>
         <translation>Diminuir volume</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1055"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1101"/>
         <source>Mute/Unmute volume</source>
         <translation>Mudo/Retirar mudo</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1056"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1102"/>
         <source>Jump to track</source>
         <translation>Ir para a faixa</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1057"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1103"/>
         <source>Clear playqueue</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2302,22 +2375,22 @@
 <context>
     <name>PageSongInfo</name>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1625"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1671"/>
         <source>Song info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1643"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1689"/>
         <source>Choose the websites you want to use when searching for lyrics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1649"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1695"/>
         <source>move up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1650"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1696"/>
         <source>move down</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2325,26 +2398,23 @@
 <context>
     <name>PlayerToolBar</name>
     <message>
-        <location filename="../src/widgets/playertoolbar.cpp" line="208"/>
+        <location filename="../src/widgets/playertoolbar/playertoolbar.cpp" line="139"/>
         <source>[paused]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/playertoolbar.cpp" line="346"/>
-        <location filename="../src/widgets/playertoolbar.cpp" line="354"/>
         <source>&lt;b&gt;%1&lt;/b&gt; by &lt;b&gt;%2&lt;/b&gt; on &lt;b&gt;%3&lt;/b&gt;</source>
-        <translation>&lt;b&gt;%1&lt;/b&gt; por &lt;b&gt;%2&lt;/b&gt; na &lt;b&gt;%3&lt;/b&gt;</translation>
+        <translation type="vanished">&lt;b&gt;%1&lt;/b&gt; por &lt;b&gt;%2&lt;/b&gt; na &lt;b&gt;%3&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/widgets/playertoolbar.cpp" line="360"/>
         <source>&lt;b&gt;%1&lt;/b&gt; stream</source>
-        <translation>&lt;b&gt;%1&lt;/b&gt; stream</translation>
+        <translation type="vanished">&lt;b&gt;%1&lt;/b&gt; stream</translation>
     </message>
 </context>
 <context>
     <name>PlaylistDbWriter</name>
     <message>
-        <location filename="../src/playqueue/playlistdbwriter.cpp" line="107"/>
+        <location filename="../src/playqueue/playlistdbwriter.cpp" line="121"/>
         <source>no name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2352,7 +2422,7 @@
 <context>
     <name>PlaylistDelegate</name>
     <message>
-        <location filename="../src/playqueue/playlistview.cpp" line="625"/>
+        <location filename="../src/playqueue/playlistview.cpp" line="638"/>
         <source>media reading error</source>
         <translation>erro ao ler mídia</translation>
     </message>
@@ -2411,7 +2481,7 @@
 <context>
     <name>PlaylistView</name>
     <message>
-        <location filename="../src/playqueue/playlistview.cpp" line="263"/>
+        <location filename="../src/playqueue/playlistview.cpp" line="258"/>
         <source>Add file to play or Drag and Drop File from Collection</source>
         <translation>Adicionar arquivo para reproduzir ou Arraste e Solte o arquivo na Coleção</translation>
     </message>
@@ -2419,44 +2489,144 @@
 <context>
     <name>PlaylistWidget</name>
     <message>
-        <location filename="../src/playqueue/playlistwidget.cpp" line="57"/>
+        <location filename="../src/playqueue/playlistwidget.cpp" line="69"/>
+        <source>Jump to track</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/playqueue/playlistwidget.cpp" line="71"/>
+        <source>&amp;Add media to playlist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/playqueue/playlistwidget.cpp" line="72"/>
+        <source>&amp;Add directory to playlist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/playqueue/playlistwidget.cpp" line="73"/>
+        <source>&amp;Add Url...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/playqueue/playlistwidget.cpp" line="74"/>
+        <source>&amp;Clear playlist</source>
+        <translation type="unfinished">&amp;Limpar a lista de reprodução</translation>
+    </message>
+    <message>
+        <location filename="../src/playqueue/playlistwidget.cpp" line="75"/>
+        <source>&amp;Export playlist to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/playqueue/playlistwidget.cpp" line="76"/>
+        <source>&amp;Save playlist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/playqueue/playlistwidget.cpp" line="77"/>
+        <source>&amp;Remove media from playlist</source>
+        <translation type="unfinished">&amp;Remover a mídia da lista de reprodução</translation>
+    </message>
+    <message>
+        <location filename="../src/playqueue/playlistwidget.cpp" line="78"/>
+        <source>Remove duplicate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/playqueue/playlistwidget.cpp" line="83"/>
+        <source>Send LastFm love</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/playqueue/playlistwidget.cpp" line="85"/>
+        <source>Show cover</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/playqueue/playlistwidget.cpp" line="89"/>
+        <source>Show rating</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/playqueue/playlistwidget.cpp" line="93"/>
+        <source>Show track number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/playqueue/playlistwidget.cpp" line="103"/>
         <source>sort</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/playqueue/playlistwidget.cpp" line="59"/>
+        <location filename="../src/playqueue/playlistwidget.cpp" line="105"/>
         <source>Sort playqueue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/playqueue/playlistwidget.cpp" line="67"/>
+        <location filename="../src/playqueue/playlistwidget.cpp" line="113"/>
         <source>Playqueue filter</source>
         <translation type="unfinished">Filtrar lista de reprodução</translation>
     </message>
     <message>
-        <location filename="../src/playqueue/playlistwidget.cpp" line="91"/>
+        <location filename="../src/playqueue/playlistwidget.cpp" line="133"/>
         <source>Show filter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/playqueue/playlistwidget.cpp" line="168"/>
+        <location filename="../src/playqueue/playlistwidget.cpp" line="137"/>
+        <source>Stop after this track</source>
+        <translation type="unfinished">Parar depois desta música</translation>
+    </message>
+    <message>
+        <location filename="../src/playqueue/playlistwidget.cpp" line="221"/>
         <source>Empty Playlist</source>
         <translation>Lista de reprodução Vazia</translation>
     </message>
     <message>
-        <location filename="../src/playqueue/playlistwidget.cpp" line="170"/>
+        <location filename="../src/playqueue/playlistwidget.cpp" line="223"/>
         <source>Playlist : &lt;b&gt;%1&lt;/b&gt; tracks - %2</source>
         <translation>Lista de reprodução : &lt;b&gt;%1&lt;/b&gt; músicas - %2</translation>
     </message>
     <message>
-        <location filename="../src/playqueue/playlistwidget.cpp" line="231"/>
+        <location filename="../src/playqueue/playlistwidget.cpp" line="304"/>
         <source>Add</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/playqueue/playlistwidget.cpp" line="243"/>
+        <location filename="../src/playqueue/playlistwidget.cpp" line="320"/>
         <source>Display options</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/playqueue/playlistwidget.cpp" line="325"/>
+        <source>Widgets options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/playqueue/playlistwidget.cpp" line="360"/>
+        <source>Add music files or playlist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/playqueue/playlistwidget.cpp" line="372"/>
+        <source>Add music directories</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/playqueue/playlistwidget.cpp" line="419"/>
+        <source>Export playlist to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/playqueue/playlistwidget.cpp" line="431"/>
+        <source>name</source>
+        <translation type="unfinished">nome</translation>
+    </message>
+    <message>
+        <location filename="../src/playqueue/playlistwidget.cpp" line="431"/>
+        <source>Save playlist</source>
+        <translation type="unfinished">Salvar lista de reprodução</translation>
     </message>
     <message>
         <source>Choose playlist mode</source>
@@ -2466,227 +2636,232 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/core/mediaitem/mediaitem.cpp" line="214"/>
+        <location filename="../src/core/mediaitem/mediaitem.cpp" line="202"/>
         <source>Today</source>
         <translation>Hoje</translation>
     </message>
     <message>
-        <location filename="../src/core/mediaitem/mediaitem.cpp" line="216"/>
+        <location filename="../src/core/mediaitem/mediaitem.cpp" line="204"/>
         <source>Yesterday</source>
         <translation>Ontem</translation>
     </message>
     <message>
-        <location filename="../src/core/mediaitem/mediaitem.cpp" line="218"/>
+        <location filename="../src/core/mediaitem/mediaitem.cpp" line="206"/>
         <source>%1 days ago</source>
         <translation>%1 dias atrás</translation>
     </message>
     <message>
-        <location filename="../src/core/mediaitem/tag.cpp" line="528"/>
+        <location filename="../src/core/mediaitem/tag.cpp" line="572"/>
         <source>unknown artist</source>
         <translation>artista desconhecido</translation>
     </message>
     <message>
-        <location filename="../src/core/mediaitem/tag.cpp" line="531"/>
+        <location filename="../src/core/mediaitem/tag.cpp" line="575"/>
         <source>unknown album</source>
         <translation>álbum desconhecido</translation>
     </message>
     <message>
-        <location filename="../src/core/mediaitem/tag.cpp" line="534"/>
+        <location filename="../src/core/mediaitem/tag.cpp" line="578"/>
         <source>unknown genre</source>
         <translation>gênero desconhecido</translation>
     </message>
     <message>
-        <location filename="../src/core/mediasearch/search_query.cpp" line="122"/>
+        <location filename="../src/core/mediasearch/search_query.cpp" line="118"/>
         <source>Filename</source>
         <translation>Nome do arquivo</translation>
     </message>
     <message>
-        <location filename="../src/core/mediasearch/search_query.cpp" line="123"/>
+        <location filename="../src/core/mediasearch/search_query.cpp" line="119"/>
         <source>Title</source>
         <translation>Título</translation>
     </message>
     <message>
-        <location filename="../src/core/mediasearch/search_query.cpp" line="124"/>
+        <location filename="../src/core/mediasearch/search_query.cpp" line="120"/>
         <source>Album</source>
         <translation>Álbum</translation>
     </message>
     <message>
-        <location filename="../src/core/mediasearch/search_query.cpp" line="125"/>
+        <location filename="../src/core/mediasearch/search_query.cpp" line="121"/>
         <source>Genre</source>
         <translation>Gênero</translation>
     </message>
     <message>
-        <location filename="../src/core/mediasearch/search_query.cpp" line="126"/>
+        <location filename="../src/core/mediasearch/search_query.cpp" line="122"/>
         <source>Duration</source>
         <translation>Duração</translation>
     </message>
     <message>
-        <location filename="../src/core/mediasearch/search_query.cpp" line="127"/>
+        <location filename="../src/core/mediasearch/search_query.cpp" line="123"/>
         <source>Track Year</source>
         <translation>Ano Da Música</translation>
     </message>
     <message>
-        <location filename="../src/core/mediasearch/search_query.cpp" line="128"/>
+        <location filename="../src/core/mediasearch/search_query.cpp" line="124"/>
         <source>Album Year</source>
         <translation>Ano Do Álbum</translation>
     </message>
     <message>
-        <location filename="../src/core/mediasearch/search_query.cpp" line="129"/>
+        <location filename="../src/core/mediasearch/search_query.cpp" line="125"/>
         <source>Number</source>
         <translation>Número</translation>
     </message>
     <message>
-        <location filename="../src/core/mediasearch/search_query.cpp" line="130"/>
+        <location filename="../src/core/mediasearch/search_query.cpp" line="126"/>
         <source>Track Playcount</source>
         <translation>Contagem da reprodução da música</translation>
     </message>
     <message>
-        <location filename="../src/core/mediasearch/search_query.cpp" line="131"/>
+        <location filename="../src/core/mediasearch/search_query.cpp" line="127"/>
         <source>Album Playcount</source>
         <translation>Contagem da reprodução do álbum</translation>
     </message>
     <message>
-        <location filename="../src/core/mediasearch/search_query.cpp" line="132"/>
+        <location filename="../src/core/mediasearch/search_query.cpp" line="128"/>
         <source>Artist Playcount</source>
         <translation>Contagem da reprodução do artista</translation>
     </message>
     <message>
-        <location filename="../src/core/mediasearch/search_query.cpp" line="133"/>
+        <location filename="../src/core/mediasearch/search_query.cpp" line="129"/>
         <source>Artist</source>
         <translation>Artista</translation>
     </message>
     <message>
-        <location filename="../src/core/mediasearch/search_query.cpp" line="134"/>
+        <location filename="../src/core/mediasearch/search_query.cpp" line="130"/>
         <source>Last Played date</source>
         <translation>Última data Reproduzida</translation>
     </message>
     <message>
-        <location filename="../src/core/mediasearch/search_query.cpp" line="135"/>
+        <location filename="../src/core/mediasearch/search_query.cpp" line="131"/>
         <source>Track rating</source>
         <translation>Avaliação da música</translation>
     </message>
     <message>
-        <location filename="../src/core/mediasearch/search_query.cpp" line="136"/>
+        <location filename="../src/core/mediasearch/search_query.cpp" line="132"/>
         <source>Album rating</source>
         <translation>Avaliação do álbum</translation>
     </message>
     <message>
-        <location filename="../src/core/mediasearch/search_query.cpp" line="137"/>
+        <location filename="../src/core/mediasearch/search_query.cpp" line="133"/>
         <source>Artist rating</source>
         <translation>Avaliação do artista</translation>
     </message>
     <message>
-        <location filename="../src/core/mediasearch/search_query.cpp" line="149"/>
+        <location filename="../src/core/mediasearch/search_query.cpp" line="145"/>
         <source>after</source>
         <translation>depois</translation>
     </message>
     <message>
-        <location filename="../src/core/mediasearch/search_query.cpp" line="150"/>
+        <location filename="../src/core/mediasearch/search_query.cpp" line="146"/>
         <source>before</source>
         <translation>antes</translation>
     </message>
     <message>
-        <location filename="../src/core/mediasearch/search_query.cpp" line="151"/>
+        <location filename="../src/core/mediasearch/search_query.cpp" line="147"/>
         <source>on</source>
         <translation>ligado</translation>
     </message>
     <message>
-        <location filename="../src/core/mediasearch/search_query.cpp" line="152"/>
+        <location filename="../src/core/mediasearch/search_query.cpp" line="148"/>
         <source>not on</source>
         <translation>desligado</translation>
     </message>
     <message>
-        <location filename="../src/core/mediasearch/search_query.cpp" line="158"/>
+        <location filename="../src/core/mediasearch/search_query.cpp" line="154"/>
         <source>contains</source>
         <translation>contém</translation>
     </message>
     <message>
-        <location filename="../src/core/mediasearch/search_query.cpp" line="159"/>
+        <location filename="../src/core/mediasearch/search_query.cpp" line="155"/>
         <source>does not contain</source>
         <translation>não contém</translation>
     </message>
     <message>
-        <location filename="../src/core/mediasearch/search_query.cpp" line="160"/>
+        <location filename="../src/core/mediasearch/search_query.cpp" line="156"/>
         <source>starts with</source>
         <translation>iniciar com</translation>
     </message>
     <message>
-        <location filename="../src/core/mediasearch/search_query.cpp" line="161"/>
+        <location filename="../src/core/mediasearch/search_query.cpp" line="157"/>
         <source>ends with</source>
         <translation>finalizar com</translation>
     </message>
     <message>
-        <location filename="../src/core/mediasearch/search_query.cpp" line="162"/>
+        <location filename="../src/core/mediasearch/search_query.cpp" line="158"/>
         <source>greater than</source>
         <translation>maior que</translation>
     </message>
     <message>
-        <location filename="../src/core/mediasearch/search_query.cpp" line="163"/>
+        <location filename="../src/core/mediasearch/search_query.cpp" line="159"/>
         <source>less than</source>
         <translation>menor que</translation>
     </message>
     <message>
-        <location filename="../src/core/mediasearch/search_query.cpp" line="164"/>
+        <location filename="../src/core/mediasearch/search_query.cpp" line="160"/>
         <source>equals</source>
         <translation>igual a</translation>
     </message>
     <message>
-        <location filename="../src/core/mediasearch/search_query.cpp" line="165"/>
+        <location filename="../src/core/mediasearch/search_query.cpp" line="161"/>
         <source>not equals</source>
         <translation>diferente de</translation>
     </message>
     <message>
-        <location filename="../src/core/mediasearch/search_query.cpp" line="175"/>
+        <location filename="../src/core/mediasearch/search_query.cpp" line="171"/>
         <source>A-Z</source>
         <translation>A-Z</translation>
     </message>
     <message>
-        <location filename="../src/core/mediasearch/search_query.cpp" line="175"/>
+        <location filename="../src/core/mediasearch/search_query.cpp" line="171"/>
         <source>Z-A</source>
         <translation>Z-A</translation>
     </message>
     <message>
-        <location filename="../src/core/mediasearch/search_query.cpp" line="176"/>
+        <location filename="../src/core/mediasearch/search_query.cpp" line="172"/>
         <source>oldest first</source>
         <translation>mais antigo primeiro</translation>
     </message>
     <message>
-        <location filename="../src/core/mediasearch/search_query.cpp" line="176"/>
+        <location filename="../src/core/mediasearch/search_query.cpp" line="172"/>
         <source>newest first</source>
         <translation>mais recente primeiro</translation>
     </message>
     <message>
-        <location filename="../src/core/mediasearch/search_query.cpp" line="177"/>
+        <location filename="../src/core/mediasearch/search_query.cpp" line="173"/>
         <source>shortest first</source>
         <translation>mais curto primeiro</translation>
     </message>
     <message>
-        <location filename="../src/core/mediasearch/search_query.cpp" line="177"/>
+        <location filename="../src/core/mediasearch/search_query.cpp" line="173"/>
         <source>longest first</source>
         <translation>mais longo primeiro</translation>
     </message>
     <message>
-        <location filename="../src/core/mediasearch/search_query.cpp" line="179"/>
+        <location filename="../src/core/mediasearch/search_query.cpp" line="175"/>
         <source>smallest first</source>
         <translation>menor primeiro</translation>
     </message>
     <message>
-        <location filename="../src/core/mediasearch/search_query.cpp" line="179"/>
+        <location filename="../src/core/mediasearch/search_query.cpp" line="175"/>
         <source>biggest first</source>
         <translation>maior primeiro</translation>
     </message>
     <message>
-        <location filename="../src/views/context/context_item.cpp" line="528"/>
+        <location filename="../src/views/context/context_scene.cpp" line="146"/>
+        <source>Wait for information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/views/context/context_scene.cpp" line="164"/>
         <source>Player is stopped</source>
         <translation>Reprodutor está parado</translation>
     </message>
     <message>
-        <location filename="../src/views/stream/stream_scene.cpp" line="210"/>
+        <location filename="../src/views/stream/stream_scene.cpp" line="241"/>
         <source>downloading streams from %1....please wait...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/stream/stream_scene.cpp" line="217"/>
+        <location filename="../src/views/stream/stream_scene.cpp" line="248"/>
         <source>error accessing stream from %1 !</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2699,18 +2874,18 @@
 <context>
     <name>RepeatControl</name>
     <message>
-        <location filename="../src/widgets/audiocontrols.cpp" line="40"/>
-        <location filename="../src/widgets/audiocontrols.cpp" line="69"/>
+        <location filename="../src/widgets/playertoolbar/audiocontrols.cpp" line="39"/>
+        <location filename="../src/widgets/playertoolbar/audiocontrols.cpp" line="67"/>
         <source>Repeat mode is off</source>
         <translation>Modo Repetir está desligado</translation>
     </message>
     <message>
-        <location filename="../src/widgets/audiocontrols.cpp" line="73"/>
+        <location filename="../src/widgets/playertoolbar/audiocontrols.cpp" line="71"/>
         <source>Repeat track</source>
         <translation>Repetir música</translation>
     </message>
     <message>
-        <location filename="../src/widgets/audiocontrols.cpp" line="77"/>
+        <location filename="../src/widgets/playertoolbar/audiocontrols.cpp" line="75"/>
         <source>Repeat all</source>
         <translation>Repetir todas</translation>
     </message>
@@ -2756,6 +2931,16 @@
         <source>Scrobbler</source>
         <translation type="obsolete">Scrobbler</translation>
     </message>
+    <message>
+        <location filename="../src/views/settings/settings_scene.cpp" line="229"/>
+        <source>Settings saved</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/views/settings/settings_scene.cpp" line="231"/>
+        <source>Restart needed</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ShortcutDialog</name>
@@ -2765,7 +2950,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/dialogs/shortcutdialog.cpp" line="42"/>
+        <location filename="../src/widgets/dialogs/shortcutdialog.cpp" line="41"/>
         <source>Press a keys that you want to set as a shortcut</source>
         <translation>Pressione as teclas que você deseja definir como um atalho</translation>
     </message>
@@ -2773,13 +2958,13 @@
 <context>
     <name>ShuffleControl</name>
     <message>
-        <location filename="../src/widgets/audiocontrols.cpp" line="98"/>
-        <location filename="../src/widgets/audiocontrols.cpp" line="127"/>
+        <location filename="../src/widgets/playertoolbar/audiocontrols.cpp" line="96"/>
+        <location filename="../src/widgets/playertoolbar/audiocontrols.cpp" line="124"/>
         <source>Shuffle mode is off</source>
         <translation>Modo embaralhar está desligado</translation>
     </message>
     <message>
-        <location filename="../src/widgets/audiocontrols.cpp" line="131"/>
+        <location filename="../src/widgets/playertoolbar/audiocontrols.cpp" line="128"/>
         <source>Shuffle mode is on</source>
         <translation>Modo embaralhar está ligado</translation>
     </message>
@@ -2888,34 +3073,47 @@
         <translation type="obsolete">Mostrar duplicados</translation>
     </message>
     <message>
-        <location filename="../src/views/stream/stream_scene.cpp" line="104"/>
+        <location filename="../src/views/stream/stream_scene.cpp" line="112"/>
+        <source>Search</source>
+        <translation type="unfinished">Localizar</translation>
+    </message>
+    <message>
+        <location filename="../src/views/stream/stream_scene.cpp" line="147"/>
         <source>add</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/stream/stream_scene.cpp" line="105"/>
+        <location filename="../src/views/stream/stream_scene.cpp" line="148"/>
         <source>import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/stream/stream_scene.cpp" line="400"/>
-        <location filename="../src/views/stream/stream_scene.cpp" line="461"/>
+        <location filename="../src/views/stream/stream_scene.cpp" line="471"/>
+        <location filename="../src/views/stream/stream_scene.cpp" line="532"/>
         <source>Loading stream</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/stream/stream_scene.cpp" line="822"/>
+        <location filename="../src/views/stream/stream_scene.cpp" line="945"/>
         <source>import stream file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/stream/stream_scene.cpp" line="823"/>
+        <location filename="../src/views/stream/stream_scene.cpp" line="946"/>
         <source>xspf playlist (*.xspf)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>No entry found</source>
         <translation type="obsolete">Nenhuma entrada encontrada</translation>
+    </message>
+</context>
+<context>
+    <name>TaskManager</name>
+    <message>
+        <location filename="../src/playqueue/task_manager.cpp" line="88"/>
+        <source>Loading remote files</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2959,14 +3157,6 @@
     <message>
         <source>Fetching Album Cover</source>
         <translation type="obsolete">Obtendo A Capa Do Álbum</translation>
-    </message>
-</context>
-<context>
-    <name>XspfStreams</name>
-    <message>
-        <location filename="../src/models/stream/service_xspf.cpp" line="32"/>
-        <source>Favorite streams</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
