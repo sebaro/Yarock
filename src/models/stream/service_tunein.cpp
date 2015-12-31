@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -21,6 +21,13 @@
 #include "views/item_button.h"
 #include "utilities.h"
 #include "debug.h"
+
+#include <QtCore>
+#if QT_VERSION >= 0x050000
+#include <QtCore/QJsonDocument>
+#else
+#include <qjson/parser.h>
+#endif
 
 /* 
 API : 
@@ -174,7 +181,7 @@ void TuneIn::browseLink(MEDIA::LinkPtr link)
     if(!UTIL::urlHasQueryItem(url, "partnerId"))
       UTIL::urlAddQueryItem( url, "partnerId", TUNEIN::partner_id);    
     if(!UTIL::urlHasQueryItem(url, "render"))
-      UTIL::urlAddQueryItem( url, "render", "xml");
+      UTIL::urlAddQueryItem( url, "render", "json");
     
     QObject *reply = HTTP()->get(url);
     m_requests[reply] = link;    
@@ -191,53 +198,38 @@ void TuneIn::slotBrowseLinkDone(QByteArray bytes)
     
     MEDIA::LinkPtr link = m_requests.take(reply);    
     
-    /* parse response */
-    QXmlStreamReader xml(bytes);
-
-    while(!xml.atEnd() && !xml.hasError())
-    {
-      xml.readNext();
-      if (xml.isStartElement()) {
-          if(xml.name() == "outline")
-          {
-            if(xml.attributes().value("type").toString() == "audio")
-            {
-              //Debug::debug() << "    [Tunein] stream found";
-              MEDIA::TrackPtr stream = MEDIA::TrackPtr::staticCast( link->addChildren(TYPE_TRACK) );
-              stream->setType(TYPE_STREAM);
-              stream->name = xml.attributes().value("text").toString();
-              stream->url  = xml.attributes().value("URL").toString();
-
-              if(xml.attributes().hasAttribute("image")) {
-                QString i_url = xml.attributes().value("image").toString();
-                //Debug::debug() << "    [Tunein] url image " << i_url ;
-
-                  QUrl image_url = QUrl(i_url);
-                  if(image_url.isValid()) {
-                    QObject* reply = HTTP()->get( image_url );
-                    m_image_requests[reply] = stream;
-                    connect(reply, SIGNAL(data(QByteArray)), this, SLOT(slot_stream_image_received(QByteArray)));
-                  }
-              }
-
-              stream->genre = link->name;
-              stream->setParent(link);
-            }
-            else if (xml.attributes().value("type").toString() == "link")
-            {
-              //Debug::debug() << "    [Tunein] link found";
-              MEDIA::LinkPtr link2 = MEDIA::LinkPtr::staticCast( link->addChildren(TYPE_LINK) );
-              link2->setType(TYPE_LINK);
-              link2->name   = xml.attributes().value("text").toString();
-              link2->url    = xml.attributes().value("URL").toString();
-              link2->state  = int(SERVICE::NO_DATA);
-              link2->genre  = link->name;
-              link2->setParent(link);
-            }
-          }
-      }
-    }    
     
+    /* parse response */
+#if QT_VERSION >= 0x050000
+    QVariantMap replyMap = QJsonDocument::fromJson(bytes).toVariant().toMap();
+#else
+    QJson::Parser parser;
+    bool ok;
+    QVariantMap replyMap = parser.parse(bytes, &ok).toMap();
+
+    if (!ok) return;
+#endif    
+
+    QVariantList list =     replyMap["body"].toList();
+    
+    foreach (const QVariant& element, list) 
+    {
+        QVariantMap map = element.toMap();
+        if( map["element"].toString() == "outline")
+        {
+            if( map.contains("type") )
+            {
+                parseTuneInJsonElement(map,link);
+            }
+            else if (map.contains("children"))
+            {
+              foreach (QVariant va,map["children"].toList())
+              {
+                parseTuneInJsonElement(va.toMap(),link);
+              }
+            }
+        }
+    }
     
     /* register update */    
     link->state = int(SERVICE::DATA_OK);
@@ -245,6 +237,54 @@ void TuneIn::slotBrowseLinkDone(QByteArray bytes)
     
     emit stateChanged();
 }  
+
+
+
+/*******************************************************************************
+  TuneIn::parseTuneInJsonElement
+*******************************************************************************/
+void TuneIn::parseTuneInJsonElement(QVariantMap map, MEDIA::LinkPtr link)
+{
+    if ( map["type"].toString() == "link" )
+    {
+        //Debug::debug() << "    [Tunein] link found";
+        MEDIA::LinkPtr link2 = MEDIA::LinkPtr::staticCast( link->addChildren(TYPE_LINK) );
+        link2->setType(TYPE_LINK);
+
+        link2->name   = map["text"].toString();
+        link2->url    = map["URL"].toString();
+        link2->state  = int(SERVICE::NO_DATA);
+        link2->setParent(link);                
+    }
+    else if( map["type"].toString() == "audio" )
+    {
+        //Debug::debug() << "    [Tunein] stream found";
+        MEDIA::TrackPtr stream = MEDIA::TrackPtr::staticCast( link->addChildren(TYPE_TRACK) );
+        stream->setType(TYPE_STREAM);
+
+        stream->url               = map["URL"].toString();
+        stream->genre             = link->name;
+        stream->extra["station"]  = map["text"].toString();
+        stream->extra["provider"] = this->name();
+        stream->extra["website"]  = QString("http://tunein.com/station/?stationId=%1").arg(map["guide_id"].toString().mid(1));
+        stream->extra["bitrate"]  = map["bitrate"].toString();
+
+        if( map.contains("image") ) 
+        {
+            QString url = map["image"].toString();
+
+            if( !url.isEmpty() && CoverCache::instance()->coverPath(stream).isEmpty() )
+            {
+            QObject* reply = HTTP()->get( url );
+            m_image_requests[reply] = stream;
+            connect(reply, SIGNAL(data(QByteArray)), this, SLOT(slot_stream_image_received(QByteArray)));
+            }
+        }
+
+        stream->genre = link->name;
+        stream->setParent(link);
+    }    
+}
 
 /*******************************************************************************
   TuneIn::slot_stream_image_received

@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -26,6 +26,7 @@
 #include <QGraphicsScene>
 #include <QStyleOptionGraphicsItem>
 
+
 /*
 ********************************************************************************
 *                                                                              *
@@ -39,12 +40,9 @@ class StreamGraphicItem : public QGraphicsItem
     StreamGraphicItem();
     int type() const { return GraphicsItem::StreamType; }
     MEDIA::TrackPtr    media;
-    int                _width;
 
     void startDrag(QWidget*);
 
-    int height() const { return boundingRect().toRect().height();}
-    
   protected:
     // Implement QGraphicsItem method
     QRectF boundingRect() const;
@@ -53,13 +51,8 @@ class StreamGraphicItem : public QGraphicsItem
     void hoverEnterEvent(QGraphicsSceneHoverEvent *e);
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *e);
     void mousePressEvent(QGraphicsSceneMouseEvent *e);
-    //void mouseReleaseEvent(QGraphicsSceneMouseEvent *e);
-    //void mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * event );
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
-    //void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
   public:
      QStyleOptionViewItemV4 opt;
 };
-
-
 #endif // _STREAM_ITEM_H_

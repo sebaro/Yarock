@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -87,10 +87,16 @@ void StreamLoader::slot_download_done(QByteArray bytes)
       /* ------------------------------*/
       else
       {
-        /* get parent name if no name found */
-        if( track->name.isEmpty() )
-          track->name = m_parent->name;
+        /* get parent informations */
+        if( track->extra["station"].toString().isEmpty() )
+          track->extra["station"] = m_parent->extra["station"];
+
+        if( track->extra["website"].toString().isEmpty() )
+          track->extra["website"] = m_parent->extra["website"];
           
+        if( track->genre.isEmpty() )
+          track->genre = m_parent->genre;
+        
         /* remote playlist found in playlist WARNING (can be recursive) */
         if( !MEDIA::isMediaPlayable(track->url) )
         {

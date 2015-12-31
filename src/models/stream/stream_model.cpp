@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -80,13 +80,13 @@ void StreamModel::setStreams(const QList<MEDIA::TrackPtr> &streams)
     
     if(!m_show_duplicate) {
       //Debug::warning() << "      [StreamModel] remove duplicate streams";
-      QSet<QString> name_list;
+      QSet<QString> _names;
       foreach(MEDIA::TrackPtr stream, m_streams) {
-          QString name = stream->name;
-          if(name_list.contains( name ))
+          const QString name = stream->extra["station"].toString();
+          if(_names.contains( name ))
             m_streams.removeOne ( stream );
           else
-            name_list.insert( name );
+            _names.insert( name );
       }
     }
 }
@@ -109,13 +109,13 @@ bool StreamModel::isStreamFiltered(const int row)
     //! check stream item
     if(m_filter_pattern.length() < 3)
     {
-      if ( stream->name.startsWith(m_filter_pattern, Qt::CaseInsensitive)    ||
+      if ( stream->extra["station"].toString().startsWith(m_filter_pattern, Qt::CaseInsensitive)    ||
            stream->genre.startsWith(m_filter_pattern, Qt::CaseInsensitive))
       return true;
     }
     else 
     {
-      if ( stream->name.contains(m_filter_pattern, Qt::CaseInsensitive)    ||
+      if ( stream->extra["station"].toString().contains(m_filter_pattern, Qt::CaseInsensitive)    ||
            stream->genre.contains(m_filter_pattern, Qt::CaseInsensitive))
       return true;
     }

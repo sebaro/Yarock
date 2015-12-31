@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -229,7 +229,6 @@ void Dirble::slotBrowseLinkDone(QByteArray bytes)
               link2->url   = QString("http://api.dirble.com/v2/category/%1/childs?token=%2").
                              arg(map["id"].toString(), DIRBLE::key_id);
               link2->state = int(SERVICE::NO_DATA);
-              link2->genre = link->name;
               link2->setParent(link);
         }
         else if (link->url.contains("childs")) 
@@ -241,7 +240,6 @@ void Dirble::slotBrowseLinkDone(QByteArray bytes)
               link2->url   = QString("http://api.dirble.com/v2/category/%1/stations?token=%2").
                                arg(map["id"].toString(), DIRBLE::key_id);
               link2->state = int(SERVICE::NO_DATA);
-              link2->genre = link->name;
               link2->setParent(link);
         }
     }
@@ -321,13 +319,17 @@ void Dirble::slotBrowseStationDone(QByteArray bytes)
   
           MEDIA::TrackPtr stream = MEDIA::TrackPtr::staticCast( link->addChildren(TYPE_TRACK) );
           stream->setType(TYPE_STREAM);
-          stream->name  = map["name"].toString();
-          stream->url   = stream_map["stream"].toString();
-          stream->genre = link->name;
+          stream->url               = stream_map["stream"].toString();
+          stream->genre             = link->name;
+          stream->extra["station"]  = map["name"].toString();
+          stream->extra["website"]  = QString("https://dirble.com/station/%1").arg(map["slug"].toString());
+          stream->extra["provider"] = this->name();
+          stream->extra["bitrate"]  = stream_map["bitrate"].toString();
+          
           stream->setParent(link);  
           
           const QString cover = map["image"].toMap()["url"].toString();
-          if( !cover.isEmpty() )
+          if( !cover.isEmpty() && CoverCache::instance()->coverPath(stream).isEmpty() )
           {
               QObject* reply = HTTP()->get( QUrl(cover) );
               m_image_requests[reply] = stream;

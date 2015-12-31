@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -26,9 +26,9 @@
 
 #include "models/stream/stream_model.h"
 #include "models/stream/service_dirble.h"
+#include "models/stream/service_favorite.h"
 #include "models/stream/service_radionomy.h"
 #include "models/stream/service_tunein.h"
-#include "models/stream/service_xspf.h"
 
 #include "playqueue/virtual_playqueue.h"
 #include "playqueue/playqueue_model.h"
@@ -55,7 +55,7 @@
 #include <QGraphicsWidget>
 #include <QDrag>
 #include <QColor>
-
+#include <QtGui/QDesktopServices>
 /*
 ********************************************************************************
 *                                                                              *
@@ -86,8 +86,9 @@ void StreamScene::initScene()
     m_services.insert(VIEW::ViewDirble,         new Dirble() );
     m_services.insert(VIEW::ViewRadionomy,      new Radionomy() );
     m_services.insert(VIEW::ViewTuneIn,         new TuneIn() );
-    m_services.insert(VIEW::ViewFavoriteRadio,  new XspfStreams() );
-
+    m_services.insert(VIEW::ViewFavoriteRadio,  new FavoriteStreams() );
+    
+    
     foreach (Service* service, m_services.values() ) {
       connect(service, SIGNAL(stateChanged()), this, SLOT(slot_on_service_state_changed()));
       connect(service, SIGNAL(dataChanged()), this, SLOT(update()));
@@ -100,15 +101,6 @@ void StreamScene::initScene()
     /*  ressources init */
     m_mouseGrabbedItem    = 0;
     m_infoSize            = 0;
-
-    /*  scene actions */
-    m_actions.insert("add_favorite", new QAction(QIcon(":/images/add_32x32.png"), tr("add"),this));
-    m_actions.insert("import_favorite", new QAction(QIcon(":/images/add_32x32.png"), tr("import"),this));
-
-    m_actions.insert("reload", new QAction(QIcon(":/images/rebuild.png"),QString("reload"),this));
-    connect(m_actions.value("reload"), SIGNAL(triggered()), this, SLOT(slot_reload_stream_list()));
-    connect(m_actions.value("add_favorite"), SIGNAL(triggered()), this, SLOT(slot_on_add_stream_clicked()));
-    connect(m_actions.value("import_favorite"), SIGNAL(triggered()), this, SLOT(slot_on_import_stream_clicked()));
 
     /* drag items action */
     ACTIONS()->insert(BROWSER_STREAM_ITEM_MOUSE_MOVE, new QAction(this));
@@ -148,6 +140,24 @@ void StreamScene::initScene()
 *******************************************************************************/
 QList<QAction *> StreamScene::actions() 
 {
+    /*actions are requested on BrowserView::contextMenuEvent */
+    if(m_actions.isEmpty())
+    {
+        /*  scene actions */
+        m_actions.insert("add_favorite", new QAction(QIcon(":/images/add_32x32.png"), tr("add"),this));
+        m_actions.insert("import_favorite", new QAction(QIcon(":/images/add_32x32.png"), tr("import"),this));
+        m_actions.insert("reload", new QAction(QIcon(":/images/rebuild.png"),QString("reload"),this));
+
+        connect(m_actions.value("reload"), SIGNAL(triggered()), this, SLOT(slot_reload_stream_list()));
+        connect(m_actions.value("add_favorite"), SIGNAL(triggered()), this, SLOT(slot_on_add_stream_clicked()));
+        connect(m_actions.value("import_favorite"), SIGNAL(triggered()), this, SLOT(slot_on_import_stream_clicked()));
+    }
+    
+    /* update actions */
+    m_actions.value("add_favorite")->setEnabled( m_services[mode()]->type() == SERVICE::LOCAL);
+    m_actions.value("import_favorite")->setEnabled( m_services[mode()]->type() == SERVICE::LOCAL);
+
+    
     QList<QAction*> list;
     list << m_actions.value("add_favorite") 
          << m_actions.value("import_favorite")
@@ -184,15 +194,23 @@ void StreamScene::setData(const QVariant& data)
 *******************************************************************************/
 void StreamScene::resizeScene()
 {
-    //Debug::debug() << "   [StreamScene] resizeScene";   
-    
-    if(mode() != VIEW::ViewFavoriteRadio) 
+    //Debug::debug() << "   [LocalScene] resizeScene";   
+    int new_item_count = (parentView()->width()/160 > 2) ? parentView()->width()/160 : 2;
+
+    if(item_count != new_item_count)  
     {
-      QWidget *w = qobject_cast<QGraphicsView*> (parentView())->viewport();
-      ui_proxy->setPos(w->width() - 13 - ui_proxy->widget()->width(), 2);
+      populateScene();
     }
+    else
+    {
+      if(mode() != VIEW::ViewFavoriteRadio) 
+      {
+        QWidget *w = qobject_cast<QGraphicsView*> (parentView())->viewport();
+        ui_proxy->setPos(w->width() - 13 - ui_proxy->widget()->width(), 2);
+      }
     
-    update();
+      update();
+    }
 }
 
 /*******************************************************************************
@@ -208,10 +226,6 @@ void StreamScene::populateScene()
       removeItem(ui_proxy);
 
     clear();
-    
-    /* update actions */
-    m_actions.value("add_favorite")->setEnabled( m_services[mode()]->type() == SERVICE::LOCAL);
-    m_actions.value("import_favorite")->setEnabled( m_services[mode()]->type() == SERVICE::LOCAL);
     
     /* handle service state */
     SERVICE::State state = m_services[mode()]->state();
@@ -254,7 +268,9 @@ void StreamScene::populateExtendedStreamScene()
   
     m_infoSize         = 0;
     int Xpos = 20,Ypos = 5;
-
+    int Column    = 0;
+    item_count = (parentView()->width()/160 > 2) ? parentView()->width()/160 : 2;
+    
     const int categoriesHeight = 40;
    
     /*  search field */    
@@ -267,7 +283,21 @@ void StreamScene::populateExtendedStreamScene()
       ui_ex_line_edit->show();
       ui_ex_line_edit->setText( m_services[mode()]->searchTerm() );
     }
-    
+    else
+    {
+      ButtonStateItem* button = new ButtonStateItem();
+      button->setText(m_services[mode()]->rootLink()->name);
+      button->setChecked( m_services[mode()]->activeLink() == m_services[mode()]->rootLink() );
+      QVariant v;
+      v.setValue(static_cast<MEDIA::LinkPtr>(m_services[mode()]->rootLink()));
+      button->setData(v);
+  
+      connect(button, SIGNAL(clicked()), m_services[mode()], SLOT(slot_activate_link()));
+      
+      button->setPos(Xpos ,Ypos );
+      Xpos = Xpos + button->width() + 20;
+      addItem(button);    
+    }
     
     /*--------------------------------------------------*/
     /* link                                             */
@@ -275,17 +305,21 @@ void StreamScene::populateExtendedStreamScene()
     QList<MEDIA::LinkPtr> links = m_services[mode()]->links();
     QString current_category;
     
+    if( mode() == VIEW::ViewFavoriteRadio)
+      current_category = m_services[mode()]->rootLink()->name;
+ 
     foreach(MEDIA::LinkPtr link, links) 
     {
-      if(current_category != link->genre)
+      if( link->parent() && current_category != MEDIA::LinkPtr::staticCast(link->parent())->name)
       {        
         if(Xpos > 20 ) 
           Ypos = Ypos + 50;
         
         /*  new category */
-        current_category = link->genre;
+        current_category = MEDIA::LinkPtr::staticCast(link->parent())->name;
+        
         CategorieGraphicItem *category = new CategorieGraphicItem(qobject_cast<QGraphicsView*> (parentView())->viewport());
-        category->m_name = link->genre;
+        category->m_name = current_category;
         category->setPos(0 , Ypos );
 
         addItem(category);
@@ -293,8 +327,9 @@ void StreamScene::populateExtendedStreamScene()
         Xpos = 20;
       }
 
-      ButtonItem* button = new ButtonItem();
+      ButtonStateItem* button = new ButtonStateItem();
       button->setText(link->name);
+      button->setChecked( link == m_services[mode()]->activeLink() );
       QVariant v;
       v.setValue(static_cast<MEDIA::LinkPtr>(link));
       button->setData(v);
@@ -312,9 +347,12 @@ void StreamScene::populateExtendedStreamScene()
       addItem(button);
     } /* end foreach link */
      
-    if(Xpos > 20 ) 
+    if(Xpos != 0 ) 
+    {
       Ypos = Ypos + 50;
-     
+      Xpos = 0;
+    }
+    
     /*--------------------------------------------------*/
     /* stream list                                      */
     /* -------------------------------------------------*/
@@ -325,6 +363,12 @@ void StreamScene::populateExtendedStreamScene()
 
       if(current_category != m_model->streamAt(i)->genre)
       {        
+        if(Xpos != 0) {
+          Ypos +=170;
+          Xpos = 0;
+          Column=0;
+        }
+          
         /* new category */
         current_category = m_model->streamAt(i)->genre;
         CategorieGraphicItem *category = new CategorieGraphicItem(qobject_cast<QGraphicsView*> (parentView())->viewport());
@@ -335,17 +379,27 @@ void StreamScene::populateExtendedStreamScene()
         Ypos += categoriesHeight;
       }      
 
+      m_infoSize++;
+      
       StreamGraphicItem *stream_item = new StreamGraphicItem();
       stream_item->media = m_model->streamAt(i);
       stream_item->media->isFavorite = (mode() == VIEW::ViewFavoriteRadio);
-      stream_item->setPos( 30, Ypos );
-      stream_item->_width   = parentView()->width()-30-20;
+      stream_item->setPos(4+Xpos, Ypos);
+      addItem( stream_item );
 
-      addItem(stream_item);
-      Ypos += stream_item->height() + 10;
-
-      m_infoSize++;
+      if(Column < (item_count-1)) {
+        Column++;
+        Xpos+=160;
+      }
+      else {
+        Column = 0;
+        Ypos +=170;
+        Xpos=0;
+      }
     }
+
+    if(Xpos != 0)
+        Ypos +=170;
     
     if(m_services[mode()]->hasMoreLink())
     {
@@ -516,6 +570,7 @@ void StreamScene::enqueueSelected(bool is_new_playqueue)
 *******************************************************************************/
 void StreamScene::enqueueStream(bool is_new_playqueue)
 {
+    Debug::debug() << "StreamScene::enqueueStream";
     if(!m_mouseGrabbedItem) return;
 
     if(is_new_playqueue)
@@ -531,14 +586,19 @@ void StreamScene::enqueueStream(bool is_new_playqueue)
     if( MEDIA::isMediaPlayable(streamUrl) )
     {
       Playqueue::instance()->addMediaItem(item->media);
-      return;
     }
-
     /*--------------------------------------------------*/
     /* playlist remote or shoutcast                     */
     /* -------------------------------------------------*/
-    // use playlist task manager to load streams into playqueue    
-    Playqueue::instance()->manager()->playlistAddFile(streamUrl);
+    else
+    {
+      // use playlist task manager to load streams into playqueue    
+      QList<MEDIA::TrackPtr> tracks; 
+      tracks << item->media;
+      
+      //Playqueue::instance()->manager()->playlistAddFile(streamUrl);
+      Playqueue::instance()->manager()->playlistAddMediaItems(tracks);
+    }
 }
 
 /*******************************************************************************
@@ -656,9 +716,21 @@ void StreamScene::slot_contextmenu_triggered(ENUM_ACTION_ITEM_MENU id)
     switch(id)
     {
       case STREAM_PLAY         : playStream();            break;
-      case STREAM_EDIT         : editStream(); break;
+      case STREAM_EDIT         : editStream();            break;
       case STREAM_QUEUE_END    : enqueueStream(false);    break;
       case STREAM_FAVORITE     : updateStreamFavorite();  break;
+      case STREAM_WEBSITE      :
+      {
+          if(m_mouseGrabbedItem) 
+          {
+              StreamGraphicItem *item = static_cast<StreamGraphicItem*>(m_mouseGrabbedItem);
+              
+              if( !item->media->extra["website"].toString().isEmpty() )
+                QDesktopServices::openUrl( QUrl(item->media->extra["website"].toString()) );
+              
+              break;   
+          }
+      }
 
       case SELECTION_PLAY      : playSelected();break;
       case SELECTION_QUEUE_END : enqueueSelected(false);break;
@@ -740,16 +812,16 @@ void StreamScene::keyPressEvent ( QKeyEvent * keyEvent )
 
     if((mode() == VIEW::ViewFavoriteRadio) && (keyEvent->key() == Qt::Key_Delete))
     {
-       XspfStreams* xspfstream = static_cast<XspfStreams*>(m_services[VIEW::ViewFavoriteRadio]);
+       FavoriteStreams* favMngr = static_cast<FavoriteStreams*>(m_services[VIEW::ViewFavoriteRadio]);
       
        foreach(QGraphicsItem* gitem, selectedItems())
        {
           StreamGraphicItem *item = static_cast<StreamGraphicItem*>(gitem);
-          xspfstream->updateItem(item->media);
+          favMngr->updateItem(item->media);
        }
 
-       xspfstream->saveToFile();
-       xspfstream->reload();
+       favMngr->saveToDatabase();
+       favMngr->reload();
        
        keyEvent->accept();
        return;
@@ -821,10 +893,10 @@ void StreamScene::updateStreamFavorite()
     if(!m_mouseGrabbedItem) return;
     StreamGraphicItem *item = static_cast<StreamGraphicItem*>(m_mouseGrabbedItem);
 
-    XspfStreams* xspfstream = static_cast<XspfStreams*>(m_services[VIEW::ViewFavoriteRadio]);
-    xspfstream->updateItem(item->media);
-    xspfstream->saveToFile();
-    xspfstream->reload();
+    FavoriteStreams* favMngr = static_cast<FavoriteStreams*>(m_services[VIEW::ViewFavoriteRadio]);
+    favMngr->updateItem(item->media);
+    favMngr->saveToDatabase();
+    favMngr->reload();
 }
 
 void StreamScene::slot_on_add_stream_clicked()
@@ -843,22 +915,23 @@ void StreamScene::slot_on_add_stream_clicked()
       {
           MEDIA::TrackPtr media = MEDIA::TrackPtr(new MEDIA::Track());
           media->setType(TYPE_STREAM);
-          media->id          = -1;
-          media->url         = url;
-          media->name        = !name.isEmpty() ? name : url ;
-          media->genre       = category;
-          media->isFavorite  = false;
-          media->isPlaying   = false;
-          media->isBroken    = false;
-          media->isPlayed    = false;
-          media->isStopAfter = false;
+          media->id               = -1;
+          media->url              = url;
+          media->extra["station"] = !name.isEmpty() ? name : url ;
+          media->genre            = category;
+          media->isFavorite       = false;
+          media->isPlaying        = false;
+          media->isBroken         = false;
+          media->isPlayed         = false;
+          media->isStopAfter      = false;
 
-          XspfStreams* xspfstream = static_cast<XspfStreams*>(m_services[VIEW::ViewFavoriteRadio]);
-          xspfstream->updateItem(media);
-          xspfstream->saveToFile();
-          xspfstream->reload();
+          FavoriteStreams* favMngr = static_cast<FavoriteStreams*>(m_services[VIEW::ViewFavoriteRadio]);
+          favMngr->updateItem(media);
+          favMngr->saveToDatabase();
+          favMngr->reload();
       }
-      else {
+      else 
+      {
           StatusManager::instance()->startMessage("please fill all requested fields", STATUS::WARNING, 5000);
       }      
     }
@@ -882,13 +955,13 @@ void StreamScene::slot_on_import_stream_clicked()
         QList<MEDIA::TrackPtr> streams = MEDIA::PlaylistFromFile(filename);
     
         /* add to favorite model */
-        XspfStreams* xspfstream = static_cast<XspfStreams*>(m_services[VIEW::ViewFavoriteRadio]);
+        FavoriteStreams* favMngr = static_cast<FavoriteStreams*>(m_services[VIEW::ViewFavoriteRadio]);
 
         foreach(MEDIA::TrackPtr stream, streams)
-          xspfstream->updateItem(stream);
+          favMngr->updateItem(stream);
     
-        xspfstream->saveToFile();
-        xspfstream->reload();    
+        favMngr->saveToDatabase();
+        favMngr->reload();    
     }
 }
 
@@ -904,7 +977,7 @@ void StreamScene::editStream()
 
     AddStreamDialog dialog(this->parentView(),true);
     dialog.setCategory( stream->genre );
-    dialog.setName( stream->name );
+    dialog.setName( stream->extra["station"].toString() );
     dialog.setUrl( stream->url );
     
     if(dialog.exec() == QDialog::Accepted)
@@ -913,14 +986,14 @@ void StreamScene::editStream()
       const QString name     = dialog.name();
       const QString url      = dialog.url();
 
-      stream->url         = url;
-      stream->name        = !name.isEmpty() ? name : url ;
-      stream->genre       = category;
+      stream->url                = url;
+      stream->extra["station"]   = !name.isEmpty() ? name : url ;
+      stream->genre              = category;
 
-      XspfStreams* xspfstream = static_cast<XspfStreams*>(m_services[VIEW::ViewFavoriteRadio]);
+      FavoriteStreams* favMngr = static_cast<FavoriteStreams*>(m_services[VIEW::ViewFavoriteRadio]);
 
-      xspfstream->saveToFile();
-      xspfstream->reload();
+      favMngr->saveToDatabase();
+      favMngr->reload();
     }
 }
 

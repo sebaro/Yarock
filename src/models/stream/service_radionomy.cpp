@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -197,8 +197,6 @@ using namespace htmlcxx;
                  
                    tree<HTML::Node> dom2 = parser.parseTree(content);
                    streamFromHtml(dom2,link);
-                   
-               
             }
         }
     } // main loop on document
@@ -218,7 +216,7 @@ using namespace htmlcxx;
     
     QString href;    
                  
-    tree <HTML::Node>:: iterator it = dom.begin ();
+    tree <HTML::Node>:: iterator it  = dom.begin ();
     tree <HTML::Node>:: iterator end = dom.end ();
     
     for (; it != end; ++it)
@@ -252,9 +250,8 @@ using namespace htmlcxx;
 
                                 MEDIA::LinkPtr link2 = MEDIA::LinkPtr::staticCast( link->addChildren(TYPE_LINK) );
                                 link2->setType(TYPE_LINK);
-                                link2->name = name;
-                                link2->state = int(SERVICE::NO_DATA);
-                                link2->genre = link->name;
+                                link2->name    = name;
+                                link2->state   = int(SERVICE::NO_DATA);
                                 link2->setParent(link);      
                         
                                 link2->url = href;
@@ -272,17 +269,27 @@ void Radionomy::streamFromHtml(tree<htmlcxx::HTML::Node> dom, MEDIA::LinkPtr lin
 {
 using namespace htmlcxx; 
     
-    //Debug::debug() << "streamFromHtml";
+    //Debug::debug() << "##BEGIN streamFromHtml";
     
-    QString name, cover, url;
+    QString name, cover, url, website;
     
     tree <HTML::Node> :: iterator it = dom.begin ();
     tree <HTML::Node> :: iterator end = dom.end ();
     for (; it != end; ++it)
     {
-        if( it->isTag())
+        if( it->isTag() )
         {
-            it->parseAttributes();
+            //Debug::debug() << QString::fromStdString( it->tagName() );
+            if( "a" == it->tagName() )
+            {
+                // this weblink is the radionomy page of the radio
+                it->parseAttributes();
+                QString href = QString::fromStdString(it->attribute("href").second);
+                if( href.contains("/en/radio") )
+                    website = "http://www.radionomy.com" + href;                
+            }
+
+            it->parseAttributes();    
             
             if( "radioName" == QString::fromStdString(it->attribute("class").second) )
             {
@@ -291,13 +298,10 @@ using namespace htmlcxx;
             }
             else if("radioCover" == QString::fromStdString(it->attribute("class").second) )
             {                
-                it->parseAttributes();
                 cover = QString::fromStdString(it->attribute("src").second);
             }
             else if ("radioPlayBtn" == QString::fromStdString(it->attribute("class").second)  )
             {
-                it->parseAttributes();
-                //QRegExp regExp ("(http://)&");
                 QRegExp regExp ("(http://([^&()\"' ]*))");
                 
                 regExp.indexIn(QString::fromStdString(it->attribute("data-play-stream").second));
@@ -309,14 +313,20 @@ using namespace htmlcxx;
     MEDIA::TrackPtr stream = MEDIA::TrackPtr::staticCast( link->addChildren(TYPE_TRACK) );
     stream->setType(TYPE_STREAM);
 
-    stream->name  = name;
-    stream->url   = url;
-    stream->genre = link->name;
+    stream->url               = url;
+    stream->genre             = link->name;
+    stream->extra["station"]  = name;
+    stream->extra["website"]  = website;
+    stream->extra["provider"] = this->name();
+    //stream->extra["bitrate"]  = NO INFO AVAILABLE
     stream->setParent(link);    
     
-    QObject* reply = HTTP()->get( QUrl(cover) );
-    m_image_requests[reply] = stream;
-    connect(reply, SIGNAL(data(QByteArray)), this, SLOT(slot_stream_image_received(QByteArray)));
+    if( !cover.isEmpty() && CoverCache::instance()->coverPath(stream).isEmpty() )
+    {
+        QObject* reply = HTTP()->get( QUrl(cover) );
+        m_image_requests[reply] = stream;
+        connect(reply, SIGNAL(data(QByteArray)), this, SLOT(slot_stream_image_received(QByteArray)));
+    }
 }
 
 

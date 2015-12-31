@@ -15,48 +15,50 @@
 *  this program.  If not, see <http://www.gnu.org/licenses/>.                           *
 *****************************************************************************************/
 
-#ifndef _SERVICE_TUNEIN_H_
-#define _SERVICE_TUNEIN_H_
+#ifndef _FAVORITE_STREAMS_H_
+#define _FAVORITE_STREAMS_H_
 
 #include "service_base.h"
 #include "core/mediaitem/mediaitem.h"
 
-#include <QMap>
-#include <QByteArray>
-#include <QObject>
+#include <QList>
+#include <QString>
 
 /*
 ********************************************************************************
 *                                                                              *
-*    Class TuneIn                                                              *
+*    Class FavoriteStreams                                                     *
 *                                                                              *
 ********************************************************************************
 */
-class TuneIn : public Service
+class FavoriteStreams : public Service
 {
-Q_OBJECT
+Q_OBJECT  
 public:
-    TuneIn();
+    FavoriteStreams();
+    ~FavoriteStreams();
+
     virtual void load();
     virtual void reload();
     virtual QList<MEDIA::TrackPtr> streams();
     virtual QList<MEDIA::LinkPtr> links();
+    
+    void saveToDatabase();
+    void updateItem(MEDIA::TrackPtr stream);
+    
+private:
+    bool findStream(MEDIA::TrackPtr stream);
 
 public slots:
     virtual void slot_activate_link(MEDIA::LinkPtr link=MEDIA::LinkPtr(0));
-   
-private:
-    void browseLink(MEDIA::LinkPtr link);
-    void parseTuneInJsonElement(QVariantMap map, MEDIA::LinkPtr link);
 
 private slots:
-    void slotBrowseLinkDone(QByteArray bytes);
-    void slotBrowseLinkError();
-    void slot_stream_image_received(QByteArray);
-
+    void slot_dbBuilder_stateChange();
+    
 private:
-    QMap<QObject*, MEDIA::LinkPtr>   m_requests;
-    QMap<QObject*, MEDIA::TrackPtr>  m_image_requests;
+    QString                 m_filename;
+    QList<MEDIA::TrackPtr>  m_streams;
 };
 
-#endif // _SERVICE_TUNEIN_H_
+
+#endif // _FAVORITE_STREAMS_H_
