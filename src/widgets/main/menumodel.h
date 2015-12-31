@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -26,13 +26,15 @@
 
 
 enum MenuItemRole {
-    MenuActionRole      = Qt::UserRole + 1,
-    ViewModeRole        = Qt::UserRole + 2,
-    DataRole            = Qt::UserRole + 3
+    GlobalActionRole    = Qt::UserRole + 1,
+    MenuActionRole      = Qt::UserRole + 2,
+    ViewModeRole        = Qt::UserRole + 3,
+    DataRole            = Qt::UserRole + 4,
+    DatabaseChooseRole  = Qt::UserRole + 5
 };
 
 
-class QStandardItem;
+class MenuItem;
 /*
 ********************************************************************************
 *                                                                              *
@@ -51,15 +53,27 @@ Q_OBJECT
 
     static MenuModel* instance() { return INSTANCE; }
     
+    QAction* modelIndexAction( QModelIndex idx );
+        
+    QModelIndex settingsModelIdx();
+    
   private:
+    MenuItem        *m_db_item;
+    MenuItem        *m_settings_item;
+    
+    void populateChooseDatabase();
     void configureMenuAction();
     void populateMenu();
 
   private slots:
     void slot_on_menu_triggered();
+    void slot_dbNameClicked();
+    void slot_database_settingsChanged();
 
   signals :
     void menu_browser_triggered(VIEW::Id, QVariant);
+    void dbNameChanged();
+    void databaseMenuChanged();
 };
 
 Q_DECLARE_METATYPE(QAction*);

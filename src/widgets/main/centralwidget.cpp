@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -90,7 +90,6 @@ CentralWidget::CentralWidget(QWidget *parent) : QFrame(parent)
 
     /* signals connection */
     connect(ACTIONS()->value(APP_SHOW_PLAYQUEUE),   SIGNAL(triggered()), SLOT(slot_show_playlist()));
-    connect(ACTIONS()->value(APP_SHOW_MENU),        SIGNAL(triggered()), SLOT(slot_show_menu()));
 
     /* event filter for splitter synchro */
     right_widget->contentWidget()->installEventFilter(this);
@@ -150,19 +149,18 @@ void CentralWidget::saveState()
 void CentralWidget::restoreState()
 {
     slot_show_playlist();
-    slot_show_menu();
 
     // splitter state
-    if(!SETTINGS()->_splitterState_1.isEmpty()) {
+    if(!SETTINGS()->_splitterState_1.isEmpty()) 
+    {
       m_viewsSplitter_1->restoreState(SETTINGS()->_splitterState_1);
     }
-    else {
+    else 
+    {
       QList<int> list;
       list << 800 << 350;
       m_viewsSplitter_1->setSizes (list); // 1200
     }
-    
-    MenuWidget::instance()->restoreState();
 }
 
 
@@ -179,16 +177,3 @@ void CentralWidget::slot_show_playlist( )
       m_viewsSplitter_1->widget(1)->hide();
 }
 
-
-/*******************************************************************************
-    slot_show_menu (Hide/Show Menu Widget)
-*******************************************************************************/
-void CentralWidget::slot_show_menu( )
-{
-    SETTINGS()->_showMenuPanel = ACTIONS()->value(APP_SHOW_MENU)->isChecked();
-
-    if( SETTINGS()->_showMenuPanel )
-      left_widget->splitter()->widget(0)->show();
-    else
-      left_widget->splitter()->widget(0)->hide();
-}

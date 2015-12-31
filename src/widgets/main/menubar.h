@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -45,6 +45,10 @@ Q_OBJECT
 
   private:
     MenuModel               *m_model;
+    MenuBarButton           *m_settings_button;
+    
+  private slots:
+    void slot_on_database_menu_changed();    
 };
 
 
@@ -63,6 +67,7 @@ Q_OBJECT
     QSize sizeHint() const;
 
     void setMenuWidget(QWidget* w);
+    QWidget* menuWidget() {return m_menu_widget;}
 
   protected:
     void enterEvent(QEvent *e);
@@ -74,10 +79,10 @@ Q_OBJECT
     void activate(bool active);
 
   private:
-    QWidget  *m_menu_widget;
-    bool     m_ismenumouseover;
-    bool     m_ismouseover;
-    QString  m_name;
+    QWidget   *m_menu_widget;
+    bool       m_ismenumouseover;
+    bool       m_ismouseover;
+    QString    m_name;
 };
 
 

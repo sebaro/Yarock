@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -21,7 +21,7 @@
 
 #include "settings.h"
 #include "global_actions.h"
-
+#include "views.h"
 #include "debug.h"
 
 //! Qt
@@ -34,6 +34,8 @@
 #if QT_VERSION >= 0x050000
   #include <QToolButton>
 #endif
+
+
 /*
 ********************************************************************************
 *                                                                              *
@@ -51,14 +53,14 @@ MenuBar::MenuBar(QWidget * parent) : QWidget(parent)
     this->setPalette(palette);
     
     
-    /* set fixed width to 50 (sizepolicy is Fixed) */
+    /* ----- set fixed width to 50 (sizepolicy is Fixed) ----- */
     this->setMinimumWidth(50);
     this->setMaximumWidth(50);
     
     m_model = MenuModel::instance();
-
+    connect(m_model, SIGNAL(databaseMenuChanged()), this, SLOT(slot_on_database_menu_changed()));
     
-    /* create ui */
+    /* ----- create ui ----- */
     QVBoxLayout* layout = new QVBoxLayout(this);
     layout->setSpacing(10);
     layout->setContentsMargins(0, 0, 0, 0);
@@ -75,39 +77,127 @@ MenuBar::MenuBar(QWidget * parent) : QWidget(parent)
       QString text   = idx.data(Qt::DisplayRole).toString();
       QIcon icon     = qvariant_cast<QIcon>(idx.data(Qt::DecorationRole));
 
+
       MenuBarButton *button = new MenuBarButton(icon,text,this);
-
       this->layout()->addWidget(button);
-      
-      //! build menu
-      QWidget* w = new QWidget();
-#if QT_VERSION >= 0x050000
-      w->setWindowFlags(Qt::ToolTip);
-#else
-      w->setWindowFlags(Qt::Popup);
-#endif
+     
 
-      QVBoxLayout* vl0 = new QVBoxLayout(w);
-      vl0->setSpacing(4);
-      vl0->setContentsMargins(12, 12, 12, 12);
+      if( m_model->settingsModelIdx() == idx )
+           m_settings_button = button;
 
+      /* ----- build menu ----- */
+      QMenu* menu = new QMenu();
+      menu->setContentsMargins(8,8,8,8);
+      menu->setStyleSheet(
+           QString("QMenu {icon-size: 32px;border: none;background-color: none;}"
+                   "QMenu::item {padding: 4px 30px 4px 30px;background-color: none;}"
+                   "QMenu::item:selected {color: %1;background-color: %2}"
+                  ).arg(
+                      QApplication::palette().color(QPalette::Normal, QPalette::HighlightedText).name(),
+                      QApplication::palette().color(QPalette::Normal, QPalette::Highlight).name()
+                )
+      );
+
+ #if QT_VERSION >= 0x050000
+      menu->setWindowFlags(Qt::ToolTip);
+ #else
+      menu->setWindowFlags(Qt::Popup /*| Qt::FramelessWindowHint*/);
+ #endif
+    
       for (int j=0; j < m_model->rowCount(idx); j++)
       {
           const QModelIndex childIdx = m_model->index(j, 0, idx);
-          QAction *a = childIdx.data(MenuActionRole).value<QAction*>();
-    
-          QToolButton* tb = new QToolButton(w);
-          tb->setDefaultAction(a);
-          tb->setAutoRaise(true);
-          tb->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-          vl0->addWidget(tb);
-      }
+
+          QAction *a = m_model->modelIndexAction( childIdx );
+
+          if( a ) 
+          {
+             a->setIconVisibleInMenu(true);
+             menu->addAction(a);
+          }
+          else
+          {
+             QMenu* menu2 = menu->addMenu( childIdx.data(Qt::DisplayRole).toString());
+             menu2->setContentsMargins(8,8,8,8);
+             menu2->setStyleSheet(
+                QString("QMenu {icon-size: 32px;border: none;background-color: none;}"
+                        "QMenu::item {padding: 4px 30px 4px 30px;background-color: none;}"
+                        "QMenu::item:selected {color: %1;background-color: %2}"
+                  ).arg(
+                      QApplication::palette().color(QPalette::Normal, QPalette::HighlightedText).name(),
+                      QApplication::palette().color(QPalette::Normal, QPalette::Highlight).name()
+                )
+            );
       
-      button->setMenuWidget( w );
-      w->hide();
+             for (int k=0; k < m_model->rowCount(childIdx); k++)
+             {
+                const QModelIndex childIdx2 = m_model->index(k, 0, childIdx);
+
+                QAction *a = m_model->modelIndexAction( childIdx2 );
+
+                if( a ) 
+                {
+                   a->setIconVisibleInMenu(true);
+                   menu2->addAction(a);
+                }
+             }
+          }
+      }
+
+      button->setMenuWidget( menu );
     }
 
     layout->addItem(new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::MinimumExpanding));    
+}
+
+
+void MenuBar::slot_on_database_menu_changed()
+{
+    QMenu *menu = qobject_cast<QMenu*>(m_settings_button->menuWidget());
+    
+    menu->hide();
+
+    foreach (QWidget * child, menu->findChildren<QWidget*>()) 
+        delete child;
+
+    for (int j=0; j < m_model->rowCount( m_model->settingsModelIdx() ); j++)
+    {
+          const QModelIndex childIdx = m_model->index(j, 0, m_model->settingsModelIdx());
+
+          QAction *a = m_model->modelIndexAction( childIdx );
+
+          if( a ) 
+          {
+            menu->addAction( a );
+          }
+          else
+          {
+             QMenu* menu2 = menu->addMenu( childIdx.data(Qt::DisplayRole).toString());
+             menu2->setContentsMargins(8,8,8,8);
+
+             menu2->setStyleSheet(
+                QString("QMenu {icon-size: 32px;border: none;background-color: none;}"
+                        "QMenu::item {padding: 4px 30px 4px 30px;background-color: none;}"
+                        "QMenu::item:selected {color: %1;background-color: %2}"
+                  ).arg(
+                      QApplication::palette().color(QPalette::Normal, QPalette::HighlightedText).name(),
+                      QApplication::palette().color(QPalette::Normal, QPalette::Highlight).name()
+                )
+            );
+             
+             for (int k=0; k < m_model->rowCount(childIdx); k++)
+             {
+                 const QModelIndex childIdx2 = m_model->index(k, 0, childIdx);
+                 
+                 QAction *a = m_model->modelIndexAction( childIdx2 );
+
+                 if( a )
+                 {
+                     menu2->addAction ( a );
+                 }
+             }
+          }
+    }
 }
 
 
@@ -129,7 +219,7 @@ MenuBarButton::MenuBarButton( const QIcon &icon, const QString &text, QWidget *p
 
     this->setStyleSheet(
       QString ("QPushButton { border: none;min-width: 40px;min-height: 32px;}" \
-              "QPushButton:checked { background-color: %1 ;border: none;min-width: 40px;min-height: 32px;}" ) 
+               "QPushButton:checked { background-color: %1 ;border: none;min-width: 40px;min-height: 32px;}" ) 
           .arg( QApplication::palette().color( QPalette::Window ).name() )
     );
     m_name = text;
@@ -154,18 +244,29 @@ bool MenuBarButton::eventFilter(QObject* obj, QEvent* event)
       switch (event->type()) 
       {
         case QEvent::Leave:
-        {
-          m_ismenumouseover = false;
-
-          QRect widgetRect = this->geometry();
-          widgetRect.moveTopLeft(this->parentWidget()->mapToGlobal(widgetRect.topLeft()));
-          widgetRect.adjust(0,0, 10, 0);
-    
-          if (!widgetRect.contains(QCursor::pos())) {
-            if(!m_ismouseover)
-              activate(false);
+        {            
+          m_ismenumouseover = false;  
+          foreach (QWidget * child, m_menu_widget->findChildren<QWidget*>()) {
+            if( QMenu* submenu = qobject_cast<QMenu*>(child) )
+            {
+                if(submenu->isVisible()) {
+                    m_ismenumouseover = true;
+                }
+                    
+            }
           }
           
+          if( !m_ismenumouseover )
+          {
+              QRect widgetRect = this->geometry();
+              widgetRect.moveTopLeft(this->parentWidget()->mapToGlobal(widgetRect.topLeft()));
+              widgetRect.adjust(0,0, 10, 0);
+              
+              if (!widgetRect.contains(QCursor::pos())) {
+                  if(!m_ismouseover)
+                      activate(false);
+              }
+          }     
           return true;
         }
         break;
@@ -242,7 +343,6 @@ void MenuBarButton::activate(bool active)
       m_menu_widget->move(location);
       m_menu_widget->show();
       m_menu_widget->raise();
-       
     }
 }
 
