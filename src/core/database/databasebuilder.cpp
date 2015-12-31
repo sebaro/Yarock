@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -32,7 +32,7 @@
 #include <QImage>
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlQuery>
-
+#include <QtSql/QSqlError>
 /*
 ********************************************************************************
 *                                                                              *
@@ -43,6 +43,7 @@
 DataBaseBuilder::DataBaseBuilder()
 {
     m_exit            = false;
+    m_do_rebuild      = false;
 }
 
 /* ---------------------------------------------------------------------------*/
@@ -50,7 +51,7 @@ DataBaseBuilder::DataBaseBuilder()
 /* ---------------------------------------------------------------------------*/
 QStringList DataBaseBuilder::filesFromFilesystem(const QString& directory)
 {
-    qDebug() << "  [DataBaseBuilder] filesFromFilesystem";
+    Debug::debug() << "  [DataBaseBuilder] filesFromFilesystem";
   
     QStringList files;
     const QStringList filters = QStringList()
@@ -76,7 +77,7 @@ QStringList DataBaseBuilder::filesFromFilesystem(const QString& directory)
 /* ---------------------------------------------------------------------------*/
 QHash<QString,uint> DataBaseBuilder::filesFromDatabase(const QString& directory)
 {  
-    qDebug() << "  [DataBaseBuilder] filesFromDatabase";
+    Debug::debug() << "  [DataBaseBuilder] filesFromDatabase";
   
     QHash<QString,uint> files;
   
@@ -106,11 +107,13 @@ QHash<QString,uint> DataBaseBuilder::filesFromDatabase(const QString& directory)
 }
 
 /* ---------------------------------------------------------------------------*/
-/* DataBaseBuilder::rebuildFolder                                             */
+/* DataBaseBuilder::updateFolder                                              */
 /*      -> User entry point : add folder to parse                             */
 /* ---------------------------------------------------------------------------*/
-void DataBaseBuilder::rebuildFolder(QStringList folder)
+void DataBaseBuilder::updateFolder(QStringList folder, bool doRebuild/*=false*/)
 {
+    m_do_rebuild = doRebuild;
+    
     m_db_dirs.clear();
     m_fs_dirs.clear();
 
@@ -121,9 +124,10 @@ void DataBaseBuilder::rebuildFolder(QStringList folder)
 /* ---------------------------------------------------------------------------*/
 /* DataBaseBuilder::run                                                       */
 /* ---------------------------------------------------------------------------*/
-void DataBaseBuilder::run() {
+void DataBaseBuilder::run()
+{
 
-    qDebug() << "  [DataBaseBuilder] run()";
+    Debug::debug() << "  [DataBaseBuilder] run()";
     InfoSystem::instance()->activateCache( false );
     
     connect( InfoSystem::instance(),
@@ -136,8 +140,10 @@ void DataBaseBuilder::run() {
     /* This makes signals and slots work */
     exec();
 
-    qDebug() << "  [DataBaseBuilder] run() exited";
+    Debug::debug() << "  [DataBaseBuilder] run() exited";
     InfoSystem::instance()->activateCache( true );
+    
+    disconnect( InfoSystem::instance(),0, this, 0);
 }
 
 
@@ -148,6 +154,7 @@ void DataBaseBuilder::doScan()
 {
     int idxCount   = 0;
     int fileCount  = 0;
+    m_requests_ids.clear();
 
     if ( m_input_folders.isEmpty() || !Database::instance()->open() ) {
       emit buildingFinished();
@@ -409,7 +416,7 @@ int DataBaseBuilder::insertDirectory(const QString & path)
 /* ---------------------------------------------------------------------------*/
 /* DataBaseBuilder::insertTrack                                               */
 /*     -> MEDIA::FromLocalFile(fname) to get track metadata                   */
-/*     -> track->coverName() to get hash of covername                         */
+/*     -> track->coverHash() to get hash of covername                         */
 /* ---------------------------------------------------------------------------*/  
 void DataBaseBuilder::insertTrack(const QString& filename)
 {
@@ -419,41 +426,55 @@ void DataBaseBuilder::insertTrack(const QString& filename)
 
     uint mtime = QFileInfo(filename).lastModified().toTime_t();
 
-    //! storage localtion
-    QString storageLocation = UTIL::CONFIGDIR + "/albums/";
-
-    //! Read tag from URL file (with taglib)
+    /* ---------- Read tag from URL file (with taglib) ---------- */
     int disc_number = 0;
     MEDIA::TrackPtr track = MEDIA::FromLocalFile(fname, &disc_number);
-    QString  cover_name   = track->coverName();
 
-    //! DIRECTORIES part in database
+    /* ---------- DIRECTORIES part in database ---------- */
     int id_dir = insertDirectory( QFileInfo(filename).canonicalPath() );
     
-    //! GENRE part in database
+    /* ---------- GENRE part in database ---------- */
     int id_genre = DatabaseCmd::insertGenre( track->genre );
 
-    //! YEAR part in database
+    /* ---------- YEAR part in database ---------- */
     int id_year = DatabaseCmd::insertYear( track->year );
 
-    //! ARTIST part in database
+    /* ---------- ARTIST part in database ---------- */
     bool isNewArtists = !(DatabaseCmd::isArtistExists(track->artist));
     
     int id_artist = DatabaseCmd::insertArtist( track->artist );
 
     if( isNewArtists )
-      loadArtistImage( track->artist );
+    {
+        fetchArtistImage( track );
+    }
     
-    //! ALBUM part in database
-    int id_album = DatabaseCmd::insertAlbum(track->album, id_artist,track->year,disc_number);
+    /* ---------- ALBUM part in database ---------- */
+    bool isNewAlbum = !(DatabaseCmd::isAlbumExists(track->album, id_artist));
 
-    //! mise à jour du cover
-    storeCoverArt(storageLocation + cover_name, track->url);
+    int id_album = DatabaseCmd::insertAlbum(track->album,id_artist,track->year,disc_number);
 
-    if( Database::instance()->param()._option_check_cover )
-      recupCoverArtFromDir(storageLocation + cover_name, track->url);
-
-    //! TRACK part in database
+    if( isNewAlbum )
+    {
+        /* remove previous coverart as we do a complete rebuild */
+        if (m_do_rebuild)
+        {            
+            QFile file( UTIL::CONFIGDIR + "/albums/" + track->coverHash() );
+            if(file.exists()) 
+                file.remove();
+        }
+        
+        /* cover update */
+        bool ok = saveAlbumCoverFromFile( track );
+        
+        if( !ok && Database::instance()->param()._option_check_cover )
+          ok = saveAlbumCoverFromDirectory( track );
+        
+        if( !ok )
+          fetchAlbumImage( track );
+    }
+    
+    /* ---------- TRACK part in database ---------- */
     QSqlQuery q("", *m_sqlDb);
     q.prepare("SELECT `id` FROM `tracks` WHERE `filename`=?;");
     q.addBindValue( fname );
@@ -462,11 +483,13 @@ void DataBaseBuilder::insertTrack(const QString& filename)
     if ( !q.next() ) 
     {
       Debug::debug() << "  [DataBaseBuilder] insert track :" << track->title;
-      
-      q.prepare("INSERT INTO `tracks`(`filename`,`trackname`,`number`,`length`," \
+
+      q.prepare("INSERT INTO `tracks`(`filename`,`trackname`,`number`,`length`,"    \
                     "`artist_id`,`album_id`,`year_id`,`genre_id`,`dir_id`,`mtime`," \
-                    "`playcount`,`rating`,`albumgain`,`albumpeakgain`,`trackgain`,`trackpeakgain`) " \
-                    "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
+                    "`playcount`,`rating`,`bitrate`,`samplerate`,`bpm`,"            \
+                    "`albumgain`,`albumpeakgain`,`trackgain`,`trackpeakgain`) "     \
+                    " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
+
       q.addBindValue(fname);
       q.addBindValue(track->title);
       q.addBindValue(track->num);
@@ -481,21 +504,26 @@ void DataBaseBuilder::insertTrack(const QString& filename)
       q.addBindValue(mtime);
       q.addBindValue(track->playcount);
       q.addBindValue(track->rating);
+      q.addBindValue(track->extra["bitrate"]);
+      q.addBindValue(track->extra["samplerate"]);
+      q.addBindValue(track->extra["bpm"]);
       q.addBindValue(track->albumGain);
       q.addBindValue(track->albumPeak);
       q.addBindValue(track->trackGain);
       q.addBindValue(track->trackPeak);
       q.exec();      
+      //Debug::debug() << q.lastError();
     }
     else
     {
       Debug::debug() << "  [DataBaseBuilder] update track :" << track->title;
       
       int id = q.value(0).toInt();
-      q.prepare("UPDATE `tracks` SET `trackname`=?,`number`=?,`length`=?," \
+      q.prepare("UPDATE `tracks` SET `trackname`=?,`number`=?,`length`=?,"                      \
                     "`artist_id`=?,`album_id`=?,`year_id`=?,`genre_id`=?,`dir_id`=?,`mtime`=?," \
-                    "`playcount`=?,`rating`=?,`albumgain`=?,`albumpeakgain`=?,`trackgain`=?,`trackpeakgain`=? " \
-                    "WHERE `id`=?;");
+                    "`playcount`=?,`rating`=?,`bitrate`=?,`samplerate`=?,`bpm`=?,"              \
+                    "`albumgain`=?,`albumpeakgain`=?,`trackgain`=?,`trackpeakgain`=?"           \
+                    " WHERE `id`=?;");
 
       q.addBindValue(track->title);
       q.addBindValue(track->num);
@@ -510,13 +538,17 @@ void DataBaseBuilder::insertTrack(const QString& filename)
       q.addBindValue(mtime);
       q.addBindValue(track->playcount);
       q.addBindValue(track->rating);
+      q.addBindValue(track->extra["bitrate"]);
+      q.addBindValue(track->extra["samplerate"]);
+      q.addBindValue(track->extra["bpm"]);      
       q.addBindValue(track->albumGain);
       q.addBindValue(track->albumPeak);
       q.addBindValue(track->trackGain);
       q.addBindValue(track->trackPeak);
       
       q.addBindValue( id );
-      q.exec();     
+      q.exec();
+      //Debug::debug() << q.lastError();
     }
 
     // delete media from memory
@@ -634,36 +666,43 @@ void DataBaseBuilder::removePlaylist(const QString& filename)
 
 
 /* ---------------------------------------------------------------------------*/
-/* DataBaseBuilder::storeCoverArt                                             */
+/* DataBaseBuilder::saveAlbumCoverFromFile                                    */
 /* ---------------------------------------------------------------------------*/
-void DataBaseBuilder::storeCoverArt(const QString& coverFilePath, const QString& trackFilename)
+bool DataBaseBuilder::saveAlbumCoverFromFile(MEDIA::TrackPtr track)
 {
-    //Debug::debug() << "  [DataBaseBuilder] storeCoverArt " << coverFilePath;
+    //Debug::debug() << "  [DataBaseBuilder] saveAlbumCoverFromFile";
+
+    const QString path = UTIL::CONFIGDIR + "/albums/" + track->coverHash();
 
     //! check if cover art already exist
-    QFile file(coverFilePath);
-    if(file.exists()) return;
+    if( QFile(path).exists() )
+        return true;
 
     //! get cover image from file
-    QImage image = MEDIA::LoadImageFromFile(trackFilename);
-    if( !image.isNull() )
-      image.save(coverFilePath, "png", -1);
+    QImage image = MEDIA::LoadImageFromFile(track->url);
+    if( !image.isNull() ) 
+    {
+      image.save(path, "png", -1);
+      return true;
+    }
+    return false;
 }
 
 /* ---------------------------------------------------------------------------*/
-/* DataBaseBuilder::recupCoverArtFromDir                                      */
+/* DataBaseBuilder::saveAlbumCoverFromDirectory                               */
 /* ---------------------------------------------------------------------------*/
-void DataBaseBuilder::recupCoverArtFromDir(const QString& coverFilePath, const QString& trackFilename)
+bool DataBaseBuilder::saveAlbumCoverFromDirectory(MEDIA::TrackPtr track)
 {
-    //Debug::debug() << "  [DataBaseBuilder] recupCoverArtFromDir " << coverFilePath;
-
-    //! check if coverArt already exist
-    QFile file(coverFilePath);
-    if(file.exists()) return ;
+    //Debug::debug() << "  [DataBaseBuilder] saveAlbumCoverFromDirectory";
+    const QString path = UTIL::CONFIGDIR + "/albums/" + track->coverHash();
+    
+    //! check if cover art already exist
+    if( QFile(path).exists() )
+        return true;
 
     //! search album art into file source directory
     const QStringList imageFilters = QStringList() << "*.jpg" << "*.png";
-    QDir sourceDir(QFileInfo(trackFilename).absolutePath());
+    QDir sourceDir(QFileInfo(track->url).absolutePath());
 
     sourceDir.setNameFilters(imageFilters);
 
@@ -672,31 +711,55 @@ void DataBaseBuilder::recupCoverArtFromDir(const QString& coverFilePath, const Q
     while(!entryList.isEmpty()) {
       //! I take the first one (the biggest one)
       //!WARNING simplification WARNING
-      QString file = QFileInfo(trackFilename).absolutePath() + "/" + entryList.takeFirst();
+      QString file = QFileInfo(track->url).absolutePath() + "/" + entryList.takeFirst();
       QImage image = QImage(file);
       //! check if not null image (occur when file is KO)
       if(!image.isNull()) {
         image = image.scaled(QSize(120,120), Qt::KeepAspectRatio, Qt::SmoothTransformation);
         //! check if save is OK
-        if(image.save(coverFilePath, "png", -1))
-          break;
+        if(image.save(path, "png", -1))
+          return true;
       }
     }
+    
+    return false;
 }
 
-
 /* ---------------------------------------------------------------------------*/
-/* DataBaseBuilder::loadArtistImage                                           */
+/* DataBaseBuilder::fetchAlbumImage                                           */
 /* ---------------------------------------------------------------------------*/
-void DataBaseBuilder::loadArtistImage(const QString& artist)
+void DataBaseBuilder::fetchAlbumImage(MEDIA::TrackPtr track)
 {
-    QString path = QString(UTIL::CONFIGDIR + "/artists/" + MEDIA::artistHash( artist ));
+    //Debug::debug() << "  [DataBaseBuilder] fetchAlbumImage";    
+    const QString path = QString(UTIL::CONFIGDIR + "/albums/" + track->coverHash());
 
     if(QFile(path).exists()) 
       return;
     
     INFO::InfoStringHash hash;
-    hash["artist"]     = artist;
+    hash["artist"]     = track->artist;
+    hash["album"]      = track->album;
+        
+    INFO::InfoRequestData request = INFO::InfoRequestData(INFO::InfoAlbumCoverArt, hash);
+      
+    m_requests_ids << request.requestId;         
+    InfoSystem::instance()->getInfo( request );
+}
+
+
+
+/* ---------------------------------------------------------------------------*/
+/* DataBaseBuilder::fetchArtistImage                                          */
+/* ---------------------------------------------------------------------------*/
+void DataBaseBuilder::fetchArtistImage(MEDIA::TrackPtr track)
+{
+    QString path = QString(UTIL::CONFIGDIR + "/artists/" + MEDIA::artistHash( track->artist ));
+
+    if(QFile(path).exists()) 
+      return;
+    
+    INFO::InfoStringHash hash;
+    hash["artist"]     = track->artist;
 
     INFO::InfoRequestData request = INFO::InfoRequestData(INFO::InfoArtistImages, hash);
       
@@ -709,38 +772,37 @@ void DataBaseBuilder::loadArtistImage(const QString& artist)
 /* ---------------------------------------------------------------------------*/
 void DataBaseBuilder::slot_systeminfo_received(INFO::InfoRequestData request, QVariant output)
 {
-    Debug::debug() << "  [DataBaseBuilder] slot_on_image_received";
-    
     if(!m_requests_ids.contains(request.requestId))
       return;
 
     m_requests_ids.removeOne(request.requestId);
 
-    INFO::InfoStringHash input = request.data.value< INFO::InfoStringHash >();
-
-    QImage image = QImage::fromData(output.toByteArray());
+    /* get request info */
+    INFO::InfoStringHash hash = request.data.value< INFO::InfoStringHash >();
     
-    int ITEM_HEIGHT = 120;
-    int ITEM_WIDTH  = 120;
-    int MAX_SIZE    = 250;
-
-    const int width = image.size().width();
-    const int height = image.size().height();
-    if (width > MAX_SIZE || height > MAX_SIZE)
-      image = image.scaled(MAX_SIZE, MAX_SIZE, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-
-    int xOffset = 0;
-    int wDiff = image.width() - ITEM_WIDTH;
-    if (wDiff > 0) xOffset = wDiff / 2;
-    int yOffset = 0;
-    int hDiff = image.height() - ITEM_HEIGHT;
-    if (hDiff > 0) yOffset = hDiff / 4;
-    image = image.copy(xOffset, yOffset, ITEM_WIDTH, ITEM_HEIGHT);
+    if ( request.type == INFO::InfoArtistImages )
+    {
+        QImage image = UTIL::artistImageFromByteArray( output.toByteArray() );
     
-    QString path = QString(UTIL::CONFIGDIR + "/artists/" + MEDIA::artistHash( input["artist"] ));
+        QString path = QString(UTIL::CONFIGDIR + "/artists/" + MEDIA::artistHash( hash["artist"] ));
     
-    image.save(path, "png", -1);
+        image.save(path, "png", -1);
+    }
+    else if ( request.type == INFO::InfoAlbumCoverArt )
+    {     
+        QString path = QString(UTIL::CONFIGDIR + "/albums/" + MEDIA::coverHash(hash["artist"], hash["album"]));
+        
+        if(QFile(path).exists()) 
+          return;
+    
+        QImage image = QImage::fromData( output.toByteArray() );
+
+        if( !image.isNull() )
+        {
+          image = image.scaled(QSize(120, 120), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        
+          image.save(path, "png", -1);
+        }
+    }
 }
-
-
 

@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -18,6 +18,7 @@
 #define _DATABASE_BUILDER_H_
 
 #include "infosystem/info_system.h"
+#include "mediaitem/mediaitem.h"
 
 #include <QThread>
 #include <QObject>
@@ -44,7 +45,7 @@ class DataBaseBuilder :  public QThread
   public:
     DataBaseBuilder();
     void setExit(bool b) {m_exit = b;}
-    void rebuildFolder(QStringList folder);
+    void updateFolder(QStringList folder, bool doRebuild=false);
 
   protected:
     void run();
@@ -67,9 +68,11 @@ class DataBaseBuilder :  public QThread
     void insertPlaylist(const QString& filename);
     void removePlaylist(const QString& filename);
 
-    void storeCoverArt(const QString& coverFilePath, const QString& trackFilename);
-    void recupCoverArtFromDir(const QString& coverFilePath, const QString& trackFilename);
-    void loadArtistImage(const QString& artist);
+    /* cover & image stuff */
+    bool saveAlbumCoverFromFile(MEDIA::TrackPtr track);
+    bool saveAlbumCoverFromDirectory(MEDIA::TrackPtr track);
+    void fetchAlbumImage(MEDIA::TrackPtr track);
+    void fetchArtistImage(MEDIA::TrackPtr track);
 
     int insertDirectory(const QString & path);
     int insertGenre(const QString & genre);
@@ -87,6 +90,7 @@ class DataBaseBuilder :  public QThread
     QStringList          m_input_folders;
 
     bool                 m_exit;
+    bool                 m_do_rebuild;
 
     QSqlDatabase        *m_sqlDb;
 
