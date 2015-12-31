@@ -15,6 +15,7 @@
         <file>images/media-stop.png</file>
         <file>images/settings-48x48.png</file>
         <file>images/view-artist.png</file>
+        <file>images/view-artist_18x18.png</file>
         <file>images/genre.png</file>
         <file>images/rebuild.png</file>
         <file>images/edit-48x48.png</file>
@@ -36,6 +37,7 @@
         <file>images/media-playlist-110x110.png</file>
         <file>images/media-playlist-48x48.png</file>
         <file>images/track-48x48.png</file>
+        <file>images/track-18x18.png</file>
         <file>images/folder-48x48.png</file>
         <file>images/folder-music-48x48.png</file>
         <file>images/add_32x32.png</file>
@@ -69,5 +71,9 @@
         <file>images/jump_to_32x32.png</file>
         <file>images/menu_48x48.png</file>
         <file>images/files-18x18.png</file>
+        <file>images/go-previous_48x48.png</file>
+        <file>images/go-next_48x48.png</file>
+        <file>images/go-up_48x48.png</file>
+        <file>images/go-down_48x48.png</file>
     </qresource>
 </RCC>
