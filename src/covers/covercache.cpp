@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -90,9 +90,11 @@ QPixmap CoverCache::image( MEDIA::ArtistPtr artist, QList<MEDIA::AlbumPtr> album
         return pixmap;
 
       /* no pixmap in cache */
-      pixmap = artist->pixmap();
+      const QString path = UTIL::CONFIGDIR + "/artists/" + artist->imageHash();
+      
+      pixmap = QPixmap( path );
 
-      if(!pixmap.isNull())
+      if( !pixmap.isNull() )
       {
         m_keys[artist] = QPixmapCache::insert( pixmap );
       }
@@ -121,9 +123,11 @@ QPixmap CoverCache::cover( const MEDIA::AlbumPtr album )
       return pixmap;
 
     /* no pixmap in cache */
-    pixmap = album->pixmap();
+    const QString path = UTIL::CONFIGDIR + "/albums/" + album->coverHash();
+   
+    pixmap = QPixmap( path );
 
-    if(!pixmap.isNull())
+    if( !pixmap.isNull() )
     {
         m_keys[album] = QPixmapCache::insert( pixmap );
     }
@@ -150,14 +154,14 @@ QPixmap CoverCache::cover(const MEDIA::TrackPtr track )
 
     if(track->type() != TYPE_TRACK)
     {
-        QString s_url = track->url;
+        QString station = track->extra["station"].toString();
 
         /* check if cover exist for stream */
         QPixmapCache::Key key = m_keys.value( track );
         if( key != QPixmapCache::Key() && QPixmapCache::find( key, &pixmap ) )
           return pixmap;
     
-        QString path = UTIL::CONFIGDIR + "/radio/" + MEDIA::urlHash( s_url );
+        QString path = UTIL::CONFIGDIR + "/radio/" + MEDIA::urlHash( station );
         if( QFile(path).exists() ) {
             m_keys[track] = QPixmapCache::insert( QPixmap(path) );
             return QPixmap(path);
@@ -171,7 +175,7 @@ QPixmap CoverCache::cover(const MEDIA::TrackPtr track )
             return pixmap;
     
           QString path = UTIL::CONFIGDIR + "/radio/" + MEDIA::urlHash(
-               MEDIA::TrackPtr::staticCast(track->parent())->url 
+               MEDIA::TrackPtr::staticCast(track->parent())->extra["station"].toString() 
           );
           if( QFile(path).exists() ){
             m_keys[track] = QPixmapCache::insert( QPixmap(path) );
@@ -205,7 +209,7 @@ QPixmap CoverCache::cover(const MEDIA::TrackPtr track )
         }
 
         //! 2: check cover path in /<config fir>/albums/
-        QString path = UTIL::CONFIGDIR + "/albums/" + track->coverName();
+        QString path = UTIL::CONFIGDIR + "/albums/" + track->coverHash();
         if( QFile(path).exists() )
           return QPixmap(path);
 
@@ -221,12 +225,12 @@ QPixmap CoverCache::cover(const MEDIA::TrackPtr track )
 /* ---------------------------------------------------------------------------*/
 /* CoverCache::coverPath for Tracks                                           */
 /* ---------------------------------------------------------------------------*/
-QString CoverCache::coverPath( MEDIA::TrackPtr track)
+QString CoverCache::coverPath( MEDIA::TrackPtr track )
 {
     QString path;
     if(track->type() != TYPE_TRACK)
     {
-        path = UTIL::CONFIGDIR + "/radio/" + MEDIA::urlHash( track->url );
+        path = UTIL::CONFIGDIR + "/radio/" + MEDIA::urlHash( track->extra["station"].toString() );
 
         if( QFile(path).exists() )
           return path;
@@ -235,7 +239,7 @@ QString CoverCache::coverPath( MEDIA::TrackPtr track)
         if(track->parent() && track->parent()->type() == TYPE_STREAM)
         {
           path = UTIL::CONFIGDIR + "/radio/" + MEDIA::urlHash(
-               MEDIA::TrackPtr::staticCast(track->parent())->url 
+               MEDIA::TrackPtr::staticCast(track->parent())->extra["station"].toString() 
           );
           
           if( QFile(path).exists() )
@@ -244,7 +248,7 @@ QString CoverCache::coverPath( MEDIA::TrackPtr track)
     }
     else
     {
-        path = UTIL::CONFIGDIR + "/albums/" + track->coverName();
+        path = UTIL::CONFIGDIR + "/albums/" + track->coverHash();
 
         if( QFile(path).exists() )
           return path;
@@ -267,32 +271,6 @@ void CoverCache::invalidate( const MEDIA::MediaPtr media )
 
 
 /* ---------------------------------------------------------------------------*/
-/* CoverCache::saveStreamParentCover                                          */
-/* ---------------------------------------------------------------------------*/
-void CoverCache::saveStreamParentCover(MEDIA::TrackPtr track)
-{
-    if (track->type() != TYPE_STREAM)
-      return;
-
-    QString s_url = track->url;
-    QString streamPath = UTIL::CONFIGDIR + "/radio/" + MEDIA::urlHash( s_url );
-    if( QFile(streamPath).exists() )
-      return;
-
-    /* check if parent have cover, need to BE a stream !!! not a playlist ITEM*/
-    if(track->parent() && track->parent()->type() == TYPE_STREAM)
-    {
-      QString parentPath = UTIL::CONFIGDIR + "/radio/" + MEDIA::urlHash(
-              MEDIA::TrackPtr::staticCast(track->parent())->url 
-          );
-
-      if( QFile(parentPath).exists() )
-        QFile(parentPath).copy(streamPath);
-    }
-}
-
-
-/* ---------------------------------------------------------------------------*/
 /* CoverCache::addStreamCover                                                 */
 /* ---------------------------------------------------------------------------*/
 void CoverCache::addStreamCover( const MEDIA::TrackPtr stream, QImage image)
@@ -311,7 +289,9 @@ void CoverCache::addStreamCover( const MEDIA::TrackPtr stream, QImage image)
     
     m_keys[stream] = QPixmapCache::insert( pixTemp );
     
-    pixTemp.toImage().save(UTIL::CONFIGDIR + "/radio/" + MEDIA::urlHash( stream->url ), "png", -1);
+    pixTemp.toImage().save(
+        UTIL::CONFIGDIR + "/radio/" + MEDIA::urlHash( stream->extra["station"].toString() ), 
+        "png", -1);
 }
 /* ---------------------------------------------------------------------------*/
 /* CoverCache::get_default_pixmap                                             */
