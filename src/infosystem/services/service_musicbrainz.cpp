@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -54,7 +54,7 @@ void ServiceMusicBrainz::getInfo( INFO::InfoRequestData requestData )
 
 void ServiceMusicBrainz::fetchInfo( INFO::InfoRequestData requestData )
 {
-    //Debug::debug() << "    [ServiceMusicBrainz] fetchInfo";
+    Debug::debug() << "    [ServiceMusicBrainz] fetchInfo";
 
     switch ( requestData.type )
     {
@@ -76,7 +76,7 @@ void ServiceMusicBrainz::fetchInfo( INFO::InfoRequestData requestData )
 /*------------------------------------------------------------------------------*/
 void ServiceMusicBrainz::fetch_artist_releases( INFO::InfoRequestData requestData )
 {
-    //Debug::debug() << "    [ServiceMusicBrainz] fetch_artist_releases";
+    Debug::debug() << "    [ServiceMusicBrainz] fetch_artist_releases";
     
     INFO::InfoStringHash hash = requestData.data.value< INFO::InfoStringHash >();
 
@@ -110,7 +110,7 @@ void ServiceMusicBrainz::fetch_artist_releases( INFO::InfoRequestData requestDat
 
 void ServiceMusicBrainz::slot_parse_artist_release_response(QByteArray bytes)
 {
-    //Debug::debug() << "    [ServiceMusicBrainz] slot_parse_artist_release_response";
+    Debug::debug() << "    [ServiceMusicBrainz] slot_parse_artist_release_response";
 
     /*-------------------------------------------------*/
     /* Get id from sender reply                        */
@@ -130,7 +130,7 @@ void ServiceMusicBrainz::slot_parse_artist_release_response(QByteArray bytes)
     doc.setContent( bytes );
     
     QDomNodeList releaseGroupsNL = doc.elementsByTagName( "release" );
-    
+
     if ( releaseGroupsNL.isEmpty() )
     {
         Debug::warning() << Q_FUNC_INFO << " releaseGroupsNL EMPTY";
@@ -138,7 +138,6 @@ void ServiceMusicBrainz::slot_parse_artist_release_response(QByteArray bytes)
         emit info( request, QVariant() );
         return;
     }
-    
 
     if( request.type == INFO::InfoArtistReleases )
     {
@@ -153,8 +152,7 @@ void ServiceMusicBrainz::slot_parse_artist_release_response(QByteArray bytes)
             QString a = releaseGroupsNL.at(i).firstChildElement( "artist-credit" ).firstChildElement( "name-credit" ).firstChildElement( "artist" ).firstChildElement( "name" ).text();
             QString id = releaseGroupsNL.at(i).firstChildElement( "artist-credit" ).firstChildElement( "name-credit" ).firstChildElement( "artist" ).attribute( "id" );
             
-
-            if ( !albums.contains( groupTitle ) && id == popularId && a.normalized( QString::NormalizationForm_KC ) == input["artist"].normalized( QString::NormalizationForm_KC ) )
+            if ( !albums.contains( groupTitle ) && (id == popularId) )
             {
                 output_release["artist"]  = input.value("artist");
                 output_release["album"]   = groupTitle;
@@ -209,7 +207,7 @@ void ServiceMusicBrainz::fetch_album_info( INFO::InfoRequestData requestData )
 
 void ServiceMusicBrainz::slot_parse_album_response(QByteArray bytes)
 {
-    //Debug::debug() << "    [ServiceMusicBrainz] slot_parse_album_response";
+    Debug::debug() << "    [ServiceMusicBrainz] slot_parse_album_response";
 
     /*-------------------------------------------------*/
     /* Get id from sender reply                        */
@@ -342,7 +340,7 @@ void ServiceMusicBrainz::fetch_image_from_mbid( INFO::InfoRequestData requestDat
         return;
     }
     
-    QUrl url = QUrl( QString("http://coverartarchive.org/release/%1/front").arg(hash["#mbid"]) );
+    QUrl url = QUrl( QString("http://coverartarchive.org/release/%1/front-250").arg(hash["#mbid"]) );
     
     QObject* reply = HTTP()->get( url );
     m_requests[reply] = requestData;

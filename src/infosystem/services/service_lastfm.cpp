@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -41,13 +41,14 @@ ServiceLastFm::ServiceLastFm() : InfoService()
 {
     Debug::debug() << "    [ServiceLastFm] start";
 
-    setName("lastfm");
+    setName("Last.fm");
     
     m_supportedInfoTypes << INFO::InfoAlbumCoverArt
                          << INFO::InfoAlbumInfo
                          << INFO::InfoAlbumSongs     
                          << INFO::InfoArtistImages
-                         << INFO::InfoArtistSimilars;                    
+                         << INFO::InfoArtistSimilars
+                         << INFO::InfoArtistTerms;
 }
 
 
@@ -71,6 +72,7 @@ void ServiceLastFm::fetchInfo( INFO::InfoRequestData request )
         case INFO::InfoAlbumInfo           : fetch_album_info( request );break;
         case INFO::InfoArtistImages        : fetch_artist_info( request );break;
         case INFO::InfoArtistSimilars      : fetch_artist_similar( request );break;
+        case INFO::InfoArtistTerms         : fetch_artist_tags( request );break;
           
         default:
         {
@@ -190,7 +192,7 @@ void ServiceLastFm::slot_parse_album_info(QByteArray bytes)
     else if (request.type == INFO::InfoAlbumInfo || request.type == INFO::InfoAlbumSongs) 
     {
         QVariantMap output;
-        output["site"] = "lastfm";
+        output["site"] = "Last.fm";
 
         if (album_map.contains("wiki"))  {
             QVariantMap wiki_map =  qvariant_cast<QVariantMap>(album_map.value("wiki"));
@@ -406,6 +408,80 @@ void ServiceLastFm::slot_parse_artist_similar( QByteArray bytes )
       }
     }
 }
+
+
+void ServiceLastFm::fetch_artist_tags( INFO::InfoRequestData request )
+{
+    //Debug::debug() << "    [ServiceLastFm] fetch_artist_tags";
+    INFO::InfoStringHash hash = request.data.value< INFO::InfoStringHash >();
+    
+    QUrl url("http://ws.audioscrobbler.com/2.0/");
+    UTIL::urlAddQueryItem( url, "method", "artist.gettoptags");
+    UTIL::urlAddQueryItem( url, "api_key", LASTFM::API_KEY);
+    UTIL::urlAddQueryItem( url, "artist", hash["artist"]);
+    UTIL::urlAddQueryItem( url, "format", "json");
+    
+    QObject *reply = HTTP()->get(url);
+    m_requests[reply] = request;        
+    connect(reply, SIGNAL(data(QByteArray)), this, SLOT(slot_parse_artist_tags(QByteArray)));
+    connect(reply, SIGNAL(error(QNetworkReply*)), this, SLOT(slot_request_error()));    
+}
+
+
+void ServiceLastFm::slot_parse_artist_tags( QByteArray bytes )
+{
+    //Debug::debug() << "    [ServiceLastFm] slot_parse_artist_tags";
+
+    /*-------------------------------------------------*/
+    /* Get id from sender reply                        */
+    /* ------------------------------------------------*/
+    QObject* reply = qobject_cast<QObject*>(sender());
+    if (!reply || !m_requests.contains(reply)) {
+      return;
+    }
+    
+    INFO::InfoRequestData request =  m_requests.take(reply);
+
+    /*-------------------------------------------------*/
+    /* Parse response                                  */
+    /* ------------------------------------------------*/
+#if QT_VERSION >= 0x050000
+    bool ok = true;
+    QVariantMap reply_map = QJsonDocument::fromJson(bytes).toVariant().toMap();
+#else
+    QJson::Parser parser;
+    bool ok;
+    QVariantMap reply_map = parser.parse(bytes, &ok).toMap();
+#endif
+    
+    if (!ok || !reply_map.contains("toptags")) {
+      Debug::debug() << "    [ServiceLastFm] no artist tags found";
+      return;
+    }    
+    
+    if ( request.type == INFO::InfoArtistTerms )
+    {
+       QVariantMap vmap =  qvariant_cast<QVariantMap>(reply_map.value("toptags"));
+
+       QVariantList tags;
+       foreach (const QVariant& tag, vmap.value("tag").toList())
+       {           
+           QVariantMap tagMap = tag.toMap();
+
+           int score = tagMap["count"].toInt();
+
+           if(score > 75 )
+             tags <<  tagMap["name"];
+
+           if(tags.count() >= 4)
+             break;
+       }
+
+       emit info(request, tags);
+    }
+}
+
+
 
 
 

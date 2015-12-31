@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -47,12 +47,15 @@ protected slots:
 private:
     void fetch_artist_info( INFO::InfoRequestData request );
     void fetch_artist_similar( INFO::InfoRequestData request );
+    void fetch_artist_tags( INFO::InfoRequestData request );
     void fetch_album_info( INFO::InfoRequestData request );
     void fetch_image_uri( INFO::InfoRequestData request );
 
 private slots:    
     void slot_parse_artist_info( QByteArray bytes );
     void slot_parse_artist_similar( QByteArray bytes );
+    void slot_parse_artist_tags( QByteArray bytes );
+
     void slot_parse_album_info(QByteArray);
     void slot_image_received(QByteArray);
     void slot_request_error();

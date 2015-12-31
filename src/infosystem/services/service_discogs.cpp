@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -31,8 +31,10 @@ API
   http://www.discogs.com/help/api
   http://www.discogs.com/developers/
 */
-namespace DISCOGS {
-static const QString API_KEY = "91734dd989";
+namespace DISCOGS 
+{
+  static const QString CONSUMER_KEY    = "fEZThNHAqwIQvPFLFPzN";
+  static const QString CONSUMER_SECRET = "TlISpgmeqAUVaKhizZcLdbndqYgZVass";
 }
 
 /*
@@ -100,8 +102,9 @@ void ServiceDiscogs::fetch_artist_releases( INFO::InfoRequestData requestData )
         return;
     }
     
-    QUrl url("http://api.discogs.com/database/search");
-    // UTIL::urlAddQueryItem( url, "api_key", DISCOGS::API_KEY );
+    QUrl url("https://api.discogs.com/database/search");
+    UTIL::urlAddQueryItem( url, "key", DISCOGS::CONSUMER_KEY );
+    UTIL::urlAddQueryItem( url, "secret", DISCOGS::CONSUMER_SECRET );
     UTIL::urlAddQueryItem( url, "page", QString::number( 1 ) );
     UTIL::urlAddQueryItem( url, "q", hash["artist"] );
     UTIL::urlAddQueryItem( url, "type", "artist" );
@@ -160,8 +163,6 @@ void ServiceDiscogs::slot_parse_artist_search_response(QByteArray bytes)
       }
     }
 }
-
-
 
 
 void ServiceDiscogs::slot_parse_artist_release_response(QByteArray bytes)

@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -211,7 +211,7 @@ void ServiceEchonest::fetch_artist_image(INFO::InfoRequestData request)
 
         UTIL::urlAddQueryItem( url, QLatin1String("api_key"), Echonest::API_KEY );
         UTIL::urlAddQueryItem( url, QLatin1String("name"), QString::fromLatin1( Echonest::escapeSpacesAndPluses( hash["artist"] ) ) );
-        UTIL::urlAddQueryItem( url, QLatin1String("results"), QString::number( 1 ) );
+        UTIL::urlAddQueryItem( url, QLatin1String("results"), QString::number( 4 ) );
         UTIL::urlAddQueryItem( url, QLatin1String("format"), QLatin1String("json") );
               
         QObject *reply = HTTP()->get(url);
@@ -258,6 +258,11 @@ void ServiceEchonest::slot_get_artist_images(QByteArray bytes)
             /* skip wrong image send by lastfm */
             if( url.toString().contains("incorrartist") )
               continue;
+            
+            /* skip wrong image send by myspace */
+            if( url.toString().contains("myspacecdn") )
+              continue;
+            
             
             QObject* reply = HTTP()->get( url );
             m_requests[reply] = request;
