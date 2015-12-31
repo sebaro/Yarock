@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -17,7 +17,7 @@
 
 // local
 #include "volumebutton.h"
-#include "widgets/audiocontrols.h"
+#include "widgets/playertoolbar/audiocontrols.h"
 
 #include "settings.h"
 #include "core/player/engine.h"
@@ -38,10 +38,9 @@
 *                                                                              *
 ********************************************************************************
 */
-VolumeButton::VolumeButton(QWidget *parent) : QToolButton( parent )
+VolumeButton::VolumeButton(QWidget *parent) : ToolButtonBase( parent )
 {
     this->setIconSize( QSize( 26, 26 ) );
-    this->setAutoRaise(true);
     this->setIcon(QIcon(":/images/volume-icon.png"));
     this->setPopupMode (QToolButton::InstantPopup);
     
@@ -74,28 +73,31 @@ VolumeButton::VolumeButton(QWidget *parent) : QToolButton( parent )
     /* ---- layout ---- */
     QHBoxLayout * mainBox = new QHBoxLayout(this);
     mainBox->setSpacing(4);
-    mainBox->setContentsMargins(4,0,4,0);
+    mainBox->setContentsMargins(8,8,8,8);
     mainBox->addWidget(mute_button, 0, Qt::AlignVCenter | Qt::AlignLeft );
     mainBox->addWidget(m_slider, 0, Qt::AlignVCenter | Qt::AlignLeft );
     mainBox->addWidget(m_volume_label,0, Qt::AlignVCenter | Qt::AlignLeft );
 
 
-    QWidget* main_widget = new QWidget(this);
-    main_widget->setLayout(mainBox);
-    main_widget->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::Minimum );
+    m_popup = new QWidget(this);
+    m_popup->setLayout(mainBox);
+    m_popup->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::Minimum );
 
     QWidgetAction * sliderActionWidget = new QWidgetAction( this );
-    sliderActionWidget->setDefaultWidget( main_widget );
+    sliderActionWidget->setDefaultWidget( m_popup );
 
+    QPalette palette = QApplication::palette();
+    palette.setColor(QPalette::Background, palette.color(QPalette::Base));
+    m_popup->setPalette(palette);
+    
     /* ---- popup menu ---- */
     m_menu = new QMenu(this);
     m_menu->addAction( sliderActionWidget );
     m_menu->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::Minimum );
-    
-    QPalette palette = QApplication::palette();
-    palette.setColor(QPalette::Background, palette.color(QPalette::Base));
-    m_menu->setPalette(palette);
-    
+    m_menu->setWindowFlags(Qt::Popup);
+    m_menu->setStyleSheet( QString ("QMenu {background-color: none;border: none;}") );
+
+      
     /* ---- init  ---- */
     Engine::instance()->setMuted(false);
     
@@ -114,9 +116,13 @@ VolumeButton::VolumeButton(QWidget *parent) : QToolButton( parent )
 
 void VolumeButton::slot_show_menu()
 {
-    if(!m_menu->isVisible()) {
-      QPoint location = this->mapToGlobal(QPoint(this->width() + 4,-4));
+    m_popup->setMinimumHeight( qobject_cast<QWidget*>(this->parent())->height() - 10 );
+
+    if( !m_menu->isVisible() )
+    {
+      QPoint location = this->mapToGlobal(QPoint(this->width() + 4,(this->height()-m_popup->height())/2));
       m_menu->popup(location);
+      m_menu->updateGeometry();
       m_menu->show();
     }
 }

@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -20,11 +20,11 @@
 
 // Qt
 #include <QWidget>
-#include <QToolButton>
 #include <QLabel>
 #include <QSlider>
 #include <QMenu>
 
+#include "toolbuttonbase.h"
 
 /*
 ********************************************************************************
@@ -33,7 +33,7 @@
 *                                                                              *
 ********************************************************************************
 */
-class VolumeButton : public QToolButton
+class VolumeButton : public ToolButtonBase
 {
 Q_OBJECT
   public:
@@ -49,6 +49,7 @@ Q_OBJECT
     QLabel       *m_volume_label;
     QSlider      *m_slider;
     QMenu        *m_menu;
+    QWidget      *m_popup;
 };
 
 #endif // _VOLUME_BUTTON_H_

@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -20,9 +20,10 @@
 #include "volumebutton.h"
 #include "nowplayingpopup.h"
 #include "audiocontrols.h"
+#include "seekslider.h"
+#include "toolbuttonbase.h"
 
 #include "widgets/spacer.h"
-#include "widgets/seekslider.h"
 #include "covers/covercache.h"
 
 #include "settings.h"
@@ -49,6 +50,7 @@ PlayerToolBar::PlayerToolBar(QWidget *parent) : QWidget( parent )
 
     this->setObjectName(QString::fromUtf8("playerToolBar"));
     this->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
+
     
     QPalette palette = QApplication::palette();
     palette.setColor(QPalette::Background, palette.color(QPalette::Base));
@@ -90,14 +92,24 @@ PlayerToolBar::PlayerToolBar(QWidget *parent) : QWidget( parent )
       hl1->addWidget( ui_image );
       hl1->addLayout( vl1 );
 
+      /* popup & now playing widget */
+      m_popup = 0;
+      
       m_now_playing_widget = new QWidget( this );
       m_now_playing_widget->setLayout( hl1 );
-      m_now_playing_widget->setContextMenuPolicy(Qt::CustomContextMenu);
       m_now_playing_widget->setMinimumHeight(60);
+      m_now_playing_widget->installEventFilter(this);
+      m_now_playing_widget->setFocusPolicy( Qt::ClickFocus);
       
-      connect(m_now_playing_widget, SIGNAL(customContextMenuRequested(const QPoint &)),this, SLOT(slot_nowplaying_clicked()));    
-
-      m_now_playing_menu = 0;
+      QColor color = SETTINGS()->_baseColor;
+      qreal saturation = color.saturationF();
+      saturation *= 0.5;
+      color.setHsvF( color.hueF(), saturation, color.valueF(), color.alphaF() );
+        
+      m_now_playing_widget->setStyleSheet(
+          QString("QWidget::focus { border: none; background-color:%1;}")
+          .arg(color.name())
+        ); 
     
     /* -- time track position -- */
       QFont font = QApplication::font();
@@ -143,30 +155,25 @@ PlayerToolBar::PlayerToolBar(QWidget *parent) : QWidget( parent )
 
     
     /* -- ToolButton creation -- */
-    QToolButton* ui_prev_button = new QToolButton(this);
+    ToolButtonBase* ui_prev_button = new ToolButtonBase(this);
     ui_prev_button->setDefaultAction(ACTIONS()->value(ENGINE_PLAY_PREV));
     ui_prev_button->setIconSize( QSize( 32, 32 ) );
-    ui_prev_button->setAutoRaise(true);
     
-    QToolButton* ui_next_button = new QToolButton(this);
+    ToolButtonBase* ui_next_button = new ToolButtonBase(this);
     ui_next_button->setDefaultAction(ACTIONS()->value(ENGINE_PLAY_NEXT));
     ui_next_button->setIconSize( QSize( 32, 32 ) );
-    ui_next_button->setAutoRaise(true);
 
-    QToolButton* ui_play_button = new QToolButton(this);
+    ToolButtonBase* ui_play_button = new ToolButtonBase(this);
     ui_play_button->setDefaultAction(ACTIONS()->value(ENGINE_PLAY));
     ui_play_button->setIconSize( QSize( 32, 32 ) );
-    ui_play_button->setAutoRaise(true);
 
-    QToolButton* ui_stop_button = new QToolButton(this);
+    ToolButtonBase* ui_stop_button = new ToolButtonBase(this);
     ui_stop_button->setDefaultAction(ACTIONS()->value(ENGINE_STOP));
     ui_stop_button->setIconSize( QSize( 32, 32 ) );
-    ui_stop_button->setAutoRaise(true);
 
-    QToolButton* ui_equalizer_button = new QToolButton(this);
+    ToolButtonBase* ui_equalizer_button = new ToolButtonBase(this);
     ui_equalizer_button->setDefaultAction(ACTIONS()->value(ENGINE_AUDIO_EQ));
     ui_equalizer_button->setIconSize( QSize( 32, 32 ) );
-    ui_equalizer_button->setAutoRaise(true);
     
  
     /* -- tool button layout -- */
@@ -198,7 +205,6 @@ PlayerToolBar::PlayerToolBar(QWidget *parent) : QWidget( parent )
       layout->addWidget(new SeekSlider(this));
       layout->addLayout(gl);
     
-    
     /* -- signals connection -- */
     connect(this->m_player, SIGNAL(mediaTick(qint64)), this, SLOT(slot_update_time_position(qint64)));
     connect(this->m_player, SIGNAL(mediaMetaDataChanged()), this, SLOT(slot_update_track_playing_info()));
@@ -220,37 +226,49 @@ void PlayerToolBar::clear()
     m_separator->hide();
 }
 
-void PlayerToolBar::slot_nowplaying_clicked()
-{
-    Debug::debug() << "      [PlayerToolBar] slot_nowplaying_clicked";
-    
-    if(m_player->state() != ENGINE::STOPPED && m_player->playingTrack())
-    {
-        if( !m_now_playing_menu )
-            m_now_playing_menu = new QMenu();
-        
-        /* delete action_widget */
-        m_now_playing_menu->clear();
-        
-        /* create action_widget */
-        NowPlayingPopup* popup = new NowPlayingPopup(this);
-        
-        QWidgetAction * wa = new QWidgetAction( m_now_playing_menu );
-        wa->setDefaultWidget( popup );   
-            
-        m_now_playing_menu->addAction( wa );
-            
-            
-        popup->updateWidget();        
-        
-        //Debug::debug() << "    [NowPlayingPopup] slot_show_menu **** popup->height() " << popup->height();
-        //Debug::debug() << "    [NowPlayingPopup] slot_show_menu **** m_now_playing_menu->height() " << m_now_playing_menu->height();
 
-        QPoint p = m_now_playing_widget->geometry().topLeft() - QPoint( 0, 140);
-            
-        m_now_playing_menu->exec( this->mapToGlobal(p) );
+bool PlayerToolBar::eventFilter(QObject* obj, QEvent* event)
+{
+    //Debug::debug() << "      [PlayerToolBar] eventFilter";
+
+    QWidget *m = qobject_cast<QWidget*>(obj);
+        
+    if (m && (m == m_now_playing_widget) )
+    {
+        if (event->type() == QEvent::Enter)
+        {
+             if(m_player->state() != ENGINE::STOPPED && m_player->playingTrack()) 
+             {
+                 m_now_playing_widget->setCursor(Qt::PointingHandCursor);
+                 m_now_playing_widget->setFocus();
+             }
+             
+             m_now_playing_widget->update();
+        }
+        else if (event->type() == QEvent::Leave)
+        {
+           m_now_playing_widget->clearFocus();
+           m_now_playing_widget->unsetCursor();
+           m_now_playing_widget->update();
+        }
+        else if (event->type() == QEvent::MouseButtonPress)
+        {
+            if(m_player->state() != ENGINE::STOPPED && m_player->playingTrack())
+            {
+                if( !m_popup )
+                    m_popup = new NowPlayingPopup(this);
+                
+                m_popup->updateWidget();
+                m_now_playing_widget->clearFocus();
+            }
+
+            return true;
+        }
     }
+
+    return QObject::eventFilter (obj, event);
 }
+
 
 
 void PlayerToolBar::slot_update_track_playing_info()
@@ -261,7 +279,7 @@ void PlayerToolBar::slot_update_track_playing_info()
     /* update now playing widget */     
     if(m_player->state() != ENGINE::STOPPED && track)
     {
-        /* update total time for current track */
+        /* ----- update total time for current track ----- */
         slot_update_total_time( m_player->currentTotalTime() );
 
         if( m_player->state() == ENGINE::PAUSED )
@@ -274,15 +292,15 @@ void PlayerToolBar::slot_update_track_playing_info()
         // Debug::debug() << "## Now playing URL   :" << track->url;
         // Debug::debug() << "## Now playing GENRE :" << track->genre;
 
-        /* update image */
+        /* ----- update image ----- */
         QPixmap pix = CoverCache::instance()->cover(track);
         QPixmap newpix = pix.scaled(QSize(60,60), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);      
         ui_image->setPixmap( newpix );
 
-        /* update labels title/album/artist */
+        /* ----- update tracks title/album/artist ----- */
         QString title_or_url = track->title.isEmpty() ? track->url : track->title;
         if(track->type() == TYPE_STREAM)
-            title_or_url = track->title.isEmpty() ? track->name : track->title;
+            title_or_url = track->title.isEmpty() ? track->extra["station"].toString() : track->title;
 
         const int width = m_now_playing_widget->width() - 70;
 
@@ -295,10 +313,17 @@ void PlayerToolBar::slot_update_track_playing_info()
         clippedText = QFontMetrics(ui_label_album->font()).elidedText(album, Qt::ElideRight, width);
 
         ui_label_album->setText ( clippedText );
+        
+        /* ----- update now playing popup */
+        if(m_popup && m_popup->isVisible())
+            m_popup->updateWidget();
     }
     else
     {
         this->clear();
+        /* ----- update now playing popup */
+        if(m_popup && m_popup->isVisible())
+            m_popup->hide();
     }
 }
 

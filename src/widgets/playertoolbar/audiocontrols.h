@@ -15,53 +15,71 @@
 *  this program.  If not, see <http://www.gnu.org/licenses/>.                           *
 *****************************************************************************************/
 
-#ifndef _PLAYER_TOOLBAR_H_
-#define _PLAYER_TOOLBAR_H_
+#ifndef _AUDIO_CONTROLS_H_
+#define _AUDIO_CONTROLS_H_
 
-// Qt
-#include <QWidget>
 #include <QToolButton>
-#include <QLabel>
-#include <QResizeEvent>
+#include <QWidget>
 
-class NowPlayingPopup;
+#include "toolbuttonbase.h"
+
 /*
 ********************************************************************************
 *                                                                              *
-*    Class PlayerToolBar                                                       *
+*    Class RepeatControl                                                       *
 *                                                                              *
 ********************************************************************************
 */
-class EngineBase;
-class PlayerToolBar : public QWidget
+class RepeatControl : public ToolButtonBase
 {
 Q_OBJECT
-public:
-    PlayerToolBar(QWidget *parent);
+  public:
+    RepeatControl( QWidget *);
+    static RepeatControl         *INSTANCE;
+    static RepeatControl* instance() { return INSTANCE; }
 
-private:
-    EngineBase       *m_player;
+    void setState(int intState);
+    int getState() {return (int)m_state;}
 
-    NowPlayingPopup  *m_popup;
-    QWidget          *m_now_playing_widget;
-    
-    QLabel           *ui_image;
-    QLabel           *ui_label_title;    
-    QLabel           *ui_label_album;    
-    
-    QLabel           *m_currentTime;
-    QLabel           *m_totalTime;
-    QLabel           *m_separator;
-    QLabel           *m_pauseState;
+  private:
+    enum RepeatMode {RepeatOff = 0,RepeatTrack = 1, RepeatAll = 2 };
+    RepeatMode   m_state;
 
-private :
-    void clear();
-    bool eventFilter(QObject *obj, QEvent *ev);
+  private slots:
+    void onButtonClicked();
 
-private slots:
-    void slot_update_track_playing_info();
-    void slot_update_time_position(qint64);
-    void slot_update_total_time(qint64);
+  signals:
+    void repeatStateChange(int);
 };
 
-#endif // _PLAYER_TOOLBAR_H_
+/*
+********************************************************************************
+*                                                                              *
+*    Class ShuffleControl                                                      *
+*                                                                              *
+********************************************************************************
+*/
+class ShuffleControl : public ToolButtonBase
+{
+Q_OBJECT
+  public:
+    ShuffleControl( QWidget *);
+    static ShuffleControl         *INSTANCE;
+    static ShuffleControl* instance() { return INSTANCE; }
+
+    void setState(int intState);
+    int getState() {return (int)m_state;}
+
+  private:
+    enum ShuffleMode {ShuffleOff = 0 ,ShuffleOn = 1};
+    ShuffleMode     m_state;
+
+  private slots:
+    void onButtonClicked();
+
+  signals:
+    void shuffleStateChange(int);
+};
+
+#endif // _AUDIO_CONTROLS_H_
+

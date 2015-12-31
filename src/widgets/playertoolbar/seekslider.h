@@ -15,53 +15,48 @@
 *  this program.  If not, see <http://www.gnu.org/licenses/>.                           *
 *****************************************************************************************/
 
-#ifndef _PLAYER_TOOLBAR_H_
-#define _PLAYER_TOOLBAR_H_
+#ifndef _SEEKSLIDER_H_
+#define _SEEKSLIDER_H_
 
-// Qt
-#include <QWidget>
-#include <QToolButton>
-#include <QLabel>
-#include <QResizeEvent>
+#include <QProgressBar>
+#include <QMouseEvent>
 
-class NowPlayingPopup;
+class SeekSliderPopup;
 /*
 ********************************************************************************
 *                                                                              *
-*    Class PlayerToolBar                                                       *
+*    Class SeekSlider                                                          *
 *                                                                              *
 ********************************************************************************
 */
-class EngineBase;
-class PlayerToolBar : public QWidget
+class SeekSlider : public QProgressBar
 {
 Q_OBJECT
-public:
-    PlayerToolBar(QWidget *parent);
+  public:
+    explicit SeekSlider(QWidget *parent = 0);
 
-private:
-    EngineBase       *m_player;
+  protected:
+    void mousePressEvent(QMouseEvent* event);
+    void mouseReleaseEvent(QMouseEvent* event);
+    void mouseMoveEvent(QMouseEvent* event);
+    void enterEvent(QEvent*);
+    void leaveEvent(QEvent*);
+  
+  
+  private :
+    void seek(int);
+    void stop();
 
-    NowPlayingPopup  *m_popup;
-    QWidget          *m_now_playing_widget;
-    
-    QLabel           *ui_image;
-    QLabel           *ui_label_title;    
-    QLabel           *ui_label_album;    
-    
-    QLabel           *m_currentTime;
-    QLabel           *m_totalTime;
-    QLabel           *m_separator;
-    QLabel           *m_pauseState;
-
-private :
-    void clear();
-    bool eventFilter(QObject *obj, QEvent *ev);
-
-private slots:
-    void slot_update_track_playing_info();
-    void slot_update_time_position(qint64);
-    void slot_update_total_time(qint64);
+  private slots:
+    void slot_stateChanged();
+    void slot_tick(qint64);
+    void slot_length(qint64);
+  
+  private:
+    bool        m_enable;
+    bool        m_ticking;
+    int         m_mouse_hover_sec;
+    SeekSliderPopup*   m_popup;
 };
 
-#endif // _PLAYER_TOOLBAR_H_
+#endif // _SEEKSLIDER_H_
