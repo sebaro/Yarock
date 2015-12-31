@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2015 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -55,9 +55,9 @@
 
 #define NumberToASFAttribute(x) TagLib::ASF::Attribute(QStringToTaglibString(QString::number(x)))
 
-const char* kMP4_FMPS_Rating_ID = "----:com.apple.iTunes:FMPS_Rating";
+const char* kMP4_FMPS_Rating_ID    = "----:com.apple.iTunes:FMPS_Rating";
 const char* kMP4_FMPS_Playcount_ID = "----:com.apple.iTunes:FMPS_Playcount";
-const char* kMP4_FMPS_Score_ID = "----:com.apple.iTunes:FMPS_Rating_Amarok_Score";
+const char* kMP4_FMPS_Score_ID     = "----:com.apple.iTunes:FMPS_Rating_Amarok_Score";
 
 /*
 ********************************************************************************
@@ -203,8 +203,12 @@ static void readID3v2Tags(TagLib::ID3v2::Tag *tag, MEDIA::TrackPtr track, QStrin
     if ( !map["TPOS"].isEmpty() )
         s_disc = TaglibStringToQString(map["TPOS"].front()->toString());
 
-    if ( !map["TPE2"].isEmpty() )
+    if ( !map["TPE2"].isEmpty() ) // non-standard: Apple, Microsoft
         track->artist = TaglibStringToQString( map["TPE2"].front()->toString() );
+
+    if ( !map["TBPM"].isEmpty() )
+        track->extra["bpm"] = TaglibStringToQString(map["TBPM"].front()->toString()).trimmed().toFloat();
+
 
     /* read FMPS frames */
     for (int i=0 ; i < map["TXXX"].size() ; ++i) 
@@ -337,20 +341,17 @@ static void readOggTags(TagLib::Ogg::XiphComment *tag, MEDIA::TrackPtr track, QS
         track->artist = TaglibStringToQString( map["ALBUM ARTIST"].front() );
     }
 
+    if ( !map["BPM"].isEmpty() )
+        track->extra["bpm"] = TaglibStringToQString( map["BPM"].front() ).trimmed().toFloat();
+  
     if (!map["DISCNUMBER"].isEmpty() )
-    {
         s_disc = TaglibStringToQString( map["DISCNUMBER"].front() );
-    }
     
     if (!map["FMPS_RATING"].isEmpty() && track->rating <= 0)
-    {
         track->rating = TaglibStringToQString( map["FMPS_RATING"].front() ).toFloat();
-    }
 
     if (!map["FMPS_PLAYCOUNT"].isEmpty() && track->playcount <= 0)
-    {
         track->playcount = TaglibStringToQString( map["FMPS_PLAYCOUNT"].front() ).toFloat();
-    }
     
     /* get replay gain */
     if ( !map["REPLAYGAIN_TRACK_GAIN"].isEmpty() )
@@ -503,8 +504,11 @@ void readFile(MEDIA::TrackPtr track, const QString& url, int* p_disc)
 
     /* duration reading */
     TagLib::AudioProperties *audioProperties = fileref.audioProperties();
-    if (audioProperties)
-        track->duration   = audioProperties->length(); // Returns the length of the file in seconds
+    if (audioProperties) {
+        track->duration            = audioProperties->length(); // Returns the length of the file in seconds
+        track->extra["bitrate"]    = audioProperties->bitrate();
+        track->extra["samplerate"] = audioProperties->sampleRate();
+    }
 
 
     /* read tags */
@@ -560,19 +564,24 @@ void readFile(MEDIA::TrackPtr track, const QString& url, int* p_disc)
       }
     }
     
-    /* post traitement */
+    /* ----- post traitement ----- */
     if ( track->title.isEmpty() )
-      track->title = track->name;    
-    
+      track->title = QFileInfo(url).baseName();
+
     if( track->artist.isEmpty() )
       track->artist = QObject::tr("unknown artist");
-    
+
     if( track->album.isEmpty() )
       track->album  = QObject::tr("unknown album");
-    
+
     if( track->genre.isEmpty() )
       track->genre  = QObject::tr("unknown genre");
-    
+
+    if( track->extra["bitrate"].toInt() < 0 )
+      track->extra["bitrate"] = 0;
+
+    if( track->extra["samplerate"].toInt() < 0 )
+      track->extra["samplerate"] = 0;
 }
 
 
