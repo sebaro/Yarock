@@ -54,8 +54,12 @@ VolumeButton::VolumeButton(QWidget *parent) : ToolButtonBase( parent )
     /* ---- volume slider ---- */
     m_slider = new QSlider();
     m_slider->setOrientation(Qt::Horizontal);
-    m_slider->setMaximum(100);
-    m_slider->setRange(0, 100);
+    
+    int maxVolume = Engine::instance()->maxVolume();
+
+    m_slider->setMaximum(maxVolume);
+    m_slider->setRange(0, maxVolume);
+    
     m_slider->setPageStep(5);
     m_slider->setSingleStep(1);
     m_slider->setMinimumWidth( 120 );
