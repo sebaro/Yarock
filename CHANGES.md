@@ -2,6 +2,18 @@
 Yarock changes
 ---------------------------------------------------------------------------------
 
+#### 1.1.6  - PUBLIC RELEASE - october 2016
+---------------------------------------------------------------------------------
+  - New    : Add Opus audio file support [#1539942]
+  - New    : Enable maximum volume level to 150 % (VLC/MPV engine)
+  - New    : Add drag and drop from playqueue to playlist to add tracks to playlist
+  - New    : Add option to enable/disable shorcuts [#1543410]
+  - BugFix : Fix closing app with active systray icon [#1627840]
+  - BugFix : Allow media keys working when current song info panel is displayed [#1624532]
+  - BugFix : Fix wrong player stop notification [#1539912]
+  - BugFix : Translations fix
+
+
 #### 1.1.5  - PUBLIC RELEASE - december 2015
 ---------------------------------------------------------------------------------
   - New    : Default audio engine is VLC (phonon/MPV still available)

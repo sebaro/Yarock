@@ -1,7 +1,8 @@
 
 About
 ----------------------------------------------------------------------------------------------
-Yarock is a modern looking music player, packed with features, that doesn’t depend on any specific desktop environment. Yarock is designed to provide an easy and pretty music browser based on cover art. Yarock is easy to build with a minimal set of dependancies, and offers the choose of differents audio back-end.
+Yarock is a modern looking music player, packed with features, that doesn’t depend on any specific desktop environment. 
+Yarock is designed to provide an easy and pretty music browser based on cover art. Yarock is easy to build with a minimal set of dependancies, and offers the choose of differents audio back-end.
 
   * Website : http://seb-apps.github.io/yarock/
   * Bugreport: https://bugs.launchpad.net/yarock
@@ -17,7 +18,7 @@ Features
   * Manage favorites item (album, artist)
   * Play music directly from collection or playqueue
   * Simple playqueue
-  * Smart playlist generator       
+  * Smart playlist generator
   * Support mp3,Ogg Vorbis,flac music files (depending on audio engine)
   * Support load/save playlist file (m3u, pls, xspf)
   * Play radio stream (tunein, dirble, radionomy,...)
@@ -132,24 +133,16 @@ Under some linux distro (tested on Mageia) you need to change link to phonon plu
      
 #### Alternate Audio engine
 
-You can build yarock with alternate audio engine (phonon is the default one)
+You can build yarock with alternate audio engine (vlc,phonon or mpv). Vlc is the default audio engine
+since the 1.1.5 versio.
 
-If you want to disable phonon just use -DENABLE_PHONON=OFF as cmake option
+If you want enable/disable audio engine use the following cmake option :
 
-For vlc audio engine
+      mkdir build && cd build
+      cmake ..  -DENABLE_VLC=ON -DENABLE_MPV=ON -DENABLE_PHONON=ON
+      make
+      make install (as root)
 
-       mkdir build && cd build
-       cmake ..  -DENABLE_VLC=ON
-       make
-       make install (as root)
-
-
-For mpv audio engine
-
-       mkdir build && cd build
-       cmake ..  -DENABLE_MPV=ON
-       make
-       make install (as root)
 
 
 
