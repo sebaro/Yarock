@@ -62,6 +62,9 @@ public slots:
 private:
   QMap<QString /*id*/, Shortcut> m_shortcuts;
   QList<QObject*> m_qxt_shortcuts;
+  
+  signals:
+    void setting_changed();      
 };
 
 

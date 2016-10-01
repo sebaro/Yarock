@@ -290,7 +290,6 @@ Q_OBJECT
     PageShortcut(QWidget* parentView = 0);
     ~PageShortcut();
 
-    void restoreSettings();
     void saveSettings();
 
     bool isChanged() {return _isChanged;}
@@ -299,6 +298,9 @@ Q_OBJECT
     
     void update();
     void doLayout();
+
+  public slots:
+    void restoreSettings();
 
   private:
     void createGui();
@@ -310,15 +312,19 @@ Q_OBJECT
   private slots:
     void slot_on_shorcutItem_clicked();
     void slot_on_titlebutton_clicked();
+    void enableChange();
 
   private:
     bool                    _isChanged;
-
+    bool                    _isEnableOld;
+    
+    QCheckBox               *ui_enable_shortcut;
+    
     QMap<QString, ShortcutGraphicItem*>  m_items;
     QWidget                 *m_parent;
 
     CategorieLayoutItem     *m_title;
-    //QCheckBox             *ui_enable_shortcut;
+
     QGraphicsProxyWidget    *proxy_widget;
     
     ButtonItem              *m_button;

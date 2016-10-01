@@ -64,9 +64,9 @@ void YarockSettings::readSettings()
 #endif
     
     _browserScroll       = s->value("Session/browserScroll",       0).toInt();  
-    _viewMode            = s->value("Session/viewMode",            5).toInt();    // ViewAlbum default
-    _album_view_type     = s->value("Session/album_view_type",     1).toInt();    // extended default
-    _playlist_view_type  = s->value("Session/playlist_view_type",  0).toInt();    // overview default
+    _viewMode            = s->value("Session/viewMode",            1).toInt();    // default = View About
+    _album_view_type     = s->value("Session/album_view_type",     1).toInt();    // default = Extended
+    _playlist_view_type  = s->value("Session/playlist_view_type",  0).toInt();    // default = Overview
 
     _playqueueShowCover  = s->value("Session/playqueueShowCover",   true).toBool();
     _playqueueShowRating = s->value("Session/playqueueShowRating",  true).toBool();
@@ -120,11 +120,11 @@ void YarockSettings::readSettings()
     _playingUrl               = s->value("PlaybackOption/currentUrl",     "").toString();
     _playingPosition          = s->value("PlaybackOption/currentPosition",  0).toDouble();
 
-    // Shurtcut media key
+    // Shortcut media key
     _shortcutsKey["play"]        = s->value("Shortcuts/play",QKeySequence(Qt::Key_MediaPlay).toString()).toString();
     _shortcutsKey["stop"]        = s->value("Shortcuts/stop",QKeySequence(Qt::Key_MediaStop).toString()).toString();
-    _shortcutsKey["prev_track"]  = s->value("Shortcuts/prev_track","Shift+Left").toString();
-    _shortcutsKey["next_track"]  = s->value("Shortcuts/next_track","Shift+Right").toString();
+    _shortcutsKey["prev_track"]  = s->value("Shortcuts/prev_track","Meta+Left").toString();
+    _shortcutsKey["next_track"]  = s->value("Shortcuts/next_track","Meta+Right").toString();
     _shortcutsKey["inc_volume"]  = s->value("Shortcuts/inc_volume","Ctrl+Up").toString();
     _shortcutsKey["dec_volume"]  = s->value("Shortcuts/dec_volume","Ctrl+Down").toString();
     _shortcutsKey["mute_volume"] = s->value("Shortcuts/mute_volume","Meta+M").toString();

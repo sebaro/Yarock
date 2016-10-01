@@ -470,6 +470,7 @@ void PagePlayer::saveSettings()
     {
        if( a->isChecked() && (SETTINGS()->_engine != a->data().toInt()) )
        {
+           _isEngineChanged = true;
            SETTINGS()->_engine = a->data().toInt();
            break;
        }
@@ -1070,7 +1071,9 @@ PageShortcut::PageShortcut(QWidget* parentView) : QGraphicsWidget(0)
 
     createGui();
 
+    connect(ShortcutsManager::instance(), SIGNAL(setting_changed()), this, SLOT(restoreSettings()));
 }
+
 
 PageShortcut::~PageShortcut()
 {
@@ -1091,6 +1094,22 @@ void PageShortcut::createGui()
 
     connect(m_button, SIGNAL(clicked()), this, SLOT(slot_on_titlebutton_clicked()));
 
+
+    
+    //! Check box to enable/disable shorcuts
+    QWidget* main_widget = new QWidget();
+    main_widget->setAttribute(Qt::WA_NoBackground, true);
+    main_widget->setAutoFillBackground(true);
+
+    QVBoxLayout* vl0 = new QVBoxLayout(main_widget);
+    ui_enable_shortcut = new QCheckBox();
+    ui_enable_shortcut->setText(tr("Enable shortcuts"));
+    vl0->addWidget(ui_enable_shortcut);
+    
+    proxy_widget = new QGraphicsProxyWidget( this );
+    proxy_widget->setWidget( main_widget );
+    proxy_widget->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
+    
 
     m_items["play"]        = new ShortcutGraphicItem(tr("Play/Pause"), SETTINGS()->_shortcutsKey["play"], QPixmap(":/images/media-play.png"));
     m_items["stop"]        = new ShortcutGraphicItem(tr("Stop"), SETTINGS()->_shortcutsKey["stop"], QPixmap(":/images/media-stop.png"));
@@ -1124,13 +1143,16 @@ void PageShortcut::createGui()
 
     m_title->setParentItem(this);
     m_title->setPos(0,0);
+    
+    // slots
+    connect(this->ui_enable_shortcut, SIGNAL(clicked()), this, SLOT(enableChange()));
 }
 
 void PageShortcut::resizeEvent( QGraphicsSceneResizeEvent *event )
 {
 Q_UNUSED(event)
     //Debug::debug() << "## PageShortcut::resizeEvent";
-this->update();
+    this->update();
 }
 
 void PageShortcut::doLayout()
@@ -1140,6 +1162,9 @@ void PageShortcut::doLayout()
   
     int Xpos = 50;
     int Ypos = 30;
+    
+    proxy_widget->setPos(Xpos,Ypos);
+    Ypos += 50;
 
     m_items.value("play")->setPos(Xpos,Ypos);
     Ypos += 35;
@@ -1179,7 +1204,8 @@ Q_UNUSED(which);
 Q_UNUSED(constraint);
 
   if(m_items.value("play")->isVisible())
-    return QSize( m_parent->width()-350, 30 + m_items.size()*35 );
+    return QSize( m_parent->width()-350, 
+                  proxy_widget->geometry().size().height() + 50 + m_items.size()*35 );
   else
     return QSize( m_parent->width()-350, 30);
 }
@@ -1211,6 +1237,10 @@ void PageShortcut::restoreSettings()
     m_items["jump_to_track"]->m_status   = ShortcutsManager::instance()->shortcuts().value("jump_to_track").status;
     m_items["clear_playqueue"]->m_status = ShortcutsManager::instance()->shortcuts().value("clear_playqueue").status;
 
+    
+    _isEnableOld = SETTINGS()->_useShortcut;
+    this->ui_enable_shortcut->setChecked(_isEnableOld);    
+    
     _isChanged = false;
     update();
 }
@@ -1229,6 +1259,9 @@ void PageShortcut::saveSettings()
     SETTINGS()->_shortcutsKey["mute_volume"]     = m_items["mute_volume"]->m_key;
     SETTINGS()->_shortcutsKey["jump_to_track"]   = m_items["jump_to_track"]->m_key;
     SETTINGS()->_shortcutsKey["clear_playqueue"] = m_items["clear_playqueue"]->m_key;
+    
+    
+    SETTINGS()->_useShortcut = this->ui_enable_shortcut->isChecked();
 }
 
 void PageShortcut::slot_on_shorcutItem_clicked()
@@ -1263,26 +1296,44 @@ void PageShortcut::setContentVisible(bool b)
 
 void PageShortcut::slot_on_titlebutton_clicked()
 {
-    if(isOpen) {
-      foreach(ShortcutGraphicItem* item, m_items)
-        item->hide();
-      
-      m_button->setPixmap(QPixmap(":/images/add_32x32.png"));
-      m_button->update();
-      isOpen = false;
+    if(isOpen)
+    {
+        proxy_widget->hide();
+        foreach(ShortcutGraphicItem* item, m_items)
+            item->hide();
+    
+        m_button->setPixmap(QPixmap(":/images/add_32x32.png"));
+        m_button->update();
+        isOpen = false;
     }
     else 
     {
-      foreach(ShortcutGraphicItem* item, m_items)
-        item->show();
+        proxy_widget->show();
+        
+        foreach(ShortcutGraphicItem* item, m_items)
+            item->show();
       
-      m_button->setPixmap(QPixmap(":/images/remove_32x32.png"));
-      m_button->update();
-      isOpen = true;
+        m_button->setPixmap(QPixmap(":/images/remove_32x32.png"));
+        m_button->update();
+        isOpen = true;
     }
     
     this->update();
 }
+
+
+//! ----------- enableChange ---------------------------------------------------
+void PageShortcut::enableChange()
+{
+    //Debug::debug() << "PageShortcut::enableChange";
+    bool isEnableNew = this->ui_enable_shortcut->isChecked();
+
+    if(isEnableNew != _isEnableOld)
+       _isChanged = true;
+    else
+       _isChanged = false;
+}
+
 
 /*
 ********************************************************************************

@@ -144,7 +144,10 @@ void SettingsScene::populateScene()
     m_container->update();
 
     /* we need to ajust SceneRect */
-    setSceneRect ( itemsBoundingRect().adjusted(0, -10, 0, 0) );
+    setSceneRect ( QRect(0,0, 
+                         m_container->geometry().size().width(),
+                         m_container->geometry().size().height() + 10 )
+                 );
 }
 
 
@@ -226,10 +229,12 @@ void SettingsScene::slot_apply_settings()
     /* engine change is done on saving */
     m_result.isEngineChanged        =  static_cast<PagePlayer*>(m_pages[SETTINGS::PLAYER])->isEngineChanged();
 
-    StatusManager::instance()->startMessage(tr("Settings saved"),STATUS::INFO, 2500);
+   
     if(m_result.isEngineChanged)
-      StatusManager::instance()->startMessage(tr("Restart needed"),STATUS::INFO_CLOSE);
-        
+      StatusManager::instance()->startMessage(tr("Settings saved, restart needed"),STATUS::INFO_CLOSE);
+    else
+      StatusManager::instance()->startMessage(tr("Settings saved"),STATUS::INFO, 2500);
+    
     emit settings_saved();
 }
 

@@ -69,7 +69,7 @@ Q_DISABLE_COPY(YarockSettings)
     bool                 _useMpris;
     bool                 _useDbusNotification;
     bool                 _useLastFmScrobbler;
-    bool                 _useShortcut; // To be done
+    bool                 _useShortcut;
 
     // show/hide widget (Startup settings)
     bool                 _showPlayQueuePanel;
@@ -119,7 +119,7 @@ Q_DISABLE_COPY(YarockSettings)
     QString              _playingUrl;
     qint64               _playingPosition;
 
-    // shortcut
+    // _shortcuts
     QMap<QString, QString> _shortcutsKey;  //shortcutName, KeySequence
 
     // equalizer

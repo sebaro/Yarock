@@ -79,9 +79,16 @@ void ShortcutsManager::reloadSettings()
     m_shortcuts["jump_to_track"].key   = QKeySequence::fromString(SETTINGS()->_shortcutsKey["jump_to_track"]);
     m_shortcuts["clear_playqueue"].key = QKeySequence::fromString(SETTINGS()->_shortcutsKey["clear_playqueue"]);
 
-    // update Qxt shorcut
+
     QxtUnregister();
-    QxtRegister();
+
+    if(SETTINGS()->_useShortcut)
+    { 
+      // update Qxt shorcut
+      QxtRegister();
+    }
+    
+    emit setting_changed();  
 }
 
 void ShortcutsManager::QxtUnregister()
