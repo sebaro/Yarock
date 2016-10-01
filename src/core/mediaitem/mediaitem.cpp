@@ -38,7 +38,7 @@
 #include <QPixmap>
 #include <QCryptographicHash>
 
-const QStringList mediaFilter    = QStringList() << "mp3" << "ogg" << "flac" << "wav" << "m4a" << "aac" << "ape";
+const QStringList mediaFilter    = QStringList() << "mp3" << "ogg" << "flac" << "wav" << "m4a" << "aac" << "ape" << "opus";
 const QStringList playlistFilter = QStringList() << "m3u" << "m3u8" << "pls" << "xspf";
 
 /*

@@ -55,7 +55,7 @@ QStringList DataBaseBuilder::filesFromFilesystem(const QString& directory)
   
     QStringList files;
     const QStringList filters = QStringList()
-    /* Audio */    << "*.mp3"  << "*.ogg" << "*.wav" << "*.flac" << "*.m4a" << "*.aac"
+    /* Audio */    << "*.mp3"  << "*.ogg" << "*.wav" << "*.flac" << "*.m4a" << "*.aac" << "*.opus"
     /* Playlist */ << "*.m3u" << "*.m3u8" << "*.pls" << "*.xspf";
 
     QDir dir(directory);

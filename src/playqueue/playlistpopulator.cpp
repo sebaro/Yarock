@@ -220,7 +220,7 @@ void PlaylistPopulator::load_dir(const QString& path, int row)
 {
     Debug::debug() << "PlaylistPopulator::load_dir";
     
-    const QStringList dirFilter  = QStringList() << "*.mp3" << "*.ogg" << "*.flac" << "*.wav" << "*.m4a" << "*.aac" << "*.ape";
+    const QStringList dirFilter  = QStringList() << "*.mp3" << "*.ogg" << "*.flac" << "*.wav" << "*.m4a" << "*.aac" << "*.ape" << "*.opus";
     QDirIterator dirIterator(path, dirFilter ,QDir::Files | QDir::NoSymLinks, QDirIterator::Subdirectories);
 
     /* --- read directoy files (with subfolders) --- */
