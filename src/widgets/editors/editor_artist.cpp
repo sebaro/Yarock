@@ -112,6 +112,8 @@ void EditorArtist::create_ui()
     ui_buttonBox = new QDialogButtonBox();
     ui_buttonBox->setOrientation(Qt::Horizontal);
     ui_buttonBox->setStandardButtons(QDialogButtonBox::Apply|QDialogButtonBox::Close);
+    ui_buttonBox->setCenterButtons(true);
+    ui_buttonBox->setContentsMargins(0,5,0,5);
 
     
     ui_headertitle = new QLabel();
@@ -143,9 +145,6 @@ void EditorArtist::create_ui()
     connect(cover_pb2, SIGNAL(clicked()), this, SLOT(slot_download_image()));
     connect(cover_pb3, SIGNAL(clicked()), this, SLOT(slot_image_remove()));
     
-    ui_artist_name->setMinimumHeight(25);
-    ui_playcount->setMinimumHeight(25);
-    ui_rating->setMinimumHeight(25);
 
     QGridLayout *grid = new QGridLayout();
     grid->setContentsMargins(0, 0, 0, 0);
@@ -173,7 +172,7 @@ void EditorArtist::create_ui()
     
     /* --- scrollarea ---*/
     QWidget *w  = new QWidget();
-    w->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Minimum);
+    w->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Expanding);
      
     QVBoxLayout *vb3 = new QVBoxLayout( w );
     vb3->setSpacing(2);
@@ -181,7 +180,6 @@ void EditorArtist::create_ui()
     vb3->addLayout( vb1 );
     vb3->addLayout( grid );
     vb3->addItem(new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Expanding));
-    vb3->addWidget(ui_buttonBox);
   
     QScrollArea* ui_scrollarea = new QScrollArea();
     ui_scrollarea->setWidget(w);
@@ -194,6 +192,8 @@ void EditorArtist::create_ui()
     layout->setSpacing(0);
     layout->setContentsMargins(0, 0, 0, 0);
     layout->addWidget( ui_scrollarea );
+    layout->addWidget(ui_buttonBox);
+    
 }
 
 

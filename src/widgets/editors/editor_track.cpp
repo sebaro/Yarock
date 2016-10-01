@@ -142,6 +142,8 @@ void EditorTrack::create_ui()
     ui_buttonBox = new QDialogButtonBox();
     ui_buttonBox->setOrientation(Qt::Horizontal);
     ui_buttonBox->setStandardButtons(QDialogButtonBox::Apply|QDialogButtonBox::Close);
+    ui_buttonBox->setCenterButtons(true);
+    ui_buttonBox->setContentsMargins(0,5,0,5);
 
     ui_headertitle = new QLabel();
     ui_headertitle->setFont(QFont("Arial",12,QFont::Bold));
@@ -170,15 +172,6 @@ void EditorTrack::create_ui()
     ui_filename->setReadOnly(true);
 
     ui_track_year->setDisplayFormat("yyyy");
-
-    ui_track_title->setMinimumHeight(25);
-    ui_album_name->setMinimumHeight(25);
-    ui_artist_name->setMinimumHeight(25);
-    ui_track_year->setMinimumHeight(25);
-    ui_track_genre->setMinimumHeight(25);
-    ui_track_number->setMinimumHeight(25);
-    ui_playcount->setMinimumHeight(25);
-    ui_rating->setMinimumHeight(25);
 
     
     ui_multifields.insert("title",    new EdMultiFieldEdit(EdMultiFieldEdit::LINEEDIT, ui_track_title) );
@@ -235,7 +228,7 @@ void EditorTrack::create_ui()
   
     /* --- scrollarea ---*/
     QWidget *w  = new QWidget();
-    w->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Minimum);
+    w->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Expanding);
      
     QVBoxLayout *vb3 = new QVBoxLayout( w );
     vb3->setSpacing(2);
@@ -243,7 +236,7 @@ void EditorTrack::create_ui()
     vb3->addLayout( vb1 );
     vb3->addLayout( grid );
     vb3->addItem(new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Expanding));
-    vb3->addWidget(ui_buttonBox);
+
   
     QScrollArea* ui_scrollarea = new QScrollArea();
     ui_scrollarea->setWidget(w);
@@ -256,6 +249,7 @@ void EditorTrack::create_ui()
     layout->setSpacing(0);
     layout->setContentsMargins(0, 0, 0, 0);
     layout->addWidget( ui_scrollarea );  
+    layout->addWidget(ui_buttonBox);    
 }
 
 /* ---------------------------------------------------------------------------*/

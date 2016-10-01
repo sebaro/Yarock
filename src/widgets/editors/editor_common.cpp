@@ -36,6 +36,7 @@
 EdLineEdit::EdLineEdit(QWidget *parent) : QLineEdit(parent)
 {
     connect(this, SIGNAL(textChanged(const QString&)), this, SLOT(slot_on_text_changed()));
+    setPalette( QApplication::palette() );
 }
 
 
@@ -45,7 +46,7 @@ void EdLineEdit::slot_on_text_changed()
     if( this->isModified() )
     {
       QPalette p;
-      p.setColor(QPalette::Text, QApplication::palette().color(QPalette::Normal,QPalette::Link) );
+      p.setColor(QPalette::Text, QColor( 255, 0, 0 ) );
       setPalette(p);
     }
     else

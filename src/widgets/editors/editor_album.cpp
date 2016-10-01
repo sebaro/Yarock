@@ -112,7 +112,8 @@ void EditorAlbum::create_ui()
     ui_buttonBox = new QDialogButtonBox();
     ui_buttonBox->setOrientation(Qt::Horizontal);
     ui_buttonBox->setStandardButtons(QDialogButtonBox::Apply|QDialogButtonBox::Close);
-
+    ui_buttonBox->setCenterButtons(true);
+    ui_buttonBox->setContentsMargins(0,5,0,5);
     
     ui_headertitle = new QLabel();
     ui_headertitle->setFont(QFont("Arial",12,QFont::Bold));
@@ -123,7 +124,6 @@ void EditorAlbum::create_ui()
     vb1->setSpacing(2);
     vb1->setContentsMargins(0, 6, 0, 6);
     vb1->addWidget( ui_headertitle );
-
 
 
     
@@ -152,15 +152,9 @@ void EditorAlbum::create_ui()
     connect(cover_pb1, SIGNAL(clicked()), this, SLOT(slot_load_image_from_file()));
     connect(cover_pb2, SIGNAL(clicked()), this, SLOT(slot_download_image()));
     connect(cover_pb3, SIGNAL(clicked()), this, SLOT(slot_image_remove()));
-    
-    ui_album_name->setMinimumHeight(25);
-    ui_artist_name->setMinimumHeight(25);
-    ui_album_year->setMinimumHeight(25);
-    ui_playcount->setMinimumHeight(25);
-    ui_rating->setMinimumHeight(25);
 
-    
     QGridLayout *gridl = new QGridLayout();
+
     gridl->setContentsMargins(0, 0, 0, 0);
     gridl->setHorizontalSpacing( 4 );
     gridl->setColumnStretch(0, 0);
@@ -190,13 +184,13 @@ void EditorAlbum::create_ui()
     gridl->addWidget(cover_pb1, 7, 2, 1, 1);
     gridl->addWidget(cover_pb2, 8, 2, 1, 1);
     gridl->addWidget(cover_pb3, 9, 2, 1, 1);
-
+ 
     gridl->addWidget(new QLabel(tr("Tracks")), 10, 0, 1, 1);
-    
+     
   
-    QVBoxLayout* vb2 = new QVBoxLayout();
-    vb2->addLayout( gridl );
 
+    QVBoxLayout* vb2 = new QVBoxLayout();
+    
     foreach(MEDIA::MediaPtr media, m_album->children()) 
     {
       MEDIA::TrackPtr track = MEDIA::TrackPtr::staticCast( media );
@@ -209,16 +203,16 @@ void EditorAlbum::create_ui()
     
     /* --- scrollarea ---*/
     QWidget *w  = new QWidget();
-    w->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Minimum);
+    w->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Expanding);
      
     QVBoxLayout *vb3 = new QVBoxLayout( w );
     vb3->setSpacing(2);
     vb3->setContentsMargins(4, 2, 4, 4);
     vb3->addLayout( vb1 );
+    vb3->addLayout( gridl );
     vb3->addLayout( vb2 );
     vb3->addItem(new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Expanding));
-    vb3->addWidget(ui_buttonBox);
-  
+
     QScrollArea* ui_scrollarea = new QScrollArea();
     ui_scrollarea->setWidget(w);
     ui_scrollarea->setWidgetResizable(true);
@@ -230,6 +224,7 @@ void EditorAlbum::create_ui()
     layout->setSpacing(0);
     layout->setContentsMargins(0, 0, 0, 0);
     layout->addWidget( ui_scrollarea );
+    layout->addWidget( ui_buttonBox );
 }
 
 
