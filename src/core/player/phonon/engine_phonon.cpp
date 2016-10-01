@@ -106,8 +106,9 @@ EnginePhonon::EnginePhonon() : EngineBase("phonon")
     }
 
     /* ----- initial volume setup ----- */
-    setVolume( SETTINGS()->_volumeLevel );
-        
+    int restoredVolume = SETTINGS()->_volumeLevel > this->maxVolume() ? this->maxVolume() : SETTINGS()->_volumeLevel;
+    setVolume( restoredVolume );
+    
     m_current_state    = ENGINE::STOPPED;
     m_old_state        = ENGINE::STOPPED;
     

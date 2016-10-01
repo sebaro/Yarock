@@ -75,6 +75,7 @@ public:
     MEDIA::TrackPtr nextTrack() const {return m_nextMediaItem;}
     
     /* audio*/ 
+    virtual int maxVolume() const {return 100;};
     virtual int volume() const {return 0;};
     virtual void setVolume(const int &) {};
     virtual bool isMuted() const {return false;};

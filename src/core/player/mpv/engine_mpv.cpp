@@ -85,7 +85,7 @@ EngineMpv::EngineMpv() : EngineBase("mpv")
     mpv_set_option_string(m_mpv_core, "quiet", "yes");                 /* console output less verbose */
 
     mpv_set_option_string(m_mpv_core, "softvol", "yes");               /* use mpv internal vol */
-    mpv_set_option_string(m_mpv_core, "softvol-max", "100.0");         /* max vol */
+    mpv_set_option_string(m_mpv_core, "softvol-max", "150.0");         /* max vol */
 
     mpv_set_option_string(m_mpv_core, "audio-client-name", "yarock");
     
@@ -114,7 +114,8 @@ EngineMpv::EngineMpv() : EngineBase("mpv")
 
     /* ----- internal volume & mute ----- */
     m_internal_volume = -1;
-    setVolume(SETTINGS()->_volumeLevel);
+    int restoredVolume = SETTINGS()->_volumeLevel > this->maxVolume() ? this->maxVolume() : SETTINGS()->_volumeLevel;
+    setVolume( restoredVolume );
     
     m_internal_is_mute  = true;
     setMuted(false);

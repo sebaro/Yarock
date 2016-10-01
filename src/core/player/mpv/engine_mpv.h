@@ -52,7 +52,8 @@ public:
     void setMediaItem(MEDIA::TrackPtr track);
     void setNextMediaItem(MEDIA::TrackPtr track);
     
-    /* audio */ 
+    /* audio */
+    int maxVolume() const { return 150;};    
     int volume() const;
     void setVolume(const int &);
     bool isMuted() const;

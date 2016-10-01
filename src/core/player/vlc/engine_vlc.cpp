@@ -94,7 +94,8 @@ EngineVlc::EngineVlc() : EngineBase("vlc")
     
     /* ----- internal volume & mute ----- */
     m_internal_volume = -1;
-    setVolume(SETTINGS()->_volumeLevel);
+    int restoredVolume = SETTINGS()->_volumeLevel > this->maxVolume() ? this->maxVolume() : SETTINGS()->_volumeLevel;
+    setVolume( restoredVolume );
     
     m_internal_is_mute  = true;
     setMuted(false);
