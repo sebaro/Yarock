@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="fr">
+<TS version="2.1" language="sv">
 <context>
     <name>AboutScene</name>
     <message>
         <location filename="../src/views/about/about_scene.cpp" line="123"/>
         <source>About</source>
-        <translation type="unfinished">A propos</translation>
+        <translation type="unfinished">Om</translation>
     </message>
     <message>
         <location filename="../src/views/about/about_scene.cpp" line="142"/>
         <source>Yarock is a Qt4 modern music player designed to provide an easy and pretty music collection browser based on cover art.&lt;br&gt;It&apos;s a Free Software distributed under the &lt;a href=&quot;http://www.gnu.org/licenses/gpl-3.0.en.html&quot;&gt;(GPLv3)&lt;/a&gt; license.&lt;br&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Yarock är en modern musikspelare baserad på Qt4 som är designad för att ge en lätt och snygg musiksamlingshanterare som baseras på omslagsbilder.&lt;br&gt;Det är Fri Mjukvara utgiven under &lt;a href=&quot;http://www.gnu.org/licenses/gpl-3.0.en.html&quot;&gt;(GPLv3)&lt;/a&gt; licens.&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../src/views/about/about_scene.cpp" line="154"/>
         <source>Contribute</source>
-        <translation>Contribuer</translation>
+        <translation>Delta</translation>
     </message>
     <message>
         <location filename="../src/views/about/about_scene.cpp" line="177"/>
         <source>Yarock is developped by &lt;b&gt;Sebastien Amardeilh&lt;/b&gt; %1</source>
-        <translation>Yarock est développé par &lt;b&gt;Sebastien Amardeilh&lt;/b&gt; %1</translation>
+        <translation>Yarock är utvecklad av &lt;b&gt;Sebastien Amardeilh&lt;/b&gt; %1</translation>
     </message>
     <message>
         <location filename="../src/views/about/about_scene.cpp" line="188"/>
         <source>Please use %1 to report bugs.</source>
-        <translation>Utiliser %1 pour rapporter un boggue</translation>
+        <translation>Var god och använd %1 för att rapportera buggar.</translation>
     </message>
     <message>
         <location filename="../src/views/about/about_scene.cpp" line="201"/>
         <source>Please use %1 for translations.</source>
-        <translation>Utiliser %1 pour les traductions</translation>
+        <translation>Var god och använd %1 för översättningar.</translation>
     </message>
     <message>
         <location filename="../src/views/about/about_scene.cpp" line="214"/>
         <source>If you can, please %1 (or %2) to support the development</source>
-        <translation>Si vous le pouvez, %1 (ou %2) pour supporter le développement</translation>
+        <translation>Om du kan, vänligen %1 (eller %2) för att stöda utvecklingen</translation>
     </message>
     <message>
         <location filename="../src/views/about/about_scene.cpp" line="223"/>
         <source>Debug Information</source>
-        <translation>Informations de deboggage</translation>
+        <translation>Avlusnings Information</translation>
     </message>
     <message>
         <location filename="../src/views/about/about_scene.cpp" line="230"/>
@@ -64,17 +64,17 @@
     <message>
         <location filename="../src/views/settings/addfolder_widget.cpp" line="50"/>
         <source>Open</source>
-        <translation>Ouvrir</translation>
+        <translation>Öppna</translation>
     </message>
     <message>
         <location filename="../src/views/settings/addfolder_widget.cpp" line="54"/>
         <source>Remove</source>
-        <translation>Supprimer</translation>
+        <translation>Ta bort</translation>
     </message>
     <message>
         <location filename="../src/views/settings/addfolder_widget.cpp" line="69"/>
         <source>Open folder</source>
-        <translation>Ouvrir le dossier</translation>
+        <translation>Öppna mapp</translation>
     </message>
 </context>
 <context>
@@ -82,7 +82,7 @@
     <message>
         <location filename="../src/widgets/dialogs/addstreamdialog.cpp" line="35"/>
         <source>Add Stream</source>
-        <translation>Ajouter un flux</translation>
+        <translation>Lägg till Ström</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/addstreamdialog.cpp" line="49"/>
@@ -92,19 +92,19 @@
     <message>
         <location filename="../src/widgets/dialogs/addstreamdialog.cpp" line="51"/>
         <source>name</source>
-        <translation>nom</translation>
+        <translation>namn</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/addstreamdialog.cpp" line="59"/>
         <source>category</source>
-        <translation>catégorie</translation>
+        <translation>kategori</translation>
     </message>
 </context>
 <context>
     <name>AlbumInfoWidget</name>
     <message>
         <source>Album tracks</source>
-        <translation type="vanished">Pistes de l&apos;album</translation>
+        <translation type="vanished">Skivlåtar</translation>
     </message>
 </context>
 <context>
@@ -112,7 +112,7 @@
     <message>
         <location filename="../src/views/context/context_widget.cpp" line="164"/>
         <source>Biography</source>
-        <translation>Biographie</translation>
+        <translation>Biografi</translation>
     </message>
 </context>
 <context>
@@ -120,7 +120,7 @@
     <message>
         <location filename="../src/views/context/context_widget.cpp" line="263"/>
         <source>Similar artists</source>
-        <translation>Artistes similaires</translation>
+        <translation>Liknande artister</translation>
     </message>
 </context>
 <context>
@@ -128,117 +128,117 @@
     <message>
         <location filename="../src/views/browser_view.cpp" line="684"/>
         <source>Context</source>
-        <translation>Contexte de lecture</translation>
+        <translation>Information</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="685"/>
         <source>History</source>
-        <translation>Historique</translation>
+        <translation>Historik</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="648"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; albums</source>
-        <translation>Collection : &lt;b&gt;%1&lt;/b&gt; albums</translation>
+        <translation>Samling : &lt;b&gt;%1&lt;/b&gt;  skivor</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="649"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; artist</source>
-        <translation>Collection : &lt;b&gt;%1&lt;/b&gt; artists</translation>
+        <translation>Samling : &lt;b&gt;%1&lt;/b&gt; artister</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="650"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; tracks</source>
-        <translation>Collection : &lt;b&gt;%1&lt;/b&gt; pistes</translation>
+        <translation>Samling : &lt;b&gt;%1&lt;/b&gt; låtar</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="651"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; styles</source>
-        <translation>Collection : &lt;b&gt;%1&lt;/b&gt; styles</translation>
+        <translation>Samling : &lt;b&gt;%1&lt;/b&gt; stilar</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="652"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; years</source>
-        <translation>Collection : &lt;b&gt;%1&lt;/b&gt; années</translation>
+        <translation>Samling : &lt;b&gt;%1&lt;/b&gt; år</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="653"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; favorite item</source>
-        <translation>Collection : &lt;b&gt;%1&lt;/b&gt; favoris</translation>
+        <translation>Samling : &lt;b&gt;%1&lt;/b&gt; favoritobjekt</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="657"/>
         <source>Playlist : &lt;b&gt;%1&lt;/b&gt; playlists</source>
-        <translation>Liste : &lt;b&gt;%1&lt;/b&gt; listes</translation>
+        <translation>Spellista :  &lt;b&gt;%1&lt;/b&gt; spellistor</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="664"/>
         <source>Radio : &lt;b&gt;%1&lt;/b&gt; streams</source>
-        <translation>Radio : &lt;b&gt;%1&lt;/b&gt; flux</translation>
+        <translation>Radio : &lt;b&gt;%1&lt;/b&gt; strömmar</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="681"/>
         <source>About</source>
-        <translation>A propos</translation>
+        <translation>Om</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="682"/>
         <source>Settings</source>
-        <translation>Paramètres</translation>
+        <translation>Inställningar</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="683"/>
         <source>Dashboard</source>
-        <translation>Tableau de bord</translation>
+        <translation>Instrumentpanel</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="686"/>
         <source>Artists</source>
-        <translation>Artistes</translation>
+        <translation>Artister</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="687"/>
         <source>Albums</source>
-        <translation>Albums</translation>
+        <translation>Skivor</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="688"/>
         <source>Tracks</source>
-        <translation>Pistes</translation>
+        <translation>Låtar</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="689"/>
         <source>Genres</source>
-        <translation>Genres</translation>
+        <translation>Genrer</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="690"/>
         <source>Years</source>
-        <translation>Années</translation>
+        <translation>Årtal</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="691"/>
         <source>Favorites</source>
-        <translation>Favoris</translation>
+        <translation>Favoriter</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="692"/>
         <source>Playlists</source>
-        <translation>Liste de lecture</translation>
+        <translation>Spellistor</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="693"/>
         <source>Smart playlists</source>
-        <translation>Playlistes intelligentes</translation>
+        <translation>Smarta spellistor</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="697"/>
         <source>Favorites radios</source>
-        <translation>Radio favorites</translation>
+        <translation>Favorit radiokanaler</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="698"/>
         <source>Filesystem</source>
-        <translation>Fichiers</translation>
+        <translation>Filsystem</translation>
     </message>
 </context>
 <context>
@@ -246,119 +246,119 @@
     <message>
         <location filename="../src/commandlineoptions.cpp" line="137"/>
         <source>Usage</source>
-        <translation>Usage</translation>
+        <translation>Användning</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="137"/>
         <source>options</source>
-        <translation>options</translation>
+        <translation>alternativ</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="137"/>
         <source>URL(s)</source>
-        <translation>URL(s)</translation>
+        <translation>URL(er)</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="137"/>
         <source>Player options</source>
-        <translation>Options de lecture</translation>
+        <translation>Alternativ för spelare</translation>
     </message>
     <message>
         <source>Start the playlist currently playing</source>
-        <translation type="vanished">Commencer la lecture de la liste</translation>
+        <translation type="vanished">Starta spellistan som spelas för tillfället</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="138"/>
         <source>Start playback</source>
-        <translation>Commencer la lecture</translation>
+        <translation>Starta uppspelning</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="139"/>
         <source>Play if stopped, pause if playing</source>
-        <translation>Lancer la lecture ou mettre en pause</translation>
+        <translation>Spela om stoppad, pausa om spelas</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="140"/>
         <source>Pause playback</source>
-        <translation>Mettre en pause</translation>
+        <translation>Pausa uppspelning</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="141"/>
         <source>Stop playback</source>
-        <translation>Stopper la lecture</translation>
+        <translation>Stoppa uppspelning</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="142"/>
         <source>Skip backwards in playlist</source>
-        <translation>Piste suivante de la liste de lecture</translation>
+        <translation>Hoppa bakåt i spellistan</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="143"/>
         <source>Skip forwards in playlist</source>
-        <translation>Piste précédente de la liste de lecture</translation>
+        <translation>Hoppa framåt i spellistan</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="144"/>
         <source>Set the volume to &lt;value&gt; percent</source>
-        <translation>Mettre le volume à &lt;value&gt; pourcent</translation>
+        <translation>Ställ in volymen till &lt;value&gt; procent</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="145"/>
         <source>Increase the volume by 4%</source>
-        <translation>Augmenter le volume de 4%</translation>
+        <translation>Öka volymen med 4%</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="146"/>
         <source>Decrease the volume by 4%</source>
-        <translation>Diminuer le volume de 4%</translation>
+        <translation>Sänk volymen med 4%</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="147"/>
         <source>Seek to an absolute position</source>
-        <translation>Déplacer à une position absolue</translation>
+        <translation>Sök till en absolut position</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="148"/>
         <source>Seek by a relative amount</source>
-        <translation>Déplacer par une quantité relative</translation>
+        <translation>Sök med en relativ mängd</translation>
     </message>
     <message>
         <source>Seek the currently playing track to an absolute position</source>
-        <translation type="vanished">Déplacer la lecture de la piste courante à une position absolue</translation>
+        <translation type="vanished">Sök till en absolut punkt i spåret som spelas </translation>
     </message>
     <message>
         <source>Seek the currently playing track by a relative amount</source>
-        <translation type="vanished">Déplacer la lecture de la piste courante par une quantité relative</translation>
+        <translation type="vanished">Sök med relativ mängd i spåret som spelas</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="149"/>
         <source>Playlist options</source>
-        <translation>Option de la liste de lecture</translation>
+        <translation>Alternativ för spellista</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="150"/>
         <source>Append files/URLs to the playlist</source>
-        <translation>Ajouter des fichiers de musiques ou liste de lectures</translation>
+        <translation>Bifoga filer/URLer till spellistan</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="151"/>
         <source>Loads files/URLs, replacing current playlist</source>
-        <translation>Charge des fichiers de musiques ou liste de lectures</translation>
+        <translation>Laddar filer/URLer, ersätter nuvarande spellista</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="152"/>
         <source>Play the &lt;n&gt;th track in the playlist</source>
-        <translation>Jouer la piste &lt;n&gt; de la liste de lecture</translation>
+        <translation>Spela den &lt;n&gt; låten i spellistan</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="153"/>
         <source>Other options</source>
-        <translation>Autres options</translation>
+        <translation>Andra alternativ</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="154"/>
         <source>Print debug information</source>
-        <translation>Afficher les information de debug</translation>
+        <translation>Skriv ut avlusnings information</translation>
     </message>
 </context>
 <context>
@@ -366,37 +366,37 @@
     <message>
         <location filename="../src/widgets/dialogs/database_add.cpp" line="37"/>
         <source>Add music collection</source>
-        <translation>Ajouter une collection</translation>
+        <translation>Lägg till musiksamling</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/database_add.cpp" line="47"/>
         <source>Choose collection name</source>
-        <translation>Choisir le nom de la collection</translation>
+        <translation>Välj ett samlingsnamn</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/database_add.cpp" line="61"/>
         <source>Name</source>
-        <translation>Nom</translation>
+        <translation>Namn</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/database_add.cpp" line="64"/>
         <source>Path</source>
-        <translation>Chemin</translation>
+        <translation>Sökväg</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/database_add.cpp" line="81"/>
         <source> Choose music folder</source>
-        <translation>Choisir le dossier contenant votre musique</translation>
+        <translation>Välj musikmapp</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/database_add.cpp" line="131"/>
         <source> Collection name cannot be empty</source>
-        <translation>Le nom de la collection ne peut pas être vide</translation>
+        <translation>Samlingsnamn kan inte vara tomt</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/database_add.cpp" line="139"/>
         <source> Collection name already exists </source>
-        <translation>Le nom de la collection existe déja</translation>
+        <translation>Samlingsnamnet är upptaget</translation>
     </message>
 </context>
 <context>
@@ -404,95 +404,95 @@
     <message>
         <location filename="../src/widgets/dialogs/database_operation.cpp" line="34"/>
         <source>Database operation</source>
-        <translation>Opération sur la base de donnée</translation>
+        <translation>Databas hantering</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/database_operation.cpp" line="42"/>
         <source>Update</source>
-        <translation>Mise à jour</translation>
+        <translation>Uppdatera</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/database_operation.cpp" line="43"/>
         <source>Rebuild</source>
-        <translation>Reconstruction</translation>
+        <translation>Bygg om</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/database_operation.cpp" line="44"/>
         <source>Cover</source>
-        <translation>Pochette</translation>
+        <translation>Omslag</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/database_operation.cpp" line="45"/>
         <source>Artist</source>
-        <translation>Artiste</translation>
+        <translation>Artist</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/database_operation.cpp" line="58"/>
         <source>Rescan medias files and update database</source>
-        <translation>Rechercher les fichiers et mettre à jour la base de données</translation>
+        <translation>Scanna om mediafiler och uppdatera databasen</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/database_operation.cpp" line="60"/>
         <source>Delete and rebuild database (*)</source>
-        <translation>Supprimer et reconstruire la base de donnée (*)</translation>
+        <translation>Ta bort och bygg om databas (*)</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/database_operation.cpp" line="61"/>
         <source>* all changes into collection database will be discarded !!</source>
-        <translation>* tous les changements seront perdus !!</translation>
+        <translation>* alla ändringar i samlingsdatabasen kommer att förkastas !!</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/database_operation.cpp" line="63"/>
         <source>Download missing album cover</source>
-        <translation>Télécharger les pochettes manquantes</translation>
+        <translation>Ladda ner saknade skivomslag</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/database_operation.cpp" line="66"/>
         <source>Download missing artist image</source>
-        <translation>Télécharger les images d&apos;artistes manquantes</translation>
+        <translation>Ladda ner saknade artistbilder</translation>
     </message>
 </context>
 <context>
     <name>DbOperationDialog</name>
     <message>
         <source>Database operation</source>
-        <translation type="vanished">Opération sur la base de donnée</translation>
+        <translation type="vanished">Hantera databas</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="vanished">Mise à jour</translation>
+        <translation type="vanished">Uppdatera</translation>
     </message>
     <message>
         <source>Rebuild</source>
-        <translation type="vanished">Reconstruction</translation>
+        <translation type="vanished">Bygg om</translation>
     </message>
     <message>
         <source>Cover</source>
-        <translation type="vanished">Pochette</translation>
+        <translation type="vanished">Omslag</translation>
     </message>
     <message>
         <source>Artist</source>
-        <translation type="vanished">Artiste</translation>
+        <translation type="vanished">Artist</translation>
     </message>
     <message>
         <source>Rescan medias files and update database</source>
-        <translation type="vanished">Rechercher les fichiers et mettre à jour la base de données</translation>
+        <translation type="vanished">Scanna om mediafiler och uppdatera databasen</translation>
     </message>
     <message>
         <source>Delete and rebuild database (*)</source>
-        <translation type="vanished">Supprimer et reconstruire la base de donnée (*)</translation>
+        <translation type="vanished">Ta bort och bygg om databas (*)</translation>
     </message>
     <message>
         <source>* all changes into collection database will be discarded !!</source>
-        <translation type="vanished">* tous les changements seront perdus !!</translation>
+        <translation type="vanished">* alla ändringar i samlingsdatabasen kommer att förkastas !!</translation>
     </message>
     <message>
         <source>Download missing album cover</source>
-        <translation type="vanished">Télécharger les pochettes manquantes</translation>
+        <translation type="vanished">Ladda ner saknade skivomslag</translation>
     </message>
     <message>
         <source>Download missing artist image</source>
-        <translation type="vanished">Télécharger les images d&apos;artistes manquantes</translation>
+        <translation type="vanished">Ladda ner saknade artistbilder</translation>
     </message>
 </context>
 <context>
@@ -500,22 +500,22 @@
     <message>
         <location filename="../src/dbus/dbusnotification.cpp" line="193"/>
         <source>Paused</source>
-        <translation>En pause</translation>
+        <translation>Pausad</translation>
     </message>
     <message>
         <location filename="../src/dbus/dbusnotification.cpp" line="203"/>
         <source>Stopped</source>
-        <translation>Stoppé</translation>
+        <translation>Stoppad</translation>
     </message>
     <message>
         <location filename="../src/dbus/dbusnotification.cpp" line="214"/>
         <source>Playlist finished</source>
-        <translation>Liste de lecture terminée</translation>
+        <translation>Spellistan uppspelad</translation>
     </message>
     <message>
         <location filename="../src/dbus/dbusnotification.cpp" line="227"/>
         <source>Volume %1%</source>
-        <translation>Volume %1%</translation>
+        <translation>Volym %1%</translation>
     </message>
 </context>
 <context>
@@ -523,7 +523,7 @@
     <message>
         <location filename="../src/views/context/context_widget.cpp" line="394"/>
         <source>Discography</source>
-        <translation>Discographie</translation>
+        <translation>Diskografi</translation>
     </message>
 </context>
 <context>
@@ -531,37 +531,37 @@
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="121"/>
         <source>Edit album</source>
-        <translation>Editer l&apos;album</translation>
+        <translation>Redigera skiva</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="148"/>
         <source>Load from file</source>
-        <translation>Charger à partir d&apos;un fichier</translation>
+        <translation>Ladda från fil</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="149"/>
         <source>Download</source>
-        <translation>Télécharger</translation>
+        <translation>Ladda ner</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="150"/>
         <source>Remove</source>
-        <translation>Supprimer</translation>
+        <translation>Ta bort</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="164"/>
         <source>Album</source>
-        <translation>Album</translation>
+        <translation>Skiva</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="166"/>
         <source>Artist</source>
-        <translation>Artiste</translation>
+        <translation>Artist</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="168"/>
         <source>Year</source>
-        <translation>Année</translation>
+        <translation>Årtal</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="171"/>
@@ -571,43 +571,43 @@
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="174"/>
         <source>Playcount</source>
-        <translation>Nombre de lecture</translation>
+        <translation>Spelräknare</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="176"/>
         <source>Rating</source>
-        <translation>Note</translation>
+        <translation>Betyg</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="182"/>
         <source>Cover</source>
-        <translation>Pochette</translation>
+        <translation>Omslag</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="188"/>
         <source>Tracks</source>
-        <translation>Pistes</translation>
+        <translation>Låtar</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="242"/>
         <location filename="../src/widgets/editors/editor_album.cpp" line="261"/>
         <source>clear user rating</source>
-        <translation>effacer la notation utilisateur</translation>
+        <translation>töm användarbetyg</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="261"/>
         <source>auto rating</source>
-        <translation>notation automatique</translation>
+        <translation>automatisk betygssättning</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="411"/>
         <source>Select image file...</source>
-        <translation>Choisir un fichier image</translation>
+        <translation>Välj bildfil...</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="412"/>
         <source>Files (*.png *.jpg)</source>
-        <translation>Fichiers(*.png *.jpg)</translation>
+        <translation>Filer (*.png *.jpg)</translation>
     </message>
 </context>
 <context>
@@ -615,63 +615,63 @@
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="122"/>
         <source>Edit artist</source>
-        <translation>Editer l&apos;artiste</translation>
+        <translation>Redigera artist</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="140"/>
         <source>Load from file</source>
-        <translation>Charger à partir d&apos;un fichier</translation>
+        <translation>Ladda från fil</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="141"/>
         <source>Download</source>
-        <translation>Télécharger</translation>
+        <translation>Ladda ner</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="142"/>
         <source>Remove</source>
-        <translation>Supprimer</translation>
+        <translation>Ta bort</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="156"/>
         <source>Artist</source>
-        <translation>Artiste</translation>
+        <translation>Artist</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="158"/>
         <source>Playcount</source>
-        <translation>Nombre de lecture</translation>
+        <translation>Spelräknare</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="160"/>
         <source>Rating</source>
-        <translation>Note</translation>
+        <translation>Betyg</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="166"/>
         <source>Image</source>
-        <translation>Image</translation>
+        <translation>Bild</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="211"/>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="230"/>
         <source>clear user rating</source>
-        <translation>effacer la notation utilisateur</translation>
+        <translation>töm användarbetyg</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="230"/>
         <source>auto rating</source>
-        <translation>notation automatique</translation>
+        <translation>automatisk betygssättning</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="333"/>
         <source>Select image file...</source>
-        <translation>Choisir le fichier image</translation>
+        <translation>Välj bildfil...</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="334"/>
         <source>Files (*.png *.jpg)</source>
-        <translation>Fichiers(*.png *.jpg)</translation>
+        <translation>Filer (*.png *.jpg)</translation>
     </message>
 </context>
 <context>
@@ -679,60 +679,60 @@
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="57"/>
         <source>Edit playlist</source>
-        <translation>Editer la liste de lecture</translation>
+        <translation>Redigera spellista</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="63"/>
         <source>playlist name</source>
-        <translation>Nom de la playlist</translation>
+        <translation>spellistsnamn</translation>
     </message>
     <message>
         <source>To database</source>
-        <translation type="vanished">En base de donnée</translation>
+        <translation type="vanished">Till databas</translation>
     </message>
     <message>
         <source>To file</source>
-        <translation type="vanished">Dans un fichier</translation>
+        <translation type="vanished">Till fil</translation>
     </message>
     <message>
         <source>Choose file to save playlist</source>
-        <translation type="vanished">Choisir le fichier à sauver</translation>
+        <translation type="vanished">Välj fil att spara spellistan till</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation type="vanished">Ouvrir</translation>
+        <translation type="vanished">Öppna</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="vanished">Nom</translation>
+        <translation type="vanished">Namn</translation>
     </message>
     <message>
         <source>Add music files or playlist</source>
-        <translation type="vanished">Ajouter des fichiers de musiques ou liste de lectures</translation>
+        <translation type="vanished">Lägg till musikfiler eller spellista</translation>
     </message>
     <message>
         <source>Add music directories</source>
-        <translation type="vanished">Ajouter des dossiers</translation>
+        <translation type="vanished">Lägg till musikkataloger</translation>
     </message>
     <message>
         <source>Save playlist to file</source>
-        <translation type="vanished">Enregistrer la liste de lecture dans un fichier</translation>
+        <translation type="vanished">Spara spellista till fil</translation>
     </message>
     <message>
         <source>&amp;Add media to playlist</source>
-        <translation type="vanished">&amp;Ajouter des fichiers à la liste de lecture</translation>
+        <translation type="vanished">&amp;Lägg till media till spellista</translation>
     </message>
     <message>
         <source>&amp;Add directory to playlist</source>
-        <translation type="vanished">Ajouter un &amp;dossier à la liste de lecture</translation>
+        <translation type="vanished">&amp;Lägg till katalog till spellista</translation>
     </message>
     <message>
         <source>&amp;Add Url...</source>
-        <translation type="vanished">Ajouter un &amp;flux...</translation>
+        <translation type="vanished">&amp;Lägg till Url...</translation>
     </message>
     <message>
         <source>Clear playlist</source>
-        <translation type="vanished">Effacer la liste</translation>
+        <translation type="vanished">Töm spellista</translation>
     </message>
 </context>
 <context>
@@ -740,27 +740,27 @@
     <message>
         <location filename="../src/widgets/editors/editor_search.cpp" line="41"/>
         <source>Search mode</source>
-        <translation>Mode de recherche</translation>
+        <translation>Sökläge</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_search.cpp" line="46"/>
         <source>Match search term (AND)</source>
-        <translation>Chercher les termes (ET)</translation>
+        <translation>Matcha sökterm (OCH)</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_search.cpp" line="48"/>
         <source>Match search term (OR)</source>
-        <translation>Chercher les termes (OU)</translation>
+        <translation>Matcha sökterm (ELLER)</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_search.cpp" line="51"/>
         <source>Search terms</source>
-        <translation>Termes de recherche</translation>
+        <translation>Söktermer</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_search.cpp" line="64"/>
         <source>Add search query</source>
-        <translation>Ajouter une requète de recherche</translation>
+        <translation>Lägg till sökförfrågan</translation>
     </message>
 </context>
 <context>
@@ -768,92 +768,92 @@
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="64"/>
         <source>Edit smart playlist</source>
-        <translation>Editer la liste intélligente</translation>
+        <translation>Redigera smart spellista</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="75"/>
         <source>playlist name</source>
-        <translation>Nom de la liste</translation>
+        <translation>spellistsnamn</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="79"/>
         <source>Name</source>
-        <translation>Nom</translation>
+        <translation>Namn</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="109"/>
         <source>Search mode</source>
-        <translation>Mode de recherche</translation>
+        <translation>Sökläge</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="114"/>
         <source>Match search term (AND)</source>
-        <translation>Chercher les termes (ET)</translation>
+        <translation>Matcha sökterm (OCH)</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="116"/>
         <source>Match search term (OR)</source>
-        <translation>Chercher les termes (OU)</translation>
+        <translation>Matcha sökterm (ELLER)</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="118"/>
         <source>Match all tracks (ALL)</source>
-        <translation>Chercher dans toutes les pistes</translation>
+        <translation>Matcha alla låtar (ALLA)</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="128"/>
         <source>Search terms</source>
-        <translation>Termes de recherche</translation>
+        <translation>Söktermer</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="139"/>
         <source>Add search query</source>
-        <translation>Ajouter une requète de recherche</translation>
+        <translation>Lägg till sökförfrågan</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="148"/>
         <source>Sort result mode</source>
-        <translation>Ordre de trie des résultats</translation>
+        <translation>Resultatsorteringsläge</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="154"/>
         <source>Keep original order</source>
-        <translation>Garder l&apos;ordre initial</translation>
+        <translation>Behåll originalordningen</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="155"/>
         <source>Random</source>
-        <translation>Aléatoire</translation>
+        <translation>Slumpmässig</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="156"/>
         <source>Sort by</source>
-        <translation>Trier par</translation>
+        <translation>Sortera enligt</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="191"/>
         <source>Limit</source>
-        <translation>Limite</translation>
+        <translation>Begränsa</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="198"/>
         <source>No limit</source>
-        <translation>Pas de limite</translation>
+        <translation>Obegränsat</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="199"/>
         <source>Limit at</source>
-        <translation>Limiter à</translation>
+        <translation>Begränsa vid</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="375"/>
         <source>Media Search Engine Dialog</source>
-        <translation>Moteur de recherche de media</translation>
+        <translation>Media Sökmotor Dialog</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="376"/>
         <source>&lt;p&gt;Search query is not valid&lt;/p&gt;</source>
-        <translation>&lt;p&gt;La recherche &apos;est pas valide&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Sökförfrågningen är ogiltig&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -861,32 +861,32 @@
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="151"/>
         <source>Edit track</source>
-        <translation>Editer la piste</translation>
+        <translation>Redigera låt</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="194"/>
         <source>File</source>
-        <translation>Fichier</translation>
+        <translation>Fil</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="198"/>
         <source>Title</source>
-        <translation>Titre</translation>
+        <translation>Titel</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="202"/>
         <source>Album</source>
-        <translation>Album</translation>
+        <translation>Skiva</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="206"/>
         <source>Artist</source>
-        <translation>Artiste</translation>
+        <translation>Artist</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="210"/>
         <source>Year</source>
-        <translation>Année</translation>
+        <translation>Årtal</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="214"/>
@@ -896,17 +896,17 @@
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="218"/>
         <source>Number</source>
-        <translation>Numéro</translation>
+        <translation>Nummer</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="222"/>
         <source>Playcount</source>
-        <translation>Nombre de lecture</translation>
+        <translation>Spelräknare</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="226"/>
         <source>Rating</source>
-        <translation>Note</translation>
+        <translation>Betyg</translation>
     </message>
 </context>
 <context>
@@ -915,28 +915,28 @@
         <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="58"/>
         <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="240"/>
         <source>Save preset</source>
-        <translation>Sauver les paramètres</translation>
+        <translation>Spara förinställning</translation>
     </message>
     <message>
         <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="63"/>
         <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="225"/>
         <source>Delete preset</source>
-        <translation>Supprimer les paramètres</translation>
+        <translation>Ta bort förinställning</translation>
     </message>
     <message>
         <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="75"/>
         <source>Enable equalizer</source>
-        <translation>Activer l&apos;equaliser</translation>
+        <translation>Aktivera equalizer</translation>
     </message>
     <message>
         <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="226"/>
         <source>Are you sure you want to delete the &quot;%1&quot; preset?</source>
-        <translation>Etes vous sur de vouloir supprimer les paramètres &quot;%1&quot; ?</translation>
+        <translation>Är du säker på att du vill ta bort &quot;%1&quot; förinställning?</translation>
     </message>
     <message>
         <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="240"/>
         <source>Name</source>
-        <translation>Nom</translation>
+        <translation>Namn</translation>
     </message>
 </context>
 <context>
@@ -944,13 +944,13 @@
     <message>
         <location filename="../src/models/stream/service_favorite.cpp" line="35"/>
         <source>Favorite streams</source>
-        <translation>Radio favorites</translation>
+        <translation>Favoritströmmar</translation>
     </message>
     <message>
         <location filename="../src/models/stream/service_favorite.cpp" line="39"/>
         <location filename="../src/models/stream/service_favorite.cpp" line="146"/>
         <source>All</source>
-        <translation>Toutes</translation>
+        <translation>Alla</translation>
     </message>
 </context>
 <context>
@@ -958,31 +958,31 @@
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="187"/>
         <source>back</source>
-        <translation>retour</translation>
+        <translation>bakåt</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="194"/>
         <source>forward</source>
-        <translation>précédent</translation>
+        <translation>framåt</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="200"/>
         <source>go up</source>
-        <translation>monter</translation>
+        <translation>gå uppåt</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="206"/>
         <source>home</source>
-        <translation>Début</translation>
+        <translation>hem</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="214"/>
         <source>show hidden file</source>
-        <translation>montrer les fichiers cachés</translation>
+        <translation>Visa dold fil</translation>
     </message>
     <message>
         <source>Audio files (*.mp3 *.wav *.ogg *.flac *.m4a *.aac)</source>
-        <translation type="vanished">Fichier audio (*.mp3 *.wav *.ogg *.flac *.m4a *.aac)</translation>
+        <translation type="vanished">Ljudfiler (*.mp3 *.wav *.ogg *.flac *.m4a *.aac)</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="253"/>
@@ -992,32 +992,32 @@
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="254"/>
         <source>Playlists files (*.m3u *.pls *.xspf)</source>
-        <translation>Listes de lecture (*.m3u *.pls *.xspf)</translation>
+        <translation>Spellistsfiler (*.m3u *.pls *.xspf)</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="255"/>
         <source>All files (*.*)</source>
-        <translation>Tous les fichiers (*.*)</translation>
+        <translation>Alla filer (*.*)</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="259"/>
         <source>All playlist (*.m3u *.pls *.xspf)</source>
-        <translation>Tous les fichiers de liste de lecture (*.m3u *.pls *.xspf)</translation>
+        <translation>All spellistor (*.m3u *.pls *.xspf)</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="260"/>
         <source>m3u playlist (*.m3u)</source>
-        <translation>playlist m3u (*.m3u)</translation>
+        <translation>m3u spellista (*.m3u)</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="261"/>
         <source>pls playlist (*.pls)</source>
-        <translation>playlist pls (*.pls)</translation>
+        <translation>pls spellista (*.pls)</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="262"/>
         <source>xspf playlist (*.xspf)</source>
-        <translation>playlist xspf (*.xspf)</translation>
+        <translation>xspf spellista (*.xspf)</translation>
     </message>
 </context>
 <context>
@@ -1025,34 +1025,34 @@
     <message>
         <location filename="../src/views/filesystem/file_scene.cpp" line="280"/>
         <source>No entry found</source>
-        <translation>Aucune entrée trouvée</translation>
+        <translation>Hittade ingen post</translation>
     </message>
 </context>
 <context>
     <name>FirstTimeDialog</name>
     <message>
         <source>Setup your music collection directory</source>
-        <translation type="vanished">Paramétrer les dossiers pour la bibliothèque</translation>
+        <translation type="vanished">Ställ in din musiksamlings katalog</translation>
     </message>
     <message>
         <source>&lt;p&gt;Welcome to yarock&lt;/p&gt;&lt;p&gt;Select the location of your music collection:&lt;/p&gt;</source>
-        <translation type="vanished">&lt;p&gt;Bienvenue&lt;/p&gt;&lt;p&gt;Choisir le répertoire pour votre bibliothèque musicale:&lt;/p&gt;</translation>
+        <translation type="vanished">&lt;b&gt;Välkommen till yarock&lt;/b&gt;&lt;p&gt;Ingen samling verkar finnas&lt;/p&gt;&lt;p&gt;Vill du ställa in en samling nu ?&lt;/p&gt;</translation>
     </message>
     <message>
         <source> Choose music folder</source>
-        <translation type="vanished">Choix du dossier</translation>
+        <translation type="vanished">Välj musikmapp</translation>
     </message>
 </context>
 <context>
     <name>GraphicsItemMenu</name>
     <message>
         <source>Enqueue to playqueue</source>
-        <translation type="vanished">Mettre dans la file de lecture</translation>
+        <translation type="vanished">Lägg till i spelkön</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="78"/>
         <source>&amp;Remove playlist from disk</source>
-        <translation>&amp;Supprimer la liste de lecture du disque</translation>
+        <translation>&amp;Ta bort spellistan från disken</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="86"/>
@@ -1061,7 +1061,7 @@
         <location filename="../src/views/item_menu.cpp" line="534"/>
         <location filename="../src/views/item_menu.cpp" line="581"/>
         <source>Add to favorites</source>
-        <translation>Ajouter aux favoris</translation>
+        <translation>Lägg till i favoriter</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="64"/>
@@ -1072,7 +1072,7 @@
         <location filename="../src/views/item_menu.cpp" line="83"/>
         <location filename="../src/views/item_menu.cpp" line="89"/>
         <source>Play</source>
-        <translation>Jouer</translation>
+        <translation>Spela upp</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="65"/>
@@ -1083,50 +1083,50 @@
         <location filename="../src/views/item_menu.cpp" line="85"/>
         <location filename="../src/views/item_menu.cpp" line="90"/>
         <source>Add to play queue</source>
-        <translation>Ajouter à la liste de lecture</translation>
+        <translation>Lägg till i spelkö</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="68"/>
         <location filename="../src/views/item_menu.cpp" line="84"/>
         <location filename="../src/views/item_menu.cpp" line="91"/>
         <source>Edit</source>
-        <translation>Editer</translation>
+        <translation>Redigera</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="87"/>
         <source>Website</source>
-        <translation>Site web</translation>
+        <translation>Webbplats</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="151"/>
         <source>%1 artists</source>
-        <translation>%1 artistes</translation>
+        <translation>%1 artister</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="153"/>
         <source>%1 albums</source>
-        <translation>%1 albums</translation>
+        <translation>%1 skivor</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="154"/>
         <source>%1 tracks</source>
-        <translation>%1 pistes</translation>
+        <translation>%1 låtar</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="155"/>
         <source>%1 streams</source>
-        <translation>%1 flux</translation>
+        <translation>%1 strömmar</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="156"/>
         <source>%1 playlist</source>
-        <translation>%1 liste de lecture</translation>
+        <translation>%1 spellista</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="257"/>
         <location filename="../src/views/item_menu.cpp" line="351"/>
         <source>jump to tracks</source>
-        <translation>Aller à la piste en cours de lecture</translation>
+        <translation>hoppa till låtar</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="269"/>
@@ -1134,12 +1134,12 @@
         <location filename="../src/views/item_menu.cpp" line="532"/>
         <location filename="../src/views/item_menu.cpp" line="579"/>
         <source>Remove from favorites</source>
-        <translation>Supprimer des favoris</translation>
+        <translation>Ta bort från favoriter</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="446"/>
         <source>jump to albums</source>
-        <translation>Aller à l&apos;album en cours de lecture</translation>
+        <translation>hoppa till skivor</translation>
     </message>
 </context>
 <context>
@@ -1147,45 +1147,45 @@
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="114"/>
         <source>view grid</source>
-        <translation>vue en grille</translation>
+        <translation>visa rutnät</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="115"/>
         <source>view by tracks</source>
-        <translation>vue par piste</translation>
+        <translation>visa enligt låtar</translation>
     </message>
     <message>
         <source>new playlist</source>
-        <translation type="vanished">nouvelle liste de lecture</translation>
+        <translation type="vanished">ny spellista</translation>
     </message>
     <message>
         <source>new smart playlist</source>
-        <translation type="vanished">nouvelle liste intélligente</translation>
+        <translation type="vanished">ny smart spellista</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="118"/>
         <source>reload history</source>
-        <translation>recharger l&apos;historique</translation>
+        <translation>ladda om historik</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="119"/>
         <source>clear history</source>
-        <translation>vider l&apos;historique</translation>
+        <translation>töm historik</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="296"/>
         <source>Updating music database</source>
-        <translation>Mise à jour de la bibliothèque musicale</translation>
+        <translation>Uppdaterar musikdatabasen</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="837"/>
         <source>Albums</source>
-        <translation>Albums</translation>
+        <translation>Skivor</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="889"/>
         <source>All playlists</source>
-        <translation>Toutes les listes</translation>
+        <translation>Alla spellistor</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene_dashboard.cpp" line="101"/>
@@ -1204,47 +1204,47 @@
         <location filename="../src/views/local/local_scene.cpp" line="993"/>
         <location filename="../src/views/local/local_scene.cpp" line="1095"/>
         <source>No entry found</source>
-        <translation>Aucune entrée trouvée</translation>
+        <translation>Hittade ingen post</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="389"/>
         <source>All Albums</source>
-        <translation>Tous les albums</translation>
+        <translation>Alla skivor</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="788"/>
         <source>Artists</source>
-        <translation>Artistes</translation>
+        <translation>Artister</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="566"/>
         <source>disc %1</source>
-        <translation>disque %1</translation>
+        <translation>disk %1</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="1012"/>
         <source>Smart playlists</source>
-        <translation>Playlistes intelligentes</translation>
+        <translation>Smarta spellistor</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene_dashboard.cpp" line="62"/>
         <source>Most played albums</source>
-        <translation>Albums les plus joués</translation>
+        <translation>Mest spelade skivor</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene_dashboard.cpp" line="115"/>
         <source>Top rated albums</source>
-        <translation>Albums les mieux notés</translation>
+        <translation>Skivor med toppbetyg</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene_dashboard.cpp" line="171"/>
         <source>Most played artists</source>
-        <translation>Artistes les plus joués</translation>
+        <translation>Mest spelade artister</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene_dashboard.cpp" line="240"/>
         <source>Top rated artists</source>
-        <translation>Artistes les mieux notés</translation>
+        <translation>Artister med toppbetyg</translation>
     </message>
 </context>
 <context>
@@ -1253,7 +1253,7 @@
         <location filename="../src/models/local/local_track_model.cpp" line="47"/>
         <location filename="../src/models/local/local_track_model.cpp" line="68"/>
         <source>All</source>
-        <translation>Toutes</translation>
+        <translation>Alla</translation>
     </message>
 </context>
 <context>
@@ -1261,7 +1261,7 @@
     <message>
         <location filename="../src/views/context/lyricseditor.cpp" line="41"/>
         <source>Lyrics editor</source>
-        <translation>Editeur de paroles</translation>
+        <translation>Låttext redigerare</translation>
     </message>
 </context>
 <context>
@@ -1270,27 +1270,27 @@
         <location filename="../src/views/context/context_widget.cpp" line="539"/>
         <location filename="../src/views/context/context_widget.cpp" line="635"/>
         <source>Add file</source>
-        <translation>Ajouter un fichier</translation>
+        <translation>Lägg till fil</translation>
     </message>
     <message>
         <location filename="../src/views/context/context_widget.cpp" line="546"/>
         <source>Remove file</source>
-        <translation>Supprimer le fichier</translation>
+        <translation>Ta bort fil</translation>
     </message>
     <message>
         <location filename="../src/views/context/context_widget.cpp" line="578"/>
         <source>No lyrics found</source>
-        <translation>Aucune parole trouvée</translation>
+        <translation>Hittade inga låttexter</translation>
     </message>
     <message>
         <location filename="../src/views/context/context_widget.cpp" line="532"/>
         <source>Song lyrics</source>
-        <translation>Paroles de la piste</translation>
+        <translation>Låttexter</translation>
     </message>
     <message>
         <location filename="../src/views/context/context_widget.cpp" line="628"/>
         <source>Edit file</source>
-        <translation>Editer le fichier</translation>
+        <translation>Redigera fil</translation>
     </message>
 </context>
 <context>
@@ -1298,32 +1298,32 @@
     <message>
         <location filename="../src/widgets/main/main_left.cpp" line="103"/>
         <source>Apply</source>
-        <translation>Appliquer</translation>
+        <translation>Tillämpa</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/main_left.cpp" line="106"/>
         <source>Cancel</source>
-        <translation>Annuler</translation>
+        <translation>Avbryt</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/main_left.cpp" line="110"/>
         <source>Go back</source>
-        <translation>Précédent</translation>
+        <translation>Gå bakåt</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/main_left.cpp" line="111"/>
         <source>Go forward</source>
-        <translation>Suivant</translation>
+        <translation>Gå framåt</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/main_left.cpp" line="112"/>
         <source>Go up</source>
-        <translation>Monter</translation>
+        <translation>Gå uppåt</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/main_left.cpp" line="119"/>
         <source>Quick filter</source>
-        <translation>Filtre rapide</translation>
+        <translation>Snabbfilter</translation>
     </message>
 </context>
 <context>
@@ -1331,32 +1331,32 @@
     <message>
         <location filename="../src/widgets/main/main_right.cpp" line="98"/>
         <source>New playlist</source>
-        <translation>Nouvelle liste</translation>
+        <translation>Ny spellista</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/main_right.cpp" line="99"/>
         <source>New smart playlist</source>
-        <translation>Nouvelle liste intélligente</translation>
+        <translation>Ny smart spellista</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/main_right.cpp" line="184"/>
         <source>Playqueue</source>
-        <translation>Liste lecture en cours</translation>
+        <translation>Spelkö</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/main_right.cpp" line="188"/>
         <source>Playlist editor</source>
-        <translation>Editeur de liste de lecture</translation>
+        <translation>Spellists redigerare</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/main_right.cpp" line="192"/>
         <source>Tag editor</source>
-        <translation>Editeur d&apos;étiquettes</translation>
+        <translation>Etikettredigerare</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/main_right.cpp" line="196"/>
         <source>Smart editor</source>
-        <translation>Editeur liste intélligente</translation>
+        <translation>Smart redigerare</translation>
     </message>
 </context>
 <context>
@@ -1364,22 +1364,22 @@
     <message>
         <location filename="../src/widgets/main/maintoolbutton.cpp" line="40"/>
         <source>Tools</source>
-        <translation>Outils</translation>
+        <translation>Verktyg</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/maintoolbutton.cpp" line="44"/>
         <source>Choose database</source>
-        <translation>Choisir la base de données</translation>
+        <translation>Välj databas</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/maintoolbutton.cpp" line="50"/>
         <source>&amp;Show/Hide panel</source>
-        <translation>&amp;Monter/Cacher les panneaux</translation>
+        <translation>&amp;Visa/Dölj panel</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/maintoolbutton.cpp" line="54"/>
         <source>&amp;Add to playqueue</source>
-        <translation>&amp;Ajouter à la liste de lecture</translation>
+        <translation>&amp;Lägg till i spelkö</translation>
     </message>
 </context>
 <context>
@@ -1387,221 +1387,221 @@
     <message>
         <location filename="../src/mainwindow.cpp" line="310"/>
         <source>&amp;Quit</source>
-        <translation>&amp;Quitter</translation>
+        <translation>&amp;Avsluta</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="311"/>
         <source>About</source>
-        <translation>A propos</translation>
+        <translation>Om</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="313"/>
         <source>settings</source>
-        <translation>paramètres</translation>
+        <translation>inställningar</translation>
     </message>
     <message>
         <source>&amp;Add media to playlist</source>
-        <translation type="vanished">&amp;Ajouter des fichiers à la liste de lecture</translation>
+        <translation type="vanished">&amp;Lägg till media till spellista</translation>
     </message>
     <message>
         <source>&amp;Add directory to playlist</source>
-        <translation type="vanished">Ajouter un &amp;dossier à la liste de lecture</translation>
+        <translation type="vanished">&amp;Lägg till katalog till spellista</translation>
     </message>
     <message>
         <source>&amp;Add Url...</source>
-        <translation type="vanished">Ajouter un &amp;flux...</translation>
+        <translation type="vanished">&amp;Lägg till Url...</translation>
     </message>
     <message>
         <source>&amp;Clear playlist</source>
-        <translation type="vanished">&amp;Vider la liste de lecture</translation>
+        <translation type="vanished">&amp;Töm spellistan</translation>
     </message>
     <message>
         <source>&amp;Save playlist to file</source>
-        <translation type="vanished">Enre&amp;gistrer la liste de lecture dans un fichier</translation>
+        <translation type="vanished">&amp;Spara spellistan till fil</translation>
     </message>
     <message>
         <source>&amp;Auto save playlist to yarock database</source>
-        <translation type="vanished">&amp;Sauvegarde automatique de la liste</translation>
+        <translation type="vanished">&amp;Autospara spellistan till Yarocks databas</translation>
     </message>
     <message>
         <source>&amp;Remove media from playlist</source>
-        <translation type="vanished">S&amp;upprimer la piste de la liste</translation>
+        <translation type="vanished">&amp;Ta bort media från spellistan</translation>
     </message>
     <message>
         <source>Stop after this track</source>
-        <translation type="vanished">Arreter après cette piste</translation>
+        <translation type="vanished">Stoppa efter denna låt</translation>
     </message>
     <message>
         <source>Remove duplicate</source>
-        <translation type="vanished">Supprimer les doublons</translation>
+        <translation type="vanished">Ta bort dublett</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="315"/>
         <source>Edit</source>
-        <translation>Editer</translation>
+        <translation>Redigera</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="318"/>
         <source>new playlist</source>
-        <translation>nouvelle liste de lecture</translation>
+        <translation>ny spellista</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="319"/>
         <source>new smart playlist</source>
-        <translation>nouvelle liste intélligente</translation>
+        <translation>ny smart spellista</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="324"/>
         <source>Play or Pause media</source>
-        <translation>Lecture ou Mettre en pause</translation>
+        <translation>Spela eller Pausa media</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="325"/>
         <source>Stop playing media</source>
-        <translation>Arreter la lecture</translation>
+        <translation>Stoppa medieuppspelning</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="326"/>
         <source>Play next media</source>
-        <translation>Lecture suivante</translation>
+        <translation>Spela nästa media</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="327"/>
         <source>Play previous media</source>
-        <translation>Lecture précédente</translation>
+        <translation>Spela föregående media</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="331"/>
         <source>Audio equalizer</source>
-        <translation>Equaliser audio</translation>
+        <translation>Ljud equalizer</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="334"/>
         <source>Database operation</source>
-        <translation>Opération sur la base de donnée</translation>
+        <translation>Hantera databas</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="335"/>
         <source>Database add</source>
-        <translation>Ajout base de donnée</translation>
+        <translation>Lägg till databas</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="338"/>
         <source>Show playqueue panel</source>
-        <translation>Montrer le panneau de liste de lecture</translation>
+        <translation>Visa panel för spelkö</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="354"/>
         <source>Enable play on search</source>
-        <translation>Activer lecture automatique sur une recherche</translation>
+        <translation>Aktivera spelning vid sökning</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="860"/>
         <source>Setup your music collection directory</source>
-        <translation>Paramétrer les dossiers pour la bibliothèque</translation>
+        <translation>Ställ in din musiksamlings katalog</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1054"/>
         <source>No equalizer available with this configuration</source>
-        <translation>Aucun equiliseur est disponible pour cette configuration</translation>
+        <translation>Ingen equalizer tillgänglig med denna inställning</translation>
     </message>
     <message>
         <source>Show menu panel</source>
-        <translation type="vanished">Montrer le panneau du menu</translation>
+        <translation type="vanished">Visa menypanel</translation>
     </message>
     <message>
         <source>Show now playing</source>
-        <translation type="vanished">Montrer la lecture en cours</translation>
+        <translation type="vanished">Visa nu spelas</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="342"/>
         <source>Switch to minimal mode</source>
-        <translation>Compact mode</translation>
+        <translation>Växla till minimalt läge</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="343"/>
         <source>Switch to normal mode</source>
-        <translation>Normal mode</translation>
+        <translation>Växla till normalläge</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="316"/>
         <source>Send LastFm love</source>
-        <translation>Envoyer j&apos;aime à LastFm</translation>
+        <translation>Skicka LastFm kärlek</translation>
     </message>
     <message>
         <source>Show cover</source>
-        <translation type="vanished">Montrer les pochettes</translation>
+        <translation type="vanished">Visa omslag</translation>
     </message>
     <message>
         <source>Show rating</source>
-        <translation type="vanished">Montrer les notes</translation>
+        <translation type="vanished">Visa betyg</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="346"/>
         <source>Jump to artist</source>
-        <translation>Aller à l&apos;artiste en cours de lecture</translation>
+        <translation>Hoppa till artist</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="347"/>
         <source>Jump to album</source>
-        <translation>Aller à l&apos;album en cours de lecture</translation>
+        <translation>Hoppa till skiva</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="348"/>
         <source>Jump to track</source>
-        <translation>Aller à la piste en cours de lecture</translation>
+        <translation>Hoppa till låt</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="351"/>
         <source>Enable search popup</source>
-        <translation>Autoriser le menu de completion</translation>
+        <translation>Aktivera popup för sökning</translation>
     </message>
     <message>
         <source>Add music files or playlist</source>
-        <translation type="vanished">Ajouter des fichiers de musiques ou liste de lectures</translation>
+        <translation type="vanished">Lägg till musikfiler eller spellista</translation>
     </message>
     <message>
         <source>Add music directories</source>
-        <translation type="vanished">Ajouter un répertoire</translation>
+        <translation type="vanished">Lägg till musikkataloger</translation>
     </message>
     <message>
         <source>Save playlist to file</source>
-        <translation type="vanished">Enregistrer la liste de lecture dans un fichier</translation>
+        <translation type="vanished">Spara spellista till fil</translation>
     </message>
     <message>
         <source>Playlist name</source>
-        <translation type="vanished">entrer un nom de liste de lecture</translation>
+        <translation type="vanished">Spellistsnamn</translation>
     </message>
     <message>
         <source>Save playlist</source>
-        <translation type="vanished">Enregistrer la liste de lecture dans un fichier</translation>
+        <translation type="vanished">Spara spellista</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="537"/>
         <source>Playing error</source>
-        <translation>Erreur de lecture</translation>
+        <translation>Fel vid uppspelning</translation>
     </message>
     <message>
         <source>settings saved</source>
-        <translation type="vanished">paramètres sauvegardés</translation>
+        <translation type="vanished">inställningarna sparade</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="885"/>
         <source>&lt;p&gt;Database need to be rebuilt&lt;/p&gt;</source>
-        <translation>&lt;p&gt;La base de donnée doit être reconstruite&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Databasen behöver byggas om&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="887"/>
         <source>Database revision update</source>
-        <translation>Mise à jour de la version de la bibliothèque</translation>
+        <translation>Reviderings uppdatering för databasen</translation>
     </message>
     <message>
         <source>&lt;b&gt;Equalizer is not available&lt;/b&gt;&lt;p&gt;Equalizer wasn&apos;t found, probably you are using a backend that doesn&apos;t support it.&lt;/p&gt;&lt;p&gt;Change to another backend (gstreamer is supported) if you want to have equalizer&lt;/p&gt;</source>
-        <translation type="vanished">&lt;b&gt;L&apos;égaliseur n&apos;est pas disponible&lt;/b&gt;&lt;p&gt;Égaliseur n&apos;a pas été trouvé, probablement vous utilisez un backend qui ne le supporte pas&lt;/p&gt;&lt;p&gt;Changer de backend (gstreamer est supporté(soutenu)) si vous voulez avoir l&apos;égaliseur&lt;p&gt;</translation>
+        <translation type="vanished">b&gt;Equalizern är inte tillgänglig&lt;/b&gt;&lt;p&gt;Equalizern hittades inte, du använder antagligen en bakände som inte stöder den.&lt;/p&gt;&lt;p&gt;Byt till en annan bakände (gstreamer stöds) om du vill använda equalizern&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Equalizer information</source>
-        <translation type="vanished">Equaliser dialogue</translation>
+        <translation type="vanished">Information om Equalizern</translation>
     </message>
 </context>
 <context>
@@ -1609,48 +1609,48 @@
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="135"/>
         <source>home</source>
-        <translation>début</translation>
+        <translation>hem</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="138"/>
         <source>music browser</source>
-        <translation>musique locale</translation>
+        <translation>musikbläddrare</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="141"/>
         <source>playlist browser</source>
-        <translation>listes de lectures</translation>
+        <translation>spellistsbläddrare</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="144"/>
         <source>radio browser</source>
-        <translation>radio</translation>
+        <translation>radiobläddrare</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="147"/>
         <source>computer</source>
-        <translation>ordinateur</translation>
+        <translation>dator</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="150"/>
         <location filename="../src/widgets/main/menumodel.cpp" line="237"/>
         <source>settings</source>
-        <translation>paramètres</translation>
+        <translation>inställningar</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="158"/>
         <source>context</source>
-        <translation>contexte de lecture</translation>
+        <translation>information</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="161"/>
         <source>dashboard</source>
-        <translation>tableau de bord</translation>
+        <translation>instrumentpanel</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="164"/>
         <source>history</source>
-        <translation>historique</translation>
+        <translation>historik</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="180"/>
@@ -1660,73 +1660,73 @@
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="227"/>
         <source>home directory</source>
-        <translation>répertoire home</translation>
+        <translation>hemkatalog</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="230"/>
         <source>root directory</source>
-        <translation>répertoire root</translation>
+        <translation>rootkatalog</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="240"/>
         <source>about</source>
-        <translation>à propos</translation>
+        <translation>om</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="250"/>
         <source>choose database</source>
-        <translation>Choisir la base de donnée</translation>
+        <translation>välj databas</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="192"/>
         <source>playlists</source>
-        <translation>lise de lecture</translation>
+        <translation>spellistor</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="171"/>
         <source>artists</source>
-        <translation>artists</translation>
+        <translation>artister</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="174"/>
         <source>albums</source>
-        <translation>albums</translation>
+        <translation>skivor</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="177"/>
         <source>tracks</source>
-        <translation>pistes</translation>
+        <translation>låtar</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="183"/>
         <source>years</source>
-        <translation>années</translation>
+        <translation>årtal</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="186"/>
         <source>favorites</source>
-        <translation>favoris</translation>
+        <translation>favoriter</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="195"/>
         <source>smart playlists</source>
-        <translation>listes intélligentes</translation>
+        <translation>smarta spellistor</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="220"/>
         <source>favorite stream</source>
-        <translation>radio favorites</translation>
+        <translation>favoritströmmar</translation>
     </message>
 </context>
 <context>
     <name>MenuWidget</name>
     <message>
         <source>show extended menu</source>
-        <translation type="vanished">Menu etendu</translation>
+        <translation type="vanished">visa utökad meny</translation>
     </message>
     <message>
         <source>show compact menu</source>
-        <translation type="vanished">menu compact</translation>
+        <translation type="vanished">visa kompakt meny</translation>
     </message>
 </context>
 <context>
@@ -1734,23 +1734,23 @@
     <message>
         <location filename="../src/widgets/playertoolbar/nowplayingpopup.cpp" line="138"/>
         <source>Add to play queue</source>
-        <translation>Ajouter à la liste de lecture</translation>
+        <translation>Lägg till i spelkö</translation>
     </message>
     <message>
         <location filename="../src/widgets/playertoolbar/nowplayingpopup.cpp" line="141"/>
         <source>Add to favorites</source>
-        <translation>Ajouter aux favoris</translation>
+        <translation>Lägg till i favoriter</translation>
     </message>
 </context>
 <context>
     <name>NowPlayingView</name>
     <message>
         <source>Edit</source>
-        <translation type="vanished">Editer</translation>
+        <translation type="vanished">Redigera</translation>
     </message>
     <message>
         <source>Send LastFm love</source>
-        <translation type="vanished">Envoyer j&apos;aime à LastFm</translation>
+        <translation type="vanished">Skicka LastFm kärlek</translation>
     </message>
 </context>
 <context>
@@ -1758,32 +1758,32 @@
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="63"/>
         <source>General</source>
-        <translation>Général</translation>
+        <translation>Allmänt</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="88"/>
         <source>Enable Mpris</source>
-        <translation>Activer le controle à distance par Mpris</translation>
+        <translation>Aktivera Mpris</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="91"/>
         <source>Enable notification</source>
-        <translation>Activer les notifications</translation>
+        <translation>Aktivera notiser</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="95"/>
         <source>Minimize application to systray</source>
-        <translation>Réduire l&apos; application dans la barre des taches</translation>
+        <translation>Minimera programmet till systemfältet</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="98"/>
         <source>Hide window at startup</source>
-        <translation>Cacher la fenetre au démarrage</translation>
+        <translation>Dölj fönstret vid start</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="110"/>
         <source>Choose color</source>
-        <translation>Choisir la color</translation>
+        <translation>Välj färg</translation>
     </message>
 </context>
 <context>
@@ -1791,112 +1791,112 @@
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="579"/>
         <source>Library settings</source>
-        <translation>Paramètres de la collection</translation>
+        <translation>Biblioteksinställningar</translation>
     </message>
     <message>
         <source>Database Name</source>
-        <translation type="vanished">Nom de la bibliothèque</translation>
+        <translation type="vanished">Namn på Databas</translation>
     </message>
     <message>
         <source>Enable Multi Database support</source>
-        <translation type="vanished">Autoriser le support de bibliothèque multiples</translation>
+        <translation type="vanished">Aktivera stöd för Multi Databas</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="612"/>
         <location filename="../src/views/settings/settings_widget.cpp" line="858"/>
         <location filename="../src/views/settings/settings_widget.cpp" line="871"/>
         <source>New database</source>
-        <translation>Nouvelle base de données</translation>
+        <translation>Ny databas</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="616"/>
         <source>Delete database</source>
-        <translation>Supprimer la base de données</translation>
+        <translation>Ta bort databas</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="620"/>
         <location filename="../src/views/settings/settings_widget.cpp" line="944"/>
         <source>Rename database</source>
-        <translation>Renommer la base de données</translation>
+        <translation>Döp om databasen</translation>
     </message>
     <message>
         <source>Database Properties</source>
-        <translation type="vanished">Propriétés de la bibliothèque</translation>
+        <translation type="vanished">Egenskaper för Databas</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="601"/>
         <source>Collection</source>
-        <translation>Collection</translation>
+        <translation>Samling</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="630"/>
         <source>Properties</source>
-        <translation>Propriétés</translation>
+        <translation>Egenskaper</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="641"/>
         <location filename="../src/views/settings/settings_widget.cpp" line="987"/>
         <source> Choose music folder</source>
-        <translation>Choisir le dossier</translation>
+        <translation>Välj musikmapp</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="648"/>
         <source>Add ...</source>
-        <translation>Ajouter...</translation>
+        <translation>Lägg till ...</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="652"/>
         <source>Update collections automatically after start</source>
-        <translation>Mettre à jour la bibliothèque à chaque démarrage</translation>
+        <translation>Uppdatera samlingarna automatiskt efter start</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="656"/>
         <source>Search cover art from file directory</source>
-        <translation>Rechercher les pochettes dans les dossiers</translation>
+        <translation>Sök omslagsbilder från filkatalog</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="660"/>
         <source>Group multi disc albums as one album</source>
-        <translation>Grouper les albums à plusieurs disques</translation>
+        <translation>Gruppera multidiskskivor som en skiva</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="664"/>
         <source>Use artist image (album cover stack otherwise)</source>
-        <translation>Utiliser les images d&apos;artistes (pile d&apos;albums sinon)</translation>
+        <translation>Använd artistbild (annars används omslagsbild)</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="668"/>
         <source>Write rating to file</source>
-        <translation>Ecrire les notes dans les fichiers</translation>
+        <translation>Skriv betyg till fil</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="858"/>
         <location filename="../src/views/settings/settings_widget.cpp" line="944"/>
         <source>Name</source>
-        <translation>Nom</translation>
+        <translation>Namn</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="872"/>
         <source>The database  &quot;%1&quot; already exists, please try another name</source>
-        <translation>La base de données &quot;%1&quot; existe déja, veuillez choisir un autre nom</translation>
+        <translation>Databasen &quot;%1&quot; finns redan, var god och försök med ett annat namn</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="926"/>
         <source>Are you sure you want to delete the &quot;%1&quot; database?</source>
-        <translation>Etes vous sur de vouloir supprimer la base de données &quot;%1&quot; ?</translation>
+        <translation>Är du säker på att du vill ta bort databasen &quot;%1&quot; ?</translation>
     </message>
     <message>
         <source>The database  &quot;%1&quot; already exist, please try another name</source>
-        <translation type="vanished">La bibliothèque &quot;%1&quot; existe déja, merci de choisir un autre nom</translation>
+        <translation type="vanished">Databasen &quot;%1&quot; finns redan, var god och försök med ett annat namn</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="925"/>
         <source>Delete database properties</source>
-        <translation>Supprimer la bibliothèque</translation>
+        <translation>Ta bort egenskaperna för databasen</translation>
     </message>
     <message>
         <source>Are you sure you want to delete the &quot;%1&quot; database ?</source>
-        <translation type="vanished">Etes vous sur de vouloir supprimer la bibliothèque &quot;%1&quot; ?</translation>
+        <translation type="vanished">Är du säker på att du vill ta bort databasen &quot;%1&quot; ?</translation>
     </message>
 </context>
 <context>
@@ -1904,32 +1904,32 @@
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="270"/>
         <source>Player settings</source>
-        <translation>Parametres du lecteur</translation>
+        <translation>Spelarinställningar</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="355"/>
         <source>Stop playing on playqueue clear</source>
-        <translation>Arreter la lecture lorsque que la liste de lecture est vidée</translation>
+        <translation>Sluta spela spelkön när den töms</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="358"/>
         <source>Restart playing at startup</source>
-        <translation>Réprendre la lecture au démarrage</translation>
+        <translation>Återuppta uppspelning vid start</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="361"/>
         <source>Restore last playqueue content at startup</source>
-        <translation>Recharger la liste de lecture au démarrage</translation>
+        <translation>Återställ innehållet i senaste spelkö vid start</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="364"/>
         <source>Use ReplayGain</source>
-        <translation>Utiliser les métadonnées ReplayGain</translation>
+        <translation>Använd ReplayGain</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="377"/>
         <source>Engine</source>
-        <translation>Moteur de recherche de media</translation>
+        <translation>Motor</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="380"/>
@@ -1939,7 +1939,7 @@
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="383"/>
         <source>Others</source>
-        <translation>Autres</translation>
+        <translation>Övrigt</translation>
     </message>
 </context>
 <context>
@@ -1947,66 +1947,66 @@
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1412"/>
         <source>Scrobbler settings</source>
-        <translation>Paramètres du srobbler</translation>
+        <translation>Scrobbler inställningar</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1436"/>
         <source>Use LastFm scrobbler</source>
-        <translation>Activer le scrobbler LastFm</translation>
+        <translation>Använd LastFm&apos;s scrobbler</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1446"/>
         <source>Account details</source>
-        <translation>Détails du compte</translation>
+        <translation>Kontodetaljer</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1452"/>
         <source>username</source>
-        <translation>utilisateur</translation>
+        <translation>användarnamn</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1455"/>
         <source>password</source>
-        <translation>mot de passe</translation>
+        <translation>lösenord</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1468"/>
         <location filename="../src/views/settings/settings_widget.cpp" line="1591"/>
         <source>Sign In</source>
-        <translation>Se connecter</translation>
+        <translation>Logga In</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1584"/>
         <source>You are log in Last.fm service as &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation>Vous etes connecté à LastFm en tant que &lt;b&gt;%1&lt;/b&gt;</translation>
+        <translation>Du är inloggad på LastFm&apos;s tjänst som &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1590"/>
         <source>You are not logged in</source>
-        <translation>Vous êtes déconnecté</translation>
+        <translation>Du är inte inloggad</translation>
     </message>
     <message>
         <source>You are log in lastFm service as &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation type="vanished">Vous etes connecté à LastFm en tant que &lt;b&gt;%1&lt;/b&gt;</translation>
+        <translation type="vanished">Du är inloggad på LastFm&apos;s tjänst som &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1586"/>
         <source>Sign Out</source>
-        <translation>Se deconnecter</translation>
+        <translation>Logga Ut</translation>
     </message>
     <message>
         <source>You are not log into</source>
-        <translation type="vanished">Vous etes déconnecté</translation>
+        <translation type="vanished">Du är inte inloggad</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1625"/>
         <source>Authentication failed</source>
-        <translation>Echec à l&apos;autentification</translation>
+        <translation>Autentisering misslyckades</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1626"/>
         <source>Your Last.fm credentials were incorrect</source>
-        <translation>Vos paramètres de compte sont inccorects</translation>
+        <translation>Dina kriterier för LastFM var felaktiga</translation>
     </message>
 </context>
 <context>
@@ -2014,52 +2014,52 @@
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1085"/>
         <source>Shortcut settings</source>
-        <translation>Paramètres des raccourcis</translation>
+        <translation>Genvägsinställningar</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1096"/>
         <source>Play/Pause</source>
-        <translation>Jouer/Pause</translation>
+        <translation>Spela/Pausa</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1097"/>
         <source>Stop</source>
-        <translation>Stopper</translation>
+        <translation>Stoppa</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1098"/>
         <source>Previous track</source>
-        <translation>Lecture précédente</translation>
+        <translation>Föregående låt</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1099"/>
         <source>Next track</source>
-        <translation>Lecture suivante</translation>
+        <translation>Nästa låt</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1100"/>
         <source>Increase volume</source>
-        <translation>Augmenter le volume</translation>
+        <translation>Höj volymen</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1101"/>
         <source>Decrease volume</source>
-        <translation>Baisser le volume</translation>
+        <translation>Sänk volymen</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1102"/>
         <source>Mute/Unmute volume</source>
-        <translation>Activer/désactiver coupure du son</translation>
+        <translation>Tysta/Avtysta volymen</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1103"/>
         <source>Jump to track</source>
-        <translation>Aller à la piste en cours de lecture</translation>
+        <translation>Hoppa till låt</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1104"/>
         <source>Clear playqueue</source>
-        <translation>Vider la liste de lecture</translation>
+        <translation>Töm spelkön</translation>
     </message>
 </context>
 <context>
@@ -2067,22 +2067,22 @@
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1672"/>
         <source>Song info</source>
-        <translation>Informations sur le morceau</translation>
+        <translation>Låtinfo</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1690"/>
         <source>Choose the websites you want to use when searching for lyrics</source>
-        <translation>Choississez les sites que vous voulez utiliser pour la recherche de paroles</translation>
+        <translation>Välj vilka webbtjänster du vill använda för att söka efter låttexter</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1696"/>
         <source>move up</source>
-        <translation>monter</translation>
+        <translation>flytta uppåt</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1697"/>
         <source>move down</source>
-        <translation>descendre</translation>
+        <translation>flytta nedåt</translation>
     </message>
 </context>
 <context>
@@ -2090,22 +2090,22 @@
     <message>
         <location filename="../src/widgets/playertoolbar/playertoolbar.cpp" line="152"/>
         <source>[paused]</source>
-        <translation>[en pause]</translation>
+        <translation>Pausad</translation>
     </message>
     <message>
         <source>&lt;b&gt;%1&lt;/b&gt; by &lt;b&gt;%2&lt;/b&gt; on &lt;b&gt;%3&lt;/b&gt;</source>
-        <translation type="vanished">&lt;b&gt;%1&lt;/b&gt; de &lt;b&gt;%2&lt;/b&gt; de &lt;b&gt;%3&lt;/b&gt;</translation>
+        <translation type="vanished">&lt;b&gt;%1&lt;/b&gt; av &lt;b&gt;%2&lt;/b&gt; på &lt;b&gt;%3&lt;/b&gt;</translation>
     </message>
     <message>
         <source>&lt;b&gt;%1&lt;/b&gt; stream</source>
-        <translation type="vanished">&lt;b&gt;%1&lt;/b&gt; radio</translation>
+        <translation type="vanished">&lt;b&gt;%1&lt;/b&gt; ström</translation>
     </message>
 </context>
 <context>
     <name>PlaylistDbWriter</name>
     <message>
         <source>no name</source>
-        <translation type="vanished">aucun nom</translation>
+        <translation type="vanished">utan namn</translation>
     </message>
 </context>
 <context>
@@ -2113,7 +2113,7 @@
     <message>
         <location filename="../src/playqueue/playlistview.cpp" line="638"/>
         <source>media reading error</source>
-        <translation>erreur de lecture du media</translation>
+        <translation>fel vid medialäsning</translation>
     </message>
 </context>
 <context>
@@ -2121,7 +2121,7 @@
     <message>
         <location filename="../src/playqueue/playlistview.cpp" line="258"/>
         <source>Add file to play or Drag and Drop File from Collection</source>
-        <translation>Ajouter des fichiers ou glisser déposer les fichiers depuis la bibliothèque</translation>
+        <translation>Lägg till en fil att spela eller Dra och Släpp en fil från din Samling</translation>
     </message>
 </context>
 <context>
@@ -2129,142 +2129,142 @@
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="69"/>
         <source>Jump to track</source>
-        <translation>Aller à la piste en cours de lecture</translation>
+        <translation>Hoppa till låt</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="71"/>
         <source>&amp;Add media to playlist</source>
-        <translation>&amp;Ajouter des fichiers à la liste de lecture</translation>
+        <translation>&amp;Lägg till media i spellistan</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="72"/>
         <source>&amp;Add directory to playlist</source>
-        <translation>Ajouter un &amp;dossier à la liste de lecture</translation>
+        <translation>&amp;Lägg till katalog i spellistan</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="73"/>
         <source>&amp;Add Url...</source>
-        <translation>Ajouter un &amp;flux...</translation>
+        <translation>&amp;Lägg till Url...</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="74"/>
         <source>&amp;Clear playlist</source>
-        <translation>&amp;Vider la liste de lecture</translation>
+        <translation>&amp;Töm spellistan</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="75"/>
         <source>&amp;Export playlist to file</source>
-        <translation>&amp;Exporter la liste de lecture dans un fichier</translation>
+        <translation>&amp;Expotera spellistan till fil</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="76"/>
         <source>&amp;Save playlist</source>
-        <translation>&amp;Sauvegarder la liste de lecture</translation>
+        <translation>&amp;Spara spellistan</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="77"/>
         <source>&amp;Remove media from playlist</source>
-        <translation>S&amp;upprimer la piste de la liste</translation>
+        <translation>&amp;Ta bort media från spellistan</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="78"/>
         <source>Remove duplicate</source>
-        <translation>Supprimer les doublons</translation>
+        <translation>Ta bort dublett</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="83"/>
         <source>Send LastFm love</source>
-        <translation>Envoyer j&apos;aime à LastFm</translation>
+        <translation>Skicka LastFm kärlek</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="85"/>
         <source>Show cover</source>
-        <translation>Montrer les pochettes</translation>
+        <translation>Visa omslag</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="89"/>
         <source>Show rating</source>
-        <translation>Montrer les notes</translation>
+        <translation>Visa betyg</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="93"/>
         <source>Show track number</source>
-        <translation>Montrer les numéro de pistes</translation>
+        <translation>Visa låtnummer</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="103"/>
         <source>sort</source>
-        <translation>trier</translation>
+        <translation>sortera</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="105"/>
         <source>Sort playqueue</source>
-        <translation>Trier la liste de lecture</translation>
+        <translation>Sortera spelkö</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="113"/>
         <source>Playqueue filter</source>
-        <translation>Filtrer la liste de lecture</translation>
+        <translation>Filter för spelkö</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="133"/>
         <source>Show filter</source>
-        <translation>Montrer le filtre</translation>
+        <translation>Visa filter</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="137"/>
         <source>Stop after this track</source>
-        <translation>Arreter après cette piste</translation>
+        <translation>Stoppa efter denna låt</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="221"/>
         <source>Empty Playlist</source>
-        <translation>Liste vide</translation>
+        <translation>Töm Spellista</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="223"/>
         <source>Playlist : &lt;b&gt;%1&lt;/b&gt; tracks - %2</source>
-        <translation>Liste : &lt;b&gt;%1&lt;/b&gt; pistes - %2</translation>
+        <translation>Spellista : &lt;b&gt;%1&lt;/b&gt; låtar - %2</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="304"/>
         <source>Add</source>
-        <translation>Ajouter</translation>
+        <translation>Lägg till</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="320"/>
         <source>Display options</source>
-        <translation>Options d&apos;affichage</translation>
+        <translation>Visningsalternativ</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="325"/>
         <source>Widgets options</source>
-        <translation>Options des widgets</translation>
+        <translation>Alternativ för miniprogram</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="360"/>
         <source>Add music files or playlist</source>
-        <translation>Ajouter des fichiers de musiques ou liste de lectures</translation>
+        <translation>Lägg till musikfiler eller spellista</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="372"/>
         <source>Add music directories</source>
-        <translation>Ajouter un répertoire de musique</translation>
+        <translation>Lägg till musikkataloger</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="419"/>
         <source>Export playlist to file</source>
-        <translation>Exporter la liste de lecture dans un fichier</translation>
+        <translation>Expotera spellistan till fil</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="431"/>
         <source>name</source>
-        <translation>nom</translation>
+        <translation>namn</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="431"/>
         <source>Save playlist</source>
-        <translation>Enregistrer la liste de lecture dans un fichier</translation>
+        <translation>Spara spellista</translation>
     </message>
 </context>
 <context>
@@ -2272,47 +2272,47 @@
     <message>
         <location filename="../src/core/mediaitem/mediaitem.cpp" line="202"/>
         <source>Today</source>
-        <translation>Aujourd&apos;hui</translation>
+        <translation>Idag</translation>
     </message>
     <message>
         <location filename="../src/core/mediaitem/mediaitem.cpp" line="204"/>
         <source>Yesterday</source>
-        <translation>Hier</translation>
+        <translation>Igår</translation>
     </message>
     <message>
         <location filename="../src/core/mediaitem/mediaitem.cpp" line="206"/>
         <source>%1 days ago</source>
-        <translation>il y a %1 jours</translation>
+        <translation>%1 dagar sedan</translation>
     </message>
     <message>
         <location filename="../src/core/mediaitem/tag.cpp" line="572"/>
         <source>unknown artist</source>
-        <translation>artiste inconnu</translation>
+        <translation>okänd artist</translation>
     </message>
     <message>
         <location filename="../src/core/mediaitem/tag.cpp" line="575"/>
         <source>unknown album</source>
-        <translation>album inconnu</translation>
+        <translation>okänd skiva</translation>
     </message>
     <message>
         <location filename="../src/core/mediaitem/tag.cpp" line="578"/>
         <source>unknown genre</source>
-        <translation>genre inconnu</translation>
+        <translation>okänd genre</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="118"/>
         <source>Filename</source>
-        <translation>Nom de fichier</translation>
+        <translation>Filnamn</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="119"/>
         <source>Title</source>
-        <translation>Titre</translation>
+        <translation>Titel</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="120"/>
         <source>Album</source>
-        <translation>Album</translation>
+        <translation>Skiva</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="121"/>
@@ -2322,187 +2322,187 @@
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="122"/>
         <source>Duration</source>
-        <translation>Durée</translation>
+        <translation>Längd</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="123"/>
         <source>Track Year</source>
-        <translation>Année de la piste</translation>
+        <translation>Årtal för Låt</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="124"/>
         <source>Album Year</source>
-        <translation>Année de l&apos;album</translation>
+        <translation>Årtal för Skiva</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="125"/>
         <source>Number</source>
-        <translation>Numéro</translation>
+        <translation>Nummer</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="126"/>
         <source>Track Playcount</source>
-        <translation>Nombre de lecture de la piste</translation>
+        <translation>Spelräknare för Låt</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="127"/>
         <source>Album Playcount</source>
-        <translation>Nombre de lecture de l&apos;album</translation>
+        <translation>Spelräknare för Skiva</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="128"/>
         <source>Artist Playcount</source>
-        <translation>Nombre de lecture de l&apos;artiste</translation>
+        <translation>Spelräknare för Artist</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="129"/>
         <source>Artist</source>
-        <translation>Artiste</translation>
+        <translation>Artist</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="130"/>
         <source>Last Played date</source>
-        <translation>Date de lecture la plus récente</translation>
+        <translation>Datum för Senast Spelad</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="131"/>
         <source>Track rating</source>
-        <translation>Note de la piste</translation>
+        <translation>Låtbetyg</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="132"/>
         <source>Album rating</source>
-        <translation>Note de l&apos;album</translation>
+        <translation>Skivbetyg</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="133"/>
         <source>Artist rating</source>
-        <translation>Note de l&apos;artiste</translation>
+        <translation>Artistbetyg</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="145"/>
         <source>after</source>
-        <translation>aprés</translation>
+        <translation>efter</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="146"/>
         <source>before</source>
-        <translation>avant</translation>
+        <translation>före</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="147"/>
         <source>on</source>
-        <translation>le</translation>
+        <translation>den</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="148"/>
         <source>not on</source>
-        <translation>n&apos;est pas le</translation>
+        <translation>inte den</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="154"/>
         <source>contains</source>
-        <translation>contiens</translation>
+        <translation>innehåller</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="155"/>
         <source>does not contain</source>
-        <translation>ne contiens pa</translation>
+        <translation>innehåller inte</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="156"/>
         <source>starts with</source>
-        <translation>commence par</translation>
+        <translation>börjar med</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="157"/>
         <source>ends with</source>
-        <translation>termine par</translation>
+        <translation>slutar med</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="158"/>
         <source>greater than</source>
-        <translation>supérieur à</translation>
+        <translation>större än</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="159"/>
         <source>less than</source>
-        <translation>inférieur à</translation>
+        <translation>mindre än</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="160"/>
         <source>equals</source>
-        <translation>egal à</translation>
+        <translation>är lika med</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="161"/>
         <source>not equals</source>
-        <translation>différent de</translation>
+        <translation>är inte lika med</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="171"/>
         <source>A-Z</source>
-        <translation>A-Z</translation>
+        <translation>A-Ö</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="171"/>
         <source>Z-A</source>
-        <translation>Z-A</translation>
+        <translation>Ö-A</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="172"/>
         <source>oldest first</source>
-        <translation>la plus ancienne d&apos;abord</translation>
+        <translation>äldsta först</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="172"/>
         <source>newest first</source>
-        <translation>la plus récente d&apos;abord</translation>
+        <translation>nyaste först</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="173"/>
         <source>shortest first</source>
-        <translation>le plus petit d&apos;abord</translation>
+        <translation>kortaste först</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="173"/>
         <source>longest first</source>
-        <translation>le plus grand d&apos;abord</translation>
+        <translation>längsta först</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="175"/>
         <source>smallest first</source>
-        <translation>le plus petit d&apos;abord</translation>
+        <translation>minsta först</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="175"/>
         <source>biggest first</source>
-        <translation>le plus grand d&apos;abord</translation>
+        <translation>största först</translation>
     </message>
     <message>
         <location filename="../src/views/context/context_scene.cpp" line="146"/>
         <source>Wait for information</source>
-        <translation>Attendre les informations</translation>
+        <translation>Vänta på information</translation>
     </message>
     <message>
         <location filename="../src/views/context/context_scene.cpp" line="164"/>
         <source>Player is stopped</source>
-        <translation>Lecture arrêtée</translation>
+        <translation>Spelaren är stoppad</translation>
     </message>
     <message>
         <location filename="../src/views/stream/stream_scene.cpp" line="241"/>
         <source>downloading streams from %1....please wait...</source>
-        <translation>téléchargement des radio de %1...merci de patienter...</translation>
+        <translation>laddar ner strömmar från %1....var god vänta...</translation>
     </message>
     <message>
         <location filename="../src/views/stream/stream_scene.cpp" line="248"/>
         <source>error accessing stream from %1 !</source>
-        <translation>erreur d&apos;accès au radio de %1 !</translation>
+        <translation>åtkomstfel till ström från %1 !</translation>
     </message>
     <message>
         <location filename="../src/widgets/exlineedit.cpp" line="49"/>
         <source>Clear</source>
-        <translation>Effacer</translation>
+        <translation>Töm</translation>
     </message>
 </context>
 <context>
@@ -2511,17 +2511,17 @@
         <location filename="../src/widgets/playertoolbar/audiocontrols.cpp" line="39"/>
         <location filename="../src/widgets/playertoolbar/audiocontrols.cpp" line="67"/>
         <source>Repeat mode is off</source>
-        <translation>Pas de répétition</translation>
+        <translation>Upprepningsläget är av</translation>
     </message>
     <message>
         <location filename="../src/widgets/playertoolbar/audiocontrols.cpp" line="71"/>
         <source>Repeat track</source>
-        <translation>Répéter la piste</translation>
+        <translation>Upprepa låt</translation>
     </message>
     <message>
         <location filename="../src/widgets/playertoolbar/audiocontrols.cpp" line="75"/>
         <source>Repeat all</source>
-        <translation>Tous répéter</translation>
+        <translation>Upprepa allt</translation>
     </message>
 </context>
 <context>
@@ -2529,7 +2529,7 @@
     <message>
         <location filename="../src/widgets/searchline_edit.cpp" line="104"/>
         <source>Custom search</source>
-        <translation>Recherche avancée</translation>
+        <translation>Anpassad sökning</translation>
     </message>
 </context>
 <context>
@@ -2542,11 +2542,11 @@
     <message>
         <location filename="../src/views/settings/settings_scene.cpp" line="233"/>
         <source>Settings saved</source>
-        <translation>Préférences sauvées</translation>
+        <translation>Inställningarna sparade</translation>
     </message>
     <message>
         <source>Restart needed</source>
-        <translation type="vanished">Redémarrage nécessaire</translation>
+        <translation type="vanished">Omstart krävs</translation>
     </message>
 </context>
 <context>
@@ -2554,12 +2554,12 @@
     <message>
         <location filename="../src/widgets/dialogs/shortcutdialog.cpp" line="35"/>
         <source>Change shortcut</source>
-        <translation>Changer les raccourcis</translation>
+        <translation>Ändra genväg</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/shortcutdialog.cpp" line="41"/>
         <source>Press a keys that you want to set as a shortcut</source>
-        <translation>Presser une combinaison de touches</translation>
+        <translation>Tryck på den tangent som du vill använda som genväg</translation>
     </message>
 </context>
 <context>
@@ -2568,12 +2568,12 @@
         <location filename="../src/widgets/playertoolbar/audiocontrols.cpp" line="96"/>
         <location filename="../src/widgets/playertoolbar/audiocontrols.cpp" line="124"/>
         <source>Shuffle mode is off</source>
-        <translation>Pas de lecture aléatoire</translation>
+        <translation>Blandningsläget är av</translation>
     </message>
     <message>
         <location filename="../src/widgets/playertoolbar/audiocontrols.cpp" line="128"/>
         <source>Shuffle mode is on</source>
-        <translation>Lecture aléatoire</translation>
+        <translation>Blandningsläget är på</translation>
     </message>
 </context>
 <context>
@@ -2581,32 +2581,32 @@
     <message>
         <location filename="../src/smartplaylist/smartplaylist.cpp" line="58"/>
         <source>50 Random tracks</source>
-        <translation>50 pistes aléatoires</translation>
+        <translation>50 Slumpmässiga låtar</translation>
     </message>
     <message>
         <location filename="../src/smartplaylist/smartplaylist.cpp" line="59"/>
         <source>50 last played</source>
-        <translation>50 dernières pistes jouées</translation>
+        <translation>50 senast spelade</translation>
     </message>
     <message>
         <location filename="../src/smartplaylist/smartplaylist.cpp" line="60"/>
         <source>50 most played</source>
-        <translation>50 pistes les plus jouées</translation>
+        <translation>50 mest spelade</translation>
     </message>
     <message>
         <location filename="../src/smartplaylist/smartplaylist.cpp" line="61"/>
         <source>ever played</source>
-        <translation>Pistes déja jouées</translation>
+        <translation>någonsin spelade</translation>
     </message>
     <message>
         <location filename="../src/smartplaylist/smartplaylist.cpp" line="62"/>
         <source>never played</source>
-        <translation>Pises jamais jouées</translation>
+        <translation>aldrig spelade</translation>
     </message>
     <message>
         <location filename="../src/smartplaylist/smartplaylist.cpp" line="63"/>
         <source>top rated tracks</source>
-        <translation>Pistes les mieux notées</translation>
+        <translation>låtar med toppbetyg</translation>
     </message>
 </context>
 <context>
@@ -2614,12 +2614,12 @@
     <message>
         <location filename="../src/widgets/sort_widget.cpp" line="36"/>
         <source>Sort field</source>
-        <translation>Champ de trie</translation>
+        <translation>Sorteringsfält</translation>
     </message>
     <message>
         <location filename="../src/widgets/sort_widget.cpp" line="39"/>
         <source>Sort order</source>
-        <translation>Ordre de trie</translation>
+        <translation>Sorteringsordning</translation>
     </message>
 </context>
 <context>
@@ -2627,33 +2627,33 @@
     <message>
         <location filename="../src/views/stream/stream_scene.cpp" line="112"/>
         <source>Search</source>
-        <translation>Rechercher</translation>
+        <translation>Sök</translation>
     </message>
     <message>
         <location filename="../src/views/stream/stream_scene.cpp" line="147"/>
         <source>add</source>
-        <translation>ajouter</translation>
+        <translation>lägg till</translation>
     </message>
     <message>
         <location filename="../src/views/stream/stream_scene.cpp" line="148"/>
         <source>import</source>
-        <translation>importer</translation>
+        <translation>importera</translation>
     </message>
     <message>
         <location filename="../src/views/stream/stream_scene.cpp" line="471"/>
         <location filename="../src/views/stream/stream_scene.cpp" line="532"/>
         <source>Loading stream</source>
-        <translation>Chargement du flux</translation>
+        <translation>Laddar ström</translation>
     </message>
     <message>
         <location filename="../src/views/stream/stream_scene.cpp" line="945"/>
         <source>import stream file</source>
-        <translation>importer un fichier de radios</translation>
+        <translation>Importera strömningsfil</translation>
     </message>
     <message>
         <location filename="../src/views/stream/stream_scene.cpp" line="946"/>
         <source>xspf playlist (*.xspf)</source>
-        <translation>playlist xspf (*.xspf)</translation>
+        <translation>xspf spellista (*.xspf)</translation>
     </message>
 </context>
 <context>
@@ -2661,7 +2661,7 @@
     <message>
         <location filename="../src/playqueue/task_manager.cpp" line="88"/>
         <source>Loading remote files</source>
-        <translation>Chargement des fichiers distants</translation>
+        <translation>Laddar fjärrfiler</translation>
     </message>
 </context>
 <context>
@@ -2670,40 +2670,40 @@
         <location filename="../src/threadmanager.cpp" line="98"/>
         <location filename="../src/threadmanager.cpp" line="105"/>
         <source>Updating music database</source>
-        <translation>Mise à jour de la bibliothèque musicale</translation>
+        <translation>Uppdaterar musikdatabasen</translation>
     </message>
     <message>
         <location filename="../src/threadmanager.cpp" line="138"/>
         <source>Loading music collection</source>
-        <translation>Chargement de la collection</translation>
+        <translation>Laddar musiksamling</translation>
     </message>
     <message>
         <location filename="../src/threadmanager.cpp" line="144"/>
         <source>Loading Music Collection</source>
-        <translation>Chargement de la collection</translation>
+        <translation>Laddar Musiksamling</translation>
     </message>
     <message>
         <location filename="../src/threadmanager.cpp" line="170"/>
         <source>Loading playlist files</source>
-        <translation>Chargement des listes de lecture</translation>
+        <translation>Laddar spellistsfiler</translation>
     </message>
     <message>
         <location filename="../src/threadmanager.cpp" line="176"/>
         <source>Loading Playlist File</source>
-        <translation>Chargement des liste de lecture</translation>
+        <translation>Laddar Spellistsfil</translation>
     </message>
     <message>
         <location filename="../src/threadmanager.cpp" line="207"/>
         <location filename="../src/threadmanager.cpp" line="225"/>
         <source>Fetching media info</source>
-        <translation>Téléchargement des informations</translation>
+        <translation>Hämtar mediainformation</translation>
     </message>
 </context>
 <context>
     <name>XspfStreams</name>
     <message>
         <source>Favorite streams</source>
-        <translation type="vanished">Radio favorites</translation>
+        <translation type="vanished">Favoritströmmar</translation>
     </message>
 </context>
 </TS>
