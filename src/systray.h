@@ -40,6 +40,7 @@ public:
 
   bool isSysTrayOn() const;
   bool isVisible() const;
+  void close();
   
 private:
     void ubuntu_unity_hack();

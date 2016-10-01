@@ -103,6 +103,16 @@ void SysTray::reloadSettings()
     }
 }
 
+
+void SysTray::close()
+{
+     if(m_trayIcon != 0) {
+          disconnect(m_trayIcon, 0,this, 0);
+          delete m_trayIcon;
+          m_trayIcon = 0;
+      }
+}
+
 void SysTray::slot_systray_clicked(QSystemTrayIcon::ActivationReason reason)
 {
     if (reason == QSystemTrayIcon::Trigger)

@@ -31,7 +31,6 @@
 #include "widgets/editors/editor_playlist.h"
 #include "widgets/iconloader.h"
 
-
 // data model
 #include "models/local/local_track_model.h"
 #include "models/local/local_playlist_model.h"
@@ -411,31 +410,40 @@ void MainWindow::connectSlots()
 //! --------- Quit Actions -----------------------------------------------------
 void MainWindow::slot_on_yarock_quit()
 {
+    Debug::debug() << "[Mainwindow] slot_on_yarock_quit";
     m_canClose = true;
+    
+    if( m_systray->isSysTrayOn() == true) 
+    {
+        m_systray->close();
+    }
+    
+    
     this->close();
 }
 
-void MainWindow::closeEvent(QCloseEvent *event)
-{
-    if( m_systray->isSysTrayOn() == false) 
-    {
-      this->close();
-    }
-    else /* only hide app is tray is running  */
-    {
-      if (m_systray->isVisible() && (m_canClose == false)) 
-      {
-          this->hide();
-          event->ignore();
-      }
-    }
-}
+// void MainWindow::closeEvent(QCloseEvent *event)
+// {
+//     if( m_systray->isSysTrayOn() == false) 
+//     {
+//       this->close();
+//     }
+//     else /* only hide app is tray is running  */
+//     {
+//       if (m_systray->isVisible() && (m_canClose == false)) 
+//       {
+//           this->hide();
+//           event->ignore();
+//       }
+//     }
+// }
 
 
 void MainWindow::resizeEvent(QResizeEvent* event)
 {
    if( m_statusManager )
      m_statusManager->onResize();
+   
    
     QMainWindow::resizeEvent(event);
 }
@@ -889,17 +897,20 @@ void MainWindow::slot_database_start()
         dlg.resize(445, 120);
         dlg.exec();      
 
-        /* delete all user data (si version depart < 19 car changement de taille cover) */
-        Q_FOREACH(QFileInfo info, QDir(UTIL::CONFIGDIR + "/albums/").entryInfoList(QDir::NoDotAndDotDot | QDir::System |
-                   QDir::Hidden  | QDir::AllDirs | QDir::Files, QDir::DirsFirst)) {
-            QFile::remove(info.absoluteFilePath());
-        }
+        if( Database::instance()->version() < 19 )
+        {
+            /* delete all user data (si version depart < 19 car changement de taille cover) */
+            Q_FOREACH(QFileInfo info, QDir(UTIL::CONFIGDIR + "/albums/").entryInfoList(QDir::NoDotAndDotDot | QDir::System |
+                    QDir::Hidden  | QDir::AllDirs | QDir::Files, QDir::DirsFirst)) {
+                QFile::remove(info.absoluteFilePath());
+            }
 
-        Q_FOREACH(QFileInfo info, QDir(UTIL::CONFIGDIR + "/artists/").entryInfoList(QDir::NoDotAndDotDot | QDir::System |
-                   QDir::Hidden  | QDir::AllDirs | QDir::Files, QDir::DirsFirst)) {
-            QFile::remove(info.absoluteFilePath());
+            Q_FOREACH(QFileInfo info, QDir(UTIL::CONFIGDIR + "/artists/").entryInfoList(QDir::NoDotAndDotDot | QDir::System |
+                    QDir::Hidden  | QDir::AllDirs | QDir::Files, QDir::DirsFirst)) {
+                QFile::remove(info.absoluteFilePath());
+            }
         }
-
+        
         /* create database */
         createDatabase();
         rebuildDatabase( true );
@@ -933,9 +944,6 @@ void MainWindow::slot_database_add_dialog()
         /* create database */
         createDatabase();
         rebuildDatabase( false );
-        
-//         rebuildDatabase( true );
-//         m_browserView->active_view(VIEW::ViewSettings,QString(), QVariant());
     }
 }
 
