@@ -59,15 +59,20 @@ NowPlayingPopup* NowPlayingPopup::INSTANCE = 0;
 *                                                                              *
 ********************************************************************************
 */
-NowPlayingPopup::NowPlayingPopup(QWidget *parent) : QWidget(parent)
+NowPlayingPopup::NowPlayingPopup(QWidget *parent) : QMenu(parent)
 {
     INSTANCE = this;
     m_playertoolbar = parent;
     m_mainwindow = MainWindow::instance();
     setParent( m_mainwindow );
 
-    this->setWindowFlags(Qt::Popup);
-
+ #if QT_VERSION >= 0x050000
+      this->setWindowFlags(Qt::ToolTip | Qt::NoDropShadowWindowHint);
+ #else
+      this->setWindowFlags(Qt::Popup /*| Qt::FramelessWindowHint*/);
+ #endif
+      
+    
     QPalette palette = QApplication::palette();
     palette.setColor(QPalette::Background, palette.color(QPalette::Window));
     this->setPalette(palette);
@@ -75,6 +80,11 @@ NowPlayingPopup::NowPlayingPopup(QWidget *parent) : QWidget(parent)
     this->setAutoFillBackground(true);
     this->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
     
+    this->setStyleSheet(
+           QString("QMenu {border: none;background-color: none;}")
+           );
+           
+           
     /* ----- UI ----- */
     ui_rating          = new RatingWidget();
     ui_rating->set_draw_frame( false );
@@ -199,13 +209,15 @@ NowPlayingPopup::NowPlayingPopup(QWidget *parent) : QWidget(parent)
     
     /* ----- init ----- */
     m_track = 0;
+    
+    
+    MainWindow::instance()->installEventFilter(this);
 }
-
 
 
 void NowPlayingPopup::resizeEvent(QResizeEvent* event)
 {
-    Debug::debug() << "  [NowPlayingPopup] resizeEvent";
+    //Debug::debug() << "  [NowPlayingPopup] resizeEvent";
 
     QWidget::resizeEvent(event);
    
@@ -216,6 +228,31 @@ void NowPlayingPopup::resizeEvent(QResizeEvent* event)
 }
 
 
+
+/*******************************************************************************
+    eventFilter
+*******************************************************************************/
+bool NowPlayingPopup::eventFilter(QObject *obj, QEvent *ev)
+{
+    int type = ev->type();
+    QWidget *wid = qobject_cast<QWidget*>(obj);
+
+    if (obj == this)
+    {
+        return false;
+    }
+
+    // hide conditions of the Popup
+    if ((type == QEvent::KeyPress || type == QEvent::Move || type == QEvent::Resize || type == QEvent::Hide || type == QEvent::MouseButtonPress) || 
+         (wid && (wid->windowFlags() & Qt::Window) && (type == QEvent::WindowDeactivate))
+       )
+    {
+        this->hide();
+        return false;
+    }
+
+    return QWidget::eventFilter(obj, ev);
+}
 /* ---------------------------------------------------------------------------*/
 /* NowPlayingPopup::updateWidget                                              */
 /* ---------------------------------------------------------------------------*/ 
@@ -304,7 +341,9 @@ void NowPlayingPopup::updateWidget()
     this->show();
     this->raise();
     this->resize(m_mainwindow->width() -6, this->height() );
-    
+    Debug::debug() << "  [MENU] POPUP NOW PLAYING" << this->windowFlags();
+ 
+ 
     /* ----- register new metadata ----- */
     m_metadata["ARTIST"] = Engine::instance()->playingTrack()->artist;
     m_metadata["ALBUM"]  = Engine::instance()->playingTrack()->album;

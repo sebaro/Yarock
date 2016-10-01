@@ -43,7 +43,7 @@ Q_OBJECT
     
     void run();
 
-    void saveToDatabase(const QString& playlist_name, int bd_id = -1);
+    void saveToDatabase(const QString& playlist_name);
     void saveToDatabase(MEDIA::PlaylistPtr playlist);
     void saveSessionToDatabase();
     

@@ -57,7 +57,7 @@ Q_OBJECT
 
     // Playlist Writer Thread
     void playlistSaveToFile(const QString &filename);
-    void playlistSaveToDb(const QString &name, int db_id=-1);
+    void playlistSaveToDb(const QString &name);
     void playlistSaveToDb(MEDIA::PlaylistPtr playlist);
 
     void savePlayqueueSession();

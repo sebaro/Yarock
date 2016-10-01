@@ -44,8 +44,12 @@
 *                                                                              *
 ********************************************************************************
 */
+PlayerToolBar* PlayerToolBar::INSTANCE = 0;
+
 PlayerToolBar::PlayerToolBar(QWidget *parent) : QWidget( parent )
 {
+    INSTANCE = this;
+
     m_player = Engine::instance();
 
     this->setObjectName(QString::fromUtf8("playerToolBar"));
@@ -80,11 +84,20 @@ PlayerToolBar::PlayerToolBar(QWidget *parent) : QWidget( parent )
       ui_label_album->setFont( font2 );
       ui_label_album->setAlignment(Qt::AlignTop);
     
+      ui_collection_info = new QLabel();
+      ui_collection_info->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );      
+      ui_collection_info->setFont( font2 );
+      ui_collection_info->setAlignment(Qt::AlignVCenter);
+      
+      
       QVBoxLayout* vl1 = new QVBoxLayout();
       vl1->setContentsMargins(0, 0, 0, 0);
       vl1->setSpacing(0);
+      //vl1->addSpacerItem ( new QSpacerItem(1, 1, QSizePolicy::Minimum, QSizePolicy::Expanding) );
       vl1->addWidget( ui_label_title , Qt::AlignVCenter | Qt::AlignLeft);
+      vl1->addWidget( ui_collection_info, Qt::AlignVCenter | Qt::AlignLeft);      
       vl1->addWidget( ui_label_album , Qt::AlignVCenter | Qt::AlignLeft);
+      //vl1->addSpacerItem ( new QSpacerItem(1, 1, QSizePolicy::Minimum, QSizePolicy::Expanding) );
     
       QHBoxLayout* hl1 = new QHBoxLayout();
       hl1->setContentsMargins(0, 0, 0, 0);
@@ -99,7 +112,7 @@ PlayerToolBar::PlayerToolBar(QWidget *parent) : QWidget( parent )
       m_now_playing_widget->setLayout( hl1 );
       m_now_playing_widget->setMinimumHeight(60);
       m_now_playing_widget->installEventFilter(this);
-      m_now_playing_widget->setFocusPolicy( Qt::ClickFocus);
+      m_now_playing_widget->setFocusPolicy( Qt::ClickFocus );
       
       QColor color = SETTINGS()->_baseColor;
       qreal saturation = color.saturationF();
@@ -279,6 +292,8 @@ void PlayerToolBar::slot_update_track_playing_info()
     /* update now playing widget */     
     if(m_player->state() != ENGINE::STOPPED && track)
     {
+        ui_collection_info->hide();
+        
         /* ----- update total time for current track ----- */
         slot_update_total_time( m_player->currentTotalTime() );
 
@@ -313,7 +328,7 @@ void PlayerToolBar::slot_update_track_playing_info()
         clippedText = QFontMetrics(ui_label_album->font()).elidedText(album, Qt::ElideRight, width);
 
         ui_label_album->setText ( clippedText );
-        
+
         /* ----- update now playing popup */
         if(m_popup && m_popup->isVisible())
             m_popup->updateWidget();
@@ -321,9 +336,57 @@ void PlayerToolBar::slot_update_track_playing_info()
     else
     {
         this->clear();
+        ui_collection_info->show();
+
+        switch( m_mode )
+        {
+            case (VIEW::ViewAlbum)    :       ui_image->setPixmap( QPixmap(":/images/album.png").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
+            case (VIEW::ViewArtist)   :       ui_image->setPixmap( QPixmap(":/images/view-artist.png").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
+            case (VIEW::ViewTrack)    :       ui_image->setPixmap( QPixmap(":/images/track-48x48.png").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
+            case (VIEW::ViewGenre)    :       ui_image->setPixmap( QPixmap(":/images/genre.png").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
+            case (VIEW::ViewYear)     :       ui_image->setPixmap( QPixmap(":/images/date-48x48.png").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
+            case (VIEW::ViewFavorite) :       ui_image->setPixmap( QPixmap(":/images/favorites-48x48.png").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
+            case (VIEW::ViewPlaylist) :       ui_image->setPixmap( QPixmap(":/images/media-playlist-48x48.png").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
+            case (VIEW::ViewSmartPlaylist) :  ui_image->setPixmap( QPixmap(":/images/smart-playlist-48x48.png").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
+            case (VIEW::ViewDirble)        :  ui_image->setPixmap( QPixmap(":/images/dirble.png").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
+            case (VIEW::ViewRadionomy)     :  ui_image->setPixmap( QPixmap(":/images/radionomy.png").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
+            case (VIEW::ViewTuneIn)        :  ui_image->setPixmap( QPixmap(":/images/tunein_48x48.png").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
+            case (VIEW::ViewFavoriteRadio) :  ui_image->setPixmap( QPixmap(":/images/favorites-48x48.png").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
+
+            default:ui_image->clear();break;   
+        }
+        
         /* ----- update now playing popup */
         if(m_popup && m_popup->isVisible())
             m_popup->hide();
+    }
+}
+
+void PlayerToolBar::setCollectionInfo(QString info,VIEW::Id mode)
+{
+    m_mode = mode;
+    
+    ui_collection_info->setText(info);
+    
+    if(m_player->state() == ENGINE::STOPPED || !m_player->playingTrack())
+    {
+        switch( m_mode )
+        {
+            case (VIEW::ViewAlbum)    :       ui_image->setPixmap( QPixmap(":/images/album.png").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
+            case (VIEW::ViewArtist)   :       ui_image->setPixmap( QPixmap(":/images/view-artist.png").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
+            case (VIEW::ViewTrack)    :       ui_image->setPixmap( QPixmap(":/images/track-48x48.png").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
+            case (VIEW::ViewGenre)    :       ui_image->setPixmap( QPixmap(":/images/genre.png").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
+            case (VIEW::ViewYear)     :       ui_image->setPixmap( QPixmap(":/images/date-48x48.png").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
+            case (VIEW::ViewFavorite) :       ui_image->setPixmap( QPixmap(":/images/favorites-48x48.png").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
+            case (VIEW::ViewPlaylist) :       ui_image->setPixmap( QPixmap(":/images/media-playlist-48x48.png").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
+            case (VIEW::ViewSmartPlaylist) :  ui_image->setPixmap( QPixmap(":/images/smart-playlist-48x48.png").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
+            case (VIEW::ViewDirble)        :  ui_image->setPixmap( QPixmap(":/images/dirble.png").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
+            case (VIEW::ViewRadionomy)     :  ui_image->setPixmap( QPixmap(":/images/radionomy.png").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
+            case (VIEW::ViewTuneIn)        :  ui_image->setPixmap( QPixmap(":/images/tunein_48x48.png").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
+            case (VIEW::ViewFavoriteRadio) :  ui_image->setPixmap( QPixmap(":/images/favorites-48x48.png").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
+
+            default:ui_image->clear();break;   
+        }
     }
 }
 

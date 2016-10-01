@@ -22,7 +22,7 @@
 #include "infosystem/info_system.h"
 
 //Qt
-#include <QWidget>
+#include <QMenu>
 #include <QResizeEvent>
 #include <QToolBar>
 #include <QPushButton>
@@ -38,7 +38,7 @@
 *                                                                              *
 ********************************************************************************
 */
-class NowPlayingPopup : public QWidget
+class NowPlayingPopup : public QMenu
 {
 Q_OBJECT
   public:
@@ -50,7 +50,8 @@ Q_OBJECT
     void updateWidget();
   protected:
     void resizeEvent(QResizeEvent* event);
-
+    bool eventFilter(QObject *obj, QEvent *ev);
+    
   private:
     void setAudioProperties();
 

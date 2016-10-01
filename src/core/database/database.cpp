@@ -50,6 +50,8 @@ Database::Database()
     settings_restore();
     
     Debug::debug() << "[Database] load database " << param()._name;
+    
+    m_current_version = 0;
 }
 
 
@@ -361,9 +363,9 @@ bool Database::versionOK()
 
     if (query.isValid())
     {
-        int currentRev =  query.value(0).toInt();
-        Debug::debug() << "[Database] revision found : " << currentRev;
-        if (currentRev != CST_DATABASE_REV)
+        m_current_version =  query.value(0).toInt();
+        Debug::debug() << "[Database] revision found : " << m_current_version;
+        if (m_current_version != CST_DATABASE_REV)
           versionOK = false;
         else
           versionOK = true;

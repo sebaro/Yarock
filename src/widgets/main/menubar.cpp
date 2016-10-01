@@ -342,7 +342,7 @@ void MenuBarButton::activate(bool active)
      
       m_menu_widget->move(location);
       m_menu_widget->show();
-      m_menu_widget->raise();
+      m_menu_widget->raise();     
     }
 }
 

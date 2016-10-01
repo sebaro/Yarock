@@ -169,10 +169,10 @@ void TaskManager::playlistSaveToFile(const QString &filename)
     m_threadPool->start (m_writer);
 }
 
-void TaskManager::playlistSaveToDb(const QString &name, int bd_id)
+void TaskManager::playlistSaveToDb(const QString &name)
 {
     if(m_db_writer->isRunning()) return;
-    m_db_writer->saveToDatabase(name, bd_id);
+    m_db_writer->saveToDatabase(name);
     m_threadPool->start (m_db_writer);
 }
 

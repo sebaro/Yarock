@@ -79,6 +79,7 @@ private slots:
     void slot_on_history_prev_activated();
 
 private:
+    QString collectionInfo();
     QString name_for_view(VIEW::Id id);
     void update_statuswidget();
     void jump_to_media(MEDIA::MediaPtr media);

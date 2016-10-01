@@ -18,6 +18,8 @@
 #ifndef _PLAYER_TOOLBAR_H_
 #define _PLAYER_TOOLBAR_H_
 
+#include "views.h"
+
 // Qt
 #include <QWidget>
 #include <QToolButton>
@@ -36,10 +38,17 @@ class EngineBase;
 class PlayerToolBar : public QWidget
 {
 Q_OBJECT
+static PlayerToolBar         *INSTANCE;
+
 public:
     PlayerToolBar(QWidget *parent);
+    static PlayerToolBar* instance() { return INSTANCE; }
 
+    void setCollectionInfo(QString info,VIEW::Id mode);
+        
 private:
+    VIEW::Id         m_mode;
+   
     EngineBase       *m_player;
 
     NowPlayingPopup  *m_popup;
@@ -48,6 +57,7 @@ private:
     QLabel           *ui_image;
     QLabel           *ui_label_title;    
     QLabel           *ui_label_album;    
+    QLabel           *ui_collection_info;    
     
     QLabel           *m_currentTime;
     QLabel           *m_totalTime;

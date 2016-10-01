@@ -73,6 +73,8 @@ public:
 
     bool exist();
     bool versionOK();
+    int  version() {return m_current_version;}
+    
     void remove();
     void create();
     
@@ -96,8 +98,11 @@ public:
 
     /* database parameters managment */
     QMap<QString /*database ID */, Database::Param>   m_params;
-    QString m_current_id;
     
+    QString m_current_id;
+
+    int     m_current_version;
+
 signals:
     void settingsChanged();
 };

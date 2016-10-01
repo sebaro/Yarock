@@ -24,8 +24,10 @@
 #include "models/local/local_track_model.h"
 #include "models/local/local_playlist_model.h"
 #include "models/local/histo_model.h"
+
 #include "playqueue/playqueue_model.h"
 #include "playqueue/virtual_playqueue.h"
+#include "playqueue/task_manager.h"
 
 #include "core/mediaitem/mediaitem.h"
 #include "covers/covercache.h"
@@ -1278,6 +1280,72 @@ void LocalScene::mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * event )
     event->accept();
 }
 
+
+/*******************************************************************************
+    dragEnterEvent
+*******************************************************************************/
+void LocalScene::dragEnterEvent(QGraphicsSceneDragDropEvent * event)
+{
+    Debug::debug() << "  [LocalScene] dragEnterEvent";
+    // only accep to drag and drop into playlist item
+    if( mode() == VIEW::ViewPlaylist )
+    {
+        event->accept();
+    }
+    else
+    {
+        event->ignore();
+    }    
+}
+
+
+void LocalScene::dragMoveEvent(QGraphicsSceneDragDropEvent * event)
+{
+    // accept only if Playlist item is under mouse
+    m_mouseGrabbedItem = this->itemAt(event->scenePos(), QTransform());
+    if( mode() == VIEW::ViewPlaylist && m_mouseGrabbedItem)
+    {
+        if (m_mouseGrabbedItem->type() == GraphicsItem::PlaylistType)
+        {
+            event->accept();
+            return;
+        }
+    }
+
+    event->ignore();
+}
+
+void LocalScene::dropEvent(QGraphicsSceneDragDropEvent * event)
+{
+    Debug::debug() << "  [LocalScene] dropEvent";
+    const QMimeData* data = event->mimeData();
+    
+    if (data->hasFormat(MEDIA_MIME)) 
+    {           
+        const MediaMimeData* mediaMimeData = dynamic_cast<const MediaMimeData*>( data );
+        
+        if(mediaMimeData)
+        {
+            /* drop from playqueue ---- */
+            if(mediaMimeData->source() == SOURCE_PLAYQUEUE)
+            {
+                Debug::debug() << "  [LocalScene] dropEvent from playqueue";
+                PlaylistGraphicItem *item = static_cast<PlaylistGraphicItem*>(m_mouseGrabbedItem);
+                
+                MEDIA::PlaylistPtr pl = item->media;
+                
+                foreach(MEDIA::TrackPtr track, mediaMimeData->getTracks()) 
+                {
+                    Debug::debug() << "  # add to playqueue:" << track->url;
+                    pl->insertChildren(track);
+                }
+                
+                // save changes to database
+                Playqueue::instance()->manager()->playlistSaveToDb(pl);
+            }
+        }
+    }
+}
 
 
 /*******************************************************************************

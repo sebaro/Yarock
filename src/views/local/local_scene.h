@@ -84,7 +84,10 @@ Q_OBJECT
     void mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * event );
     void keyPressEvent ( QKeyEvent * keyEvent );
     void mousePressEvent ( QGraphicsSceneMouseEvent * event );
-
+    void dragEnterEvent(QGraphicsSceneDragDropEvent * event);
+    void dragMoveEvent(QGraphicsSceneDragDropEvent * event);
+    void dropEvent(QGraphicsSceneDragDropEvent * event);
+    
   private slots :
     void slot_item_mouseMove();
     void slot_item_ratingclick();

@@ -54,13 +54,13 @@ PlaylistDbWriter::PlaylistDbWriter()
 /* ---------------------------------------------------------------------------*/
 /* PlaylistDbWriter::saveToDatabase                                           */
 /* ---------------------------------------------------------------------------*/
-void PlaylistDbWriter::saveToDatabase(const QString& playlist_name, int bd_id /* = -1*/)
+void PlaylistDbWriter::saveToDatabase(const QString& playlist_name)
 {
-    Debug::debug() << "  [PlaylistDbWriter] saveToDatabase name:" << playlist_name << "id:" << bd_id;
+    Debug::debug() << "  [PlaylistDbWriter] saveToDatabase name:" << playlist_name << "id:" << -1;
     m_playlist       = 0;
     _isSessionSaving = false;
     _playlist_name   = playlist_name;
-    _database_id     = bd_id;
+    _database_id     = -1;
 }
 
 /* ---------------------------------------------------------------------------*/
@@ -107,20 +107,14 @@ void PlaylistDbWriter::run()
 /* ---------------------------------------------------------------------------*/
 void PlaylistDbWriter::savePlaylist()
 {
-    //Debug::debug() << "  [PlaylistDbWriter] savePlaylist";
+    Debug::debug() << "  [PlaylistDbWriter] savePlaylist";
     
     //! playlist data for Database
-    QDateTime date   = QDateTime::currentDateTime();
-    uint mtime       = date.toTime_t();
-    QString pname    = "playlist-" + date.toString("dd-MM-yyyy-hh:mm");
-    QString fname    = QString(QCryptographicHash::hash(QString::number(mtime).toUtf8().constData(), 
-                                                        QCryptographicHash::Sha1).toHex());
+    uint mtime       = QDateTime::currentDateTime().toTime_t();
+    QString fname    = QString(QCryptographicHash::hash(QString::number(mtime).toUtf8().constData(), QCryptographicHash::Sha1).toHex());
 
-    pname = _playlist_name;
-    if(pname.isEmpty())
-      pname = tr("no name");
 
-    Debug::debug() << "  [PlaylistDbWriter] saving playlist:" << pname << "id:" << _database_id;
+    Debug::debug() << "  [PlaylistDbWriter] saving playlist:" << _playlist_name << "id:" << _database_id;
 
     if (!Database::instance()->open())
       return;
@@ -144,7 +138,7 @@ void PlaylistDbWriter::savePlaylist()
       
       q.prepare("UPDATE `playlists` SET `filename`=?,`name`=?,`type`=?,`favorite`=?,`dir_id`=?,`mtime`=? WHERE `id`=?");      
       q.addBindValue( fname );
-      q.addBindValue( pname );
+      q.addBindValue( _playlist_name );
       q.addBindValue( (int) T_DATABASE );
       q.addBindValue(  0 );
       q.addBindValue( -1 );
@@ -160,7 +154,7 @@ void PlaylistDbWriter::savePlaylist()
                  " VALUES(?,?,?,?,?,?);");
 
       q.addBindValue( fname );
-      q.addBindValue( pname );
+      q.addBindValue( _playlist_name );
       q.addBindValue( (int) T_DATABASE );
       q.addBindValue(  0 );
       q.addBindValue( -1 );
@@ -182,30 +176,56 @@ void PlaylistDbWriter::savePlaylist()
     /*-----------------------------------------------------------*/
     /* PLAYLIST ITEMS part in database                           */
     /* ----------------------------------------------------------*/
-    for (int i = 0; i < m_model->rowCount(QModelIndex()); i++) 
+    // take playlist item because we save a playlist item outside playqueue widget/editor
+    if( m_playlist && m_model == Playqueue::instance() )
     {
-        const QString item_url   = m_model->trackAt(i)->url;
-        const QString item_name  = MEDIA::isLocal(m_model->trackAt(i)->url) ? 
-          m_model->trackAt(i)->title : m_model->trackAt(i)->extra["station"].toString();
-       
-        Debug::debug() << "  [PlaylistDbWriter] insert playlist item url: " << item_url;
-        Debug::debug() << "  [PlaylistDbWriter] insert playlist item title: " << m_model->trackAt(i)->title;
-        Debug::debug() << "  [PlaylistDbWriter] insert playlist item station: " << m_model->trackAt(i)->extra["station"].toString();
+        for (int i = 0; i < m_playlist->childCount(); i++) 
+        {
+            MEDIA::TrackPtr track = MEDIA::TrackPtr::staticCast(m_playlist->child(i));
+                                
+            const QString item_url   = track->url;
+            const QString item_name  = MEDIA::isLocal(track->url) ? 
+            track->title : track->extra["station"].toString();
+        
+            Debug::debug() << "  [PlaylistDbWriter] insert playlist item url: " << item_url;
+            Debug::debug() << "  [PlaylistDbWriter] insert playlist item title: " << item_name;
 
-        q.prepare("INSERT INTO `playlist_items`(`url`,`name`,`playlist_id`) VALUES(?,?,?);");
-        q.addBindValue( item_url );
-        q.addBindValue( item_name );
-        q.addBindValue( _database_id );
-        q.exec();
+            q.prepare("INSERT INTO `playlist_items`(`url`,`name`,`playlist_id`) VALUES(?,?,?);");
+            q.addBindValue( item_url );
+            q.addBindValue( item_name );
+            q.addBindValue( m_playlist->id );
+            q.exec();
+        }
     }
+    // take model from playqueue/playlist editor
+    else
+    {
+        for (int i = 0; i < m_model->rowCount(QModelIndex()); i++) 
+        {
+            const QString item_url   = m_model->trackAt(i)->url;
+            const QString item_name  = MEDIA::isLocal(m_model->trackAt(i)->url) ? 
+            m_model->trackAt(i)->title : m_model->trackAt(i)->extra["station"].toString();
+        
+            Debug::debug() << "  [PlaylistDbWriter] insert playlist item url: " << item_url;
+            Debug::debug() << "  [PlaylistDbWriter] insert playlist item title: " << m_model->trackAt(i)->title;
+            Debug::debug() << "  [PlaylistDbWriter] insert playlist item station: " << m_model->trackAt(i)->extra["station"].toString();
 
+            q.prepare("INSERT INTO `playlist_items`(`url`,`name`,`playlist_id`) VALUES(?,?,?);");
+            q.addBindValue( item_url );
+            q.addBindValue( item_name );
+            q.addBindValue( _database_id );
+            q.exec();
+        }
+    }
+    
     q.finish();
     if( m_playlist )
     {
         m_playlist->id   = _database_id;
-        m_playlist->name = pname;
     }
 }
+
+
 
 /* ---------------------------------------------------------------------------*/
 /* PlaylistDbWriter::saveSession                                              */

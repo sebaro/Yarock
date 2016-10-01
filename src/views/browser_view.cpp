@@ -37,9 +37,9 @@
 #include "media_search.h"
 
 /* widgets */
+#include "widgets/playertoolbar/playertoolbar.h"
 #include "widgets/main/menumodel.h"
 #include "widgets/main/main_left.h"
-#include "widgets/statusmanager.h"
 
 #include "settings.h"
 #include "global_actions.h"
@@ -65,7 +65,7 @@ BrowserView::BrowserView(QWidget *parent) : QGraphicsView(parent)
     this->setFrameShadow(QFrame::Plain);
 
     this->setCacheMode(QGraphicsView::CacheNone);
-    this->setDragMode(QGraphicsView::NoDrag);
+
     this->setRenderHint(QPainter::Antialiasing);
     this->setOptimizationFlags(  QGraphicsView::DontAdjustForAntialiasing
                                    | QGraphicsView::DontClipPainter
@@ -74,7 +74,8 @@ BrowserView::BrowserView(QWidget *parent) : QGraphicsView(parent)
     this->setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
     this->setAlignment(Qt::AlignLeft | Qt::AlignTop );
 
-    this->setDragMode(QGraphicsView::NoDrag);
+    this->setDragMode(QGraphicsView::NoDrag); 
+    
     this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     
     is_started = false;
@@ -228,8 +229,6 @@ void BrowserView::slot_on_search_changed(const QVariant& variant)
     add_history_entry(param);
 
     switch_view(param);
-
-    update_statuswidget();
 }
 
 /* slot triggered when action from menu is activated */
@@ -252,8 +251,6 @@ void BrowserView::slot_on_menu_browser_triggered(VIEW::Id view, QVariant data)
     add_history_entry(param);
 
     switch_view(param);
-    
-    update_statuswidget();
 }
 
 /* slot slot_on_load_new_data                              */
@@ -276,9 +273,6 @@ void BrowserView::slot_on_load_new_data(const QVariant data)
       add_history_entry( param );
             
     switch_view(param);
-    
-    if( data.canConvert<QString>() || (qvariant_cast<MEDIA::LinkPtr>(data))->state == SERVICE::DATA_OK )
-      update_statuswidget();
 }
 
 
@@ -298,9 +292,6 @@ void BrowserView::slot_on_tag_clicked()
     add_history_entry(param);
 
     switch_view(param);
-
-    update_statuswidget();
-    
 }
 
 
@@ -311,8 +302,6 @@ void BrowserView::active_view(VIEW::Id m, QString f, QVariant d)
     add_history_entry( param );
     
     switch_view(param);
-    
-    update_statuswidget();
 }
 
     
@@ -348,8 +337,6 @@ void BrowserView::slot_on_model_populated(E_MODEL_TYPE model)
       break;
       default : break;
     }
-    
-    update_statuswidget();
 }
 
 /*******************************************************************************
@@ -424,9 +411,6 @@ void BrowserView::switch_view(BrowserParam& param)
     scene->playSceneContents( param.search );
     this->setFocus();
 
-    MainLeftWidget::instance()->setMode(param.mode);
-    MainLeftWidget::instance()->setBrowserSearch(param.search);
-
     switch( VIEW::typeForView(VIEW::Id(param.mode)) )
     {
       case VIEW::LOCAL      : setScene(static_cast<LocalScene*>(m_scenes[param.mode]));    break;
@@ -440,7 +424,10 @@ void BrowserView::switch_view(BrowserParam& param)
     /* restore scroll position */
     m_scrollbar->setSliderPosition(param.scroll);
 
-    /* update page title */
+    /* update page title */    
+    PlayerToolBar::instance()->setCollectionInfo( collectionInfo() , VIEW::Id(param.mode));
+    MainLeftWidget::instance()->setMode(param.mode);
+    MainLeftWidget::instance()->setBrowserSearch(param.search);
     MainLeftWidget::instance()->setTitle( name_for_view(VIEW::Id(param.mode)) );
 }
 
@@ -647,12 +634,10 @@ void BrowserView::keyPressEvent ( QKeyEvent * event )
 }
 
 /*******************************************************************************
-    update_statuswidget
+    collectionInfo
 *******************************************************************************/
-void BrowserView::update_statuswidget()
+QString BrowserView::collectionInfo() 
 {
-    //Debug::debug() << "  [BrowserView] update_statuswidget";
-
     const int collectionSize = static_cast<LocalScene*>(m_scenes[VIEW::ViewArtist])->elementCount();
     const int radioSize      = static_cast<StreamScene*>(m_scenes[VIEW::ViewTuneIn])->elementCount();
 
@@ -680,13 +665,10 @@ void BrowserView::update_statuswidget()
          break;
       default: text = "";break;
     }
-
-    if( (VIEW::typeForView(VIEW::Id(SETTINGS()->_viewMode)) == VIEW::LOCAL && collectionSize != 0) ||
-        (VIEW::typeForView(VIEW::Id(SETTINGS()->_viewMode)) == VIEW::RADIO && radioSize != 0) )
-    {
-        StatusManager::instance()->startMessage(text, STATUS::INFO, 2200);
-    }
+    
+    return text;
 }
+
 
 /*******************************************************************************
     name_for_view

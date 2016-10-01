@@ -120,7 +120,7 @@ void AboutScene::populateScene()
     int Ypos = 10;
     
     CategorieGraphicItem *cat = new CategorieGraphicItem(qobject_cast<QGraphicsView*> (parentView())->viewport());
-    cat->m_name = "About";
+    cat->m_name = tr("About");
     cat->setPos( 0 ,Ypos);
     addItem(cat);
     
@@ -227,14 +227,14 @@ void AboutScene::populateScene()
     Ypos += 35;
 
     TextGraphicItem *text6 = new TextGraphicItem();
-    text6->setHtml( QString("<b>Compiled with Qt Version</b>: %1").arg(QT_VERSION_STR) );
+    text6->setHtml( QString(tr("<b>Compiled with Qt Version</b>: %1")).arg(QT_VERSION_STR) );
     text6->setPos( 40, Ypos);
     addItem(text6);
  
     Ypos += text6->height() + 10;
     
     TextGraphicItem *text7 = new TextGraphicItem();
-    text7->setHtml( QString("<b>Qt Runtime Version</b>: %1").arg(qVersion()) );
+    text7->setHtml( QString(tr("<b>Qt Runtime Version</b>: %1")).arg(qVersion()) );
     text7->setPos( 40, Ypos);
     addItem(text7);
     
@@ -245,7 +245,7 @@ void AboutScene::populateScene()
         QString("no engine");
     
     TextGraphicItem *text8 = new TextGraphicItem();
-    text8->setHtml( QString("<b>Audio engine</b>: %1").arg(audio_engine_info) );
+    text8->setHtml( QString(tr("<b>Audio engine</b>: %1")).arg(audio_engine_info) );
     text8->setPos( 40, Ypos);
     addItem(text8);
 

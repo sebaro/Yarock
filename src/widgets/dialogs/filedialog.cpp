@@ -250,7 +250,7 @@ void FileDialog::setupUi()
       
       if(FileDialog::m_mode != SaveFile) 
       {
-        ui_filter_cb->addItem(tr("Audio files (*.mp3 *.wav *.ogg *.flac *.m4a *.aac)"));
+        ui_filter_cb->addItem(tr("Audio files (*.mp3 *.wav *.ogg *.flac *.m4a *.aac *.opus)"));
         ui_filter_cb->addItem(tr("Playlists files (*.m3u *.pls *.xspf)"));
         ui_filter_cb->addItem(tr("All files (*.*)"));
       }
