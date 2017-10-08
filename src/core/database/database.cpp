@@ -30,7 +30,7 @@
 #include <QMap>
 #include <QSettings>
 
-#define CST_DATABASE_REV  20
+#define CST_DATABASE_REV  21
 
 
 
