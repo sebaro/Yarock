@@ -929,9 +929,9 @@ void MainWindow::slot_database_start()
         dlg.resize(445, 120);
         dlg.exec();      
 
-        if( Database::instance()->version() < 19 )
+        if( Database::instance()->version() <= 20 )
         {
-            /* delete all user data (si version depart < 19 car changement de taille cover) */
+            /* delete all user data (if version is <= 20 because cover size change) */
             Q_FOREACH(QFileInfo info, QDir(UTIL::CONFIGDIR + "/albums/").entryInfoList(QDir::NoDotAndDotDot | QDir::System |
                     QDir::Hidden  | QDir::AllDirs | QDir::Files, QDir::DirsFirst)) {
                 QFile::remove(info.absoluteFilePath());
