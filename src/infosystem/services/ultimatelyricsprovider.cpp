@@ -110,7 +110,7 @@ void UltimateLyricsProvider::LyricsFetched(QByteArray bytes)
 
       QString content = original_content;
       ApplyExtractRule(rule_copy, &content);
-      //Debug::debug() << "Extract rule" << rule_copy << "matched" << content.length();
+      Debug::debug() << "Extract rule" << rule_copy << "matched" << content.length();
 
       if (!content.isEmpty()) {
         lyrics = content;

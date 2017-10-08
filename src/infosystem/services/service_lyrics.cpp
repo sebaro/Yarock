@@ -115,13 +115,12 @@ QStringList ServiceLyrics::defaultProvidersList()
     QStringList default_order;
     default_order << "lyrics.wikia.com"
                   << "lyricsreg.com"
-                  << "lyricsmania.com"
                   << "metrolyrics.com"
                   << "azlyrics.com"
                   << "songlyrics.com"
+                  << "genius.com"                  
+                  << "lyricsmania.com"
                   << "elyrics.net"
-                  << "lyrics.com"
-                  << "lyricsbay.com"
                   << "lyricsmode.com"
                   << "directlyrics.com"
                   << "loudsongs.com";
@@ -141,20 +140,19 @@ QStringList ServiceLyrics::defaultProvidersList()
 *******************************************************************************/
 QStringList ServiceLyrics::fullProvidersList()
 {
-    QStringList full_list;
-    full_list     << "lyrics.wikia.com"
+    QStringList full_list;    
+    full_list     << "genius.com"
+                  << "lyrics.wikia.com"
                   << "lyricsreg.com"
                   << "lyricsmania.com"
                   << "metrolyrics.com"
                   << "azlyrics.com"
                   << "songlyrics.com"
                   << "elyrics.net"
-                  << "lyrics.com"
-                  << "lyricsbay.com"
                   << "lyricsmode.com"
                   << "directlyrics.com"
                   << "loudsongs.com"
-                  << "darklyrics.com"
+                  << "darklyrics.com"                  
                   << "teksty.org"
                   << "tekstowo.pl (Polish translations)"
                   << "vagalume.uol.com.br"
