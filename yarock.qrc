@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
+        <file>images/default-cover-200x200.png</file>
+        <file>images/default-cover-256x256.png</file>
         <file>data/lyrics/ultimate_providers.xml</file>
         <file>icon/yarock_64x64.png</file>
         <file>images/about-48x48.png</file>
@@ -22,8 +24,6 @@
         <file>images/lastfm.png</file>
         <file>images/home-48x48.png</file>
         <file>images/album.png</file>
-        <file>images/default-cover-120x120.png</file>
-        <file>images/default-url-120x120.png</file>
         <file>images/dirble.png</file>
         <file>images/radionomy.png</file>
         <file>images/info-48x48.png</file>
@@ -34,7 +34,7 @@
         <file>images/favorites-18x18.png</file>
         <file>images/favorites-48x48.png</file>
         <file>images/history-48x48.png</file>
-        <file>images/media-playlist-110x110.png</file>
+        <file>images/media-playlist-150x150.png</file>
         <file>images/media-playlist-48x48.png</file>
         <file>images/track-48x48.png</file>
         <file>images/track-18x18.png</file>
@@ -53,10 +53,10 @@
         <file>images/media-shuffle-1-48x48.png</file>
         <file>images/media-shuffle-2-48x48.png</file>
         <file>images/media-shuffle-3-48x48.png</file>
-        <file>images/media-smartplaylist1-110x110.png</file>
-        <file>images/media-smartplaylist2-110x110.png</file>
-        <file>images/media-smartplaylist3-110x110.png</file>
-        <file>images/media-smartplaylist4-110x110.png</file>
+        <file>images/media-smartplaylist1-150x150.png</file>
+        <file>images/media-smartplaylist2-150x150.png</file>
+        <file>images/media-smartplaylist3-150x150.png</file>
+        <file>images/media-smartplaylist4-150x150.png</file>
         <file>images/chart-48x48.png</file>
         <file>images/smart-playlist-48x48.png</file>       
         <file>images/star-off.png</file>
