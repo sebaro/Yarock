@@ -52,7 +52,13 @@ class StreamGraphicItem : public QGraphicsItem
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *e);
     void mousePressEvent(QGraphicsSceneMouseEvent *e);
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+    
+    int   m_coverSize;
   public:
-     QStyleOptionViewItemV4 opt;
+    #if QT_VERSION >= 0x050000
+    QStyleOptionViewItem opt;
+    #else
+    QStyleOptionViewItemV4 opt;
+    #endif
 };
 #endif // _STREAM_ITEM_H_

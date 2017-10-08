@@ -78,8 +78,8 @@ void SettingsScene::initScene()
     this->addItem(m_container);
 
     /* il faut interdire la modification des parametres de collection si un database builder est en cours */
-    connect(ThreadManager::instance(), SIGNAL(dbBuildStart()), this, SLOT(slot_dbBuilder_stateChange()));
     connect(ThreadManager::instance(), SIGNAL(dbBuildFinished()), this, SLOT(slot_dbBuilder_stateChange()));
+    connect(ThreadManager::instance(), SIGNAL(dbBuildStart()), this, SLOT(slot_dbBuilder_stateChange()));
 
     connect(Database::instance(), SIGNAL(settingsChanged()), this, SLOT(slot_database_settingsChanged()));
     
@@ -111,7 +111,7 @@ void SettingsScene::slot_database_settingsChanged()
 *******************************************************************************/
 void SettingsScene::slot_dbBuilder_stateChange()
 {
-    //Debug::debug() << "#######   [SettingsScene] slot_dbBuilder_stateChange DB RUNNING " << ThreadManager::instance()->isDbRunning();
+    Debug::debug() << "#######   [SettingsScene] slot_dbBuilder_stateChange DB RUNNING " << ThreadManager::instance()->isDbRunning();
     m_pages[SETTINGS::LIBRARY]->setEnabled( !ThreadManager::instance()->isDbRunning() );
 }
 
@@ -141,12 +141,20 @@ void SettingsScene::populateScene()
     static_cast<PageSongInfo*>(m_pages[SETTINGS::SONGINFO])->doLayout();
     static_cast<PageScrobbler*>(m_pages[SETTINGS::SCROBBLER])->doLayout();
     
+    
+    int h = static_cast<PageGeneral*>(m_pages[SETTINGS::GENERAL])->size().height();
+    h += static_cast<PagePlayer*>(m_pages[SETTINGS::PLAYER])->size().height();
+    h += static_cast<PageLibrary*>(m_pages[SETTINGS::LIBRARY])->size().height();
+    h += static_cast<PageShortcut*>(m_pages[SETTINGS::SHORTCUT])->size().height();
+    h += static_cast<PageSongInfo*>(m_pages[SETTINGS::SONGINFO])->size().height();
+    h += static_cast<PageScrobbler*>(m_pages[SETTINGS::SCROBBLER])->size().height();
+    
     m_container->update();
 
     /* we need to ajust SceneRect */
     setSceneRect ( QRect(0,0, 
                          m_container->geometry().size().width(),
-                         m_container->geometry().size().height() + 10 )
+                         qMax((int)m_container->geometry().size().height() + 30, h + 30 ))
                  );
 }
 
@@ -198,6 +206,7 @@ void SettingsScene::restore_settings()
     m_result.isMprisChanged         =  false;
     m_result.isEngineChanged        =  false;
     m_result.isLibraryChanged       =  false;
+    m_result.isCoverSizeChanged     =  false;
     m_result.isViewChanged          =  false;
     m_result.isShorcutChanged       =  false;
     m_result.isScrobblerChanged     =  false;
@@ -215,6 +224,7 @@ void SettingsScene::slot_apply_settings()
     m_result.isDbusChanged          =  static_cast<PageGeneral*>(m_pages[SETTINGS::GENERAL])->isDbusChanged();
     m_result.isMprisChanged         =  static_cast<PageGeneral*>(m_pages[SETTINGS::GENERAL])->isMprisChanged();
     m_result.isLibraryChanged       =  static_cast<PageLibrary*>(m_pages[SETTINGS::LIBRARY])->isLibraryChanged();
+    m_result.isCoverSizeChanged     =  static_cast<PageLibrary*>(m_pages[SETTINGS::LIBRARY])->isCoverSizeChanged();
     m_result.isViewChanged          =  static_cast<PageLibrary*>(m_pages[SETTINGS::LIBRARY])->isViewChanged();
     m_result.isShorcutChanged       =  static_cast<PageShortcut*>(m_pages[SETTINGS::SHORTCUT])->isChanged();
     m_result.isScrobblerChanged     =  static_cast<PageScrobbler*>(m_pages[SETTINGS::SCROBBLER])->isChanged();

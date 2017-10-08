@@ -37,6 +37,7 @@
 #include <QGraphicsProxyWidget>
 #include <QCryptographicHash>
 
+#include <QButtonGroup>
 #include <QMenu>
 
 /*
@@ -141,6 +142,8 @@ void PageGeneral::doLayout()
 {
     m_button->setPos(qobject_cast<QGraphicsView*> (m_parent)->viewport()->width()-40,0);
     proxy_widget->setPos(50,30);
+    
+    updateGeometry();
 }
 
 void PageGeneral::update()
@@ -149,7 +152,7 @@ void PageGeneral::update()
 
     doLayout();
  
-    updateGeometry();
+    //updateGeometry();
  
     QGraphicsWidget::update();
 
@@ -560,6 +563,7 @@ PageLibrary::PageLibrary(QWidget* parentView) : QGraphicsWidget(0)
     connect(this->ui_add_path_button, SIGNAL(clicked()), this, SLOT(slot_on_add_folder_clicked()));
     
     connect(this->ui_auto_update, SIGNAL(stateChanged (int)), this, SLOT(slot_oncheckbox_clicked()));
+    connect(this->ui_download_cover, SIGNAL(stateChanged (int)), this, SLOT(slot_oncheckbox_clicked()));
     connect(this->ui_search_cover, SIGNAL(stateChanged (int)), this, SLOT(slot_oncheckbox_clicked()));
     connect(this->ui_group_albums, SIGNAL(stateChanged (int)), this, SLOT(slot_oncheckbox_clicked()));
     connect(this->ui_use_artist_image, SIGNAL(stateChanged (int)), this, SLOT(slot_oncheckbox_clicked()));
@@ -571,6 +575,7 @@ PageLibrary::PageLibrary(QWidget* parentView) : QGraphicsWidget(0)
     connect(this->ui_db_del_button, SIGNAL(clicked()), this, SLOT(delDatabaseParam()));
     connect(this->ui_db_rename_button, SIGNAL(clicked()), this, SLOT(renameDatabaseParam()));
 }
+
 
 //! ----------- createGui ------------------------------------------------------
 void PageLibrary::createGui()
@@ -651,10 +656,6 @@ void PageLibrary::createGui()
       ui_auto_update = new QCheckBox(m_main_widget);
       ui_auto_update->setText(tr("Update collections automatically after start"));
 
-      /* Check box --> search cover into directory */
-      ui_search_cover = new QCheckBox(m_main_widget);
-      ui_search_cover->setText(tr("Search cover art from file directory"));
-
       /* Check box : group multiset albums */
       ui_group_albums = new QCheckBox(m_main_widget);
       ui_group_albums->setText(tr("Group multi disc albums as one album"));
@@ -667,7 +668,25 @@ void PageLibrary::createGui()
       ui_rating_to_file = new QCheckBox(m_main_widget);
       ui_rating_to_file->setText(tr("Write rating to file"));
       
-
+      /* Images options */
+      QLabel *lbl3 = new QLabel(tr("Image settings"), m_main_widget);
+      lbl3->setFont(QFont("Arial",10,QFont::Bold));            
+      
+      ui_cover_size_spinbox = new QSpinBox();
+      ui_cover_size_spinbox->setMinimum(128);
+      ui_cover_size_spinbox->setMaximum(256);
+      ui_cover_size_spinbox->setValue(200);
+      ui_cover_size_spinbox->setPrefix(tr("image size: "));
+      ui_cover_size_spinbox->setFocusPolicy( Qt::NoFocus );
+      
+      /* Check box --> search cover into directory */
+      ui_search_cover = new QCheckBox(m_main_widget);
+      ui_search_cover->setText(tr("Search cover art from file directory"));
+      
+      ui_download_cover = new QCheckBox(m_main_widget);
+      ui_download_cover->setText(tr("Download image (artist and album) from internet"));
+      
+      
     /* ----- Final Layout ----- */    
       QVBoxLayout* layout = new QVBoxLayout( m_main_widget );
       layout->addWidget( lbl1 );
@@ -678,10 +697,16 @@ void PageLibrary::createGui()
       layout->addLayout( ui_folders_layout ,0);
       layout->addWidget( ui_add_path_button );
       layout->addWidget( ui_auto_update );
-      layout->addWidget( ui_search_cover );
       layout->addWidget( ui_group_albums );
       layout->addWidget( ui_use_artist_image );
-      layout->addWidget( ui_rating_to_file );      
+      layout->addWidget( ui_rating_to_file );
+      layout->addItem( new QSpacerItem(20, 15, QSizePolicy::Fixed, QSizePolicy::Fixed) );
+
+      layout->addWidget( lbl3 );      
+      layout->addWidget( ui_search_cover );
+      layout->addWidget( ui_download_cover );      
+      layout->addWidget( ui_cover_size_spinbox );
+      
       
       layout->setSizeConstraint(QLayout::SetMinimumSize );
       layout->addItem( new QSpacerItem(20, 15, QSizePolicy::Fixed, QSizePolicy::Expanding) );
@@ -694,6 +719,12 @@ void PageLibrary::createGui()
     m_title->setParentItem(this);
     m_title->setPos(0,0);
 }
+
+bool PageLibrary::isCoverSizeChanged()
+{
+    return ( SETTINGS()->_coverSize != ui_cover_size_spinbox->value() );
+}
+
 
 bool PageLibrary::isViewChanged()
 {
@@ -765,6 +796,14 @@ void PageLibrary::restoreSettings()
     if (selectedIdx != -1)
       ui_choose_db->setCurrentIndex(selectedIdx);
 
+    
+    if(SETTINGS()->_coverSize < 120 || SETTINGS()->_coverSize > 256 )
+    {
+      SETTINGS()->_coverSize = 200;      
+    }
+    
+    ui_cover_size_spinbox->setValue( SETTINGS()->_coverSize );
+    
     _isLibraryChanged = false;
 }
 
@@ -773,6 +812,10 @@ void PageLibrary::saveSettings()
 {
     Debug::debug() << "PageLibrary::saveSettings";
 
+    //! save cover size
+    SETTINGS()->_coverSize = ui_cover_size_spinbox->value();
+    
+    
     //! save settings file
     Database *database = Database::instance();
 
@@ -797,7 +840,11 @@ void PageLibrary::slot_oncheckbox_clicked()
     if( !m_db_params.contains(db_name))
       return;
 
-    if( cb == ui_search_cover )
+    if( cb == ui_download_cover )
+    {
+      m_db_params[db_name]._option_download_cover = ui_download_cover->isChecked();
+    }
+    else if( cb == ui_search_cover )
     {
       m_db_params[db_name]._option_check_cover   = ui_search_cover->isChecked();      
     }
@@ -826,13 +873,18 @@ void PageLibrary::loadDatabaseParam(QString db_name)
   
     if(db_name.isEmpty()) return;
 
-    if(m_db_params.contains(db_name)) {
+    if(m_db_params.contains(db_name)) 
+    {
      //Debug::debug() << "SettingCollectionPage::loadDatabaseParam   database name = " << db_name;
      //Debug::debug() << "SettingCollectionPage::loadDatabaseParam   option_auto_rebuild = " << m_db_params[db_name]._option_auto_rebuild;
      //Debug::debug() << "SettingCollectionPage::loadDatabaseParam   option_check_cover = " << m_db_params[db_name]._option_check_cover;
+     //Debug::debug() << "SettingCollectionPage::loadDatabaseParam   option_download_cover = " << m_db_params[db_name].option_download_cover;
 
       ui_auto_update->setChecked( m_db_params[db_name]._option_auto_rebuild );
+      
       ui_search_cover->setChecked( m_db_params[db_name]._option_check_cover );
+      ui_download_cover->setChecked( m_db_params[db_name]._option_download_cover );
+      
       ui_group_albums->setChecked( m_db_params[db_name]._option_group_albums );
       ui_use_artist_image->setChecked( m_db_params[db_name]._option_artist_image );
       ui_rating_to_file->setChecked( m_db_params[db_name]._option_wr_rating_to_file );
@@ -878,6 +930,7 @@ void PageLibrary::newDatabaseParam()
       Database::Param  param;
       param._option_auto_rebuild    = false;
       param._option_check_cover     = true;
+      param._option_download_cover  = true;
       param._paths                  = QStringList();
       param._option_group_albums    = false;
       param._option_artist_image    = true;
@@ -897,6 +950,7 @@ void PageLibrary::addDatabaseParam(const QString& name, const Database::Param& p
     m_db_params[name]._name                     = name;
     m_db_params[name]._option_auto_rebuild      = param._option_auto_rebuild;
     m_db_params[name]._option_check_cover       = param._option_check_cover;
+    m_db_params[name]._option_download_cover       = param._option_download_cover;
     m_db_params[name]._option_group_albums      = param._option_group_albums;
     m_db_params[name]._option_artist_image      = param._option_artist_image;
     m_db_params[name]._option_wr_rating_to_file = param._option_wr_rating_to_file;
@@ -906,6 +960,7 @@ void PageLibrary::addDatabaseParam(const QString& name, const Database::Param& p
     Debug::debug() << "PageLibrary::addDatabaseParam  paths" << param._paths;
     Debug::debug() << "PageLibrary::addDatabaseParam  option_auto_rebuild" << param._option_auto_rebuild;
     Debug::debug() << "PageLibrary::addDatabaseParam  option_check_cover" << param._option_check_cover;
+    Debug::debug() << "PageLibrary::addDatabaseParam  option_download_cover" << param._option_download_cover;
     Debug::debug() << "PageLibrary::addDatabaseParam  option_artist_image" << param._option_artist_image;
     Debug::debug() << "PageLibrary::addDatabaseParam  option_rating_tofile" << param._option_wr_rating_to_file;
 

@@ -126,6 +126,7 @@ Q_OBJECT
     void slot_database_start();
     void slot_database_ope_dialog();
     void slot_database_add_dialog();
+    void slot_dbBuilder_finished();
 
     /* Jump to item slot */
     void set_enable_jump_to(bool b);

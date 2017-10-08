@@ -76,7 +76,7 @@ namespace UTIL
    
     QPixmap squareCenterPixmap( const QPixmap& sourceImage );
    
-    QImage artistImageFromByteArray(QByteArray array);
+    QImage artistImageFromByteArray(QByteArray array, int size=200);
 
    
 /* ---------------------------------------------------------------------------*/

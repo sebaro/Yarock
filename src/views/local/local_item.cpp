@@ -92,13 +92,15 @@ AlbumGraphicItem::AlbumGraphicItem()
     opt.state |= QStyle::State_Enabled;
     opt.state &= ~QStyle::State_Selected;
     
+    m_coverSize = SETTINGS()->_coverSize;
+    
     opt.rect = boundingRect().toRect();
 }
 
 
 QRectF AlbumGraphicItem::boundingRect() const
 {
-    return QRectF(0, 0, 150, 120 + opt.fontMetrics.height()*2 + 4);
+    return QRectF(0, 0, m_coverSize*1.25, m_coverSize + opt.fontMetrics.height()*2 + 4);
 }
 
 void AlbumGraphicItem::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)
@@ -134,7 +136,7 @@ Q_UNUSED(option)
  
        //! paint cover art
        QPixmap pix = CoverCache::instance()->cover(media);
-       p.drawPixmap(15,2, pix);
+       p.drawPixmap((opt.rect.size().width()- m_coverSize)/2,2, pix);
        p.end();
     }
  
@@ -146,8 +148,8 @@ Q_UNUSED(option)
     painter->setPen(opt.palette.color ( QPalette::Normal, isSelected() ? QPalette::HighlightedText : QPalette::WindowText) );
     painter->setFont(opt.font);
 
-    const QString elided_album = opt.fontMetrics.elidedText ( media->name, Qt::ElideRight, 150);
-    painter->drawText(QRect (0,123,150, 25), Qt::AlignTop | Qt::AlignHCenter,elided_album );
+    const QString elided_album = opt.fontMetrics.elidedText ( media->name, Qt::ElideRight, m_coverSize*1.25);
+    painter->drawText(QRect (0,m_coverSize+3,m_coverSize*1.25, 25), Qt::AlignTop | Qt::AlignHCenter,elided_album );
 
     /* album number */
     if(media->disc_number != 0) {
@@ -165,8 +167,8 @@ Q_UNUSED(option)
     painter->setFont( alternateFont() );
     painter->setPen(opt.palette.color ( QPalette::Disabled, isSelected() ? QPalette::HighlightedText : QPalette::WindowText) );
 
-    const QString elided_artist = alternateFontMetric().elidedText ( artist_ptr->name, Qt::ElideRight, 150, Qt::TextWrapAnywhere);
-    painter->drawText(QRect(0, 123 + opt.fontMetrics.height() + 2, 150, 25), Qt::AlignTop | Qt::AlignHCenter, elided_artist);
+    const QString elided_artist = alternateFontMetric().elidedText ( artist_ptr->name, Qt::ElideRight, m_coverSize*1.25, Qt::TextWrapAnywhere);
+    painter->drawText(QRect(0, m_coverSize+3 + opt.fontMetrics.height() + 2, m_coverSize*1.25, 25), Qt::AlignTop | Qt::AlignHCenter, elided_artist);
 
     /* paint playing or favorite attibute */
     if(media->isPlaying)
@@ -273,7 +275,7 @@ Q_UNUSED(option)
  
        //! paint cover art
        QPixmap pix = CoverCache::instance()->cover(media);
-       p.drawPixmap(15,2, pix);
+       p.drawPixmap((opt.rect.size().width()- m_coverSize)/2,2, pix);
        p.end();
     }
  
@@ -284,8 +286,8 @@ Q_UNUSED(option)
     painter->setPen(opt.palette.color ( QPalette::Normal, isSelected() ? QPalette::HighlightedText : QPalette::WindowText));
     painter->setFont(opt.font);
 
-    const QString elided_album = opt.fontMetrics.elidedText ( media->name, Qt::ElideRight, 150);
-    painter->drawText(QRect (0,123,150, 25),  Qt::AlignTop | Qt::AlignHCenter,elided_album );
+    const QString elided_album = opt.fontMetrics.elidedText ( media->name, Qt::ElideRight, m_coverSize*1.25);
+    painter->drawText(QRect (0,m_coverSize+3,m_coverSize*1.25, 25),  Qt::AlignTop | Qt::AlignHCenter,elided_album );
 
     /* album number */
     if(media->disc_number != 0) {
@@ -302,7 +304,7 @@ Q_UNUSED(option)
     /* paint year */
     painter->setFont( alternateFont() );
     painter->setPen(opt.palette.color ( QPalette::Disabled, isSelected() ? QPalette::HighlightedText : QPalette::WindowText));
-    painter->drawText(QRect(0, 123 + opt.fontMetrics.height() + 2, 150, 25),  Qt::AlignTop | Qt::AlignHCenter, media->yearToString());
+    painter->drawText(QRect(0, m_coverSize +3 + opt.fontMetrics.height() + 2, m_coverSize*1.25, 25),  Qt::AlignTop | Qt::AlignHCenter, media->yearToString());
 
     /* paint playing or favorite attibute */
     if(media->isPlaying)
@@ -371,7 +373,7 @@ AlbumGraphicItem_v3::AlbumGraphicItem_v3()
 
 QRectF AlbumGraphicItem_v3::boundingRect() const
 {
-    return QRectF(0, 0, 150, /*cover*/120 + /*text*/opt.fontMetrics.height()*2 + /*playcount*/25 + /*padding*/4);
+    return QRectF(0, 0, m_coverSize*1.25, /*cover*/m_coverSize + /*text*/opt.fontMetrics.height()*2 + /*playcount*/25 + /*padding*/4);
 }
 
 void AlbumGraphicItem_v3::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)
@@ -408,7 +410,7 @@ Q_UNUSED(option)
 
       QPixmap pix = CoverCache::instance()->cover(media);
 
-      p.drawPixmap(15,21, pix);
+      p.drawPixmap((opt.rect.size().width()- m_coverSize)/2,21, pix);
       p.end();
     }
 
@@ -418,7 +420,7 @@ Q_UNUSED(option)
     /* paint playcount */
     QColor m_brush_color = QColor(0x4a82dd);
     m_brush_color.setAlphaF(0.6);
-    QRect rect = QRect(50,2,50,18);
+    QRect rect = QRect(opt.rect.size().width()/2 - 25,2,50,18);
     painter->setPen(QPen( m_brush_color, 0.1, Qt::SolidLine, Qt::RoundCap));
     painter->setBrush(QBrush( m_brush_color ,Qt::SolidPattern));
     painter->drawRoundedRect(rect, 4.0, 4.0);
@@ -431,15 +433,15 @@ Q_UNUSED(option)
     painter->setPen(opt.palette.color ( QPalette::Normal, isSelected() ? QPalette::HighlightedText : QPalette::WindowText));
     painter->setFont(opt.font);
 
-    const QString elided_album = opt.fontMetrics.elidedText ( media->name, Qt::ElideRight, 150);
-    painter->drawText(QRect (0,142,150,25), Qt::AlignTop | Qt::AlignHCenter,elided_album );
+    const QString elided_album = opt.fontMetrics.elidedText ( media->name, Qt::ElideRight, m_coverSize*1.25);
+    painter->drawText(QRect (0,m_coverSize+22,m_coverSize*1.25,25), Qt::AlignTop | Qt::AlignHCenter,elided_album );
 
     /* paint artist name */
     painter->setFont( alternateFont() );
     painter->setPen(opt.palette.color ( QPalette::Disabled, isSelected() ? QPalette::HighlightedText : QPalette::WindowText));
 
-    const QString elided_artist = alternateFontMetric().elidedText ( artist_name, Qt::ElideRight, 150);
-    painter->drawText(QRect(0, 144+opt.fontMetrics.height(), 150, 25), Qt::AlignTop | Qt::AlignHCenter, elided_artist);
+    const QString elided_artist = alternateFontMetric().elidedText ( artist_name, Qt::ElideRight, m_coverSize*1.25);
+    painter->drawText(QRect(0, m_coverSize+22+opt.fontMetrics.height(), m_coverSize*1.25, 25), Qt::AlignTop | Qt::AlignHCenter, elided_artist);
 
     /* paint playing or favorite attibute */
     if(media->isPlaying)
@@ -465,7 +467,7 @@ AlbumGraphicItem_v4::AlbumGraphicItem_v4()
 
 QRectF AlbumGraphicItem_v4::boundingRect() const
 {
-    return QRectF(0, 0, 150, /*cover*/120 + /*text*/opt.fontMetrics.height()*2 + /*rating*/25 + /*padding*/4);
+    return QRectF(0, 0, m_coverSize*1.25, /*cover*/m_coverSize + /*text*/opt.fontMetrics.height()*2 + /*rating*/25 + /*padding*/4);
 }
 
 void AlbumGraphicItem_v4::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)
@@ -495,7 +497,7 @@ Q_UNUSED(option)
     /* Draw frame for State_HasFocus item */
     UTIL::getStyle()->drawControl(QStyle::CE_ItemViewItem, &opt, painter, widget);
 
-    QPixmap pixTemp(QSize(150,175));
+    QPixmap pixTemp(opt.rect.size());
     {
       pixTemp.fill(Qt::transparent);
       QPainter p;
@@ -503,7 +505,7 @@ Q_UNUSED(option)
 
       //! paint cover art
       QPixmap pix = CoverCache::instance()->cover(media);
-      p.drawPixmap(15,21,pix);
+      p.drawPixmap((opt.rect.size().width()- m_coverSize)/2,21,pix);
       p.end();
     }
 
@@ -512,21 +514,21 @@ Q_UNUSED(option)
 
     //! paint album rating
     const float rating_ = media->rating;
-    RatingPainter::instance()->Paint(painter, QRect(0, 1, 150, 22), hover_rating_ == -1.0 ? rating_ : hover_rating_, media->isUserRating);
+    RatingPainter::instance()->Paint(painter, QRect(0, 1, opt.rect.size().width(), 22), hover_rating_ == -1.0 ? rating_ : hover_rating_, media->isUserRating);
 
     //! paint album title
     painter->setPen(opt.palette.color ( QPalette::Normal, isSelected() ? QPalette::HighlightedText : QPalette::WindowText));
     painter->setFont( opt.font );
 
-    const QString elided_album = opt.fontMetrics.elidedText ( media->name, Qt::ElideRight, 150);
-    painter->drawText(QRect (0,142,150, 25), Qt::AlignTop | Qt::AlignHCenter,elided_album );
+    const QString elided_album = opt.fontMetrics.elidedText ( media->name, Qt::ElideRight, m_coverSize*1.25);
+    painter->drawText(QRect (0,m_coverSize+22,m_coverSize*1.25, 25), Qt::AlignTop | Qt::AlignHCenter,elided_album );
 
     //! paint artist name
     painter->setFont( alternateFont() );
     painter->setPen(opt.palette.color ( QPalette::Disabled, isSelected() ? QPalette::HighlightedText : QPalette::WindowText));
 
-    const QString elided_artist = alternateFontMetric().elidedText ( artist_name, Qt::ElideRight, 150);
-    painter->drawText(QRect(0, 142+opt.fontMetrics.height()+2, 150, 18), Qt::AlignTop | Qt::AlignHCenter, elided_artist);
+    const QString elided_artist = alternateFontMetric().elidedText ( artist_name, Qt::ElideRight, m_coverSize*1.25);
+    painter->drawText(QRect(0, m_coverSize+22+opt.fontMetrics.height()+2, m_coverSize*1.25, 18), Qt::AlignTop | Qt::AlignHCenter, elided_artist);
 
     //! paint playing or favorite attibute
     if(media->isPlaying)
@@ -540,7 +542,7 @@ void AlbumGraphicItem_v4::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
 {
     if(event->pos().toPoint().y() <= 22)
     {
-      hover_rating_ = RatingPainter::RatingForPos(event->pos().toPoint(), QRect(0, 1, 150, 22));
+      hover_rating_ = RatingPainter::RatingForPos(event->pos().toPoint(), QRect(0, 1, m_coverSize*1.25, 22));
       this->update();
 
       // update all track hover rating if selected
@@ -559,7 +561,7 @@ void AlbumGraphicItem_v4::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     if(event->pos().toPoint().y() <= 22)
     {
-      media->rating       = RatingPainter::RatingForPos(event->pos().toPoint(), QRect(0, 1, 150, 22));
+      media->rating       = RatingPainter::RatingForPos(event->pos().toPoint(), QRect(0, 1, m_coverSize*1.25, 22));
       media->isUserRating = true;
 
       // update all track hover rating if selected
@@ -633,12 +635,14 @@ ArtistGraphicItem::ArtistGraphicItem()
     opt.state |= QStyle::State_Enabled;
     opt.state &= ~QStyle::State_Selected;
     
+    m_coverSize = SETTINGS()->_coverSize;
+
     opt.rect = boundingRect().toRect();
 }
 
 QRectF ArtistGraphicItem::boundingRect() const
 {
-    return QRectF(0, 0, 140, 120 + opt.fontMetrics.height()*2 + 4);
+    return QRectF(0, 0, m_coverSize*1.17, m_coverSize + opt.fontMetrics.height()*2 + 4);
 }
 
 
@@ -646,6 +650,7 @@ QRectF ArtistGraphicItem::boundingRect() const
 void ArtistGraphicItem::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)
 {
 Q_UNUSED(option)
+
     /* Get color for state */
     QColor c = QApplication::palette().color(QPalette::Normal,QPalette::Highlight);
 
@@ -667,7 +672,7 @@ Q_UNUSED(option)
     UTIL::getStyle()->drawControl(QStyle::CE_ItemViewItem, &opt, painter, widget);
 
 
-    /* draw artist image 120x120 */
+    /* draw artist image 200x200 */
     QPixmap pixTemp( opt.rect.size() );
     {
       pixTemp.fill(Qt::transparent);
@@ -676,7 +681,8 @@ Q_UNUSED(option)
 
       //! paint cover art
       QPixmap pix = CoverCache::instance()->image(media, albums_covers);
-      p.drawPixmap(10,2,pix);
+      
+      p.drawPixmap((opt.rect.size().width()-m_coverSize)/2,2,pix);
       p.end();
     }
 
@@ -687,9 +693,9 @@ Q_UNUSED(option)
     painter->setFont(opt.font);
     painter->setPen(opt.palette.color ( QPalette::Normal, isSelected() ? QPalette::HighlightedText : QPalette::WindowText));
 
-    const QString elided_artist = opt.fontMetrics.elidedText ( media->name, Qt::ElideMiddle, 260, Qt::TextWrapAnywhere);
+    const QString elided_artist = opt.fontMetrics.elidedText ( media->name, Qt::ElideMiddle, m_coverSize*1.17*2, Qt::TextWrapAnywhere);
 
-    painter->drawText(QRect(0, 122, 140, opt.fontMetrics.height()*2+4), Qt::AlignTop | Qt::AlignHCenter | Qt::TextWrapAnywhere, elided_artist);
+    painter->drawText(QRect(0, m_coverSize+4, m_coverSize*1.17, opt.fontMetrics.height()*2+4), Qt::AlignTop | Qt::AlignHCenter | Qt::TextWrapAnywhere, elided_artist);
 
     /* affichage des attributs playing ou favorite */
     if(media->isPlaying)
@@ -763,7 +769,7 @@ ArtistGraphicItem_v2::ArtistGraphicItem_v2()
 
 QRectF ArtistGraphicItem_v2::boundingRect() const
 {
-    return QRectF(0, 0, 150, 120 + opt.fontMetrics.height()*2 + 4 +  /*playcount*/25 );
+    return QRectF(0, 0, m_coverSize*1.25, m_coverSize + opt.fontMetrics.height()*2 + 4 +  /*playcount*/25 );
 }
 
 void ArtistGraphicItem_v2::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)
@@ -789,7 +795,7 @@ Q_UNUSED(option)
     /* Draw frame for State_HasFocus item */
     UTIL::getStyle()->drawControl(QStyle::CE_ItemViewItem, &opt, painter, widget);
 
-    /* draw artist image 120x120 */
+    /* draw artist image 200x200 */
     QPixmap pixTemp( opt.rect.size() );
     {
       pixTemp.fill(Qt::transparent);
@@ -798,7 +804,7 @@ Q_UNUSED(option)
 
       //! paint cover art
       QPixmap pix = CoverCache::instance()->image(media, albums_covers);
-      p.drawPixmap(15,21, pix);
+      p.drawPixmap((opt.rect.size().width()-m_coverSize)/2,21, pix);
       p.end();
     }
 
@@ -809,7 +815,7 @@ Q_UNUSED(option)
     /* paint playcount */
     QColor m_brush_color = QColor(0x4a82dd);
     m_brush_color.setAlphaF(0.6);
-    QRect rect = QRect(50,2,50,18);
+    QRect rect = QRect(opt.rect.size().width()/2-25,2,50,18);
     painter->setPen(QPen( m_brush_color, 0.1, Qt::SolidLine, Qt::RoundCap));
     painter->setBrush(QBrush( m_brush_color ,Qt::SolidPattern));
     painter->drawRoundedRect(rect, 4.0, 4.0);
@@ -822,8 +828,8 @@ Q_UNUSED(option)
     painter->setFont(opt.font);
     painter->setPen(opt.palette.color ( QPalette::Normal, isSelected() ? QPalette::HighlightedText : QPalette::WindowText));
 
-    const QString elided_artist = opt.fontMetrics.elidedText ( media->name, Qt::ElideRight, 150);
-    painter->drawText(QRect(0, 142, 150, 25), Qt::AlignTop | Qt::AlignHCenter, elided_artist);
+    const QString elided_artist = opt.fontMetrics.elidedText ( media->name, Qt::ElideRight, m_coverSize*1.25);
+    painter->drawText(QRect(0, m_coverSize+22, m_coverSize*1.25, 25), Qt::AlignTop | Qt::AlignHCenter, elided_artist);
     
     /* paint playing or favorite attibute */
     if(media->isPlaying)
@@ -850,7 +856,7 @@ ArtistGraphicItem_v3::ArtistGraphicItem_v3()
 
 QRectF ArtistGraphicItem_v3::boundingRect() const
 {
-    return QRectF(0, 0, 150, 120 + opt.fontMetrics.height()*2 + 4 +  /*rating*/25 );
+    return QRectF(0, 0, m_coverSize*1.25, m_coverSize + opt.fontMetrics.height()*2 + 4 +  /*rating*/25 );
 
 }
 
@@ -877,7 +883,7 @@ Q_UNUSED(option)
     /* Draw frame for State_HasFocus item */
     UTIL::getStyle()->drawControl(QStyle::CE_ItemViewItem, &opt, painter, widget);
     
-    /* draw artist image 120x120 */
+    /* draw artist image 200x200 */
     QPixmap pixTemp( opt.rect.size() );
     {
       pixTemp.fill(Qt::transparent);
@@ -886,7 +892,7 @@ Q_UNUSED(option)
 
       //! paint cover art
       QPixmap pix = CoverCache::instance()->image(media, albums_covers);
-      p.drawPixmap(15,21, pix);
+      p.drawPixmap((opt.rect.size().width()-m_coverSize)/2,21, pix);
       p.end();
     }
 
@@ -895,14 +901,14 @@ Q_UNUSED(option)
 
     /* paint artist rating */
     const float rating_ = media->rating;
-    RatingPainter::instance()->Paint(painter, QRect(0, 1, 150, 22), hover_rating_ == -1.0 ? rating_ : hover_rating_, media->isUserRating);
+    RatingPainter::instance()->Paint(painter, QRect(0, 1, m_coverSize*1.25, 22), hover_rating_ == -1.0 ? rating_ : hover_rating_, media->isUserRating);
 
     /* paint artist name */
     painter->setFont(opt.font);
     painter->setPen(opt.palette.color ( QPalette::Normal, isSelected() ? QPalette::HighlightedText : QPalette::WindowText));
 
-    const QString elided_artist = opt.fontMetrics.elidedText ( media->name, Qt::ElideRight, 150);
-    painter->drawText(QRect(0, 142, 150, 25), Qt::AlignTop | Qt::AlignHCenter, elided_artist);
+    const QString elided_artist = opt.fontMetrics.elidedText ( media->name, Qt::ElideRight, m_coverSize*1.25);
+    painter->drawText(QRect(0, m_coverSize+22, m_coverSize*1.25, 25), Qt::AlignTop | Qt::AlignHCenter, elided_artist);
 
     //! paint playing or favorite attibute
     if(media->isPlaying)
@@ -916,7 +922,7 @@ void ArtistGraphicItem_v3::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
 {
     if(event->pos().toPoint().y() <= 22)
     {
-      hover_rating_ = RatingPainter::RatingForPos(event->pos().toPoint(), QRect(0, 1, 150, 22));
+      hover_rating_ = RatingPainter::RatingForPos(event->pos().toPoint(), QRect(0, 1, m_coverSize*1.25, 22));
       this->update();
 
       // update all track hover rating if selected
@@ -935,7 +941,7 @@ void ArtistGraphicItem_v3::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     if(event->pos().toPoint().y() <= 22)
     {
-      media->rating       = RatingPainter::RatingForPos(event->pos().toPoint(), QRect(0, 1, 150, 22));
+      media->rating       = RatingPainter::RatingForPos(event->pos().toPoint(), QRect(0, 1, m_coverSize*1.25, 22));
       media->isUserRating = true;
 
       // update all track hover rating if selected
@@ -1437,6 +1443,155 @@ void TrackGraphicItem_v3::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
     TrackGraphicItem::hoverLeaveEvent(event);
 }
 
+
+/*
+********************************************************************************
+*                                                                              *
+*    Class TrackGraphicItem_v5                                                 *
+*      -> used in TRACKS VIEW popup menu                                       *
+*      -> draw number/track name/duration/rating                               *
+*                                                                              *
+********************************************************************************
+*/
+TrackGraphicItem_v5::TrackGraphicItem_v5() : TrackGraphicItem()
+{
+    _width        = 530;
+    hover_rating_ = -1.0;
+}
+
+QRectF TrackGraphicItem_v5::boundingRect() const
+{
+    if(_width < 530)
+      return QRectF(0, 0, 530, 22);
+
+    return QRectF(0, 0, _width, 22);
+}
+
+/* TrackGraphicItem_v5 is used in popup menu   */
+/*  assume only media is TYPE_TRACK            */
+void TrackGraphicItem_v5::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)
+{
+Q_UNUSED(option)
+   //! get data
+   const int title_width = _width < 530 ? 120 : (_width - 210);
+
+   if(media->type() != TYPE_TRACK) {
+     TrackGraphicItem::paint(painter, option, widget);
+     return;
+   }
+
+   //! Get color for state
+   QColor c = QApplication::palette().color(QPalette::Normal,QPalette::Highlight);
+
+   if(isSelected())
+   {
+     opt.state |= QStyle::State_Selected;
+     opt.palette.setColor(QPalette::Normal, QPalette::Highlight, c);
+   }
+   else if (opt.state & QStyle::State_MouseOver) {
+     opt.state |= QStyle::State_Selected;
+     c.setAlpha(100);
+     opt.palette.setColor(QPalette::Normal, QPalette::Highlight, c);
+   }
+   else {
+     opt.state &= ~QStyle::State_Selected;
+   }
+
+   //! Draw frame for State_HasFocus item
+   //QStyle *style = widget ? widget->style() : QApplication::style();
+   opt.rect = boundingRect().toRect().adjusted(0,0,-10,0);
+   UTIL::getStyle()->drawControl(QStyle::CE_ItemViewItem, &opt, painter, widget);
+
+   //! paint track number
+   painter->setPen(opt.palette.color ( QPalette::Normal, isSelected() ? QPalette::HighlightedText : QPalette::WindowText));
+   painter->setFont(opt.font);
+   painter->drawText(QRect(30, 0, 30, 22), Qt::AlignLeft | Qt::AlignVCenter, QString::number(media->num));
+
+   //! paint track name
+   const QString title_elided = opt.fontMetrics.elidedText ( media->title, Qt::ElideRight, title_width);
+   painter->drawText(QRect(60, 0, title_width, 22), Qt::AlignLeft | Qt::AlignVCenter,title_elided);
+
+   //! paint track duration
+   const QString duree_elided = opt.fontMetrics.elidedText ( media->durationToString(), Qt::ElideRight, 50);
+   painter->drawText(QRect(60+title_width, 0, 50, 22), Qt::AlignRight | Qt::AlignVCenter,duree_elided);
+
+
+   //! paint activated item
+   if(media->isPlaying)
+      UTIL::drawPlayingIcon(painter,18, 0, QPoint(1,1));
+   else if(media->isBroken)
+      painter->drawPixmap(0, 0, QPixmap(":/images/media-broken-18x18.png"));
+
+   //! paint track rating
+   const float rating_ = media->rating;
+   RatingPainter::instance()->Paint(painter, QRect(title_width + 115, 0, 80, 22), hover_rating_ == -1.0 ? rating_ : hover_rating_, true);
+}
+
+void TrackGraphicItem_v5::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
+{
+    const int title_width = _width < 530 ? 120 : (_width - 210);
+    if(event->pos().toPoint().x() >= title_width + 115)
+    {
+      hover_rating_ = RatingPainter::RatingForPos(event->pos().toPoint(), QRect(title_width + 115, 0, 80, 22));
+
+      this->update();
+
+      // update all track hover rating if selected
+      QGraphicsScene* scene = this->scene();
+      if(scene->selectedItems().contains(this)) {
+        foreach(QGraphicsItem* gi, scene->selectedItems()) {
+          TrackGraphicItem_v5 *item = static_cast<TrackGraphicItem_v5*>(gi);
+          item->setHoverRating(hover_rating_);
+          item->update();
+        }
+      }
+    }
+}
+
+void TrackGraphicItem_v5::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    const int title_width = _width < 530 ? 120 : (_width - 210);
+
+    if(event->pos().toPoint().x() >= title_width + 115)
+    {
+      media->rating = RatingPainter::RatingForPos(event->pos().toPoint(), QRect(title_width + 115, 0, 80, 22));
+
+      // update all track hover rating if selected
+      QGraphicsScene* scene = this->scene();
+      if(scene->selectedItems().contains(this)) {
+        foreach(QGraphicsItem* gi, scene->selectedItems()) {
+          TrackGraphicItem_v5 *item = static_cast<TrackGraphicItem_v5*>(gi);
+          item->media->rating = media->rating;
+        }
+      }
+
+      QVariant v;
+      v.setValue(static_cast<QGraphicsItem*>(this));
+
+      (ACTIONS()->value(BROWSER_ITEM_RATING_CLICK))->setData(v);
+      (ACTIONS()->value(BROWSER_ITEM_RATING_CLICK))->trigger();
+    }
+}
+
+void TrackGraphicItem_v5::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
+{
+    //Debug::debug() << " ---- TrackGraphicItem_v5::hoverLeaveEvent";
+    hover_rating_ = -1.0;
+
+    // update all track hover rating if selected
+    QGraphicsScene* scene = this->scene();
+    if(scene->selectedItems().contains(this)) {
+      foreach(QGraphicsItem* gi, scene->selectedItems()) {
+        TrackGraphicItem_v5 *item = static_cast<TrackGraphicItem_v5*>(gi);
+        item->setHoverRating(-1.0);
+        item->update();
+      }
+    }
+
+    TrackGraphicItem::hoverLeaveEvent(event);
+}
+
+
 /*
 ********************************************************************************
 *                                                                              *
@@ -1474,7 +1629,7 @@ PlaylistGraphicItem::PlaylistGraphicItem()
 
 QRectF PlaylistGraphicItem::boundingRect() const
 {
-    return QRectF(0, 0, 140, 150);
+    return QRectF(0, 0, 170, 170);
 }
 
 
@@ -1511,31 +1666,31 @@ Q_UNUSED(option)
    painter->setFont(opt.font);
 
    //! paint media playlist mime
-   painter->drawPixmap(opt.rect.adjusted(15,15,-15,-25),QPixmap(icon));
+   painter->drawPixmap(opt.rect.adjusted(10,6,-10,-10),QPixmap(icon));
 
    //! paint playlist date
    if( media->p_type == T_FILE || media->p_type== T_DATABASE)
    {
       QDateTime date        =  QDateTime::fromTime_t(media->date);
-      painter->drawText(boundingRect().toRect().adjusted(0, 0, 0, -120), Qt::AlignCenter, date.toString("dd.MM.yyyy"));
+      painter->drawText(boundingRect().toRect().adjusted(0, 0, 0, -150), Qt::AlignCenter, date.toString("dd.MM.yyyy"));
    }
 
    //! paint playlist name
    const QString elided_p_name = opt.fontMetrics.elidedText ( name, Qt::ElideMiddle, 260, Qt::TextWrapAnywhere);
 
-   painter->drawText(QRect(0, 120, 140, 30), Qt::AlignTop | Qt::AlignCenter | Qt::TextWrapAnywhere, elided_p_name);
+   painter->drawText(QRect(0, 140, 170, 30), Qt::AlignTop | Qt::AlignCenter | Qt::TextWrapAnywhere, elided_p_name);
 
    //! paint activated item
    if(media->isPlaying)
-     UTIL::drawPlayingIcon(painter,18, 0, QPoint(2,35));
+     UTIL::drawPlayingIcon(painter,18, 0, QPoint(14,30));
 
    //! paint favorites item
    if(media->isFavorite)
-     painter->drawPixmap(0, 60, QPixmap(":/images/favorites-18x18.png"));
+     painter->drawPixmap(10, 60, QPixmap(":/images/favorites-18x18.png"));
 
    //! paint media playlist type (internal/user)
    if(media->p_type == T_FILE)
-     painter->drawPixmap(114, 80, QPixmap(":/images/files-18x18.png"));
+     painter->drawPixmap(10, 90, QPixmap(":/images/files-18x18.png"));
 }
 
 void PlaylistGraphicItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)

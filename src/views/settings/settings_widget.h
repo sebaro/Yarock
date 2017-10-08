@@ -35,6 +35,7 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QActionGroup>
+#include <QSpinBox>
 
 class CategorieLayoutItem;
 class ButtonItem;
@@ -177,6 +178,7 @@ Q_OBJECT
 
     bool isLibraryChanged() {return _isLibraryChanged;}
     bool isViewChanged();
+    bool isCoverSizeChanged();
 
     void setContentVisible(bool b);
     
@@ -202,20 +204,24 @@ Q_OBJECT
     void slot_on_add_folder_clicked(const QString text=QString());
     void slot_on_remove_folder_clicked();
     void slot_on_path_changed();
+
     
   private:
     bool         _isLibraryChanged; //! we need to rebuild database
-
+    
     QList<AddFolderWidget*>  ui_folderWidgets;
     QVBoxLayout              *ui_folders_layout;
     
     QCheckBox              *ui_auto_update;
     QCheckBox              *ui_search_cover;
+    QCheckBox              *ui_download_cover;
     QCheckBox              *ui_group_albums;
     QCheckBox              *ui_use_artist_image;
     QCheckBox              *ui_rating_to_file;
     QComboBox              *ui_choose_db;
 
+    QSpinBox               *ui_cover_size_spinbox;
+    
     QPushButton            *ui_add_path_button;
 
     QToolButton            *ui_db_new_button;
@@ -270,7 +276,11 @@ Q_INTERFACES(QGraphicsLayoutItem)
     void mousePressEvent ( QGraphicsSceneMouseEvent * event );
 
   private:
+    #if QT_VERSION >= 0x050000
+    QStyleOptionViewItem opt;
+    #else
     QStyleOptionViewItemV4 opt;
+    #endif
 
   signals:
     void clicked();

@@ -44,7 +44,7 @@ void YarockSettings::readSettings()
 {
     Debug::debug() << "[Settings] readSettings";
     
-    // window elements (Startup settings)
+    // ------ window elements (Startup settings)
     _windowsGeometry     = s->value("Window/geometry").toByteArray();
     _windowsState        = s->value("Window/state").toByteArray();
     _splitterState_1     = s->value("Window/splitter1").toByteArray();
@@ -54,7 +54,7 @@ void YarockSettings::readSettings()
     _enableSearchPopup   = s->value("Window/searchPopup",       true).toBool();
     _enablePlayOnSearch  = s->value("Window/playOnSearch",      false).toBool();
 
-    // session
+    // ------ session
 #ifdef ENABLE_PHONON
     _engine              = s->value("Session/engine",              1).toInt();    // default = phonon
 #elif ENABLE_VLC  
@@ -78,16 +78,29 @@ void YarockSettings::readSettings()
     
     _hideAtStartup       = s->value("Session/hideAtStartup", false).toBool();
 
-    /* handle color */
+    // ------ cover size
+    _coverSize           = s->value("Session/coversize", 200).toUInt();
+    
+    if(_coverSize < 128 || _coverSize > 256)
+        _coverSize = 200;
+    
+    // ------ handle color
     if(s->contains("Session/color")) 
     {
-      QByteArray bytes = s->value("Session/color").toByteArray();
-    
-      QBuffer buf(&bytes);
-      buf.open(QIODevice::ReadOnly);
+        try 
+        { 
+            QByteArray bytes = s->value("Session/color").toByteArray();
+            
+            QBuffer buf(&bytes);            
+            buf.open(QIODevice::ReadOnly);
 
-      QDataStream stream(&buf);
-      stream >> _baseColor;
+            QDataStream stream(&buf);
+            stream >> _baseColor;
+        }
+        catch (...)
+        {
+            _baseColor = QColor(0xfca822);
+        }
     }
     else
     {
@@ -95,23 +108,24 @@ void YarockSettings::readSettings()
     }
     updateCheckedColor();
 
-    // features activations (Dynamic settings)
+    
+    // ------ features activations (Dynamic settings)
     _useTrayIcon         = s->value("Features/systray", false).toBool();
     _useMpris            = s->value("Features/mpris",   true).toBool();
     _useDbusNotification = s->value("Features/dbus",    false).toBool();
     _useLastFmScrobbler  = s->value("Features/lastFm",  false).toBool();
     _useShortcut         = s->value("Features/shortcut", false).toBool();
 
-    // song info 
+    // ------ song info 
     _lyrics_providers =  s->value("SongInfo/providers",  ServiceLyrics::defaultProvidersList()).toStringList();
     
-    // audio controler (Startup settings)
+    // ------ audio controler (Startup settings)
     _repeatMode          = s->value("AudioControl/repeat",  0).toInt();
     _shuffleMode         = s->value("AudioControl/shuffle", 0).toInt();
     _volumeLevel         = s->value("AudioControl/volume",  75).toInt();
     _replaygain          = s->value("AudioControl/replaygain", 0).toInt();
 
-    // playback option
+    // ------ playback option
     _stopOnPlayqueueClear     = s->value("PlaybackOption/stopOnclear", false).toBool();
     _restorePlayqueue         = s->value("PlaybackOption/restorePlayqueue", false).toBool();
     _restartPlayingAtStartup  = s->value("PlaybackOption/restartPlaying", false).toBool();
@@ -120,7 +134,7 @@ void YarockSettings::readSettings()
     _playingUrl               = s->value("PlaybackOption/currentUrl",     "").toString();
     _playingPosition          = s->value("PlaybackOption/currentPosition",  0).toDouble();
 
-    // Shortcut media key
+    // ------ Shortcut media key
     _shortcutsKey["play"]        = s->value("Shortcuts/play",QKeySequence(Qt::Key_MediaPlay).toString()).toString();
     _shortcutsKey["stop"]        = s->value("Shortcuts/stop",QKeySequence(Qt::Key_MediaStop).toString()).toString();
     _shortcutsKey["prev_track"]  = s->value("Shortcuts/prev_track","Meta+Left").toString();
@@ -131,7 +145,7 @@ void YarockSettings::readSettings()
     _shortcutsKey["jump_to_track"] = s->value("Shortcuts/jump_to_track","Meta+J").toString();
     _shortcutsKey["clear_playqueue"] = s->value("Shortcuts/clear_playqueue","Ctrl+K").toString();
 
-    // Equalizer settings
+    // ------ Equalizer settings
     const int count = s->beginReadArray("Equalizer/presets");
     for (int i=0 ; i<count ; ++i)
     {
@@ -175,7 +189,8 @@ void YarockSettings::writeSettings()
     s->setValue("playqueueShowFilter",_playqueueShowFilter);
     s->setValue("hideAtStartup",      _hideAtStartup);
     s->setValue("filesystem",         _filesystem_path);
-        
+    s->setValue("coversize",         _coverSize);
+    
       /* handle color */
       QByteArray byteArray;      
       QBuffer buffer(&byteArray);

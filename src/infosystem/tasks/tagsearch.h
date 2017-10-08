@@ -32,7 +32,7 @@
 *                                                                              *
 ********************************************************************************
 */
-class TagSearch : public QObject
+class TagSearch : public QThread
 {
 Q_OBJECT
  public:
@@ -46,14 +46,17 @@ Q_OBJECT
        ALBUM_GENRE_SINGLE,
        ALBUM_GENRE_FULL,
        ARTIST_IMAGE_SINGLE,
-       ARTIST_IMAGE_FULL
+       ARTIST_IMAGE_FULL,
+       ARTIST_ALBUM_FULL
     };
     
     bool isRunning() {return m_isRunning;};
-    bool type() {return m_type;};
+
     void setExit(bool b) {m_exit = b;}
 
-    void start(TYPE type, INFO::InfoRequestData request=INFO::InfoRequestData());
+    void run();
+    void setSearch(TYPE type, INFO::InfoRequestData request=INFO::InfoRequestData());
+    //void start(TYPE type, INFO::InfoRequestData request=INFO::InfoRequestData());
 
   private:
     void  process_search();

@@ -59,6 +59,8 @@ ThreadManager::~ThreadManager()
     delete m_databaseBuilder;
     delete m_localTrackPopulator;
     delete m_localPlaylistPopulator;
+    if(m_tagSearchTask != 0)
+      delete m_tagSearchTask;
 }
 
 
@@ -68,17 +70,17 @@ ThreadManager::~ThreadManager()
 void ThreadManager::stopThread()
 {
     Debug::debug() << "[ThreadManager] stop running thread";
-    if(m_databaseBuilder->isRunning())
+    if( m_databaseBuilder->isRunning() )
       cancelThread(DB_THREAD);
 
-    if(m_localTrackPopulator->isRunning())
+    if( m_localTrackPopulator->isRunning() )
       cancelThread(POPULATOR_C_THREAD);
 
-    if(m_localPlaylistPopulator->isRunning())
+    if( m_localPlaylistPopulator->isRunning() )
       cancelThread(POPULATOR_P_THREAD);
 
     if(m_tagSearchTask  != 0)
-      if(m_tagSearchTask ->isRunning())
+      if( m_tagSearchTask->isRunning() )
         cancelThread(TAG_SEARCH_THREAD);
 }
 
@@ -97,7 +99,8 @@ void ThreadManager::databaseBuild(QStringList listDir,bool doRebuild/*=false*/)
 
     uint i = StatusManager::instance()->startMessage(tr("Updating music database") + " (0%)");
     messageIds.insert("DbUpdate", i);
-    emit dbBuildStart();    
+    
+    emit dbBuildStart();     
 }
 
 void ThreadManager::dbBuildProgressChanged(int progress)
@@ -108,13 +111,12 @@ void ThreadManager::dbBuildProgressChanged(int progress)
 
 void ThreadManager::dbBuildFinish()
 {
+    Debug::debug() << "[ThreadManager] dbBuildFinish";
+        
     if (messageIds.contains("DbUpdate"))
       StatusManager::instance()->stopMessage( messageIds.take("DbUpdate") );
 
     emit dbBuildFinished();
-    
-    /* after db is built => repopulate local track model */
-    this->populateLocalTrackModel();
 }
 
 bool ThreadManager::isDbRunning()
@@ -128,15 +130,15 @@ bool ThreadManager::isDbRunning()
 *******************************************************************************/
 void ThreadManager::populateLocalTrackModel()
 {
-   Debug::debug() << "[ThreadManager] start a new collection populator";
-   if(m_localTrackPopulator->isRunning()) {
-     cancelThread(POPULATOR_C_THREAD);
-   }
+    Debug::debug() << "[ThreadManager] start a new collection populator";
+    if(m_localTrackPopulator->isRunning()) {
+      cancelThread(POPULATOR_C_THREAD);
+    }
 
-   m_localTrackPopulator->start();
+    m_localTrackPopulator->start();
 
-   uint i = StatusManager::instance()->startMessage(tr("Loading music collection"));
-   messageIds.insert("LoadMusic", i);
+    uint i = StatusManager::instance()->startMessage(tr("Loading music collection"));
+    messageIds.insert("LoadMusic", i);
 }
 
 void ThreadManager::slot_on_localtrackmodel_populating_changed(int progress)
@@ -161,14 +163,14 @@ void ThreadManager::slot_on_localtrackmodel_populated()
 *******************************************************************************/
 void ThreadManager::populateLocalPlaylistModel()
 {
-   Debug::debug() << "[ThreadManager] start a new playlist populator";
-   if(m_localPlaylistPopulator->isRunning())
-     cancelThread(POPULATOR_P_THREAD);
+    Debug::debug() << "[ThreadManager] start a new playlist populator";
+    if(m_localPlaylistPopulator->isRunning())
+      cancelThread(POPULATOR_P_THREAD);
 
-   m_localPlaylistPopulator->start();
+    m_localPlaylistPopulator->start();
 
-   uint i = StatusManager::instance()->startMessage(tr("Loading playlist files"));
-   messageIds.insert("LoadPlaylist", i);
+    uint i = StatusManager::instance()->startMessage(tr("Loading playlist files"));
+    messageIds.insert("LoadPlaylist", i);
 }
 
 void ThreadManager::slot_on_localplaylistmodel_populating_changed(int progress)
@@ -207,7 +209,10 @@ void ThreadManager::startTagSearch(TagSearch::TYPE type, INFO::InfoRequestData r
     uint i = StatusManager::instance()->startMessage(tr("Fetching media info"));
     messageIds.insert("MediaTagSearch", i);
 
-    m_tagSearchTask->start(type, request);
+    
+    m_tagSearchTask->setSearch(type, request);
+    m_tagSearchTask->run();
+    //m_tagSearchTask->start(type, request);
 }
 
 void ThreadManager::slot_tagsearch_finished()
@@ -231,7 +236,8 @@ void ThreadManager::slot_tagsearch_progress(int progress)
 *******************************************************************************/
 void ThreadManager::cancelThread(E_THREAD thread)
 {
-    switch(thread) {
+    switch(thread)
+    {
       case DB_THREAD:
          Debug::warning() << "ThreadManager -> cancel database builder thread !!";
         m_databaseBuilder->setExit(true);
@@ -266,6 +272,8 @@ void ThreadManager::cancelThread(E_THREAD thread)
       case TAG_SEARCH_THREAD:
          Debug::warning() << "ThreadManager -> cancel tag search thread !!";
          m_tagSearchTask->setExit(true);
+         m_tagSearchTask->wait();
+         m_tagSearchTask->setExit(false);
 
         if (messageIds.contains("MediaTagSearch"))
           StatusManager::instance()->stopMessage( messageIds.take("MediaTagSearch") );

@@ -41,6 +41,7 @@ struct Results {
 
       bool    isEngineChanged;
       bool    isLibraryChanged;
+      bool    isCoverSizeChanged;
       bool    isViewChanged;
       
       bool    isShorcutChanged;

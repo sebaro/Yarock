@@ -262,6 +262,8 @@ void LocalScene::populateScene()
     //! clear scene and delete all items
     clear();
     
+    COVER_SIZE = SETTINGS()->_coverSize;
+
     /* si model est vide et database est en cours de construction */
     if(m_localTrackModel->isEmpty() && ThreadManager::instance()->isDbRunning())
     {
@@ -323,7 +325,7 @@ void LocalScene::populateAlbumExtendedScene()
     int Column    = 0;
     m_infosize    = 0;
 
-    item_count = (parentView()->width()/160 > 2) ? parentView()->width()/160 : 2;
+    item_count = (parentView()->width()/(COVER_SIZE*1.25) > 2) ? parentView()->width()/(COVER_SIZE*1.25) : 2;
 
 
     /* artist loop */
@@ -335,7 +337,7 @@ void LocalScene::populateAlbumExtendedScene()
 
       CategorieGraphicItem *category = new CategorieGraphicItem(qobject_cast<QGraphicsView*> (parentView())->viewport());
       category->m_name = artist->name;
-      category->setPos( 0 ,10 + artistRow*50 + albumRow*170);
+      category->setPos( 0 ,10 + artistRow*50 + albumRow*(COVER_SIZE+50));
 
       addItem(category);
 
@@ -353,7 +355,7 @@ void LocalScene::populateAlbumExtendedScene()
 
         AlbumGraphicItem_v2 *album_item = new AlbumGraphicItem_v2();
         album_item->media = album;
-        album_item->setPos(4+160*Column, artistRow*50 + albumRow*170);
+        album_item->setPos(4+(COVER_SIZE*1.25)*Column, artistRow*50 + albumRow*(COVER_SIZE+50));
         addItem(album_item);
 
 
@@ -382,7 +384,8 @@ void LocalScene::populateAlbumGridScene()
     int Column        = 0;
     m_infosize        = 0;
     int categorieRow  = 0;
-    item_count = (parentView()->width()/160 > 2) ? parentView()->width()/160 : 2;
+    
+    item_count = (parentView()->width()/(COVER_SIZE*1.25) > 2) ? parentView()->width()/(COVER_SIZE*1.25) : 2;
 
 
     CategorieGraphicItem *cat = new CategorieGraphicItem(qobject_cast<QGraphicsView*> (parentView())->viewport());
@@ -410,7 +413,7 @@ void LocalScene::populateAlbumGridScene()
 
         AlbumGraphicItem *album_item = new AlbumGraphicItem();
         album_item->media = album;
-        album_item->setPos(4+160*Column, 10 + albumRow*170 + categorieRow*50);
+        album_item->setPos(4+(COVER_SIZE*1.25)*Column, 10 + albumRow*(COVER_SIZE+50) + categorieRow*50);
         addItem(album_item);
 
         if(Column < (item_count-1)) {
@@ -440,7 +443,8 @@ void LocalScene::populateArtistScene()
     int Column       = 0;
     m_infosize       = 0;
     int idx          = 0;
-    item_count = (parentView()->width()/160 > 2) ? parentView()->width()/160 : 2;
+    
+    item_count = (parentView()->width()/(COVER_SIZE*1.25) > 2) ? parentView()->width()/(COVER_SIZE*1.25) : 2;
    
     
     /* artist loop */
@@ -460,7 +464,7 @@ void LocalScene::populateArtistScene()
 
           CategorieGraphicItem *category = new CategorieGraphicItem(qobject_cast<QGraphicsView*> (parentView())->viewport());
           category->m_name = QString(start_char);
-          category->setPos( 0 , 10 + categorieRow*50 + artistRow*165);
+          category->setPos( 0 , 10 + categorieRow*50 + artistRow*(COVER_SIZE*1.25));
           addItem(category);
 
           Column = 0;
@@ -474,7 +478,7 @@ void LocalScene::populateArtistScene()
         /* new Artist Item */
         ArtistGraphicItem *artist_item = new ArtistGraphicItem();
         artist_item->media = artist;
-        artist_item->setPos( 4 + 160*Column , categorieRow*50 + artistRow*165);
+        artist_item->setPos( 4 + (COVER_SIZE*1.25)*Column , categorieRow*50 + artistRow*(COVER_SIZE*1.25));
         addItem(artist_item);
 
         /* ALBUM COVER LOOP */
@@ -530,7 +534,7 @@ void LocalScene::populateTrackScene()
       
       CategorieGraphicItem *category = new CategorieGraphicItem(qobject_cast<QGraphicsView*> (parentView())->viewport());
       category->m_name = artist->name;
-      category->setPos( 0 ,artistRow*50 + trackRow*20 + albumRow*30 + offset );
+      category->setPos( 0 ,artistRow*50 + albumRow*30 + trackRow*20 + offset );
       addItem(category);
 
       artistRow++;
@@ -545,7 +549,7 @@ void LocalScene::populateTrackScene()
         AlbumGraphicItem_v2 *album_item = new AlbumGraphicItem_v2();
         album_item->setFlag(QGraphicsItem::ItemIsSelectable, false);
         album_item->media = album;
-        album_item->setPos(4, artistRow*50 + trackRow*20 + albumRow*30 + offset );
+        album_item->setPos(4, artistRow*50 + albumRow*30 + trackRow*20 + offset );
         addItem(album_item);
 
         trackPerAlbum = 0;
@@ -567,7 +571,7 @@ void LocalScene::populateTrackScene()
             text_item->setDefaultTextColor(QApplication::palette().color(QPalette::Disabled, QPalette::WindowText));
             text_item->setFont( QFont("Arial", 10, QFont::Bold) );
 
-            text_item->setPos(160, artistRow*50 + trackRow*20 + albumRow*30 + offset);
+            text_item->setPos((COVER_SIZE*1.25), artistRow*50 + albumRow*30 + trackRow*20 + offset);
             addItem(text_item);
 
             trackRow++;
@@ -575,10 +579,10 @@ void LocalScene::populateTrackScene()
 
           TrackGraphicItem_v2 *track_item = new TrackGraphicItem_v2();
           track_item->media = track;
-          track_item->setPos(155, artistRow*50 + trackRow*20 + albumRow*30 + offset);
-
+          track_item->setPos((COVER_SIZE*1.25), artistRow*50 + albumRow*30 + trackRow*20 + offset);
+	  
           //PATCH (-20 => fix alignement of the scene)
-          track_item->_width = parentView()->width()-155-20;
+          track_item->_width = parentView()->width()-(COVER_SIZE*1.25)-20;
 
           addItem(track_item);
 
@@ -588,7 +592,10 @@ void LocalScene::populateTrackScene()
         }
         albumRow++;
 
-        if( trackPerAlbum < 8 ) offset = offset + (8 - trackPerAlbum)*20;
+        if( (COVER_SIZE+50) >   trackPerAlbum*20)
+        {
+          offset = offset + ( (COVER_SIZE+50) - trackPerAlbum*20);
+        }
       }
     }
 
@@ -608,7 +615,7 @@ void LocalScene::populateGenreScene()
     int albumRow     = 0;
     int Column       = 0;
     m_infosize       = 0;
-    item_count = (parentView()->width()/160 > 2) ? parentView()->width()/160 : 2;
+    item_count = (parentView()->width()/(COVER_SIZE*1.25)  > 2) ? parentView()->width()/(COVER_SIZE*1.25) : 2;
 
     
     int Xpos = 20,Ypos = 10;
@@ -669,7 +676,7 @@ void LocalScene::populateGenreScene()
 
       CategorieGraphicItem *category = new CategorieGraphicItem(qobject_cast<QGraphicsView*> (parentView())->viewport());
       category->m_name = link->name;
-      category->setPos( 0 , Ypos + 10 + categorieRow*50 + albumRow*170);
+      category->setPos( 0 , Ypos + 10 + categorieRow*50 + albumRow*(COVER_SIZE+50) );
       addItem(category);
 
       m_infosize++; // on compte les categorie = genre
@@ -683,7 +690,7 @@ void LocalScene::populateGenreScene()
           AlbumGenreGraphicItem *album_item = new AlbumGenreGraphicItem();
           album_item->media    = MEDIA::AlbumPtr::staticCast( link->child(j) );
           album_item->_genre   = link->name;
-          album_item->setPos(4+160*Column, Ypos + categorieRow*50 + albumRow*170);
+          album_item->setPos(4+(COVER_SIZE*1.25)*Column, Ypos + categorieRow*50 + albumRow*(COVER_SIZE+50) );
           addItem(album_item);
 
           if(Column < (item_count-1)) {
@@ -711,7 +718,7 @@ void LocalScene::populateYearScene()
     int albumRow     = 0;
     int Column       = 0;
     m_infosize       = 0;
-    item_count = (parentView()->width()/160 > 2) ? parentView()->width()/160 : 2;
+    item_count = (parentView()->width()/(COVER_SIZE*1.25) > 2) ? parentView()->width()/(COVER_SIZE*1.25) : 2;
 
 
     int year         = -1;
@@ -735,7 +742,7 @@ void LocalScene::populateYearScene()
 
         CategorieGraphicItem *category = new CategorieGraphicItem(qobject_cast<QGraphicsView*> (parentView())->viewport());
         category->m_name = QString::number(year);
-        category->setPos( 0 , 10 + categorieRow*50 + albumRow*170);
+        category->setPos( 0 , 10 + categorieRow*50 + albumRow*(COVER_SIZE+50));
         addItem(category);
 
         m_infosize++; // on compte les categorie = genre
@@ -746,7 +753,7 @@ void LocalScene::populateYearScene()
 
       AlbumGraphicItem *album_item = new AlbumGraphicItem();
       album_item->media  = album;
-      album_item->setPos(4+160*Column, categorieRow*50 + albumRow*170);
+      album_item->setPos(4+(COVER_SIZE*1.25)*Column, categorieRow*50 + albumRow*(COVER_SIZE+50));
       addItem(album_item);
 
       if(Column < (item_count-1)) {
@@ -780,7 +787,7 @@ void LocalScene::populateFavoriteScene()
     int albumRow     = 0;
     int Column       = 0;
     m_infosize        = 0;
-    item_count = (parentView()->width()/160 > 2) ? parentView()->width()/160 : 2;
+    item_count = (parentView()->width()/(COVER_SIZE*1.25) > 2) ? parentView()->width()/(COVER_SIZE*1.25) : 2;
 
 
     
@@ -807,7 +814,7 @@ void LocalScene::populateFavoriteScene()
       //! New Artist Item
       ArtistGraphicItem *artist_item = new ArtistGraphicItem();
       artist_item->media = artist;
-      artist_item->setPos( 4 + 160*Column , categorieRow*50 + artistRow*165);
+      artist_item->setPos( 4 + (COVER_SIZE*1.25)*Column , categorieRow*50 + artistRow*(COVER_SIZE*1.25));
       addItem(artist_item);
 
       if(Column < (item_count-1)) {
@@ -822,7 +829,7 @@ void LocalScene::populateFavoriteScene()
     if(m_infosize==0) {
       InfoGraphicItem *info = new InfoGraphicItem(qobject_cast<QGraphicsView*> (parentView())->viewport());
       info->_text = tr("No entry found");
-      info->setPos( 0 , 10 + categorieRow*50 + artistRow*165);
+      info->setPos( 0 , 10 + categorieRow*50 + artistRow*(COVER_SIZE*1.25));
       addItem(info);
       categorieRow++;
     }
@@ -835,7 +842,7 @@ void LocalScene::populateFavoriteScene()
 
     CategorieGraphicItem *category2 = new CategorieGraphicItem(qobject_cast<QGraphicsView*> (parentView())->viewport());
     category2->m_name = tr("Albums");
-    category2->setPos( 0 , 10 + categorieRow*50 + artistRow*165);
+    category2->setPos( 0 , 10 + categorieRow*50 + artistRow*(COVER_SIZE*1.25));
     addItem(category2);
 
     Column = 0;
@@ -850,7 +857,7 @@ void LocalScene::populateFavoriteScene()
 
         AlbumGraphicItem *album_item = new AlbumGraphicItem();
         album_item->media = album;
-        album_item->setPos(4+160*Column, categorieRow*50 + artistRow*165 + albumRow*170);
+        album_item->setPos(4+(COVER_SIZE*1.25)*Column, categorieRow*50 + artistRow*(COVER_SIZE*1.25) + albumRow*(COVER_SIZE+50));
         addItem(album_item);
 
         if(Column < (item_count-1)) {
@@ -865,7 +872,7 @@ void LocalScene::populateFavoriteScene()
     if(oldInfoSize == m_infosize) {
       InfoGraphicItem *info = new InfoGraphicItem(qobject_cast<QGraphicsView*> (parentView())->viewport());
       info->_text   = tr("No entry found");
-      info->setPos( 0 , 10 + categorieRow*50 + artistRow*165);
+      info->setPos( 0 , 10 + categorieRow*50 + artistRow*(COVER_SIZE*1.25));
       addItem(info);
     }
 }
@@ -907,7 +914,7 @@ void LocalScene::populatePlaylistOverviewScene()
 
       PlaylistGraphicItem *playlist_item = new PlaylistGraphicItem();
       playlist_item->media = playlist;
-      playlist_item->setPos(4+160*Column, categorieRow*50 + playlistRow*150);
+      playlist_item->setPos(4+170*Column, categorieRow*50 + playlistRow*170);
       addItem(playlist_item);
 
       if(Column < (item_count-1)) {
@@ -1010,7 +1017,7 @@ void LocalScene::populatePlaylistSmartScene()
 
     CategorieGraphicItem *category = new CategorieGraphicItem(qobject_cast<QGraphicsView*> (parentView())->viewport());
     category->m_name = tr("Smart playlists");
-    category->setPos( 0 ,10 + categorieRow*50 + playlistRow*150);
+    category->setPos( 0 ,10 + categorieRow*50 + playlistRow*170);
     addItem(category);
     categorieRow++;
 
@@ -1027,7 +1034,7 @@ void LocalScene::populatePlaylistSmartScene()
 
       PlaylistGraphicItem *playlist_item = new PlaylistGraphicItem();
       playlist_item->media = playlist;
-      playlist_item->setPos(4+160*Column, categorieRow*50 + playlistRow*150);
+      playlist_item->setPos(4+170*Column, categorieRow*50 + playlistRow*170);
       addItem(playlist_item);
 
       if(Column < (item_count-1)) {

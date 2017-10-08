@@ -23,6 +23,7 @@
 #include "widgets/spacer.h"
 #include "global_actions.h"
 
+#include "settings.h"
 #include "ratingwidget.h"
 
 #include "debug.h"
@@ -51,7 +52,7 @@ MinimalWidget::MinimalWidget(QWidget *parent) : QWidget(parent)
 
     ui_image           = new QLabel();
     ui_image->setAlignment(Qt::AlignCenter);
-    ui_image->setFixedSize(120,120);
+    ui_image->setFixedSize(200,200);
     
     ui_label_title     = new QLabel();
     ui_label_album     = new QLabel();
@@ -121,7 +122,7 @@ MinimalWidget::MinimalWidget(QWidget *parent) : QWidget(parent)
     layout->addItem(new QSpacerItem(1, 1, QSizePolicy::Minimum, QSizePolicy::Expanding));
     layout->addLayout( hl2 );
     
-    this->setMinimumSize(QSize(200,200));
+    this->setMinimumSize(QSize(250,250));
     this->adjustSize();
     this->setFixedSize( sizeHint() );
     this->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
@@ -162,8 +163,23 @@ void MinimalWidget::slot_update()
     {
         /* update image */
         QPixmap pix = CoverCache::instance()->cover(track);
-        ui_image->setPixmap( pix );
 
+        if(pix.size().width() > 200)
+        {
+          pix = pix.scaled( QSize(200,200), Qt::KeepAspectRatio, Qt::SmoothTransformation);	  
+        }
+
+        QPixmap p_out(QSize(200,200));
+        p_out.fill(Qt::transparent);
+    
+        QPainter p(&p_out);
+
+        p.drawPixmap((200-pix.size().width())/2, (200-pix.size().width())/2, pix);
+        p.end();     
+    
+        ui_image->setPixmap( p_out );
+    
+    
         /* update labels title/album/artist */
         QString title_or_url = track->title.isEmpty() ? track->url : track->title;
         if(track->type() == TYPE_STREAM)
@@ -193,7 +209,7 @@ void MinimalWidget::slot_update()
     else
     {
         ui_image->clear(); 
-        ui_image->setPixmap( QPixmap(":/icon/yarock_64x64.png") );
+        ui_image->setPixmap( QPixmap(":/images/default-cover-200x200.png") );
         
         ui_label_title->clear();
         ui_label_album->clear();

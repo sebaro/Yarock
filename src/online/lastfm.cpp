@@ -168,7 +168,7 @@ void LastFmService::signIn(const QString& username, const QString& password)
     Debug::debug() << "    [LastFmService] Sign In request - username" << username;
     signOut();
     
-    QUrl url("http://ws.audioscrobbler.com/2.0/");
+    QUrl url("https://ws.audioscrobbler.com/2.0/");
     
     QMap<QString, QString> params;
     params["method"]    = "auth.getMobileSession";
@@ -229,7 +229,7 @@ void LastFmService::love(MEDIA::TrackPtr track, bool love)
 {
     Debug::debug() << "    [LastFmService] love";
 
-    QUrl url("http://ws.audioscrobbler.com/2.0/");
+    QUrl url("https://ws.audioscrobbler.com/2.0/");
 
     QMap<QString, QString> params;
     if(love)
@@ -277,7 +277,7 @@ void LastFmService::scrobble()
         return;
     }  
     
-    QUrl url("http://ws.audioscrobbler.com/2.0/");
+    QUrl url("https://ws.audioscrobbler.com/2.0/");
 
     QMap<QString, QString> params;
     params["method"]      = "track.scrobble";
@@ -311,7 +311,7 @@ void LastFmService::nowPlaying()
     if(m_currentTrack->type() != TYPE_TRACK)
       return;
       
-    QUrl url("http://ws.audioscrobbler.com/2.0/");
+    QUrl url("https://ws.audioscrobbler.com/2.0/");
 
     QMap<QString, QString> params;
     params["method"] = "track.updateNowPlaying";

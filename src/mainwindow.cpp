@@ -80,6 +80,7 @@
 #include "dialogs/database_operation.h"
 #include "dialogs/database_add.h"
 
+
 MainWindow* MainWindow::INSTANCE = 0;
 
 /*
@@ -231,9 +232,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     m_playingModel = 0;
     
-#ifdef TEST_FLAG    
-    QTimer::singleShot(4000, this, SLOT(slot_start_test()));
-#endif    
+// #ifdef TEST_FLAG    
+//     QTimer::singleShot(4000, this, SLOT(slot_start_test()));
+// #endif    
     Debug::debug() << "[Mainwindow] constructor end";
 }
 
@@ -286,9 +287,13 @@ MainWindow::~MainWindow()
     delete _player;
 
     /* ---- stop main task ---- */
+    Debug::debug() << "[Mainwindow] Stop Thread Manager";
     m_thread_manager->stopThread();    
     delete m_thread_manager;
+    Debug::debug() << "[Mainwindow] Stop Thread Manager OK";
+    
 
+    
     /* ---- stop playqueue task ---- */
     /* !!! wait for playqueue task to be done */
     delete m_playqueue->manager();
@@ -396,6 +401,7 @@ void MainWindow::connectSlots()
 
     //! ThreadManager connection
     QObject::connect(MainLeftWidget::instance(), SIGNAL(dbNameChanged()), this, SLOT(slot_database_start()));
+    QObject::connect(ThreadManager::instance(), SIGNAL(dbBuildFinished()), this, SLOT(slot_dbBuilder_finished()));
 
     //! Screen mode connection
     QObject::connect(ACTIONS()->value(APP_MODE_COMPACT), SIGNAL(triggered()), SLOT(slot_widget_mode_switch()));
@@ -794,6 +800,7 @@ void MainWindow::slot_on_settings_saved()
     Debug::debug() << "[MainWindow] isScrobblerChanged "  << r.isScrobblerChanged;
     Debug::debug() << "[MainWindow] isEngineChanged    "  << r.isEngineChanged;
     Debug::debug() << "[MainWindow] isLibraryChanged   "  << r.isLibraryChanged;
+    Debug::debug() << "[MainWindow] isCoverSizeChanged "  << r.isCoverSizeChanged;
     Debug::debug() << "[MainWindow] isViewChanged      "  << r.isViewChanged;
 
     if(r.isSystrayChanged)    { m_systray->reloadSettings();}
@@ -801,8 +808,29 @@ void MainWindow::slot_on_settings_saved()
     if(r.isMprisChanged)      { m_mpris_manager->reloadSettings(); }
     if(r.isShorcutChanged)    { m_shortcutsManager->reloadSettings();}
     if(r.isScrobblerChanged)  { LastFmService::instance()->init();}
-    if(r.isLibraryChanged)
+    if(r.isLibraryChanged || r.isCoverSizeChanged)
     {
+        if( r.isCoverSizeChanged )
+        {
+            Debug::warning() << "Database builder -> removing all existing artist and albums images !";
+
+            /* delete all covers  */
+            Q_FOREACH(QFileInfo info, QDir(UTIL::CONFIGDIR + "/albums/").entryInfoList(QDir::NoDotAndDotDot | QDir::System |
+                    QDir::Hidden  | QDir::AllDirs | QDir::Files, QDir::DirsFirst)) {
+                QFile::remove(info.absoluteFilePath());
+            }
+
+            Q_FOREACH(QFileInfo info, QDir(UTIL::CONFIGDIR + "/artists/").entryInfoList(QDir::NoDotAndDotDot | QDir::System |
+                    QDir::Hidden  | QDir::AllDirs | QDir::Files, QDir::DirsFirst)) {
+                QFile::remove(info.absoluteFilePath());
+            }
+
+            Q_FOREACH(QFileInfo info, QDir(UTIL::CONFIGDIR + "/radio/").entryInfoList(QDir::NoDotAndDotDot | QDir::System |
+                    QDir::Hidden  | QDir::AllDirs | QDir::Files, QDir::DirsFirst)) {
+                QFile::remove(info.absoluteFilePath());
+            }
+       }
+       
       
       /* NOTE : hack pour eviter un crash de l'appli (car on ferme la connection a la 
        base de donnee puis on relance le thread database builder). Stop des thread ajoute
@@ -816,8 +844,12 @@ void MainWindow::slot_on_settings_saved()
 
       if(!Database::instance()->exist())
         createDatabase();
+      
+      if(r.isCoverSizeChanged)
+        createDatabase();
 
-      rebuildDatabase( false );
+      // rebuild all only if cover size has been changed, otherwise it's an database update
+      rebuildDatabase( r.isCoverSizeChanged );
     }
     else if (r.isViewChanged) 
     {
@@ -840,7 +872,7 @@ void MainWindow::createDatabase ()
 
 void MainWindow::rebuildDatabase(bool doRebuild)
 {
-    Debug::debug() << "[MainWindow] rebuildDatabase";
+    Debug::debug() << "[MainWindow] rebuildDatabase doRebuild:" << doRebuild;
 
     QStringList listDir = QStringList() << Database::instance()->param()._paths;
     Debug::debug() << "[MainWindow] rebuildDatabase listDir" << listDir;
@@ -936,6 +968,22 @@ void MainWindow::slot_database_start()
     commandlineOptionsHandle();
 }
 
+
+void MainWindow::slot_dbBuilder_finished()
+{
+    /* after db is built => repopulate local track model */
+    m_thread_manager->populateLocalTrackModel();
+    
+    if(Database::instance()->param()._option_download_cover)
+    {
+        if(Database::instance()->param()._option_artist_image)
+            m_thread_manager->startTagSearch(TagSearch::ARTIST_ALBUM_FULL);
+        else
+            m_thread_manager->startTagSearch(TagSearch::ALBUM_COVER_FULL);
+    }
+}
+
+
 void MainWindow::slot_database_add_dialog()
 {
     DatabaseAddDialog dialog(this);
@@ -946,7 +994,6 @@ void MainWindow::slot_database_add_dialog()
         rebuildDatabase( false );
     }
 }
-
 
 
 void MainWindow::slot_database_ope_dialog()

@@ -51,18 +51,21 @@ public:
     
       bool           _option_auto_rebuild;
       bool           _option_check_cover;
+      bool           _option_download_cover;
       bool           _option_group_albums;
       bool           _option_artist_image;
       bool           _option_wr_rating_to_file;
-      
-      Param() {
+
+      Param() 
+      {
          _name  = QString("collection"); 
          _paths = QStringList();
-         _option_auto_rebuild = false;
-         _option_check_cover  = true;
-         _option_group_albums = false;
-         _option_artist_image = true;
-         _option_wr_rating_to_file = false;
+         _option_auto_rebuild      = false;
+         _option_check_cover       = true;
+         _option_download_cover    = true;
+         _option_group_albums      = false;
+         _option_artist_image      = true;
+         _option_wr_rating_to_file = false;         
       }
     };
   

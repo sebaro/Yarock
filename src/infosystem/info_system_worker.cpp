@@ -17,11 +17,11 @@
 #include "info_system_worker.h"
 #include "debug.h"
 
-#include "services/service_echonest.h"
 #include "services/service_discogs.h"
 #include "services/service_lastfm.h"
 #include "services/service_musicbrainz.h"
 #include "services/service_lyrics.h"
+#include "services/service_spotify.h"
 
 /*
 ********************************************************************************
@@ -53,7 +53,7 @@ InfoSystemWorker::init(  )
     Debug::debug() << "  [InfoSystem] init";
 
     /* create all InfoServices */
-    m_services.append(new ServiceEchonest());
+    m_services.append(new ServiceSpotify());
     m_services.append(new ServiceLastFm());
     m_services.append(new ServiceMusicBrainz());
     m_services.append(new ServiceDiscogs());
@@ -89,7 +89,7 @@ InfoSystemWorker::init(  )
 void InfoSystemWorker::getInfo( INFO::InfoRequestData requestData )
 {
     bool foundOne = false;
-    //Debug::debug() << "  [InfoSystem] getInfo";
+    Debug::debug() << "  [InfoSystem] getInfo";
     
     foreach (INFO::InfoService* service, m_services) 
     {
@@ -130,6 +130,8 @@ void InfoSystemWorker::slot_checkCache(INFO::InfoRequestData requestData)
 
 void InfoSystemWorker::slot_updateCache(INFO::InfoRequestData requestData, QVariant output)
 {
+    //Debug::debug() << "  [InfoSystem] slot_updateCache";
+    
     if( !output.isNull() ) 
     {
         /* check if info is already in cache */

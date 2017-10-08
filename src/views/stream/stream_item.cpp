@@ -22,6 +22,7 @@
 #include "utilities.h"
 
 #include "global_actions.h"
+#include "settings.h"
 #include "debug.h"
 
 //! Qt
@@ -64,16 +65,18 @@ StreamGraphicItem::StreamGraphicItem()
    opt.displayAlignment    = Qt::AlignLeft|Qt::AlignVCenter;
 
    opt.locale.setNumberOptions(QLocale::OmitGroupSeparator);
-    opt.state |= QStyle::State_Active;
-    opt.state |= QStyle::State_Enabled;
-    opt.state &= ~QStyle::State_Selected;
+   opt.state |= QStyle::State_Active;
+   opt.state |= QStyle::State_Enabled;
+   opt.state &= ~QStyle::State_Selected;
     
-    opt.rect = boundingRect().toRect();
+   m_coverSize = SETTINGS()->_coverSize;
+   
+   opt.rect = boundingRect().toRect();
 }
 
 QRectF StreamGraphicItem::boundingRect() const
 {
-    return QRectF(0, 0, 150, 120 + opt.fontMetrics.height()*2 + 4);
+    return QRectF(0, 0, m_coverSize*1.25, m_coverSize + opt.fontMetrics.height()*2 + 4);
 }
 
 
@@ -104,7 +107,7 @@ Q_UNUSED(option)
     /* Draw frame for State_HasFocus item */
     UTIL::getStyle()->drawControl(QStyle::CE_ItemViewItem, &opt, painter, widget);
 
-    painter->drawPixmap(QPointF(15,2),CoverCache::instance()->cover(media));
+    painter->drawPixmap(QPointF((opt.rect.size().width()- m_coverSize)/2,2),CoverCache::instance()->cover(media));
 
 
     
@@ -112,8 +115,8 @@ Q_UNUSED(option)
     painter->setPen(opt.palette.color ( QPalette::Normal, isSelected() ? QPalette::HighlightedText : QPalette::WindowText) );
     painter->setFont(opt.font);
 
-    const QString elided_name = opt.fontMetrics.elidedText ( media->extra["station"].toString(), Qt::ElideRight, 150);
-    painter->drawText(QRect (0,123,150, 25), Qt::AlignTop | Qt::AlignHCenter,elided_name );
+    const QString elided_name = opt.fontMetrics.elidedText ( media->extra["station"].toString(), Qt::ElideRight, (m_coverSize*1.25)-20);
+    painter->drawText(QRect (10,m_coverSize,(m_coverSize*1.25)-20, 25), Qt::AlignTop | Qt::AlignHCenter,elided_name );
     
     
     /* paint playing or favorite attibute */

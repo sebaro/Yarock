@@ -406,7 +406,7 @@ void EditorArtist::slot_on_image_received(INFO::InfoRequestData request, QVarian
 void EditorArtist::slot_image_remove()
 {
     //Debug::debug() << "   [EditorArtist] slot_image_remove";
-    ui_image->setPixmap( QPixmap(":/images/default-cover-120x120.png") );
+    ui_image->setPixmap( QPixmap(":/images/default-cover-200x200.png") );
     ui_image->update();
     
     m_new_image = QImage();

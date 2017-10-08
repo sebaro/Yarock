@@ -93,7 +93,7 @@ void LocalPlaylistPopulator::run()
           playlistItem->id         =  query.value(0).toInt();
           playlistItem->url        =  query.value(1).toString();
           playlistItem->name       =  query.value(2).toString();
-          playlistItem->icon       =  QString(":/images/media-playlist-110x110.png");
+          playlistItem->icon       =  QString(":/images/media-playlist-150x150.png");
           playlistItem->p_type     =  (T_PLAYLIST)query.value(3).toInt();
           playlistItem->isFavorite =  query.value(4).toBool();
           playlistItem->date       =  (query.value(5).isNull() ? -1 : query.value(5).toInt());

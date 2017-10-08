@@ -27,6 +27,7 @@
 #include <QByteArray>
 #include <QColor>
 
+
 namespace SETTING {
 enum ReplayGainMode
 {
@@ -100,6 +101,8 @@ Q_DISABLE_COPY(YarockSettings)
     bool                 _hideAtStartup;
     QString              _filesystem_path;
     
+    // collection
+    uint                 _coverSize; // default 200
 
     // song info 
     QStringList          _lyrics_providers;

@@ -227,6 +227,9 @@ void StreamScene::populateScene()
 
     clear();
     
+    COVER_SIZE = SETTINGS()->_coverSize;
+    
+    
     /* handle service state */
     SERVICE::State state = m_services[mode()]->state();
         
@@ -269,7 +272,7 @@ void StreamScene::populateExtendedStreamScene()
     m_infoSize         = 0;
     int Xpos = 20,Ypos = 5;
     int Column    = 0;
-    item_count = (parentView()->width()/160 > 2) ? parentView()->width()/160 : 2;
+    item_count = (parentView()->width()/(COVER_SIZE*1.25) > 2) ? parentView()->width()/(COVER_SIZE*1.25) : 2;
     
     const int categoriesHeight = 40;
    
@@ -364,7 +367,7 @@ void StreamScene::populateExtendedStreamScene()
       if(current_category != m_model->streamAt(i)->genre)
       {        
         if(Xpos != 0) {
-          Ypos +=170;
+          Ypos +=(COVER_SIZE*1.25)+4;
           Xpos = 0;
           Column=0;
         }
@@ -389,17 +392,17 @@ void StreamScene::populateExtendedStreamScene()
 
       if(Column < (item_count-1)) {
         Column++;
-        Xpos+=160;
+        Xpos+=(COVER_SIZE*1.25);
       }
       else {
         Column = 0;
-        Ypos +=170;
+        Ypos +=(COVER_SIZE*1.25)+4;
         Xpos=0;
       }
     }
 
     if(Xpos != 0)
-        Ypos +=170;
+        Ypos +=(COVER_SIZE*1.25)+4;
     
     if(m_services[mode()]->hasMoreLink())
     {
@@ -727,9 +730,8 @@ void StreamScene::slot_contextmenu_triggered(ENUM_ACTION_ITEM_MENU id)
               
               if( !item->media->extra["website"].toString().isEmpty() )
                 QDesktopServices::openUrl( QUrl(item->media->extra["website"].toString()) );
-              
-              break;   
           }
+          break;
       }
 
       case SELECTION_PLAY      : playSelected();break;

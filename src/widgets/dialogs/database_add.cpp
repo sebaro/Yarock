@@ -146,6 +146,7 @@ void DatabaseAddDialog::on_buttonBox_accepted()
     param._name                     = new_db_name;
     param._option_auto_rebuild      = false;
     param._option_check_cover       = true;
+    param._option_download_cover    = true;
     param._option_group_albums      = false;
     param._option_artist_image      = true;
     param._option_wr_rating_to_file = false;

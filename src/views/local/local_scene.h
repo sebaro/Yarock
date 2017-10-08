@@ -78,7 +78,9 @@ Q_OBJECT
     GraphicsItemMenu         *m_graphic_item_menu;
 
     QMap<QString,QAction*>    m_actions;
-        
+
+    int                       COVER_SIZE;
+    
   protected:
     void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
     void mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * event );

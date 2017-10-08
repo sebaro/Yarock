@@ -120,7 +120,7 @@ VolumeButton::VolumeButton(QWidget *parent) : ToolButtonBase( parent )
 
 void VolumeButton::slot_show_menu()
 {
-    m_popup->setMinimumHeight( qobject_cast<QWidget*>(this->parent())->height() - 10 );
+    m_popup->setMinimumHeight( this->height() );
 
     if( !m_menu->isVisible() )
     {

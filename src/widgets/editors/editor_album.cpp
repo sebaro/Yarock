@@ -418,7 +418,7 @@ void EditorAlbum::slot_load_image_from_file()
     /* get new cover file */
     m_new_image = QImage(fd.addFile());
  
-    m_new_image = m_new_image.scaled(QSize(120, 120), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    m_new_image = m_new_image.scaled(QSize(200, 200), Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
     ui_image->setPixmap( QPixmap::fromImage(m_new_image) );
     ui_image->update();
@@ -466,7 +466,7 @@ void EditorAlbum::slot_on_image_received(INFO::InfoRequestData request, QVariant
     /* get data */
     m_new_image = QImage::fromData(output.toByteArray());
 
-    m_new_image = m_new_image.scaled(QSize(120, 120), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    m_new_image = m_new_image.scaled(QSize(200, 200), Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
     ui_image->setPixmap( QPixmap::fromImage(m_new_image) );
     ui_image->update();
@@ -480,7 +480,7 @@ void EditorAlbum::slot_on_image_received(INFO::InfoRequestData request, QVariant
 void EditorAlbum::slot_image_remove()
 {
     Debug::debug() << "   [EditorAlbum] slot_image_remove";
-    ui_image->setPixmap( QPixmap(":/images/default-cover-120x120.png") );
+    ui_image->setPixmap( QPixmap(":/images/default-cover-200x200.png") );
     ui_image->update();
     
     m_new_image = QImage();

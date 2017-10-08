@@ -54,7 +54,8 @@ public slots:
 
 private slots:
     void slot_show_playlist();
-
+    void slot_switch_playertoolbar();
+    
 private :
     QWidget             *m_parent;
 

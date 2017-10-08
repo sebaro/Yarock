@@ -6,8 +6,8 @@ set( CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake )
 
 PROJECT( yarock )
 set(YAROCK_MAJOR_VERSION 1)
-set(YAROCK_MINOR_VERSION 1)
-set(YAROCK_PATCH_VERSION 6)
+set(YAROCK_MINOR_VERSION 2)
+set(YAROCK_PATCH_VERSION 0)
 set(YAROCK_VERSION "${YAROCK_MAJOR_VERSION}.${YAROCK_MINOR_VERSION}.${YAROCK_PATCH_VERSION}")
 
 # ------------------------------------------------------------------------------
@@ -32,6 +32,7 @@ OPTION(ENABLE_SHORTCUT "Enable/disable global shortcut manager" ON)
 # ------------------------------------------------------------------------------
 #  EXTERNAL PACKAGE
 # ------------------------------------------------------------------------------
+
 
 #---- Qt ----
 if (ENABLE_QT5)

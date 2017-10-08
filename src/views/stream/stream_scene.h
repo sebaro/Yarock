@@ -131,6 +131,8 @@ Q_OBJECT
     
     /* messages Id for StatusWidget management */
     QMap<QString, uint>       m_messageIds;
+    
+    int                       COVER_SIZE;
 };
 
 #endif // _STREAM_SCENE_H_

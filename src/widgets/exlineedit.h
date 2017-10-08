@@ -65,7 +65,13 @@ Q_OBJECT
     void resizeEvent(QResizeEvent *);
     void paintEvent(QPaintEvent *event);
     void updateGeometries();
+    
+    #if QT_VERSION >= 0x050000
+    void initStyleOption(QStyleOptionFrame *option) const;
+    #else
     void initStyleOption(QStyleOptionFrameV2 *option) const;
+    #endif
+
     void contextMenuEvent ( QContextMenuEvent * event );
 
     void keyPressEvent(QKeyEvent *event);

@@ -280,7 +280,7 @@ void ArtistSimilarWidget::setData(INFO::InfoRequestData request, QVariant data)
 
             if(!cover.isNull()) {
               m_artists[hash["artist"]]->m_pix = 
-              QPixmap( UTIL::squareCenterPixmap( cover ) ).scaled(QSize(120,120), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+              QPixmap( UTIL::squareCenterPixmap( cover ) ).scaled(QSize(200,200), Qt::KeepAspectRatio, Qt::SmoothTransformation);
               m_artists[hash["artist"]]->update(); 
             }
         }
@@ -409,7 +409,7 @@ void DiscoInfoWidget::setData(INFO::InfoRequestData request , QVariant data)
               cover.loadFromData( bytes );
 
               if(!cover.isNull()) {
-                m_albums[akey]->m_pix = cover.scaled(QSize(120, 120), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+                m_albums[akey]->m_pix = cover.scaled(QSize(200, 200), Qt::KeepAspectRatio, Qt::SmoothTransformation);
                 m_albums[akey]->update();
               }
             }

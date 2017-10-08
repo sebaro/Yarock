@@ -229,7 +229,7 @@ AlbumThumbGraphicItem::AlbumThumbGraphicItem()
 
     setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
 
-    m_pix = QPixmap(":/images/default-cover-120x120.png");
+    m_pix = QPixmap(":/images/default-cover-200x200.png");
 }
 
 
@@ -238,7 +238,7 @@ void AlbumThumbGraphicItem::clear()
     m_title.clear();
     m_year.clear();
 
-    m_pix = QPixmap(":/images/default-cover-120x120.png");
+    m_pix = QPixmap(":/images/default-cover-200x200.png");
 }
 
 void AlbumThumbGraphicItem::updateItem()
@@ -248,7 +248,7 @@ void AlbumThumbGraphicItem::updateItem()
 
 QRectF AlbumThumbGraphicItem::boundingRect() const
 {
-    return QRectF(0, 0, 140, 140);
+    return QRectF(0, 0, 240, 240);
 }
 
 // Inherited from QGraphicsLayoutItem
@@ -269,13 +269,13 @@ Q_UNUSED(constraint)
 void AlbumThumbGraphicItem::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * )
 {
 Q_UNUSED(option)
-    QPixmap pixTemp(QSize(140,140));
+    QPixmap pixTemp(QSize(240,240));
     {
       pixTemp.fill(Qt::transparent);
       QPainter p;
       p.begin(&pixTemp);
 
-      p.drawPixmap(10,10, m_pix);
+      p.drawPixmap(20,10, m_pix);
       p.end();
     }
 
@@ -286,12 +286,12 @@ Q_UNUSED(option)
    painter->setPen(QApplication::palette().color(QPalette::Normal, QPalette::WindowText));
 
    QFontMetrics m1( painter->font());
-   const QString elided_album = m1.elidedText ( m_title, Qt::ElideRight, 140);
-   painter->drawText(QRect (0,130,130,20), Qt::AlignVCenter | Qt::AlignHCenter, elided_album );
+   const QString elided_album = m1.elidedText ( m_title, Qt::ElideRight, 220);
+   painter->drawText(QRect (0,220,220,20), Qt::AlignVCenter | Qt::AlignHCenter, elided_album );
 
    //! paint year
    painter->setPen(QApplication::palette().color(QPalette::Disabled, QPalette::WindowText));
-   painter->drawText(QRect(0, 0, 140, 10), Qt::AlignTop | Qt::AlignCenter, m_year);
+   painter->drawText(QRect(10, 0, 220, 10), Qt::AlignTop | Qt::AlignCenter, m_year);
 }
 
 
@@ -319,14 +319,14 @@ ArtistThumbGraphicItem::ArtistThumbGraphicItem()
 
     setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
 
-    m_pix = QPixmap(":/images/view-artist.png");
+    m_pix = QPixmap(":/images/default-cover-200x200.png");
 }
 
 
 void ArtistThumbGraphicItem::clear()
 {
     m_name.clear();
-    m_pix = QPixmap(":/images/view-artist.png");
+    m_pix = QPixmap(":/images/default-cover-200x200.png");
 }
 
 void ArtistThumbGraphicItem::updateItem()
@@ -336,7 +336,7 @@ void ArtistThumbGraphicItem::updateItem()
 
 QRectF ArtistThumbGraphicItem::boundingRect() const
 {
-    return QRectF(0, 0, 140, 140);
+    return QRectF(0, 0, 240, 240);
 }
 
 // Inherited from QGraphicsLayoutItem
@@ -359,15 +359,15 @@ void ArtistThumbGraphicItem::paint(QPainter * painter, const QStyleOptionGraphic
 Q_UNUSED(option)
     QSize size = m_pix.size();
     
-    int offset_h = qMax(12, (140 - size.height())/2);
+    int offset_h = qMax(12, (240 - size.height())/2);
     
-    QPixmap pixTemp(QSize(140,140));
+    QPixmap pixTemp(QSize(240,240));
     {
       pixTemp.fill(Qt::transparent);
       QPainter p;
       p.begin(&pixTemp);
 
-      p.drawPixmap((140 - size.width())/2,offset_h, m_pix);
+      p.drawPixmap((240 - size.width())/2,offset_h, m_pix);
       p.end();
     }
 
@@ -378,8 +378,8 @@ Q_UNUSED(option)
    painter->setPen(QApplication::palette().color(QPalette::Normal, QPalette::WindowText));
    
    QFontMetrics m1( painter->font());
-   const QString elided_artist = m1.elidedText ( m_name, Qt::ElideRight, 135);
+   const QString elided_artist = m1.elidedText ( m_name, Qt::ElideRight, 220);
    
-   painter->drawText(QRect(0, 0, 140, 10), Qt::AlignTop | Qt::AlignCenter, elided_artist);
+   painter->drawText(QRect(10, 0, 220, 10), Qt::AlignTop | Qt::AlignCenter, elided_artist);
 }
 

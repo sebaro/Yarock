@@ -52,6 +52,25 @@ class ToolButtonBase : public QToolButton
           .arg(color.name())
         );    
     };
+    
+    ToolButtonBase(QWidget *w, QSizePolicy policy, Qt::ToolButtonStyle style=Qt::ToolButtonTextBesideIcon) : QToolButton(w)
+    {
+        setSizePolicy(policy);
+	setAutoRaise(true);
+	setToolButtonStyle(style);
+
+        QColor color = SETTINGS()->_baseColor;
+        
+        qreal saturation = color.saturationF();
+        saturation *= 0.5;
+
+        color.setHsvF( color.hueF(), saturation, color.valueF(), color.alphaF() );
+    
+        setStyleSheet(
+          QString("QToolButton::hover { border: none; border-radius: 2px; background-color:%1;}")
+          .arg(color.name())
+        );    
+    };    
 };
 
 #endif // _TOOLBUTTONBASE_H_

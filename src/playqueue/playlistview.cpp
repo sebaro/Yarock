@@ -525,7 +525,12 @@ void PlaylistDelegate::paint ( QPainter * painter, const QStyleOptionViewItem & 
     //painter->setRenderHint(QPainter::Antialiasing, true);
   
     /* draw background */
+    #if QT_VERSION >= 0x050000
+    QStyleOptionViewItem opt(option);
+    #else
     QStyleOptionViewItemV4 opt(option);
+    #endif
+
     opt.state = option.state;
     opt.showDecorationSelected = true;
     opt.state &= ~(QStyle::State_Selected | QStyle::State_MouseOver);

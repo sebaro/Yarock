@@ -54,8 +54,14 @@ class AlbumGraphicItem : public QGraphicsItem
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+    
+    int   m_coverSize;
   public:
-     QStyleOptionViewItemV4 opt;
+    #if QT_VERSION >= 0x050000
+    QStyleOptionViewItem opt;
+    #else
+    QStyleOptionViewItemV4 opt;
+    #endif
 };
 
 /*
@@ -168,8 +174,14 @@ class ArtistGraphicItem : public QGraphicsItem
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+    
+    int   m_coverSize;
   public:
-     QStyleOptionViewItemV4 opt;
+    #if QT_VERSION >= 0x050000
+    QStyleOptionViewItem opt;
+    #else
+    QStyleOptionViewItemV4 opt;
+    #endif
 };
 
 /*
@@ -246,7 +258,11 @@ class TrackGraphicItem : public QGraphicsItem
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 
   public:
-     QStyleOptionViewItemV4 opt;
+    #if QT_VERSION >= 0x050000
+    QStyleOptionViewItem opt;
+    #else
+    QStyleOptionViewItemV4 opt;
+    #endif
 };
 
 /*
@@ -303,6 +319,34 @@ class TrackGraphicItem_v3 : public TrackGraphicItem
     float hover_rating_;
 };
 
+/*
+********************************************************************************
+*                                                                              *
+*    Class TrackGraphicItem_v5                                                 *
+*      -> used in TRACKS VIEW popup menu                                       *
+*      -> draw number/track name/duration/rating                               *
+*                                                                              *
+********************************************************************************
+*/
+class TrackGraphicItem_v5  : public TrackGraphicItem
+{
+  public:
+    TrackGraphicItem_v5();
+    void setHoverRating(float hr) {hover_rating_ = hr;}
+
+  protected:
+    // Implement QGraphicsItem method
+    QRectF boundingRect() const;
+    void paint(QPainter *p, const QStyleOptionGraphicsItem *, QWidget *);
+
+    void hoverMoveEvent(QGraphicsSceneHoverEvent *event);
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
+
+  private:
+    float hover_rating_;
+};
+
 
 /*
 ********************************************************************************
@@ -331,7 +375,11 @@ class PlaylistGraphicItem : public QGraphicsItem
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 
   private:
-     QStyleOptionViewItemV4 opt;
+    #if QT_VERSION >= 0x050000
+    QStyleOptionViewItem opt;
+    #else
+    QStyleOptionViewItemV4 opt;
+    #endif
 };
 
 

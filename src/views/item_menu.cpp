@@ -41,6 +41,7 @@
 #include <QWidgetAction>
 #include <QLabel>
 
+#include <QScrollBar>
 #include <QGraphicsView>
 #include <QGraphicsSceneEvent>
 #include <QGraphicsScene>
@@ -56,10 +57,11 @@ GraphicsItemMenu::GraphicsItemMenu(QWidget *parent) : QMenu(parent)
 {
     this->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Minimum);
     this->setAutoFillBackground(true);
-    this->setContentsMargins(0,0,0,0);
+    this->setContentsMargins(4,4,4,4);
 
     this->setStyleSheet( "QMenu {background-color: none;border: none;}");
-         
+    
+   
     /* menu actions */
     m_map_actions.insert(ALBUM_PLAY,          new QAction(QIcon(":/images/media-play.png"), tr("Play"), 0));
     m_map_actions.insert(ALBUM_QUEUE_END,     new QAction(QIcon(":/images/media-playlist-48x48.png"), tr("Add to play queue"), 0));
@@ -124,7 +126,8 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
     this->clear();
     m_scene = 0;
     
-  
+    COVER_SIZE = SETTINGS()->_coverSize;
+    
     is_selection = isSelection;
   
     if(m_items.isEmpty()) return;
@@ -189,11 +192,9 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
     {
       m_scene = new QGraphicsScene(main_widget);
       m_view = new QGraphicsView(main_widget);
-      m_view->setStyleSheet("background: transparent");
-      
+    
       /* QGraphicsView setup */  
       m_view->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
-      m_view->setAutoFillBackground(false);
       m_view->setFrameShape(QFrame::NoFrame);
       m_view->setFrameShadow(QFrame::Plain);
 
@@ -207,6 +208,17 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
       m_view->setResizeAnchor(QGraphicsView::NoAnchor);
       m_view->setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
       m_view->setAlignment(Qt::AlignLeft | Qt::AlignTop );
+
+      m_view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+      m_view->verticalScrollBar()->setContextMenuPolicy(Qt::NoContextMenu);
+            
+      // set palette for graphic view background
+      QPalette palette = QApplication::palette();
+      QColor c = palette.color(QPalette::Window);
+      palette.setColor(QPalette::Window, c);
+      palette.setColor(QPalette::Base, c);
+      m_view->setPalette(palette);    
+      
 
       m_view->setScene(m_scene);    
       m_scene->installEventFilter(this);
@@ -228,11 +240,13 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
     
       foreach(MEDIA::TrackPtr track, tracks) 
       {
-          TrackGraphicItem_v2 *track_item = new TrackGraphicItem_v2();
+          //TrackGraphicItem_v2 *track_item = new TrackGraphicItem_v2();
+          TrackGraphicItem_v5 *track_item = new TrackGraphicItem_v5();
+          
           track_item->setFlag(QGraphicsItem::ItemIsSelectable, false);
 
           track_item->media = track;
-          track_item->setPos(160, yPos);
+          track_item->setPos(COVER_SIZE*1.25, yPos);
           yPos += 20;
 
           m_scene->addItem(track_item);
@@ -286,23 +300,32 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
     {
       m_scene = new QGraphicsScene(main_widget);
       m_view = new QGraphicsView(main_widget);
-      m_view->setStyleSheet("background: transparent");
     
       /* QGraphicsView setup */  
       m_view->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
-      m_view->setAutoFillBackground(false);
       m_view->setFrameShape(QFrame::NoFrame);
       m_view->setFrameShadow(QFrame::Plain);
 
       m_view->setCacheMode(QGraphicsView::CacheNone);
       m_view->setDragMode(QGraphicsView::NoDrag);
       m_view->setRenderHint(QPainter::Antialiasing);
-      m_view->setOptimizationFlags(QGraphicsView::DontAdjustForAntialiasing
-                                   | QGraphicsView::DontClipPainter
-                                   | QGraphicsView::DontSavePainterState);
+      
+      m_view->setOptimizationFlags(  QGraphicsView::DontAdjustForAntialiasing
+                                 | QGraphicsView::DontClipPainter
+                                 | QGraphicsView::DontSavePainterState);
       m_view->setResizeAnchor(QGraphicsView::NoAnchor);
       m_view->setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
       m_view->setAlignment(Qt::AlignLeft | Qt::AlignTop );
+
+      m_view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+      m_view->verticalScrollBar()->setContextMenuPolicy(Qt::NoContextMenu);
+            
+      // set palette for graphic view background
+      QPalette palette = QApplication::palette();
+      QColor c = palette.color(QPalette::Window);
+      palette.setColor(QPalette::Window, c);
+      palette.setColor(QPalette::Base, c);
+      m_view->setPalette(palette);   
 
       m_view->setScene(m_scene);    
       m_scene->installEventFilter(this);
@@ -328,7 +351,7 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
           track_item->setFlag(QGraphicsItem::ItemIsSelectable, false);
 
           track_item->media = track;
-          track_item->setPos(160, yPos);
+          track_item->setPos(COVER_SIZE*1.25, yPos);
           yPos += 20;
 
           m_scene->addItem(track_item);
@@ -376,23 +399,32 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
       //Debug::debug() << "GraphicsItemMenu::ArtistType";
       m_scene = new QGraphicsScene(main_widget);
       m_view = new QGraphicsView(main_widget);
-      m_view->setStyleSheet("background: transparent");
     
       /* QGraphicsView setup */  
       m_view->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
-      m_view->setAutoFillBackground(false);
       m_view->setFrameShape(QFrame::NoFrame);
       m_view->setFrameShadow(QFrame::Plain);
 
       m_view->setCacheMode(QGraphicsView::CacheNone);
       m_view->setDragMode(QGraphicsView::NoDrag);
       m_view->setRenderHint(QPainter::Antialiasing);
-      m_view->setOptimizationFlags(QGraphicsView::DontAdjustForAntialiasing
-                                   | QGraphicsView::DontClipPainter
-                                   | QGraphicsView::DontSavePainterState);
+      
+      m_view->setOptimizationFlags(  QGraphicsView::DontAdjustForAntialiasing
+                                 | QGraphicsView::DontClipPainter
+                                 | QGraphicsView::DontSavePainterState);
       m_view->setResizeAnchor(QGraphicsView::NoAnchor);
       m_view->setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
       m_view->setAlignment(Qt::AlignLeft | Qt::AlignTop );
+
+      m_view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+      m_view->verticalScrollBar()->setContextMenuPolicy(Qt::NoContextMenu);
+            
+      // set palette for graphic view background
+      QPalette palette = QApplication::palette();
+      QColor c = palette.color(QPalette::Window);
+      palette.setColor(QPalette::Window, c);
+      palette.setColor(QPalette::Base, c);
+      m_view->setPalette(palette);   
 
       m_view->setScene(m_scene);
       m_scene->installEventFilter(this);
@@ -403,7 +435,7 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
     
       int Column   = 0;
       int albumRow = 0;
-      int max_item_per_colum = (m_browserview->width()-40)/155;
+      int max_item_per_colum = (m_browserview->width()-40)/(COVER_SIZE*1.25);
     
       m_view->setMaximumHeight(m_browserview->height() - 40 );
     
@@ -414,7 +446,7 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
 
         AlbumGraphicItem_v2 *album_item = new AlbumGraphicItem_v2();
         album_item->media = artist->child(i);
-        album_item->setPos(4+155*Column, albumRow*155);
+        album_item->setPos(4+(COVER_SIZE*1.25)*Column, albumRow*(COVER_SIZE*1.25));
         album_item->setFlag(QGraphicsItem::ItemIsSelectable, false);
         m_scene->addItem(album_item);
 

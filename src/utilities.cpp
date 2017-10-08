@@ -194,13 +194,13 @@ UTIL::squareCenterPixmap( const QPixmap& sourceImage )
 }
 
 QImage 
-UTIL::artistImageFromByteArray(QByteArray array)
+UTIL::artistImageFromByteArray(QByteArray array, int size /*= 200 */ )
 {
     QImage image = QImage::fromData( array );
     
-    int ITEM_HEIGHT = 120;
-    int ITEM_WIDTH  = 120;
-    int MAX_SIZE    = 250;
+    int ITEM_HEIGHT = size;
+    int ITEM_WIDTH  = size;
+    int MAX_SIZE    = ITEM_HEIGHT*2;
 
     const int width = image.size().width();
     const int height = image.size().height();

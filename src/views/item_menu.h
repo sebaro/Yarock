@@ -93,6 +93,8 @@ private:
     VIEW::Id                 m_view_mode;
     
     QMap<ENUM_ACTION_ITEM_MENU, QAction*>  m_map_actions;
+    
+    int                      COVER_SIZE;
 
 signals:
     void menu_action_triggered(ENUM_ACTION_ITEM_MENU);

@@ -299,6 +299,9 @@ using namespace htmlcxx;
             else if("radioCover" == QString::fromStdString(it->attribute("class").second) )
             {                
                 cover = QString::fromStdString(it->attribute("src").second);
+
+                // patch access bigger image for radio cover
+                cover.replace("/radios/67/","/radios/400/");
             }
             else if ("radioPlayBtn" == QString::fromStdString(it->attribute("class").second)  )
             {

@@ -18,14 +18,16 @@
 #include "covercache.h"
 #include "database.h"
 #include "utilities.h"
+#include "settings.h"
 #include "debug.h"
 
 #include <QFile>
 #include <QPixmap>
 #include <QPainter>
 
-static const QString noCoverKey  = QString(":/images/default-cover-120x120.png");
-static const QString urlCoverKey = QString(":/images/default-url-120x120.png");
+static const QString noCoverKey     = QString(":/images/default-cover-256x256.png");
+
+
 /*
 ********************************************************************************
 *                                                                              *
@@ -42,9 +44,6 @@ CoverCache* CoverCache::instance()
 
 CoverCache::CoverCache()
 {
-    QPixmapCache::insert( noCoverKey, get_default_pixmap(false) );
-    QPixmapCache::insert( urlCoverKey, get_default_pixmap(true) );
-      
     INSTANCE = this;
 }
 
@@ -58,11 +57,15 @@ CoverCache::~CoverCache()
 /* ---------------------------------------------------------------------------*/
 QPixmap CoverCache::image( MEDIA::ArtistPtr artist, QList<MEDIA::AlbumPtr> albums)
 {
+    //Debug::debug() << "CoverCache::image";
+  
     QPixmap pixmap;
 
+    // covers stack
     if(!Database::instance()->param()._option_artist_image) 
     {
-      pixmap = QPixmap( 120, 120 );
+      int SIZE = SETTINGS()->_coverSize;
+      pixmap = QPixmap( SIZE, SIZE );
       {
         pixmap.fill( Qt::transparent );
         QPainter pt( &pixmap );
@@ -72,7 +75,7 @@ QPixmap CoverCache::image( MEDIA::ArtistPtr artist, QList<MEDIA::AlbumPtr> album
         foreach(MEDIA::AlbumPtr album, albums)
         {
           QPixmap pix = CoverCache::instance()->cover(album);
-          pix = pix.scaled(QSize(85,85), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+          pix = pix.scaled(QSize(SIZE*0.7,SIZE*0.7), Qt::KeepAspectRatio, Qt::SmoothTransformation);
   
           QTransform transform = QTransform().rotate(15*i++).translate(-pix.width()/2,-pix.height()/2);
           pix = pix.transformed(transform, Qt::SmoothTransformation);
@@ -92,18 +95,18 @@ QPixmap CoverCache::image( MEDIA::ArtistPtr artist, QList<MEDIA::AlbumPtr> album
       /* no pixmap in cache */
       const QString path = UTIL::CONFIGDIR + "/artists/" + artist->imageHash();
       
-      pixmap = QPixmap( path );
-
-      if( !pixmap.isNull() )
+      if(QFile(path).exists())
       {
-        m_keys[artist] = QPixmapCache::insert( pixmap );
+        pixmap = QPixmap( path );
+
+        if( !pixmap.isNull() )
+        {
+          m_keys[artist] = QPixmapCache::insert( pixmap );
+        }
       }
       else
       {
-        if (QPixmapCache::find( noCoverKey, &pixmap ) )
-          return pixmap;
-        else
-          return get_default_pixmap(false);
+          return get_default_pixmap();
       }
     }
 
@@ -133,10 +136,7 @@ QPixmap CoverCache::cover( const MEDIA::AlbumPtr album )
     }
     else
     {
-        if (QPixmapCache::find( noCoverKey, &pixmap ) )
-          return pixmap;
-        else
-          return get_default_pixmap(false);
+          return get_default_pixmap();
     }
 
     return pixmap;
@@ -183,21 +183,15 @@ QPixmap CoverCache::cover(const MEDIA::TrackPtr track )
           }
         }
       
-        if (QPixmapCache::find( urlCoverKey, &pixmap ) )
-          return pixmap;
-        else
-          return get_default_pixmap(true);
+        return get_default_pixmap();
     }
     else if (track->id == -1)
     {
-        QPixmap pixmap = MEDIA::LoadCoverFromFile( track->url );
+        QPixmap pixmap = MEDIA::LoadCoverFromFile( track->url, QSize(SETTINGS()->_coverSize,SETTINGS()->_coverSize) );
         if(!pixmap.isNull())
           return pixmap;
 
-        if (QPixmapCache::find( noCoverKey, &pixmap ) )
-          return pixmap;
-        else
-          return get_default_pixmap(false);
+        return get_default_pixmap();
     }
     else // track exist in collection
     {
@@ -213,10 +207,7 @@ QPixmap CoverCache::cover(const MEDIA::TrackPtr track )
         if( QFile(path).exists() )
           return QPixmap(path);
 
-        if (QPixmapCache::find( noCoverKey, &pixmap ) )
-          return pixmap;
-        else
-          return get_default_pixmap(false);
+        return get_default_pixmap();
     }
 
     return pixmap;
@@ -275,15 +266,16 @@ void CoverCache::invalidate( const MEDIA::MediaPtr media )
 /* ---------------------------------------------------------------------------*/
 void CoverCache::addStreamCover( const MEDIA::TrackPtr stream, QImage image)
 {
+    int SIZE = SETTINGS()->_coverSize;
     //Debug::debug() << "    [CoverCache] addStreamCover";
-    QImage i = image.scaledToHeight(120, Qt::SmoothTransformation);
+    QImage i = image.scaledToHeight(SIZE, Qt::SmoothTransformation);
   
-    QPixmap pixTemp(QSize(120,120));
+    QPixmap pixTemp(QSize(SIZE,SIZE));
     {
       pixTemp.fill(Qt::transparent);
       QPainter p;
       p.begin(&pixTemp);
-      p.drawImage( (120 - i.width())/2,0, i);
+      p.drawImage( (SIZE - i.width())/2,0, i);
       p.end();
     }
     
@@ -296,27 +288,35 @@ void CoverCache::addStreamCover( const MEDIA::TrackPtr stream, QImage image)
 /* ---------------------------------------------------------------------------*/
 /* CoverCache::get_default_pixmap                                             */
 /* ---------------------------------------------------------------------------*/  
-QPixmap CoverCache::get_default_pixmap(bool isStream/*=false*/)
+QPixmap CoverCache::get_default_pixmap()
 {
-    QPixmap p_in;
-    if(isStream)
-        p_in = QPixmap(":/images/default-url-120x120.png");
-    else
-        p_in = QPixmap(":/images/default-cover-120x120.png");
+    //Debug::debug() << "CoverCache::get_default_pixmap COVER SIZE "  << SETTINGS()->_coverSize;
     
+    QPixmap p_outcache;
+    
+    if (QPixmapCache::find( noCoverKey, &p_outcache ) )
+    {
+        if(p_outcache.size().width() == SETTINGS()->_coverSize)
+        {          
+            return p_outcache;
+        }
+    }
 
-    QPixmap p_out(p_in.size());
+    QPixmap defaultpixmap = QPixmap(":/images/default-cover-256x256.png");
+            
+    defaultpixmap = defaultpixmap.scaled(QSize(SETTINGS()->_coverSize,SETTINGS()->_coverSize), 
+             Qt::KeepAspectRatio, Qt::SmoothTransformation);
+  
+    QPixmap p_out(defaultpixmap.size());
     p_out.fill(Qt::transparent);
+    
     QPainter p(&p_out);
     p.setOpacity(0.4);
-    p.drawPixmap(0, 0, p_in);
+    p.drawPixmap(0, 0, defaultpixmap);
     p.end();      
       
-    if(isStream)
-      QPixmapCache::insert( urlCoverKey, p_out );
-    else
-      QPixmapCache::insert( noCoverKey, p_out );
-    
+    QPixmapCache::insert( noCoverKey, p_out );
+
     return p_out;
 }
 

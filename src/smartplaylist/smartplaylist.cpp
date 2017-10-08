@@ -63,12 +63,12 @@ const QStringList p_names = QStringList()
             << tr("top rated tracks");
 
 const QStringList p_icon = QStringList()
-            << ":/images/media-smartplaylist1-110x110.png"
-            << ":/images/media-smartplaylist2-110x110.png"
-            << ":/images/media-smartplaylist4-110x110.png"
-            << ":/images/media-smartplaylist4-110x110.png"
-            << ":/images/media-smartplaylist4-110x110.png"
-            << ":/images/media-smartplaylist3-110x110.png";
+            << ":/images/media-smartplaylist1-150x150.png"
+            << ":/images/media-smartplaylist2-150x150.png"
+            << ":/images/media-smartplaylist4-150x150.png"
+            << ":/images/media-smartplaylist4-150x150.png"
+            << ":/images/media-smartplaylist4-150x150.png"
+            << ":/images/media-smartplaylist3-150x150.png";
 
 
   /*
@@ -162,7 +162,7 @@ void SmartPlaylist::updatePlaylist(MEDIA::PlaylistPtr playlist)
       q.prepare("INSERT INTO `smart_playlists`(`name`,`icon`,`rules`,`type`,`favorite`) VALUES(?,?,?,?,?);");
      
       q.addBindValue(playlist->name);
-      q.addBindValue(":/images/media-smartplaylist4-110x110.png");
+      q.addBindValue(":/images/media-smartplaylist4-150x150.png");
       q.addBindValue(MediaSearch::toDatabase( search ));
       q.addBindValue((int) T_SMART);
       q.addBindValue((int)playlist->isFavorite);

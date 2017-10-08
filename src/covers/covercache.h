@@ -53,7 +53,7 @@ private:
     /* hash from media Object pointer to QPixmapCache:key internal key */
     QHash< const MEDIA::MediaPtr, QPixmapCache::Key > m_keys;
 
-    QPixmap get_default_pixmap(bool isStream=false);
+    QPixmap get_default_pixmap();
     
     Q_DISABLE_COPY( CoverCache )
 };

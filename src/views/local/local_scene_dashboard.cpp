@@ -53,7 +53,7 @@ void LocalScene::populateMostPlayedAlbum(int YPos)
 {
     int albumRow  = 0;
     int Column    = 0;
-    item_count    = (parentView()->width()/160 > 2) ? parentView()->width()/160 : 2;
+    item_count    = (parentView()->width()/(COVER_SIZE*1.25) > 2) ? parentView()->width()/(COVER_SIZE*1.25) : 2;
     int maxPlaycount = 0;
 
     int char_entry = 0;
@@ -81,7 +81,7 @@ void LocalScene::populateMostPlayedAlbum(int YPos)
 
       AlbumGraphicItem_v3 *album_item = new AlbumGraphicItem_v3();
       album_item->media = album;
-      album_item->setPos(4+160*Column, YPos + 35 + albumRow*190);
+      album_item->setPos(4+(COVER_SIZE*1.25)*Column, YPos + 35 + albumRow*(COVER_SIZE+65));
 
       addItem(album_item);
       char_entry++;
@@ -108,7 +108,7 @@ void LocalScene::populateTopRatedAlbum(int YPos)
 {
     int albumRow  = 0;
     int Column    = 0;
-    item_count    = (parentView()->width()/160 > 2) ? parentView()->width()/160 : 2;
+    item_count    = (parentView()->width()/(COVER_SIZE*1.25) > 2) ? parentView()->width()/(COVER_SIZE*1.25) : 2;
     int char_entry = 0;
 
     CategorieGraphicItem *category = new CategorieGraphicItem(qobject_cast<QGraphicsView*> (parentView())->viewport());
@@ -131,7 +131,7 @@ void LocalScene::populateTopRatedAlbum(int YPos)
 
       AlbumGraphicItem_v4 *album_item = new AlbumGraphicItem_v4();
       album_item->media = album;
-      album_item->setPos(4+160*Column, YPos + 35 + albumRow*190);
+      album_item->setPos(4+(COVER_SIZE*1.25)*Column, YPos + 35 + albumRow*(COVER_SIZE+65));
 
       addItem(album_item);
       char_entry++;
@@ -163,7 +163,7 @@ void LocalScene::populateMostPlayedArtist(int YPos)
 {
     int artistRow  = 0;
     int Column     = 0;
-    item_count = (parentView()->width()/160 > 2) ? parentView()->width()/160 : 2;
+    item_count = (parentView()->width()/(COVER_SIZE*1.25) > 2) ? parentView()->width()/(COVER_SIZE*1.25) : 2;
     int char_entry    = 0;
 
     
@@ -192,7 +192,7 @@ void LocalScene::populateMostPlayedArtist(int YPos)
 
       ArtistGraphicItem_v2 *artist_item = new ArtistGraphicItem_v2();
       artist_item->media = artist;
-      artist_item->setPos(4+160*Column, YPos + 35 + artistRow*190);
+      artist_item->setPos(4+(COVER_SIZE*1.25)*Column, YPos + 35 + artistRow*(COVER_SIZE+65));
 
       addItem(artist_item);
       char_entry++;
@@ -233,7 +233,7 @@ void LocalScene::populateTopRatedArtist(int YPos)
 {
     int artistRow  = 0;
     int Column     = 0;
-    item_count = (parentView()->width()/160 > 2) ? parentView()->width()/160 : 2;
+    item_count = (parentView()->width()/(COVER_SIZE*1.25) > 2) ? parentView()->width()/(COVER_SIZE*1.25) : 2;
     int char_entry = 0;
 
     CategorieGraphicItem *category = new CategorieGraphicItem(qobject_cast<QGraphicsView*> (parentView())->viewport());
@@ -259,7 +259,7 @@ void LocalScene::populateTopRatedArtist(int YPos)
 
       ArtistGraphicItem_v3 *artist_item = new ArtistGraphicItem_v3();
       artist_item->media = artist;
-      artist_item->setPos(4+160*Column, YPos + 35 + artistRow*190);
+      artist_item->setPos(4+(COVER_SIZE*1.25)*Column, YPos + 35 + artistRow*(COVER_SIZE+65));
 
       addItem(artist_item);
       char_entry++;

@@ -2,6 +2,16 @@
 Yarock changes
 ---------------------------------------------------------------------------------
 
+#### 1.2.0  - PUBLIC RELEASE - october 2017
+  - New    : Configurable custom cover size [#1627841]
+  - New    : Redesign player tool bar with expanded tool bar mode
+  - New    : Remove Echonest web service no longer available
+  - New    : Add Spotify web service for artist image
+  - Changes: Internet connection; prevent downloading artist image if no used [#1624536]
+  - Changes: Change & fix many lyrics provider services
+  - Changes: Many minors ui changes and improvments
+
+
 #### 1.1.6  - PUBLIC RELEASE - october 2016
 ---------------------------------------------------------------------------------
   - New    : Add Opus audio file support [#1539942]

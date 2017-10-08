@@ -185,9 +185,10 @@ set (SOURCES
            ${CMAKE_SOURCE_DIR}/src/widgets/main/menuwidget.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/main/menubar.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/playertoolbar/audiocontrols.cpp
-           ${CMAKE_SOURCE_DIR}/src/widgets/playertoolbar/playertoolbar.cpp
+           ${CMAKE_SOURCE_DIR}/src/widgets/playertoolbar/playertoolbarbase.cpp           
+           ${CMAKE_SOURCE_DIR}/src/widgets/playertoolbar/playertoolbarcompact.cpp
+           ${CMAKE_SOURCE_DIR}/src/widgets/playertoolbar/playertoolbarfull.cpp           
            ${CMAKE_SOURCE_DIR}/src/widgets/playertoolbar/volumebutton.cpp           
-           ${CMAKE_SOURCE_DIR}/src/widgets/playertoolbar/nowplayingpopup.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/playertoolbar/seekslider.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/playertoolbar/seeksliderpopup.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/popupcompleter/popup_item.cpp
@@ -199,7 +200,6 @@ set (SOURCES
            ${CMAKE_SOURCE_DIR}/src/widgets/equalizer/equalizer_preset.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/equalizer/equalizer_slider.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/exlineedit.cpp
-           ${CMAKE_SOURCE_DIR}/src/widgets/flowlayout.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/header_widget.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/iconloader.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/minimalwidget.cpp
@@ -217,10 +217,10 @@ set (SOURCES
            ${CMAKE_SOURCE_DIR}/src/infosystem/info_system.cpp
            ${CMAKE_SOURCE_DIR}/src/infosystem/info_system_worker.cpp           
            ${CMAKE_SOURCE_DIR}/src/infosystem/services/service_discogs.cpp
-           ${CMAKE_SOURCE_DIR}/src/infosystem/services/service_echonest.cpp
            ${CMAKE_SOURCE_DIR}/src/infosystem/services/service_lastfm.cpp
            ${CMAKE_SOURCE_DIR}/src/infosystem/services/service_musicbrainz.cpp
            ${CMAKE_SOURCE_DIR}/src/infosystem/services/service_lyrics.cpp
+           ${CMAKE_SOURCE_DIR}/src/infosystem/services/service_spotify.cpp
            ${CMAKE_SOURCE_DIR}/src/infosystem/services/ultimatelyricsprovider.cpp
            ${CMAKE_SOURCE_DIR}/src/infosystem/services/ultimatelyricsreader.cpp
            ${CMAKE_SOURCE_DIR}/src/infosystem/tasks/tagsearch.cpp           
@@ -267,10 +267,10 @@ SET(YAROCK_HEADERS
            ${CMAKE_SOURCE_DIR}/src/infosystem/info_system.h
            ${CMAKE_SOURCE_DIR}/src/infosystem/info_system_worker.h
            ${CMAKE_SOURCE_DIR}/src/infosystem/services/service_discogs.h
-           ${CMAKE_SOURCE_DIR}/src/infosystem/services/service_echonest.h
            ${CMAKE_SOURCE_DIR}/src/infosystem/services/service_lastfm.h
            ${CMAKE_SOURCE_DIR}/src/infosystem/services/service_musicbrainz.h           
            ${CMAKE_SOURCE_DIR}/src/infosystem/services/service_lyrics.h  
+           ${CMAKE_SOURCE_DIR}/src/infosystem/services/service_spotify.h           
            ${CMAKE_SOURCE_DIR}/src/infosystem/services/ultimatelyricsprovider.h
            ${CMAKE_SOURCE_DIR}/src/infosystem/services/ultimatelyricsreader.h
            ${CMAKE_SOURCE_DIR}/src/infosystem/tasks/tagsearch.h
@@ -346,9 +346,10 @@ SET(YAROCK_HEADERS
            ${CMAKE_SOURCE_DIR}/src/widgets/main/menuwidget.h
            ${CMAKE_SOURCE_DIR}/src/widgets/main/menubar.h
            ${CMAKE_SOURCE_DIR}/src/widgets/playertoolbar/audiocontrols.h
-           ${CMAKE_SOURCE_DIR}/src/widgets/playertoolbar/playertoolbar.h
+           ${CMAKE_SOURCE_DIR}/src/widgets/playertoolbar/playertoolbarbase.h
+           ${CMAKE_SOURCE_DIR}/src/widgets/playertoolbar/playertoolbarcompact.h
+           ${CMAKE_SOURCE_DIR}/src/widgets/playertoolbar/playertoolbarfull.h
            ${CMAKE_SOURCE_DIR}/src/widgets/playertoolbar/volumebutton.h
-           ${CMAKE_SOURCE_DIR}/src/widgets/playertoolbar/nowplayingpopup.h           
            ${CMAKE_SOURCE_DIR}/src/widgets/playertoolbar/seekslider.h
            ${CMAKE_SOURCE_DIR}/src/widgets/playertoolbar/seeksliderpopup.h
            ${CMAKE_SOURCE_DIR}/src/widgets/playertoolbar/toolbuttonbase.h
@@ -361,7 +362,6 @@ SET(YAROCK_HEADERS
            ${CMAKE_SOURCE_DIR}/src/widgets/equalizer/equalizer_preset.h
            ${CMAKE_SOURCE_DIR}/src/widgets/equalizer/equalizer_slider.h
            ${CMAKE_SOURCE_DIR}/src/widgets/exlineedit.h
-           ${CMAKE_SOURCE_DIR}/src/widgets/flowlayout.h
            ${CMAKE_SOURCE_DIR}/src/widgets/header_widget.h
            ${CMAKE_SOURCE_DIR}/src/widgets/iconloader.h
            ${CMAKE_SOURCE_DIR}/src/widgets/minimalwidget.h

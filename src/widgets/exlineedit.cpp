@@ -185,7 +185,12 @@ void ExLineEdit::resizeEvent(QResizeEvent *event)
 
 void ExLineEdit::updateGeometries()
 {
+    #if QT_VERSION >= 0x050000
+    QStyleOptionFrame panel;
+    #else
     QStyleOptionFrameV2 panel;
+    #endif
+    
     initStyleOption(&panel);
     QRect rect = style()->subElementRect(QStyle::SE_LineEditContents, &panel, this);
 
@@ -217,7 +222,13 @@ void ExLineEdit::paintEvent(QPaintEvent *event)
 Q_UNUSED(event)
     //! draw the frame
     QPainter p(this);
+    
+    #if QT_VERSION >= 0x050000
+    QStyleOptionFrame panel;
+    #else
     QStyleOptionFrameV2 panel;
+    #endif
+    
     initStyleOption(&panel);
     style()->drawPrimitive(QStyle::PE_PanelLineEdit, &panel, &p, this);
 

@@ -20,7 +20,10 @@
 #include "widgets/main/main_right.h"
 #include "widgets/main/main_left.h"
 #include "menuwidget.h"
-#include "playertoolbar.h"
+
+#include "playertoolbarbase.h"
+#include "playertoolbarcompact.h"
+#include "playertoolbarfull.h"
 
 
 #include "settings.h"
@@ -52,7 +55,10 @@ CentralWidget::CentralWidget(QWidget *parent) : QFrame(parent)
     /* left widget */
     left_widget = new MainLeftWidget(this);
 
-
+    /* toolbar */
+    //new PlayerToolBar(new PlayerToolBarCompact(this));
+    new PlayerToolBarCompact(this);
+    
     /* content widget splitter population */
     m_viewsSplitter_1 = new CustomSplitter(this);
     m_viewsSplitter_1->setObjectName(QString::fromUtf8("viewsSplitter_1"));
@@ -85,12 +91,14 @@ CentralWidget::CentralWidget(QWidget *parent) : QFrame(parent)
     layout->setContentsMargins(0, 0, 0, 0);    
     layout->addWidget( m_viewsSplitter_1b );
     layout->addWidget( m_viewsSplitter_1 );
-    layout->setStretch(1,1);
-    layout->addWidget( new PlayerToolBar(this) );
+    layout->setStretch(1,1);    
+    layout->addWidget( PlayerToolBarBase::instance() );
 
     /* signals connection */
     connect(ACTIONS()->value(APP_SHOW_PLAYQUEUE),   SIGNAL(triggered()), SLOT(slot_show_playlist()));
+    connect(PlayerToolBarBase::instance(),   SIGNAL(switchToolBarType()), SLOT(slot_switch_playertoolbar()));
 
+    
     /* event filter for splitter synchro */
     right_widget->contentWidget()->installEventFilter(this);
 }
@@ -159,7 +167,7 @@ void CentralWidget::restoreState()
     {
       QList<int> list;
       list << 800 << 350;
-      m_viewsSplitter_1->setSizes (list); // 1200
+      m_viewsSplitter_1->setSizes (list);
     }
 }
 
@@ -175,5 +183,40 @@ void CentralWidget::slot_show_playlist( )
       m_viewsSplitter_1->widget(1)->show();
     else
       m_viewsSplitter_1->widget(1)->hide();
+}
+
+
+/*******************************************************************************
+    slot_switch_playertoolbar
+*******************************************************************************/
+void CentralWidget::slot_switch_playertoolbar( )
+{
+     Debug::debug() << "CentralWidget slot_switch_playertoolbar";
+         
+     PlayerToolBarBase* tbb = qobject_cast<PlayerToolBarBase*>(sender());
+     
+     this->layout()->takeAt(2);       
+     
+     disconnect(tbb, 0,this, 0);
+     
+     tbb->deleteLater();   
+
+     if(qobject_cast<PlayerToolBarCompact*>(tbb))
+     {
+         //new PlayerToolBar(new PlayerToolBarFull(this));
+	 new PlayerToolBarFull(this);
+     }   
+     else 
+     {
+       new PlayerToolBarCompact(this);
+         //new PlayerToolBar(new PlayerToolBarCompact(this));
+     }
+     
+
+     this->layout()->addWidget(PlayerToolBarBase::instance());
+     
+     PlayerToolBarBase::instance()->fullUpdate();
+
+     connect(PlayerToolBarBase::instance(), SIGNAL(switchToolBarType()), SLOT(slot_switch_playertoolbar()));
 }
 

@@ -428,12 +428,13 @@ void Database::settings_restore()
       QString db_id   = idForName( db_name );
 
       Database::Param param;
-      param._name                 = db_name;
-      param._paths                << s.value("sourcepath").toStringList(); 
-      param._option_auto_rebuild  = s.value("autorebuild", false).toBool();
-      param._option_check_cover   = s.value("checkcover", true).toBool();
-      param._option_group_albums  = s.value("groupAlbums", false).toBool();
-      param._option_artist_image  = s.value("imageArtists", true).toBool();
+      param._name                     = db_name;
+      param._paths                    << s.value("sourcepath").toStringList(); 
+      param._option_auto_rebuild      = s.value("autorebuild", false).toBool();
+      param._option_check_cover       = s.value("checkcover", true).toBool();
+      param._option_download_cover    = s.value("downloadcover", true).toBool();
+      param._option_group_albums      = s.value("groupAlbums", false).toBool();
+      param._option_artist_image      = s.value("imageArtists", true).toBool();
       param._option_wr_rating_to_file = s.value("ratingToFile", false).toBool();
       
       m_params.insert(db_id, param);
@@ -442,6 +443,7 @@ void Database::settings_restore()
       Debug::debug() << "[Database] _paths "                  << m_params[db_id]._paths;
       Debug::debug() << "[Database] _option_auto_rebuild "    << m_params[db_id]._option_auto_rebuild;
       Debug::debug() << "[Database] _option_check_cover "     << m_params[db_id]._option_check_cover;
+      Debug::debug() << "[Database] _option_download_cover "  << m_params[db_id]._option_download_cover;
       Debug::debug() << "[Database] _option_group_albums "    << m_params[db_id]._option_group_albums;
       Debug::debug() << "[Database] _option_artist_image "    << m_params[db_id]._option_artist_image;
       Debug::debug() << "[Database] _option_wr_rating_to_file "    << m_params[db_id]._option_wr_rating_to_file;
@@ -482,13 +484,14 @@ void Database::settings_save()
     foreach (const QString& db_id, m_params.keys()) 
     {
       s.setArrayIndex(i++);
-      s.setValue("name",        m_params[db_id]._name);
-      s.setValue("sourcepath",  m_params[db_id]._paths);
-      s.setValue("autorebuild", m_params[db_id]._option_auto_rebuild);
-      s.setValue("checkcover",  m_params[db_id]._option_check_cover);
-      s.setValue("groupAlbums", m_params[db_id]._option_group_albums);
-      s.setValue("imageArtists", m_params[db_id]._option_artist_image);
-      s.setValue("ratingToFile", m_params[db_id]._option_wr_rating_to_file);
+      s.setValue("name",           m_params[db_id]._name);
+      s.setValue("sourcepath",     m_params[db_id]._paths);
+      s.setValue("autorebuild",    m_params[db_id]._option_auto_rebuild);
+      s.setValue("checkcover",     m_params[db_id]._option_check_cover);
+      s.setValue("downloadcover",  m_params[db_id]._option_download_cover);
+      s.setValue("groupAlbums",    m_params[db_id]._option_group_albums);
+      s.setValue("imageArtists",   m_params[db_id]._option_artist_image);
+      s.setValue("ratingToFile",   m_params[db_id]._option_wr_rating_to_file);
     }
     s.endArray();
     s.endGroup();

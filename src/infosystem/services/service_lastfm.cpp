@@ -45,7 +45,8 @@ ServiceLastFm::ServiceLastFm() : InfoService()
     
     m_supportedInfoTypes << INFO::InfoAlbumCoverArt
                          << INFO::InfoAlbumInfo
-                         << INFO::InfoAlbumSongs     
+                         << INFO::InfoAlbumSongs  
+                         << INFO::InfoArtistBiography
                          << INFO::InfoArtistImages
                          << INFO::InfoArtistSimilars
                          << INFO::InfoArtistTerms;
@@ -67,12 +68,13 @@ void ServiceLastFm::fetchInfo( INFO::InfoRequestData request )
     //Debug::debug() << "    [ServiceLastFm] fetchInfo";
     switch ( request.type )
     {
-        case INFO::InfoAlbumCoverArt       : fetch_album_info( request );break;
-        case INFO::InfoAlbumSongs          : fetch_album_info( request );break;  
-        case INFO::InfoAlbumInfo           : fetch_album_info( request );break;
-        case INFO::InfoArtistImages        : fetch_artist_info( request );break;
+        case INFO::InfoAlbumCoverArt       : fetch_album_info( request );    break;
+        case INFO::InfoAlbumSongs          : fetch_album_info( request );    break;  
+        case INFO::InfoAlbumInfo           : fetch_album_info( request );    break;
+        case INFO::InfoArtistBiography     : fetch_artist_info( request );   break;
+	case INFO::InfoArtistImages        : fetch_artist_info( request );   break;
         case INFO::InfoArtistSimilars      : fetch_artist_similar( request );break;
-        case INFO::InfoArtistTerms         : fetch_artist_tags( request );break;
+        case INFO::InfoArtistTerms         : fetch_artist_tags( request );   break;
           
         default:
         {
@@ -86,7 +88,7 @@ void ServiceLastFm::fetchInfo( INFO::InfoRequestData request )
   use first album.getInfo method, 
   if no result -> use album.search method 
 */
-// http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=e1db9fda381dea473df994bc26dfa1f1&artist=eric%20clapton&album=old%20sock&format=json
+// https://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=e1db9fda381dea473df994bc26dfa1f1&artist=eric%20clapton&album=old%20sock&format=json
 
 void ServiceLastFm::fetch_image_uri( INFO::InfoRequestData request )
 {
@@ -262,7 +264,7 @@ void ServiceLastFm::fetch_artist_info( INFO::InfoRequestData request )
 
 void ServiceLastFm::slot_parse_artist_info( QByteArray bytes )
 {
-    //Debug::debug() << "    [ServiceLastFm] slot_parse_artist_info";
+    //Debug::debug() << "    [ServiceLastFm] ******** slot_parse_artist_info ******** ";
 
     /*-------------------------------------------------*/
     /* Get id from sender reply                        */
@@ -320,6 +322,23 @@ void ServiceLastFm::slot_parse_artist_info( QByteArray bytes )
         
         if(!imageFound)
           emit finished( request );
+    }
+    else if ( request.type == INFO::InfoArtistBiography )
+    {
+        QVariantMap outputBio;
+
+        QVariantMap artist_map =  qvariant_cast<QVariantMap>(reply_map.value("artist"));
+
+        if (artist_map.contains("bio"))
+        {
+          QVariantMap bio_map =  qvariant_cast<QVariantMap>(artist_map.value("bio"));
+
+          outputBio[ "site" ]       = "LastFm";
+          outputBio[ "url" ]        = artist_map.value("url");
+          outputBio[ "text" ]       = bio_map.value("content");
+          
+          emit info( request, outputBio );        
+       }
     }
 }
 

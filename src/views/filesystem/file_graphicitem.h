@@ -19,7 +19,7 @@
 #define _FILE_GRAPHICS_ITEM_H_
 
 #include <QGraphicsItem>
-#include <QStyleOptionViewItemV4>
+#include <QStyleOptionViewItem>
 #include <QIcon>
 
 #include "item_common.h"
@@ -60,11 +60,17 @@ class DirectoryGraphicItem : public QGraphicsItem
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
     
   private:
-     QStyleOptionViewItemV4 opt;
-     QString  m_dirname;
-     QString  m_path;
-     QPixmap  pixmap;
-     bool     isSymbLink;
+    #if QT_VERSION >= 0x050000
+    QStyleOptionViewItem opt;
+    #else
+    QStyleOptionViewItemV4 opt;
+    #endif
+    
+    
+    QString  m_dirname;
+    QString  m_path;
+    QPixmap  pixmap;
+    bool     isSymbLink;
 };
 
 /*

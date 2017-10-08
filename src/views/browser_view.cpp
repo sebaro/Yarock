@@ -37,7 +37,7 @@
 #include "media_search.h"
 
 /* widgets */
-#include "widgets/playertoolbar/playertoolbar.h"
+#include "widgets/playertoolbar/playertoolbarbase.h"
 #include "widgets/main/menumodel.h"
 #include "widgets/main/main_left.h"
 
@@ -425,7 +425,7 @@ void BrowserView::switch_view(BrowserParam& param)
     m_scrollbar->setSliderPosition(param.scroll);
 
     /* update page title */    
-    PlayerToolBar::instance()->setCollectionInfo( collectionInfo() , VIEW::Id(param.mode));
+    PlayerToolBarBase::instance()->setCollectionInfo( collectionInfo() , VIEW::Id(param.mode));
     MainLeftWidget::instance()->setMode(param.mode);
     MainLeftWidget::instance()->setBrowserSearch(param.search);
     MainLeftWidget::instance()->setTitle( name_for_view(VIEW::Id(param.mode)) );
@@ -645,6 +645,10 @@ QString BrowserView::collectionInfo()
 
     switch( SETTINGS()->_viewMode )
     {
+      case (VIEW::ViewHistory)    : text = QString(tr("History")); break;
+      case (VIEW::ViewDashBoard)   : text = QString(tr("Dashboard")); break;
+      case (VIEW::ViewSettings)   : text = QString(tr("Settings")); break;
+      
       case (VIEW::ViewAlbum)    : text = QString(tr("Collection : <b>%1</b> albums")).arg(QString::number(collectionSize)); break;
       case (VIEW::ViewArtist)   : text = QString(tr("Collection : <b>%1</b> artist")).arg(QString::number(collectionSize));break;
       case (VIEW::ViewTrack)    : text = QString(tr("Collection : <b>%1</b> tracks")).arg(QString::number(collectionSize));break;

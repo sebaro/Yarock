@@ -20,6 +20,8 @@
 
 #include "core/database/database.h"
 #include "core/mediaitem/mediaitem.h"
+
+#include "settings.h"
 #include "utilities.h"
 #include "debug.h"
 
@@ -37,8 +39,10 @@
 ********************************************************************************
 */
 
-TagSearch::TagSearch(QObject *parent) : QObject(parent)
+TagSearch::TagSearch(QObject *parent)
 {
+Q_UNUSED(parent)
+
     setObjectName("tagsearch");
 
     //! init
@@ -52,15 +56,33 @@ TagSearch::TagSearch(QObject *parent) : QObject(parent)
 
 TagSearch::~TagSearch()
 {
+   m_timeout.stop();
+   m_isRunning       = false;
 }
 
+
 /* ---------------------------------------------------------------------------*/
-/* TagSearch::start                                                           */
+/* TagSearch::run                                                             */
 /* ---------------------------------------------------------------------------*/
-void TagSearch::start(TYPE type, INFO::InfoRequestData request)
+void TagSearch::run()
+{
+    Debug::debug() << Q_FUNC_INFO << m_type;
+    
+    m_isRunning = true;
+    m_max = m_requests.size();
+
+    process_search();
+
+    /* Start thread event loop --> makes signals and slots work */
+    QEventLoop eventLoop;
+    eventLoop.exec();
+    
+    m_requests.clear();
+}
+
+void TagSearch::setSearch(TYPE type, INFO::InfoRequestData request)
 {
     m_type = type;
-    Debug::debug() << Q_FUNC_INFO << m_type;
     
     /* prepare request to process */
     m_requests.clear();
@@ -76,20 +98,54 @@ void TagSearch::start(TYPE type, INFO::InfoRequestData request)
        case ALBUM_GENRE_FULL : set_requests_genre_search(); break;
        case ARTIST_IMAGE_FULL: set_requests_artist_search(); break;
     
+       case ARTIST_ALBUM_FULL:
+         set_requests_artist_search();
+         set_requests_cover_search(); 
+         break;
        default:break;
     }
-    
-    m_isRunning = true;
-    m_max = m_requests.size();
-
-    process_search();
-
-    /* Start thread event loop --> makes signals and slots work */
-    QEventLoop eventLoop;
-    eventLoop.exec();
-    
-    m_requests.clear();
 }
+
+/* ---------------------------------------------------------------------------*/
+/* TagSearch::start                                                           */
+/* ---------------------------------------------------------------------------*/
+// void TagSearch::start(TYPE type, INFO::InfoRequestData request)
+// {
+//     m_type = type;
+//     Debug::debug() << Q_FUNC_INFO << m_type;
+//     
+//     /* prepare request to process */
+//     m_requests.clear();
+//     switch (m_type)
+//     {
+//        case ALBUM_COVER_SINGLE:
+//        case ALBUM_GENRE_SINGLE:  
+//        case ARTIST_IMAGE_SINGLE:
+//          m_requests.insert(request.requestId, request);
+//        break;  
+//              
+//        case ALBUM_COVER_FULL : set_requests_cover_search(); break;
+//        case ALBUM_GENRE_FULL : set_requests_genre_search(); break;
+//        case ARTIST_IMAGE_FULL: set_requests_artist_search(); break;
+//     
+//        case ARTIST_ALBUM_FULL:
+//          set_requests_artist_search();
+//          set_requests_cover_search(); 
+//          break;
+//        default:break;
+//     }
+//     
+//     m_isRunning = true;
+//     m_max = m_requests.size();
+// 
+//     process_search();
+// 
+//     /* Start thread event loop --> makes signals and slots work */
+//     QEventLoop eventLoop;
+//     eventLoop.exec();
+//     
+//     m_requests.clear();
+// }
 
 /* ---------------------------------------------------------------------------*/
 /* TagSearch::finish_search                                                   */
@@ -266,7 +322,7 @@ void TagSearch::handle_cover_search_result(INFO::InfoStringHash hash, QVariant o
         const QByteArray bytes = output.toByteArray();
 
         QImage image = QImage::fromData(bytes);
-        image = image.scaled(QSize(120, 120), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        image = image.scaled(QSize(SETTINGS()->_coverSize, SETTINGS()->_coverSize), Qt::KeepAspectRatio, Qt::SmoothTransformation);
         image.save(filePath, "png", -1);
     }  
 }
@@ -299,7 +355,7 @@ void TagSearch::handle_artist_search_result(INFO::InfoStringHash hash, QVariant 
     else
     {
         /* get data */  
-        QImage image = UTIL::artistImageFromByteArray( output.toByteArray() );
+        QImage image = UTIL::artistImageFromByteArray( output.toByteArray(), SETTINGS()->_coverSize);
     
         if( image.isNull() )
             return;
