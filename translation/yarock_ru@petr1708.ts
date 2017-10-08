@@ -126,117 +126,120 @@
 <context>
     <name>BrowserView</name>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="684"/>
+        <location filename="../src/views/browser_view.cpp" line="688"/>
         <source>Context</source>
         <translation>Контекст</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="685"/>
+        <location filename="../src/views/browser_view.cpp" line="648"/>
+        <location filename="../src/views/browser_view.cpp" line="689"/>
         <source>History</source>
         <translation>История</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="648"/>
+        <location filename="../src/views/browser_view.cpp" line="652"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; albums</source>
         <translation>Коллекция : &lt;b&gt;%1&lt;/b&gt; альбомы</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="649"/>
+        <location filename="../src/views/browser_view.cpp" line="653"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; artist</source>
         <translation>Коллекция : &lt;b&gt;%1&lt;/b&gt; исполнитель</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="650"/>
+        <location filename="../src/views/browser_view.cpp" line="654"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; tracks</source>
         <translation>Коллекция : &lt;b&gt;%1&lt;/b&gt; дорожек</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="651"/>
+        <location filename="../src/views/browser_view.cpp" line="655"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; styles</source>
         <translation>Коллекция : &lt;b&gt;%1&lt;/b&gt; стилей</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="652"/>
+        <location filename="../src/views/browser_view.cpp" line="656"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; years</source>
         <translation>Коллекция : &lt;b&gt;%1&lt;/b&gt; года</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="653"/>
+        <location filename="../src/views/browser_view.cpp" line="657"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; favorite item</source>
         <translation>Коллекция : &lt;b&gt;%1&lt;/b&gt; любимые</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="657"/>
+        <location filename="../src/views/browser_view.cpp" line="661"/>
         <source>Playlist : &lt;b&gt;%1&lt;/b&gt; playlists</source>
         <translation>Плей-лист : &lt;b&gt;%1&lt;/b&gt; песен</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="664"/>
+        <location filename="../src/views/browser_view.cpp" line="668"/>
         <source>Radio : &lt;b&gt;%1&lt;/b&gt; streams</source>
         <translation>Радио : &lt;b&gt;%1&lt;/b&gt; потоков</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="681"/>
+        <location filename="../src/views/browser_view.cpp" line="685"/>
         <source>About</source>
         <translation>О программе</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="682"/>
+        <location filename="../src/views/browser_view.cpp" line="650"/>
+        <location filename="../src/views/browser_view.cpp" line="686"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="683"/>
+        <location filename="../src/views/browser_view.cpp" line="649"/>
+        <location filename="../src/views/browser_view.cpp" line="687"/>
         <source>Dashboard</source>
         <translation>Личный кабинет</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="686"/>
+        <location filename="../src/views/browser_view.cpp" line="690"/>
         <source>Artists</source>
         <translation>Исполнители</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="687"/>
+        <location filename="../src/views/browser_view.cpp" line="691"/>
         <source>Albums</source>
         <translation>Альбомы</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="688"/>
+        <location filename="../src/views/browser_view.cpp" line="692"/>
         <source>Tracks</source>
         <translation>Дорожки</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="689"/>
+        <location filename="../src/views/browser_view.cpp" line="693"/>
         <source>Genres</source>
         <translation>Жанры</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="690"/>
+        <location filename="../src/views/browser_view.cpp" line="694"/>
         <source>Years</source>
         <translation>Года</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="691"/>
+        <location filename="../src/views/browser_view.cpp" line="695"/>
         <source>Favorites</source>
         <translation>Избранное</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="692"/>
+        <location filename="../src/views/browser_view.cpp" line="696"/>
         <source>Playlists</source>
         <translation>Плей-листы</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="693"/>
+        <location filename="../src/views/browser_view.cpp" line="697"/>
         <source>Smart playlists</source>
         <translation>Умные плей-листы</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="697"/>
+        <location filename="../src/views/browser_view.cpp" line="701"/>
         <source>Favorites radios</source>
         <translation>Избранное радио</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="698"/>
+        <location filename="../src/views/browser_view.cpp" line="702"/>
         <source>Filesystem</source>
         <translation>Файловая система</translation>
     </message>
@@ -1050,94 +1053,94 @@
         <translation type="vanished">Поставить в очередь воспроизведения</translation>
     </message>
     <message>
-        <location filename="../src/views/item_menu.cpp" line="78"/>
+        <location filename="../src/views/item_menu.cpp" line="80"/>
         <source>&amp;Remove playlist from disk</source>
         <translation>Удалить &amp;список с диска</translation>
     </message>
     <message>
-        <location filename="../src/views/item_menu.cpp" line="86"/>
-        <location filename="../src/views/item_menu.cpp" line="271"/>
-        <location filename="../src/views/item_menu.cpp" line="460"/>
-        <location filename="../src/views/item_menu.cpp" line="534"/>
-        <location filename="../src/views/item_menu.cpp" line="581"/>
+        <location filename="../src/views/item_menu.cpp" line="88"/>
+        <location filename="../src/views/item_menu.cpp" line="285"/>
+        <location filename="../src/views/item_menu.cpp" line="492"/>
+        <location filename="../src/views/item_menu.cpp" line="566"/>
+        <location filename="../src/views/item_menu.cpp" line="613"/>
         <source>Add to favorites</source>
         <translation>Добавить в избранное</translation>
     </message>
     <message>
-        <location filename="../src/views/item_menu.cpp" line="64"/>
-        <location filename="../src/views/item_menu.cpp" line="70"/>
-        <location filename="../src/views/item_menu.cpp" line="73"/>
-        <location filename="../src/views/item_menu.cpp" line="76"/>
-        <location filename="../src/views/item_menu.cpp" line="80"/>
-        <location filename="../src/views/item_menu.cpp" line="83"/>
-        <location filename="../src/views/item_menu.cpp" line="89"/>
+        <location filename="../src/views/item_menu.cpp" line="66"/>
+        <location filename="../src/views/item_menu.cpp" line="72"/>
+        <location filename="../src/views/item_menu.cpp" line="75"/>
+        <location filename="../src/views/item_menu.cpp" line="78"/>
+        <location filename="../src/views/item_menu.cpp" line="82"/>
+        <location filename="../src/views/item_menu.cpp" line="85"/>
+        <location filename="../src/views/item_menu.cpp" line="91"/>
         <source>Play</source>
         <translation>Воспроизведение</translation>
     </message>
     <message>
-        <location filename="../src/views/item_menu.cpp" line="65"/>
-        <location filename="../src/views/item_menu.cpp" line="71"/>
-        <location filename="../src/views/item_menu.cpp" line="74"/>
-        <location filename="../src/views/item_menu.cpp" line="77"/>
-        <location filename="../src/views/item_menu.cpp" line="81"/>
-        <location filename="../src/views/item_menu.cpp" line="85"/>
-        <location filename="../src/views/item_menu.cpp" line="90"/>
+        <location filename="../src/views/item_menu.cpp" line="67"/>
+        <location filename="../src/views/item_menu.cpp" line="73"/>
+        <location filename="../src/views/item_menu.cpp" line="76"/>
+        <location filename="../src/views/item_menu.cpp" line="79"/>
+        <location filename="../src/views/item_menu.cpp" line="83"/>
+        <location filename="../src/views/item_menu.cpp" line="87"/>
+        <location filename="../src/views/item_menu.cpp" line="92"/>
         <source>Add to play queue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/item_menu.cpp" line="68"/>
-        <location filename="../src/views/item_menu.cpp" line="84"/>
-        <location filename="../src/views/item_menu.cpp" line="91"/>
+        <location filename="../src/views/item_menu.cpp" line="70"/>
+        <location filename="../src/views/item_menu.cpp" line="86"/>
+        <location filename="../src/views/item_menu.cpp" line="93"/>
         <source>Edit</source>
         <translation>Изменить</translation>
     </message>
     <message>
-        <location filename="../src/views/item_menu.cpp" line="87"/>
+        <location filename="../src/views/item_menu.cpp" line="89"/>
         <source>Website</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/item_menu.cpp" line="151"/>
+        <location filename="../src/views/item_menu.cpp" line="154"/>
         <source>%1 artists</source>
         <translation>%1 исполнители</translation>
     </message>
     <message>
-        <location filename="../src/views/item_menu.cpp" line="153"/>
+        <location filename="../src/views/item_menu.cpp" line="156"/>
         <source>%1 albums</source>
         <translation>%1 альбомы</translation>
     </message>
     <message>
-        <location filename="../src/views/item_menu.cpp" line="154"/>
+        <location filename="../src/views/item_menu.cpp" line="157"/>
         <source>%1 tracks</source>
         <translation>%1 дорожек</translation>
     </message>
     <message>
-        <location filename="../src/views/item_menu.cpp" line="155"/>
+        <location filename="../src/views/item_menu.cpp" line="158"/>
         <source>%1 streams</source>
         <translation>%1 потоки</translation>
     </message>
     <message>
-        <location filename="../src/views/item_menu.cpp" line="156"/>
+        <location filename="../src/views/item_menu.cpp" line="159"/>
         <source>%1 playlist</source>
         <translation>%1 список</translation>
     </message>
     <message>
-        <location filename="../src/views/item_menu.cpp" line="257"/>
-        <location filename="../src/views/item_menu.cpp" line="351"/>
+        <location filename="../src/views/item_menu.cpp" line="271"/>
+        <location filename="../src/views/item_menu.cpp" line="374"/>
         <source>jump to tracks</source>
         <translation>Перейти к дорожкам</translation>
     </message>
     <message>
-        <location filename="../src/views/item_menu.cpp" line="269"/>
-        <location filename="../src/views/item_menu.cpp" line="458"/>
-        <location filename="../src/views/item_menu.cpp" line="532"/>
-        <location filename="../src/views/item_menu.cpp" line="579"/>
+        <location filename="../src/views/item_menu.cpp" line="283"/>
+        <location filename="../src/views/item_menu.cpp" line="490"/>
+        <location filename="../src/views/item_menu.cpp" line="564"/>
+        <location filename="../src/views/item_menu.cpp" line="611"/>
         <source>Remove from favorites</source>
         <translation>Удалить из избранного</translation>
     </message>
     <message>
-        <location filename="../src/views/item_menu.cpp" line="446"/>
+        <location filename="../src/views/item_menu.cpp" line="478"/>
         <source>jump to albums</source>
         <translation>Перейти к альбомам</translation>
     </message>
@@ -1173,17 +1176,17 @@
         <translation>Очистить историю</translation>
     </message>
     <message>
-        <location filename="../src/views/local/local_scene.cpp" line="296"/>
+        <location filename="../src/views/local/local_scene.cpp" line="298"/>
         <source>Updating music database</source>
         <translation>Обновление базы данных музыки</translation>
     </message>
     <message>
-        <location filename="../src/views/local/local_scene.cpp" line="837"/>
+        <location filename="../src/views/local/local_scene.cpp" line="844"/>
         <source>Albums</source>
         <translation>Альбомы</translation>
     </message>
     <message>
-        <location filename="../src/views/local/local_scene.cpp" line="889"/>
+        <location filename="../src/views/local/local_scene.cpp" line="896"/>
         <source>All playlists</source>
         <translation>Все списки</translation>
     </message>
@@ -1192,37 +1195,37 @@
         <location filename="../src/views/local/local_scene_dashboard.cpp" line="151"/>
         <location filename="../src/views/local/local_scene_dashboard.cpp" line="225"/>
         <location filename="../src/views/local/local_scene_dashboard.cpp" line="291"/>
-        <location filename="../src/views/local/local_scene.cpp" line="373"/>
-        <location filename="../src/views/local/local_scene.cpp" line="428"/>
-        <location filename="../src/views/local/local_scene.cpp" line="506"/>
-        <location filename="../src/views/local/local_scene.cpp" line="597"/>
-        <location filename="../src/views/local/local_scene.cpp" line="701"/>
-        <location filename="../src/views/local/local_scene.cpp" line="766"/>
-        <location filename="../src/views/local/local_scene.cpp" line="824"/>
-        <location filename="../src/views/local/local_scene.cpp" line="867"/>
-        <location filename="../src/views/local/local_scene.cpp" line="925"/>
-        <location filename="../src/views/local/local_scene.cpp" line="993"/>
-        <location filename="../src/views/local/local_scene.cpp" line="1095"/>
+        <location filename="../src/views/local/local_scene.cpp" line="375"/>
+        <location filename="../src/views/local/local_scene.cpp" line="431"/>
+        <location filename="../src/views/local/local_scene.cpp" line="510"/>
+        <location filename="../src/views/local/local_scene.cpp" line="604"/>
+        <location filename="../src/views/local/local_scene.cpp" line="708"/>
+        <location filename="../src/views/local/local_scene.cpp" line="773"/>
+        <location filename="../src/views/local/local_scene.cpp" line="831"/>
+        <location filename="../src/views/local/local_scene.cpp" line="874"/>
+        <location filename="../src/views/local/local_scene.cpp" line="932"/>
+        <location filename="../src/views/local/local_scene.cpp" line="1000"/>
+        <location filename="../src/views/local/local_scene.cpp" line="1102"/>
         <source>No entry found</source>
         <translation>Запись не найдена</translation>
     </message>
     <message>
-        <location filename="../src/views/local/local_scene.cpp" line="389"/>
+        <location filename="../src/views/local/local_scene.cpp" line="392"/>
         <source>All Albums</source>
         <translation>Все альбомы</translation>
     </message>
     <message>
-        <location filename="../src/views/local/local_scene.cpp" line="788"/>
+        <location filename="../src/views/local/local_scene.cpp" line="795"/>
         <source>Artists</source>
         <translation>Исполнители</translation>
     </message>
     <message>
-        <location filename="../src/views/local/local_scene.cpp" line="566"/>
+        <location filename="../src/views/local/local_scene.cpp" line="570"/>
         <source>disc %1</source>
         <translation>Диск %1</translation>
     </message>
     <message>
-        <location filename="../src/views/local/local_scene.cpp" line="1012"/>
+        <location filename="../src/views/local/local_scene.cpp" line="1019"/>
         <source>Smart playlists</source>
         <translation>Умные плей-листы</translation>
     </message>
@@ -1385,17 +1388,17 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/mainwindow.cpp" line="310"/>
+        <location filename="../src/mainwindow.cpp" line="314"/>
         <source>&amp;Quit</source>
         <translation>&amp;Выход</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="311"/>
+        <location filename="../src/mainwindow.cpp" line="315"/>
         <source>About</source>
         <translation>О программе</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="313"/>
+        <location filename="../src/mainwindow.cpp" line="317"/>
         <source>settings</source>
         <translation>Настройки</translation>
     </message>
@@ -1436,72 +1439,72 @@
         <translation type="vanished">Удалять повторяющиеся</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="315"/>
+        <location filename="../src/mainwindow.cpp" line="319"/>
         <source>Edit</source>
         <translation type="unfinished">Изменить</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="318"/>
+        <location filename="../src/mainwindow.cpp" line="322"/>
         <source>new playlist</source>
         <translation type="unfinished">Новый список</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="319"/>
+        <location filename="../src/mainwindow.cpp" line="323"/>
         <source>new smart playlist</source>
         <translation type="unfinished">Новый умный список воспроизведения</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="324"/>
+        <location filename="../src/mainwindow.cpp" line="328"/>
         <source>Play or Pause media</source>
         <translation>Воспроизведение или пауза</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="325"/>
+        <location filename="../src/mainwindow.cpp" line="329"/>
         <source>Stop playing media</source>
         <translation>Остановить воспроизведение музыки</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="326"/>
+        <location filename="../src/mainwindow.cpp" line="330"/>
         <source>Play next media</source>
         <translation>Играть следующий трек</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="327"/>
+        <location filename="../src/mainwindow.cpp" line="331"/>
         <source>Play previous media</source>
         <translation>Играть предыдущий трек</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="331"/>
+        <location filename="../src/mainwindow.cpp" line="335"/>
         <source>Audio equalizer</source>
         <translation>Аудио эквалайзер</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="334"/>
+        <location filename="../src/mainwindow.cpp" line="338"/>
         <source>Database operation</source>
         <translation>Операции с базой данных</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="335"/>
+        <location filename="../src/mainwindow.cpp" line="339"/>
         <source>Database add</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="338"/>
+        <location filename="../src/mainwindow.cpp" line="342"/>
         <source>Show playqueue panel</source>
         <translation>Показывать панель очереди воспроизведения</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="354"/>
+        <location filename="../src/mainwindow.cpp" line="358"/>
         <source>Enable play on search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="860"/>
+        <location filename="../src/mainwindow.cpp" line="900"/>
         <source>Setup your music collection directory</source>
         <translation type="unfinished">Установить каталог вашей коллекции мызыки</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1054"/>
+        <location filename="../src/mainwindow.cpp" line="1109"/>
         <source>No equalizer available with this configuration</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1514,17 +1517,17 @@
         <translation type="vanished">Показывать &quot;сейчас воспроизводится&quot;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="342"/>
+        <location filename="../src/mainwindow.cpp" line="346"/>
         <source>Switch to minimal mode</source>
         <translation>Переключиться в минимальный режим</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="343"/>
+        <location filename="../src/mainwindow.cpp" line="347"/>
         <source>Switch to normal mode</source>
         <translation>Переключиться в обычный режим</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="316"/>
+        <location filename="../src/mainwindow.cpp" line="320"/>
         <source>Send LastFm love</source>
         <translation>Отправить любимое на LastFm</translation>
     </message>
@@ -1537,22 +1540,22 @@
         <translation type="vanished">Показывать рейтинг</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="346"/>
+        <location filename="../src/mainwindow.cpp" line="350"/>
         <source>Jump to artist</source>
         <translation>Перейти к исполнителю</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="347"/>
+        <location filename="../src/mainwindow.cpp" line="351"/>
         <source>Jump to album</source>
         <translation>Перейти к альбому</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="348"/>
+        <location filename="../src/mainwindow.cpp" line="352"/>
         <source>Jump to track</source>
         <translation>Перейти к дорожке</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="351"/>
+        <location filename="../src/mainwindow.cpp" line="355"/>
         <source>Enable search popup</source>
         <translation>Включить всплывающий поиск</translation>
     </message>
@@ -1577,7 +1580,7 @@
         <translation type="vanished">Сохранить список</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="537"/>
+        <location filename="../src/mainwindow.cpp" line="551"/>
         <source>Playing error</source>
         <translation>Ошибка воспроизведения</translation>
     </message>
@@ -1586,12 +1589,12 @@
         <translation type="vanished">Настройки сохранены</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="885"/>
+        <location filename="../src/mainwindow.cpp" line="925"/>
         <source>&lt;p&gt;Database need to be rebuilt&lt;/p&gt;</source>
         <translation>&lt;p&gt;Необходимо перестроить базу данных&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="887"/>
+        <location filename="../src/mainwindow.cpp" line="927"/>
         <source>Database revision update</source>
         <translation>Обновление базы данных</translation>
     </message>
@@ -1732,14 +1735,8 @@
 <context>
     <name>NowPlayingPopup</name>
     <message>
-        <location filename="../src/widgets/playertoolbar/nowplayingpopup.cpp" line="138"/>
-        <source>Add to play queue</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/playertoolbar/nowplayingpopup.cpp" line="141"/>
         <source>Add to favorites</source>
-        <translation type="unfinished">Добавить в избранное</translation>
+        <translation type="obsolete">Добавить в избранное</translation>
     </message>
 </context>
 <context>
@@ -1756,32 +1753,32 @@
 <context>
     <name>PageGeneral</name>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="63"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="64"/>
         <source>General</source>
         <translation>Основные</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="88"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="89"/>
         <source>Enable Mpris</source>
         <translation>Включить Mpris</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="91"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="92"/>
         <source>Enable notification</source>
         <translation>Включить уведомления</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="95"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="96"/>
         <source>Minimize application to systray</source>
         <translation>Минимизировать в системный лоток</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="98"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="99"/>
         <source>Hide window at startup</source>
         <translation>Спрятать окно при запуске</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="110"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="111"/>
         <source>Choose color</source>
         <translation>Выбрать цвет</translation>
     </message>
@@ -1789,7 +1786,7 @@
 <context>
     <name>PageLibrary</name>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="579"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="584"/>
         <source>Library settings</source>
         <translation>Настройки библиотеки</translation>
     </message>
@@ -1802,20 +1799,20 @@
         <translation type="vanished">Включить поддержку нескольких баз данных</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="612"/>
-        <location filename="../src/views/settings/settings_widget.cpp" line="858"/>
-        <location filename="../src/views/settings/settings_widget.cpp" line="871"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="617"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="910"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="923"/>
         <source>New database</source>
         <translation>Новая база данных</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="616"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="621"/>
         <source>Delete database</source>
         <translation>Удалить базу данных</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="620"/>
-        <location filename="../src/views/settings/settings_widget.cpp" line="944"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="625"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="999"/>
         <source>Rename database</source>
         <translation>Переименовать базу данных</translation>
     </message>
@@ -1824,64 +1821,79 @@
         <translation type="vanished">Настройки базы данных</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="601"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="606"/>
         <source>Collection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="630"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="635"/>
         <source>Properties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="641"/>
-        <location filename="../src/views/settings/settings_widget.cpp" line="987"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="646"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1042"/>
         <source> Choose music folder</source>
         <translation> Выбрать папку с музыкой</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="648"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="653"/>
         <source>Add ...</source>
         <translation>Добавить ...</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="652"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="657"/>
         <source>Update collections automatically after start</source>
         <translation>Обновлять коллекцию автоматически после старта</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="656"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="672"/>
+        <source>Image settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/views/settings/settings_widget.cpp" line="679"/>
+        <source>image size: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/views/settings/settings_widget.cpp" line="684"/>
         <source>Search cover art from file directory</source>
         <translation>Поиск обложек в каталогах</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="660"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="661"/>
         <source>Group multi disc albums as one album</source>
         <translation>Группировать многодисковые альбомы как один альбом</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="664"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="665"/>
         <source>Use artist image (album cover stack otherwise)</source>
         <translation>Использовать изображение исполнителя (в противном случае обложку альбома)</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="668"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="669"/>
         <source>Write rating to file</source>
         <translation>Записывать рейтинг в файл</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="858"/>
-        <location filename="../src/views/settings/settings_widget.cpp" line="944"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="687"/>
+        <source>Download image (artist and album) from internet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/views/settings/settings_widget.cpp" line="910"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="999"/>
         <source>Name</source>
         <translation>Название</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="872"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="924"/>
         <source>The database  &quot;%1&quot; already exists, please try another name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="926"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="981"/>
         <source>Are you sure you want to delete the &quot;%1&quot; database?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1890,7 +1902,7 @@
         <translation type="vanished">База данных  &quot;%1&quot; уже существует, попробуйте другое название</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="925"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="980"/>
         <source>Delete database properties</source>
         <translation>Удалить настройки базы данных</translation>
     </message>
@@ -1902,42 +1914,42 @@
 <context>
     <name>PagePlayer</name>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="270"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="273"/>
         <source>Player settings</source>
         <translation>Настройки проигрывателя</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="355"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="358"/>
         <source>Stop playing on playqueue clear</source>
         <translation>Остановить воспроизведение при очистке очереди</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="358"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="361"/>
         <source>Restart playing at startup</source>
         <translation>Перезапустить воспроизведение при запуске</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="361"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="364"/>
         <source>Restore last playqueue content at startup</source>
         <translation>Восстановить последнюю очередь при запуске</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="364"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="367"/>
         <source>Use ReplayGain</source>
         <translation>Использовать выравнивание громкости</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="377"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="380"/>
         <source>Engine</source>
         <translation>Движек</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="380"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="383"/>
         <source>Replaygain</source>
         <translation>Выравнивание громкости</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="383"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="386"/>
         <source>Others</source>
         <translation>Другие</translation>
     </message>
@@ -1945,43 +1957,43 @@
 <context>
     <name>PageScrobbler</name>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1412"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1517"/>
         <source>Scrobbler settings</source>
         <translation>Настройки скробблера</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1436"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1541"/>
         <source>Use LastFm scrobbler</source>
         <translation>Использовать скробблер Last.fm</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1446"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1551"/>
         <source>Account details</source>
         <translation>Информация об учетной записи</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1452"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1557"/>
         <source>username</source>
         <translation>Имя пользователя</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1455"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1560"/>
         <source>password</source>
         <translation>Пароль</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1468"/>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1591"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1573"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1696"/>
         <source>Sign In</source>
         <translation>Авторизоваться</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1584"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1689"/>
         <source>You are log in Last.fm service as &lt;b&gt;%1&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1590"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1695"/>
         <source>You are not logged in</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1990,7 +2002,7 @@
         <translation type="vanished">Вы авторизованы на сервисе last.fm как &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1586"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1691"/>
         <source>Sign Out</source>
         <translation>Выйти</translation>
     </message>
@@ -1999,12 +2011,12 @@
         <translation type="vanished">Вы не авторизовались в</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1625"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1730"/>
         <source>Authentication failed</source>
         <translation>Ошибка аутентификации</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1626"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1731"/>
         <source>Your Last.fm credentials were incorrect</source>
         <translation>Ваши данные Last.fm не корректны</translation>
     </message>
@@ -2012,52 +2024,57 @@
 <context>
     <name>PageShortcut</name>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1085"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1142"/>
         <source>Shortcut settings</source>
         <translation>Настройки горячих клавиш</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1096"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1161"/>
+        <source>Enable shortcuts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1169"/>
         <source>Play/Pause</source>
         <translation>Играть/пауза</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1097"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1170"/>
         <source>Stop</source>
         <translation>Остановить</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1098"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1171"/>
         <source>Previous track</source>
         <translation>Предыдущая дорожка</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1099"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1172"/>
         <source>Next track</source>
         <translation>Следующая дорожка</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1100"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1173"/>
         <source>Increase volume</source>
         <translation>Прибавить громкость</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1101"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1174"/>
         <source>Decrease volume</source>
         <translation>Убавить громкость</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1102"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1175"/>
         <source>Mute/Unmute volume</source>
         <translation>Отключить/включить звук</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1103"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1176"/>
         <source>Jump to track</source>
         <translation>Перейти к дорожке</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1104"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1177"/>
         <source>Clear playqueue</source>
         <translation>Очистить количество воспроизведений</translation>
     </message>
@@ -2065,22 +2082,22 @@
 <context>
     <name>PageSongInfo</name>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1672"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1777"/>
         <source>Song info</source>
         <translation>Сведения о песне</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1690"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1795"/>
         <source>Choose the websites you want to use when searching for lyrics</source>
         <translation>Выбрать веб-сайты, используемые для поиск текста песен</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1696"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1801"/>
         <source>move up</source>
         <translation>Переместить вверх</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1697"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1802"/>
         <source>move down</source>
         <translation>Переместить вниз</translation>
     </message>
@@ -2088,9 +2105,8 @@
 <context>
     <name>PlayerToolBar</name>
     <message>
-        <location filename="../src/widgets/playertoolbar/playertoolbar.cpp" line="152"/>
         <source>[paused]</source>
-        <translation>[приостановлено]</translation>
+        <translation type="vanished">[приостановлено]</translation>
     </message>
     <message>
         <source>&lt;b&gt;%1&lt;/b&gt; by &lt;b&gt;%2&lt;/b&gt; on &lt;b&gt;%3&lt;/b&gt;</source>
@@ -2099,6 +2115,27 @@
     <message>
         <source>&lt;b&gt;%1&lt;/b&gt; stream</source>
         <translation type="vanished">&lt;b&gt;%1&lt;/b&gt; поток</translation>
+    </message>
+</context>
+<context>
+    <name>PlayerToolBarCompact</name>
+    <message>
+        <location filename="../src/widgets/playertoolbar/playertoolbarcompact.cpp" line="145"/>
+        <source>[paused]</source>
+        <translation type="unfinished">[приостановлено]</translation>
+    </message>
+</context>
+<context>
+    <name>PlayerToolBarFull</name>
+    <message>
+        <location filename="../src/widgets/playertoolbar/playertoolbarfull.cpp" line="122"/>
+        <source>Add to play queue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/playertoolbar/playertoolbarfull.cpp" line="124"/>
+        <source>Add to favorites</source>
+        <translation type="unfinished">Добавить в избранное</translation>
     </message>
 </context>
 <context>
@@ -2111,7 +2148,7 @@
 <context>
     <name>PlaylistDelegate</name>
     <message>
-        <location filename="../src/playqueue/playlistview.cpp" line="638"/>
+        <location filename="../src/playqueue/playlistview.cpp" line="643"/>
         <source>media reading error</source>
         <translation>Ошибка чтения файла</translation>
     </message>
@@ -2490,12 +2527,12 @@
         <translation>Проигрыватель остановлен</translation>
     </message>
     <message>
-        <location filename="../src/views/stream/stream_scene.cpp" line="241"/>
+        <location filename="../src/views/stream/stream_scene.cpp" line="244"/>
         <source>downloading streams from %1....please wait...</source>
         <translation>Загрузка потока из %1....пожалуйста подождите...</translation>
     </message>
     <message>
-        <location filename="../src/views/stream/stream_scene.cpp" line="248"/>
+        <location filename="../src/views/stream/stream_scene.cpp" line="251"/>
         <source>error accessing stream from %1 !</source>
         <translation>Ошибка получения потока из %1 !</translation>
     </message>
@@ -2527,7 +2564,7 @@
 <context>
     <name>SearchLineEdit</name>
     <message>
-        <location filename="../src/widgets/searchline_edit.cpp" line="104"/>
+        <location filename="../src/widgets/searchline_edit.cpp" line="110"/>
         <source>Custom search</source>
         <translation>Специальный поиск</translation>
     </message>
@@ -2535,12 +2572,12 @@
 <context>
     <name>SettingsScene</name>
     <message>
-        <location filename="../src/views/settings/settings_scene.cpp" line="231"/>
+        <location filename="../src/views/settings/settings_scene.cpp" line="244"/>
         <source>Settings saved, restart needed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_scene.cpp" line="233"/>
+        <location filename="../src/views/settings/settings_scene.cpp" line="246"/>
         <source>Settings saved</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2636,18 +2673,18 @@
         <translation>Импорт</translation>
     </message>
     <message>
-        <location filename="../src/views/stream/stream_scene.cpp" line="471"/>
-        <location filename="../src/views/stream/stream_scene.cpp" line="532"/>
+        <location filename="../src/views/stream/stream_scene.cpp" line="474"/>
+        <location filename="../src/views/stream/stream_scene.cpp" line="535"/>
         <source>Loading stream</source>
         <translation>Загрузка потока</translation>
     </message>
     <message>
-        <location filename="../src/views/stream/stream_scene.cpp" line="945"/>
+        <location filename="../src/views/stream/stream_scene.cpp" line="947"/>
         <source>import stream file</source>
         <translation>Импорт файла потока</translation>
     </message>
     <message>
-        <location filename="../src/views/stream/stream_scene.cpp" line="946"/>
+        <location filename="../src/views/stream/stream_scene.cpp" line="948"/>
         <source>xspf playlist (*.xspf)</source>
         <translation>Список воспроизведения xspf (*.xspf)</translation>
     </message>
@@ -2663,34 +2700,34 @@
 <context>
     <name>ThreadManager</name>
     <message>
-        <location filename="../src/threadmanager.cpp" line="98"/>
-        <location filename="../src/threadmanager.cpp" line="105"/>
+        <location filename="../src/threadmanager.cpp" line="100"/>
+        <location filename="../src/threadmanager.cpp" line="108"/>
         <source>Updating music database</source>
         <translation>Обновление базы данных музыки</translation>
     </message>
     <message>
-        <location filename="../src/threadmanager.cpp" line="138"/>
+        <location filename="../src/threadmanager.cpp" line="140"/>
         <source>Loading music collection</source>
         <translation>Загрузка музыкальной коллекции</translation>
     </message>
     <message>
-        <location filename="../src/threadmanager.cpp" line="144"/>
+        <location filename="../src/threadmanager.cpp" line="146"/>
         <source>Loading Music Collection</source>
         <translation>Загрузка музыкальной коллекции</translation>
     </message>
     <message>
-        <location filename="../src/threadmanager.cpp" line="170"/>
+        <location filename="../src/threadmanager.cpp" line="172"/>
         <source>Loading playlist files</source>
         <translation>Загрузка файла списка воспроизведения</translation>
     </message>
     <message>
-        <location filename="../src/threadmanager.cpp" line="176"/>
+        <location filename="../src/threadmanager.cpp" line="178"/>
         <source>Loading Playlist File</source>
         <translation>Загрузка файла списка воспроизведения</translation>
     </message>
     <message>
-        <location filename="../src/threadmanager.cpp" line="207"/>
-        <location filename="../src/threadmanager.cpp" line="225"/>
+        <location filename="../src/threadmanager.cpp" line="209"/>
+        <location filename="../src/threadmanager.cpp" line="230"/>
         <source>Fetching media info</source>
         <translation>Извлечение информации о композиции</translation>
     </message>

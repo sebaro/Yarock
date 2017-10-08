@@ -126,117 +126,120 @@
 <context>
     <name>BrowserView</name>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="684"/>
+        <location filename="../src/views/browser_view.cpp" line="688"/>
         <source>Context</source>
         <translation>Konteks</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="685"/>
+        <location filename="../src/views/browser_view.cpp" line="648"/>
+        <location filename="../src/views/browser_view.cpp" line="689"/>
         <source>History</source>
         <translation>Riwayat</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="648"/>
+        <location filename="../src/views/browser_view.cpp" line="652"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; albums</source>
         <translation>Koleksi : &lt;b&gt;%1&lt;/b&gt; album</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="649"/>
+        <location filename="../src/views/browser_view.cpp" line="653"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; artist</source>
         <translation>Koleksi : &lt;b&gt;%1&lt;/b&gt; artis</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="650"/>
+        <location filename="../src/views/browser_view.cpp" line="654"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; tracks</source>
         <translation>Koleksi : &lt;b&gt;%1&lt;/b&gt; trek</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="651"/>
+        <location filename="../src/views/browser_view.cpp" line="655"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; styles</source>
         <translation>Koleksi : &lt;b&gt;%1&lt;/b&gt; gaya</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="652"/>
+        <location filename="../src/views/browser_view.cpp" line="656"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; years</source>
         <translation>Koleksi : &lt;b&gt;%1&lt;/b&gt; tahun</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="653"/>
+        <location filename="../src/views/browser_view.cpp" line="657"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; favorite item</source>
         <translation>Koleksi : &lt;b&gt;%1&lt;/b&gt; item favorit</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="657"/>
+        <location filename="../src/views/browser_view.cpp" line="661"/>
         <source>Playlist : &lt;b&gt;%1&lt;/b&gt; playlists</source>
         <translation>Daftar putar : &lt;b&gt;%1&lt;/b&gt; daftar putar</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="664"/>
+        <location filename="../src/views/browser_view.cpp" line="668"/>
         <source>Radio : &lt;b&gt;%1&lt;/b&gt; streams</source>
         <translation>Radio : &lt;b&gt;%1&lt;/b&gt; strim</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="681"/>
+        <location filename="../src/views/browser_view.cpp" line="685"/>
         <source>About</source>
         <translation>Tentang</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="682"/>
+        <location filename="../src/views/browser_view.cpp" line="650"/>
+        <location filename="../src/views/browser_view.cpp" line="686"/>
         <source>Settings</source>
         <translation>Pengaturan</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="683"/>
+        <location filename="../src/views/browser_view.cpp" line="649"/>
+        <location filename="../src/views/browser_view.cpp" line="687"/>
         <source>Dashboard</source>
         <translation>Dasbor</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="686"/>
+        <location filename="../src/views/browser_view.cpp" line="690"/>
         <source>Artists</source>
         <translation>Artis</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="687"/>
+        <location filename="../src/views/browser_view.cpp" line="691"/>
         <source>Albums</source>
         <translation>Album</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="688"/>
+        <location filename="../src/views/browser_view.cpp" line="692"/>
         <source>Tracks</source>
         <translation>Trek</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="689"/>
+        <location filename="../src/views/browser_view.cpp" line="693"/>
         <source>Genres</source>
         <translation>Jenis Musik</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="690"/>
+        <location filename="../src/views/browser_view.cpp" line="694"/>
         <source>Years</source>
         <translation>Tahun</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="691"/>
+        <location filename="../src/views/browser_view.cpp" line="695"/>
         <source>Favorites</source>
         <translation>Favorit</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="692"/>
+        <location filename="../src/views/browser_view.cpp" line="696"/>
         <source>Playlists</source>
         <translation>Daftar Putar</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="693"/>
+        <location filename="../src/views/browser_view.cpp" line="697"/>
         <source>Smart playlists</source>
         <translation>Daftar putar cerdas</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="697"/>
+        <location filename="../src/views/browser_view.cpp" line="701"/>
         <source>Favorites radios</source>
         <translation>Radio favorit</translation>
     </message>
     <message>
-        <location filename="../src/views/browser_view.cpp" line="698"/>
+        <location filename="../src/views/browser_view.cpp" line="702"/>
         <source>Filesystem</source>
         <translation>Sistem berkas</translation>
     </message>
@@ -1050,94 +1053,94 @@
         <translation type="vanished">Antrekan ke antrean putar</translation>
     </message>
     <message>
-        <location filename="../src/views/item_menu.cpp" line="78"/>
+        <location filename="../src/views/item_menu.cpp" line="80"/>
         <source>&amp;Remove playlist from disk</source>
         <translation>Buang daftar putar da&amp;ri diska</translation>
     </message>
     <message>
-        <location filename="../src/views/item_menu.cpp" line="86"/>
-        <location filename="../src/views/item_menu.cpp" line="271"/>
-        <location filename="../src/views/item_menu.cpp" line="460"/>
-        <location filename="../src/views/item_menu.cpp" line="534"/>
-        <location filename="../src/views/item_menu.cpp" line="581"/>
+        <location filename="../src/views/item_menu.cpp" line="88"/>
+        <location filename="../src/views/item_menu.cpp" line="285"/>
+        <location filename="../src/views/item_menu.cpp" line="492"/>
+        <location filename="../src/views/item_menu.cpp" line="566"/>
+        <location filename="../src/views/item_menu.cpp" line="613"/>
         <source>Add to favorites</source>
         <translation>Tambah ke favorit</translation>
     </message>
     <message>
-        <location filename="../src/views/item_menu.cpp" line="64"/>
-        <location filename="../src/views/item_menu.cpp" line="70"/>
-        <location filename="../src/views/item_menu.cpp" line="73"/>
-        <location filename="../src/views/item_menu.cpp" line="76"/>
-        <location filename="../src/views/item_menu.cpp" line="80"/>
-        <location filename="../src/views/item_menu.cpp" line="83"/>
-        <location filename="../src/views/item_menu.cpp" line="89"/>
+        <location filename="../src/views/item_menu.cpp" line="66"/>
+        <location filename="../src/views/item_menu.cpp" line="72"/>
+        <location filename="../src/views/item_menu.cpp" line="75"/>
+        <location filename="../src/views/item_menu.cpp" line="78"/>
+        <location filename="../src/views/item_menu.cpp" line="82"/>
+        <location filename="../src/views/item_menu.cpp" line="85"/>
+        <location filename="../src/views/item_menu.cpp" line="91"/>
         <source>Play</source>
         <translation>Putar</translation>
     </message>
     <message>
-        <location filename="../src/views/item_menu.cpp" line="65"/>
-        <location filename="../src/views/item_menu.cpp" line="71"/>
-        <location filename="../src/views/item_menu.cpp" line="74"/>
-        <location filename="../src/views/item_menu.cpp" line="77"/>
-        <location filename="../src/views/item_menu.cpp" line="81"/>
-        <location filename="../src/views/item_menu.cpp" line="85"/>
-        <location filename="../src/views/item_menu.cpp" line="90"/>
+        <location filename="../src/views/item_menu.cpp" line="67"/>
+        <location filename="../src/views/item_menu.cpp" line="73"/>
+        <location filename="../src/views/item_menu.cpp" line="76"/>
+        <location filename="../src/views/item_menu.cpp" line="79"/>
+        <location filename="../src/views/item_menu.cpp" line="83"/>
+        <location filename="../src/views/item_menu.cpp" line="87"/>
+        <location filename="../src/views/item_menu.cpp" line="92"/>
         <source>Add to play queue</source>
         <translation>Tambah ke antrean putar</translation>
     </message>
     <message>
-        <location filename="../src/views/item_menu.cpp" line="68"/>
-        <location filename="../src/views/item_menu.cpp" line="84"/>
-        <location filename="../src/views/item_menu.cpp" line="91"/>
+        <location filename="../src/views/item_menu.cpp" line="70"/>
+        <location filename="../src/views/item_menu.cpp" line="86"/>
+        <location filename="../src/views/item_menu.cpp" line="93"/>
         <source>Edit</source>
         <translation>Sunting</translation>
     </message>
     <message>
-        <location filename="../src/views/item_menu.cpp" line="87"/>
+        <location filename="../src/views/item_menu.cpp" line="89"/>
         <source>Website</source>
         <translation>Situs web</translation>
     </message>
     <message>
-        <location filename="../src/views/item_menu.cpp" line="151"/>
+        <location filename="../src/views/item_menu.cpp" line="154"/>
         <source>%1 artists</source>
         <translation>%1 artis</translation>
     </message>
     <message>
-        <location filename="../src/views/item_menu.cpp" line="153"/>
+        <location filename="../src/views/item_menu.cpp" line="156"/>
         <source>%1 albums</source>
         <translation>%1 album</translation>
     </message>
     <message>
-        <location filename="../src/views/item_menu.cpp" line="154"/>
+        <location filename="../src/views/item_menu.cpp" line="157"/>
         <source>%1 tracks</source>
         <translation>%1 trek</translation>
     </message>
     <message>
-        <location filename="../src/views/item_menu.cpp" line="155"/>
+        <location filename="../src/views/item_menu.cpp" line="158"/>
         <source>%1 streams</source>
         <translation>%1 strim</translation>
     </message>
     <message>
-        <location filename="../src/views/item_menu.cpp" line="156"/>
+        <location filename="../src/views/item_menu.cpp" line="159"/>
         <source>%1 playlist</source>
         <translation>%1 daftar putar</translation>
     </message>
     <message>
-        <location filename="../src/views/item_menu.cpp" line="257"/>
-        <location filename="../src/views/item_menu.cpp" line="351"/>
+        <location filename="../src/views/item_menu.cpp" line="271"/>
+        <location filename="../src/views/item_menu.cpp" line="374"/>
         <source>jump to tracks</source>
         <translation>lompat ke trek</translation>
     </message>
     <message>
-        <location filename="../src/views/item_menu.cpp" line="269"/>
-        <location filename="../src/views/item_menu.cpp" line="458"/>
-        <location filename="../src/views/item_menu.cpp" line="532"/>
-        <location filename="../src/views/item_menu.cpp" line="579"/>
+        <location filename="../src/views/item_menu.cpp" line="283"/>
+        <location filename="../src/views/item_menu.cpp" line="490"/>
+        <location filename="../src/views/item_menu.cpp" line="564"/>
+        <location filename="../src/views/item_menu.cpp" line="611"/>
         <source>Remove from favorites</source>
         <translation>Buang dari favorit</translation>
     </message>
     <message>
-        <location filename="../src/views/item_menu.cpp" line="446"/>
+        <location filename="../src/views/item_menu.cpp" line="478"/>
         <source>jump to albums</source>
         <translation>Lompat ke album</translation>
     </message>
@@ -1173,17 +1176,17 @@
         <translation>bersihkan riwayat</translation>
     </message>
     <message>
-        <location filename="../src/views/local/local_scene.cpp" line="296"/>
+        <location filename="../src/views/local/local_scene.cpp" line="298"/>
         <source>Updating music database</source>
         <translation>Memperbarui basis data musik</translation>
     </message>
     <message>
-        <location filename="../src/views/local/local_scene.cpp" line="837"/>
+        <location filename="../src/views/local/local_scene.cpp" line="844"/>
         <source>Albums</source>
         <translation>Album</translation>
     </message>
     <message>
-        <location filename="../src/views/local/local_scene.cpp" line="889"/>
+        <location filename="../src/views/local/local_scene.cpp" line="896"/>
         <source>All playlists</source>
         <translation>Semua daftar putar</translation>
     </message>
@@ -1192,37 +1195,37 @@
         <location filename="../src/views/local/local_scene_dashboard.cpp" line="151"/>
         <location filename="../src/views/local/local_scene_dashboard.cpp" line="225"/>
         <location filename="../src/views/local/local_scene_dashboard.cpp" line="291"/>
-        <location filename="../src/views/local/local_scene.cpp" line="373"/>
-        <location filename="../src/views/local/local_scene.cpp" line="428"/>
-        <location filename="../src/views/local/local_scene.cpp" line="506"/>
-        <location filename="../src/views/local/local_scene.cpp" line="597"/>
-        <location filename="../src/views/local/local_scene.cpp" line="701"/>
-        <location filename="../src/views/local/local_scene.cpp" line="766"/>
-        <location filename="../src/views/local/local_scene.cpp" line="824"/>
-        <location filename="../src/views/local/local_scene.cpp" line="867"/>
-        <location filename="../src/views/local/local_scene.cpp" line="925"/>
-        <location filename="../src/views/local/local_scene.cpp" line="993"/>
-        <location filename="../src/views/local/local_scene.cpp" line="1095"/>
+        <location filename="../src/views/local/local_scene.cpp" line="375"/>
+        <location filename="../src/views/local/local_scene.cpp" line="431"/>
+        <location filename="../src/views/local/local_scene.cpp" line="510"/>
+        <location filename="../src/views/local/local_scene.cpp" line="604"/>
+        <location filename="../src/views/local/local_scene.cpp" line="708"/>
+        <location filename="../src/views/local/local_scene.cpp" line="773"/>
+        <location filename="../src/views/local/local_scene.cpp" line="831"/>
+        <location filename="../src/views/local/local_scene.cpp" line="874"/>
+        <location filename="../src/views/local/local_scene.cpp" line="932"/>
+        <location filename="../src/views/local/local_scene.cpp" line="1000"/>
+        <location filename="../src/views/local/local_scene.cpp" line="1102"/>
         <source>No entry found</source>
         <translation>Entri tidak ditemukan</translation>
     </message>
     <message>
-        <location filename="../src/views/local/local_scene.cpp" line="389"/>
+        <location filename="../src/views/local/local_scene.cpp" line="392"/>
         <source>All Albums</source>
         <translation>Semua Album</translation>
     </message>
     <message>
-        <location filename="../src/views/local/local_scene.cpp" line="788"/>
+        <location filename="../src/views/local/local_scene.cpp" line="795"/>
         <source>Artists</source>
         <translation>Artis</translation>
     </message>
     <message>
-        <location filename="../src/views/local/local_scene.cpp" line="566"/>
+        <location filename="../src/views/local/local_scene.cpp" line="570"/>
         <source>disc %1</source>
         <translation>cakram %1</translation>
     </message>
     <message>
-        <location filename="../src/views/local/local_scene.cpp" line="1012"/>
+        <location filename="../src/views/local/local_scene.cpp" line="1019"/>
         <source>Smart playlists</source>
         <translation>Daftar putar cerdas</translation>
     </message>
@@ -1385,17 +1388,17 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/mainwindow.cpp" line="310"/>
+        <location filename="../src/mainwindow.cpp" line="314"/>
         <source>&amp;Quit</source>
         <translation>&amp;Keluar</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="311"/>
+        <location filename="../src/mainwindow.cpp" line="315"/>
         <source>About</source>
         <translation>Tentang</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="313"/>
+        <location filename="../src/mainwindow.cpp" line="317"/>
         <source>settings</source>
         <translation>pengaturan</translation>
     </message>
@@ -1436,72 +1439,72 @@
         <translation type="vanished">Buang duplikat</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="315"/>
+        <location filename="../src/mainwindow.cpp" line="319"/>
         <source>Edit</source>
         <translation>Sunting</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="318"/>
+        <location filename="../src/mainwindow.cpp" line="322"/>
         <source>new playlist</source>
         <translation>daftar putar baru</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="319"/>
+        <location filename="../src/mainwindow.cpp" line="323"/>
         <source>new smart playlist</source>
         <translation>daftar putar cerdas baru</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="324"/>
+        <location filename="../src/mainwindow.cpp" line="328"/>
         <source>Play or Pause media</source>
         <translation>Putar atau Jeda media</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="325"/>
+        <location filename="../src/mainwindow.cpp" line="329"/>
         <source>Stop playing media</source>
         <translation>Hentikan media yang diputar</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="326"/>
+        <location filename="../src/mainwindow.cpp" line="330"/>
         <source>Play next media</source>
         <translation>Putar media berikutnya</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="327"/>
+        <location filename="../src/mainwindow.cpp" line="331"/>
         <source>Play previous media</source>
         <translation>Putar media sebelumnya</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="331"/>
+        <location filename="../src/mainwindow.cpp" line="335"/>
         <source>Audio equalizer</source>
         <translation>Ekualiser audio</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="334"/>
+        <location filename="../src/mainwindow.cpp" line="338"/>
         <source>Database operation</source>
         <translation>Operasi basis data</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="335"/>
+        <location filename="../src/mainwindow.cpp" line="339"/>
         <source>Database add</source>
         <translation>Penambahan basis data</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="338"/>
+        <location filename="../src/mainwindow.cpp" line="342"/>
         <source>Show playqueue panel</source>
         <translation>Tampilkan panel antrean putar</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="354"/>
+        <location filename="../src/mainwindow.cpp" line="358"/>
         <source>Enable play on search</source>
         <translation>Fungsikan pemutaran pada pencarian</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="860"/>
+        <location filename="../src/mainwindow.cpp" line="900"/>
         <source>Setup your music collection directory</source>
         <translation>Siapkan direktori koleksi musik anda</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1054"/>
+        <location filename="../src/mainwindow.cpp" line="1109"/>
         <source>No equalizer available with this configuration</source>
         <translation>Tidak ada ekualiser yang tersedia dengan konfigurasi ini</translation>
     </message>
@@ -1514,17 +1517,17 @@
         <translation type="vanished">Tampilkan pemutaran saat ini</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="342"/>
+        <location filename="../src/mainwindow.cpp" line="346"/>
         <source>Switch to minimal mode</source>
         <translation>Alihkan ke mode minimal</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="343"/>
+        <location filename="../src/mainwindow.cpp" line="347"/>
         <source>Switch to normal mode</source>
         <translation>Alihkan ke mode normal</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="316"/>
+        <location filename="../src/mainwindow.cpp" line="320"/>
         <source>Send LastFm love</source>
         <translation>Kirimi LastFM cinta</translation>
     </message>
@@ -1537,22 +1540,22 @@
         <translation type="vanished">Tampilkan nilai</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="346"/>
+        <location filename="../src/mainwindow.cpp" line="350"/>
         <source>Jump to artist</source>
         <translation>Lompat ke artis</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="347"/>
+        <location filename="../src/mainwindow.cpp" line="351"/>
         <source>Jump to album</source>
         <translation>Lompat ke album</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="348"/>
+        <location filename="../src/mainwindow.cpp" line="352"/>
         <source>Jump to track</source>
         <translation>Lompat ke trek</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="351"/>
+        <location filename="../src/mainwindow.cpp" line="355"/>
         <source>Enable search popup</source>
         <translation>Aktifkan jendela pencarian</translation>
     </message>
@@ -1577,7 +1580,7 @@
         <translation type="vanished">Simpan daftar putar</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="537"/>
+        <location filename="../src/mainwindow.cpp" line="551"/>
         <source>Playing error</source>
         <translation>Galat pemutaran</translation>
     </message>
@@ -1586,12 +1589,12 @@
         <translation type="vanished">pengaturan disimpan</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="885"/>
+        <location filename="../src/mainwindow.cpp" line="925"/>
         <source>&lt;p&gt;Database need to be rebuilt&lt;/p&gt;</source>
         <translation>&lt;p&gt;Basis data perlu dibangun ulang&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="887"/>
+        <location filename="../src/mainwindow.cpp" line="927"/>
         <source>Database revision update</source>
         <translation>Pembaruan perubahan basis data</translation>
     </message>
@@ -1732,14 +1735,12 @@
 <context>
     <name>NowPlayingPopup</name>
     <message>
-        <location filename="../src/widgets/playertoolbar/nowplayingpopup.cpp" line="138"/>
         <source>Add to play queue</source>
-        <translation>Tambah ke antrean putar</translation>
+        <translation type="vanished">Tambah ke antrean putar</translation>
     </message>
     <message>
-        <location filename="../src/widgets/playertoolbar/nowplayingpopup.cpp" line="141"/>
         <source>Add to favorites</source>
-        <translation>Tambah ke favorit</translation>
+        <translation type="vanished">Tambah ke favorit</translation>
     </message>
 </context>
 <context>
@@ -1756,32 +1757,32 @@
 <context>
     <name>PageGeneral</name>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="63"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="64"/>
         <source>General</source>
         <translation>Umum</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="88"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="89"/>
         <source>Enable Mpris</source>
         <translation>Aktifkan Mpris</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="91"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="92"/>
         <source>Enable notification</source>
         <translation>Aktifkan notifikasi</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="95"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="96"/>
         <source>Minimize application to systray</source>
         <translation>Minimalkan aplikasi ke baki sistem</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="98"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="99"/>
         <source>Hide window at startup</source>
         <translation>Sembunyikan jendela saat memulai</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="110"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="111"/>
         <source>Choose color</source>
         <translation>Pilih warna</translation>
     </message>
@@ -1789,7 +1790,7 @@
 <context>
     <name>PageLibrary</name>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="579"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="584"/>
         <source>Library settings</source>
         <translation>Pengaturan pustaka</translation>
     </message>
@@ -1802,20 +1803,20 @@
         <translation type="vanished">Aktifkan dukungan Basis Data Multi</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="612"/>
-        <location filename="../src/views/settings/settings_widget.cpp" line="858"/>
-        <location filename="../src/views/settings/settings_widget.cpp" line="871"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="617"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="910"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="923"/>
         <source>New database</source>
         <translation>Basis data baru</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="616"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="621"/>
         <source>Delete database</source>
         <translation>Hapus basis data</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="620"/>
-        <location filename="../src/views/settings/settings_widget.cpp" line="944"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="625"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="999"/>
         <source>Rename database</source>
         <translation>Ubah nama basis data</translation>
     </message>
@@ -1824,64 +1825,79 @@
         <translation type="vanished">Properti Basis Data</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="601"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="606"/>
         <source>Collection</source>
         <translation>Koleksi</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="630"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="635"/>
         <source>Properties</source>
         <translation>Properti</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="641"/>
-        <location filename="../src/views/settings/settings_widget.cpp" line="987"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="646"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1042"/>
         <source> Choose music folder</source>
         <translation>Pilih folder musik</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="648"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="653"/>
         <source>Add ...</source>
         <translation>Tambah ...</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="652"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="657"/>
         <source>Update collections automatically after start</source>
         <translation>Perbarui koleksi secara otomatis setelah aplikasi dijalankan</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="656"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="672"/>
+        <source>Image settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/views/settings/settings_widget.cpp" line="679"/>
+        <source>image size: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/views/settings/settings_widget.cpp" line="684"/>
         <source>Search cover art from file directory</source>
         <translation>Cari kover dari direktori berkas</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="660"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="661"/>
         <source>Group multi disc albums as one album</source>
         <translation>Kelompokkan album multi cakram menjadi satu album</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="664"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="665"/>
         <source>Use artist image (album cover stack otherwise)</source>
         <translation>Gunakan gambar artis (jika tidak kover album)</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="668"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="669"/>
         <source>Write rating to file</source>
         <translation>Tulis nilai ke berkas</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="858"/>
-        <location filename="../src/views/settings/settings_widget.cpp" line="944"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="687"/>
+        <source>Download image (artist and album) from internet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/views/settings/settings_widget.cpp" line="910"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="999"/>
         <source>Name</source>
         <translation>Nama</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="872"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="924"/>
         <source>The database  &quot;%1&quot; already exists, please try another name</source>
         <translation>Basis data &quot;%1&quot; sudah ada, harap gunakan nama lain</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="926"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="981"/>
         <source>Are you sure you want to delete the &quot;%1&quot; database?</source>
         <translation>Apakah Anda yakin ingin menghapus basis data &quot;%1&quot;?</translation>
     </message>
@@ -1890,7 +1906,7 @@
         <translation type="vanished">Basis data &quot;%1&quot; sudah ada, mohon gunakan nama lain</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="925"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="980"/>
         <source>Delete database properties</source>
         <translation>Hapus properti basis data</translation>
     </message>
@@ -1902,42 +1918,42 @@
 <context>
     <name>PagePlayer</name>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="270"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="273"/>
         <source>Player settings</source>
         <translation>Pengaturan pemutar</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="355"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="358"/>
         <source>Stop playing on playqueue clear</source>
         <translation>Hentikan pemutaran saat pembersihan antrean putar</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="358"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="361"/>
         <source>Restart playing at startup</source>
         <translation>Mulai ulang pemutaran saat aplikasi dijalankan</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="361"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="364"/>
         <source>Restore last playqueue content at startup</source>
         <translation>Kembalikan isi antrean putar terakhir saat aplikasi dijalankan</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="364"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="367"/>
         <source>Use ReplayGain</source>
         <translation>Gunakan ReplayGain</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="377"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="380"/>
         <source>Engine</source>
         <translation>Mesin</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="380"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="383"/>
         <source>Replaygain</source>
         <translation>Replaygain</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="383"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="386"/>
         <source>Others</source>
         <translation>Lainnya</translation>
     </message>
@@ -1945,43 +1961,43 @@
 <context>
     <name>PageScrobbler</name>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1412"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1517"/>
         <source>Scrobbler settings</source>
         <translation>Pengaturan scrobbler</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1436"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1541"/>
         <source>Use LastFm scrobbler</source>
         <translation>Gunakan LastFM scrobbler</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1446"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1551"/>
         <source>Account details</source>
         <translation>Detail akun</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1452"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1557"/>
         <source>username</source>
         <translation>nama pengguna</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1455"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1560"/>
         <source>password</source>
         <translation>kata sandi</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1468"/>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1591"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1573"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1696"/>
         <source>Sign In</source>
         <translation>Masuk</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1584"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1689"/>
         <source>You are log in Last.fm service as &lt;b&gt;%1&lt;/b&gt;</source>
         <translation>Anda masuk ke layanan Last.fm sebagai &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1590"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1695"/>
         <source>You are not logged in</source>
         <translation>Anda belum masuk</translation>
     </message>
@@ -1990,7 +2006,7 @@
         <translation type="vanished">Anda telah masuk ke layanan LastFM sebagai &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1586"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1691"/>
         <source>Sign Out</source>
         <translation>Keluar</translation>
     </message>
@@ -1999,12 +2015,12 @@
         <translation type="vanished">Anda belum masuk ke</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1625"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1730"/>
         <source>Authentication failed</source>
         <translation>Otentikasi gagal</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1626"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1731"/>
         <source>Your Last.fm credentials were incorrect</source>
         <translation>Kredensial Last.fm anda salah</translation>
     </message>
@@ -2012,52 +2028,57 @@
 <context>
     <name>PageShortcut</name>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1085"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1142"/>
         <source>Shortcut settings</source>
         <translation>Pengaturan pintasan</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1096"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1161"/>
+        <source>Enable shortcuts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1169"/>
         <source>Play/Pause</source>
         <translation>Putar/Jeda</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1097"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1170"/>
         <source>Stop</source>
         <translation>Berhenti</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1098"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1171"/>
         <source>Previous track</source>
         <translation>Trek sebelumnya</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1099"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1172"/>
         <source>Next track</source>
         <translation>Trek selanjutnya</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1100"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1173"/>
         <source>Increase volume</source>
         <translation>Naikkan volume</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1101"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1174"/>
         <source>Decrease volume</source>
         <translation>Turunkan volume</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1102"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1175"/>
         <source>Mute/Unmute volume</source>
         <translation>Sunyi/Bunyi volume</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1103"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1176"/>
         <source>Jump to track</source>
         <translation>Lompat ke trek</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1104"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1177"/>
         <source>Clear playqueue</source>
         <translation>Bersihkan antrean putar</translation>
     </message>
@@ -2065,22 +2086,22 @@
 <context>
     <name>PageSongInfo</name>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1672"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1777"/>
         <source>Song info</source>
         <translation>Info lagu</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1690"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1795"/>
         <source>Choose the websites you want to use when searching for lyrics</source>
         <translation>Pilih situs web yang ingin anda gunakan ketika mencari lirik</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1696"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1801"/>
         <source>move up</source>
         <translation>pindah ke atas</translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_widget.cpp" line="1697"/>
+        <location filename="../src/views/settings/settings_widget.cpp" line="1802"/>
         <source>move down</source>
         <translation>pindah ke bawah</translation>
     </message>
@@ -2088,9 +2109,8 @@
 <context>
     <name>PlayerToolBar</name>
     <message>
-        <location filename="../src/widgets/playertoolbar/playertoolbar.cpp" line="152"/>
         <source>[paused]</source>
-        <translation>[jeda]</translation>
+        <translation type="vanished">[jeda]</translation>
     </message>
     <message>
         <source>&lt;b&gt;%1&lt;/b&gt; by &lt;b&gt;%2&lt;/b&gt; on &lt;b&gt;%3&lt;/b&gt;</source>
@@ -2099,6 +2119,27 @@
     <message>
         <source>&lt;b&gt;%1&lt;/b&gt; stream</source>
         <translation type="vanished">&lt;b&gt;%1&lt;/b&gt; strim</translation>
+    </message>
+</context>
+<context>
+    <name>PlayerToolBarCompact</name>
+    <message>
+        <location filename="../src/widgets/playertoolbar/playertoolbarcompact.cpp" line="145"/>
+        <source>[paused]</source>
+        <translation type="unfinished">[jeda]</translation>
+    </message>
+</context>
+<context>
+    <name>PlayerToolBarFull</name>
+    <message>
+        <location filename="../src/widgets/playertoolbar/playertoolbarfull.cpp" line="122"/>
+        <source>Add to play queue</source>
+        <translation type="unfinished">Tambah ke antrean putar</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/playertoolbar/playertoolbarfull.cpp" line="124"/>
+        <source>Add to favorites</source>
+        <translation type="unfinished">Tambah ke favorit</translation>
     </message>
 </context>
 <context>
@@ -2111,7 +2152,7 @@
 <context>
     <name>PlaylistDelegate</name>
     <message>
-        <location filename="../src/playqueue/playlistview.cpp" line="638"/>
+        <location filename="../src/playqueue/playlistview.cpp" line="643"/>
         <source>media reading error</source>
         <translation>galat pembacaan media</translation>
     </message>
@@ -2490,12 +2531,12 @@
         <translation>Pemutar dihentikan</translation>
     </message>
     <message>
-        <location filename="../src/views/stream/stream_scene.cpp" line="241"/>
+        <location filename="../src/views/stream/stream_scene.cpp" line="244"/>
         <source>downloading streams from %1....please wait...</source>
         <translation>mengunduh strim dari %1....mohon tunggu...</translation>
     </message>
     <message>
-        <location filename="../src/views/stream/stream_scene.cpp" line="248"/>
+        <location filename="../src/views/stream/stream_scene.cpp" line="251"/>
         <source>error accessing stream from %1 !</source>
         <translation>galat mengakses strim dari %1 !</translation>
     </message>
@@ -2527,7 +2568,7 @@
 <context>
     <name>SearchLineEdit</name>
     <message>
-        <location filename="../src/widgets/searchline_edit.cpp" line="104"/>
+        <location filename="../src/widgets/searchline_edit.cpp" line="110"/>
         <source>Custom search</source>
         <translation>Pencarian ubahsuai</translation>
     </message>
@@ -2535,12 +2576,12 @@
 <context>
     <name>SettingsScene</name>
     <message>
-        <location filename="../src/views/settings/settings_scene.cpp" line="231"/>
+        <location filename="../src/views/settings/settings_scene.cpp" line="244"/>
         <source>Settings saved, restart needed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/views/settings/settings_scene.cpp" line="233"/>
+        <location filename="../src/views/settings/settings_scene.cpp" line="246"/>
         <source>Settings saved</source>
         <translation>Pengaturan disimpan</translation>
     </message>
@@ -2640,18 +2681,18 @@
         <translation>impor</translation>
     </message>
     <message>
-        <location filename="../src/views/stream/stream_scene.cpp" line="471"/>
-        <location filename="../src/views/stream/stream_scene.cpp" line="532"/>
+        <location filename="../src/views/stream/stream_scene.cpp" line="474"/>
+        <location filename="../src/views/stream/stream_scene.cpp" line="535"/>
         <source>Loading stream</source>
         <translation>Memuat strim</translation>
     </message>
     <message>
-        <location filename="../src/views/stream/stream_scene.cpp" line="945"/>
+        <location filename="../src/views/stream/stream_scene.cpp" line="947"/>
         <source>import stream file</source>
         <translation>impor berkas strim</translation>
     </message>
     <message>
-        <location filename="../src/views/stream/stream_scene.cpp" line="946"/>
+        <location filename="../src/views/stream/stream_scene.cpp" line="948"/>
         <source>xspf playlist (*.xspf)</source>
         <translation>daftar putar xspf (*.xspf)</translation>
     </message>
@@ -2667,34 +2708,34 @@
 <context>
     <name>ThreadManager</name>
     <message>
-        <location filename="../src/threadmanager.cpp" line="98"/>
-        <location filename="../src/threadmanager.cpp" line="105"/>
+        <location filename="../src/threadmanager.cpp" line="100"/>
+        <location filename="../src/threadmanager.cpp" line="108"/>
         <source>Updating music database</source>
         <translation>Memperbarui basis data musik</translation>
     </message>
     <message>
-        <location filename="../src/threadmanager.cpp" line="138"/>
+        <location filename="../src/threadmanager.cpp" line="140"/>
         <source>Loading music collection</source>
         <translation>Memuat koleksi musik</translation>
     </message>
     <message>
-        <location filename="../src/threadmanager.cpp" line="144"/>
+        <location filename="../src/threadmanager.cpp" line="146"/>
         <source>Loading Music Collection</source>
         <translation>Memuat Koleksi Musik</translation>
     </message>
     <message>
-        <location filename="../src/threadmanager.cpp" line="170"/>
+        <location filename="../src/threadmanager.cpp" line="172"/>
         <source>Loading playlist files</source>
         <translation>Memuat berkas daftar putar</translation>
     </message>
     <message>
-        <location filename="../src/threadmanager.cpp" line="176"/>
+        <location filename="../src/threadmanager.cpp" line="178"/>
         <source>Loading Playlist File</source>
         <translation>Memuat Berkas Daftar Putar</translation>
     </message>
     <message>
-        <location filename="../src/threadmanager.cpp" line="207"/>
-        <location filename="../src/threadmanager.cpp" line="225"/>
+        <location filename="../src/threadmanager.cpp" line="209"/>
+        <location filename="../src/threadmanager.cpp" line="230"/>
         <source>Fetching media info</source>
         <translation>Mengambil info media</translation>
     </message>
