@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -579,7 +579,7 @@ void LocalScene::populateTrackScene()
 
           TrackGraphicItem_v2 *track_item = new TrackGraphicItem_v2();
           track_item->media = track;
-          track_item->setPos((COVER_SIZE*1.25), artistRow*50 + albumRow*30 + trackRow*20 + offset);
+          track_item->setPos((COVER_SIZE*1.25)+5, artistRow*50 + albumRow*30 + trackRow*20 + offset);
 	  
           //PATCH (-20 => fix alignement of the scene)
           track_item->_width = parentView()->width()-(COVER_SIZE*1.25)-20;
@@ -981,8 +981,8 @@ void LocalScene::populatePlaylistByTrackScene()
 
         TrackGraphicItem *track_item = new TrackGraphicItem();
         track_item->media = track;
-        track_item->setPos(155, categorieRow*50 + playlistRow*30 + trackRow*20 + offset);
-        track_item->_width = parentView()->width()-155 -20;
+        track_item->setPos(180, categorieRow*50 + playlistRow*30 + trackRow*20 + offset);        
+        track_item->_width = parentView()->width()-180-20;
 
         addItem(track_item);
 
