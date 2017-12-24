@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -98,9 +98,10 @@ EnginePhonon::EnginePhonon() : EngineBase("phonon")
       {
           m_equalizer = new Phonon::Effect( mDescr, this );
 
-          if( SETTINGS()->_enableEq ) {
-            addEqualizer();
-            loadEqualizerSettings();
+          if( SETTINGS()->_enableEq ) 
+          {
+              addEqualizer();
+              loadEqualizerSettings();
           }
       }
     }
@@ -138,6 +139,8 @@ void EnginePhonon::pause()
 
 void EnginePhonon::stop()
 {
+   Debug::debug() << "[EnginePhonon] -> stop";
+
    m_mediaObject->blockSignals(true);
    m_mediaObject->stop();
    m_mediaObject->clearQueue();
@@ -334,7 +337,7 @@ void EnginePhonon::slot_on_phonon_state_changed(Phonon::State newState, Phonon::
 void  EnginePhonon::slot_on_duration_change(qint64 total_time_ms)
 {
 Q_UNUSED(total_time_ms)  
-    Debug::debug() << "[EnginePhonon] -> slot_on_duration_change" ;
+    //Debug::debug() << "[EnginePhonon] -> slot_on_duration_change" ;
 
     /* As Amarok note: don't rely on m_currentTrack here. At least some Phonon backends first emit
        totalTimeChanged(), then metaDataChanged() and only then currentSourceChanged()
@@ -394,7 +397,9 @@ void EnginePhonon::slot_on_media_change()
     if(!m_currentMediaItem)
     {
         Debug::error() << "[EnginePhonon] -> no media set";
-        //stop();
+        // note phonon gestreamer need a sto pin this case
+        // don't remember if it's a probleme for phonon vlc
+        stop();
         return;
     }
     else if ( (m_currentMediaItem->type() == TYPE_TRACK) &&
@@ -447,9 +452,8 @@ void EnginePhonon::slot_on_media_change()
 /* ---------------------------------------------------------------------------*/
 void EnginePhonon::slot_on_metadata_change()
 {
-    //Debug::debug() << "[EnginePhonon] -> slot_on_metadata_change";
-
-    if(m_currentMediaItem->type() != TYPE_STREAM) return;
+    Debug::debug() << "[EnginePhonon] -> slot_on_metadata_change";
+    if(!m_currentMediaItem || m_currentMediaItem->type() != TYPE_STREAM) return;
 
     const QMap<QString, QString> &metaData = m_mediaObject->metaData();
 
@@ -469,10 +473,13 @@ void EnginePhonon::slot_on_metadata_change()
       m_currentMediaItem->title = list.last();
     }
     
-#ifdef TEST_FLAG    
+    // No support in phonon for bitrate/samplerate/format meta data
+    
+#ifdef TEST_FLAG
     foreach(QString key, metaData.keys())
       Debug::debug() << "[EnginePhonon] -> on_metadata_change " << key << ":" << metaData[key];
 #endif
+
     emit mediaMetaDataChanged();
 }
 

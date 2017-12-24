@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -348,6 +348,8 @@ Q_ASSERT(  m_currentMediaItem);
 /* ---------------------------------------------------------------------------*/
 void EngineMpv::on_metadata_change()
 {
+    //Debug::debug() << "[EngineMpv] -> on_metadata_change";
+
     if(!m_currentMediaItem || m_currentMediaItem->type() != TYPE_STREAM )
       return;
 
@@ -363,9 +365,9 @@ void EngineMpv::on_metadata_change()
             {
                 QString s_key   =  node.u.list->keys[n];
                 QString s_value =  node.u.list->values[n].u.string;
-#ifdef TEST_FLAG                 
-                Debug::debug() << "[EngineMpv] -> on_metadata_change " << s_key << ":" << s_value;
-#endif                
+//#ifdef TEST_FLAG                 
+//                Debug::debug() << "[EngineMpv] -> on_metadata_change " << s_key << ":" << s_value;
+//#endif                
                 
                 if( s_key == "title")
                   title = s_value;
@@ -380,6 +382,7 @@ void EngineMpv::on_metadata_change()
             }
         }
      }           
+     
      
     /* Streams sometimes have the artist and title munged in nowplaying */
     if ( artist.isEmpty() && !nowPlaying.isEmpty() && nowPlaying.contains("-") )
@@ -402,17 +405,17 @@ void EngineMpv::on_metadata_change()
             m_currentMediaItem->extra["bitrate"] = bitrate;
     }
     
-    uint samplingrate;
-    mpv_get_property(m_mpv_core, "audio-samplerate", MPV_FORMAT_INT64, &samplingrate);
-
+    double samplingrate;
+    mpv_get_property(m_mpv_core, "audio-samplerate", MPV_FORMAT_DOUBLE, &samplingrate);
+ 
     if(samplingrate != 0)
-      m_currentMediaItem->extra["samplerate"] = samplingrate;
+       m_currentMediaItem->extra["samplerate"] = samplingrate;
     
     char *cformat = NULL;
     mpv_get_property(m_mpv_core, "audio-format", MPV_FORMAT_STRING, &cformat);
     m_currentMediaItem->extra["format"] = QString(cformat);
    
-    
+   
     m_currentMediaItem->title  = title;
     m_currentMediaItem->album  = album;
     m_currentMediaItem->artist = artist;

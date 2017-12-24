@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -104,9 +104,10 @@ EngineVlc::EngineVlc() : EngineBase("vlc")
     m_equalizer = 0;
 #if (LIBVLC_VERSION_INT >= LIBVLC_VERSION(2, 2, 0, 0))    
     m_equalizer = libvlc_audio_equalizer_new();
-    if( SETTINGS()->_enableEq ) {
-      addEqualizer();
-      loadEqualizerSettings();
+    if( SETTINGS()->_enableEq )
+    {
+        addEqualizer();
+        loadEqualizerSettings();
     }
 #endif
 
@@ -650,6 +651,7 @@ void EngineVlc::slot_on_metadata_change()
         m_currentMediaItem->extra["bitrate"] = track->i_bitrate/1000;
         m_currentMediaItem->extra["samplerate"] = track->audio->i_rate;
 #if (LIBVLC_VERSION_INT >= LIBVLC_VERSION(3, 0, 0, 0))
+        //Debug::debug() << "[EngineVlc] -> vlc lib > 3 get stream format";
         const char* codecDesc = libvlc_media_get_codec_description(track->i_type,track->i_codec);
         m_currentMediaItem->extra["format"] = QString(codecDesc);
 #endif
