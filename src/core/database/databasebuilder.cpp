@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -432,15 +432,16 @@ void DataBaseBuilder::insertTrack(const QString& filename)
     int id_year = DatabaseCmd::insertYear( track->year );
 
     /* ---------- ARTIST part in database ---------- */
-    bool isNewArtists = !(DatabaseCmd::isArtistExists(track->artist));
+    // Remark : disable fetch for new artist (fetch is done after database building)
+//  bool isNewArtists = !(DatabaseCmd::isArtistExists(track->artist));
     
     int id_artist = DatabaseCmd::insertArtist( track->artist );
 
-    if( isNewArtists && Database::instance()->param()._option_download_cover)
-    {
-        //fetchArtistImage( track );
-    }
-    
+//     if( isNewArtists && Database::instance()->param()._option_download_cover)
+//     {
+//         fetchArtistImage( track );
+//     }    
+   
     /* ---------- ALBUM part in database ---------- */
     bool isNewAlbum = !(DatabaseCmd::isAlbumExists(track->album, id_artist));
 
@@ -461,9 +462,6 @@ void DataBaseBuilder::insertTrack(const QString& filename)
         
         if( !ok && Database::instance()->param()._option_check_cover )
           ok = saveAlbumCoverFromDirectory( track );
-        
-//         if( !ok && Database::instance()->param()._option_download_cover)
-//           fetchAlbumImage( track );
     }
     
     /* ---------- TRACK part in database ---------- */
