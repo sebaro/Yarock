@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -125,7 +125,10 @@ void LocalScene::populateTopRatedAlbum(int YPos)
     //! loop over album MediaItem
     foreach(MEDIA::AlbumPtr album, albums)
     {
-      if(album->rating == 0.0 || char_entry == MAX_CHART_ENTRY) break;
+      Debug::debug() << "   [LocalScene] populateTopRatedAlbum ALBUM RATING" << album->rating;
+
+        
+      if(album->rating <= 0.0 || char_entry == MAX_CHART_ENTRY) break;
 
       if( !m_localTrackModel->isMediaMatch(album) ) continue;
 
