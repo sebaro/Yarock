@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -20,6 +20,8 @@
 #include "core/player/engine.h"
 #include "core/mediaitem/mediaitem.h"
 #include "models/local/local_track_model.h"
+
+#include "settings.h"
 #include "debug.h"
 
 #include <QDateTime>
@@ -41,17 +43,24 @@ HistoManager::HistoManager()
 {
     INSTANCE  = this;
 
-    //! set Info resolver
+    //! set player trigger
     m_player = Engine::instance();
-    connect(m_player, SIGNAL(mediaChanged()), this, SLOT(addEntry()));
-
     m_timer = new QTimer();
+    
+    connect(m_player, SIGNAL(mediaChanged()), this, SLOT(addEntry()));      
     connect(m_timer, SIGNAL(timeout()), this, SLOT(addToDatabase()));
 
     //! check database histo table
     checkHisto();
 }
 
+/* ---------------------------------------------------------------------------*/
+/* HistoManager::reloadSettings                                               */
+/* ---------------------------------------------------------------------------*/
+void HistoManager::reloadSettings()
+{
+    //Debug::debug() << "  [HistoManager] reloadSettings";
+}
 
 
 /* ---------------------------------------------------------------------------*/
@@ -99,33 +108,37 @@ void HistoManager::addToDatabase()
     //    add or update entry in history
     //---------------------------------------
     QSqlQuery q("", *Database::instance()->db());
-    q.prepare("SELECT `id`,`url` FROM `histo` WHERE `url`=:val;");
-    q.bindValue(":val", engine_url );
-    q.exec();
-
-    if ( !q.next() ) {
-      Debug::debug() << "      [Histo] add a new entry" << engine_url;
-
-      q.prepare("INSERT INTO `histo`(`url`,`name`,`date`) VALUES (:u,:n,:d);");
-      q.bindValue(":u", engine_url);
-      q.bindValue(":n", media_name);
-      q.bindValue(":d", now_date);
-      q.exec();
-
-      if(q.numRowsAffected() < 1)
-        Debug::warning() << "[Histo] error adding entry !! ";
-
-      QSqlQuery query("DELETE FROM `histo` WHERE `id` <= (SELECT MAX(`id`) FROM `histo`) - 2000;", *Database::instance()->db());
-    }
-    else
+    
+    if(SETTINGS()->_useHistory)
     {
-      Debug::debug() << "      [Histo] update an existing entry" << engine_url;
-      int histo_id = q.value(0).toString().toInt();
+        q.prepare("SELECT `id`,`url` FROM `histo` WHERE `url`=:val;");
+        q.bindValue(":val", engine_url );
+        q.exec();
 
-      q.prepare("UPDATE `histo` SET `date`=:d WHERE `id`=:id;");
-      q.bindValue(":d", now_date);
-      q.bindValue(":id", histo_id);
-      q.exec();
+        if ( !q.next() ) {
+            Debug::debug() << "      [Histo] add a new entry" << engine_url;
+
+            q.prepare("INSERT INTO `histo`(`url`,`name`,`date`) VALUES (:u,:n,:d);");
+            q.bindValue(":u", engine_url);
+            q.bindValue(":n", media_name);
+            q.bindValue(":d", now_date);
+            q.exec();
+
+            if(q.numRowsAffected() < 1)
+                Debug::warning() << "[Histo] error adding entry !! ";
+
+            QSqlQuery query("DELETE FROM `histo` WHERE `id` <= (SELECT MAX(`id`) FROM `histo`) - 2000;", *Database::instance()->db());
+        }
+        else
+        {
+            Debug::debug() << "      [Histo] update an existing entry" << engine_url;
+            int histo_id = q.value(0).toString().toInt();
+
+            q.prepare("UPDATE `histo` SET `date`=:d WHERE `id`=:id;");
+            q.bindValue(":d", now_date);
+            q.bindValue(":id", histo_id);
+            q.exec();
+        }
     }
 
     //---------------------------------------
