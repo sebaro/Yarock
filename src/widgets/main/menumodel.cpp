@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -21,6 +21,7 @@
 
 #include "global_actions.h"
 #include "debug.h"
+#include "iconmanager.h"
 
 #include <QDir>
 #include <QMap>
@@ -132,22 +133,22 @@ void MenuModel::populateMenu()
    /* -----------------------*/
    /* populate Root Item     */
    /* -----------------------*/
-   MenuItem* item1 = new MenuItem(tr("home"), QIcon(":/images/home-48x48.png"));
+   MenuItem* item1 = new MenuItem(tr("home"), IconManager::instance()->icon( "home"));
    rootItem->appendRow(item1);
-       
-   MenuItem* item2 = new MenuItem(tr("music browser"), QIcon(":/images/folder-music-48x48.png"));
+   
+   MenuItem* item2 = new MenuItem(tr("music browser"), IconManager::instance()->icon( "music"));
    rootItem->appendRow(item2);
 
-   MenuItem* item3 = new MenuItem(tr("playlist browser"), QIcon(":/images/media-playlist-48x48.png"));
+   MenuItem* item3 = new MenuItem(tr("playlist browser"), IconManager::instance()->icon( "playlist1"));
    rootItem->appendRow(item3);
 
-   MenuItem* item4 = new MenuItem(tr("radio browser"), QIcon(":/images/media-url-48x48.png"));
+   MenuItem* item4 = new MenuItem(tr("radio browser"), IconManager::instance()->icon( "globe"));
    rootItem->appendRow(item4);
 
-   MenuItem* item5 = new MenuItem(tr("computer"), QIcon(":/images/computer-48x48.png"));
+   MenuItem* item5 = new MenuItem(tr("computer"), IconManager::instance()->icon( "desktop"));
    rootItem->appendRow(item5);
    
-   MenuItem* item6 = new MenuItem(tr("settings"), QIcon(":/images/settings-48x48.png"));
+   MenuItem* item6 = new MenuItem(tr("settings"), IconManager::instance()->icon( "setting"));
    rootItem->appendRow(item6);
 
    m_settings_item = item6;
@@ -168,13 +169,14 @@ void MenuModel::populateMenu()
    /* -------------------------*/
    /* populate Collection Item */
    /* -------------------------*/      
-   MenuItem* item21 = new MenuItem(tr("artists"), QIcon(":/images/view-artist.png"), VIEW::ViewArtist);
+   
+   MenuItem* item21 = new MenuItem(tr("artists"), IconManager::instance()->icon( "artist"), VIEW::ViewArtist);
    item2->appendRow(item21);
 
    MenuItem* item22 = new MenuItem(tr("albums"), QIcon(":/images/album.png"), VIEW::ViewAlbum);
    item2->appendRow(item22);
    
-   MenuItem* item23 = new MenuItem(tr("tracks"), QIcon(":/images/track-48x48.png"), VIEW::ViewTrack);
+   MenuItem* item23 = new MenuItem(tr("tracks"), IconManager::instance()->icon( "track"), VIEW::ViewTrack);
    item2->appendRow(item23);
 
    MenuItem* item24 = new MenuItem(tr("genre"), QIcon(":/images/genre.png"), VIEW::ViewGenre);
@@ -188,8 +190,8 @@ void MenuModel::populateMenu()
 
    /* -------------------------*/
    /* populate Paylist Browser */
-   /* -------------------------*/    
-   MenuItem* item31 = new MenuItem(tr("playlists"), QIcon(":/images/media-playlist-48x48.png"), VIEW::ViewPlaylist);
+   /* -------------------------*/
+   MenuItem* item31 = new MenuItem(tr("playlists"), IconManager::instance()->icon( "playlist1"), VIEW::ViewPlaylist);
    item3->appendRow(item31);
 
    MenuItem* item32 = new MenuItem(tr("smart playlists"), QIcon(":/images/smart-playlist-48x48.png"), VIEW::ViewSmartPlaylist);
@@ -234,7 +236,7 @@ void MenuModel::populateMenu()
    /* -----------------------*/
    /* populate Settings Item */
    /* -----------------------*/   
-   MenuItem* item60 = new MenuItem(tr("settings"), QIcon(":/images/settings-48x48.png"), VIEW::ViewSettings);
+   MenuItem* item60 = new MenuItem(tr("settings"), IconManager::instance()->icon("setting"), VIEW::ViewSettings);
    item6->appendRow(item60);
 
    MenuItem* item61 = new MenuItem(tr("about"), QIcon(":/images/about-48x48.png"), VIEW::ViewAbout);
@@ -247,9 +249,15 @@ void MenuModel::populateMenu()
    MenuItem* item64 = new MenuItem( ACTIONS()->value(DATABASE_ADD), GlobalActionRole);
    item6->appendRow( item64 );
    
-   m_db_item = new MenuItem(tr("choose database"), QIcon() );
+   m_db_item = new MenuItem(tr("Choose database"), QIcon() );
    item6->appendRow( m_db_item );
+   
+   MenuItem* item65 = new MenuItem( ACTIONS()->value(APP_SHOW_PLAYQUEUE), GlobalActionRole);
+   item6->appendRow( item65 );
 
+   MenuItem* item66 = new MenuItem( ACTIONS()->value(APP_MODE_COMPACT), GlobalActionRole);
+   item6->appendRow( item66 );
+   
    populateChooseDatabase();
 }
 
@@ -330,7 +338,7 @@ void MenuModel::slot_dbNameClicked()
  
      Database::instance()->change_database( action->text() );
      
-     //Debug::debug() << "      [MainToolButton] dbNameClicked = " << action->text();
+     //Debug::debug() << "      [MenuModel] dbNameClicked = " << action->text();
      
      emit dbNameChanged();
 }

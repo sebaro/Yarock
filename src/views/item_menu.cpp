@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -31,6 +31,7 @@
 #include "mediaitem.h"
 #include "global_actions.h"
 #include "settings.h"
+#include "iconmanager.h"
 
 #include "debug.h"
 
@@ -63,33 +64,33 @@ GraphicsItemMenu::GraphicsItemMenu(QWidget *parent) : QMenu(parent)
     
    
     /* menu actions */
-    m_map_actions.insert(ALBUM_PLAY,          new QAction(QIcon(":/images/media-play.png"), tr("Play"), 0));
-    m_map_actions.insert(ALBUM_QUEUE_END,     new QAction(QIcon(":/images/media-playlist-48x48.png"), tr("Add to play queue"), 0));
+    m_map_actions.insert(ALBUM_PLAY,          new QAction(IconManager::instance()->icon("media-play"), tr("Play"), 0));
+    m_map_actions.insert(ALBUM_QUEUE_END,     new QAction(IconManager::instance()->icon("playlist1"), tr("Add to play queue"), 0));
     
     m_map_actions.insert(UPDATE_FAVORITE,     new QAction(QIcon(":/images/favorites-48x48.png"), "", 0));
     m_map_actions.insert(EDIT,                new QAction(QIcon(":/images/edit-48x48.png"), tr("Edit"), 0));
 
-    m_map_actions.insert(GENRE_PLAY,          new QAction(QIcon(":/images/media-play.png"), tr("Play"), 0));
-    m_map_actions.insert(GENRE_QUEUE_END,     new QAction(QIcon(":/images/media-playlist-48x48.png"), tr("Add to play queue"), 0));
+    m_map_actions.insert(GENRE_PLAY,          new QAction(IconManager::instance()->icon("media-play"), tr("Play"), 0));
+    m_map_actions.insert(GENRE_QUEUE_END,     new QAction(IconManager::instance()->icon("playlist1"), tr("Add to play queue"), 0));
 
-    m_map_actions.insert(ARTIST_PLAY,         new QAction(QIcon(":/images/media-play.png"), tr("Play"), 0));
-    m_map_actions.insert(ARTIST_QUEUE_END,    new QAction(QIcon(":/images/media-playlist-48x48.png"), tr("Add to play queue"), 0));
+    m_map_actions.insert(ARTIST_PLAY,         new QAction(IconManager::instance()->icon("media-play"), tr("Play"), 0));
+    m_map_actions.insert(ARTIST_QUEUE_END,    new QAction(IconManager::instance()->icon("playlist1"), tr("Add to play queue"), 0));
 
-    m_map_actions.insert(PLAYLIST_PLAY,       new QAction(QIcon(":/images/media-play.png"), tr("Play"), 0));
-    m_map_actions.insert(PLAYLIST_QUEUE_END,  new QAction(QIcon(":/images/media-playlist-48x48.png"), tr("Add to play queue"), 0));
+    m_map_actions.insert(PLAYLIST_PLAY,       new QAction(IconManager::instance()->icon("media-play"), tr("Play"), 0));
+    m_map_actions.insert(PLAYLIST_QUEUE_END,  new QAction(IconManager::instance()->icon("playlist1"), tr("Add to play queue"), 0));
     m_map_actions.insert(PLAYLIST_REMOVE,     new QAction(QIcon::fromTheme("edit-delete"),tr("&Remove playlist from disk"), 0));
 
-    m_map_actions.insert(TRACK_PLAY,          new QAction(QIcon(":/images/media-play.png"), tr("Play"), 0));
-    m_map_actions.insert(TRACK_QUEUE_END,     new QAction(QIcon(":/images/media-playlist-48x48.png"), tr("Add to play queue"), 0));
+    m_map_actions.insert(TRACK_PLAY,          new QAction(IconManager::instance()->icon("media-play"), tr("Play"), 0));
+    m_map_actions.insert(TRACK_QUEUE_END,     new QAction(IconManager::instance()->icon("playlist1"), tr("Add to play queue"), 0));
 
-    m_map_actions.insert(STREAM_PLAY,          new QAction(QIcon(":/images/media-play.png"), tr("Play"), 0));
+    m_map_actions.insert(STREAM_PLAY,          new QAction(IconManager::instance()->icon("media-play"), tr("Play"), 0));
     m_map_actions.insert(STREAM_EDIT,          new QAction(QIcon(":/images/edit-48x48.png"), tr("Edit"), 0));
-    m_map_actions.insert(STREAM_QUEUE_END,     new QAction(QIcon(":/images/media-playlist-48x48.png"), tr("Add to play queue"), 0));
+    m_map_actions.insert(STREAM_QUEUE_END,     new QAction(IconManager::instance()->icon("playlist1"), tr("Add to play queue"), 0));
     m_map_actions.insert(STREAM_FAVORITE,      new QAction(QIcon(":/images/favorites-48x48.png"), tr("Add to favorites"), 0));
     m_map_actions.insert(STREAM_WEBSITE,       new QAction(QIcon(":/images/media-url-48x48.png"), tr("Website"), 0));
     
-    m_map_actions.insert(SELECTION_PLAY,       new QAction(QIcon(":/images/media-play.png"), tr("Play"), 0));
-    m_map_actions.insert(SELECTION_QUEUE_END,  new QAction(QIcon(":/images/media-playlist-48x48.png"), tr("Add to play queue"), 0));
+    m_map_actions.insert(SELECTION_PLAY,       new QAction(IconManager::instance()->icon("media-play"), tr("Play"), 0));
+    m_map_actions.insert(SELECTION_QUEUE_END,  new QAction(IconManager::instance()->icon("playlist1"), tr("Add to play queue"), 0));
     m_map_actions.insert(SELECTION_TRACK_EDIT, new QAction(QIcon(":/images/edit-48x48.png"), tr("Edit"), 0));
 
 
@@ -240,7 +241,6 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
     
       foreach(MEDIA::TrackPtr track, tracks) 
       {
-          //TrackGraphicItem_v2 *track_item = new TrackGraphicItem_v2();
           TrackGraphicItem_v5 *track_item = new TrackGraphicItem_v5();
           
           track_item->setFlag(QGraphicsItem::ItemIsSelectable, false);
@@ -347,7 +347,7 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
     
       foreach(MEDIA::TrackPtr track, tracks) 
       {
-          TrackGraphicItem_v2 *track_item = new TrackGraphicItem_v2();
+          TrackGraphicItem_v5 *track_item = new TrackGraphicItem_v5();
           track_item->setFlag(QGraphicsItem::ItemIsSelectable, false);
 
           track_item->media = track;

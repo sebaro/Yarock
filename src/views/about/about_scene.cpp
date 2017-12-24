@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -20,6 +20,7 @@
 #include "views/item_common.h"
 #include "views/context/context_item.h"
 #include "engine.h"
+#include "iconmanager.h"
 #include "debug.h"
 
 // Qt
@@ -169,7 +170,7 @@ void AboutScene::populateScene()
     Ypos += text1->height() + 10;
                    
     /* AUTHOR */    
-    QGraphicsPixmapItem* pix2 = this->addPixmap( QPixmap(":/images/view-artist_18x18.png") );
+    QGraphicsPixmapItem* pix2 = this->addPixmap( IconManager::instance()->icon( "artist").pixmap(QSize(18,18)));
     pix2->setPos( 20, Ypos+5);
                 
     TextGraphicItem *text2 = new TextGraphicItem();
