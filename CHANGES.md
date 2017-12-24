@@ -1,8 +1,29 @@
-
 Yarock changes
+
+
+#### 1.3.0  - PUBLIC RELEASE
 ---------------------------------------------------------------------------------
+  - New    : New favorite stream editor with extended option
+  - New    : Improve favorites streams management
+  - New    : Improve stream search (TuneIn, Dirble)
+  - New    : Add bitrate info for radio stream view (TuneIn, Dirble)
+  - New    : Add option to enable/disable playing history
+  - New    : Better icon color consistency for light or dark system theme
+  - New    : Save/restore bottom bar state (expanded/collapsed)
+  - BugFix : Fix favorite stream loss
+  - BugFix : Fix playcount update if history not enabled
+  - BugFix : Fix auto rating calculation
+  - BugFix : Fix cover size management for album edition
+  - BugFix : Fix phonon engine crash condition on stopping player (with gstreamer backend)
+  - BugFix : Fix mpv engine player crash
+  - Changes: Improve playing item visibility
+  - Changes: Restore previous playing cover for radio stream
+  - Changes: Minor code update for deprecated Qt5 
+  - Changes: Minor ui changes & improvments
+
 
 #### 1.2.0  - PUBLIC RELEASE - october 2017
+---------------------------------------------------------------------------------
   - New    : Configurable custom cover size [#1627841]
   - New    : Redesign player tool bar with expanded tool bar mode
   - New    : Remove Echonest web service no longer available
