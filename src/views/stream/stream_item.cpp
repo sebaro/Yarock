@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -65,13 +65,16 @@ StreamGraphicItem::StreamGraphicItem()
    opt.displayAlignment    = Qt::AlignLeft|Qt::AlignVCenter;
 
    opt.locale.setNumberOptions(QLocale::OmitGroupSeparator);
-   opt.state |= QStyle::State_Active;
+   opt.state &= ~ QStyle::State_Active;
    opt.state |= QStyle::State_Enabled;
    opt.state &= ~QStyle::State_Selected;
+    
     
    m_coverSize = SETTINGS()->_coverSize;
    
    opt.rect = boundingRect().toRect();
+   opt.palette.setColor(QPalette::Active, QPalette::Highlight, SETTINGS()->_baseColor);
+   opt.palette.setColor(QPalette::Inactive, QPalette::Highlight, QApplication::palette().color(QPalette::Normal,QPalette::Highlight));   
 }
 
 QRectF StreamGraphicItem::boundingRect() const
@@ -88,20 +91,19 @@ Q_UNUSED(option)
    
    
     /* Get color for state */
-    QColor c = QApplication::palette().color(QPalette::Normal,QPalette::Highlight);
-
-    if(isSelected())
+    if(media->isPlaying)
     {
-      opt.state |= QStyle::State_Selected;
-      opt.palette.setColor(QPalette::Normal, QPalette::Highlight, c);
-    }
-    else if (opt.state & QStyle::State_MouseOver) {
-      opt.state |= QStyle::State_Selected;
-      c.setAlpha(100);
-      opt.palette.setColor(QPalette::Normal, QPalette::Highlight, c);
-    }
-    else {
-      opt.state &= ~QStyle::State_Selected;
+        opt.state |= QStyle::State_Selected;
+        opt.state |= QStyle::State_Active;
+    }    
+    else 
+    {
+        opt.state &= ~QStyle::State_Active;
+        opt.state &= ~QStyle::State_Selected;
+        if(isSelected())
+        {
+            opt.state |= QStyle::State_Selected;
+        }
     }
 
     /* Draw frame for State_HasFocus item */
@@ -119,12 +121,18 @@ Q_UNUSED(option)
     painter->drawText(QRect (10,m_coverSize,(m_coverSize*1.25)-20, 25), Qt::AlignTop | Qt::AlignHCenter,elided_name );
     
     
-    /* paint playing or favorite attibute */
-    if(media->isPlaying)
-      UTIL::drawPlayingIcon(painter,18, 0, QPoint(2,8));
+    /* paint bitrate */
+    painter->setFont( UTIL::alternateFont() );
+    painter->setPen(opt.palette.color ( QPalette::Disabled, isSelected() ? QPalette::HighlightedText : QPalette::WindowText));
+    painter->drawText(QRect(0, m_coverSize +3 + opt.fontMetrics.height() + 2, m_coverSize*1.25, 25),  Qt::AlignTop | Qt::AlignHCenter, "#" + media->extra["bitrate"].toString());
 
-    else if(media->isBroken)
-      painter->drawPixmap(70, 22, QPixmap(":/images/favorites-18x18.png"));
+    
+    /* paint playing or favorite attibute */
+    if(media->isBroken)
+        painter->drawPixmap(2, 1, QPixmap(":/images/media-broken-18x18.png"));
+
+    if(media->isFavorite)
+        painter->drawPixmap(0, 32, QPixmap(":/images/favorites-18x18.png"));
 }
 
 void StreamGraphicItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
