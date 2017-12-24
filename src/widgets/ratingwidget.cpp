@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -21,7 +21,7 @@
 //#include "debug.h"
 
 #include <QMouseEvent>
-#include <QStyleOptionFrameV3>
+#include <QStyleOptionFrame>
 #include <QStylePainter>
 
 
@@ -173,7 +173,11 @@ Q_UNUSED(e)
     // Draw the background
     if(draw_frame_)
     {
+      #if QT_VERSION >= 0x050000
+      QStyleOptionFrame opt;
+      #else
       QStyleOptionFrameV3 opt;
+      #endif        
       opt.initFrom(this);
       opt.state |= QStyle::State_Sunken;
       opt.frameShape = QFrame::StyledPanel;
