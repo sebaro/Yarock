@@ -35,6 +35,7 @@
 #include "core/database/database_cmd.h"
 #include "covers/covercache.h"
 #include "core/player/engine.h"
+#include "core/database/database.h"
 
 #include "settings.h"
 #include "utilities.h"
@@ -553,24 +554,27 @@ void PlayerToolBarFull::setAudioProperties()
 void PlayerToolBarFull::slot_get_artist_image()
 {
     //Debug::debug() << "   [PlayerToolBarFull] slot_get_artist_image m_track" << m_track;
-
-    if(m_track)
+   
+    /* track from collection */
+    if(Database::instance()->param()._option_artist_image == true)
     {
-      /* track from collection */
-      if( m_track->id != -1 && m_track->parent() && m_track->parent()->type() == TYPE_ALBUM)
+      if(m_track && m_track->id != -1 && m_track->parent() && m_track->parent()->type() == TYPE_ALBUM)
       {
           if( MEDIA::MediaPtr artist = m_track->parent()->parent())
           {
                 QPixmap pix = CoverCache::instance()->image( artist );
 
                 ui_artist_image->setPixmap( pix.scaledToHeight(128, Qt::SmoothTransformation) );
+
+                return;
           }
       }
-      else
-      {
+    }
+
+    if( Database::instance()->param()._option_artist_image == false )
+    {
           if( !Engine::instance()->playingTrack()->artist.isEmpty() )
             slot_download_image();
-      }
     }
 }
 
@@ -601,7 +605,7 @@ void PlayerToolBarFull::slot_download_image()
 /* ---------------------------------------------------------------------------*/
 void PlayerToolBarFull::slot_download_artists_tags()
 {
-    //Debug::debug() << "   [PlayerToolBarFull] slot_download_artists_tags";
+    Debug::debug() << "   [PlayerToolBarFull] slot_download_artists_tags";
     INFO::InfoStringHash hash;
 
     hash["artist"]                  = Engine::instance()->playingTrack()->artist;
