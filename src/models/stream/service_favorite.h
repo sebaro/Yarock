@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -43,8 +43,8 @@ public:
     virtual QList<MEDIA::TrackPtr> streams();
     virtual QList<MEDIA::LinkPtr> links();
     
-    void saveToDatabase();
-    void updateItem(MEDIA::TrackPtr stream);
+    void addOrRemovetoFavorite(MEDIA::TrackPtr stream);
+    void updateStreamFavorite(MEDIA::TrackPtr stream);
     
 private:
     bool findStream(MEDIA::TrackPtr stream);

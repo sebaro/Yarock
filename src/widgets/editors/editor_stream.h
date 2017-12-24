@@ -15,46 +15,72 @@
 *  this program.  If not, see <http://www.gnu.org/licenses/>.                           *
 *****************************************************************************************/
 
-#ifndef _DATABASE_CMD_H_
-#define _DATABASE_CMD_H_
+#ifndef _EDITOR_STREAM_H_
+#define _EDITOR_STREAM_H_
 
-#include "mediaitem.h"
+#include "core/mediaitem/mediaitem.h"
+#include "core/mediaitem/mediamimedata.h"
+
+#include "widgets/editors/editor_common.h"
+
+#include <QWidget>
+#include <QObject>
+#include <QLabel>
+#include <QDialogButtonBox>
+
+class FavoriteStreams;
+class QGraphicsScene;
 
 /*
 ********************************************************************************
 *                                                                              *
-*    Class DatabaseCmd                                                         *
+*    Class EditorStream                                                        *
 *                                                                              *
 ********************************************************************************
 */
-class DatabaseCmd 
+class EditorStream : public QWidget
 {
+Q_OBJECT
+
 public:
-  DatabaseCmd();
-  
-  static int  insertGenre(const QString & genre);
-  static int  insertYear(int year);
-  
-  static bool isArtistExists(const QString & artist);
-  static int  insertArtist(const QString & artist);
-  static int  updateArtist(const QString & artist, bool favorite, int playcount, float rating);
-  
-  static bool isAlbumExists(const QString & album,int artist_id);
-  static int  insertAlbum(const QString & album, int artist_id,int year,int disc);
-  static int  updateAlbum(const QString & album, int artist_id,int year, int disc, bool favorite, int playcount, float rating);
-  static void clean();
-  
-  static void updateFavorite(MEDIA::MediaPtr media, bool isFavorite);
-  static void addStreamToFavorite(MEDIA::TrackPtr stream);
-  static void removeStreamToFavorite(MEDIA::TrackPtr stream);
-  static void updateStreamFavorite(MEDIA::TrackPtr stream);
-  
-  static void rateMediaItems(QList<MEDIA::MediaPtr> list);
-  
+  EditorStream(MEDIA::TrackPtr stream,FavoriteStreams* fvmodel,QGraphicsScene* scene);
+  ~EditorStream();
+
 private:
-  static void rateTrack(MEDIA::TrackPtr track);
-  static void rateArtist(MEDIA::ArtistPtr artist);
-  static void rateAlbum(MEDIA::AlbumPtr album);
+  void create_ui();
+  void do_changes();
+  void save_new_image();
+
+private slots:
+  void slot_on_buttonbox_clicked(QAbstractButton * button);
+
+  void slot_load_image_from_file();
+  void slot_image_remove();
+    
+private:
+  MEDIA::TrackPtr        m_stream;
+  FavoriteStreams       *m_fvs_model;
+  QGraphicsScene        *m_scene;
+
+  bool                   m_isChanged;
+  bool                   m_isImageChange;
+
+  QImage                 m_new_image;  
+
+  QLabel                *ui_headertitle;
+  QLabel                *ui_image;
+  EdLineEdit            *ui_edit_name;
+  EdLineEdit            *ui_edit_url;
+  EdLineEdit            *ui_edit_genre;
+  EdLineEdit            *ui_edit_website;
+  EdLineEdit            *ui_edit_bitrate;
+  EdLineEdit            *ui_edit_samplerate;
+  EdLineEdit            *ui_edit_format;
+  
+  QDialogButtonBox      *ui_buttonBox;
+    
+signals:
+  void close();
 };
 
-#endif //_DATABASE_CMD_H_
+#endif // _EDITOR_STREAM_H_

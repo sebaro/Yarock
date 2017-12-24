@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -23,6 +23,9 @@
 #include <QApplication>
 #include <QLabel>
 #include <QStyle>
+
+
+
 /*
 ********************************************************************************
 *                                                                              *
@@ -35,6 +38,7 @@ DialogBase::DialogBase(QWidget *parent,const QString& title) : QDialog(parent)
     QPalette palette = QApplication::palette();
     palette.setColor(QPalette::Background, palette.color(QPalette::Base));
     this->setPalette(palette);
+    this->setAutoFillBackground(true);
     
     this->setWindowFlags( Qt::Dialog | Qt::FramelessWindowHint );
     setAttribute(Qt::WA_ShowModal, true);
@@ -65,9 +69,9 @@ void DialogBase::setContentLayout(QLayout* contentLayout, bool isSpacer)
     fl->setContentsMargins(0, 0, 0, 0);
     
     QFrame* frame = new QFrame();
-    frame->setFrameShape(QFrame::Box);
-    frame->setObjectName("mainframe");
-    frame->setStyleSheet(QString("#mainframe {border: 1px ridge %1;}").arg(SETTINGS()->_baseColor.name()));
+//     frame->setFrameShape(QFrame::Box);
+//     frame->setObjectName("mainframe");
+//     frame->setStyleSheet(QString("#mainframe {border: 1px ridge %1;}").arg(SETTINGS()->_baseColor.name()));
 
     fl->addWidget(frame);
   
@@ -93,9 +97,9 @@ void DialogBase::setContentWidget(QWidget* contentWidget, bool isSpacer)
     fl->setContentsMargins(0, 0, 0, 0);
     
     QFrame* frame = new QFrame();
-    frame->setFrameShape(QFrame::Box);
-    frame->setObjectName("mainframe");
-    frame->setStyleSheet(QString("#mainframe {border: 1px ridge %1;}").arg(SETTINGS()->_baseColor.name()));
+//     frame->setFrameShape(QFrame::Box);
+//     frame->setObjectName("mainframe");
+//     frame->setStyleSheet(QString("#mainframe {border: 1px ridge %1;}").arg(SETTINGS()->_baseColor.name()));
 
     fl->addWidget(frame);
   

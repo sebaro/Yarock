@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -30,7 +30,7 @@
 #include <QMap>
 #include <QSettings>
 
-#define CST_DATABASE_REV  21
+#define CST_DATABASE_REV  22
 
 
 
@@ -241,7 +241,10 @@ void Database::create()
                  "    `name` TEXT NOT NULL,"                                \
                  "    `genre` TEXT,"                                        \
                  "    `website` TEXT,"                                      \
-                 "    `provider` TEXT);");
+                 "    `provider` TEXT,"                                     \
+                 "    `bitrate` TEXT,"                                      \
+                 "    `samplerate` TEXT,"                                   \
+                 "    `format` TEXT);");
 
     
     //! Smart Playlist

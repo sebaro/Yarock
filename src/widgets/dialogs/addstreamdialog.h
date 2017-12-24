@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -19,9 +19,10 @@
 #define _ADDSTREAM_DIALOG_H_
 
 #include "dialog_base.h"
+#include "core/mediaitem/mediaitem.h"
+#include "widgets/editors/editor_common.h"
 
-// #include <QDialog>
-// #include <QWidget>
+
 #include <QLineEdit>
 
 /*
@@ -31,28 +32,29 @@
 *                                                                              *
 ********************************************************************************
 */
-//class AddStreamDialog : public QDialog
 class AddStreamDialog : public DialogBase
 {
 Q_OBJECT
   public:
-    AddStreamDialog(QWidget *parent = 0,bool active_category=false);
-    const QString url() const;
-    const QString name() const;
-    const QString category() const;
-
-    void setUrl(const QString& url);
-    void setName(const QString& name);
-    void setCategory(const QString& categorie);
+    AddStreamDialog(MEDIA::TrackPtr stream, QWidget *parent = 0);
+    
+    MEDIA::TrackPtr stream() { return m_stream;}
 
   private slots:
     void on_buttonBox_rejected();
     void on_buttonBox_accepted();
 
   private:
-     QLineEdit         *ui_edit_url;
-     QLineEdit         *ui_edit_name;
-     QLineEdit         *ui_edit_category;
+    MEDIA::TrackPtr       m_stream;
+      
+    // TODO add image support     QLabel                *ui_image;
+    EdLineEdit            *ui_edit_name;
+    EdLineEdit            *ui_edit_url;
+    EdLineEdit            *ui_edit_website;
+    EdLineEdit            *ui_edit_genre;
+    EdLineEdit            *ui_edit_bitrate;
+    EdLineEdit            *ui_edit_samplerate;
+    EdLineEdit            *ui_edit_format;
 };
 
 #endif // _ADDSTREAM_DIALOG_H_

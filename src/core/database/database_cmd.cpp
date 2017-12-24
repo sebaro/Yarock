@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -302,6 +302,8 @@ void DatabaseCmd::updateFavorite(MEDIA::MediaPtr media, bool isFavorite)
 /* ---------------------------------------------------------------------------*/
 void DatabaseCmd::addStreamToFavorite(MEDIA::TrackPtr stream)
 {
+    Debug::debug() << "- DatabaseCmd -> addStreamToFavorite";
+    
     QSqlQuery q("",*Database::instance()->db());
     q.prepare("SELECT `id` FROM `favorite_stream` WHERE `url`=? AND `name`=?;");
     q.addBindValue( stream->url );
@@ -314,14 +316,68 @@ void DatabaseCmd::addStreamToFavorite(MEDIA::TrackPtr stream)
         if( stream->genre.isEmpty() )
             stream->genre = "Unkown";
             
-        q.prepare("INSERT INTO `favorite_stream`(`url`,`name`,`genre`,`website`,`provider`) VALUES(?,?,?,?,?);");
+        q.prepare("INSERT INTO `favorite_stream`(`url`,`name`,`genre`,`website`,`provider`,`bitrate`,`samplerate`,`format`) VALUES(?,?,?,?,?,?,?,?);");
         
         q.addBindValue( stream->url );
         q.addBindValue( stream->extra["station"].toString() );
         q.addBindValue( stream->genre );
         q.addBindValue( stream->extra["website"].toString() );
         q.addBindValue( stream->extra["provider"].toString() );
+        q.addBindValue( stream->extra["bitrate"].toString() );
+        q.addBindValue( stream->extra["samplerate"].toString() );
+        q.addBindValue( stream->extra["format"].toString() );
         
+        Debug::debug() << "exec " << q.exec();
+    }
+}
+
+/* ---------------------------------------------------------------------------*/
+/* DatabaseCmd::removeStreamToFavorite                                        */
+/* ---------------------------------------------------------------------------*/
+void DatabaseCmd::removeStreamToFavorite(MEDIA::TrackPtr stream)
+{
+    Debug::debug() << "- DatabaseCmd -> removeStreamToFavorite";
+    
+    QSqlQuery q("",*Database::instance()->db());
+    q.prepare("DELETE FROM `favorite_stream` WHERE `id` IN (SELECT `id` FROM `favorite_stream` WHERE `url`=? AND `name`=?);");
+    q.addBindValue( stream->url );
+    q.addBindValue( stream->extra["station"].toString() );
+    
+    Debug::debug() << "exec " << q.exec();
+}
+
+/* ---------------------------------------------------------------------------*/
+/* DatabaseCmd::updateStreamFavorite                                          */
+/* ---------------------------------------------------------------------------*/
+void DatabaseCmd::updateStreamFavorite(MEDIA::TrackPtr stream)
+{
+    Debug::debug() << "- DatabaseCmd -> updateStreamFavorite";
+    
+    QSqlQuery q("",*Database::instance()->db());
+    q.prepare("SELECT `id` FROM `favorite_stream` WHERE `id`=?;");
+    q.addBindValue( stream->id );
+    
+    q.exec();
+
+    if ( q.next() )
+    {
+        int bdid = q.value(0).toInt();
+        Debug::debug() << "- DatabaseCmd -> updateStreamFavorite id: " << bdid;
+        
+        if( stream->genre.isEmpty() )
+            stream->genre = "Unkown";
+            
+        q.prepare("UPDATE `favorite_stream` SET `url`=?,`name`=?,`genre`=?,`website`=?,`provider`=?,`bitrate`=?,`samplerate`=?,`format`=? WHERE `id`=?;");
+        
+        q.addBindValue( stream->url );
+        q.addBindValue( stream->extra["station"].toString() );
+        q.addBindValue( stream->genre );
+        q.addBindValue( stream->extra["website"].toString() );
+        q.addBindValue( stream->extra["provider"].toString() );
+        q.addBindValue( stream->extra["bitrate"].toString() );
+        q.addBindValue( stream->extra["samplerate"].toString() );
+        q.addBindValue( stream->extra["format"].toString() );
+        q.addBindValue( bdid );
         Debug::debug() << "exec " << q.exec();
     }
 }

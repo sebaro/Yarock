@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -17,6 +17,7 @@
 
 #include "models/stream/service_favorite.h"
 #include "core/database/database.h"
+#include "core/database/database_cmd.h"
 #include "threadmanager.h"
 
 #include "utilities.h"
@@ -36,7 +37,7 @@ FavoriteStreams::FavoriteStreams() : Service(tr("Favorite streams"), SERVICE::LO
 {
     /* root link */
     m_root_link = MEDIA::LinkPtr(new MEDIA::Link());
-    m_root_link->name  = QString(tr("All"));
+    m_root_link->name  = QString(tr("Favorite"));
     m_root_link->state = int (SERVICE::NO_DATA);
    
     m_active_link = m_root_link;
@@ -58,26 +59,26 @@ void FavoriteStreams::slot_dbBuilder_stateChange()
     reload();
 }
 
-void FavoriteStreams::updateItem(MEDIA::TrackPtr stream)
+
+void FavoriteStreams::updateStreamFavorite(MEDIA::TrackPtr stream)
 {
-    Debug::debug() << "    [FavoriteStreams] updateItem";
+    //Debug::debug() << "    [FavoriteStreams] updateStreamFavorite " << stream->id;
+    DatabaseCmd::updateStreamFavorite(stream);
+}
+
+void FavoriteStreams::addOrRemovetoFavorite(MEDIA::TrackPtr stream)
+{
+    Debug::debug() << "    [FavoriteStreams] addOrRemovetoFavorite";
   
     if(stream->isFavorite)
     {
-      /* remove it from favorite */ 
-      foreach(MEDIA::TrackPtr _stream, m_streams) {
-        if(_stream == stream) {
-          m_streams.removeOne(stream);
-          stream->isFavorite = false;
-          break;
-        }
-      }
+        DatabaseCmd::removeStreamToFavorite(stream);
+        stream->isFavorite = false;
     }
     else
     {
-      /* add it to favorite */  
-      m_streams << stream;
-      stream->isFavorite = true;
+        DatabaseCmd::addStreamToFavorite(stream);
+        stream->isFavorite = true;
     }
 }
 
@@ -105,7 +106,7 @@ QList<MEDIA::LinkPtr> FavoriteStreams::links()
 
         p_link = p_link->parent();
     }
-    
+
     return links;
 }
 
@@ -143,7 +144,7 @@ void FavoriteStreams::reload()
     
     /* root link */
     m_root_link = MEDIA::LinkPtr(new MEDIA::Link());
-    m_root_link->name  = QString(tr("All"));
+    m_root_link->name  = QString(tr("Favorite"));
     m_root_link->state = int (SERVICE::NO_DATA);
    
     m_active_link = m_root_link;
@@ -178,34 +179,39 @@ void FavoriteStreams::load()
 
     MEDIA::LinkPtr currentLink = MEDIA::LinkPtr(0);
 
-    QSqlQuery query("SELECT id,url,name,genre,provider FROM favorite_stream ORDER BY genre COLLATE NOCASE ASC",*Database::instance()->db());
+    QSqlQuery query("SELECT id,url,name,genre,website,provider,bitrate,samplerate,format FROM favorite_stream ORDER BY genre COLLATE NOCASE ASC",*Database::instance()->db());
 
     while ( query.next() )
     {
         /* new genre link */
         if( !currentLink || currentLink->name != query.value(3).toString() )
         {
-            Debug::debug() << "new Link";
+            //Debug::debug() << "new Link";
             currentLink         = MEDIA::LinkPtr::staticCast( m_root_link->addChildren(TYPE_LINK) );
             currentLink->setType(TYPE_LINK);
             currentLink->name   = query.value(3).toString();
             currentLink->state  = int(SERVICE::DATA_OK);
-            currentLink->setParent(m_root_link);  
+            currentLink->setParent(m_root_link);
         }
 
 
         /* new stream */
         MEDIA::TrackPtr stream = MEDIA::TrackPtr(new MEDIA::Track());
         stream->setType(TYPE_STREAM);
-        stream->id               = query.value(0).toInt();
-        stream->url              = query.value(1).toString();
-        stream->extra["station"] = query.value(2).toString();
-        stream->genre            = query.value(3).toString();
-        stream->isFavorite       = false;
-        stream->isPlaying        = false;
-        stream->isBroken         = false;
-        stream->isPlayed         = false;
-        stream->isStopAfter      = false;
+        stream->id                  = query.value(0).toInt();
+        stream->url                 = query.value(1).toString();
+        stream->extra["station"]    = query.value(2).toString();
+        stream->genre               = query.value(3).toString();
+        stream->extra["website"]    = query.value(4).toString();
+        stream->extra["provider"]   = query.value(5).toString();
+        stream->extra["bitrate"]    = query.value(6).toString();
+        stream->extra["samplerate"] = query.value(7).toString();
+        stream->extra["format"]     = query.value(8).toString();
+        stream->isFavorite          = true;
+        stream->isPlaying           = false;
+        stream->isBroken            = false;
+        stream->isPlayed            = false;
+        stream->isStopAfter         = false;
         
         currentLink->insertChildren( stream );
         stream->setParent( currentLink );
@@ -233,36 +239,6 @@ bool FavoriteStreams::findStream(MEDIA::TrackPtr stream)
       }
       
     return false;
-}
-
-
-void FavoriteStreams::saveToDatabase()
-{
-    Debug::debug() << "    [FavoriteStreams] saveToDatabase";
- 
-    /*-----------------------------------------------------------*/
-    /* Get connection                                            */
-    /* ----------------------------------------------------------*/
-    if (!Database::instance()->open()) {
-        Debug::warning() << "  [FavoriteStreams] db connect failed";
-        return;
-    }
-    
-    QSqlQuery query("DELETE FROM `favorite_stream`;", *Database::instance()->db() );
-    //query.exec();
-
-    foreach(MEDIA::TrackPtr stream, m_streams) 
-    {
-      query.prepare("INSERT INTO `favorite_stream`(`url`,`name`,`genre`,`website`,`provider`) VALUES(?,?,?,?,?);");
-
-      query.addBindValue( stream->url );
-      query.addBindValue( stream->extra["station"].toString() );
-      query.addBindValue( stream->genre );
-      query.addBindValue( stream->extra["website"].toString() );
-      query.addBindValue( stream->extra["provider"].toString() );
-      
-      Debug::debug() << "exec " << query.exec();
-    }
 }
 
 

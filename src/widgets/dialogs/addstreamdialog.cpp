@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -24,6 +24,7 @@
 #include <QLabel>
 #include <QApplication>
 
+#include "widgets/editors/editor_stream.h"
 
 /*
 ********************************************************************************
@@ -32,79 +33,52 @@
 *                                                                              *
 ********************************************************************************
 */
-AddStreamDialog::AddStreamDialog(QWidget *parent,bool active_category) : DialogBase(parent, tr("Add Stream"))
+AddStreamDialog::AddStreamDialog(MEDIA::TrackPtr stream,QWidget *parent) : DialogBase(parent, tr("Add Stream"))
 {
+    // init 
+    m_stream = stream;
+    
     //create ui
-    this->setFixedSize(480,160);
+    this->setMinimumWidth(480);
 
-    ui_edit_url   = new QLineEdit(this);
-    ui_edit_url->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
+    ui_edit_name       = new EdLineEdit();
+    ui_edit_url        = new EdLineEdit();
+    ui_edit_genre      = new EdLineEdit();
+    ui_edit_website    = new EdLineEdit();
+    ui_edit_bitrate    = new EdLineEdit();
+    ui_edit_samplerate = new EdLineEdit();
+    ui_edit_format     = new EdLineEdit();
+
     ui_edit_url->setText("http://");
-    
-    ui_edit_name  = new QLineEdit(this);
-    ui_edit_name->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
-
+          
+ 
     QGridLayout *ui_grid_layout = new QGridLayout();
+    ui_grid_layout->setColumnStretch(0, 0);
+    ui_grid_layout->setColumnStretch(1, 2);
     ui_grid_layout->setContentsMargins(0, 0, 0, 0);
-    ui_grid_layout->addWidget(new QLabel(tr("url")), 0, 0, 1, 1);
-    ui_grid_layout->addWidget(ui_edit_url, 0, 1, 1, 1);
-    ui_grid_layout->addWidget(new QLabel(tr("name")), 1, 0, 1, 1);
-    ui_grid_layout->addWidget(ui_edit_name, 1, 1, 1, 1);
+    ui_grid_layout->addWidget(new QLabel(tr("name")), 0, 0, 1, 1);
+    ui_grid_layout->addWidget(ui_edit_name, 0, 1, 1, 1);
+    ui_grid_layout->addWidget(new QLabel(tr("url")), 1, 0, 1, 1);
+    ui_grid_layout->addWidget(ui_edit_url, 1, 1, 1, 1);
+    ui_grid_layout->addWidget(new QLabel(tr("genre")), 2, 0, 1, 1);
+    ui_grid_layout->addWidget(ui_edit_genre, 2, 1, 1, 1);
+    ui_grid_layout->addWidget(new QLabel(tr("website")), 3, 0, 1, 1);
+    ui_grid_layout->addWidget(ui_edit_website, 3, 1, 1, 1);
+    ui_grid_layout->addWidget(new QLabel(tr("bitrate")), 4, 0, 1, 1);
+    ui_grid_layout->addWidget(ui_edit_bitrate, 4, 1, 1, 1);
+    ui_grid_layout->addWidget(new QLabel(tr("samplerate")), 5, 0, 1, 1);
+    ui_grid_layout->addWidget(ui_edit_samplerate, 5, 1, 1, 1);
+    ui_grid_layout->addWidget(new QLabel(tr("format")), 6, 0, 1, 1);
+    ui_grid_layout->addWidget(ui_edit_format, 6, 1, 1, 1);
 
-    ui_edit_category = 0;
-    
-    if(active_category) 
-    {
-      ui_edit_category  = new QLineEdit(this);
-      ui_grid_layout->addWidget(new QLabel(tr("category")), 2, 0, 1, 1);
-      ui_grid_layout->addWidget(ui_edit_category, 2, 1, 1, 1);
-    }
+    /* layout content */
+    setContentLayout(ui_grid_layout);
 
-     /* layout content */
-     setContentLayout(ui_grid_layout);
-
-     QObject::connect(buttonBox(), SIGNAL(accepted()), this, SLOT(on_buttonBox_accepted()));
-     QObject::connect(buttonBox(), SIGNAL(rejected()), this, SLOT(on_buttonBox_rejected()));
-}
-
-/*******************************************************************************
-    setter/getter
-*******************************************************************************/
-const QString AddStreamDialog::url() const
-{
-    return ui_edit_url->text();
+    QObject::connect(buttonBox(), SIGNAL(accepted()), this, SLOT(on_buttonBox_accepted()));
+    QObject::connect(buttonBox(), SIGNAL(rejected()), this, SLOT(on_buttonBox_rejected()));
 }
 
 
-const QString AddStreamDialog::name() const
-{
-    return ui_edit_name->text();
-}
-
-const QString AddStreamDialog::category() const
-{
-    if(ui_edit_category)
-      return ui_edit_category->text();
-    else
-      return QString();
-}
-
-void AddStreamDialog::setUrl(const QString& url)
-{
-    ui_edit_url->setText(url);
-}
-
-
-void AddStreamDialog::setName(const QString& name)
-{
-    return ui_edit_name->setText(name);
-}
-
-void AddStreamDialog::setCategory(const QString& categorie)
-{
-    if(ui_edit_category)
-      ui_edit_category->setText(categorie);
-}
 /*******************************************************************************
     on_buttonBox_rejected
 *******************************************************************************/
@@ -120,6 +94,25 @@ void AddStreamDialog::on_buttonBox_rejected()
 void AddStreamDialog::on_buttonBox_accepted()
 {
     //Debug::debug() << "AddStreamDialog::on_buttonBox_accepted";
+              
+    m_stream->id                   = -1;
+    m_stream->url                  = ui_edit_url->text();
+    m_stream->extra["station"]     = ui_edit_name->text();
+    m_stream->genre                = ui_edit_genre->text();
+    m_stream->extra["website"]     = ui_edit_website->text();
+    m_stream->extra["bitrate"]     = ui_edit_bitrate->text();
+    m_stream->extra["samplerate"]  = ui_edit_samplerate->text();
+    m_stream->extra["format"]      = ui_edit_format->text();
+
+    if(ui_edit_genre->text().isEmpty())
+        m_stream->genre            = "Unknown";
+    
+    m_stream->isFavorite       = false;
+    m_stream->isPlaying        = false;
+    m_stream->isBroken         = false;
+    m_stream->isPlayed         = false;
+    m_stream->isStopAfter      = false;
+
 
     this->setResult(QDialog::Accepted);
     QDialog::accept();
