@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -418,9 +418,11 @@ void EditorAlbum::slot_load_image_from_file()
     /* get new cover file */
     m_new_image = QImage(fd.addFile());
  
-    m_new_image = m_new_image.scaled(QSize(200, 200), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    /*  save image according to configuration size */
+    int SIZE = SETTINGS()->_coverSize;
+    m_new_image = m_new_image.scaled(QSize(SIZE, SIZE), Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
-    ui_image->setPixmap( QPixmap::fromImage(m_new_image) );
+    ui_image->setPixmap( QPixmap::fromImage(m_new_image).scaled( QSize(200,200), Qt::KeepAspectRatio, Qt::SmoothTransformation) );
     ui_image->update();
     m_isImageChange = true;
 }
