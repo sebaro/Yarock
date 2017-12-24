@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -29,6 +29,7 @@
 #include "shortcuts_manager.h"
 #include "utilities.h"
 #include "settings.h"
+#include "iconmanager.h"
 #include "debug.h"
 
 #include <QColorDialog>
@@ -91,6 +92,9 @@ void PageGeneral::createGui()
     ui_check_enableDbus = new QCheckBox(main_widget);
     ui_check_enableDbus->setText( tr("Enable notification") );
 
+    ui_check_enableHistory = new QCheckBox(main_widget);
+    ui_check_enableHistory->setText( tr("Enable playing history") );    
+    
     //! systray parameter
     ui_check_systray = new QCheckBox(main_widget);
     ui_check_systray->setText(tr("Minimize application to systray"));
@@ -117,6 +121,7 @@ void PageGeneral::createGui()
     //! layout
     vl0->addWidget(ui_check_enableMpris);
     vl0->addWidget(ui_check_enableDbus);
+    vl0->addWidget(ui_check_enableHistory);
     vl0->addWidget(ui_check_systray);
     vl0->addWidget(ui_check_hideAtStartup);
     vl0->addWidget(ui_color_button);
@@ -181,6 +186,7 @@ void PageGeneral::saveSettings()
     SETTINGS()->_hideAtStartup       = this->ui_check_hideAtStartup->isChecked();
     SETTINGS()->_useDbusNotification = this->ui_check_enableDbus->isChecked();
     SETTINGS()->_useMpris            = this->ui_check_enableMpris->isChecked();
+    SETTINGS()->_useHistory          = this->ui_check_enableHistory->isChecked();
 }
 
 //! ----------- restoreSettings ------------------------------------------------
@@ -190,6 +196,7 @@ void PageGeneral::restoreSettings()
     this->ui_check_hideAtStartup->setChecked( SETTINGS()->_hideAtStartup );
     this->ui_check_enableDbus->setChecked( SETTINGS()->_useDbusNotification );
     this->ui_check_enableMpris->setChecked( SETTINGS()->_useMpris );
+    this->ui_check_enableHistory->setChecked( SETTINGS()->_useHistory );
 }
 
 
@@ -207,6 +214,12 @@ bool PageGeneral::isMprisChanged()
 {
     return SETTINGS()->_useMpris != ui_check_enableMpris->isChecked();
 }
+
+bool PageGeneral::isHistoryChanged()
+{
+    return SETTINGS()->_useHistory != ui_check_enableHistory->isChecked();
+}
+
 
 void PageGeneral::slot_color_button_clicked()
 {
@@ -1166,14 +1179,14 @@ void PageShortcut::createGui()
     proxy_widget->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
     
 
-    m_items["play"]        = new ShortcutGraphicItem(tr("Play/Pause"), SETTINGS()->_shortcutsKey["play"], QPixmap(":/images/media-play.png"));
-    m_items["stop"]        = new ShortcutGraphicItem(tr("Stop"), SETTINGS()->_shortcutsKey["stop"], QPixmap(":/images/media-stop.png"));
-    m_items["prev_track"]  = new ShortcutGraphicItem(tr("Previous track"), SETTINGS()->_shortcutsKey["prev_track"], QPixmap(":/images/media-prev.png"));
-    m_items["next_track"]  = new ShortcutGraphicItem(tr("Next track"), SETTINGS()->_shortcutsKey["next_track"], QPixmap(":/images/media-next.png"));
+    m_items["play"]        = new ShortcutGraphicItem(tr("Play/Pause"), SETTINGS()->_shortcutsKey["play"], IconManager::instance()->icon("media-play").pixmap(QSize(32,32)));
+    m_items["stop"]        = new ShortcutGraphicItem(tr("Stop"), SETTINGS()->_shortcutsKey["stop"], IconManager::instance()->icon("media-stop").pixmap(QSize(32,32)));
+    m_items["prev_track"]  = new ShortcutGraphicItem(tr("Previous track"), SETTINGS()->_shortcutsKey["prev_track"], IconManager::instance()->icon("media-prev").pixmap(QSize(32,32)));
+    m_items["next_track"]  = new ShortcutGraphicItem(tr("Next track"), SETTINGS()->_shortcutsKey["next_track"], IconManager::instance()->icon("media-next").pixmap(QSize(32,32)));
     m_items["inc_volume"]  = new ShortcutGraphicItem(tr("Increase volume"), SETTINGS()->_shortcutsKey["inc_volume"], QPixmap(":/images/volume-icon.png"));
     m_items["dec_volume"]  = new ShortcutGraphicItem(tr("Decrease volume"), SETTINGS()->_shortcutsKey["dec_volume"], QPixmap(":/images/volume-icon.png"));
     m_items["mute_volume"] = new ShortcutGraphicItem(tr("Mute/Unmute volume"), SETTINGS()->_shortcutsKey["mute_volume"], QPixmap(":/images/volume-muted.png"));
-    m_items["jump_to_track"] = new ShortcutGraphicItem(tr("Jump to track"), SETTINGS()->_shortcutsKey["jump_to_track"], QPixmap(":/images/jump_to_32x32.png"));
+    m_items["jump_to_track"] = new ShortcutGraphicItem(tr("Jump to track"), SETTINGS()->_shortcutsKey["jump_to_track"], IconManager::instance()->icon("goto").pixmap(QSize(32,32)));
     m_items["clear_playqueue"] = new ShortcutGraphicItem(tr("Clear playqueue"), SETTINGS()->_shortcutsKey["clear_playqueue"], QPixmap());
     
     connect(m_items.value("play"), SIGNAL(clicked()),this, SLOT(slot_on_shorcutItem_clicked()));

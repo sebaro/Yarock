@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -56,8 +56,11 @@ CentralWidget::CentralWidget(QWidget *parent) : QFrame(parent)
     left_widget = new MainLeftWidget(this);
 
     /* toolbar */
-    //new PlayerToolBar(new PlayerToolBarCompact(this));
-    new PlayerToolBarCompact(this);
+    if(SETTINGS()->_isbottombarexpanded)
+        new PlayerToolBarFull(this);
+    else
+        new PlayerToolBarCompact(this);
+    
     
     /* content widget splitter population */
     m_viewsSplitter_1 = new CustomSplitter(this);
@@ -101,6 +104,9 @@ CentralWidget::CentralWidget(QWidget *parent) : QFrame(parent)
     
     /* event filter for splitter synchro */
     right_widget->contentWidget()->installEventFilter(this);
+    
+    
+    PlayerToolBarBase::instance()->fullUpdate();
 }
 
 /*******************************************************************************
@@ -203,13 +209,11 @@ void CentralWidget::slot_switch_playertoolbar( )
 
      if(qobject_cast<PlayerToolBarCompact*>(tbb))
      {
-         //new PlayerToolBar(new PlayerToolBarFull(this));
-	 new PlayerToolBarFull(this);
+         new PlayerToolBarFull(this);
      }   
      else 
      {
-       new PlayerToolBarCompact(this);
-         //new PlayerToolBar(new PlayerToolBarCompact(this));
+         new PlayerToolBarCompact(this);
      }
      
 

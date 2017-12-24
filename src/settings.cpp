@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -53,7 +53,7 @@ void YarockSettings::readSettings()
     _showPlayQueuePanel  = s->value("Window/showPlaylistPanel", true).toBool();
     _enableSearchPopup   = s->value("Window/searchPopup",       true).toBool();
     _enablePlayOnSearch  = s->value("Window/playOnSearch",      false).toBool();
-
+    
     // ------ session
 #ifdef ENABLE_PHONON
     _engine              = s->value("Session/engine",              1).toInt();    // default = phonon
@@ -78,6 +78,8 @@ void YarockSettings::readSettings()
     
     _hideAtStartup       = s->value("Session/hideAtStartup", false).toBool();
 
+    _isbottombarexpanded = s->value("Session/expandBottomBar", true).toBool();
+    
     // ------ cover size
     _coverSize           = s->value("Session/coversize", 200).toUInt();
     
@@ -115,6 +117,7 @@ void YarockSettings::readSettings()
     _useDbusNotification = s->value("Features/dbus",    false).toBool();
     _useLastFmScrobbler  = s->value("Features/lastFm",  false).toBool();
     _useShortcut         = s->value("Features/shortcut", false).toBool();
+    _useHistory          = s->value("Features/history", true).toBool();
 
     // ------ song info 
     _lyrics_providers =  s->value("SongInfo/providers",  ServiceLyrics::defaultProvidersList()).toStringList();
@@ -131,8 +134,11 @@ void YarockSettings::readSettings()
     _restartPlayingAtStartup  = s->value("PlaybackOption/restartPlaying", false).toBool();
     _pauseOnScreenSaver       = s->value("PlaybackOption/screenSaverPause", false).toBool();
     _stopOnScreenSaver        = s->value("PlaybackOption/screenSaverStop", false).toBool();
-    _playingUrl               = s->value("PlaybackOption/currentUrl",     "").toString();
-    _playingPosition          = s->value("PlaybackOption/currentPosition",  0).toDouble();
+
+    // ------ playing media
+    _url        = s->value("PlayingMedia/url", "").toString();
+    _station    = s->value("PlayingMedia/station", "").toString();
+    _position   = s->value("PlayingMedia/position", 0).toDouble();
 
     // ------ Shortcut media key
     _shortcutsKey["play"]        = s->value("Shortcuts/play",QKeySequence(Qt::Key_MediaPlay).toString()).toString();
@@ -189,8 +195,9 @@ void YarockSettings::writeSettings()
     s->setValue("playqueueShowFilter",_playqueueShowFilter);
     s->setValue("hideAtStartup",      _hideAtStartup);
     s->setValue("filesystem",         _filesystem_path);
-    s->setValue("coversize",         _coverSize);
-    
+    s->setValue("coversize",          _coverSize);
+    s->setValue("expandBottomBar",    _isbottombarexpanded);
+     
       /* handle color */
       QByteArray byteArray;      
       QBuffer buffer(&byteArray);
@@ -211,6 +218,7 @@ void YarockSettings::writeSettings()
     s->setValue("dbus",              _useDbusNotification);
     s->setValue("lastFm",            _useLastFmScrobbler);
     s->setValue("shortcut",          _useShortcut);
+    s->setValue("history",           _useHistory);
     s->endGroup();
 
     // song info 
@@ -233,8 +241,13 @@ void YarockSettings::writeSettings()
     s->setValue("restartPlaying",    _restartPlayingAtStartup);
     s->setValue("screenSaverPause",  _pauseOnScreenSaver);
     s->setValue("screenSaverStop",   _stopOnScreenSaver);
-    s->setValue("currentUrl",        _playingUrl);
-    s->setValue("currentPosition",   _playingPosition);
+    s->endGroup();
+    
+    // ------ playing media
+    s->beginGroup("PlayingMedia");
+    s->setValue("url",        _url);
+    s->setValue("station",    _station);
+    s->setValue("position",   _position);
     s->endGroup();
 
     // Shurtcut media key

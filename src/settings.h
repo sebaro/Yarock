@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -71,6 +71,7 @@ Q_DISABLE_COPY(YarockSettings)
     bool                 _useDbusNotification;
     bool                 _useLastFmScrobbler;
     bool                 _useShortcut;
+    bool                 _useHistory;
 
     // show/hide widget (Startup settings)
     bool                 _showPlayQueuePanel;
@@ -100,6 +101,7 @@ Q_DISABLE_COPY(YarockSettings)
     bool                 _playqueueShowFilter;
     bool                 _hideAtStartup;
     QString              _filesystem_path;
+    bool                 _isbottombarexpanded;
     
     // collection
     uint                 _coverSize; // default 200
@@ -119,8 +121,11 @@ Q_DISABLE_COPY(YarockSettings)
     bool                 _restartPlayingAtStartup;
     bool                 _pauseOnScreenSaver;
     bool                 _stopOnScreenSaver;
-    QString              _playingUrl;
-    qint64               _playingPosition;
+
+    // playing media    
+    QString              _url;
+    QString              _station;
+    qint64               _position;
 
     // _shortcuts
     QMap<QString, QString> _shortcutsKey;  //shortcutName, KeySequence
