@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -25,6 +25,7 @@
 
 #include "settings.h"
 #include "views.h"
+#include "iconmanager.h"
 #include "debug.h"
 
 /*
@@ -128,7 +129,7 @@ void PopupModel::getCollectionSuggestions(const QString & query)
 
     // make model item
     foreach (const QString& artist, artists) {
-      PopupItem* item = new PopupItem(artist, QIcon(":/images/view-artist.png"));
+      PopupItem* item = new PopupItem(artist, IconManager::instance()->icon( "artist"));
       rootItem->appendRow(item);
     }
 
@@ -138,7 +139,7 @@ void PopupModel::getCollectionSuggestions(const QString & query)
     }
 
     foreach (const QString& title, titles) {
-      PopupItem* item = new PopupItem(title, QIcon(":/images/track-48x48.png"));
+      PopupItem* item = new PopupItem(title, IconManager::instance()->icon("track"));
       rootItem->appendRow(item);
     }
 }
@@ -194,7 +195,7 @@ void PopupModel::getHistorySuggestions(const QString & query)
 
     // make model item
     foreach (const QString& artist, artists) {
-      PopupItem* item = new PopupItem(artist, QIcon(":/images/view-artist.png"));
+      PopupItem* item = new PopupItem(artist, IconManager::instance()->icon("artist"));
       rootItem->appendRow(item);
     }
 
@@ -204,7 +205,7 @@ void PopupModel::getHistorySuggestions(const QString & query)
     }
 
     foreach (const QString& title, titles) {
-      PopupItem* item = new PopupItem(title, QIcon(":/images/track-48x48.png"));
+      PopupItem* item = new PopupItem(title, IconManager::instance()->icon("track"));
       rootItem->appendRow(item);
     }
 }

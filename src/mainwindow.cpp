@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -24,6 +24,7 @@
 #include "playqueue/playlistview.h"
 #include "playqueue/playlistwidget.h"
 #include "widgets/main/centralwidget.h"
+#include "widgets/main/menumodel.h"
 #include "widgets/minimalwidget.h"
 #include "widgets/statusmanager.h"
 #include "widgets/equalizer/equalizer_dialog.h"
@@ -66,6 +67,7 @@
 #include "networkaccess.h"
 #include "covercache.h"
 
+#include "iconmanager.h"
 #include "global_actions.h"
 #include "systray.h"
 #include "config.h"
@@ -111,6 +113,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     // Menu Policy
     this->setContextMenuPolicy (Qt::NoContextMenu);
 
+    //! ###############   Fonts #############################################
+    IconManager* im = new IconManager(this);
+    im->initFontAwesome();
+    
     
     //! ###############   Settings   ########################################
     new YarockSettings();
@@ -202,10 +208,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     m_dbus_notifier   = new DbusNotification(this);
     m_mpris_manager   = new MprisManager(this);
 
-    //! ############### Restore Playing   ###################################
-    if(SETTINGS()->_restartPlayingAtStartup)
-      restorePlayingTrack();
-
+    //! ############### Restore Equalizer ###################################
+    if( SETTINGS()->_enableEq && _player->isEqualizerAvailable()) 
+    {
+        ACTIONS()->value(ENGINE_AUDIO_EQ)->setIcon(IconManager::instance()->icon("equalizer","selected"));
+    }
+        
     //! ############### Restore windows geometry ############################
     Debug::debug() << "[Mainwindow] restore geometry";
     if( !SETTINGS()->_windowsGeometry.isEmpty() )
@@ -235,7 +243,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 // #ifdef TEST_FLAG    
 //     QTimer::singleShot(4000, this, SLOT(slot_start_test()));
 // #endif    
-    Debug::debug() << "[Mainwindow] constructor end";
 }
 
 #ifdef TEST_FLAG
@@ -314,7 +321,7 @@ void MainWindow::createActions()
     ACTIONS()->insert(APP_QUIT, new QAction(IconLoader::Load("application-exit"),tr("&Quit"), this));
     ACTIONS()->insert(APP_SHOW_YAROCK_ABOUT, new QAction(QIcon(":/images/about-48x48.png"),tr("About"), this));
 
-    ACTIONS()->insert(APP_SHOW_SETTINGS, new QAction(QIcon(":/images/settings-48x48.png"), tr("settings"), this));
+    ACTIONS()->insert(APP_SHOW_SETTINGS, new QAction(IconManager::instance()->icon("setting"), tr("settings"), this));
     
     ACTIONS()->insert(PLAYING_TRACK_EDIT,new QAction(QIcon(":/images/edit-48x48.png"), tr("Edit"), this));
     ACTIONS()->insert(PLAYING_TRACK_LOVE, new QAction(QIcon(":/images/lastfm.png"), tr("Send LastFm love"), this));
@@ -325,14 +332,14 @@ void MainWindow::createActions()
     ACTIONS()->insert(TAG_CLICKED, new QAction(QIcon(),"TAG_CLICKED", this));
     
     /* player action*/
-    ACTIONS()->insert(ENGINE_PLAY, new QAction(QIcon(":/images/media-play.png"), tr("Play or Pause media"), this));
-    ACTIONS()->insert(ENGINE_STOP, new QAction(QIcon(":/images/media-stop.png"), tr("Stop playing media"), this));
-    ACTIONS()->insert(ENGINE_PLAY_NEXT, new QAction(QIcon(":/images/media-next.png"), tr("Play next media"), this));
-    ACTIONS()->insert(ENGINE_PLAY_PREV, new QAction(QIcon(":/images/media-prev.png"), tr("Play previous media"), this));
+    ACTIONS()->insert(ENGINE_PLAY, new QAction( IconManager::instance()->icon( "media-play" ), tr("Play or Pause media"), this));
+    ACTIONS()->insert(ENGINE_STOP, new QAction( IconManager::instance()->icon( "media-stop" ), tr("Stop playing media"), this));
+    ACTIONS()->insert(ENGINE_PLAY_NEXT, new QAction( IconManager::instance()->icon( "media-next" ), tr("Play next media"), this));
+    ACTIONS()->insert(ENGINE_PLAY_PREV, new QAction( IconManager::instance()->icon( "media-prev" ), tr("Play previous media"), this));
     ACTIONS()->insert(ENGINE_VOL_MUTE, new QAction(QIcon(":/images/volume-icon.png"),"", this));
     ACTIONS()->insert(ENGINE_VOL_INC, new QAction(QIcon(":/images/volume-icon.png"),"", this));
     ACTIONS()->insert(ENGINE_VOL_DEC, new QAction(QIcon(":/images/volume-icon.png"),"", this));
-    ACTIONS()->insert(ENGINE_AUDIO_EQ, new QAction(QIcon(":/images/equalizer-48x48-1.png"),tr("Audio equalizer"), this));
+    ACTIONS()->insert(ENGINE_AUDIO_EQ, new QAction(IconManager::instance()->icon("equalizer"),tr("Audio equalizer"), this));
 
     /* database action */
     ACTIONS()->insert(DATABASE_OPERATION, new QAction(QIcon(":/images/rebuild.png"),tr("Database operation"), this));
@@ -347,10 +354,10 @@ void MainWindow::createActions()
     ACTIONS()->insert(APP_MODE_NORMAL, new QAction(QIcon(":/images/screen-normalmode.png"), tr("Switch to normal mode"), this));
 
     /* jump to track  */
-    ACTIONS()->insert(BROWSER_JUMP_TO_ARTIST, new QAction(QIcon(":/images/jump_to_32x32.png"),tr("Jump to artist"), this));
-    ACTIONS()->insert(BROWSER_JUMP_TO_ALBUM,  new QAction(QIcon(":/images/jump_to_32x32.png"),tr("Jump to album"), this));
-    ACTIONS()->insert(BROWSER_JUMP_TO_TRACK,  new QAction(QIcon(":/images/jump_to_32x32.png"),tr("Jump to track"), this));
-    ACTIONS()->insert(BROWSER_JUMP_TO_MEDIA,  new QAction(QIcon(":/images/jump_to_32x32.png"),QString(), this));
+    ACTIONS()->insert(BROWSER_JUMP_TO_ARTIST, new QAction( IconManager::instance()->icon( "goto" ),tr("Jump to artist"), this));
+    ACTIONS()->insert(BROWSER_JUMP_TO_ALBUM,  new QAction( IconManager::instance()->icon( "goto" ),tr("Jump to album"), this));
+    ACTIONS()->insert(BROWSER_JUMP_TO_TRACK,  new QAction( IconManager::instance()->icon( "goto" ),tr("Jump to track"), this));
+    ACTIONS()->insert(BROWSER_JUMP_TO_MEDIA,  new QAction( IconManager::instance()->icon( "goto" ),QString(), this));
     
     ACTIONS()->insert(APP_ENABLE_SEARCH_POPUP, new QAction(QIcon(),tr("Enable search popup"), this));
     ACTIONS()->value(APP_ENABLE_SEARCH_POPUP)->setCheckable(true);
@@ -385,6 +392,7 @@ void MainWindow::connectSlots()
     QObject::connect(ACTIONS()->value(ENGINE_STOP), SIGNAL(triggered()), SLOT(stopPlayer()));
     QObject::connect(ACTIONS()->value(ENGINE_AUDIO_EQ), SIGNAL(triggered()), SLOT(slot_eq_openDialog()));
 
+    
     QObject::connect(ACTIONS()->value(ENGINE_VOL_MUTE), SIGNAL(triggered()),Engine::instance(), SLOT(volumeMute()));
     QObject::connect(ACTIONS()->value(ENGINE_VOL_INC), SIGNAL(triggered()), Engine::instance(), SLOT(volumeInc()));
     QObject::connect(ACTIONS()->value(ENGINE_VOL_DEC), SIGNAL(triggered()), Engine::instance(), SLOT(volumeDec()));    
@@ -400,7 +408,7 @@ void MainWindow::connectSlots()
     QObject::connect(m_browserView, SIGNAL(settings_saved()), SLOT(slot_on_settings_saved()));
 
     //! ThreadManager connection
-    QObject::connect(MainLeftWidget::instance(), SIGNAL(dbNameChanged()), this, SLOT(slot_database_start()));
+    QObject::connect(MenuModel::instance(), SIGNAL(dbNameChanged()), this, SLOT(slot_database_start()));
     QObject::connect(ThreadManager::instance(), SIGNAL(dbBuildFinished()), this, SLOT(slot_dbBuilder_finished()));
 
     //! Screen mode connection
@@ -532,16 +540,16 @@ void MainWindow::slot_player_on_state_change()
      case ENGINE::STOPPED:
         set_enable_jump_to(false);
         (ACTIONS()->value(ENGINE_STOP))->setEnabled(false);
-        (ACTIONS()->value(ENGINE_PLAY))->setIcon(QIcon(":/images/media-play.png"));
+        (ACTIONS()->value(ENGINE_PLAY))->setIcon(IconManager::instance()->icon( "media-play" ));
      break;
      /**************** PLAYING ***********************/
      case ENGINE::PLAYING:
         (ACTIONS()->value(ENGINE_STOP))->setEnabled(true);
-        (ACTIONS()->value(ENGINE_PLAY))->setIcon(QIcon(":/images/media-pause.png"));
+        (ACTIONS()->value(ENGINE_PLAY))->setIcon(IconManager::instance()->icon( "media-pause" ));
      break;
      /**************** PAUSE *************************/
      case ENGINE::PAUSED:
-        (ACTIONS()->value(ENGINE_PLAY))->setIcon(QIcon(":/images/media-play.png"));
+        (ACTIONS()->value(ENGINE_PLAY))->setIcon(IconManager::instance()->icon( "media-play" ));
      break;
      /**************** ERROR *************************/
      case ENGINE::ERROR:
@@ -745,19 +753,25 @@ void MainWindow::savePlayingTrack()
     //Debug::debug() << "[Mainwindow] savePlayingTrack";
     if (_player->state() == ENGINE::PLAYING)
     {
-      SETTINGS()->_playingUrl = _player->playingTrack()->url;
+         SETTINGS()->_url      = _player->playingTrack()->url;
       
-      if( MEDIA::isLocal(SETTINGS()->_playingUrl) )
-         SETTINGS()->_playingPosition = _player->currentTime();
-      else
-         SETTINGS()->_playingPosition = 0;
+         if( MEDIA::isLocal(SETTINGS()->_url) )
+         {
+            SETTINGS()->_position = _player->currentTime();
+            SETTINGS()->_station  = "";
+         }
+         else
+         {
+            SETTINGS()->_position = 0;
+            SETTINGS()->_station  = _player->playingTrack()->extra["station"].toString();
+         }
     }
 }
 
 void MainWindow::restorePlayingTrack()
 {
-    //Debug::debug() << "[Mainwindow] restorePlayingTrack";
-    const QString url = SETTINGS()->_playingUrl;
+    Debug::debug() << "[Mainwindow] restorePlayingTrack";
+    const QString url = SETTINGS()->_url;
     if(url.isEmpty())
       return;
 
@@ -769,7 +783,7 @@ void MainWindow::restorePlayingTrack()
 
         _player->setMediaItem(media);
 
-        qint64 position = SETTINGS()->_playingPosition;
+        qint64 position = SETTINGS()->_position;
         //Debug::debug() << "[Mainwindow] restorePlayingTrack TYPE_TRACK position = " << position;
         _player->seek( position );
     }
@@ -779,6 +793,7 @@ void MainWindow::restorePlayingTrack()
         media->setType(TYPE_STREAM);
         media->id        = -1;
         media->url       = url;
+        media->extra["station"] = SETTINGS()->_station;
 
         _player->setMediaItem(media);
     }
@@ -796,6 +811,7 @@ void MainWindow::slot_on_settings_saved()
     Debug::debug() << "[MainWindow] isSystrayChanged   "  << r.isSystrayChanged;
     Debug::debug() << "[MainWindow] isDbusChanged      "  << r.isDbusChanged;
     Debug::debug() << "[MainWindow] isMprisChanged     "  << r.isMprisChanged;
+    Debug::debug() << "[MainWindow] isHistoryChanged   "  << r.isHistoryChanged;
     Debug::debug() << "[MainWindow] isShorcutChanged   "  << r.isShorcutChanged;
     Debug::debug() << "[MainWindow] isScrobblerChanged "  << r.isScrobblerChanged;
     Debug::debug() << "[MainWindow] isEngineChanged    "  << r.isEngineChanged;
@@ -806,6 +822,7 @@ void MainWindow::slot_on_settings_saved()
     if(r.isSystrayChanged)    { m_systray->reloadSettings();}
     if(r.isDbusChanged)       { m_dbus_notifier->reloadSettings(); }
     if(r.isMprisChanged)      { m_mpris_manager->reloadSettings(); }
+    if(r.isHistoryChanged)    { m_histoManager->reloadSettings(); }
     if(r.isShorcutChanged)    { m_shortcutsManager->reloadSettings();}
     if(r.isScrobblerChanged)  { LastFmService::instance()->init();}
     if(r.isLibraryChanged || r.isCoverSizeChanged)
@@ -960,6 +977,11 @@ void MainWindow::slot_database_start()
         /* Start existing database by populating models              */
         /* ----------------------------------------------------------*/
         m_thread_manager->populateLocalTrackModel();
+        
+        
+        /* Restore playing track */
+        if(SETTINGS()->_restartPlayingAtStartup)
+            restorePlayingTrack();
     }
     
     QObject::connect(m_thread_manager, SIGNAL(modelPopulationFinished(E_MODEL_TYPE)), this, SLOT(slot_restore_playqueue()), Qt::UniqueConnection);
@@ -1116,12 +1138,14 @@ void MainWindow::slot_eq_enableChange(bool eqActivated)
     Debug::debug() << "[MainWindow] slot_eq_enableChange bool" << eqActivated;
     if(eqActivated) 
     {
-        ACTIONS()->value(ENGINE_AUDIO_EQ)->setIcon(QIcon(":/images/equalizer-48x48-2.png"));
+        ACTIONS()->value(ENGINE_AUDIO_EQ)->setIcon(IconManager::instance()->icon("equalizer","selected"));
+
         _player->addEqualizer();
     }
     else
     {
-        ACTIONS()->value(ENGINE_AUDIO_EQ)->setIcon(QIcon(":/images/equalizer-48x48-1.png"));
+        ACTIONS()->value(ENGINE_AUDIO_EQ)->setIcon(IconManager::instance()->icon("equalizer","normal"));        
+
         _player->removeEqualizer();
     }
 }

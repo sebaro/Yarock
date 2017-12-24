@@ -57,6 +57,7 @@ SET(SOURCES
            ${CMAKE_SOURCE_DIR}/src/threadmanager.cpp
            ${CMAKE_SOURCE_DIR}/src/utilities.cpp
            ${CMAKE_SOURCE_DIR}/src/systray.cpp
+           ${CMAKE_SOURCE_DIR}/src/iconmanager.cpp           
 )
 
 set (SOURCES 
@@ -173,6 +174,7 @@ set (SOURCES
            ${CMAKE_SOURCE_DIR}/src/widgets/editors/editor_album.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/editors/editor_artist.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/editors/editor_track.cpp
+           ${CMAKE_SOURCE_DIR}/src/widgets/editors/editor_stream.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/editors/editor_common.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/editors/editor_playlist.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/editors/editor_smart.cpp
@@ -180,7 +182,6 @@ set (SOURCES
            ${CMAKE_SOURCE_DIR}/src/widgets/main/centralwidget.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/main/main_right.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/main/main_left.cpp
-           ${CMAKE_SOURCE_DIR}/src/widgets/main/maintoolbutton.cpp           
            ${CMAKE_SOURCE_DIR}/src/widgets/main/menumodel.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/main/menuwidget.cpp
            ${CMAKE_SOURCE_DIR}/src/widgets/main/menubar.cpp
@@ -243,6 +244,7 @@ SET(YAROCK_HEADERS
            ${CMAKE_SOURCE_DIR}/src/threadmanager.h
            ${CMAKE_SOURCE_DIR}/src/utilities.h
            ${CMAKE_SOURCE_DIR}/src/systray.h
+           ${CMAKE_SOURCE_DIR}/src/iconmanager.h
            ${CMAKE_SOURCE_DIR}/src/core/database/database.h
            ${CMAKE_SOURCE_DIR}/src/core/database/database_cmd.h
            ${CMAKE_SOURCE_DIR}/src/core/database/databasebuilder.h
@@ -334,6 +336,7 @@ SET(YAROCK_HEADERS
            ${CMAKE_SOURCE_DIR}/src/widgets/editors/editor_album.h
            ${CMAKE_SOURCE_DIR}/src/widgets/editors/editor_artist.h
            ${CMAKE_SOURCE_DIR}/src/widgets/editors/editor_track.h
+           ${CMAKE_SOURCE_DIR}/src/widgets/editors/editor_stream.h
            ${CMAKE_SOURCE_DIR}/src/widgets/editors/editor_common.h
            ${CMAKE_SOURCE_DIR}/src/widgets/editors/editor_playlist.h
            ${CMAKE_SOURCE_DIR}/src/widgets/editors/editor_smart.h
@@ -341,7 +344,6 @@ SET(YAROCK_HEADERS
            ${CMAKE_SOURCE_DIR}/src/widgets/main/centralwidget.h
            ${CMAKE_SOURCE_DIR}/src/widgets/main/main_right.h
            ${CMAKE_SOURCE_DIR}/src/widgets/main/main_left.h
-           ${CMAKE_SOURCE_DIR}/src/widgets/main/maintoolbutton.h           
            ${CMAKE_SOURCE_DIR}/src/widgets/main/menumodel.h
            ${CMAKE_SOURCE_DIR}/src/widgets/main/menuwidget.h
            ${CMAKE_SOURCE_DIR}/src/widgets/main/menubar.h

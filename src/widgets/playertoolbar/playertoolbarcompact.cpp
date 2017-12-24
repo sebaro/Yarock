@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -22,7 +22,7 @@
 #include "volumebutton.h"
 #include "audiocontrols.h"
 #include "seekslider.h"
-
+#include "iconmanager.h"
 
 #include "widgets/spacer.h"
 #include "covers/covercache.h"
@@ -183,7 +183,7 @@ PlayerToolBarCompact::PlayerToolBarCompact(QWidget *parent) : PlayerToolBarBase(
     
  
     ToolButtonBase* ui_expand_button = new ToolButtonBase(this);
-    ui_expand_button->setIcon(QIcon(":/images/go-up_48x48.png"));
+    ui_expand_button->setIcon( IconManager::instance()->icon( "chevron-up") );
     
     /* -- tool button layout -- */
     QGridLayout* gl = new QGridLayout();
@@ -228,7 +228,7 @@ PlayerToolBarCompact::PlayerToolBarCompact(QWidget *parent) : PlayerToolBarBase(
 void PlayerToolBarCompact::fullUpdate()
 {
     slot_update_track_playing_info();      
-};
+}
 
 
 void PlayerToolBarCompact::clear()
@@ -265,10 +265,10 @@ void PlayerToolBarCompact::slot_update_track_playing_info()
         else
           m_pauseState->hide();
     
-        // Debug::debug() << "## Now playing TITLE :" << track->title;
-        // Debug::debug() << "## Now playing NAME  :" << track->name;
-        // Debug::debug() << "## Now playing URL   :" << track->url;
-        // Debug::debug() << "## Now playing GENRE :" << track->genre;
+//         Debug::debug() << "## Now playing TITLE :" << track->title;
+//         Debug::debug() << "## Now playing NAME  :" << track->name;
+//         Debug::debug() << "## Now playing URL   :" << track->url;
+//         Debug::debug() << "## Now playing GENRE :" << track->genre;
 
         /* ----- update image ----- */
         QPixmap pix = CoverCache::instance()->cover(track);
@@ -319,12 +319,16 @@ void PlayerToolBarCompact::setCollectionInfo(QString info,VIEW::Id mode)
             case (VIEW::ViewDashBoard)  :     ui_image->setPixmap( QPixmap(":/images/chart-48x48.png").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
             case (VIEW::ViewSettings)  :      ui_image->setPixmap( QPixmap(":/images/settings-48x48").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
             case (VIEW::ViewAlbum)    :       ui_image->setPixmap( QPixmap(":/images/album.png").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
-            case (VIEW::ViewArtist)   :       ui_image->setPixmap( QPixmap(":/images/view-artist.png").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
-            case (VIEW::ViewTrack)    :       ui_image->setPixmap( QPixmap(":/images/track-48x48.png").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
+            case (VIEW::ViewArtist)   :       ui_image->setPixmap( 
+                IconManager::instance()->icon( "artist").pixmap(QSize(24, 24))                
+            ); break;
+            case (VIEW::ViewTrack)    :       ui_image->setPixmap( IconManager::instance()->icon("track").pixmap(QSize(24,24))); break;
             case (VIEW::ViewGenre)    :       ui_image->setPixmap( QPixmap(":/images/genre.png").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
             case (VIEW::ViewYear)     :       ui_image->setPixmap( QPixmap(":/images/date-48x48.png").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
             case (VIEW::ViewFavorite) :       ui_image->setPixmap( QPixmap(":/images/favorites-48x48.png").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
-            case (VIEW::ViewPlaylist) :       ui_image->setPixmap( QPixmap(":/images/media-playlist-48x48.png").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
+            case (VIEW::ViewPlaylist) :       ui_image->setPixmap( 
+                 IconManager::instance()->icon("playlist1").pixmap(QSize(24, 24))
+            ); break;
             case (VIEW::ViewSmartPlaylist) :  ui_image->setPixmap( QPixmap(":/images/smart-playlist-48x48.png").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
             case (VIEW::ViewDirble)        :  ui_image->setPixmap( QPixmap(":/images/dirble.png").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
             case (VIEW::ViewRadionomy)     :  ui_image->setPixmap( QPixmap(":/images/radionomy.png").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;

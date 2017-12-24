@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -23,7 +23,6 @@
 
 
 // for header
-#include "maintoolbutton.h"
 #include "sort_widget.h"
 
 #include "widgets/searchline_edit.h"
@@ -35,6 +34,7 @@
 #include "core/mediasearch/media_search.h"
 
 // others
+#include "iconmanager.h"
 #include "settings.h"
 #include "global_actions.h"
 #include "debug.h"
@@ -54,6 +54,7 @@ MainLeftWidget* MainLeftWidget::INSTANCE = 0;
 *                                                                              *
 ********************************************************************************
 */
+
 MainLeftWidget::MainLeftWidget(QWidget *parent)
 {
     INSTANCE   = this;
@@ -61,17 +62,18 @@ MainLeftWidget::MainLeftWidget(QWidget *parent)
     m_parent = parent;
     
     /* content */
-    m_viewsSplitter = new CustomSplitter(m_parent);
-    m_viewsSplitter->setObjectName(QString::fromUtf8("viewsSplitter_2"));
-    m_viewsSplitter->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );       
-
+    m_contentWidget = new QWidget(m_parent);
+    m_contentWidget->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
+    
+    QHBoxLayout * layout = new QHBoxLayout(m_contentWidget);
+    
     QPalette p1;
     p1.setColor(QPalette::Background, QApplication::palette().color(QPalette::Normal, QPalette::Base));
-    m_viewsSplitter->setPalette( p1 );
+    m_contentWidget->setPalette( p1 );
     
     
     MenuWidget* m_menu_widget = new MenuWidget(m_parent);
-    m_viewsSplitter->addWidget(m_menu_widget);
+    layout->addWidget(m_menu_widget);
 
     /* header */
     m_header = new HeaderWidget(m_parent);
@@ -85,15 +87,11 @@ MainLeftWidget::MainLeftWidget(QWidget *parent)
 
 void MainLeftWidget::setBrowser(BrowserView* browser)
 {
-    m_viewsSplitter->addWidget(browser);
+    m_contentWidget->layout()->addWidget(browser);
 }
 
 void MainLeftWidget::create_header_ui()
 {
-    /* main tool button */
-      MainToolButton* main_tb = new MainToolButton(m_header);
-      main_tb->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-
       /* title  */
       m_title = new QLabel();
       m_title->setText("Artists");
@@ -107,9 +105,9 @@ void MainLeftWidget::create_header_ui()
       ui_cancel_button->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
       
       /*  prev/next browsing actions  */
-      ACTIONS()->insert(BROWSER_PREV, new QAction(QIcon(":/images/go-previous_48x48.png"),tr("Go back"),this));
-      ACTIONS()->insert(BROWSER_NEXT, new QAction(QIcon(":/images/go-next_48x48.png"),tr("Go forward"),this));
-      ACTIONS()->insert(BROWSER_UP,   new QAction(QIcon(":/images/go-up_48x48.png"),tr("Go up"),this));
+      ACTIONS()->insert(BROWSER_PREV, new QAction( IconManager::instance()->icon( "chevron-left") ,tr("Go backward"),this));
+      ACTIONS()->insert(BROWSER_NEXT, new QAction( IconManager::instance()->icon( "chevron-right"), tr("Go forward"),this));
+      ACTIONS()->insert(BROWSER_UP,   new QAction( IconManager::instance()->icon( "chevron-up") ,tr("Go up"),this));
       
       ACTIONS()->value(BROWSER_PREV)->setEnabled(false);
       ACTIONS()->value(BROWSER_NEXT)->setEnabled(false);
@@ -167,13 +165,13 @@ void MainLeftWidget::create_header_ui()
     QHBoxLayout* h2 = new QHBoxLayout(m_header);
     h2->setSpacing(2);
     h2->setContentsMargins(4, 4, 4, 4);
-    h2->addWidget(main_tb);    
     h2->addWidget( ui_button_prev );
     h2->addWidget( ui_button_next );
     h2->addWidget( ui_button_up );
     h2->addWidget( new FixedSpacer( m_header, QSize(4, 0)) );
     h2->addWidget( m_title );
     h2->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Minimum));
+    
     h2->addWidget( ui_search_lineedit );
     h2->addWidget( ui_save_button );
     h2->addWidget( ui_cancel_button );    
@@ -186,8 +184,6 @@ void MainLeftWidget::create_header_ui()
     /*--------------------------------*/      
     connect(ui_advance_search_button, SIGNAL(clicked ()), this, SLOT(slot_advance_search_clicked()));
     
-    connect(MenuModel::instance(), SIGNAL(dbNameChanged()), this, SIGNAL(dbNameChanged()));
-    connect(main_tb, SIGNAL(dbNameChanged()), this, SIGNAL(dbNameChanged()));
     connect(ui_search_lineedit, SIGNAL(textfield_entered()), this, SLOT(slot_send_quick_filter_change()));
     connect(ACTIONS()->value(APP_ENABLE_SEARCH_POPUP), SIGNAL(triggered()), this, SLOT(slot_explorer_popup_setting_change()));
     connect(ui_save_button, SIGNAL(clicked()), this, SIGNAL(settings_save_clicked()));

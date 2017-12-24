@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -62,7 +62,7 @@ MenuBar::MenuBar(QWidget * parent) : QWidget(parent)
     
     /* ----- create ui ----- */
     QVBoxLayout* layout = new QVBoxLayout(this);
-    layout->setSpacing(10);
+    layout->setSpacing(20);
     layout->setContentsMargins(0, 0, 0, 0);
 
     
@@ -90,7 +90,7 @@ MenuBar::MenuBar(QWidget * parent) : QWidget(parent)
       menu->setContentsMargins(8,8,8,8);
       menu->setStyleSheet(
            QString("QMenu {icon-size: 32px;border: none;background-color: none;}"
-                   "QMenu::item {padding: 4px 30px 4px 30px;background-color: none;}"
+                   "QMenu::item {padding: 4px 30px 4px 30px;background-color: none;height: 32px;}"
                    "QMenu::item:selected {color: %1;background-color: %2}"
                   ).arg(
                       QApplication::palette().color(QPalette::Normal, QPalette::HighlightedText).name(),
@@ -121,7 +121,7 @@ MenuBar::MenuBar(QWidget * parent) : QWidget(parent)
              menu2->setContentsMargins(8,8,8,8);
              menu2->setStyleSheet(
                 QString("QMenu {icon-size: 32px;border: none;background-color: none;}"
-                        "QMenu::item {padding: 4px 30px 4px 30px;background-color: none;}"
+                        "QMenu::item {padding: 4px 30px 4px 30px;background-color: none; height: 32px;}"
                         "QMenu::item:selected {color: %1;background-color: %2}"
                   ).arg(
                       QApplication::palette().color(QPalette::Normal, QPalette::HighlightedText).name(),
@@ -213,7 +213,7 @@ MenuBarButton::MenuBarButton( const QIcon &icon, const QString &text, QWidget *p
 {
     this->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );  
     this->setFocusPolicy(Qt::TabFocus);
-    this->setIconSize( QSize(26,26) );
+    this->setIconSize( QSize(32,32) );
     this->setFlat ( true );
     this->setCheckable(true);
 

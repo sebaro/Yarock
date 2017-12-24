@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -173,8 +173,8 @@ QSize ExLineEdit::sizeHint() const
     
     return QSize(
       m_lineEdit->sizeHint().width() + m_clearButton->sizeHint().width(),
-         qMax(H + 8, 24)
-      );
+      qMax(H + 8, 30)
+    );
 }
 
 void ExLineEdit::resizeEvent(QResizeEvent *event)
@@ -229,8 +229,9 @@ Q_UNUSED(event)
     QStyleOptionFrameV2 panel;
     #endif
     
+  
     initStyleOption(&panel);
-    style()->drawPrimitive(QStyle::PE_PanelLineEdit, &panel, &p, this);
+    QApplication::style()->drawPrimitive(QStyle::PE_PanelLineEdit, &panel, &p, this);
 
     // draw line edit inactive text
     if (m_lineEdit->text().isEmpty() && !hasFocus())
@@ -250,14 +251,18 @@ Q_UNUSED(event)
     }
 }
 
+#if QT_VERSION >= 0x050000
+void ExLineEdit::initStyleOption(QStyleOptionFrame *option) const
+#else
 void ExLineEdit::initStyleOption(QStyleOptionFrameV2 *option) const
+#endif
 {
     option->initFrom(this);
     option->rect = contentsRect();
     option->lineWidth = style()->pixelMetric(QStyle::PM_DefaultFrameWidth, option, this);
     option->midLineWidth = 0;
+    option->frameShape = QFrame::StyledPanel;
     option->state |= QStyle::State_Sunken;
-
     option->features = QStyleOptionFrameV2::None;
 }
 

@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -24,6 +24,7 @@
 #include <QEvent>
 #include <QKeyEvent>
 
+#include "utilities.h"
 #include "settings.h"
 #include "debug.h"
 
@@ -67,14 +68,14 @@ Q_UNUSED(event)
     #else
     QStyleOptionFrameV2 panel;
     #endif
-        
+    
     initStyleOption(&panel);
-    style()->drawPrimitive(QStyle::PE_PanelLineEdit, &panel, &p, this);
+    UTIL::getStyle()->drawPrimitive(QStyle::PE_PanelLineEdit, &panel, &p, this);
 
     // draw line edit inactive text
     if (m_lineEdit->text().isEmpty() && !hasFocus() && !isCustomSearch)
     {
-        QRect r = style()->subElementRect(QStyle::SE_LineEditContents, &panel, this);
+        QRect r = UTIL::getStyle()->subElementRect(QStyle::SE_LineEditContents, &panel, this);
 
         QFontMetrics fm = fontMetrics();
         int horizontalMargin = 2;
@@ -90,7 +91,7 @@ Q_UNUSED(event)
     }
     else if (isCustomSearch)
     {
-        QRect r = style()->subElementRect(QStyle::SE_LineEditContents, &panel, this);
+        QRect r = UTIL::getStyle()->subElementRect(QStyle::SE_LineEditContents, &panel, this);
       
         QFont font = QApplication::font();
         font.setBold(true);
@@ -105,7 +106,7 @@ Q_UNUSED(event)
                        fm.height());
 
         QPainter painter(this);
-	painter.setFont(font);
+        painter.setFont(font);
         painter.setPen(QPen(SETTINGS()->_baseColor, 0.1, Qt::SolidLine, Qt::RoundCap));
         painter.drawText(lineRect, Qt::AlignLeft|Qt::AlignVCenter, tr("Custom search"));
     }

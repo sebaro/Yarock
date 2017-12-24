@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -19,7 +19,6 @@
 #define _MAIN_LEFT_H_
 
 #include "header_widget.h"
-#include "widgets/customsplitter.h"
 #include "views.h"
 
 #include <QObject>
@@ -58,9 +57,7 @@ public:
 
     void setMode(VIEW::Id mode);
 
-    CustomSplitter* splitter() {return m_viewsSplitter;}
-    
-    QWidget * contentWidget() {return m_viewsSplitter;}
+    QWidget * contentWidget() {return m_contentWidget;}
     QWidget * headerWidget()  {return m_header;}
     
 private slots:
@@ -72,7 +69,6 @@ private slots:
 signals:
     void browser_search_change(const QVariant&);
     
-    void dbNameChanged();
     void settings_save_clicked();
     void settings_cancel_clicked();
      
@@ -84,8 +80,7 @@ private:
     
     VIEW::Id              m_mode;
     HeaderWidget         *m_header;
-    
-    CustomSplitter       *m_viewsSplitter;
+    QWidget              *m_contentWidget;
     
     /* for header */
     EditorSearch         *ui_editor_search;

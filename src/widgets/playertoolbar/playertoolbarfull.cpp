@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -20,7 +20,7 @@
 #include "volumebutton.h"
 #include "audiocontrols.h"
 #include "seekslider.h"
-
+#include "iconmanager.h"
 
 #include "widgets/editors/editor_track.h"
 #include "widgets/main/main_right.h"
@@ -97,12 +97,12 @@ PlayerToolBarFull::PlayerToolBarFull(QWidget *parent) : PlayerToolBarBase( paren
       
     ui_btn_title  = new ToolButtonBase(this, QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum) );
     ui_btn_title->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
-    ui_btn_title->setIcon(QIcon(":/images/track-18x18.png"));
+    ui_btn_title->setIcon( IconManager::instance()->icon( "track"));
 
     
     ui_btn_artist  = new ToolButtonBase(this, QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum) );
     ui_btn_artist->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
-    ui_btn_artist->setIcon(QIcon(":/images/view-artist_18x18.png"));      
+    ui_btn_artist->setIcon(IconManager::instance()->icon( "artist"));
 
     ui_btn_audio = new ToolButtonBase(this, QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum) );
     ui_btn_audio->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
@@ -119,7 +119,7 @@ PlayerToolBarFull::PlayerToolBarFull(QWidget *parent) : PlayerToolBarBase( paren
       
 
     /* toolbar actions */
-    PLAYING_TRACK_ADD_QUEUE = new QAction(QIcon(":/images/media-playlist-48x48.png"), tr("Add to play queue"), 0);
+    PLAYING_TRACK_ADD_QUEUE = new QAction(IconManager::instance()->icon("playlist1"), tr("Add to play queue"), 0);
 
     PLAYING_TRACK_FAVORITE = new QAction(QIcon(":/images/favorites-48x48.png"), tr("Add to favorites"), 0);
 
@@ -146,7 +146,7 @@ PlayerToolBarFull::PlayerToolBarFull(QWidget *parent) : PlayerToolBarBase( paren
     
     
     ToolButtonBase* ui_expand_button = new ToolButtonBase(this);
-    ui_expand_button->setIcon(QIcon(":/images/go-down_48x48.png"));
+    ui_expand_button->setIcon( IconManager::instance()->icon( "chevron-down") );
     
 
    

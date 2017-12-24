@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -17,6 +17,7 @@
 #include "main_right.h"
 #include "global_actions.h"
 #include "debug.h"
+#include "iconmanager.h"
 
 #include "playqueue/playlistwidget.h"
 #include "widgets/editors/editor_playlist.h"
@@ -24,6 +25,7 @@
 #include "widgets/editors/editor_artist.h"
 #include "widgets/editors/editor_album.h"
 #include "widgets/editors/editor_track.h"
+#include "widgets/editors/editor_stream.h"
 
 
 #include <QtGui>
@@ -49,7 +51,7 @@ MainRightWidget::MainRightWidget(QWidget *parent)
     m_header->setMinimumHeight(36);
 
     QPushButton* ui_tool_button = new QPushButton(m_parent);
-    ui_tool_button->setIcon(QIcon(":/images/go-down_48x48.png"));
+    ui_tool_button->setIcon( IconManager::instance()->icon( "chevron-down") );
     ui_tool_button->setFlat(true);
     
     /* ----- header layout ----- */
@@ -167,6 +169,8 @@ void MainRightWidget::addWidget(QWidget* widget, bool activate)
       addWidget(MainRightWidget::TAG_EDIT, w, activate);
     else if ( EditorTrack *w = dynamic_cast<EditorTrack*>(widget) )
       addWidget(MainRightWidget::TAG_EDIT, w, activate);
+    else if ( EditorStream *w = dynamic_cast<EditorStream*>(widget) )
+      addWidget(MainRightWidget::TAG_EDIT, w, activate);
 }
 
 
@@ -180,7 +184,7 @@ void MainRightWidget::addWidget(WidgetType type, QWidget* widget, bool activate)
     switch (type)
     {
       case MainRightWidget::PLAYQUEUE: 
-          button->setIcon(QIcon(":/images/media-playlist-48x48.png"));
+          button->setIcon(IconManager::instance()->icon("playlist1"));
           button->setToolTip(tr("Playqueue"));
       break;
       case MainRightWidget::PLAYLIST_EDIT: 
