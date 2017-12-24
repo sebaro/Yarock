@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -43,20 +43,6 @@
 #include <QDrag>
 #include <QtCore>
 
-static inline QFont alternateFont()
-{
-    QFont font = QApplication::font();
-    font.setPointSize( QApplication::font().pointSize() -1 );
-    font.setWeight( QFont::Bold );
-    return font;
-}
-
-static inline QFontMetrics alternateFontMetric()
-{
-    return  QFontMetrics( alternateFont() );
-}
-
-
 /*
 ********************************************************************************
 *                                                                              *
@@ -88,13 +74,15 @@ AlbumGraphicItem::AlbumGraphicItem()
     opt.displayAlignment = Qt::AlignCenter;
 
     opt.locale.setNumberOptions(QLocale::OmitGroupSeparator);
-    opt.state |= QStyle::State_Active;
+    opt.state &= ~ QStyle::State_Active;
     opt.state |= QStyle::State_Enabled;
     opt.state &= ~QStyle::State_Selected;
     
     m_coverSize = SETTINGS()->_coverSize;
     
     opt.rect = boundingRect().toRect();
+    opt.palette.setColor(QPalette::Active, QPalette::Highlight, SETTINGS()->_baseColor);
+    opt.palette.setColor(QPalette::Inactive, QPalette::Highlight, QApplication::palette().color(QPalette::Normal,QPalette::Highlight));
 }
 
 
@@ -109,21 +97,21 @@ Q_UNUSED(option)
     MEDIA::ArtistPtr artist_ptr = MEDIA::ArtistPtr::staticCast(media->parent());
 
     /* Get color for state */
-    QColor c = QApplication::palette().color(QPalette::Normal,QPalette::Highlight);
-
-    if(isSelected())
+    if(media->isPlaying)
     {
-      opt.state |= QStyle::State_Selected;
-      opt.palette.setColor(QPalette::Normal, QPalette::Highlight, c);
+        opt.state |= QStyle::State_Selected;
+        opt.state |= QStyle::State_Active;
+    }    
+    else 
+    {
+        opt.state &= ~QStyle::State_Active;
+        opt.state &= ~QStyle::State_Selected;
+        if(isSelected())
+        {
+            opt.state |= QStyle::State_Selected;
+        }
     }
-    else if (opt.state & QStyle::State_MouseOver) {
-      opt.state |= QStyle::State_Selected;
-      c.setAlpha(100);
-      opt.palette.setColor(QPalette::Normal, QPalette::Highlight, c);
-    }
-    else {
-      opt.state &= ~QStyle::State_Selected;
-    }
+    
 
     /* Draw frame for State_HasFocus item */
     UTIL::getStyle()->drawControl(QStyle::CE_ItemViewItem, &opt, painter, widget);
@@ -164,16 +152,13 @@ Q_UNUSED(option)
     }
    
     /* paint artist name */
-    painter->setFont( alternateFont() );
+    painter->setFont( UTIL::alternateFont() );
     painter->setPen(opt.palette.color ( QPalette::Disabled, isSelected() ? QPalette::HighlightedText : QPalette::WindowText) );
 
-    const QString elided_artist = alternateFontMetric().elidedText ( artist_ptr->name, Qt::ElideRight, m_coverSize*1.25, Qt::TextWrapAnywhere);
+    const QString elided_artist = UTIL::alternateFontMetric().elidedText ( artist_ptr->name, Qt::ElideRight, m_coverSize*1.25, Qt::TextWrapAnywhere);
     painter->drawText(QRect(0, m_coverSize+3 + opt.fontMetrics.height() + 2, m_coverSize*1.25, 25), Qt::AlignTop | Qt::AlignHCenter, elided_artist);
 
-    /* paint playing or favorite attibute */
-    if(media->isPlaying)
-      UTIL::drawPlayingIcon(painter,18, 0, QPoint(2,8));
-
+    /* paint favorite attibute */
     if(media->isFavorite)
       painter->drawPixmap(0, 60, QPixmap(":/images/favorites-18x18.png"));
 }
@@ -248,21 +233,21 @@ void AlbumGraphicItem_v2::paint(QPainter * painter, const QStyleOptionGraphicsIt
 Q_UNUSED(option)
 
     /* Get color for state */
-    QColor c = QApplication::palette().color(QPalette::Normal,QPalette::Highlight);
-
-    if(isSelected())
+    if(media->isPlaying)
     {
-      opt.state |= QStyle::State_Selected;
-      opt.palette.setColor(QPalette::Normal, QPalette::Highlight, c);
+        opt.state |= QStyle::State_Selected;
+        opt.state |= QStyle::State_Active;
+    }    
+    else 
+    {
+        opt.state &= ~QStyle::State_Active;
+        opt.state &= ~QStyle::State_Selected;
+        if(isSelected())
+        {
+            opt.state |= QStyle::State_Selected;
+        }
     }
-    else if (opt.state & QStyle::State_MouseOver) {
-      opt.state |= QStyle::State_Selected;
-      c.setAlpha(100);
-      opt.palette.setColor(QPalette::Normal, QPalette::Highlight, c);
-    }
-    else {
-      opt.state &= ~QStyle::State_Selected;
-    }
+
 
     /* Draw frame for State_HasFocus item */
     UTIL::getStyle()->drawControl(QStyle::CE_ItemViewItem, &opt, painter, widget);
@@ -302,14 +287,11 @@ Q_UNUSED(option)
     }
   
     /* paint year */
-    painter->setFont( alternateFont() );
+    painter->setFont( UTIL::alternateFont() );
     painter->setPen(opt.palette.color ( QPalette::Disabled, isSelected() ? QPalette::HighlightedText : QPalette::WindowText));
     painter->drawText(QRect(0, m_coverSize +3 + opt.fontMetrics.height() + 2, m_coverSize*1.25, 25),  Qt::AlignTop | Qt::AlignHCenter, media->yearToString());
 
-    /* paint playing or favorite attibute */
-    if(media->isPlaying)
-      UTIL::drawPlayingIcon(painter,18, 0, QPoint(2,8));
-
+    /* paint favorite attibute */
     if(media->isFavorite)
       painter->drawPixmap(0, 60, QPixmap(":/images/favorites-18x18.png"));
 }
@@ -383,21 +365,21 @@ Q_UNUSED(option)
     const QString artist_name   =  !artist_ptr.isNull() ? artist_ptr->name : "";
 
     /* Get color for state */
-    QColor c = QApplication::palette().color(QPalette::Normal,QPalette::Highlight);
-
-    if(isSelected())
+    if(media->isPlaying)
     {
-      opt.state |= QStyle::State_Selected;
-      opt.palette.setColor(QPalette::Normal, QPalette::Highlight, c);
+        opt.state |= QStyle::State_Selected;
+        opt.state |= QStyle::State_Active;
+    }    
+    else 
+    {
+        opt.state &= ~QStyle::State_Active;
+        opt.state &= ~QStyle::State_Selected;
+        if(isSelected())
+        {
+            opt.state |= QStyle::State_Selected;
+        }
     }
-    else if (opt.state & QStyle::State_MouseOver) {
-      opt.state |= QStyle::State_Selected;
-      c.setAlpha(100);
-      opt.palette.setColor(QPalette::Normal, QPalette::Highlight, c);
-    }
-    else {
-      opt.state &= ~QStyle::State_Selected;
-    }
+
 
     /* Draw frame for State_HasFocus item */
     UTIL::getStyle()->drawControl(QStyle::CE_ItemViewItem, &opt, painter, widget);
@@ -437,16 +419,13 @@ Q_UNUSED(option)
     painter->drawText(QRect (0,m_coverSize+22,m_coverSize*1.25,25), Qt::AlignTop | Qt::AlignHCenter,elided_album );
 
     /* paint artist name */
-    painter->setFont( alternateFont() );
+    painter->setFont( UTIL::alternateFont() );
     painter->setPen(opt.palette.color ( QPalette::Disabled, isSelected() ? QPalette::HighlightedText : QPalette::WindowText));
 
-    const QString elided_artist = alternateFontMetric().elidedText ( artist_name, Qt::ElideRight, m_coverSize*1.25);
+    const QString elided_artist = UTIL::alternateFontMetric().elidedText ( artist_name, Qt::ElideRight, m_coverSize*1.25);
     painter->drawText(QRect(0, m_coverSize+22+opt.fontMetrics.height(), m_coverSize*1.25, 25), Qt::AlignTop | Qt::AlignHCenter, elided_artist);
 
-    /* paint playing or favorite attibute */
-    if(media->isPlaying)
-      UTIL::drawPlayingIcon(painter,18, 0, QPoint(2,35));
-
+    /* paint favorite attibute */
     if(media->isFavorite)
       painter->drawPixmap(0, 60, QPixmap(":/images/favorites-18x18.png"));
 }
@@ -478,21 +457,21 @@ Q_UNUSED(option)
     const QString artist_name   =  !artist_ptr.isNull() ? artist_ptr->name : "";
 
     /* Get color for state */
-    QColor c = QApplication::palette().color(QPalette::Normal,QPalette::Highlight);
-
-    if(isSelected())
+    if(media->isPlaying)
     {
-      opt.state |= QStyle::State_Selected;
-      opt.palette.setColor(QPalette::Normal, QPalette::Highlight, c);
+        opt.state |= QStyle::State_Selected;
+        opt.state |= QStyle::State_Active;
+    }    
+    else 
+    {
+        opt.state &= ~QStyle::State_Active;
+        opt.state &= ~QStyle::State_Selected;
+        if(isSelected())
+        {
+            opt.state |= QStyle::State_Selected;
+        }
     }
-    else if (opt.state & QStyle::State_MouseOver) {
-      opt.state |= QStyle::State_Selected;
-      c.setAlpha(100);
-      opt.palette.setColor(QPalette::Normal, QPalette::Highlight, c);
-    }
-    else {
-      opt.state &= ~QStyle::State_Selected;
-    }
+
 
     /* Draw frame for State_HasFocus item */
     UTIL::getStyle()->drawControl(QStyle::CE_ItemViewItem, &opt, painter, widget);
@@ -524,16 +503,13 @@ Q_UNUSED(option)
     painter->drawText(QRect (0,m_coverSize+22,m_coverSize*1.25, 25), Qt::AlignTop | Qt::AlignHCenter,elided_album );
 
     //! paint artist name
-    painter->setFont( alternateFont() );
+    painter->setFont( UTIL::alternateFont() );
     painter->setPen(opt.palette.color ( QPalette::Disabled, isSelected() ? QPalette::HighlightedText : QPalette::WindowText));
 
-    const QString elided_artist = alternateFontMetric().elidedText ( artist_name, Qt::ElideRight, m_coverSize*1.25);
+    const QString elided_artist = UTIL::alternateFontMetric().elidedText ( artist_name, Qt::ElideRight, m_coverSize*1.25);
     painter->drawText(QRect(0, m_coverSize+22+opt.fontMetrics.height()+2, m_coverSize*1.25, 18), Qt::AlignTop | Qt::AlignHCenter, elided_artist);
 
-    //! paint playing or favorite attibute
-    if(media->isPlaying)
-      UTIL::drawPlayingIcon(painter,18, 0, QPoint(2,35));
-
+    /* paint favorite attibute */
     if(media->isFavorite)
       painter->drawPixmap(0, 60, QPixmap(":/images/favorites-18x18.png"));
 }
@@ -631,13 +607,15 @@ ArtistGraphicItem::ArtistGraphicItem()
     opt.displayAlignment = Qt::AlignCenter;
 
     opt.locale.setNumberOptions(QLocale::OmitGroupSeparator);
-    opt.state |= QStyle::State_Active;
+    opt.state &= ~ QStyle::State_Active;
     opt.state |= QStyle::State_Enabled;
     opt.state &= ~QStyle::State_Selected;
     
     m_coverSize = SETTINGS()->_coverSize;
 
     opt.rect = boundingRect().toRect();
+    opt.palette.setColor(QPalette::Active, QPalette::Highlight, SETTINGS()->_baseColor);
+    opt.palette.setColor(QPalette::Inactive, QPalette::Highlight, QApplication::palette().color(QPalette::Normal,QPalette::Highlight));
 }
 
 QRectF ArtistGraphicItem::boundingRect() const
@@ -652,21 +630,21 @@ void ArtistGraphicItem::paint(QPainter * painter, const QStyleOptionGraphicsItem
 Q_UNUSED(option)
 
     /* Get color for state */
-    QColor c = QApplication::palette().color(QPalette::Normal,QPalette::Highlight);
-
-    if(isSelected())
+    if(media->isPlaying)
     {
-      opt.state |= QStyle::State_Selected;
-      opt.palette.setColor(QPalette::Normal, QPalette::Highlight, c);
+        opt.state |= QStyle::State_Selected;
+        opt.state |= QStyle::State_Active;
+    }    
+    else 
+    {
+        opt.state &= ~QStyle::State_Active;
+        opt.state &= ~QStyle::State_Selected;
+        if(isSelected())
+        {
+            opt.state |= QStyle::State_Selected;
+        }
     }
-    else if (opt.state & QStyle::State_MouseOver) {
-      opt.state |= QStyle::State_Selected;
-      c.setAlpha(100);
-      opt.palette.setColor(QPalette::Normal, QPalette::Highlight, c);
-    }
-    else {
-      opt.state &= ~QStyle::State_Selected;
-    }
+
 
     /* Draw frame for State_HasFocus item */
     UTIL::getStyle()->drawControl(QStyle::CE_ItemViewItem, &opt, painter, widget);
@@ -697,10 +675,7 @@ Q_UNUSED(option)
 
     painter->drawText(QRect(0, m_coverSize+4, m_coverSize*1.17, opt.fontMetrics.height()*2+4), Qt::AlignTop | Qt::AlignHCenter | Qt::TextWrapAnywhere, elided_artist);
 
-    /* affichage des attributs playing ou favorite */
-    if(media->isPlaying)
-      UTIL::drawPlayingIcon(painter,18, 0, QPoint(2,8));
-    
+    /* paint favorite attibute */
     if(media->isFavorite)
       painter->drawPixmap(0, 40, QPixmap(":/images/favorites-18x18.png"));
 }
@@ -775,21 +750,21 @@ QRectF ArtistGraphicItem_v2::boundingRect() const
 void ArtistGraphicItem_v2::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)
 {
 Q_UNUSED(option)
-    /* Get color for state */
-    QColor c = QApplication::palette().color(QPalette::Normal,QPalette::Highlight);
 
-    if(isSelected())
+    /* Get color for state */
+    if(media->isPlaying)
     {
-      opt.state |= QStyle::State_Selected;
-      opt.palette.setColor(QPalette::Normal, QPalette::Highlight, c);
-    }
-    else if (opt.state & QStyle::State_MouseOver) {
-      opt.state |= QStyle::State_Selected;
-      c.setAlpha(100);
-      opt.palette.setColor(QPalette::Normal, QPalette::Highlight, c);
-    }
-    else {
-      opt.state &= ~QStyle::State_Selected;
+        opt.state |= QStyle::State_Selected;
+        opt.state |= QStyle::State_Active;
+    }    
+    else 
+    {
+        opt.state &= ~QStyle::State_Active;
+        opt.state &= ~QStyle::State_Selected;
+        if(isSelected())
+        {
+            opt.state |= QStyle::State_Selected;
+        }
     }
 
     /* Draw frame for State_HasFocus item */
@@ -831,10 +806,7 @@ Q_UNUSED(option)
     const QString elided_artist = opt.fontMetrics.elidedText ( media->name, Qt::ElideRight, m_coverSize*1.25);
     painter->drawText(QRect(0, m_coverSize+22, m_coverSize*1.25, 25), Qt::AlignTop | Qt::AlignHCenter, elided_artist);
     
-    /* paint playing or favorite attibute */
-    if(media->isPlaying)
-      UTIL::drawPlayingIcon(painter,18, 0, QPoint(2,35));
-
+    /* paint favorite attibute */
     if(media->isFavorite)
       painter->drawPixmap(0, 60, QPixmap(":/images/favorites-18x18.png"));
 }
@@ -863,21 +835,21 @@ QRectF ArtistGraphicItem_v3::boundingRect() const
 void ArtistGraphicItem_v3::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)
 {
 Q_UNUSED(option)
-    /* Get color for state */
-    QColor c = QApplication::palette().color(QPalette::Normal,QPalette::Highlight);
 
-    if(isSelected())
+    /* Get color for state */
+    if(media->isPlaying)
     {
-      opt.state |= QStyle::State_Selected;
-      opt.palette.setColor(QPalette::Normal, QPalette::Highlight, c);
-    }
-    else if (opt.state & QStyle::State_MouseOver) {
-      opt.state |= QStyle::State_Selected;
-      c.setAlpha(100);
-      opt.palette.setColor(QPalette::Normal, QPalette::Highlight, c);
-    }
-    else {
-      opt.state &= ~QStyle::State_Selected;
+        opt.state |= QStyle::State_Selected;
+        opt.state |= QStyle::State_Active;
+    }    
+    else 
+    {
+        opt.state &= ~QStyle::State_Active;
+        opt.state &= ~QStyle::State_Selected;
+        if(isSelected())
+        {
+            opt.state |= QStyle::State_Selected;
+        }
     }
     
     /* Draw frame for State_HasFocus item */
@@ -910,10 +882,7 @@ Q_UNUSED(option)
     const QString elided_artist = opt.fontMetrics.elidedText ( media->name, Qt::ElideRight, m_coverSize*1.25);
     painter->drawText(QRect(0, m_coverSize+22, m_coverSize*1.25, 25), Qt::AlignTop | Qt::AlignHCenter, elided_artist);
 
-    //! paint playing or favorite attibute
-    if(media->isPlaying)
-      UTIL::drawPlayingIcon(painter,18, 0, QPoint(2,35));
-
+    /* paint favorite attibute */
     if(media->isFavorite)
       painter->drawPixmap(0, 60, QPixmap(":/images/favorites-18x18.png"));
 }
@@ -1100,7 +1069,7 @@ Q_UNUSED(option)
 
    //! paint activated item
    if(media->isPlaying)
-      UTIL::drawPlayingIcon(painter,18, 0, QPoint(1,1));
+      UTIL::drawPlayingIcon(painter,18, 0, QPoint(12,1));
    else if(media->isBroken)
      painter->drawPixmap(2, 1, QPixmap(":/images/media-broken-18x18.png"));
    else if (!isTrack)
@@ -1230,7 +1199,7 @@ Q_UNUSED(option)
 
    //! paint activated item
    if(media->isPlaying)
-      UTIL::drawPlayingIcon(painter,18, 0, QPoint(1,1));
+      UTIL::drawPlayingIcon(painter,18, 0, QPoint(12,1));
    else if(media->isBroken)
      painter->drawPixmap(0, 0, QPixmap(":/images/media-broken-18x18.png"));
 
@@ -1402,7 +1371,7 @@ Q_UNUSED(option)
 
    //! paint activated item
    if(media->isPlaying)
-      UTIL::drawPlayingIcon(painter,18, 0, QPoint(1,1));
+      UTIL::drawPlayingIcon(painter,18, 0, QPoint(12,1));
    else if(media->isBroken)
      painter->drawPixmap(1, 1, QPixmap(":/images/media-broken-18x18.png"));
    else if (!isTrack)
@@ -1518,7 +1487,7 @@ Q_UNUSED(option)
 
    //! paint activated item
    if(media->isPlaying)
-      UTIL::drawPlayingIcon(painter,18, 0, QPoint(1,1));
+      UTIL::drawPlayingIcon(painter,18, 0, QPoint(12,1));
    else if(media->isBroken)
       painter->drawPixmap(0, 0, QPixmap(":/images/media-broken-18x18.png"));
 
@@ -1623,8 +1592,12 @@ PlaylistGraphicItem::PlaylistGraphicItem()
    opt.displayAlignment = Qt::AlignCenter;
 
    opt.locale.setNumberOptions(QLocale::OmitGroupSeparator);
-   opt.state |= QStyle::State_Active;
+   opt.state &= ~ QStyle::State_Active;
    opt.state |= QStyle::State_Enabled;
+   opt.state &= ~QStyle::State_Selected;
+   
+   opt.palette.setColor(QPalette::Active, QPalette::Highlight, SETTINGS()->_baseColor);
+   opt.palette.setColor(QPalette::Inactive, QPalette::Highlight, QApplication::palette().color(QPalette::Normal,QPalette::Highlight));
 }
 
 QRectF PlaylistGraphicItem::boundingRect() const
@@ -1640,21 +1613,20 @@ Q_UNUSED(option)
    const QString name    = media->name;
    const QString icon    = media->icon;
 
-   //! Get color for state
-   QColor c = QApplication::palette().color(QPalette::Normal,QPalette::Highlight);
-
-   if(isSelected())
+   /* Get color for state */
+   if(media->isPlaying)
    {
-     opt.state |= QStyle::State_Selected;
-     opt.palette.setColor(QPalette::Normal, QPalette::Highlight, c);
-   }
-   else if (opt.state & QStyle::State_MouseOver) {
-     opt.state |= QStyle::State_Selected;
-     c.setAlpha(100);
-     opt.palette.setColor(QPalette::Normal, QPalette::Highlight, c);
-   }
-   else {
-     opt.state &= ~QStyle::State_Selected;
+       opt.state |= QStyle::State_Selected;
+       opt.state |= QStyle::State_Active;
+   }    
+   else 
+   {
+       opt.state &= ~QStyle::State_Active;
+       opt.state &= ~QStyle::State_Selected;
+       if(isSelected())
+       {
+           opt.state |= QStyle::State_Selected;
+       }
    }
 
    
@@ -1680,11 +1652,7 @@ Q_UNUSED(option)
 
    painter->drawText(QRect(0, 140, 170, 30), Qt::AlignTop | Qt::AlignCenter | Qt::TextWrapAnywhere, elided_p_name);
 
-   //! paint activated item
-   if(media->isPlaying)
-     UTIL::drawPlayingIcon(painter,18, 0, QPoint(14,30));
-
-   //! paint favorites item
+   /* paint favorite attibute */
    if(media->isFavorite)
      painter->drawPixmap(10, 60, QPixmap(":/images/favorites-18x18.png"));
 
