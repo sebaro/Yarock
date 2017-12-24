@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -29,7 +29,6 @@
 #include <QDir>
 #include <QString>
 #include <QTime>
-
 #include <QLocalServer>
 #include <QLocalSocket>
 
@@ -186,10 +185,10 @@ void Starter::startPlayer(const CommandlineOptions& options)
     QDir().mkpath(UTIL::CONFIGDIR + "/artists");
     QDir().mkpath(UTIL::CONFIGDIR + "/lyrics");
 
-    
-     m_mainwindow = new MainWindow();
-     connect(m_server, SIGNAL(newConnection()), SLOT(readCommand()));
-     m_mainwindow->show();
+   
+    m_mainwindow = new MainWindow();
+    connect(m_server, SIGNAL(newConnection()), SLOT(readCommand()));
+    m_mainwindow->show();
 }
 
 

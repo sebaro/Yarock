@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -253,10 +253,8 @@ Q_UNUSED(option)
       else if (!isTrack)
         painter->drawPixmap(1, 1, QPixmap(":/images/files-18x18.png"));      
    }
-
-
-
 }
+
 
 
 void TrackGraphicItem_v4::mouseMoveEvent(QGraphicsSceneMouseEvent *event)

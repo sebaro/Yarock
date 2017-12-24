@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -16,12 +16,6 @@
 *****************************************************************************************/
 
 #include "browser_view.h"
-
-/* models */
-#include "models/local/local_track_model.h"
-#include "models/local/local_playlist_model.h"
-#include "models/local/histo_model.h"
-#include "models/stream/stream_model.h"
 
 /* scene */
 #include "views/local/local_scene.h"

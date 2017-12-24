@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -29,6 +29,7 @@
 
 #include "global_actions.h"
 #include "settings.h"
+#include "iconmanager.h"
 #include "debug.h"
 
 #include <QLayout>
@@ -66,9 +67,9 @@ void PlaylistWidget::init(PlayqueueModel* model)
     /* ------- menu & actions ------------------ */
     m_menu     = 0;
     
-    m_actions->insert(PLAYQUEUE_JUMP_TO_TRACK, new QAction(QIcon(":/images/jump_to_32x32.png"),tr("Jump to track"), this));
+    m_actions->insert(PLAYQUEUE_JUMP_TO_TRACK, new QAction(IconManager::instance()->icon("goto"),tr("Jump to track"), this));
     
-    m_actions->insert(PLAYQUEUE_ADD_FILE, new QAction(QIcon(":/images/track-48x48.png"),tr("&Add media to playlist"), this));
+    m_actions->insert(PLAYQUEUE_ADD_FILE, new QAction(IconManager::instance()->icon("track"),tr("&Add media to playlist"), this));
     m_actions->insert(PLAYQUEUE_ADD_DIR, new QAction(QIcon(":/images/folder-48x48.png"),tr("&Add directory to playlist"), this));
     m_actions->insert(PLAYQUEUE_ADD_URL, new QAction(QIcon(":/images/media-url-48x48.png"),tr("&Add Url..."), this));
     m_actions->insert(PLAYQUEUE_CLEAR, new QAction(QIcon::fromTheme("edit-clear-list"), tr("&Clear playlist"), this));    
@@ -109,7 +110,7 @@ void PlaylistWidget::init(PlayqueueModel* model)
 
     /* ------- playqueue filter widget --------- */
     ui_playqueue_filter = new ExLineEdit();
-    ui_playqueue_filter->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
+    ui_playqueue_filter->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Minimum);
     ui_playqueue_filter->setInactiveText(tr("Playqueue filter"));
     
     ui_filter_container = new QWidget(this);
@@ -381,35 +382,23 @@ void PlaylistWidget::slot_add_to_playqueue()
     /* -------------------------------------------------*/
     else if ( action == m_actions->value(PLAYQUEUE_ADD_URL) )
     {
-      AddStreamDialog stream_dialog(this,false);
+        MEDIA::TrackPtr media = MEDIA::TrackPtr(new MEDIA::Track());
+        media->setType(TYPE_STREAM);
+          
+        AddStreamDialog stream_dialog(media, this);
 
-      if(stream_dialog.exec() == QDialog::Accepted)
-      {
-        const QString url   = stream_dialog.url();
-
-        if(!QUrl(url).isEmpty() && QUrl(url).isValid()) 
+        if(stream_dialog.exec() == QDialog::Accepted)
         {
-          const QString name  = stream_dialog.name();
-
-          MEDIA::TrackPtr media = MEDIA::TrackPtr(new MEDIA::Track());
-          media->setType(TYPE_STREAM);
-          media->id          = -1;
-          media->url         = url;
-          media->extra["station"] = !name.isEmpty() ? name : url ;
-          media->isFavorite  = false;
-          media->isPlaying   = false;
-          media->isBroken    = false;
-          media->isPlayed    = false;
-          media->isStopAfter = false;
-
-          m_model->addMediaItem(media);
-          media.reset();
+            if(!QUrl(media->url).isEmpty() && QUrl(media->url).isValid()) 
+            {
+                m_model->addMediaItem(media);
+                media.reset();
+            }
+            else 
+            {
+                StatusManager::instance()->startMessage("invalid url can not be added !!", STATUS::WARNING, 5000);
+            }
         }
-        else 
-        {
-          StatusManager::instance()->startMessage("invalid url can not be added !!", STATUS::WARNING, 5000);
-        }
-      }
     }
 }
 

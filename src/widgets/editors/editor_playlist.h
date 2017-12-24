@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -27,7 +27,6 @@
 #include <QWidget>
 #include <QObject>
 #include <QDialogButtonBox>
-#include <QMenu>
 
 class TaskManager;
 /*
@@ -57,10 +56,9 @@ private:
 
   TaskManager           *m_task_manager;
 
-  QMenu                 *m_menu;
   ExLineEdit            *ui_edit_name;
   QDialogButtonBox      *ui_buttonBox;
-    
+  
 signals:
   void playlistSaved();
   void close();

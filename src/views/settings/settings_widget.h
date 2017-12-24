@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -59,6 +59,7 @@ Q_OBJECT
     bool isSystrayChanged();
     bool isDbusChanged();
     bool isMprisChanged();
+    bool isHistoryChanged();
 
     void setContentVisible(bool b);
     
@@ -81,6 +82,7 @@ Q_OBJECT
     QCheckBox              *ui_check_hideAtStartup;
     QCheckBox              *ui_check_enableMpris;
     QCheckBox              *ui_check_enableDbus;
+    QCheckBox              *ui_check_enableHistory;    
     QPushButton            *ui_color_button;
 
     CategorieLayoutItem    *m_title;

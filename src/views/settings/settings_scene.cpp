@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -17,7 +17,9 @@
 
 #include "settings_scene.h"
 #include "settings_widget.h"
+
 #include "main_left.h"
+#include "menumodel.h"
 
 #include "threadmanager.h"
 
@@ -83,7 +85,7 @@ void SettingsScene::initScene()
 
     connect(Database::instance(), SIGNAL(settingsChanged()), this, SLOT(slot_database_settingsChanged()));
     
-    connect(MainLeftWidget::instance(), SIGNAL(dbNameChanged()), this, SLOT(slot_database_settingsChanged()));
+    connect(MenuModel::instance(), SIGNAL(dbNameChanged()), this, SLOT(slot_database_settingsChanged()));
     connect(MainLeftWidget::instance(), SIGNAL(settings_save_clicked()), this, SLOT(slot_apply_settings()));
     connect(MainLeftWidget::instance(), SIGNAL(settings_cancel_clicked()), this, SLOT(slot_cancel_settings()));
         
@@ -111,7 +113,7 @@ void SettingsScene::slot_database_settingsChanged()
 *******************************************************************************/
 void SettingsScene::slot_dbBuilder_stateChange()
 {
-    Debug::debug() << "#######   [SettingsScene] slot_dbBuilder_stateChange DB RUNNING " << ThreadManager::instance()->isDbRunning();
+    Debug::debug() << "   [SettingsScene] slot_dbBuilder_stateChange DB RUNNING " << ThreadManager::instance()->isDbRunning();
     m_pages[SETTINGS::LIBRARY]->setEnabled( !ThreadManager::instance()->isDbRunning() );
 }
 
@@ -204,6 +206,7 @@ void SettingsScene::restore_settings()
     m_result.isSystrayChanged       =  false;
     m_result.isDbusChanged          =  false;
     m_result.isMprisChanged         =  false;
+    m_result.isHistoryChanged       =  false;
     m_result.isEngineChanged        =  false;
     m_result.isLibraryChanged       =  false;
     m_result.isCoverSizeChanged     =  false;
@@ -223,6 +226,7 @@ void SettingsScene::slot_apply_settings()
     m_result.isSystrayChanged       =  static_cast<PageGeneral*>(m_pages[SETTINGS::GENERAL])->isSystrayChanged();
     m_result.isDbusChanged          =  static_cast<PageGeneral*>(m_pages[SETTINGS::GENERAL])->isDbusChanged();
     m_result.isMprisChanged         =  static_cast<PageGeneral*>(m_pages[SETTINGS::GENERAL])->isMprisChanged();
+    m_result.isHistoryChanged       =  static_cast<PageGeneral*>(m_pages[SETTINGS::GENERAL])->isHistoryChanged();
     m_result.isLibraryChanged       =  static_cast<PageLibrary*>(m_pages[SETTINGS::LIBRARY])->isLibraryChanged();
     m_result.isCoverSizeChanged     =  static_cast<PageLibrary*>(m_pages[SETTINGS::LIBRARY])->isCoverSizeChanged();
     m_result.isViewChanged          =  static_cast<PageLibrary*>(m_pages[SETTINGS::LIBRARY])->isViewChanged();

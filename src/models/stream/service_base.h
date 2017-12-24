@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -100,7 +100,8 @@ protected:
     MEDIA::LinkPtr     m_root_link;
     MEDIA::LinkPtr     m_active_link;
     MEDIA::LinkPtr     m_search_link;
-    MEDIA::LinkPtr     m_more_link;    
+    MEDIA::LinkPtr     m_more_link;
+    MEDIA::LinkPtr     m_genre_link;
 
     QString            m_search_term;
 };

@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -26,6 +26,7 @@
 #include <QDir>
 #include <QDialogButtonBox>
 #include <QVBoxLayout>
+#include <QApplication>
 
 /*
 ********************************************************************************
@@ -41,11 +42,10 @@ DatabaseAddDialog::DatabaseAddDialog(QWidget *parent) : DialogBase(parent, tr("A
 
     buttonBox()->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
 
-    ui_line_edit = new ExLineEdit();
+    ui_line_edit = new ExLineEdit(this);
     ui_line_edit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
     ui_line_edit->clearFocus();
     ui_line_edit->setInactiveText(tr("Choose collection name"));
-
     
     ui_add_folder = new AddFolderWidget();
     ui_add_folder->hideRemoveButton();

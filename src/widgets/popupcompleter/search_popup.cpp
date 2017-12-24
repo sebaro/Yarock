@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -91,8 +91,8 @@ void SearchPopup::show_popup()
     this->setUpdatesEnabled(true);
 
     int height = (m_popup_view->sizeHintForRow(0) + 2) * m_popup_model->rowCount() + 4;
-    this->resize(m_line_edit->sizeHint().width()-8, height);
-
+    this->resize(m_line_edit->contentsRect().width()-8, height);
+    
     this->move(m_line_edit->mapToGlobal(QPoint(4, m_line_edit->height())));
     this->show();
 

@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -15,6 +15,7 @@
 *  this program.  If not, see <http://www.gnu.org/licenses/>.                           *
 *****************************************************************************************/        
 #include "filedialog.h"
+#include "iconmanager.h"
 #include "debug.h"
 
 #include <QFileInfo>
@@ -183,26 +184,26 @@ void FileDialog::setupUi()
 
     /* setup ui */
     ui_prev_button = new QToolButton(this);
-    ui_prev_button->setIcon( QIcon::fromTheme("go-previous", QIcon(":/images/go-previous.png")) );
+    ui_prev_button->setIcon( QIcon::fromTheme("go-previous", IconManager::instance()->icon( "chevron-left")) );
     ui_prev_button->setText( tr("back") );
     ui_prev_button->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     ui_prev_button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
 
 
     ui_next_button = new QToolButton(this);
-    ui_next_button->setIcon( QIcon::fromTheme("go-next", QIcon(":/images/go-next.png")) );
+    ui_next_button->setIcon( QIcon::fromTheme("go-next", IconManager::instance()->icon( "chevron-right")) );
     ui_next_button->setText( tr("forward") );
     ui_next_button->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     ui_next_button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
 
     ui_up_button = new QToolButton(this);
-    ui_up_button->setIcon( QIcon::fromTheme("go-up", QIcon(":/images/go-up.png")) );
+    ui_up_button->setIcon( QIcon::fromTheme("go-up", IconManager::instance()->icon( "chevron-up")) );
     ui_up_button->setText( tr("go up") );
     ui_up_button->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     ui_up_button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
 
     ui_home_button = new QToolButton(this);
-    ui_home_button->setIcon( QIcon(":/images/home-48x48.png") );
+    ui_home_button->setIcon( IconManager::instance()->icon( "home") );
     ui_home_button->setText( tr("home") );
     ui_home_button->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     ui_home_button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
