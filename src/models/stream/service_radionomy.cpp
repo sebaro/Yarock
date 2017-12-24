@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -40,7 +40,7 @@ Radionomy::Radionomy() : Service("Radionomy", SERVICE::RADIONOMY)
     /* root link */
     m_root_link = MEDIA::LinkPtr(new MEDIA::Link());
     m_root_link->url  = QString("https://www.radionomy.com/en/style");
-    m_root_link->name = QString("radionomy directory");
+    m_root_link->name = QString("Radionomy");
     m_root_link->state = int (SERVICE::NO_DATA);
    
     /* search link */
@@ -61,7 +61,7 @@ void Radionomy::reload()
     /* root link */
     m_root_link = MEDIA::LinkPtr(new MEDIA::Link());
     m_root_link->url  = QString("https://www.radionomy.com/en/style");
-    m_root_link->name = QString("radionomy directory");
+    m_root_link->name = QString("Radionomy");
     m_root_link->state = int (SERVICE::NO_DATA);    
 
     /* search link */

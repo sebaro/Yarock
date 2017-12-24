@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -66,7 +66,7 @@ Dirble::Dirble() : Service("Dirble", SERVICE::DIRBLE)
     /* root link */
     m_root_link = MEDIA::LinkPtr(new MEDIA::Link());
     m_root_link->url  = QString("http://api.dirble.com/v2/categories/primary?token=%1").arg(DIRBLE::key_id);
-    m_root_link->name = QString("dirble directory");
+    m_root_link->name = QString("Dirble");
    
     /* search link */
     m_search_link = MEDIA::LinkPtr(new MEDIA::Link());
@@ -88,7 +88,7 @@ void Dirble::reload()
     /* root link */
     m_root_link = MEDIA::LinkPtr(new MEDIA::Link());
     m_root_link->url  = QString("http://api.dirble.com/v2/categories/primary?token=%1").arg(DIRBLE::key_id);
-    m_root_link->name = QString("dirble directory");
+    m_root_link->name = QString("Dirble");
    
     /* search link */
     m_search_term.clear();
@@ -173,6 +173,10 @@ QList<MEDIA::TrackPtr> Dirble::streams()
       }
     }
       
+    //! If search link, sort stream by categorie
+    if(m_active_link == m_search_link )
+      qSort(streams.begin(), streams.end(),MEDIA::compareStreamCategorie);
+    
     return streams;
 }
 
@@ -219,7 +223,7 @@ void Dirble::slotBrowseLinkDone(QByteArray bytes)
     {
         QVariantMap map = genre_link.toMap();
 
-	/* http://api.dirble.com/v2/categories/primary?token=b6909ed70f32338fe171e4df174c1eb6e388ca98 */
+        /* http://api.dirble.com/v2/categories/primary?token=b6909ed70f32338fe171e4df174c1eb6e388ca98 */
         if (link->url.contains("primary")) 
         {
               /*   http://api.dirble.com/v2/category/:id/childs?token=API_KEY */
@@ -320,7 +324,20 @@ void Dirble::slotBrowseStationDone(QByteArray bytes)
           MEDIA::TrackPtr stream = MEDIA::TrackPtr::staticCast( link->addChildren(TYPE_TRACK) );
           stream->setType(TYPE_STREAM);
           stream->url               = stream_map["stream"].toString();
-          stream->genre             = link->name;
+          
+          if(m_search_link->name != link->name)
+          {
+              stream->genre             = link->name;
+          }
+          else 
+          {
+              if( map["categories"].toList().isEmpty() == false )
+              {
+                QVariantMap cat = map["categories"].toList().constFirst().toMap();
+                stream->genre             = cat["title"].toString();
+              }
+          }
+          
           stream->extra["station"]  = map["name"].toString();
           stream->extra["website"]  = QString("https://dirble.com/station/%1").arg(map["slug"].toString());
           stream->extra["provider"] = this->name();
@@ -337,6 +354,7 @@ void Dirble::slotBrowseStationDone(QByteArray bytes)
           }
        }
     }
+    
     
     /* register update */    
     link->state = int(SERVICE::DATA_OK);

@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -70,7 +70,7 @@ TuneIn::TuneIn() : Service("Tunein", SERVICE::TUNEIN)
     /* root link */
     m_root_link = MEDIA::LinkPtr(new MEDIA::Link());
     m_root_link->url  = QString("http://opml.radiotime.com/Browse.ashx");
-    m_root_link->name = QString("tunein directory");
+    m_root_link->name = QString("TuneIn");
     m_root_link->state = int (SERVICE::NO_DATA);
    
     /* search link */
@@ -79,7 +79,9 @@ TuneIn::TuneIn() : Service("Tunein", SERVICE::TUNEIN)
     m_search_link->state = int (SERVICE::NO_DATA);
     
     m_active_link = m_root_link;
-    set_state(SERVICE::NO_DATA);    
+    set_state(SERVICE::NO_DATA);
+    
+    loadGenres();
 }
 
 void TuneIn::reload()
@@ -90,7 +92,7 @@ void TuneIn::reload()
     /* root link */
     m_root_link = MEDIA::LinkPtr(new MEDIA::Link());
     m_root_link->url  = QString("http://opml.radiotime.com/Browse.ashx");
-    m_root_link->name = QString("tunein directory");
+    m_root_link->name = QString("TuneIn");
     m_root_link->state = int (SERVICE::NO_DATA);   
 
     /* search link */
@@ -167,7 +169,11 @@ QList<MEDIA::TrackPtr> TuneIn::streams()
         streams << stream;
       }
     }
-      
+    
+    //! If search link, sort stream by categorie
+    if(m_active_link == m_search_link )
+      qSort(streams.begin(), streams.end(),MEDIA::compareStreamCategorie);
+    
     return streams;
 }
 
@@ -230,10 +236,14 @@ void TuneIn::slotBrowseLinkDone(QByteArray bytes)
             }
         }
     }
+
     
-    /* register update */    
-    link->state = int(SERVICE::DATA_OK);
-    set_state(SERVICE::DATA_OK);    
+    /* register update */
+    if(link != m_genre_link)
+    {
+      link->state = int(SERVICE::DATA_OK);
+      set_state(SERVICE::DATA_OK);    
+    }
     
     emit stateChanged();
 }  
@@ -245,7 +255,13 @@ void TuneIn::slotBrowseLinkDone(QByteArray bytes)
 *******************************************************************************/
 void TuneIn::parseTuneInJsonElement(QVariantMap map, MEDIA::LinkPtr link)
 {
-    if ( map["type"].toString() == "link" )
+    if ( map["type"].toString() == "text" )
+    {
+        //Debug::debug() << "    [Tunein] genres: " << map["guide_id"].toString() << " : " << map["text"].toString();
+        
+        m_genres[map["guide_id"].toString()] = map["text"].toString();
+    }    
+    else if ( map["type"].toString() == "link" && link != m_genre_link)
     {
         //Debug::debug() << "    [Tunein] link found";
         MEDIA::LinkPtr link2 = MEDIA::LinkPtr::staticCast( link->addChildren(TYPE_LINK) );
@@ -281,7 +297,18 @@ void TuneIn::parseTuneInJsonElement(QVariantMap map, MEDIA::LinkPtr link)
             }
         }
 
-        stream->genre = link->name;
+        if(m_search_link->name == link->name)
+        {
+            if(m_genres.contains(map["genre_id"].toString()))
+                stream->genre = m_genres[map["genre_id"].toString()];
+            else
+                stream->genre = "Unknown";
+        }   
+        else
+        {
+            stream->genre = link->name;
+        }
+        
         stream->setParent(link);
     }    
 }
@@ -354,4 +381,14 @@ void TuneIn::slot_activate_link(MEDIA::LinkPtr link)
     /* register update */        
     set_state(SERVICE::State(m_active_link->state));
     emit stateChanged();
+}
+
+
+void TuneIn::loadGenres()
+{    
+    m_genre_link = MEDIA::LinkPtr(new MEDIA::Link());
+    m_genre_link->url  = QString("http://opml.radiotime.com/Describe.ashx?c=genres");
+    m_genre_link->state = int (SERVICE::NO_DATA);
+     
+    browseLink(m_genre_link);
 }

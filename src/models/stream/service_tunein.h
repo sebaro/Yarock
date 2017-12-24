@@ -1,6 +1,6 @@
 /****************************************************************************************
 *  YAROCK                                                                               *
-*  Copyright (c) 2010-2016 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
+*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
 *                                                                                       *
 *  This program is free software; you can redistribute it and/or modify it under        *
 *  the terms of the GNU General Public License as published by the Free Software        *
@@ -49,6 +49,8 @@ private:
     void browseLink(MEDIA::LinkPtr link);
     void parseTuneInJsonElement(QVariantMap map, MEDIA::LinkPtr link);
 
+    void loadGenres();
+    
 private slots:
     void slotBrowseLinkDone(QByteArray bytes);
     void slotBrowseLinkError();
@@ -57,6 +59,7 @@ private slots:
 private:
     QMap<QObject*, MEDIA::LinkPtr>   m_requests;
     QMap<QObject*, MEDIA::TrackPtr>  m_image_requests;
+    QMap<QString, QString>  m_genres;
 };
 
 #endif // _SERVICE_TUNEIN_H_
