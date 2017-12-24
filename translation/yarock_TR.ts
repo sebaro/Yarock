@@ -1,62 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ru">
+<TS version="2.1" language="tr_TR">
 <context>
     <name>AboutScene</name>
     <message>
         <location filename="../src/views/about/about_scene.cpp" line="124"/>
         <source>About</source>
-        <translation>О программе</translation>
+        <translation>Hakkında</translation>
     </message>
     <message>
         <location filename="../src/views/about/about_scene.cpp" line="143"/>
         <source>Yarock is a Qt4 modern music player designed to provide an easy and pretty music collection browser based on cover art.&lt;br&gt;It&apos;s a Free Software distributed under the &lt;a href=&quot;http://www.gnu.org/licenses/gpl-3.0.en.html&quot;&gt;(GPLv3)&lt;/a&gt; license.&lt;br&gt;</source>
-        <translation>Yarock является современным музыкальным проигрывателем с простым и удобным обзором музыкальной коллекции.&lt;br&gt;Это свободное программное обеспечение, распространяемое по &lt;a href=&quot;http://www.gnu.org/licenses/gpl-3.0.en.html&quot;&gt; лицензии&lt;/a&gt; (GPLv3).&lt;br&gt;</translation>
+        <translation>Yarock, Qt4 arayüzlü modern bir müzik oynatıcısıdır. Kolay ve hoş müzik koleksiyonu sağlamak için tasarlandı.
+&lt;br&gt;It&apos;s a Free Software distributed under the&lt;ahref=&quot;http://www.gnu.org/licenses/gpl-3.0.en.html&quot;&gt;(GPLv3)&lt;/a&gt;license.&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../src/views/about/about_scene.cpp" line="155"/>
         <source>Contribute</source>
-        <translation>Сотрудничать</translation>
+        <translation>Katkıda bulun</translation>
     </message>
     <message>
         <location filename="../src/views/about/about_scene.cpp" line="178"/>
         <source>Yarock is developped by &lt;b&gt;Sebastien Amardeilh&lt;/b&gt; %1</source>
-        <translation>Разработчик &lt;b&gt;Sebastien Amardeilh&lt;/b&gt; %1</translation>
+        <translation>Yarock &lt;b&gt;Sebastien Amardeilh&lt;/b&gt; tarafından geliştirildi %1</translation>
     </message>
     <message>
         <location filename="../src/views/about/about_scene.cpp" line="189"/>
         <source>Please use %1 to report bugs.</source>
-        <translation>Для сообщений об ошибках используйте %1.</translation>
+        <translation>Lütfen bugları bildirmek için %1 &apos;i kullanın.</translation>
     </message>
     <message>
         <location filename="../src/views/about/about_scene.cpp" line="202"/>
         <source>Please use %1 for translations.</source>
-        <translation>Для перевода используйте %1.</translation>
+        <translation>Lütfen çeviriler için %1 &apos;i kullanın.</translation>
     </message>
     <message>
         <location filename="../src/views/about/about_scene.cpp" line="215"/>
         <source>If you can, please %1 (or %2) to support the development</source>
-        <translation>Если возможно, поддержите разработчика на %1 (или %2)</translation>
+        <translation>Eğer yapabilirseniz, lütfen geliştirmeyi desteklemek için %1 (veya %2)</translation>
     </message>
     <message>
         <location filename="../src/views/about/about_scene.cpp" line="224"/>
         <source>Debug Information</source>
-        <translation>Отладочная информация</translation>
+        <translation>Hata ayıklama bilgisi</translation>
     </message>
     <message>
         <location filename="../src/views/about/about_scene.cpp" line="231"/>
         <source>&lt;b&gt;Compiled with Qt Version&lt;/b&gt;: %1</source>
-        <translation>&lt;b&gt;Скомпилено с Qt версии&lt;/b&gt;: %1</translation>
+        <translation>&lt;b&gt;Qt Sürüm&lt;/b&gt;: %1 ile derlendi</translation>
     </message>
     <message>
         <location filename="../src/views/about/about_scene.cpp" line="238"/>
         <source>&lt;b&gt;Qt Runtime Version&lt;/b&gt;: %1</source>
-        <translation>&lt;b&gt;Версия Qt Runtime&lt;/b&gt;: %1</translation>
+        <translation>&lt;b&gt;Qt çalıştırma sürümü&lt;/b&gt; : %1</translation>
     </message>
     <message>
         <location filename="../src/views/about/about_scene.cpp" line="249"/>
         <source>&lt;b&gt;Audio engine&lt;/b&gt;: %1</source>
-        <translation>&lt;b&gt;Движок аудио&lt;/b&gt;: %1</translation>
+        <translation>&lt;b&gt;Ses motoru&lt;/b&gt; : %1</translation>
     </message>
 </context>
 <context>
@@ -64,17 +65,17 @@
     <message>
         <location filename="../src/views/settings/addfolder_widget.cpp" line="50"/>
         <source>Open</source>
-        <translation>Открыть</translation>
+        <translation>Aç</translation>
     </message>
     <message>
         <location filename="../src/views/settings/addfolder_widget.cpp" line="54"/>
         <source>Remove</source>
-        <translation>Удалить</translation>
+        <translation>Kaldır</translation>
     </message>
     <message>
         <location filename="../src/views/settings/addfolder_widget.cpp" line="69"/>
         <source>Open folder</source>
-        <translation>Открыть папку</translation>
+        <translation>Klasör aç</translation>
     </message>
 </context>
 <context>
@@ -82,17 +83,17 @@
     <message>
         <location filename="../src/widgets/dialogs/addstreamdialog.cpp" line="36"/>
         <source>Add Stream</source>
-        <translation>Добавить поток</translation>
+        <translation>Akış ekle</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/addstreamdialog.cpp" line="61"/>
         <source>url</source>
-        <translation>Ссылка</translation>
+        <translation>url</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/addstreamdialog.cpp" line="63"/>
         <source>genre</source>
-        <translation type="unfinished">Жанр</translation>
+        <translation type="unfinished">Tür</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/addstreamdialog.cpp" line="65"/>
@@ -117,18 +118,18 @@
     <message>
         <location filename="../src/widgets/dialogs/addstreamdialog.cpp" line="59"/>
         <source>name</source>
-        <translation>Название</translation>
+        <translation>ad</translation>
     </message>
     <message>
         <source>category</source>
-        <translation type="vanished">Категория</translation>
+        <translation type="vanished">Kategori</translation>
     </message>
 </context>
 <context>
     <name>AlbumInfoWidget</name>
     <message>
         <source>Album tracks</source>
-        <translation type="vanished">Дорожки альбома</translation>
+        <translation type="vanished">Albüm Parçaları</translation>
     </message>
 </context>
 <context>
@@ -136,7 +137,7 @@
     <message>
         <location filename="../src/views/context/context_widget.cpp" line="164"/>
         <source>Biography</source>
-        <translation>Биография</translation>
+        <translation>Biyografi</translation>
     </message>
 </context>
 <context>
@@ -144,7 +145,7 @@
     <message>
         <location filename="../src/views/context/context_widget.cpp" line="263"/>
         <source>Similar artists</source>
-        <translation>Похожие исполнители</translation>
+        <translation>Benzer sanatçılar</translation>
     </message>
 </context>
 <context>
@@ -152,120 +153,120 @@
     <message>
         <location filename="../src/views/browser_view.cpp" line="682"/>
         <source>Context</source>
-        <translation>Текущий статус</translation>
+        <translation>Bağlam görünümü</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="642"/>
         <location filename="../src/views/browser_view.cpp" line="683"/>
         <source>History</source>
-        <translation>История</translation>
+        <translation>Geçmiş</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="646"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; albums</source>
-        <translation>Коллекция : &lt;b&gt;%1&lt;/b&gt; альбомов</translation>
+        <translation>Kolleksiyon : &lt;b&gt;%1&lt;/b&gt; albümler</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="647"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; artist</source>
-        <translation>Коллекция : &lt;b&gt;%1&lt;/b&gt; исполнитель</translation>
+        <translation>Kolleksiyon : &lt;b&gt;%1&lt;/b&gt; sanatçılar</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="648"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; tracks</source>
-        <translation>Коллекция : &lt;b&gt;%1&lt;/b&gt; дорожек</translation>
+        <translation>Kolleksiyon : &lt;b&gt;%1&lt;/b&gt; parçalar</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="649"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; styles</source>
-        <translation>Коллекция : &lt;b&gt;%1&lt;/b&gt; стилей</translation>
+        <translation>Kolleksiyon : &lt;b&gt;%1&lt;/b&gt; stiller</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="650"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; years</source>
-        <translation>Коллекция : &lt;b&gt;%1&lt;/b&gt; года</translation>
+        <translation>Kolleksiyon : &lt;b&gt;%1&lt;/b&gt; seneler</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="651"/>
         <source>Collection : &lt;b&gt;%1&lt;/b&gt; favorite item</source>
-        <translation>Коллекция : &lt;b&gt;%1&lt;/b&gt; любимые</translation>
+        <translation>Kolleksiyon: &lt;b&gt;%1&lt;/b&gt; favori öğe</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="655"/>
         <source>Playlist : &lt;b&gt;%1&lt;/b&gt; playlists</source>
-        <translation>Список воспроизведения : &lt;b&gt;%1&lt;/b&gt; песен</translation>
+        <translation>Çalma Listesi : &lt;b&gt;%1&lt;/b&gt; çalma listeleri</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="662"/>
         <source>Radio : &lt;b&gt;%1&lt;/b&gt; streams</source>
-        <translation>Радио : &lt;b&gt;%1&lt;/b&gt; потоков</translation>
+        <translation>Radyo : &lt;b&gt;%1&lt;/b&gt; akışlar</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="679"/>
         <source>About</source>
-        <translation>О программе</translation>
+        <translation>Hakkında</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="644"/>
         <location filename="../src/views/browser_view.cpp" line="680"/>
         <source>Settings</source>
-        <translation>Параметры</translation>
+        <translation>Düzenleme</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="643"/>
         <location filename="../src/views/browser_view.cpp" line="681"/>
         <source>Dashboard</source>
-        <translation>Панель мониторинга</translation>
+        <translation>Pano görünümü</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="684"/>
         <source>Artists</source>
-        <translation>Исполнители</translation>
+        <translation>Artistler</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="685"/>
         <source>Albums</source>
-        <translation>Альбомы</translation>
+        <translation>Albümler</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="686"/>
         <source>Tracks</source>
-        <translation>Дорожки</translation>
+        <translation>Parçalar</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="687"/>
         <source>Genres</source>
-        <translation>Жанры</translation>
+        <translation>Tür</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="688"/>
         <source>Years</source>
-        <translation>Года</translation>
+        <translation>Yıl</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="689"/>
         <source>Favorites</source>
-        <translation>Избранное</translation>
+        <translation>Favoriler</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="690"/>
         <source>Playlists</source>
-        <translation>Списки воспроизведения</translation>
+        <translation>Çalma Listesi</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="691"/>
         <source>Smart playlists</source>
-        <translation>Умные списки воспроизведения</translation>
+        <translation>Akıllı Çalma listesi</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="695"/>
         <source>Favorites radios</source>
-        <translation>Избранное радио</translation>
+        <translation>Favori Raydolar</translation>
     </message>
     <message>
         <location filename="../src/views/browser_view.cpp" line="696"/>
         <source>Filesystem</source>
-        <translation>Файловая система</translation>
+        <translation>Dosya Sistemi</translation>
     </message>
 </context>
 <context>
@@ -273,119 +274,119 @@
     <message>
         <location filename="../src/commandlineoptions.cpp" line="137"/>
         <source>Usage</source>
-        <translation>Использование</translation>
+        <translation>Kullanım</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="137"/>
         <source>options</source>
-        <translation>Параметры</translation>
+        <translation>Seçenekler</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="137"/>
         <source>URL(s)</source>
-        <translation>Ссылка(и)</translation>
+        <translation>Bağlantı(lar)</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="137"/>
         <source>Player options</source>
-        <translation>Опции проигрывателя</translation>
+        <translation>Oynatıcı seçenekleri</translation>
     </message>
     <message>
         <source>Start the playlist currently playing</source>
-        <translation type="vanished">Запустить список с этого места</translation>
+        <translation type="vanished">Şu an çalmakta olan çalma listesini başlat</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="138"/>
         <source>Start playback</source>
-        <translation>Начать воспроизведение</translation>
+        <translation>Oynatmayı başlat</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="139"/>
         <source>Play if stopped, pause if playing</source>
-        <translation>Старт, если остановлено, Пауза, если проигрывается</translation>
+        <translation>Eğer durdurulmuşsa çal, eğer çalmakta ise duraklat</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="140"/>
         <source>Pause playback</source>
-        <translation>Приостановить воспроизведение</translation>
+        <translation>Oynatımı beklet</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="141"/>
         <source>Stop playback</source>
-        <translation>Остановить воспроизведение</translation>
+        <translation>Oynatımı durdur</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="142"/>
         <source>Skip backwards in playlist</source>
-        <translation>Перейти назад в списке воспроизведения</translation>
+        <translation>Çalma listesinde geriye atla</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="143"/>
         <source>Skip forwards in playlist</source>
-        <translation>Перейти вперёд в списке воспроизведения</translation>
+        <translation>Çalma listesinde ileriye atla</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="144"/>
         <source>Set the volume to &lt;value&gt; percent</source>
-        <translation>Установить громкость в &lt;value&gt; процентов</translation>
+        <translation>Ses seviyesini yüzde &lt;değer&gt; yap</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="145"/>
         <source>Increase the volume by 4%</source>
-        <translation>Увеличить звук на 4%</translation>
+        <translation>Sesi % 4 oranında artırın</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="146"/>
         <source>Decrease the volume by 4%</source>
-        <translation>Уменьшить звук на 4%</translation>
+        <translation>Sesi % 4 oranında azaltın</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="147"/>
         <source>Seek to an absolute position</source>
-        <translation>Поиск на абсолютную позицию</translation>
+        <translation>Kesin bir konumu arama</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="148"/>
         <source>Seek by a relative amount</source>
-        <translation>Поиск по относительной величине</translation>
+        <translation>Bağıl bir miktara göre arama</translation>
     </message>
     <message>
         <source>Seek the currently playing track to an absolute position</source>
-        <translation type="vanished">Поиск в текущей дорожке на абсолютной позиции</translation>
+        <translation type="vanished">Çalmakta olan parçayı boyutuna göre ara</translation>
     </message>
     <message>
         <source>Seek the currently playing track by a relative amount</source>
-        <translation type="vanished">Поиск в текущей дорожке на относительное количество</translation>
+        <translation type="vanished">Çalmakta olan parçayı boyutuna göre ara</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="149"/>
         <source>Playlist options</source>
-        <translation>Параметры списка воспроизведения</translation>
+        <translation>Çalma listesi ayarları</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="150"/>
         <source>Append files/URLs to the playlist</source>
-        <translation>Добавленные файлы/адреса в список воспроизведения</translation>
+        <translation>Oynatma listesine dosya/URL ekle</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="151"/>
         <source>Loads files/URLs, replacing current playlist</source>
-        <translation>Загрузка файлов/адресов,замена текущего списка воспроизведения</translation>
+        <translation>Geçerli çalma listesine yerine, dosya/URL yükle</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="152"/>
         <source>Play the &lt;n&gt;th track in the playlist</source>
-        <translation>Воспроизвести &lt;n&gt; дорожку в списке воспроизведения</translation>
+        <translation>Oynatma listesindeki &lt;n&gt;.parça çalınıyor</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="153"/>
         <source>Other options</source>
-        <translation>Другие параметры</translation>
+        <translation>Diğer seçenekler</translation>
     </message>
     <message>
         <location filename="../src/commandlineoptions.cpp" line="154"/>
         <source>Print debug information</source>
-        <translation>Печать информации отладки</translation>
+        <translation>Hata çıktısını yazdır</translation>
     </message>
 </context>
 <context>
@@ -393,37 +394,37 @@
     <message>
         <location filename="../src/widgets/dialogs/database_add.cpp" line="38"/>
         <source>Add music collection</source>
-        <translation>Добавить коллекцию музыки</translation>
+        <translation>Müzik kolleksiyonu ekle</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/database_add.cpp" line="48"/>
         <source>Choose collection name</source>
-        <translation>Выберите имя коллекции</translation>
+        <translation>Kolleksiyon ismi seçin</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/database_add.cpp" line="61"/>
         <source>Name</source>
-        <translation>Название</translation>
+        <translation>İsim</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/database_add.cpp" line="64"/>
         <source>Path</source>
-        <translation>Путь</translation>
+        <translation>Yol</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/database_add.cpp" line="81"/>
         <source> Choose music folder</source>
-        <translation> Выбрать папку с музыкой</translation>
+        <translation>Müzik dizini seç</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/database_add.cpp" line="131"/>
         <source> Collection name cannot be empty</source>
-        <translation> Название коллекции не может быть пустым</translation>
+        <translation>Kolleksiyon adı boş olamaz</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/database_add.cpp" line="139"/>
         <source> Collection name already exists </source>
-        <translation> Название коллекции уже существует </translation>
+        <translation>Kolleksiyon adı mevcut</translation>
     </message>
 </context>
 <context>
@@ -431,95 +432,95 @@
     <message>
         <location filename="../src/widgets/dialogs/database_operation.cpp" line="34"/>
         <source>Database operation</source>
-        <translation>Операции с базой данных</translation>
+        <translation>Veritabanı işlemleri</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/database_operation.cpp" line="42"/>
         <source>Update</source>
-        <translation>Обновить</translation>
+        <translation>Güncelle</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/database_operation.cpp" line="43"/>
         <source>Rebuild</source>
-        <translation>Пересоздать</translation>
+        <translation>Yeniden inşaa et</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/database_operation.cpp" line="44"/>
         <source>Cover</source>
-        <translation>Обложка</translation>
+        <translation>Kapak</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/database_operation.cpp" line="45"/>
         <source>Artist</source>
-        <translation>Исполнитель</translation>
+        <translation>Sanatçı</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/database_operation.cpp" line="58"/>
         <source>Rescan medias files and update database</source>
-        <translation>Пересканировать медиа файлы и обновить базу данных</translation>
+        <translation>Medya dosyalarını yeniden tara ve veritabanını güncelle</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/database_operation.cpp" line="60"/>
         <source>Delete and rebuild database (*)</source>
-        <translation>Удалить и перестроить базу данных (*)</translation>
+        <translation>Veritabanını sil ve yeniden oluştur (*)</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/database_operation.cpp" line="61"/>
         <source>* all changes into collection database will be discarded !!</source>
-        <translation>* все изменения в базе данных коллекции будут потеряны !!</translation>
+        <translation>* kolleksiyon veritabanındaki tüm değişiklikler yok varsayılacaktır!</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/database_operation.cpp" line="63"/>
         <source>Download missing album cover</source>
-        <translation>Загрузить недостающую обложку альбома</translation>
+        <translation>Eksik albüm kapağını indir</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/database_operation.cpp" line="66"/>
         <source>Download missing artist image</source>
-        <translation>Загрузить недостающее изображение исполнителя</translation>
+        <translation>Eksik sanatçı görselini indir</translation>
     </message>
 </context>
 <context>
     <name>DbOperationDialog</name>
     <message>
         <source>Database operation</source>
-        <translation type="vanished">Операции с базой данных</translation>
+        <translation type="vanished">Veritabanı işlemi</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="vanished">Обновить</translation>
+        <translation type="vanished">Güncelle</translation>
     </message>
     <message>
         <source>Rebuild</source>
-        <translation type="vanished">Пересоздать</translation>
+        <translation type="vanished">Yeniden yap</translation>
     </message>
     <message>
         <source>Cover</source>
-        <translation type="vanished">Обложка</translation>
+        <translation type="vanished">Kapak</translation>
     </message>
     <message>
         <source>Artist</source>
-        <translation type="vanished">Исполнитель</translation>
+        <translation type="vanished">Sanatçı</translation>
     </message>
     <message>
         <source>Rescan medias files and update database</source>
-        <translation type="vanished">Пересканировать медиа файлы и обновить базу данных</translation>
+        <translation type="vanished">Medya dosyalarını yeniden tara ve veritabanını güncelle</translation>
     </message>
     <message>
         <source>Delete and rebuild database (*)</source>
-        <translation type="vanished">Удалить и перестроить базу данных (*)</translation>
+        <translation type="vanished">Vertabanı (*) kaldır ve yeniden oluştur</translation>
     </message>
     <message>
         <source>* all changes into collection database will be discarded !!</source>
-        <translation type="vanished">* все изменения в базе данных коллекции будут потеряны !!</translation>
+        <translation type="vanished">* Toplama veritabanına tüm değişiklikleri atılır!</translation>
     </message>
     <message>
         <source>Download missing album cover</source>
-        <translation type="vanished">Загрузить недостающую обложку альбома</translation>
+        <translation type="vanished">Albüm kapağı getiriliyor</translation>
     </message>
     <message>
         <source>Download missing artist image</source>
-        <translation type="vanished">Загрузить недостающее изображение исполнителя</translation>
+        <translation type="vanished">Tüm eksik kapak resimlerini bul</translation>
     </message>
 </context>
 <context>
@@ -527,22 +528,22 @@
     <message>
         <location filename="../src/dbus/dbusnotification.cpp" line="193"/>
         <source>Paused</source>
-        <translation>Приостановлено</translation>
+        <translation>Duraklatıldı</translation>
     </message>
     <message>
         <location filename="../src/dbus/dbusnotification.cpp" line="203"/>
         <source>Stopped</source>
-        <translation>Остановлено</translation>
+        <translation>Durduruldu</translation>
     </message>
     <message>
         <location filename="../src/dbus/dbusnotification.cpp" line="214"/>
         <source>Playlist finished</source>
-        <translation>Список воспроизведения закончился</translation>
+        <translation>Çalma listesi tamamlandı</translation>
     </message>
     <message>
         <location filename="../src/dbus/dbusnotification.cpp" line="227"/>
         <source>Volume %1%</source>
-        <translation>Громкость %1%</translation>
+        <translation>Ses %1%</translation>
     </message>
 </context>
 <context>
@@ -550,7 +551,7 @@
     <message>
         <location filename="../src/views/context/context_widget.cpp" line="394"/>
         <source>Discography</source>
-        <translation>Дискография</translation>
+        <translation>Diskografi</translation>
     </message>
 </context>
 <context>
@@ -558,83 +559,83 @@
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="121"/>
         <source>Edit album</source>
-        <translation>Редактировать альбом</translation>
+        <translation>Albümü düzenle</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="148"/>
         <source>Load from file</source>
-        <translation>Загрузить из файла</translation>
+        <translation>Buradan yükle</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="149"/>
         <source>Download</source>
-        <translation>Загрузить</translation>
+        <translation>indir</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="150"/>
         <source>Remove</source>
-        <translation>Удалить</translation>
+        <translation>Kaldır</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="164"/>
         <source>Album</source>
-        <translation>Альбом</translation>
+        <translation>Albüm</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="166"/>
         <source>Artist</source>
-        <translation>Исполнитель</translation>
+        <translation>Sanatçı</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="168"/>
         <source>Year</source>
-        <translation>Год</translation>
+        <translation>Yıl</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="171"/>
         <source>Genre</source>
-        <translation>Жанр</translation>
+        <translation>Tür</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="174"/>
         <source>Playcount</source>
-        <translation>Количество воспроизведений</translation>
+        <translation>Çalma sayısı</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="176"/>
         <source>Rating</source>
-        <translation>Рейтинг</translation>
+        <translation>Değerlendirme</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="182"/>
         <source>Cover</source>
-        <translation>Обложка</translation>
+        <translation>Kapak</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="188"/>
         <source>Tracks</source>
-        <translation>Дорожки</translation>
+        <translation>Parçalar</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="242"/>
         <location filename="../src/widgets/editors/editor_album.cpp" line="261"/>
         <source>clear user rating</source>
-        <translation>Очистить рейтинг</translation>
+        <translation>kullanıcı değerlendirmesini sil</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="261"/>
         <source>auto rating</source>
-        <translation>Авто рейтинг</translation>
+        <translation>Otomatik derecelendirme</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="411"/>
         <source>Select image file...</source>
-        <translation>Выбрать файл изображения...</translation>
+        <translation>Resim dosyası seçin</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_album.cpp" line="412"/>
         <source>Files (*.png *.jpg)</source>
-        <translation>Изображения (*.png *.jpg)</translation>
+        <translation>Dosyalar (*. png *. jpg)</translation>
     </message>
 </context>
 <context>
@@ -642,63 +643,63 @@
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="122"/>
         <source>Edit artist</source>
-        <translation>Редактировать исполнителя</translation>
+        <translation>Sanatçıyı düzenle</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="140"/>
         <source>Load from file</source>
-        <translation>Загрузить из файла</translation>
+        <translation>Buradan yükle</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="141"/>
         <source>Download</source>
-        <translation>Загрузить</translation>
+        <translation>Kapak resmi indir</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="142"/>
         <source>Remove</source>
-        <translation>Удалить</translation>
+        <translation>Kaldır</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="156"/>
         <source>Artist</source>
-        <translation>Исполнитель</translation>
+        <translation>Sanatçı</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="158"/>
         <source>Playcount</source>
-        <translation>Количество воспроизведений</translation>
+        <translation>Çalma sayısı</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="160"/>
         <source>Rating</source>
-        <translation>Рейтинг</translation>
+        <translation>Değerlendirme</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="166"/>
         <source>Image</source>
-        <translation>Изображение</translation>
+        <translation>Resim</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="211"/>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="230"/>
         <source>clear user rating</source>
-        <translation>Очистить рейтинг</translation>
+        <translation>kullanıcı değerlendirmesini sil</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="230"/>
         <source>auto rating</source>
-        <translation>Авто рейтинг</translation>
+        <translation>Otomatik derecelendirme</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="333"/>
         <source>Select image file...</source>
-        <translation>Выбрать файл изображения...</translation>
+        <translation>Resim dosyası seçin</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_artist.cpp" line="334"/>
         <source>Files (*.png *.jpg)</source>
-        <translation>Изображения (*.png *.jpg)</translation>
+        <translation>Dosyalar (*. png *. jpg)</translation>
     </message>
 </context>
 <context>
@@ -706,60 +707,60 @@
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="57"/>
         <source>Edit playlist</source>
-        <translation>Изменить список воспроизведения</translation>
+        <translation>Çalma listesini düzenle</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_playlist.cpp" line="63"/>
         <source>playlist name</source>
-        <translation>Название списка воспроизведения</translation>
+        <translation>Çalma listesi adı</translation>
     </message>
     <message>
         <source>To database</source>
-        <translation type="vanished">В базу данных</translation>
+        <translation type="vanished">veritabanına</translation>
     </message>
     <message>
         <source>To file</source>
-        <translation type="vanished">В файл</translation>
+        <translation type="vanished">Dosyaya</translation>
     </message>
     <message>
         <source>Choose file to save playlist</source>
-        <translation type="vanished">Выберите файл сохранения списка воспроизведения</translation>
+        <translation type="vanished">Çalma listesine kaydetmek için dosyayı seçin</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation type="vanished">Открыть</translation>
+        <translation type="vanished">Aç</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="vanished">Имя</translation>
+        <translation type="vanished">İsim</translation>
     </message>
     <message>
         <source>Add music files or playlist</source>
-        <translation type="vanished">Добавить музыкальные файлы или список воспроизведения</translation>
+        <translation type="vanished">Müzik dosyaları veya çalma listesi ekle</translation>
     </message>
     <message>
         <source>Add music directories</source>
-        <translation type="vanished">Добавить каталог музыки</translation>
+        <translation type="vanished">Müzik dizini ekle</translation>
     </message>
     <message>
         <source>Save playlist to file</source>
-        <translation type="vanished">Сохранить список воспроизведения в файл</translation>
+        <translation type="vanished">Çalma listesini dosyaya kaydet</translation>
     </message>
     <message>
         <source>&amp;Add media to playlist</source>
-        <translation type="vanished">Добавить &amp;композицию в список</translation>
+        <translation type="vanished">&amp;Çalma listesine ortam ekle</translation>
     </message>
     <message>
         <source>&amp;Add directory to playlist</source>
-        <translation type="vanished">Добавить &amp;каталог в список</translation>
+        <translation type="vanished">&amp;Çalma listesine dizin ekle</translation>
     </message>
     <message>
         <source>&amp;Add Url...</source>
-        <translation type="vanished">Добавить &amp;адрес...</translation>
+        <translation type="vanished">&amp;Bağlantı ekle</translation>
     </message>
     <message>
         <source>Clear playlist</source>
-        <translation type="vanished">Очистить список воспроизведения</translation>
+        <translation type="vanished">Çalma listesini temizle</translation>
     </message>
 </context>
 <context>
@@ -767,27 +768,27 @@
     <message>
         <location filename="../src/widgets/editors/editor_search.cpp" line="41"/>
         <source>Search mode</source>
-        <translation>Режим поиска</translation>
+        <translation>Arama modu</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_search.cpp" line="46"/>
         <source>Match search term (AND)</source>
-        <translation>Совпадает термин поиска (логический элемент И)</translation>
+        <translation>Aranan terimi eşleştir(VE)</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_search.cpp" line="48"/>
         <source>Match search term (OR)</source>
-        <translation>Совпадает термин поиска (логический элемент ИЛИ)</translation>
+        <translation>Aranan terimi eşleştir(YA DA)</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_search.cpp" line="51"/>
         <source>Search terms</source>
-        <translation>Поиск в промежутке времени</translation>
+        <translation>Arama terimleri</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_search.cpp" line="64"/>
         <source>Add search query</source>
-        <translation>Добавить поисковый запрос</translation>
+        <translation>Arama sorgusu ekle</translation>
     </message>
 </context>
 <context>
@@ -795,92 +796,92 @@
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="64"/>
         <source>Edit smart playlist</source>
-        <translation>Изменить умный список воспроизведения</translation>
+        <translation>Akıllı Çalma listesini düzenle</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="75"/>
         <source>playlist name</source>
-        <translation>Название списка воспроизведения</translation>
+        <translation>Çalma listesi adı</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="79"/>
         <source>Name</source>
-        <translation>Название</translation>
+        <translation>İsim</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="109"/>
         <source>Search mode</source>
-        <translation>Режим поиска</translation>
+        <translation>Arama modu</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="114"/>
         <source>Match search term (AND)</source>
-        <translation>Совпадает термин поиска (логический элемент И)</translation>
+        <translation>Aranan terimi eşleştir(VE)</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="116"/>
         <source>Match search term (OR)</source>
-        <translation>Совпадает термин поиска (логический элемент ИЛИ)</translation>
+        <translation>Aranan terimi eşleştir(YA DA)</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="118"/>
         <source>Match all tracks (ALL)</source>
-        <translation>Совпадают все дорожки (Все)</translation>
+        <translation>Bütün parçaları eşleştir(HEPSİ)</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="128"/>
         <source>Search terms</source>
-        <translation>Поиск в промежутке времени</translation>
+        <translation>Arama terimleri</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="139"/>
         <source>Add search query</source>
-        <translation>Добавить поисковый запрос</translation>
+        <translation>Arama sorgusu ekle</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="148"/>
         <source>Sort result mode</source>
-        <translation>Режим сортировки результатов</translation>
+        <translation>Sıralama sonucu modu</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="154"/>
         <source>Keep original order</source>
-        <translation>Сохранять исходный порядок</translation>
+        <translation>Orijinal sırada tut</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="155"/>
         <source>Random</source>
-        <translation>Случайно</translation>
+        <translation>Rastgele</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="156"/>
         <source>Sort by</source>
-        <translation>Сортировать по</translation>
+        <translation>Sıralama</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="191"/>
         <source>Limit</source>
-        <translation>Ограничение</translation>
+        <translation>Sınır</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="198"/>
         <source>No limit</source>
-        <translation>Без ограничения</translation>
+        <translation>Sınır yok</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="199"/>
         <source>Limit at</source>
-        <translation>Ограничить до</translation>
+        <translation>sınırla</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="375"/>
         <source>Media Search Engine Dialog</source>
-        <translation>Диалог движка поиска</translation>
+        <translation>Ortam Arama Motoru İletişim Kutusu</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_smart.cpp" line="376"/>
         <source>&lt;p&gt;Search query is not valid&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Не верный поисковый запрос&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Arama sorgusu geçersiz&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -893,12 +894,12 @@
     <message>
         <location filename="../src/widgets/editors/editor_stream.cpp" line="138"/>
         <source>Load from file</source>
-        <translation type="unfinished">Загрузить из файла</translation>
+        <translation type="unfinished">Buradan yükle</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_stream.cpp" line="139"/>
         <source>Remove</source>
-        <translation type="unfinished">Удалить</translation>
+        <translation type="unfinished">Kaldır</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_stream.cpp" line="152"/>
@@ -913,12 +914,12 @@
     <message>
         <location filename="../src/widgets/editors/editor_stream.cpp" line="156"/>
         <source>Genre</source>
-        <translation type="unfinished">Жанр</translation>
+        <translation type="unfinished">Tür</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_stream.cpp" line="158"/>
         <source>Website</source>
-        <translation type="unfinished">Веб-сайт</translation>
+        <translation type="unfinished">Web sitesi</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_stream.cpp" line="160"/>
@@ -938,17 +939,17 @@
     <message>
         <location filename="../src/widgets/editors/editor_stream.cpp" line="169"/>
         <source>Image</source>
-        <translation type="unfinished">Изображение</translation>
+        <translation type="unfinished">Resim</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_stream.cpp" line="247"/>
         <source>Select image file...</source>
-        <translation type="unfinished">Выбрать файл изображения...</translation>
+        <translation type="unfinished">Resim dosyası seçin</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_stream.cpp" line="248"/>
         <source>Files (*.png *.jpg)</source>
-        <translation type="unfinished">Изображения (*.png *.jpg)</translation>
+        <translation type="unfinished">Dosyalar (*. png *. jpg)</translation>
     </message>
 </context>
 <context>
@@ -956,52 +957,52 @@
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="151"/>
         <source>Edit track</source>
-        <translation>Редактировать дорожку</translation>
+        <translation>Parçayı düzenle</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="194"/>
         <source>File</source>
-        <translation>Файл</translation>
+        <translation>Dosya</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="198"/>
         <source>Title</source>
-        <translation>Название</translation>
+        <translation>Başlık</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="202"/>
         <source>Album</source>
-        <translation>Альбом</translation>
+        <translation>Albüm</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="206"/>
         <source>Artist</source>
-        <translation>Исполнитель</translation>
+        <translation>Sanatçı</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="210"/>
         <source>Year</source>
-        <translation>Год</translation>
+        <translation>Yıl</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="214"/>
         <source>Genre</source>
-        <translation>Жанр</translation>
+        <translation>Tür</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="218"/>
         <source>Number</source>
-        <translation>Номер</translation>
+        <translation>Numara</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="222"/>
         <source>Playcount</source>
-        <translation>Количество воспроизведений</translation>
+        <translation>Çalma sayısı</translation>
     </message>
     <message>
         <location filename="../src/widgets/editors/editor_track.cpp" line="226"/>
         <source>Rating</source>
-        <translation>Рейтинг</translation>
+        <translation>Değerlendirme</translation>
     </message>
 </context>
 <context>
@@ -1010,28 +1011,28 @@
         <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="58"/>
         <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="240"/>
         <source>Save preset</source>
-        <translation>Сохранить предустановку</translation>
+        <translation>Ön ayarı kaydet</translation>
     </message>
     <message>
         <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="63"/>
         <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="225"/>
         <source>Delete preset</source>
-        <translation>Удалить предустановку</translation>
+        <translation>Ön ayarı sil</translation>
     </message>
     <message>
         <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="75"/>
         <source>Enable equalizer</source>
-        <translation>Включить эквалайзер</translation>
+        <translation>Ekolayzer etkinleştir</translation>
     </message>
     <message>
         <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="226"/>
         <source>Are you sure you want to delete the &quot;%1&quot; preset?</source>
-        <translation>Хотите удалить предустановку &quot;%1&quot;?</translation>
+        <translation>%1 değerini silmek istediğinizden emin misiniz?</translation>
     </message>
     <message>
         <location filename="../src/widgets/equalizer/equalizer_dialog.cpp" line="240"/>
         <source>Name</source>
-        <translation>Название</translation>
+        <translation>İsim</translation>
     </message>
 </context>
 <context>
@@ -1039,7 +1040,7 @@
     <message>
         <location filename="../src/models/stream/service_favorite.cpp" line="36"/>
         <source>Favorite streams</source>
-        <translation>Избранные потоки</translation>
+        <translation>Favori akışlar</translation>
     </message>
     <message>
         <location filename="../src/models/stream/service_favorite.cpp" line="40"/>
@@ -1049,7 +1050,7 @@
     </message>
     <message>
         <source>All</source>
-        <translation type="vanished">Все</translation>
+        <translation type="vanished">Tümü</translation>
     </message>
 </context>
 <context>
@@ -1057,66 +1058,66 @@
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="188"/>
         <source>back</source>
-        <translation>Назад</translation>
+        <translation>Geri</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="195"/>
         <source>forward</source>
-        <translation>Вперед</translation>
+        <translation>İleri git</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="201"/>
         <source>go up</source>
-        <translation>Вверх</translation>
+        <translation>Yukarı çık</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="207"/>
         <source>home</source>
-        <translation>Домой</translation>
+        <translation>Ev</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="215"/>
         <source>show hidden file</source>
-        <translation>Показывать скрытые файлы</translation>
+        <translation>Gizli dosyaları göster</translation>
     </message>
     <message>
         <source>Audio files (*.mp3 *.wav *.ogg *.flac *.m4a *.aac)</source>
-        <translation type="vanished">Аудио файлы (*.mp3 *.wav *.ogg *.flac *.m4a *.aac)</translation>
+        <translation type="vanished">Ses dosyaları(*.mp3 *.wav *.ogg *.flac *.m4a *.aac)</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="254"/>
         <source>Audio files (*.mp3 *.wav *.ogg *.flac *.m4a *.aac *.opus)</source>
-        <translation>Аудиофайлы (*.mp3 *.wav *.ogg *.flac *.m4a *.aac *.opus)</translation>
+        <translation>Ses dosyaları (*.mp3 *.wav *.ogg *.flac *.m4a *.aac *.opus) </translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="255"/>
         <source>Playlists files (*.m3u *.pls *.xspf)</source>
-        <translation>Файлы списков воспроизведения (*.m3u *.pls *.xspf)</translation>
+        <translation>Çalma listesi (*.m3u *.pls *.xspf)</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="256"/>
         <source>All files (*.*)</source>
-        <translation>Все файлы (*.*)</translation>
+        <translation>Tüm dosyalar (*.*)</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="260"/>
         <source>All playlist (*.m3u *.pls *.xspf)</source>
-        <translation>Все списки воспроизведения (*.m3u *.pls *.xspf)</translation>
+        <translation>Tüm çalma listesi (*.m3u *.pls *.xspf)</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="261"/>
         <source>m3u playlist (*.m3u)</source>
-        <translation>Список воспроизведения m3u (*.m3u)</translation>
+        <translation>m3u oynatma listesi (*.m3u)</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="262"/>
         <source>pls playlist (*.pls)</source>
-        <translation>Список воспроизведения pls (*.pls)</translation>
+        <translation>pls çalma listesi (*.pls)</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/filedialog.cpp" line="263"/>
         <source>xspf playlist (*.xspf)</source>
-        <translation>Список воспроизведения xspf (*.xspf)</translation>
+        <translation>xspf çalma listesi (*.xspf)</translation>
     </message>
 </context>
 <context>
@@ -1124,34 +1125,34 @@
     <message>
         <location filename="../src/views/filesystem/file_scene.cpp" line="280"/>
         <source>No entry found</source>
-        <translation>Запись не найдена</translation>
+        <translation>Kayıt bulunamadı</translation>
     </message>
 </context>
 <context>
     <name>FirstTimeDialog</name>
     <message>
         <source>Setup your music collection directory</source>
-        <translation type="vanished">Установить каталог вашей коллекции мызыки</translation>
+        <translation type="vanished">Müzik koleksiyonunuzun dizinini ayarlayın</translation>
     </message>
     <message>
         <source>&lt;p&gt;Welcome to yarock&lt;/p&gt;&lt;p&gt;Select the location of your music collection:&lt;/p&gt;</source>
-        <translation type="vanished">&lt;p&gt;Добро пожаловать в yarock&lt;/p&gt;&lt;p&gt;Выберите расположение вашей музыкальной коллекции:&lt;/p&gt;</translation>
+        <translation type="vanished">&lt;h2&gt;YaRock&apos;a hoşgeldiniz&lt;/h2&gt;&lt;p&gt;Herhangi bir koleksiyon kurulmamış görünüyor&lt;/p&gt;&lt;p&gt;Koleksiyonunuzu şimdi kurmak istermisiniz&lt;/p&gt;</translation>
     </message>
     <message>
         <source> Choose music folder</source>
-        <translation type="vanished"> Выбрать папку с музыкой</translation>
+        <translation type="vanished">Müzik dizini seç</translation>
     </message>
 </context>
 <context>
     <name>GraphicsItemMenu</name>
     <message>
         <source>Enqueue to playqueue</source>
-        <translation type="vanished">Поставить в очередь воспроизведения</translation>
+        <translation type="vanished">Çalma listesini sıraya al</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="81"/>
         <source>&amp;Remove playlist from disk</source>
-        <translation>Удалить &amp;список воспроизведения с диска</translation>
+        <translation>&amp;Çalma listesini diskten sil</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="89"/>
@@ -1160,7 +1161,7 @@
         <location filename="../src/views/item_menu.cpp" line="566"/>
         <location filename="../src/views/item_menu.cpp" line="613"/>
         <source>Add to favorites</source>
-        <translation>Добавить в избранное</translation>
+        <translation>Favorilerine ekle</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="67"/>
@@ -1171,7 +1172,7 @@
         <location filename="../src/views/item_menu.cpp" line="86"/>
         <location filename="../src/views/item_menu.cpp" line="92"/>
         <source>Play</source>
-        <translation>Воспроизведение</translation>
+        <translation>Oynat</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="68"/>
@@ -1182,50 +1183,50 @@
         <location filename="../src/views/item_menu.cpp" line="88"/>
         <location filename="../src/views/item_menu.cpp" line="93"/>
         <source>Add to play queue</source>
-        <translation>Добавить в очередь воспроизведения</translation>
+        <translation>Çalma kuyruğuna ekle</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="71"/>
         <location filename="../src/views/item_menu.cpp" line="87"/>
         <location filename="../src/views/item_menu.cpp" line="94"/>
         <source>Edit</source>
-        <translation>Изменить</translation>
+        <translation>Düzenle</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="90"/>
         <source>Website</source>
-        <translation>Веб-сайт</translation>
+        <translation>Web sitesi</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="155"/>
         <source>%1 artists</source>
-        <translation>%1 исполнителей</translation>
+        <translation>Artistler</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="157"/>
         <source>%1 albums</source>
-        <translation>%1 альбомов</translation>
+        <translation>Albümler</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="158"/>
         <source>%1 tracks</source>
-        <translation>%1 дорожек</translation>
+        <translation>%1 Parçalar</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="159"/>
         <source>%1 streams</source>
-        <translation>%1 потоков</translation>
+        <translation>Akış %1</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="160"/>
         <source>%1 playlist</source>
-        <translation>%1 список воспроизведения</translation>
+        <translation>Çalma Listesi</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="271"/>
         <location filename="../src/views/item_menu.cpp" line="374"/>
         <source>jump to tracks</source>
-        <translation>Перейти к дорожкам</translation>
+        <translation>Parçaya git</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="283"/>
@@ -1233,12 +1234,12 @@
         <location filename="../src/views/item_menu.cpp" line="564"/>
         <location filename="../src/views/item_menu.cpp" line="611"/>
         <source>Remove from favorites</source>
-        <translation>Удалить из избранного</translation>
+        <translation>Sık Kullanılanlardan Kaldır</translation>
     </message>
     <message>
         <location filename="../src/views/item_menu.cpp" line="478"/>
         <source>jump to albums</source>
-        <translation>Перейти к альбомам</translation>
+        <translation>Albüme git</translation>
     </message>
 </context>
 <context>
@@ -1246,45 +1247,45 @@
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="114"/>
         <source>view grid</source>
-        <translation>Отобразить решеткой</translation>
+        <translation>Şemayı göster</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="115"/>
         <source>view by tracks</source>
-        <translation>Отобразить дорожки</translation>
+        <translation>parçaları göster</translation>
     </message>
     <message>
         <source>new playlist</source>
-        <translation type="vanished">Новый список</translation>
+        <translation type="vanished">Yeni çalma listesi</translation>
     </message>
     <message>
         <source>new smart playlist</source>
-        <translation type="vanished">Новый умный список воспроизведения</translation>
+        <translation type="vanished">Yeni akıllı çalma listesi</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="118"/>
         <source>reload history</source>
-        <translation>Перезагрузить историю</translation>
+        <translation>Geçmişi güncelle</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="119"/>
         <source>clear history</source>
-        <translation>Очистить историю</translation>
+        <translation>Geçmişi temizle</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="298"/>
         <source>Updating music database</source>
-        <translation>Обновление базы данных музыки</translation>
+        <translation>Müzik koleksiyonunu güncellemesi</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="844"/>
         <source>Albums</source>
-        <translation>Альбомы</translation>
+        <translation>Albümler</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="896"/>
         <source>All playlists</source>
-        <translation>Все списки воспроизведения</translation>
+        <translation>Çalma listeleri</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene_dashboard.cpp" line="101"/>
@@ -1303,47 +1304,47 @@
         <location filename="../src/views/local/local_scene.cpp" line="1000"/>
         <location filename="../src/views/local/local_scene.cpp" line="1102"/>
         <source>No entry found</source>
-        <translation>Запись не найдена</translation>
+        <translation>Kayıt bulunamadı</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="392"/>
         <source>All Albums</source>
-        <translation>Все альбомы</translation>
+        <translation>Tüm Albümler</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="795"/>
         <source>Artists</source>
-        <translation>Исполнители</translation>
+        <translation>Artistler</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="570"/>
         <source>disc %1</source>
-        <translation>Диск %1</translation>
+        <translation>Disk %1</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene.cpp" line="1019"/>
         <source>Smart playlists</source>
-        <translation>Умные списки воспроизведения</translation>
+        <translation>Akıllı Çalma listesi</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene_dashboard.cpp" line="62"/>
         <source>Most played albums</source>
-        <translation>Самые воспроизводимые альбомы</translation>
+        <translation>Tercih edilen albümler</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene_dashboard.cpp" line="115"/>
         <source>Top rated albums</source>
-        <translation>Альбомы с самым высоким рейтингом</translation>
+        <translation>En yüksek oy alan albümler</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene_dashboard.cpp" line="174"/>
         <source>Most played artists</source>
-        <translation>Самые воспроизводимые исполнители</translation>
+        <translation>Tercih edilen sanatçılar</translation>
     </message>
     <message>
         <location filename="../src/views/local/local_scene_dashboard.cpp" line="243"/>
         <source>Top rated artists</source>
-        <translation>Исполнители с самым высоким рейтингом</translation>
+        <translation>En yüksek oy alan sanatçılar</translation>
     </message>
 </context>
 <context>
@@ -1352,7 +1353,7 @@
         <location filename="../src/models/local/local_track_model.cpp" line="47"/>
         <location filename="../src/models/local/local_track_model.cpp" line="68"/>
         <source>All</source>
-        <translation>Все</translation>
+        <translation>Tümü</translation>
     </message>
 </context>
 <context>
@@ -1360,7 +1361,7 @@
     <message>
         <location filename="../src/views/context/lyricseditor.cpp" line="41"/>
         <source>Lyrics editor</source>
-        <translation>Текст песен</translation>
+        <translation>Şarkı sözleri editörü</translation>
     </message>
 </context>
 <context>
@@ -1369,27 +1370,27 @@
         <location filename="../src/views/context/context_widget.cpp" line="539"/>
         <location filename="../src/views/context/context_widget.cpp" line="635"/>
         <source>Add file</source>
-        <translation>Добавить файл</translation>
+        <translation>Dosya ekle</translation>
     </message>
     <message>
         <location filename="../src/views/context/context_widget.cpp" line="546"/>
         <source>Remove file</source>
-        <translation>Удалить файл</translation>
+        <translation>Dosyayı kaldır</translation>
     </message>
     <message>
         <location filename="../src/views/context/context_widget.cpp" line="578"/>
         <source>No lyrics found</source>
-        <translation>Текст песни не найден</translation>
+        <translation>Şarkı sözleri bulunamadı</translation>
     </message>
     <message>
         <location filename="../src/views/context/context_widget.cpp" line="532"/>
         <source>Song lyrics</source>
-        <translation>Текст песен</translation>
+        <translation>Şarkı sözleri</translation>
     </message>
     <message>
         <location filename="../src/views/context/context_widget.cpp" line="628"/>
         <source>Edit file</source>
-        <translation>Изменить файл</translation>
+        <translation>Dosyayı düzenle</translation>
     </message>
 </context>
 <context>
@@ -1397,16 +1398,16 @@
     <message>
         <location filename="../src/widgets/main/main_left.cpp" line="101"/>
         <source>Apply</source>
-        <translation>Применить</translation>
+        <translation>Uygula</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/main_left.cpp" line="104"/>
         <source>Cancel</source>
-        <translation>Отмена</translation>
+        <translation>İptal</translation>
     </message>
     <message>
         <source>Go back</source>
-        <translation type="vanished">Назад</translation>
+        <translation type="vanished">Geri git</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/main_left.cpp" line="108"/>
@@ -1416,17 +1417,17 @@
     <message>
         <location filename="../src/widgets/main/main_left.cpp" line="109"/>
         <source>Go forward</source>
-        <translation>Вперед</translation>
+        <translation>İleri git</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/main_left.cpp" line="110"/>
         <source>Go up</source>
-        <translation>Вверх</translation>
+        <translation>Yukarı çık</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/main_left.cpp" line="117"/>
         <source>Quick filter</source>
-        <translation>Быстрый фильтр</translation>
+        <translation>Hızlı filtre</translation>
     </message>
 </context>
 <context>
@@ -1434,51 +1435,51 @@
     <message>
         <location filename="../src/widgets/main/main_right.cpp" line="100"/>
         <source>New playlist</source>
-        <translation>Новый список воспроизведения</translation>
+        <translation>Yeni çalma listesi</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/main_right.cpp" line="101"/>
         <source>New smart playlist</source>
-        <translation>Новый умный список воспроизведения</translation>
+        <translation>Yeni akıllı çalma listesi</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/main_right.cpp" line="188"/>
         <source>Playqueue</source>
-        <translation>Количество воспроизведений</translation>
+        <translation>Çalma kuyruğu filtresi</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/main_right.cpp" line="192"/>
         <source>Playlist editor</source>
-        <translation>Редактор списка воспроизведения</translation>
+        <translation>Çalma listesi düzenleyici</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/main_right.cpp" line="196"/>
         <source>Tag editor</source>
-        <translation>Редактор тегов</translation>
+        <translation>Etikey düzenleyici</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/main_right.cpp" line="200"/>
         <source>Smart editor</source>
-        <translation>Интеллектуальный редактор</translation>
+        <translation>Akıllı düzenleyici</translation>
     </message>
 </context>
 <context>
     <name>MainToolButton</name>
     <message>
         <source>Tools</source>
-        <translation type="vanished">Инструменты</translation>
+        <translation type="vanished">Araçlar</translation>
     </message>
     <message>
         <source>Choose database</source>
-        <translation type="vanished">Выбрать базу данных</translation>
+        <translation type="vanished">Veritabanını seçin</translation>
     </message>
     <message>
         <source>&amp;Show/Hide panel</source>
-        <translation type="vanished">&amp;Показывать/скрывать панель</translation>
+        <translation type="vanished">&amp;Göster/Gizle panel</translation>
     </message>
     <message>
         <source>&amp;Add to playqueue</source>
-        <translation type="vanished">&amp;Добавить в очередь воспроизведения</translation>
+        <translation type="vanished">&amp;oynatım kuyruğuna ekle</translation>
     </message>
 </context>
 <context>
@@ -1486,221 +1487,221 @@
     <message>
         <location filename="../src/mainwindow.cpp" line="321"/>
         <source>&amp;Quit</source>
-        <translation>&amp;Выход</translation>
+        <translation>&amp;Çıkış</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="322"/>
         <source>About</source>
-        <translation>О программе</translation>
+        <translation>Hakkında</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="324"/>
         <source>settings</source>
-        <translation>Параметры</translation>
+        <translation>Düzenleme</translation>
     </message>
     <message>
         <source>&amp;Add media to playlist</source>
-        <translation type="vanished">Добавить &amp;композицию в список</translation>
+        <translation type="vanished">&amp;Çalma listesine ortam ekle</translation>
     </message>
     <message>
         <source>&amp;Add directory to playlist</source>
-        <translation type="vanished">Добавить &amp;каталог в список</translation>
+        <translation type="vanished">&amp;Çalma listesine dizin ekle</translation>
     </message>
     <message>
         <source>&amp;Add Url...</source>
-        <translation type="vanished">Добавить &amp;адрес...</translation>
+        <translation type="vanished">&amp;Bağlantı ekle</translation>
     </message>
     <message>
         <source>&amp;Clear playlist</source>
-        <translation type="vanished">&amp;Очистить список воспроизведения</translation>
+        <translation type="vanished">&amp;Çalma listesini temizle</translation>
     </message>
     <message>
         <source>&amp;Save playlist to file</source>
-        <translation type="vanished">&amp;Сохранить список воспроизведения в файл</translation>
+        <translation type="vanished">&amp;Çalma listesini bir dosyaya kaydet</translation>
     </message>
     <message>
         <source>&amp;Auto save playlist to yarock database</source>
-        <translation type="vanished">&amp;Автоматическое сохранение списка воспроизведения в базе данных yarock</translation>
+        <translation type="vanished">&amp;Çalma listesini YaRock veritabanına otomatik kaydet</translation>
     </message>
     <message>
         <source>&amp;Remove media from playlist</source>
-        <translation type="vanished">&amp;Удалить композицию из списка</translation>
+        <translation type="vanished">&amp;ortamı çalma listesinden çıkar</translation>
     </message>
     <message>
         <source>Stop after this track</source>
-        <translation type="vanished">Остановить после этой дорожки</translation>
+        <translation type="vanished">Bu parçadan sonra durdur</translation>
     </message>
     <message>
         <source>Remove duplicate</source>
-        <translation type="vanished">Удалить повторяющиеся</translation>
+        <translation type="vanished">Yinelenenleri kaldır</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="326"/>
         <source>Edit</source>
-        <translation>Изменить</translation>
+        <translation>Düzenle</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="329"/>
         <source>new playlist</source>
-        <translation>Новый список воспроизведения</translation>
+        <translation>Yeni çalma listesi</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="330"/>
         <source>new smart playlist</source>
-        <translation>Новый умный список воспроизведения</translation>
+        <translation>yeni akıllı çalma listesi</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="335"/>
         <source>Play or Pause media</source>
-        <translation>Воспроизведение или пауза</translation>
+        <translation>Ortam Oynat yada Beklet</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="336"/>
         <source>Stop playing media</source>
-        <translation>Остановить воспроизведение музыки</translation>
+        <translation>Çalınan ortamı durdur</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="337"/>
         <source>Play next media</source>
-        <translation>Воспроизвести следующую дорожку</translation>
+        <translation>Sonraki ortamı çal</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="338"/>
         <source>Play previous media</source>
-        <translation>Воспроизвести предыдущую дорожку</translation>
+        <translation>Bir önceki ortamı oynat</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="342"/>
         <source>Audio equalizer</source>
-        <translation>Эквалайзер</translation>
+        <translation>Ses dengeleyicisi</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="345"/>
         <source>Database operation</source>
-        <translation>Операции с базой данных</translation>
+        <translation>Veritabanı işlemi</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="346"/>
         <source>Database add</source>
-        <translation>Добавить базу данных</translation>
+        <translation>Veritabanı ekle</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="349"/>
         <source>Show playqueue panel</source>
-        <translation>Показывать панель очереди воспроизведения</translation>
+        <translation>Oynatım kuyruğu panelini göster</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="365"/>
         <source>Enable play on search</source>
-        <translation>Включить воспроизведение по поиску</translation>
+        <translation>Aramada çalmayı etkinleştir</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="917"/>
         <source>Setup your music collection directory</source>
-        <translation>Установить каталог вашей коллекции мызыки</translation>
+        <translation>Müzik koleksiyonu dizinizi ayarlayın</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1131"/>
         <source>No equalizer available with this configuration</source>
-        <translation>Эквалайзер недоступен с этой конфигурацией</translation>
+        <translation>Bu yapılandırma için ekolayzer bulunmamaktadır</translation>
     </message>
     <message>
         <source>Show menu panel</source>
-        <translation type="vanished">Показать панель меню</translation>
+        <translation type="vanished">Menü panelini göster</translation>
     </message>
     <message>
         <source>Show now playing</source>
-        <translation type="vanished">Показывать &quot;сейчас воспроизводится&quot;</translation>
+        <translation type="vanished">Şimdi çalınanı göster</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="353"/>
         <source>Switch to minimal mode</source>
-        <translation>Переключиться в минимальный режим</translation>
+        <translation>Normal moda geçin</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="354"/>
         <source>Switch to normal mode</source>
-        <translation>Переключиться в обычный режим</translation>
+        <translation>Normal moda geçin</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="327"/>
         <source>Send LastFm love</source>
-        <translation>Отправить любимое на LastFm</translation>
+        <translation>LastFm&apos;in sevilen parçalarına gönder</translation>
     </message>
     <message>
         <source>Show cover</source>
-        <translation type="vanished">Показывать обложку</translation>
+        <translation type="vanished">Kapağı göster</translation>
     </message>
     <message>
         <source>Show rating</source>
-        <translation type="vanished">Показывать рейтинг</translation>
+        <translation type="vanished">Derecelendirmeyi göster</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="357"/>
         <source>Jump to artist</source>
-        <translation>Перейти к исполнителю</translation>
+        <translation>Sanatçıya git</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="358"/>
         <source>Jump to album</source>
-        <translation>Перейти к альбому</translation>
+        <translation>Albüme git</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="359"/>
         <source>Jump to track</source>
-        <translation>Перейти к дорожке</translation>
+        <translation>Parçaya git</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="362"/>
         <source>Enable search popup</source>
-        <translation>Включить всплывающий поиск</translation>
+        <translation>Popup aramasını etkinkeştir</translation>
     </message>
     <message>
         <source>Add music files or playlist</source>
-        <translation type="vanished">Добавить музыкальные файлы или список воспроизведения</translation>
+        <translation type="vanished">Müzik dosyaları veya çalma listesi ekle</translation>
     </message>
     <message>
         <source>Add music directories</source>
-        <translation type="vanished">Добавить каталог музыки</translation>
+        <translation type="vanished">Müzik dizini ekle</translation>
     </message>
     <message>
         <source>Save playlist to file</source>
-        <translation type="vanished">Сохранить список воспроизведения в файл</translation>
+        <translation type="vanished">Çalma listesini dosyaya kaydet</translation>
     </message>
     <message>
         <source>Playlist name</source>
-        <translation type="vanished">Название списка воспроизведения</translation>
+        <translation type="vanished">Çalma listesi adı</translation>
     </message>
     <message>
         <source>Save playlist</source>
-        <translation type="vanished">Сохранить список воспроизведения</translation>
+        <translation type="vanished">Çalma listesini kaydet</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="559"/>
         <source>Playing error</source>
-        <translation>Ошибка воспроизведения</translation>
+        <translation>Çalma hatası</translation>
     </message>
     <message>
         <source>settings saved</source>
-        <translation type="vanished">Настройки сохранены</translation>
+        <translation type="vanished">düzenleri kaydet</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="942"/>
         <source>&lt;p&gt;Database need to be rebuilt&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Необходимо перестроить базу данных&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Veritabanı yeniden oluşturulmalı&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="944"/>
         <source>Database revision update</source>
-        <translation>Обновление базы данных</translation>
+        <translation>Düzeltilmiş vertabanı güncellemesi</translation>
     </message>
     <message>
         <source>&lt;b&gt;Equalizer is not available&lt;/b&gt;&lt;p&gt;Equalizer wasn&apos;t found, probably you are using a backend that doesn&apos;t support it.&lt;/p&gt;&lt;p&gt;Change to another backend (gstreamer is supported) if you want to have equalizer&lt;/p&gt;</source>
-        <translation type="vanished">&lt;b&gt;Эквалайзер не поддерживается&lt;/b&gt;&lt;p&gt;Эквалайзер не найден, вероятно используемый вами движек не поддерживает это.&lt;/p&gt;&lt;p&gt;Перейдите на другой движек (gstreamer поддерживает ) если вам необходимо иметь эквалайзер&lt;/p&gt;</translation>
+        <translation type="vanished">&lt;h1&gt;Ekolayzer yok&lt;/h1&gt;&lt;p&gt;Ekolayzer bulunamadı, desteklenmeyen bir sunucu uygulaması kullanıyor olabilirsiniz.&lt;/p&gt;&lt;p&gt;Ekolayzer kullanmak istiyorsanız başka bir sunucu uygulaması (gstreamer destekli) kullanın&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Equalizer information</source>
-        <translation type="vanished">Сведения эквалайзера</translation>
+        <translation type="vanished">Dengeleyici bilgisi</translation>
     </message>
 </context>
 <context>
@@ -1708,139 +1709,139 @@
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="136"/>
         <source>home</source>
-        <translation>Домой</translation>
+        <translation>Ev</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="139"/>
         <source>music browser</source>
-        <translation>Обзор музыки</translation>
+        <translation>Müzik tarayıcı</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="142"/>
         <source>playlist browser</source>
-        <translation>Обзор списков воспроизведения</translation>
+        <translation>Çalma listesi tarayıcı</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="145"/>
         <source>radio browser</source>
-        <translation>Обзор радио</translation>
+        <translation>Radyo tarayıcı</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="148"/>
         <source>computer</source>
-        <translation>Компьютер</translation>
+        <translation>Bilgisayar</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="151"/>
         <location filename="../src/widgets/main/menumodel.cpp" line="239"/>
         <source>settings</source>
-        <translation>Параметры</translation>
+        <translation>Düzenleme</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="159"/>
         <source>context</source>
-        <translation>Текущий статус</translation>
+        <translation>Bağlam görünümü</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="162"/>
         <source>dashboard</source>
-        <translation>Панель мониторинга</translation>
+        <translation>Pano görünümü</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="165"/>
         <source>history</source>
-        <translation>История</translation>
+        <translation>Geçmiş</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="182"/>
         <source>genre</source>
-        <translation>Жанр</translation>
+        <translation>Tür</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="229"/>
         <source>home directory</source>
-        <translation>Домашний каталог</translation>
+        <translation>Ev dizini</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="232"/>
         <source>root directory</source>
-        <translation>Корневой каталог</translation>
+        <translation>Temel dizin</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="242"/>
         <source>about</source>
-        <translation>О программе</translation>
+        <translation>Hakkında</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="252"/>
         <source>Choose database</source>
-        <translation type="unfinished">Выбрать базу данных</translation>
+        <translation type="unfinished">Veritabanını seçin</translation>
     </message>
     <message>
         <source>choose database</source>
-        <translation type="vanished">Выбрать базу данных</translation>
+        <translation type="vanished">Veritabanını seçin</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="194"/>
         <source>playlists</source>
-        <translation>Списки воспроизведения</translation>
+        <translation>Çalma Listesi</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="173"/>
         <source>artists</source>
-        <translation>Исполнители</translation>
+        <translation>Artistler</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="176"/>
         <source>albums</source>
-        <translation>Альбомы</translation>
+        <translation>Albümler</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="179"/>
         <source>tracks</source>
-        <translation>Дорожки</translation>
+        <translation>Parçalar</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="185"/>
         <source>years</source>
-        <translation>Год</translation>
+        <translation>Yıl</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="188"/>
         <source>favorites</source>
-        <translation>Избранное</translation>
+        <translation>Favori albüm</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="197"/>
         <source>smart playlists</source>
-        <translation>Умные списки воспроизведения</translation>
+        <translation>Akıllı Çalma listesi</translation>
     </message>
     <message>
         <location filename="../src/widgets/main/menumodel.cpp" line="222"/>
         <source>favorite stream</source>
-        <translation>избранные потоки</translation>
+        <translation>Favori akış</translation>
     </message>
 </context>
 <context>
     <name>MenuWidget</name>
     <message>
         <source>show extended menu</source>
-        <translation type="vanished">Показать расширенное меню</translation>
+        <translation type="vanished">Ayrıntılı göster</translation>
     </message>
     <message>
         <source>show compact menu</source>
-        <translation type="vanished">Показать компактное меню</translation>
+        <translation type="vanished">Ayrıntılı göster</translation>
     </message>
 </context>
 <context>
     <name>NowPlayingView</name>
     <message>
         <source>Edit</source>
-        <translation type="vanished">Изменить</translation>
+        <translation type="vanished">Düzenle</translation>
     </message>
     <message>
         <source>Send LastFm love</source>
-        <translation type="vanished">Отправить любимое на LastFm</translation>
+        <translation type="vanished">LastFm&apos;in sevilen parçalarına gönder</translation>
     </message>
 </context>
 <context>
@@ -1848,17 +1849,17 @@
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="65"/>
         <source>General</source>
-        <translation>Основные</translation>
+        <translation>Genel</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="90"/>
         <source>Enable Mpris</source>
-        <translation>Включить Mpris</translation>
+        <translation>Mpris arabirimini etkinleştir</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="93"/>
         <source>Enable notification</source>
-        <translation>Включить уведомления</translation>
+        <translation>Bildirimleri etkinleştir</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="96"/>
@@ -1868,17 +1869,17 @@
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="100"/>
         <source>Minimize application to systray</source>
-        <translation>Минимизировать в системный лоток</translation>
+        <translation>Uygulamayı tepsiye küçült</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="103"/>
         <source>Hide window at startup</source>
-        <translation>Спрятать окно при запуске</translation>
+        <translation>Başlangıçta pencereyi gizle</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="115"/>
         <source>Choose color</source>
-        <translation>Выбрать цвет</translation>
+        <translation>Renk seç</translation>
     </message>
 </context>
 <context>
@@ -1886,127 +1887,127 @@
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="597"/>
         <source>Library settings</source>
-        <translation>Параметры библиотеки</translation>
+        <translation>Kütüphane ayarları</translation>
     </message>
     <message>
         <source>Database Name</source>
-        <translation type="vanished">Название базы данных</translation>
+        <translation type="vanished">Veritabanı adı</translation>
     </message>
     <message>
         <source>Enable Multi Database support</source>
-        <translation type="vanished">Включить поддержку нескольких баз данных</translation>
+        <translation type="vanished">Çoklu Veritabanı desteğini etkinleştir</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="630"/>
         <location filename="../src/views/settings/settings_widget.cpp" line="923"/>
         <location filename="../src/views/settings/settings_widget.cpp" line="936"/>
         <source>New database</source>
-        <translation>Новая база данных</translation>
+        <translation>Yeni veritabanı</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="634"/>
         <source>Delete database</source>
-        <translation>Удалить базу данных</translation>
+        <translation>Veritabanını sil</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="638"/>
         <location filename="../src/views/settings/settings_widget.cpp" line="1012"/>
         <source>Rename database</source>
-        <translation>Переименовать базу данных</translation>
+        <translation>Veritabanını yeniden adlandır</translation>
     </message>
     <message>
         <source>Database Properties</source>
-        <translation type="vanished">Настройки базы данных</translation>
+        <translation type="vanished">Veritabanı Özellikleri</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="619"/>
         <source>Collection</source>
-        <translation>Коллекция</translation>
+        <translation>Kolleksiyon</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="648"/>
         <source>Properties</source>
-        <translation>Параметры</translation>
+        <translation>Özellikler</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="659"/>
         <location filename="../src/views/settings/settings_widget.cpp" line="1055"/>
         <source> Choose music folder</source>
-        <translation> Выбрать папку с музыкой</translation>
+        <translation>Müzik dizini seç</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="666"/>
         <source>Add ...</source>
-        <translation>Добавить ...</translation>
+        <translation>Ekle ...</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="670"/>
         <source>Update collections automatically after start</source>
-        <translation>Обновлять коллекцию автоматически после старта</translation>
+        <translation>Başladıktan sonra otomatik olarak koleksiyonu güncelle</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="685"/>
         <source>Image settings</source>
-        <translation>Параметры изображения</translation>
+        <translation>Görüntü özellikleri</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="692"/>
         <source>image size: </source>
-        <translation>Размер изображения: </translation>
+        <translation>Görüntü boyutu:</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="697"/>
         <source>Search cover art from file directory</source>
-        <translation>Поиск обложек в каталогах</translation>
+        <translation>Dizinden albüm kapağını ara</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="674"/>
         <source>Group multi disc albums as one album</source>
-        <translation>Группировать многодисковые альбомы как один альбом</translation>
+        <translation>Bir albüm olarak grup çoklu diskli albümleri</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="678"/>
         <source>Use artist image (album cover stack otherwise)</source>
-        <translation>Использовать изображение исполнителя (в противном случае обложку альбома)</translation>
+        <translation>Artist için resim kullan (albüm kapağının haricinde)</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="682"/>
         <source>Write rating to file</source>
-        <translation>Записывать рейтинг в файл</translation>
+        <translation>Dosyayı derecelendir</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="700"/>
         <source>Download image (artist and album) from internet</source>
-        <translation>Загрузить изображение из интернета (исполнитель и альбом)</translation>
+        <translation>İnternetten görüntü (sanatçı ve albüm) indir</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="923"/>
         <location filename="../src/views/settings/settings_widget.cpp" line="1012"/>
         <source>Name</source>
-        <translation>Название</translation>
+        <translation>İsim</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="937"/>
         <source>The database  &quot;%1&quot; already exists, please try another name</source>
-        <translation>База данных  «%1» уже сушествует, попробуйте другое имя</translation>
+        <translation>Veritabanı &quot;%1&quot; mevcut, lütfen başka isim deneyin</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="994"/>
         <source>Are you sure you want to delete the &quot;%1&quot; database?</source>
-        <translation>Вы хотите удалить базу данных  «%1»?</translation>
+        <translation>Veritabanı &quot;%1&quot; &apos;i silmeye eminmisiniz?</translation>
     </message>
     <message>
         <source>The database  &quot;%1&quot; already exist, please try another name</source>
-        <translation type="vanished">База данных  &quot;%1&quot; уже существует, попробуйте другое название</translation>
+        <translation type="vanished">Bu veritabanı &quot;%1&quot; mevcut, lütfen başka bir isimle dene</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="993"/>
         <source>Delete database properties</source>
-        <translation>Удалить настройки базы данных</translation>
+        <translation>Veritabanı özelliklerini sil</translation>
     </message>
     <message>
         <source>Are you sure you want to delete the &quot;%1&quot; database ?</source>
-        <translation type="vanished">Хотите удалить базу данных &quot;%1&quot;?</translation>
+        <translation type="vanished">Eminmisiniz silmek için &quot;%1&quot; veritabanını ?</translation>
     </message>
 </context>
 <context>
@@ -2014,42 +2015,42 @@
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="286"/>
         <source>Player settings</source>
-        <translation>Параметры проигрывателя</translation>
+        <translation>Oynatıcı ayarları</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="371"/>
         <source>Stop playing on playqueue clear</source>
-        <translation>Остановить воспроизведение при очистке очереди</translation>
+        <translation>Çalma listesinde çalmayı durdur</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="374"/>
         <source>Restart playing at startup</source>
-        <translation>Перезапустить воспроизведение при запуске</translation>
+        <translation>Açılışta yürütüleni yeniden başlatın</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="377"/>
         <source>Restore last playqueue content at startup</source>
-        <translation>Восстановить последнюю очередь при запуске</translation>
+        <translation>Açılışta son son çalma listesini geri yükle</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="380"/>
         <source>Use ReplayGain</source>
-        <translation>Использовать выравнивание громкости</translation>
+        <translation>ReplayGain kullan</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="393"/>
         <source>Engine</source>
-        <translation>Движек</translation>
+        <translation>Makine</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="396"/>
         <source>Replaygain</source>
-        <translation>Выравнивание громкости</translation>
+        <translation>Replaygain</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="399"/>
         <source>Others</source>
-        <translation>Другие</translation>
+        <translation>Diğer seçenekler</translation>
     </message>
 </context>
 <context>
@@ -2057,66 +2058,66 @@
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1530"/>
         <source>Scrobbler settings</source>
-        <translation>Параметры скробблера</translation>
+        <translation>Skroplayıcı ayarları</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1554"/>
         <source>Use LastFm scrobbler</source>
-        <translation>Использовать скробблер Last.fm</translation>
+        <translation>LastFm canlı yayınlayıcısı kullan</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1564"/>
         <source>Account details</source>
-        <translation>Информация об учетной записи</translation>
+        <translation>Hesap detayları</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1570"/>
         <source>username</source>
-        <translation>Имя пользователя</translation>
+        <translation>Kullanıcı adı</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1573"/>
         <source>password</source>
-        <translation>Пароль</translation>
+        <translation>Parola</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1586"/>
         <location filename="../src/views/settings/settings_widget.cpp" line="1709"/>
         <source>Sign In</source>
-        <translation>Авторизоваться</translation>
+        <translation>Oturum Aç</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1702"/>
         <source>You are log in Last.fm service as &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation>Вы вошли в сервис Last.fm как &lt;b&gt;%1&lt;/b&gt;</translation>
+        <translation>Last.fm servisi &lt;b&gt;%1&lt;/b&gt; olarak giriş yaptınız</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1708"/>
         <source>You are not logged in</source>
-        <translation>Вы не авторизованы</translation>
+        <translation>Giriş yapmadınız</translation>
     </message>
     <message>
         <source>You are log in lastFm service as &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation type="vanished">Вы авторизованы на сервисе last.fm как &lt;b&gt;%1&lt;/b&gt;</translation>
+        <translation type="vanished">LastFm servsine  &lt;b&gt;%1&lt;/b&gt; olarak giriş yaptınız</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1704"/>
         <source>Sign Out</source>
-        <translation>Выйти</translation>
+        <translation>Çıkış Yap</translation>
     </message>
     <message>
         <source>You are not log into</source>
-        <translation type="vanished">Вы не авторизовались в</translation>
+        <translation type="vanished">Giriş yapmadınız</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1743"/>
         <source>Authentication failed</source>
-        <translation>Ошибка аутентификации</translation>
+        <translation>Kimlik doğrulama başarısız</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1744"/>
         <source>Your Last.fm credentials were incorrect</source>
-        <translation>Ваши данные Last.fm не корректны</translation>
+        <translation>Sizin Last.fm kimlik bilgileriniz hatalı</translation>
     </message>
 </context>
 <context>
@@ -2124,57 +2125,57 @@
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1155"/>
         <source>Shortcut settings</source>
-        <translation>Настройки горячих клавиш</translation>
+        <translation>Kısayol ayarları</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1174"/>
         <source>Enable shortcuts</source>
-        <translation>Включить горячие клавиши</translation>
+        <translation>Kısayolları etkinleştir</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1182"/>
         <source>Play/Pause</source>
-        <translation>Воспроизведение / пауза</translation>
+        <translation>Oynat/Duraklat</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1183"/>
         <source>Stop</source>
-        <translation>Остановить</translation>
+        <translation>Durdur</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1184"/>
         <source>Previous track</source>
-        <translation>Предыдущая дорожка</translation>
+        <translation>Önceki parça</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1185"/>
         <source>Next track</source>
-        <translation>Следующая дорожка</translation>
+        <translation>Sonraki parça</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1186"/>
         <source>Increase volume</source>
-        <translation>Прибавить громкость</translation>
+        <translation>Sesi artırın</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1187"/>
         <source>Decrease volume</source>
-        <translation>Убавить громкость</translation>
+        <translation>Sesi azaltın</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1188"/>
         <source>Mute/Unmute volume</source>
-        <translation>Отключить/включить звук</translation>
+        <translation>Açık/Kapalı ses</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1189"/>
         <source>Jump to track</source>
-        <translation>Перейти к дорожке</translation>
+        <translation>Parçaya git</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1190"/>
         <source>Clear playqueue</source>
-        <translation>Очистить количество воспроизведений</translation>
+        <translation>Çalma listesini temizle</translation>
     </message>
 </context>
 <context>
@@ -2182,37 +2183,37 @@
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1790"/>
         <source>Song info</source>
-        <translation>Сведения о песне</translation>
+        <translation>Şarkı bilgisi</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1808"/>
         <source>Choose the websites you want to use when searching for lyrics</source>
-        <translation>Выбрать веб-сайты, используемые для поиск текста песен</translation>
+        <translation>Sözleri ararken kullanmak istediğiniz web sitelerini seçebilirsiniz</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1814"/>
         <source>move up</source>
-        <translation>Переместить вверх</translation>
+        <translation>Yukarı taşı</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_widget.cpp" line="1815"/>
         <source>move down</source>
-        <translation>Переместить вниз</translation>
+        <translation>Aşağı kaydır</translation>
     </message>
 </context>
 <context>
     <name>PlayerToolBar</name>
     <message>
         <source>[paused]</source>
-        <translation type="vanished">[приостановлено]</translation>
+        <translation type="vanished">Duraklatıldı</translation>
     </message>
     <message>
         <source>&lt;b&gt;%1&lt;/b&gt; by &lt;b&gt;%2&lt;/b&gt; on &lt;b&gt;%3&lt;/b&gt;</source>
-        <translation type="vanished">&lt;b&gt;%1&lt;/b&gt; из &lt;b&gt;%2&lt;/b&gt; в &lt;b&gt;%3&lt;/b&gt;</translation>
+        <translation type="vanished">&lt;b&gt;%1&lt;/b&gt; tarafından &lt;b&gt;%2&lt;/b&gt; açık &lt;b&gt;%3&lt;/b&gt;</translation>
     </message>
     <message>
         <source>&lt;b&gt;%1&lt;/b&gt; stream</source>
-        <translation type="vanished">&lt;b&gt;%1&lt;/b&gt; поток</translation>
+        <translation type="vanished">&lt;b&gt;%1&lt;/b&gt; akış</translation>
     </message>
 </context>
 <context>
@@ -2220,7 +2221,7 @@
     <message>
         <location filename="../src/widgets/playertoolbar/playertoolbarcompact.cpp" line="145"/>
         <source>[paused]</source>
-        <translation>[приостановлено]</translation>
+        <translation>[duraklatıldı]</translation>
     </message>
 </context>
 <context>
@@ -2228,19 +2229,19 @@
     <message>
         <location filename="../src/widgets/playertoolbar/playertoolbarfull.cpp" line="122"/>
         <source>Add to play queue</source>
-        <translation>Добавить в очередь воспроизведения</translation>
+        <translation>Çalma kuyruğuna ekle</translation>
     </message>
     <message>
         <location filename="../src/widgets/playertoolbar/playertoolbarfull.cpp" line="124"/>
         <source>Add to favorites</source>
-        <translation>Добавить в избранное</translation>
+        <translation>Favorilere ekle</translation>
     </message>
 </context>
 <context>
     <name>PlaylistDbWriter</name>
     <message>
         <source>no name</source>
-        <translation type="vanished">По имени</translation>
+        <translation type="vanished">isimsiz</translation>
     </message>
 </context>
 <context>
@@ -2248,7 +2249,7 @@
     <message>
         <location filename="../src/playqueue/playlistview.cpp" line="644"/>
         <source>media reading error</source>
-        <translation>Ошибка чтения файла</translation>
+        <translation>Ortam okuma hatası</translation>
     </message>
 </context>
 <context>
@@ -2256,7 +2257,7 @@
     <message>
         <location filename="../src/playqueue/playlistview.cpp" line="259"/>
         <source>Add file to play or Drag and Drop File from Collection</source>
-        <translation>Добавить файл для воспроизведения или перетащить файл из коллекции</translation>
+        <translation>Çalmak için dosya ekle ya da koleksiyondan dosyayı sürükle ve bırak</translation>
     </message>
 </context>
 <context>
@@ -2264,142 +2265,142 @@
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="70"/>
         <source>Jump to track</source>
-        <translation>Перейти к дорожке</translation>
+        <translation>Parçaya git</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="72"/>
         <source>&amp;Add media to playlist</source>
-        <translation>Добавить &amp;композицию в список воспроизведения</translation>
+        <translation>&amp;Çalma listesine ortam ekle</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="73"/>
         <source>&amp;Add directory to playlist</source>
-        <translation>Добавить &amp;каталог в список воспроизведения</translation>
+        <translation>&amp;Çalma listesine dizin ekle</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="74"/>
         <source>&amp;Add Url...</source>
-        <translation>Добавить &amp;адрес...</translation>
+        <translation>&amp;Url ekle...</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="75"/>
         <source>&amp;Clear playlist</source>
-        <translation>&amp;Очистить список воспроизведения</translation>
+        <translation>&amp;Çalma listesini temizle</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="76"/>
         <source>&amp;Export playlist to file</source>
-        <translation>&amp;Экспортировать список воспроизведения в файл</translation>
+        <translation>&amp;Çalma listesini dosyaya aktar</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="77"/>
         <source>&amp;Save playlist</source>
-        <translation>&amp;Сохранить список воспроизведения</translation>
+        <translation>&amp;Çalma listesini kaydet</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="78"/>
         <source>&amp;Remove media from playlist</source>
-        <translation>&amp;Удалить композицию из списка воспроизведения</translation>
+        <translation>&amp;Ortamı çalma listesinden çıkar</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="79"/>
         <source>Remove duplicate</source>
-        <translation>Удалять повторяющиеся</translation>
+        <translation>Yinelenenleri kaldır</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="84"/>
         <source>Send LastFm love</source>
-        <translation>Отправить любимое на LastFm</translation>
+        <translation>LastFm&apos;in sevilen parçalarına gönder</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="86"/>
         <source>Show cover</source>
-        <translation>Показывать обложку</translation>
+        <translation>Kapağı göster</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="90"/>
         <source>Show rating</source>
-        <translation>Показывать рейтинг</translation>
+        <translation>Derecelendirmeyi göster</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="94"/>
         <source>Show track number</source>
-        <translation>Показывать номер дорожки</translation>
+        <translation>Parça numarasını göster</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="104"/>
         <source>sort</source>
-        <translation>Сортировать</translation>
+        <translation>tür</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="106"/>
         <source>Sort playqueue</source>
-        <translation>Сортировать количество воспроизведений</translation>
+        <translation>&amp;oynatım kuyruğu türü</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="114"/>
         <source>Playqueue filter</source>
-        <translation>Фильтр очереди воспроизведения</translation>
+        <translation>Çalma kuyruğu filtresi</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="134"/>
         <source>Show filter</source>
-        <translation>Показывать фильтр</translation>
+        <translation>filtre göster</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="138"/>
         <source>Stop after this track</source>
-        <translation>Остановить после текущей дорожки</translation>
+        <translation>Bu parçadan sonra dur</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="222"/>
         <source>Empty Playlist</source>
-        <translation>Пустой список воспроизведения</translation>
+        <translation>Boş Çalma Listesi</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="224"/>
         <source>Playlist : &lt;b&gt;%1&lt;/b&gt; tracks - %2</source>
-        <translation>Список воспроизведения : &lt;b&gt;%1&lt;/b&gt; %2 - дорожек</translation>
+        <translation>Çalma listesi: &lt;b&gt;%1&lt;/b&gt; parçalar - %2</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="305"/>
         <source>Add</source>
-        <translation>Добавить</translation>
+        <translation>Ekle</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="321"/>
         <source>Display options</source>
-        <translation>Настройки отображения</translation>
+        <translation>Oynatıcı seçenekleri</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="326"/>
         <source>Widgets options</source>
-        <translation>Параметры виджета</translation>
+        <translation>Görsel Bileşen Seçenekleri </translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="361"/>
         <source>Add music files or playlist</source>
-        <translation>Добавить музыкальные файлы или список воспроизведения</translation>
+        <translation>Müzik dosyalarını veya çalma listesini ekle</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="373"/>
         <source>Add music directories</source>
-        <translation>Добавить каталоги с музыкой</translation>
+        <translation>Müzik dizini ekle</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="408"/>
         <source>Export playlist to file</source>
-        <translation>Экспортировать список воспроизведения в файл</translation>
+        <translation>Çalma listesini dosyaya aktar</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="420"/>
         <source>name</source>
-        <translation>Название</translation>
+        <translation>isim</translation>
     </message>
     <message>
         <location filename="../src/playqueue/playlistwidget.cpp" line="420"/>
         <source>Save playlist</source>
-        <translation>Сохранить список воспроизведения</translation>
+        <translation>Çalma listesini kaydet</translation>
     </message>
 </context>
 <context>
@@ -2407,237 +2408,237 @@
     <message>
         <location filename="../src/core/mediaitem/mediaitem.cpp" line="202"/>
         <source>Today</source>
-        <translation>Сегодня</translation>
+        <translation>Bugün</translation>
     </message>
     <message>
         <location filename="../src/core/mediaitem/mediaitem.cpp" line="204"/>
         <source>Yesterday</source>
-        <translation>Вчера</translation>
+        <translation>Dün</translation>
     </message>
     <message>
         <location filename="../src/core/mediaitem/mediaitem.cpp" line="206"/>
         <source>%1 days ago</source>
-        <translation>%1 дней назад</translation>
+        <translation>%1 gün önce</translation>
     </message>
     <message>
         <location filename="../src/core/mediaitem/tag.cpp" line="572"/>
         <source>unknown artist</source>
-        <translation>Неизвестный исполнитель</translation>
+        <translation>Bilinmeyen sanatçı</translation>
     </message>
     <message>
         <location filename="../src/core/mediaitem/tag.cpp" line="575"/>
         <source>unknown album</source>
-        <translation>Неизвестный альбом</translation>
+        <translation>Bilinmeyen albüm</translation>
     </message>
     <message>
         <location filename="../src/core/mediaitem/tag.cpp" line="578"/>
         <source>unknown genre</source>
-        <translation>Неизвестный жанр</translation>
+        <translation>Bilinmeyen tür</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="118"/>
         <source>Filename</source>
-        <translation>Имя файла</translation>
+        <translation>Dosya adı</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="119"/>
         <source>Title</source>
-        <translation>Название</translation>
+        <translation>Başlık</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="120"/>
         <source>Album</source>
-        <translation>Альбом</translation>
+        <translation>Albüm</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="121"/>
         <source>Genre</source>
-        <translation>Жанр</translation>
+        <translation>Tür</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="122"/>
         <source>Duration</source>
-        <translation>Длительность</translation>
+        <translation>Süre</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="123"/>
         <source>Track Year</source>
-        <translation>Год дорожки</translation>
+        <translation>Parça yılı</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="124"/>
         <source>Album Year</source>
-        <translation>Год альбома</translation>
+        <translation>Albüm Yılı</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="125"/>
         <source>Number</source>
-        <translation>Номер</translation>
+        <translation>Numara</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="126"/>
         <source>Track Playcount</source>
-        <translation>Количество воспроизведений дорожки</translation>
+        <translation>Parça oynatımı</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="127"/>
         <source>Album Playcount</source>
-        <translation>Количество воспроизведения альбома</translation>
+        <translation>Albüm oynatımı</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="128"/>
         <source>Artist Playcount</source>
-        <translation>Количество воспроизведения исполнителя</translation>
+        <translation>Sanatçı oynatımı</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="129"/>
         <source>Artist</source>
-        <translation>Исполнитель</translation>
+        <translation>Sanatçı</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="130"/>
         <source>Last Played date</source>
-        <translation>Дата последнего воспроизведения</translation>
+        <translation>Son oynatma tarihi</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="131"/>
         <source>Track rating</source>
-        <translation>Рейтинг дорожки</translation>
+        <translation>Parça izlenme oranı</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="132"/>
         <source>Album rating</source>
-        <translation>Рейтинг альбома</translation>
+        <translation>Albüm derecelendirme</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="133"/>
         <source>Artist rating</source>
-        <translation>Рейтинг исполнителя</translation>
+        <translation>Sanatçı derecelendirme</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="145"/>
         <source>after</source>
-        <translation>до</translation>
+        <translation>sonra</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="146"/>
         <source>before</source>
-        <translation>после</translation>
+        <translation>önce</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="147"/>
         <source>on</source>
-        <translation>на</translation>
+        <translation>olsun</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="148"/>
         <source>not on</source>
-        <translation>не на</translation>
+        <translation>olmasın</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="154"/>
         <source>contains</source>
-        <translation>Содержит</translation>
+        <translation>İçerik</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="155"/>
         <source>does not contain</source>
-        <translation>Не содержит</translation>
+        <translation>İçermez</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="156"/>
         <source>starts with</source>
-        <translation>Начинается с</translation>
+        <translation>İle başlar</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="157"/>
         <source>ends with</source>
-        <translation>Заканчивается на</translation>
+        <translation>İle biter</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="158"/>
         <source>greater than</source>
-        <translation>Больше, чем</translation>
+        <translation>daha büyük</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="159"/>
         <source>less than</source>
-        <translation>Меньше, чем</translation>
+        <translation>Daha az</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="160"/>
         <source>equals</source>
-        <translation>Равен</translation>
+        <translation>eşittir</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="161"/>
         <source>not equals</source>
-        <translation>Не равен</translation>
+        <translation>eşit değildir</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="171"/>
         <source>A-Z</source>
-        <translation>А-Я</translation>
+        <translation>A - Z</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="171"/>
         <source>Z-A</source>
-        <translation>Я-А</translation>
+        <translation>Z-A</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="172"/>
         <source>oldest first</source>
-        <translation>Сначала старые</translation>
+        <translation>Önce en eskisi</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="172"/>
         <source>newest first</source>
-        <translation>Сначала новые</translation>
+        <translation>Önce en yenisi</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="173"/>
         <source>shortest first</source>
-        <translation>Сначала короткие</translation>
+        <translation>Önce en kısası</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="173"/>
         <source>longest first</source>
-        <translation>Сначала длинные</translation>
+        <translation>Önce en uzunu</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="175"/>
         <source>smallest first</source>
-        <translation>Сначала маленькие</translation>
+        <translation>Önce en küçüğü</translation>
     </message>
     <message>
         <location filename="../src/core/mediasearch/search_query.cpp" line="175"/>
         <source>biggest first</source>
-        <translation>Сначала большие</translation>
+        <translation>Önce en uzunu</translation>
     </message>
     <message>
         <location filename="../src/views/context/context_scene.cpp" line="146"/>
         <source>Wait for information</source>
-        <translation>Ожидание информации</translation>
+        <translation>Bilgi için bekle</translation>
     </message>
     <message>
         <location filename="../src/views/context/context_scene.cpp" line="164"/>
         <source>Player is stopped</source>
-        <translation>Проигрыватель остановлен</translation>
+        <translation>Oynatıcı durduruldu</translation>
     </message>
     <message>
         <location filename="../src/views/stream/stream_scene.cpp" line="238"/>
         <source>downloading streams from %1....please wait...</source>
-        <translation>Загрузка потока из %1....пожалуйста подождите...</translation>
+        <translation>akış dosyaları indiriliyor %1 ....lütfen bekleyin...</translation>
     </message>
     <message>
         <location filename="../src/views/stream/stream_scene.cpp" line="245"/>
         <source>error accessing stream from %1 !</source>
-        <translation>Ошибка получения потока из %1 !</translation>
+        <translation>%1 akış için erişim hatası !</translation>
     </message>
     <message>
         <location filename="../src/widgets/exlineedit.cpp" line="49"/>
         <source>Clear</source>
-        <translation>Очистить</translation>
+        <translation>Temizle</translation>
     </message>
 </context>
 <context>
@@ -2646,17 +2647,17 @@
         <location filename="../src/widgets/playertoolbar/audiocontrols.cpp" line="39"/>
         <location filename="../src/widgets/playertoolbar/audiocontrols.cpp" line="67"/>
         <source>Repeat mode is off</source>
-        <translation>Режим повтора выключен</translation>
+        <translation>Tekrar modu kapalı</translation>
     </message>
     <message>
         <location filename="../src/widgets/playertoolbar/audiocontrols.cpp" line="71"/>
         <source>Repeat track</source>
-        <translation>Повторять дорожку</translation>
+        <translation>Parçayı tekrarla</translation>
     </message>
     <message>
         <location filename="../src/widgets/playertoolbar/audiocontrols.cpp" line="75"/>
         <source>Repeat all</source>
-        <translation>Повторять все</translation>
+        <translation>Tümünü tekrarla</translation>
     </message>
 </context>
 <context>
@@ -2664,7 +2665,7 @@
     <message>
         <location filename="../src/widgets/searchline_edit.cpp" line="111"/>
         <source>Custom search</source>
-        <translation>Специальный поиск</translation>
+        <translation>Gelişmiş arama</translation>
     </message>
 </context>
 <context>
@@ -2672,12 +2673,12 @@
     <message>
         <location filename="../src/views/settings/settings_scene.cpp" line="248"/>
         <source>Settings saved, restart needed</source>
-        <translation>Настройки сохранены, нужно перезапустить проигрыватель</translation>
+        <translation>Ayarlarlar kaydedildi, yeniden başlatma gerekli</translation>
     </message>
     <message>
         <location filename="../src/views/settings/settings_scene.cpp" line="250"/>
         <source>Settings saved</source>
-        <translation>Параметры сохранены</translation>
+        <translation>Ayarlar kaydedildi</translation>
     </message>
 </context>
 <context>
@@ -2685,12 +2686,12 @@
     <message>
         <location filename="../src/widgets/dialogs/shortcutdialog.cpp" line="35"/>
         <source>Change shortcut</source>
-        <translation>Изменить сочетание клавишь</translation>
+        <translation>Kısayol bildirimini değiştir</translation>
     </message>
     <message>
         <location filename="../src/widgets/dialogs/shortcutdialog.cpp" line="41"/>
         <source>Press a keys that you want to set as a shortcut</source>
-        <translation>Нажать клавиши, что-бы установить как сочетание клавишь</translation>
+        <translation>Kısayol olarak atamak istediğiniz bir tuşa basınız</translation>
     </message>
 </context>
 <context>
@@ -2699,12 +2700,12 @@
         <location filename="../src/widgets/playertoolbar/audiocontrols.cpp" line="96"/>
         <location filename="../src/widgets/playertoolbar/audiocontrols.cpp" line="124"/>
         <source>Shuffle mode is off</source>
-        <translation>Режим перемешивания выключен</translation>
+        <translation>Karıştırıcı modu açık</translation>
     </message>
     <message>
         <location filename="../src/widgets/playertoolbar/audiocontrols.cpp" line="128"/>
         <source>Shuffle mode is on</source>
-        <translation>Режим перемешивания включен</translation>
+        <translation>Karıştırıcı modu kapalı</translation>
     </message>
 </context>
 <context>
@@ -2712,32 +2713,32 @@
     <message>
         <location filename="../src/smartplaylist/smartplaylist.cpp" line="58"/>
         <source>50 Random tracks</source>
-        <translation>50 случайных дорожек</translation>
+        <translation>50 rastgele parça</translation>
     </message>
     <message>
         <location filename="../src/smartplaylist/smartplaylist.cpp" line="59"/>
         <source>50 last played</source>
-        <translation>50 последних воспроизведённых</translation>
+        <translation>50 son çalınan</translation>
     </message>
     <message>
         <location filename="../src/smartplaylist/smartplaylist.cpp" line="60"/>
         <source>50 most played</source>
-        <translation>50 самых воспроизводимых</translation>
+        <translation>50 en çok çalınan</translation>
     </message>
     <message>
         <location filename="../src/smartplaylist/smartplaylist.cpp" line="61"/>
         <source>ever played</source>
-        <translation>Когда-либо воспроизводился</translation>
+        <translation>bir kez çalınmış</translation>
     </message>
     <message>
         <location filename="../src/smartplaylist/smartplaylist.cpp" line="62"/>
         <source>never played</source>
-        <translation>Никогда не воспроизводился</translation>
+        <translation>hiç çalınmamış</translation>
     </message>
     <message>
         <location filename="../src/smartplaylist/smartplaylist.cpp" line="63"/>
         <source>top rated tracks</source>
-        <translation>Дорожки с самым высоким рейтингом</translation>
+        <translation>en beğenilen parçalar</translation>
     </message>
 </context>
 <context>
@@ -2745,12 +2746,12 @@
     <message>
         <location filename="../src/widgets/sort_widget.cpp" line="36"/>
         <source>Sort field</source>
-        <translation>Область сортировки</translation>
+        <translation>Sıralama sonucu modu</translation>
     </message>
     <message>
         <location filename="../src/widgets/sort_widget.cpp" line="39"/>
         <source>Sort order</source>
-        <translation>Порядок сортировки</translation>
+        <translation>Sıralama modu</translation>
     </message>
 </context>
 <context>
@@ -2758,38 +2759,38 @@
     <message>
         <location filename="../src/views/stream/stream_scene.cpp" line="116"/>
         <source>Search</source>
-        <translation>Поиск</translation>
+        <translation>Arama</translation>
     </message>
     <message>
         <location filename="../src/views/stream/stream_scene.cpp" line="141"/>
         <source>add</source>
-        <translation>Добавить</translation>
+        <translation>Ekle</translation>
     </message>
     <message>
         <location filename="../src/views/stream/stream_scene.cpp" line="142"/>
         <source>import</source>
-        <translation>Импорт</translation>
+        <translation>İçeri Aktar</translation>
     </message>
     <message>
         <location filename="../src/views/stream/stream_scene.cpp" line="317"/>
         <source>All</source>
-        <translation type="unfinished">Все</translation>
+        <translation type="unfinished">Tümü</translation>
     </message>
     <message>
         <location filename="../src/views/stream/stream_scene.cpp" line="474"/>
         <location filename="../src/views/stream/stream_scene.cpp" line="535"/>
         <source>Loading stream</source>
-        <translation>Загрузка потока</translation>
+        <translation>Akış Yükleniyor</translation>
     </message>
     <message>
         <location filename="../src/views/stream/stream_scene.cpp" line="932"/>
         <source>import stream file</source>
-        <translation>Импорт файла потока</translation>
+        <translation>Akış dosyası içeri aktar</translation>
     </message>
     <message>
         <location filename="../src/views/stream/stream_scene.cpp" line="933"/>
         <source>xspf playlist (*.xspf)</source>
-        <translation>Список воспроизведения xspf (*.xspf)</translation>
+        <translation>xspf çalma listesi (*.xspf)</translation>
     </message>
 </context>
 <context>
@@ -2797,7 +2798,7 @@
     <message>
         <location filename="../src/playqueue/task_manager.cpp" line="88"/>
         <source>Loading remote files</source>
-        <translation>Загрузка удаленных файлов</translation>
+        <translation>Uzaktaki dosyalar yükleniyor</translation>
     </message>
 </context>
 <context>
@@ -2806,40 +2807,40 @@
         <location filename="../src/threadmanager.cpp" line="100"/>
         <location filename="../src/threadmanager.cpp" line="108"/>
         <source>Updating music database</source>
-        <translation>Обновление базы данных музыки</translation>
+        <translation>Müzik koleksiyonunu güncellemesi</translation>
     </message>
     <message>
         <location filename="../src/threadmanager.cpp" line="140"/>
         <source>Loading music collection</source>
-        <translation>Загрузка музыкальной коллекции</translation>
+        <translation>Müzik koleksiyonu yüklemesi</translation>
     </message>
     <message>
         <location filename="../src/threadmanager.cpp" line="146"/>
         <source>Loading Music Collection</source>
-        <translation>Загрузка музыкальной коллекции</translation>
+        <translation>Müzik koleksiyonu yüklemesi</translation>
     </message>
     <message>
         <location filename="../src/threadmanager.cpp" line="172"/>
         <source>Loading playlist files</source>
-        <translation>Загрузка файла списка воспроизведения</translation>
+        <translation>Oynatma listesi dosyaları yükleniyor</translation>
     </message>
     <message>
         <location filename="../src/threadmanager.cpp" line="178"/>
         <source>Loading Playlist File</source>
-        <translation>Загрузка файла списка воспроизведения</translation>
+        <translation>Oynatma listesi dosyaları yükleniyor</translation>
     </message>
     <message>
         <location filename="../src/threadmanager.cpp" line="209"/>
         <location filename="../src/threadmanager.cpp" line="230"/>
         <source>Fetching media info</source>
-        <translation>Извлечение информации о композиции</translation>
+        <translation>Medya bilgisi getiriliyor</translation>
     </message>
 </context>
 <context>
     <name>XspfStreams</name>
     <message>
         <source>Favorite streams</source>
-        <translation type="vanished">Избранные потоки</translation>
+        <translation type="vanished">Favori akışlar</translation>
     </message>
 </context>
 </TS>
