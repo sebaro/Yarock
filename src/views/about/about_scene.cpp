@@ -95,7 +95,7 @@ void AboutScene::populateScene()
       version->setText(VERSION);
 
       QLabel *copyright = new QLabel(widget1);
-      copyright->setText("(c) 2010-2015 Sebastien Amardeilh");
+      copyright->setText("(c) 2010-2018 Sebastien Amardeilh");
 
       QLabel *icon = new QLabel(widget1);
       icon->setPixmap( QPixmap(":/icon/yarock_64x64.png") );

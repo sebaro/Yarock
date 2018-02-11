@@ -558,20 +558,24 @@ void PlayerToolBarFull::slot_get_artist_image()
     /* track from collection */
     if(Database::instance()->param()._option_artist_image == true)
     {
-      if(m_track && m_track->id != -1 && m_track->parent() && m_track->parent()->type() == TYPE_ALBUM)
+      if(m_track && m_track->id != -1 && m_track->parent())
       {
-          if( MEDIA::MediaPtr artist = m_track->parent()->parent())
+          //Debug::debug() << "   [PlayerToolBarFull] slot_get_artist_image m_track->id " << m_track->id;
+          if(m_track->parent()->type() == TYPE_ALBUM)
           {
-                QPixmap pix = CoverCache::instance()->image( artist );
+              if(MEDIA::MediaPtr artist = m_track->parent()->parent())
+              {
+                  QPixmap pix = CoverCache::instance()->image( artist );
 
-                ui_artist_image->setPixmap( pix.scaledToHeight(128, Qt::SmoothTransformation) );
+                  ui_artist_image->setPixmap( pix.scaledToHeight(128, Qt::SmoothTransformation) );
 
-                return;
+                  return;
+              }
           }
       }
     }
 
-    if( Database::instance()->param()._option_artist_image == false )
+    if( Database::instance()->param()._option_download_cover == true )
     {
           if( !Engine::instance()->playingTrack()->artist.isEmpty() )
             slot_download_image();
@@ -584,7 +588,7 @@ void PlayerToolBarFull::slot_get_artist_image()
 /* ---------------------------------------------------------------------------*/
 void PlayerToolBarFull::slot_download_image()
 {
-    //Debug::debug() << "   [PlayerToolBarFull] slot_download_image";
+    Debug::debug() << "   [PlayerToolBarFull] slot_download_image";
     INFO::InfoStringHash hash;
     
     hash["artist"]                = Engine::instance()->playingTrack()->artist;

@@ -209,10 +209,12 @@ void CentralWidget::slot_switch_playertoolbar( )
 
      if(qobject_cast<PlayerToolBarCompact*>(tbb))
      {
+         SETTINGS()->_isbottombarexpanded = true;
          new PlayerToolBarFull(this);
      }   
      else 
      {
+         SETTINGS()->_isbottombarexpanded = false;
          new PlayerToolBarCompact(this);
      }
      

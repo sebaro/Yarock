@@ -261,7 +261,9 @@ void ExLineEdit::initStyleOption(QStyleOptionFrameV2 *option) const
     option->rect = contentsRect();
     option->lineWidth = style()->pixelMetric(QStyle::PM_DefaultFrameWidth, option, this);
     option->midLineWidth = 0;
+#if QT_VERSION >= 0x050000    
     option->frameShape = QFrame::StyledPanel;
+#endif    
     option->state |= QStyle::State_Sunken;
     option->features = QStyleOptionFrameV2::None;
 }

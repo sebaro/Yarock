@@ -353,6 +353,7 @@ void PlaylistView::dropEvent(QDropEvent *event)
 
 void PlaylistView::mouseMoveEvent(QMouseEvent* event)
 {
+    //Debug::debug() << "    [PlaylistView] mouseMoveEvent";
     if(ACTIONS()->value(PLAYQUEUE_OPTION_SHOW_RATING)->isChecked())
     {
         QModelIndex index = indexAt(event->pos());
@@ -395,29 +396,39 @@ void PlaylistView::leaveEvent(QEvent* event)
 void PlaylistView::mousePressEvent(QMouseEvent* event) 
 {
     QModelIndex index = indexAt(event->pos());
-    if (event->button() == Qt::LeftButton && index.isValid() )
+    //Debug::debug() << "    [PlaylistView] mousePressEvent";
+    
+    if(ACTIONS()->value(PLAYQUEUE_OPTION_SHOW_RATING)->isChecked())
     {
-      if(event->pos().x() >= this->viewport()->width() - 75) 
-      {
-        float hover_rating = RatingPainter::RatingForPos(m_delegate->mouse_over_pos(), QRect(viewport()->width()-75, 0, 80, 16));
+        if (event->button() == Qt::LeftButton && index.isValid() )
+        {
+            if(event->pos().x() >= this->viewport()->width() - 75) 
+            {
+                //Debug::debug() << "    [PlaylistView] mousePressEvent  RATE";
 
-        QList<MEDIA::MediaPtr> tracks;
-        if (selectedIndexes().contains(index)) {
-          foreach (const QModelIndex& idx, selectedIndexes()) {
-            MEDIA::TrackPtr track = m_model->trackAt( idx.row() );
-            track->rating = hover_rating;
-            tracks << track; 
-          }
-        }
-        else {
-            MEDIA::TrackPtr track = m_model->trackAt( index.row() );
-            track->rating = hover_rating;
-            tracks << track; 
-        }
+                float hover_rating = RatingPainter::RatingForPos(m_delegate->mouse_over_pos(), QRect(viewport()->width()-75, 0, 80, 16));
 
-        /* rate in database */  
-        QtConcurrent::run(DatabaseCmd::rateMediaItems, tracks);
-      }  
+                QList<MEDIA::MediaPtr> tracks;
+                if (selectedIndexes().contains(index)) 
+                {
+                foreach (const QModelIndex& idx, selectedIndexes())
+                {
+                    MEDIA::TrackPtr track = m_model->trackAt( idx.row() );
+                    track->rating = hover_rating;
+                    tracks << track; 
+                }
+                }
+                else 
+                {
+                    MEDIA::TrackPtr track = m_model->trackAt( index.row() );
+                    track->rating = hover_rating;
+                    tracks << track; 
+                }
+
+                /* rate in database */  
+                QtConcurrent::run(DatabaseCmd::rateMediaItems, tracks);
+            }  
+        }
     }
   
     QListView::mousePressEvent(event);

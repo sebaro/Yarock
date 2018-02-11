@@ -281,7 +281,7 @@ void PlayerToolBarCompact::slot_update_track_playing_info()
             title_or_url = track->title.isEmpty() ? track->extra["station"].toString() : track->title;
 
         const int width = m_now_playing_widget->width() - 70;
-
+        
         QString clippedText = QFontMetrics(ui_label_title->font()).elidedText(title_or_url, Qt::ElideRight, width);
 
         ui_label_title->setText( clippedText );

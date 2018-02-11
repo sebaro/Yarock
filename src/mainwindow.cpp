@@ -1195,10 +1195,12 @@ void MainWindow::commandlineOptionsHandle()
     switch (m_options.playlist_action())
     {
       case CommandlineOptions::Playlist_Load:
-        m_playqueue->clear(); // no break !
       case CommandlineOptions::Playlist_Append:
-        if( !m_options.urls().isEmpty() )
-          m_playqueue->manager()->playlistAddUrls(m_options.urls());
+          if( m_options.playlist_action() == CommandlineOptions::Playlist_Load)
+              m_playqueue->clear(); 
+
+          if( !m_options.urls().isEmpty() )
+              m_playqueue->manager()->playlistAddUrls(m_options.urls());
         break;
       
       case CommandlineOptions::Playlist_Default:

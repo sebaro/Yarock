@@ -333,7 +333,11 @@ void Dirble::slotBrowseStationDone(QByteArray bytes)
           {
               if( map["categories"].toList().isEmpty() == false )
               {
+#if QT_VERSION < QT_VERSION_CHECK(5,6,0)                  
+                QVariantMap cat = map["categories"].toList().first().toMap();
+#else
                 QVariantMap cat = map["categories"].toList().constFirst().toMap();
+#endif                
                 stream->genre             = cat["title"].toString();
               }
           }

@@ -1,7 +1,12 @@
 Yarock changes
 
+#### 1.3.1  - PUBLIC RELEASE - february 2018
+---------------------------------------------------------------------------------
+  - BugFix : Fix Qt4 build
+  - BugFix : Fix player tool bar save/restore
+  - BugFix : Fix playqueue track rating minor issue
 
-#### 1.3.0  - PUBLIC RELEASE
+#### 1.3.0  - PUBLIC RELEASE - december 2017
 ---------------------------------------------------------------------------------
   - New    : New favorite stream editor with extended option
   - New    : Improve favorites streams management
