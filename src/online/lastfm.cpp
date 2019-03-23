@@ -209,9 +209,9 @@ void LastFmService::slot_sign_in_finished(QNetworkReply* reply)
         LastFm::GLOBAL::session_key = key.childNodes().at(0).nodeValue();
         LastFm::GLOBAL::username    = name.childNodes().at(0).nodeValue();
 
-        Debug::debug() << "    [LastFmService] Sign in Successfull";
-        Debug::debug() << "    [LastFmService] Sign in Successfull LastFm::GLOBAL::session_key " << LastFm::GLOBAL::session_key;
-        Debug::debug() << "    [LastFmService] Sign in Successfull LastFm::GLOBAL::username " << LastFm::GLOBAL::username;
+        Debug::debug() << "    [LastFmService] Sign in Successful";
+        Debug::debug() << "    [LastFmService] Sign in Successful LastFm::GLOBAL::session_key " << LastFm::GLOBAL::session_key;
+        Debug::debug() << "    [LastFmService] Sign in Successful LastFm::GLOBAL::username " << LastFm::GLOBAL::username;
     }
 
     emit signInFinished();  
@@ -350,7 +350,7 @@ void LastFmService::slot_lastfm_response(QNetworkReply* reply)
     QDomElement lfm = document.documentElement();
     if (lfm.attribute("status", "") == "ok") 
     {
-        Debug::debug() << "    [LastFmService] successfull";
+        Debug::debug() << "    [LastFmService] successful";
     }
     else 
     {

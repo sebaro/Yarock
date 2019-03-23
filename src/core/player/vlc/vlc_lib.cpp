@@ -22,6 +22,7 @@
 
 #include "vlc_lib.h"
 #include "debug.h"
+#include "config.h"
 
 #include <QByteArray>
 #include <QVarLengthArray>
@@ -85,6 +86,12 @@ bool VlcLib::init()
     {
         Debug::debug() << "[EngineVlc] vlc initialised";
         Debug::debug() << "[EngineVlc] using libvlc version:" << QString(libvlc_get_version());
+#if (LIBVLC_VERSION_INT >= LIBVLC_VERSION(2, 1, 0, 0))        
+        libvlc_set_app_id(m_vlcInstance,
+                          QString(APP_NAME).toLocal8Bit().data(),
+                          QString(VERSION).toLocal8Bit().data(),
+                          QString(ICON_NAME).toLocal8Bit().data());
+#endif        
     } 
     else 
     {

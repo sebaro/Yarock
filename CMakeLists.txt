@@ -6,8 +6,8 @@ set( CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake )
 
 PROJECT( yarock )
 set(YAROCK_MAJOR_VERSION 1)
-set(YAROCK_MINOR_VERSION 3)
-set(YAROCK_PATCH_VERSION 1)
+set(YAROCK_MINOR_VERSION 4)
+set(YAROCK_PATCH_VERSION 0)
 set(YAROCK_VERSION "${YAROCK_MAJOR_VERSION}.${YAROCK_MINOR_VERSION}.${YAROCK_PATCH_VERSION}")
 
 # ------------------------------------------------------------------------------
@@ -287,10 +287,10 @@ install( TARGETS yarock DESTINATION ${CMAKE_INSTALL_BIN} )
 install(FILES ${YAROCK_QM_FILES} DESTINATION "${CMAKE_INSTALL_PREFIX}/share/yarock/translations")
 
 # -- install destop file
-install(FILES data/yarock.desktop  DESTINATION "${CMAKE_INSTALL_PREFIX}/share/applications" )
+install(FILES data/org.yarock.desktop  DESTINATION "${CMAKE_INSTALL_PREFIX}/share/applications" )
 
 # -- install appdata file
-install(FILES data/yarock.appdata.xml  DESTINATION "${CMAKE_INSTALL_PREFIX}/share/appdata" )
+install(FILES data/org.yarock.appdata.xml  DESTINATION "${CMAKE_INSTALL_PREFIX}/share/appdata" )
 
 # -- install icons files
 INSTALL( FILES ${CMAKE_SOURCE_DIR}/icon/yarock_16x16.png DESTINATION "${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/16x16/apps" RENAME application-x-yarock.png)
@@ -299,6 +299,7 @@ INSTALL( FILES ${CMAKE_SOURCE_DIR}/icon/yarock_48x48.png DESTINATION "${CMAKE_IN
 INSTALL( FILES ${CMAKE_SOURCE_DIR}/icon/yarock_64x64.png DESTINATION "${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/64x64/apps" RENAME application-x-yarock.png)
 INSTALL( FILES ${CMAKE_SOURCE_DIR}/icon/yarock_128x128.png DESTINATION "${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/128x128/apps" RENAME application-x-yarock.png)
 INSTALL( FILES ${CMAKE_SOURCE_DIR}/icon/yarock.svg DESTINATION "${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/apps" RENAME application-x-yarock.svg)
+INSTALL( FILES ${CMAKE_SOURCE_DIR}/icon/yarock_48x48.png DESTINATION "${CMAKE_INSTALL_PREFIX}/share/pixmaps/" RENAME application-x-yarock.png)
 
 # ------------------------------------------------------------------------------
 #  UN-INSTALL SUPPORT

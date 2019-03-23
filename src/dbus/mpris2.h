@@ -128,7 +128,7 @@ public slots:
 private slots:
     void slot_onVolumeChanged();
     void slot_engineStateChanged();
-    void slot_engineMediaChanged();
+    void slot_engineMediaDataChanged();
     void slot_mediaTick( qint64 );
     
 private:

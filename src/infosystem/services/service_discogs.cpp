@@ -210,7 +210,7 @@ void ServiceDiscogs::slot_parse_artist_release_response(QByteArray bytes)
         output_release["album"]   = release_map.value("title").toString();  
         output_release["year"]    = release_map.value("year").toString(); 
         
-        /* WARNING remove discogs image uri download as we need authentification */
+        /* WARNING remove discogs image uri download as we need authentication */
         /*output_release["uri"]     = release_map.value("thumb").toString();*/
     
         output_releases << output_release;  

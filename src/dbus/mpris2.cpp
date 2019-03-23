@@ -50,7 +50,7 @@ Mpris2::Mpris2(QObject* parent)  : QObject(parent)
     // Listen to volume changes
     connect(Engine::instance(), SIGNAL( volumeChanged() ), SLOT( slot_onVolumeChanged() ) );
     connect(Engine::instance(), SIGNAL( engineStateChanged() ), SLOT(slot_engineStateChanged()));
-    connect(Engine::instance(), SIGNAL( mediaChanged() ), SLOT(slot_engineMediaChanged()));
+    connect(Engine::instance(), SIGNAL( mediaMetaDataChanged() ), SLOT(slot_engineMediaDataChanged()));
     connect(Engine::instance(), SIGNAL( mediaTick( qint64 ) ),SLOT( slot_mediaTick( qint64 ) ) );
     
     syncProperties();
@@ -253,14 +253,18 @@ QVariantMap Mpris2::metadata() const
 
         /* Each set of metadata must have a "mpris:trackid" entry at the very least,
          * which contains a string that uniquely identifies this track within the scope of the tracklist.*/
-        metadataMap.insert( "mpris:trackid", track->id );
+        if(track->id != -1)
+            metadataMap.insert( "mpris:trackid", track->id );
+        else
+            metadataMap.insert( "mpris:trackid", MEDIA::urlHash(track->url) );
 
         metadataMap.insert( "xesam:url",    track->url );
         metadataMap.insert( "xesam:album",  track->album );
         metadataMap.insert( "xesam:artist", track->artist );
         metadataMap.insert( "xesam:title",  track->title );
         metadataMap.insert( "xesam:genre",  track->genre );
-        metadataMap.insert( "mpris:length", static_cast<qlonglong>(track->duration) * 1000000 );
+        if(track->type() != TYPE_STREAM)
+            metadataMap.insert( "mpris:length", static_cast<qlonglong>(track->duration) * 1000000 );
 
         const QString coverpath = CoverCache::instance()->coverPath( track );
         if( !coverpath.isEmpty() )
@@ -424,7 +428,8 @@ void Mpris2::slot_engineStateChanged()
     Debug::debug() << "  [Mpris2] slot_engineStateChanged";
     ENGINE::E_ENGINE_STATE engine_state = Engine::instance()->state();
 
-    if(engine_state != ENGINE::PLAYING && engine_state != ENGINE::PAUSED) {
+    if(engine_state != ENGINE::PLAYING && engine_state != ENGINE::PAUSED) 
+    {
       // clear metadata
       EmitNotification("Metadata");
     }
@@ -432,11 +437,11 @@ void Mpris2::slot_engineStateChanged()
 }
  
  
-void Mpris2::slot_engineMediaChanged()
+void Mpris2::slot_engineMediaDataChanged()
 {
     /* get media track playing */ 
-    MEDIA::TrackPtr track = Engine::instance()->playingTrack();
-    //Debug::debug() << "  [Mpris2] slot_engineMediaChanged  track " << track;
+    //MEDIA::TrackPtr track = Engine::instance()->playingTrack();
+    Debug::debug() << "  [Mpris2] slot_engineMediaDataChanged";
     
     EmitNotification("Metadata");  
     EmitNotification("Rate");

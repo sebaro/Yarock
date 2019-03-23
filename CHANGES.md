@@ -1,5 +1,14 @@
 Yarock changes
 
+#### 1.4.0  - PUBLIC RELEASE - mars 2019
+---------------------------------------------------------------------------------
+  - BugFix : fix Appstream metadata legacy location and format #1813638
+  - BugFix : fix widget bottom toolbar save/restore state
+  - BugFix : fix debian Lintian spelling errors #1815382
+  - BugFix : fix internal build rules for phonon engine #1745854
+  - BugFix : improve mpris metatada for web stream
+  - BugFix : fix icon installation under some environment #1747308 
+
 #### 1.3.1  - PUBLIC RELEASE - february 2018
 ---------------------------------------------------------------------------------
   - BugFix : Fix Qt4 build

@@ -96,7 +96,7 @@ int main(int argc, char *argv[])
     qRegisterMetaType<MEDIA::PlaylistPtr>();
    
     //! DBUS
-    QDBusConnection::sessionBus().registerService("com.sebastien.yarock");
+    QDBusConnection::sessionBus().registerService("com.seb-apps.yarock");
     qDBusRegisterMetaType<QImage>();
     qDBusRegisterMetaType<QVariantMap>();
 

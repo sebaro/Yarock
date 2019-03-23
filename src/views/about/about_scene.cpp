@@ -175,7 +175,7 @@ void AboutScene::populateScene()
                 
     TextGraphicItem *text2 = new TextGraphicItem();
     text2->setOpenExternalLinks(true);
-    text2->setHtml( QString(tr("Yarock is developped by <b>Sebastien Amardeilh</b> %1")).arg(S_MAIL) );
+    text2->setHtml( QString(tr("Yarock is developed by <b>Sebastien Amardeilh</b> %1")).arg(S_MAIL) );
             
     text2->setPos( 40, Ypos);
     addItem(text2);

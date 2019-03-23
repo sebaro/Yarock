@@ -27,4 +27,7 @@
 #define ORG_NAME "yarock"
 #define AUTHOR_NAME "Sébastien Amardeilh"
 
+#define ICON_NAME "application-x-yarock"
+
+
 #endif // CONFIG_H_IN

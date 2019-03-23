@@ -14,44 +14,20 @@
 *  You should have received a copy of the GNU General Public License along with         *
 *  this program.  If not, see <http://www.gnu.org/licenses/>.                           *
 *****************************************************************************************/
+#ifndef CONFIG_H_IN
+#define CONFIG_H_IN
 
-#ifndef TAGWIDGET_H
-#define TAGWIDGET_H
+#define CMAKE_INSTALL_BIN "/usr/bin"
+#define CMAKE_INSTALL_LIB "/usr/lib/yarock"
+#define CMAKE_INSTALL_TRANS "/usr/share/yarock/translations"
+
+#define VERSION "1.4.0" 
+
+#define APP_NAME "yarock"
+#define ORG_NAME "yarock"
+#define AUTHOR_NAME "Sébastien Amardeilh"
+
+#define ICON_NAME "application-x-yarock"
 
 
-#include <QWidget>
-
-class TagWidget : public QWidget 
-{
-  Q_OBJECT
-
-public:
-  TagWidget(const QString& text, QWidget* parent);
-
-  static const int kIconSize;
-  static const int kIconTextSpacing;
-  static const int kHPadding;
-  static const int kVPadding;
-
-  QSize sizeHint() const;
-  QSize minimumSize() const;
-  
-  QString text() const { return m_text; }
-
-signals:
-  void Clicked();
-
-protected:
-  void enterEvent(QEvent*);
-  void leaveEvent(QEvent*);
-  void paintEvent(QPaintEvent*);
-  void mouseReleaseEvent(QMouseEvent*);
-  void contextMenuEvent(QContextMenuEvent*);
-
-private:
-    QString     m_text;
-    qreal       m_alpha;
-    QColor      m_brush_color;
-};
-
-#endif // TAGWIDGET_H
+#endif // CONFIG_H_IN

@@ -151,7 +151,7 @@ void ServiceSpotify::slot_getAuthentification(QNetworkReply* reply)
     
     if (!ok || !reply_map.contains("access_token")) {
       m_auth_info["access_token"] = "";
-      Debug::debug() << "    [ServiceSpotify] no authentification token";
+      Debug::debug() << "    [ServiceSpotify] no authentication token";
       return;
     }    
     

@@ -41,7 +41,7 @@ public:
     void init();
     void saveSettings();
 
-    /* authentification */
+    /* authentication */
     bool isAuthenticated() const;
     void signIn(const QString& username, const QString& password);
     void signOut();
