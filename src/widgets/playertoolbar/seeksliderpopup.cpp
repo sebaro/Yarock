@@ -52,27 +52,27 @@ void SeekSliderPopup::SetText(const QString& text)
     UpdatePixmap();
 }
 
-void SeekSliderPopup::SetSmallText(const QString& text) 
+void SeekSliderPopup::SetSmallText(const QString& text)
 {
     m_small_text = text;
     UpdatePixmap();
 }
 
-void SeekSliderPopup::SetPopupPosition(const QPoint& pos) 
+void SeekSliderPopup::SetPopupPosition(const QPoint& pos)
 {
     m_pos = pos;
     UpdatePosition();
 }
 
-void SeekSliderPopup::paintEvent(QPaintEvent*) 
+void SeekSliderPopup::paintEvent(QPaintEvent*)
 {
     QPainter p(this);
     p.drawPixmap(0, 0, m_pixmap);
 }
 
-void SeekSliderPopup::UpdatePixmap() 
+void SeekSliderPopup::UpdatePixmap()
 {
-  const int text_width = qMax(m_font_metrics.width(m_text), m_small_font_metrics.width(m_small_text));
+  const int text_width = qMax(m_font_metrics.horizontalAdvance(m_text), m_small_font_metrics.horizontalAdvance(m_small_text));
 
   const QRect text_rect1(kTextMargin, kTextMargin,
                          text_width + 2, m_font_metrics.height());
@@ -80,13 +80,13 @@ void SeekSliderPopup::UpdatePixmap()
                          text_width, m_small_font_metrics.height());
 
   const int bubble_bottom = text_rect2.bottom() + kTextMargin;
-  
+
   const QRect total_rect(0, 0, text_rect1.right() + kTextMargin, bubble_bottom + kPointLength);
-  
+
   const QRect bubble_rect(0, 0,total_rect.width(), bubble_bottom);
-    
-  const QColor brush_color = SETTINGS()->_baseColor;   
-    
+
+  const QColor brush_color = SETTINGS()->_baseColor;
+
   if (m_background_cache.size() != total_rect.size())
   {
     QPolygon pointy;
@@ -96,10 +96,10 @@ void SeekSliderPopup::UpdatePixmap()
 
     m_background_cache = QPixmap(total_rect.size());
     m_background_cache.fill(Qt::transparent);
-    
+
     QPainter p(&m_background_cache);
     p.setRenderHint(QPainter::Antialiasing);
-    p.setRenderHint(QPainter::HighQualityAntialiasing);
+    //p.setRenderHint(QPainter::HighQualityAntialiasing);
 
     /* draw bubble */
     p.setPen(Qt::NoPen);
@@ -112,10 +112,10 @@ void SeekSliderPopup::UpdatePixmap()
 
   m_pixmap = QPixmap(total_rect.size());
   m_pixmap.fill(Qt::transparent);
-  
+
   QPainter p(&m_pixmap);
   p.setRenderHint(QPainter::Antialiasing);
-  p.setRenderHint(QPainter::HighQualityAntialiasing);
+  //p.setRenderHint(QPainter::HighQualityAntialiasing);
 
   /* draw background */
   p.drawPixmap(total_rect.topLeft(), m_background_cache);
@@ -125,7 +125,7 @@ void SeekSliderPopup::UpdatePixmap()
       p.setPen(QColor(Qt::black));
   else
       p.setPen(QColor(Qt::white));
-        
+
   p.setFont(m_font);
   p.drawText(text_rect1, Qt::AlignHCenter, m_text);
 
@@ -140,7 +140,7 @@ void SeekSliderPopup::UpdatePixmap()
   update();
 }
 
-void SeekSliderPopup::UpdatePosition() 
+void SeekSliderPopup::UpdatePosition()
 {
     move( m_pos.x() - m_pixmap.width() / 2,
           m_pos.y() - m_pixmap.height() );

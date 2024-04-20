@@ -36,8 +36,8 @@
 void LocalScene::populateDashBoardScene()
 {
     //Debug::debug() << "   [LocalScene] populateDashBoardScene";
-    
-    //! content    
+
+    //! content
     populateMostPlayedAlbum(itemsBoundingRect().height() + 40);
     populateTopRatedAlbum(itemsBoundingRect().height() + 80);
     populateMostPlayedArtist(itemsBoundingRect().height() + 80);
@@ -67,7 +67,7 @@ void LocalScene::populateMostPlayedAlbum(int YPos)
     QList<MEDIA::AlbumPtr> albums = m_localTrackModel->albumItemList;
 
     //! sort
-    qSort(albums.begin(), albums.end(), MEDIA::compareAlbumItemPlaycount);
+    std::sort(albums.begin(), albums.end(), MEDIA::compareAlbumItemPlaycount);
 
     //! loop over album MediaItem
     foreach(MEDIA::AlbumPtr album, albums)
@@ -120,14 +120,14 @@ void LocalScene::populateTopRatedAlbum(int YPos)
     QList<MEDIA::AlbumPtr> albums = m_localTrackModel->albumItemList;
 
     //! sort
-    qSort(albums.begin(), albums.end(), MEDIA::compareAlbumItemRating);
+    std::sort(albums.begin(), albums.end(), MEDIA::compareAlbumItemRating);
 
     //! loop over album MediaItem
     foreach(MEDIA::AlbumPtr album, albums)
     {
       Debug::debug() << "   [LocalScene] populateTopRatedAlbum ALBUM RATING" << album->rating;
 
-        
+
       if(album->rating <= 0.0 || char_entry == MAX_CHART_ENTRY) break;
 
       if( !m_localTrackModel->isMediaMatch(album) ) continue;
@@ -169,7 +169,7 @@ void LocalScene::populateMostPlayedArtist(int YPos)
     item_count = (parentView()->width()/(COVER_SIZE*1.25) > 2) ? parentView()->width()/(COVER_SIZE*1.25) : 2;
     int char_entry    = 0;
 
-    
+
     CategorieGraphicItem *category = new CategorieGraphicItem(qobject_cast<QGraphicsView*> (parentView())->viewport());
     category->m_name = QString(tr("Most played artists"));
     category->setPos(0 ,YPos);
@@ -182,7 +182,7 @@ void LocalScene::populateMostPlayedArtist(int YPos)
      }
 
     //! sort
-    qSort(artists.begin(), artists.end(), MEDIA::compareArtistItemPlaycount);
+    std::sort(artists.begin(), artists.end(), MEDIA::compareArtistItemPlaycount);
 
 
     //! loop over artist MediaItem
@@ -200,7 +200,7 @@ void LocalScene::populateMostPlayedArtist(int YPos)
       addItem(artist_item);
       char_entry++;
 
-      
+
       /* ALBUM COVER LOOP */
         artist_item->albums_covers.clear();
         for(int j = artist->childCount()-1 ; j >= 0; j--) {
@@ -212,7 +212,7 @@ void LocalScene::populateMostPlayedArtist(int YPos)
           /* WARNING limite de l'affichage à 6 cover max */
           if(artist_item->albums_covers.size() >=6) break;
         }
-      
+
       if(Column < (item_count-1)) {
         Column++;
       }
@@ -251,7 +251,7 @@ void LocalScene::populateTopRatedArtist(int YPos)
      }
 
     //! sort
-    qSort(artists.begin(), artists.end(), MEDIA::compareArtistItemRating);
+    std::sort(artists.begin(), artists.end(), MEDIA::compareArtistItemRating);
 
     //! loop over artist MediaItem
     foreach(MEDIA::ArtistPtr artist, artists)

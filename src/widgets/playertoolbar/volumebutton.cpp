@@ -43,30 +43,30 @@ VolumeButton::VolumeButton(QWidget *parent) : ToolButtonBase( parent )
     this->setIconSize( QSize( 26, 26 ) );
     this->setIcon(QIcon(":/images/volume-icon.png"));
     this->setPopupMode (QToolButton::InstantPopup);
-    
+
     /* ---- label ---- */
     m_volume_label= new QLabel( this );
     m_volume_label->setAlignment( Qt::AlignCenter );
-    m_volume_label->setMinimumWidth( QFontMetrics(QApplication::font()).width(QString("100%")) +1 );
-    m_volume_label->setMaximumWidth( QFontMetrics(QApplication::font()).width(QString("100%")) +1 );
+    m_volume_label->setMinimumWidth( QFontMetrics(QApplication::font()).horizontalAdvance(QString("100%")) +1 );
+    m_volume_label->setMaximumWidth( QFontMetrics(QApplication::font()).horizontalAdvance(QString("100%")) +1 );
     m_volume_label->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Minimum );
 
     /* ---- volume slider ---- */
     m_slider = new QSlider();
     m_slider->setOrientation(Qt::Horizontal);
-    
+
     int maxVolume = Engine::instance()->maxVolume();
 
     m_slider->setMaximum(maxVolume);
     m_slider->setRange(0, maxVolume);
-    
+
     m_slider->setPageStep(5);
     m_slider->setSingleStep(1);
     m_slider->setMinimumWidth( 120 );
     m_slider->setMaximumWidth( 120 );
     m_slider->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
 
-    
+
     /* ---- mute button ---- */
     QToolButton* mute_button = new QToolButton();
     mute_button->setDefaultAction(ACTIONS()->value(ENGINE_VOL_MUTE));
@@ -91,9 +91,9 @@ VolumeButton::VolumeButton(QWidget *parent) : ToolButtonBase( parent )
     sliderActionWidget->setDefaultWidget( m_popup );
 
     QPalette palette = QApplication::palette();
-    palette.setColor(QPalette::Background, palette.color(QPalette::Base));
+    palette.setColor(QPalette::Window, palette.color(QPalette::Base));
     m_popup->setPalette(palette);
-    
+
     /* ---- popup menu ---- */
     m_menu = new QMenu(this);
     m_menu->addAction( sliderActionWidget );
@@ -101,15 +101,15 @@ VolumeButton::VolumeButton(QWidget *parent) : ToolButtonBase( parent )
     m_menu->setWindowFlags(Qt::Popup);
     m_menu->setStyleSheet( QString ("QMenu {background-color: none;border: none;}") );
 
-      
+
     /* ---- init  ---- */
     Engine::instance()->setMuted(false);
-    
+
     int volume = Engine::instance()->volume();
     m_volume_label->setText( QString::number( volume ) + '%' );
-    
+
     m_slider->setValue( volume );
-    
+
     /* ---- signals connections ---- */
     connect(Engine::instance() , SIGNAL(muteStateChanged()), this, SLOT(slot_mute_change()));
     connect(Engine::instance() , SIGNAL(volumeChanged()), this, SLOT(slot_volume_change()));
@@ -147,9 +147,9 @@ void VolumeButton::slot_apply_volume(int vol)
     if( vol <= 0 )
     {
       this->setIcon(QIcon(":/images/volume-muted.png"));
-      (ACTIONS()->value(ENGINE_VOL_MUTE))->setIcon(QIcon(":/images/volume-muted.png"));        
+      (ACTIONS()->value(ENGINE_VOL_MUTE))->setIcon(QIcon(":/images/volume-muted.png"));
     }
-    else if( !Engine::instance()->isMuted() )        
+    else if( !Engine::instance()->isMuted() )
     {
       this->setIcon(QIcon(":/images/volume-icon.png"));
       (ACTIONS()->value(ENGINE_VOL_MUTE))->setIcon(QIcon(":/images/volume-icon.png"));

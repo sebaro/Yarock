@@ -25,6 +25,7 @@
 
 #include <QtCore>
 #include <QFutureWatcher>
+#include <QRegularExpression>
 
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent>
@@ -42,7 +43,7 @@ ServiceLyrics::ServiceLyrics() : InfoService()
     Debug::debug() << "    [ServiceLyrics] start";
 
     setName("lyrics");
-    
+
     m_supportedInfoTypes << INFO::InfoTrackLyrics;
 }
 
@@ -55,7 +56,7 @@ void ServiceLyrics::init()
     m_ultimateLyricsReader = new UltimateLyricsReader(this);
 
     QFuture<ProviderList> future = QtConcurrent::run(
-             m_ultimateLyricsReader, &UltimateLyricsReader::Parse,
+             &UltimateLyricsReader::Parse, m_ultimateLyricsReader,
              QString(":/data/lyrics/ultimate_providers.xml")
      );
 
@@ -63,7 +64,7 @@ void ServiceLyrics::init()
     watcher->setFuture(future);
     connect(watcher, SIGNAL(finished()), SLOT(slot_ultimate_lyrics_parsed()));
 }
-    
+
 /*******************************************************************************
   ServiceLyrics::slot_ultimate_lyrics_parsed
 *******************************************************************************/
@@ -82,7 +83,7 @@ void ServiceLyrics::slot_ultimate_lyrics_parsed()
     /* sort user lyrics providers */
     QStringList user_names = SETTINGS()->_lyrics_providers;
 
-    foreach (const QString& name, user_names) 
+    foreach (const QString& name, user_names)
     {
       for(int i = 0;i<list.count();i++)
       {
@@ -91,15 +92,15 @@ void ServiceLyrics::slot_ultimate_lyrics_parsed()
          UltimateLyricsProvider* provider = list.takeAt(i);
          m_providers << provider;
          Debug::debug() << "    [ServiceLyrics] slot_ultimate_lyrics_parsed # Provider Name =" << name;
- 
+
          connect(provider, SIGNAL(InfoReady(INFO::InfoRequestData, const QString&)), this, SLOT(slot_lyrics_fetched(INFO::InfoRequestData,const QString&)), Qt::QueuedConnection);
          connect(provider, SIGNAL(Finished(INFO::InfoRequestData)), this, SLOT(slot_fetch_lyrics(INFO::InfoRequestData)), Qt::QueuedConnection);
-  
+
          break;
        }
       }
     }
-      
+
     while (!list.isEmpty())
       delete list.takeFirst();
 
@@ -118,7 +119,7 @@ QStringList ServiceLyrics::defaultProvidersList()
                   << "metrolyrics.com"
                   << "azlyrics.com"
                   << "songlyrics.com"
-                  << "genius.com"                  
+                  << "genius.com"
                   << "lyricsmania.com"
                   << "elyrics.net"
                   << "lyricsmode.com"
@@ -131,7 +132,7 @@ QStringList ServiceLyrics::defaultProvidersList()
                   << "vagalume.uol.com.br (Portuguese translations)"
                   << "darklyrics.com";
                   */
-                  
+
     return default_order;
 }
 
@@ -140,7 +141,7 @@ QStringList ServiceLyrics::defaultProvidersList()
 *******************************************************************************/
 QStringList ServiceLyrics::fullProvidersList()
 {
-    QStringList full_list;    
+    QStringList full_list;
     full_list     << "genius.com"
                   << "lyrics.wikia.com"
                   << "lyricsreg.com"
@@ -152,15 +153,15 @@ QStringList ServiceLyrics::fullProvidersList()
                   << "lyricsmode.com"
                   << "directlyrics.com"
                   << "loudsongs.com"
-                  << "darklyrics.com"                  
+                  << "darklyrics.com"
                   << "teksty.org"
                   << "tekstowo.pl (Polish translations)"
                   << "vagalume.uol.com.br"
                   << "vagalume.uol.com.br (Portuguese translations)";
-                  
+
     return full_list;
 }
-    
+
 /*******************************************************************************
   ServiceLyrics::getInfo
 *******************************************************************************/
@@ -176,15 +177,15 @@ void ServiceLyrics::fetchInfo( INFO::InfoRequestData requestData )
 {
     //Debug::debug() << "    [ServiceLyrics] fetchInfo";
 
-    if ( requestData.type == INFO::InfoTrackLyrics) 
+    if ( requestData.type == INFO::InfoTrackLyrics)
     {
       m_current_providers.clear();
       m_current_providers.append(m_providers);
-    
+
       if( !check_local_lyrics(requestData) )
         slot_fetch_lyrics(requestData);
     }
-    else 
+    else
     {
         emit finished( requestData );
     }
@@ -211,7 +212,7 @@ bool ServiceLyrics::check_local_lyrics(INFO::InfoRequestData requestData)
       if(file.open(QIODevice::ReadOnly))
       {
         QString file_content = QTextStream( &file ).readAll();
-        file_content.replace(QRegExp("\n"), "<br>");
+        file_content.replace(QRegularExpression("\n"), "<br>");
 
         QVariantHash output;
         output[ "provider" ] = QString("local");
@@ -248,7 +249,7 @@ void ServiceLyrics::slot_lyrics_fetched(INFO::InfoRequestData requestData, const
     // get provider sender
     UltimateLyricsProvider* provider = qobject_cast<UltimateLyricsProvider*>(sender());
 
-    if(provider) 
+    if(provider)
     {
         QVariantHash output;
         output[ "provider" ] = provider->name();

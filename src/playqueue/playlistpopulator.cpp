@@ -66,7 +66,7 @@ void PlaylistPopulator::run()
   Debug::debug() << "  [PlaylistPopulator] Start "  << QTime::currentTime().second() << ":" << QTime::currentTime().msec();
 
   m_isRunning = true;
-    
+
   /*-----------------------------------------------------------*/
   /* Get connection                                            */
   /* ----------------------------------------------------------*/
@@ -74,10 +74,10 @@ void PlaylistPopulator::run()
         Debug::warning() << "  [PlaylistPopulator] db connect failed";
         return;
   }
-    
+
   if( m_playlist_row < 0 )
     m_playlist_row = m_model->rowCount();
-            
+
   while (!m_files.isEmpty() || !m_tracks.isEmpty())
   {
       /*--------------------------------------------------*/
@@ -104,7 +104,7 @@ void PlaylistPopulator::run()
             stream->id          = -1;
             stream->url         = url;
 //             stream->name        = url;
-      
+
             emit async_load(stream, m_playlist_row++);
         }
       }
@@ -119,7 +119,7 @@ void PlaylistPopulator::run()
               //Debug::debug() << "  [PlaylistPopulator] PlaylistFromFile local " << m_files.first();
               QList<MEDIA::TrackPtr> list = MEDIA::PlaylistFromFile(m_files.takeFirst());
 
-              foreach (MEDIA::TrackPtr track, list) 
+              foreach (MEDIA::TrackPtr track, list)
               {
                 if(track->type() == TYPE_TRACK) {
                     QString url = track->url;
@@ -134,7 +134,7 @@ void PlaylistPopulator::run()
                 }
                 else {
                     m_model->request_insert_track(track, m_playlist_row++);
-                    
+
                     track.reset();
                 }
              } // foreach MediaItem
@@ -172,37 +172,37 @@ void PlaylistPopulator::run()
 
               stream.reset();
           }
-          else 
+          else
           {
               //!WARNING on doit sortir les elements non traites (si boucle while)
               Debug::warning() << "  [PlaylistPopulator] unsupported media !" << m_files.takeFirst();
           }
       }
 
-      
+
       /*--------------------------------------------------*/
       /* cas des mediaitems                               */
       /* -------------------------------------------------*/
-      if(m_tracks.size() > 0) 
+      if(m_tracks.size() > 0)
       {
         //Debug::debug() << "  [PlaylistPopulator] m_tracks.size() :" << m_tracks.size();
-        
+
         MEDIA::TrackPtr track = m_tracks.takeFirst();
 
         if( !MEDIA::isMediaPlayable(track->url) )
         {
             emit async_load(track, m_playlist_row);
         }
-        else 
+        else
         {
             //Debug::warning() << "  [PlaylistPopulator] insert media item at " << m_playlist_row;
-            
+
             m_model->request_insert_track(track, m_playlist_row++);
         }
       }
 
   } //! END !m_files.isEmpty() && !m_tracks.isEmpty()
-    
+
   if(SETTINGS()->_playqueueDuplicate == false)
     m_model->removeDuplicate();
 
@@ -219,7 +219,7 @@ void PlaylistPopulator::run()
 void PlaylistPopulator::load_dir(const QString& path, int row)
 {
     Debug::debug() << "PlaylistPopulator::load_dir";
-    
+
     const QStringList dirFilter  = QStringList() << "*.mp3" << "*.ogg" << "*.flac" << "*.wav" << "*.m4a" << "*.aac" << "*.ape" << "*.opus";
     QDirIterator dirIterator(path, dirFilter ,QDir::Files | QDir::NoSymLinks, QDirIterator::Subdirectories);
 
@@ -228,7 +228,7 @@ void PlaylistPopulator::load_dir(const QString& path, int row)
     while(dirIterator.hasNext()) {
       files << dirIterator.next();
     }
-    
+
     /* --- get media item from files --- */
     QList<MEDIA::TrackPtr> list;
     foreach (const QString & file, files)
@@ -241,13 +241,13 @@ void PlaylistPopulator::load_dir(const QString& path, int row)
 
         list << track;
     }
-      
-    /* --- sort list --- */   
-    qSort(list.begin(), list.end(),MEDIA::compareTrackNatural);
-    
+
+    /* --- sort list --- */
+    std::sort(list.begin(), list.end(),MEDIA::compareTrackNatural);
+
     /* --- add to playqueue --- */
     int insert_row = row;
-    foreach(MEDIA::MediaPtr track, list) 
+    foreach(MEDIA::MediaPtr track, list)
     {
         m_model->request_insert_track(track, insert_row);
         if(insert_row != -1 )
@@ -281,7 +281,7 @@ void PlaylistPopulator::addFiles(const QStringList &files)
 void PlaylistPopulator::addUrls(QList<QUrl> listUrl, int playlist_row)
 {
     //Debug::debug() << "  [PlaylistPopulator] addUrls";
-  
+
     m_playlist_row = playlist_row;
 
     foreach (const QUrl &url, listUrl)
@@ -304,7 +304,7 @@ void PlaylistPopulator::addMediaItems(QList<MEDIA::TrackPtr> list, int playlist_
 void PlaylistPopulator::restoreSession()
 {
     Debug::debug() << "  [PlaylistPopulator] restoreSession ";
-    
+
     if (!Database::instance()->open())
       return;
 
@@ -316,7 +316,7 @@ void PlaylistPopulator::restoreSession()
     while (query.next())
     {
         QVariant track_id = query.value(2);
-        
+
         /* item is a track in collection  */
         if(!track_id.isNull())
         {
@@ -347,7 +347,7 @@ void PlaylistPopulator::restoreSession()
                 track->isPlayed     =  false;
                 track->isStopAfter  =  false;
               }
-              
+
               m_model->request_insert_track(track);
             }
             else

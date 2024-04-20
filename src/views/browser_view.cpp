@@ -62,18 +62,17 @@ BrowserView::BrowserView(QWidget *parent) : QGraphicsView(parent)
 
     this->setRenderHint(QPainter::Antialiasing);
     this->setOptimizationFlags(  QGraphicsView::DontAdjustForAntialiasing
-                                   | QGraphicsView::DontClipPainter
                                    | QGraphicsView::DontSavePainterState);
     this->setResizeAnchor(QGraphicsView::NoAnchor);
     this->setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
     this->setAlignment(Qt::AlignLeft | Qt::AlignTop );
 
-    this->setDragMode(QGraphicsView::NoDrag); 
-    
+    this->setDragMode(QGraphicsView::NoDrag);
+
     this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    
+
     is_started = false;
-    
+
     /* scroll bar */
     m_scrollbar = this->verticalScrollBar();
     m_scrollbar->setSingleStep(10);
@@ -82,21 +81,21 @@ BrowserView::BrowserView(QWidget *parent) : QGraphicsView(parent)
     m_scrollbar->installEventFilter(this);
     m_scrollbar->setMinimum( 0 );
 
-    /* Build scene */  
-      /* filesystem scene */    
+    /* Build scene */
+      /* filesystem scene */
       m_scenes.insert(VIEW::ViewFileSystem,  new FileScene(this));
       connect(static_cast<FileScene*>(m_scenes[VIEW::ViewFileSystem]), SIGNAL(load_directory(QVariant)), this, SLOT(slot_on_load_new_data(QVariant)));
 
-      /* about scene */    
+      /* about scene */
       m_scenes.insert(VIEW::ViewAbout,  new AboutScene(this));
-    
+
       /* settings */
       m_scenes.insert(VIEW::ViewSettings,  new SettingsScene(this));
       connect(static_cast<SettingsScene*>(m_scenes[VIEW::ViewSettings]), SIGNAL(settings_saved()), this, SIGNAL(settings_saved()));
 
       /* context */
-      m_scenes.insert(VIEW::ViewContext,  new ContextScene(this) );      
- 
+      m_scenes.insert(VIEW::ViewContext,  new ContextScene(this) );
+
       /* stream scene */
       m_scenes.insert(VIEW::ViewDirble,         new StreamScene(this) );
       m_scenes.insert(VIEW::ViewRadionomy,      m_scenes[VIEW::ViewDirble] );
@@ -104,7 +103,7 @@ BrowserView::BrowserView(QWidget *parent) : QGraphicsView(parent)
       m_scenes.insert(VIEW::ViewFavoriteRadio,  m_scenes[VIEW::ViewDirble] );
 
       connect(static_cast<StreamScene*>(m_scenes[VIEW::ViewDirble]), SIGNAL(linked_changed(QVariant)), this, SLOT(slot_on_load_new_data(QVariant)));
-      
+
       /* local scene */
       m_scenes.insert(VIEW::ViewArtist,         new LocalScene(this) );
       m_scenes.insert(VIEW::ViewAlbum,          m_scenes[VIEW::ViewArtist] );
@@ -117,27 +116,27 @@ BrowserView::BrowserView(QWidget *parent) : QGraphicsView(parent)
       m_scenes.insert(VIEW::ViewSmartPlaylist,  m_scenes[VIEW::ViewArtist] );
       m_scenes.insert(VIEW::ViewFavorite,       m_scenes[VIEW::ViewArtist] );
       connect(static_cast<LocalScene*>(m_scenes[VIEW::ViewArtist]), SIGNAL(linked_changed(QVariant)), this, SLOT(slot_on_load_new_data(QVariant)));
-    
+
     /* connections */
     connect(MainLeftWidget::instance(), SIGNAL(browser_search_change(const QVariant&)),this, SLOT(slot_on_search_changed(const QVariant&)));
     connect(ThreadManager::instance(),  SIGNAL(modelPopulationFinished(E_MODEL_TYPE)), this, SLOT(slot_on_model_populated(E_MODEL_TYPE)));
-    
-    
+
+
     connect(ACTIONS()->value(BROWSER_PREV), SIGNAL(triggered()), this, SLOT(slot_on_history_prev_activated()));
     connect(ACTIONS()->value(BROWSER_NEXT), SIGNAL(triggered()), this, SLOT(slot_on_history_next_activated()));
 
     connect(MenuModel::instance(),SIGNAL(menu_browser_triggered(VIEW::Id, QVariant)),this, SLOT(slot_on_menu_browser_triggered(VIEW::Id, QVariant)));
     connect(ACTIONS()->value(TAG_CLICKED), SIGNAL(triggered()), this, SLOT(slot_on_tag_clicked()));
-    
+
     connect (m_scrollbar, SIGNAL(actionTriggered(int)), this, SLOT(slot_check_slider(int)));
-      
+
     connect(ACTIONS()->value(BROWSER_JUMP_TO_ARTIST), SIGNAL(triggered()), SLOT(slot_jump_to_media()));
     connect(ACTIONS()->value(BROWSER_JUMP_TO_ALBUM), SIGNAL(triggered()), SLOT(slot_jump_to_media()));
     connect(ACTIONS()->value(BROWSER_JUMP_TO_TRACK), SIGNAL(triggered()), SLOT(slot_jump_to_media()));
     connect(ACTIONS()->value(BROWSER_JUMP_TO_MEDIA), SIGNAL(triggered()), SLOT(slot_jump_to_media()));
-    
-    /* initialization        */  
-    m_browser_params_idx = -1;    
+
+    /* initialization        */
+    m_browser_params_idx = -1;
     m_menu = 0;
 }
 
@@ -148,16 +147,16 @@ bool BrowserView::playSelectedItems()
 {
     LocalScene* localscene = static_cast<LocalScene*>(m_scenes[VIEW::ViewArtist]);
     StreamScene* streamscene = static_cast<StreamScene*>(m_scenes[VIEW::ViewDirble]);
-  
+
     if(!localscene->selectedItems().isEmpty()) {
       localscene->playSelected();
       return true;
     }
-        
+
     if (!streamscene->selectedItems().isEmpty()) {
       streamscene->playSelected();
       return true;
-    }  
+    }
 
     return false;
 }
@@ -176,13 +175,13 @@ SETTINGS::Results BrowserView::settingsResults()
 void BrowserView::restore_view()
 {
    Debug::debug() << "  [BrowserView] restore_view";
-  
+
    BrowserParam param;
 
    param.mode    = VIEW::Id(SETTINGS()->_viewMode);
    param.scroll  = SETTINGS()->_browserScroll;
    param.search  = QVariant();
-   
+
    if(param.mode == VIEW::ViewFileSystem)
      param.data   = QVariant( SETTINGS()->_filesystem_path );
    else
@@ -190,36 +189,36 @@ void BrowserView::restore_view()
 
    add_history_entry(param);
 
-   switch_view(param);   
-  
+   switch_view(param);
+
    is_started = true;
 }
 
 void BrowserView::save_view()
 {
     Debug::debug() << "  [BrowserView] save_view  ";
-  
+
     SETTINGS()->_browserScroll = m_scrollbar->sliderPosition();
 }
 
 /*******************************************************************************
-   Changing view slots 
+   Changing view slots
 *******************************************************************************/
 /* slot triggered when use enter the search field */
 void BrowserView::slot_on_search_changed(const QVariant& variant)
-{           
+{
     Debug::debug() << "  [BrowserView] slot_on_search_changed  ";
 
     BrowserParam current_param;
     if(m_browser_params_idx != -1)
       current_param = m_browser_params.at(m_browser_params_idx);
 
-  
+
     BrowserParam param = BrowserParam(
            VIEW::Id(SETTINGS()->_viewMode),
            variant,
            current_param.data);
-    
+
     add_history_entry(param);
 
     switch_view(param);
@@ -229,7 +228,7 @@ void BrowserView::slot_on_search_changed(const QVariant& variant)
 void BrowserView::slot_on_menu_browser_triggered(VIEW::Id view, QVariant data)
 {
     Debug::debug() << "  [BrowserView] slot_on_menu_browser_triggered data";
-  
+
     QVariant search = MainLeftWidget::instance()->browserSearch();
 
     /* manage search case */
@@ -239,9 +238,9 @@ void BrowserView::slot_on_menu_browser_triggered(VIEW::Id view, QVariant data)
       if(search.canConvert<MediaSearch>())
         search = QVariant();
     }
-       
+
     BrowserParam param = BrowserParam(view,search,data);
-    
+
     add_history_entry(param);
 
     switch_view(param);
@@ -255,17 +254,17 @@ void BrowserView::slot_on_load_new_data(const QVariant data)
     Debug::debug() << "  [BrowserView] slot_on_load_new_data";
 
     MEDIA::LinkPtr link = qvariant_cast<MEDIA::LinkPtr>(data);
-    
+
     BrowserParam param = BrowserParam(
           VIEW::Id(SETTINGS()->_viewMode),
           MainLeftWidget::instance()->browserSearch(),
           data);
-    
+
     /* hack because stream service notify every state change */
     /* no need to record all state, i.e DOWNLOADING state    */
     if( data.canConvert<QString>() || (qvariant_cast<MEDIA::LinkPtr>(data))->state == SERVICE::DATA_OK )
       add_history_entry( param );
-            
+
     switch_view(param);
 }
 
@@ -277,12 +276,12 @@ void BrowserView::slot_on_tag_clicked()
     if(m_browser_params_idx != -1)
       current_param = m_browser_params.at(m_browser_params_idx);
 
-  
+
     BrowserParam param = BrowserParam(
            VIEW::ViewGenre,
            ACTIONS()->value(TAG_CLICKED)->data(),
            QVariant());
-    
+
     add_history_entry(param);
 
     switch_view(param);
@@ -294,11 +293,11 @@ void BrowserView::active_view(VIEW::Id m, QString f, QVariant d)
     BrowserParam param = BrowserParam(m, f, d);
 
     add_history_entry( param );
-    
+
     switch_view(param);
 }
 
-    
+
 /*******************************************************************************
     slot_on_model_populated
 *******************************************************************************/
@@ -309,7 +308,7 @@ void BrowserView::slot_on_model_populated(E_MODEL_TYPE model)
     Debug::debug() << "  [BrowserView] slot_on_model_populated ";
     //! no need to update graphics view if the viewmode is not impacted
     BrowserParam param = m_browser_params.at(m_browser_params_idx);
-    
+
     switch(param.mode)
     {
       case VIEW::ViewAlbum     :
@@ -318,8 +317,8 @@ void BrowserView::slot_on_model_populated(E_MODEL_TYPE model)
       case VIEW::ViewGenre     :
       case VIEW::ViewYear      :
       case VIEW::ViewFavorite  :
-      case VIEW::ViewDashBoard : 
-      case VIEW::ViewHistory   : 
+      case VIEW::ViewDashBoard :
+      case VIEW::ViewHistory   :
         if(model == MODEL_COLLECTION)
           switch_view(param);
       break;
@@ -340,11 +339,11 @@ void BrowserView::resizeEvent( QResizeEvent * event)
 {
     Debug::debug() << "  [BrowserView] resizeEvent";
     if(!is_started) return;
-    
+
     SceneBase * scene = m_scenes.value( VIEW::Id(SETTINGS()->_viewMode) );
     if( scene->isInit() )
       scene->resizeScene();
-     
+
     event->accept();
 }
 
@@ -366,7 +365,7 @@ bool BrowserView::eventFilter(QObject *obj, QEvent *ev)
 
     if (wid && (wid == m_scrollbar ))
     {
-      if(type == QEvent::Hide || type == QEvent::Show) 
+      if(type == QEvent::Hide || type == QEvent::Show)
       {
         SceneBase * scene = m_scenes.value( VIEW::Id(SETTINGS()->_viewMode) );
         if( scene->isInit() )
@@ -377,8 +376,8 @@ bool BrowserView::eventFilter(QObject *obj, QEvent *ev)
     return QWidget::eventFilter(obj, ev);
 }
 
-    
-    
+
+
 /*******************************************************************************
     switch_view
 *******************************************************************************/
@@ -391,13 +390,13 @@ void BrowserView::switch_view(BrowserParam& param)
 
     /* save current state */
     SETTINGS()->_viewMode = param.mode;
-    
+
     /* handle scene switch view */
     SceneBase * scene = m_scenes[ param.mode ];
 
     if( !scene->isInit() )
       scene->initScene();
-          
+
     scene->setMode( param.mode );
     scene->setSearch( param.search );
     scene->setData( param.data );
@@ -418,14 +417,14 @@ void BrowserView::switch_view(BrowserParam& param)
     /* restore scroll position */
     m_scrollbar->setSliderPosition(param.scroll);
 
-    /* update page title */    
+    /* update page title */
     PlayerToolBarBase::instance()->setCollectionInfo( collectionInfo() , VIEW::Id(param.mode));
     MainLeftWidget::instance()->setMode(param.mode);
     MainLeftWidget::instance()->setBrowserSearch(param.search);
     MainLeftWidget::instance()->setTitle( name_for_view(VIEW::Id(param.mode)) );
 }
 
-    
+
 /*******************************************************************************
     slot_jump_to_media
 *******************************************************************************/
@@ -441,22 +440,22 @@ void BrowserView::slot_jump_to_media()
       media = qvariant_cast<MEDIA::MediaPtr>( (ACTIONS()->value(BROWSER_JUMP_TO_MEDIA))->data() );
       jump_to_media(media);
     }
-    else 
+    else
     {
       media = Engine::instance()->playingTrack();
-      
+
       if(!media) return;
-      
+
       if(!media->parent()) return;
-      
-      MEDIA::MediaPtr album = media->parent();      
+
+      MEDIA::MediaPtr album = media->parent();
       MEDIA::MediaPtr artist = album->parent();
-      
+
 
       if(action == ACTIONS()->value(BROWSER_JUMP_TO_TRACK))
         jump_to_media(media);
       else if(action == ACTIONS()->value(BROWSER_JUMP_TO_ALBUM))
-        jump_to_media(album);      
+        jump_to_media(album);
       else if(action == ACTIONS()->value(BROWSER_JUMP_TO_ARTIST))
         jump_to_media(artist);
     }
@@ -469,49 +468,49 @@ void BrowserView::jump_to_media(MEDIA::MediaPtr media)
 
     if(!media)
       return;
-    
+
     if(media->type() == TYPE_ARTIST)
       mode = VIEW::ViewArtist;
     else if(media->type() == TYPE_ALBUM)
       mode = VIEW::ViewAlbum;
     else if(media->type() == TYPE_TRACK)
       mode = VIEW::ViewTrack;
-    else return;  
-      
+    else return;
+
     MainLeftWidget::instance()->setBrowserSearch(QVariant());
-    
+
     m_scenes[VIEW::ViewArtist]->setSearch(QVariant());
     m_scenes[VIEW::ViewTuneIn]->setSearch(QVariant());
     m_scenes[VIEW::ViewFileSystem]->setSearch(QVariant());
-      
+
     active_view(mode,"", QVariant());
 
     /* localise item */
     QPoint p = static_cast<LocalScene*>(m_scenes[mode])->get_item_position(media);
 
-    if(!p.isNull()) 
+    if(!p.isNull())
       m_scrollbar->setSliderPosition( p.y() - 40 );
 }
 
 
 /*******************************************************************************
-    Browser History 
+    Browser History
 *******************************************************************************/
 void BrowserView::add_history_entry(BrowserParam& param)
 {
     //Debug::debug() << "  [BrowserView] add_history_entry";
 
     /* save scroll position */
-    if(m_browser_params_idx == 0) 
+    if(m_browser_params_idx == 0)
     {
       BrowserParam current_param = m_browser_params[0];
       current_param.scroll = m_scrollbar->sliderPosition();
       scrolls[ current_param.mode ] = current_param.scroll;
 
       if(scrolls.contains(param.mode))
-        param.scroll = scrolls.value( param.mode );      
+        param.scroll = scrolls.value( param.mode );
     }
-    
+
     /* nouveau déclenchement --> on supprime les next */
     for(int i = 0; i < m_browser_params_idx; i++)
       m_browser_params.removeAt(i);
@@ -522,10 +521,10 @@ void BrowserView::add_history_entry(BrowserParam& param)
     /* limite de la taille de l'historique de navigation */
     if(m_browser_params.size() >= 30 && m_browser_params_idx != m_browser_params.size() -1)
       m_browser_params.takeLast();
-    
+
     ACTIONS()->value(BROWSER_PREV)->setEnabled(m_browser_params_idx < m_browser_params.size() -1);
-    ACTIONS()->value(BROWSER_NEXT)->setEnabled(m_browser_params_idx > 0);    
-} 
+    ACTIONS()->value(BROWSER_NEXT)->setEnabled(m_browser_params_idx > 0);
+}
 
 
 void BrowserView::slot_on_history_prev_activated()
@@ -553,7 +552,7 @@ void BrowserView::slot_on_history_next_activated()
       ACTIONS()->value(BROWSER_NEXT)->setEnabled(m_browser_params_idx > 0);
 
       BrowserParam param = m_browser_params.at(m_browser_params_idx);
-      switch_view(param);      
+      switch_view(param);
     }
 }
 
@@ -566,31 +565,31 @@ void BrowserView::contextMenuEvent ( QContextMenuEvent * event )
 {
     //Debug::debug() << "  [BrowserView] contextMenuEvent ";
     SceneBase * scene = m_scenes[ VIEW::Id(SETTINGS()->_viewMode) ];
-    
-    if(scene->mouseGrabberItem()) 
+
+    if(scene->mouseGrabberItem())
     {
         QGraphicsView::contextMenuEvent(event) ;
     }
-    else 
+    else
     {
-       if(!m_menu) 
+       if(!m_menu)
        {
          m_menu = new QMenu(this);
-         
+
          m_menu->setStyleSheet(
              QString("QMenu {icon-size: 32px; background-color: none;border: none;}"
-                     "QMenu::item {background-color: none;}") );         
+                     "QMenu::item {background-color: none;}") );
        }
-       
+
        m_menu->clear();
        m_menu->addActions(scene->actions());
        m_menu->addSeparator();
        m_menu->addAction(ACTIONS()->value(BROWSER_JUMP_TO_ARTIST));
        m_menu->addAction(ACTIONS()->value(BROWSER_JUMP_TO_ALBUM));
-       m_menu->addAction(ACTIONS()->value(BROWSER_JUMP_TO_TRACK));       
-       
+       m_menu->addAction(ACTIONS()->value(BROWSER_JUMP_TO_TRACK));
+
        m_menu->popup(mapToGlobal(event->pos()));
-       
+
        event->accept();
     }
 }
@@ -621,8 +620,8 @@ void BrowserView::keyPressEvent ( QKeyEvent * event )
       case Qt::Key_Left  :
       case Qt::Key_Right :
         event->ignore();
-        break;      
-      
+        break;
+
       default : QGraphicsView::keyPressEvent(event);break;
     }
 }
@@ -630,7 +629,7 @@ void BrowserView::keyPressEvent ( QKeyEvent * event )
 /*******************************************************************************
     collectionInfo
 *******************************************************************************/
-QString BrowserView::collectionInfo() 
+QString BrowserView::collectionInfo()
 {
     const int collectionSize = static_cast<LocalScene*>(m_scenes[VIEW::ViewArtist])->elementCount();
     const int radioSize      = static_cast<StreamScene*>(m_scenes[VIEW::ViewTuneIn])->elementCount();
@@ -642,7 +641,7 @@ QString BrowserView::collectionInfo()
       case (VIEW::ViewHistory)    : text = QString(tr("History")); break;
       case (VIEW::ViewDashBoard)   : text = QString(tr("Dashboard")); break;
       case (VIEW::ViewSettings)   : text = QString(tr("Settings")); break;
-      
+
       case (VIEW::ViewAlbum)    : text = QString(tr("Collection : <b>%1</b> albums")).arg(QString::number(collectionSize)); break;
       case (VIEW::ViewArtist)   : text = QString(tr("Collection : <b>%1</b> artist")).arg(QString::number(collectionSize));break;
       case (VIEW::ViewTrack)    : text = QString(tr("Collection : <b>%1</b> tracks")).arg(QString::number(collectionSize));break;
@@ -650,11 +649,11 @@ QString BrowserView::collectionInfo()
       case (VIEW::ViewYear)     : text = QString(tr("Collection : <b>%1</b> years")).arg(QString::number(collectionSize));break;
       case (VIEW::ViewFavorite) : text = QString(tr("Collection : <b>%1</b> favorite item")).arg(QString::number(collectionSize));break;
 
-      case (VIEW::ViewPlaylist) : 
+      case (VIEW::ViewPlaylist) :
       case (VIEW::ViewSmartPlaylist) :
         text = QString(tr("Playlist : <b>%1</b> playlists")).arg(QString::number(collectionSize));
         break;
-      
+
       case (VIEW::ViewDirble)         :
       case (VIEW::ViewRadionomy)      :
       case (VIEW::ViewTuneIn)         :
@@ -663,7 +662,7 @@ QString BrowserView::collectionInfo()
          break;
       default: text = "";break;
     }
-    
+
     return text;
 }
 
@@ -695,7 +694,7 @@ QString BrowserView::name_for_view(VIEW::Id id)
       case VIEW::ViewFavoriteRadio     : title = tr("Favorites radios");  break;
       case VIEW::ViewFileSystem        : title = tr("Filesystem");  break;
       default:break;
-    }     
+    }
     return title;
 }
 
@@ -709,30 +708,30 @@ void BrowserView::slot_check_slider(int action)
     if( action == QAbstractSlider::SliderPageStepAdd ||
         action == QAbstractSlider::SliderPageStepSub )
     {
-        
+
       QList<QGraphicsItem*> categories;
       foreach(QGraphicsItem* gItem, this->scene()->items() )
         if(gItem->type() == GraphicsItem::CategoryType)
           categories << gItem;
 
       if( categories.isEmpty() ) return;
-        
+
       int top = m_scrollbar->sliderPosition();
-                  
+
       /* ------------ navigate go up ---------------- */
-      if( action == QAbstractSlider::SliderPageStepSub) 
-      {      
+      if( action == QAbstractSlider::SliderPageStepSub)
+      {
           for(int i=categories.size()-1; i>=0;i--)
           {
             QPoint itemPoint = categories.at(i)->scenePos().toPoint();
-    
+
             if(top > itemPoint.y()) {
               m_scrollbar->setSliderPosition(itemPoint.y());
               break;
             }
           }
       }
-      /* ------------ navigate go down ---------------*/      
+      /* ------------ navigate go down ---------------*/
       else
       {
           foreach (QGraphicsItem *item, categories)
@@ -743,7 +742,7 @@ void BrowserView::slot_check_slider(int action)
               m_scrollbar->setSliderPosition(itemPoint.y());
               break;
             }
-          }      
+          }
       }
     }
 }

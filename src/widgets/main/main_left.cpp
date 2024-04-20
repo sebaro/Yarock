@@ -46,7 +46,7 @@
 #endif
 
 MainLeftWidget* MainLeftWidget::INSTANCE = 0;
-    
+
 /*
 ********************************************************************************
 *                                                                              *
@@ -58,20 +58,20 @@ MainLeftWidget* MainLeftWidget::INSTANCE = 0;
 MainLeftWidget::MainLeftWidget(QWidget *parent)
 {
     INSTANCE   = this;
-      
+
     m_parent = parent;
-    
+
     /* content */
     m_contentWidget = new QWidget(m_parent);
     m_contentWidget->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
-    
+
     QHBoxLayout * layout = new QHBoxLayout(m_contentWidget);
-    
+
     QPalette p1;
-    p1.setColor(QPalette::Background, QApplication::palette().color(QPalette::Normal, QPalette::Base));
+    p1.setColor(QPalette::Window, QApplication::palette().color(QPalette::Normal, QPalette::Base));
     m_contentWidget->setPalette( p1 );
-    
-    
+
+
     MenuWidget* m_menu_widget = new MenuWidget(m_parent);
     layout->addWidget(m_menu_widget);
 
@@ -80,7 +80,7 @@ MainLeftWidget::MainLeftWidget(QWidget *parent)
     m_header->setMinimumHeight(36);
 
     create_header_ui();
-    
+
     /* init */
     ui_editor_search = 0;
 }
@@ -101,17 +101,17 @@ void MainLeftWidget::create_header_ui()
       ui_save_button   = new QPushButton(QIcon(":/images/save-32x32.png"), tr("Apply"), 0);
       ui_save_button->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 
-      ui_cancel_button = new QPushButton(QIcon::fromTheme("dialog-cancel"), tr("Cancel"), 0);      
+      ui_cancel_button = new QPushButton(QIcon::fromTheme("dialog-cancel"), tr("Cancel"), 0);
       ui_cancel_button->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-      
+
       /*  prev/next browsing actions  */
       ACTIONS()->insert(BROWSER_PREV, new QAction( IconManager::instance()->icon( "chevron-left") ,tr("Go backward"),this));
       ACTIONS()->insert(BROWSER_NEXT, new QAction( IconManager::instance()->icon( "chevron-right"), tr("Go forward"),this));
       ACTIONS()->insert(BROWSER_UP,   new QAction( IconManager::instance()->icon( "chevron-up") ,tr("Go up"),this));
-      
+
       ACTIONS()->value(BROWSER_PREV)->setEnabled(false);
       ACTIONS()->value(BROWSER_NEXT)->setEnabled(false);
-    
+
       /* browser search line edit */
       ui_search_lineedit = new SearchLineEdit(m_header);
       ui_search_lineedit->setInactiveText(tr("Quick filter"));
@@ -123,34 +123,34 @@ void MainLeftWidget::create_header_ui()
       ui_save_button->setMaximumHeight(ui_search_lineedit->height());
       ui_cancel_button->setMaximumHeight(ui_search_lineedit->height());
 
-      
+
       QMenu* menu = new QMenu();
       menu->addAction(ACTIONS()->value(APP_ENABLE_SEARCH_POPUP));
       menu->addAction(ACTIONS()->value(APP_PLAY_ON_SEARCH));
       ui_search_lineedit->setCustomContextMenu(menu);
-      
+
       /* explorer advanced search */
       ui_advance_search_button = new QPushButton();
       ui_advance_search_button->setIcon(QIcon(":/images/add_32x32.png"));
-      
+
       ui_advance_search_button->setFocusPolicy(Qt::NoFocus);
       ui_advance_search_button->setStyleSheet("QPushButton { background-color:transparent; border: none; padding: 0px}");
       ui_advance_search_button->setCursor(Qt::ArrowCursor);
       ui_advance_search_button->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
       ui_advance_search_button->setContextMenuPolicy(Qt::PreventContextMenu);
-      
-      
+
+
       ui_search_lineedit->addLeftIcon(ui_advance_search_button);
 
       /* explorer popup completer */
       ui_popup_completer = 0;
-    
+
       /* navigation button */
       ui_button_prev = new QToolButton(m_header);
       ui_button_prev->setAutoRaise(true);
       //ui_button_prev->setArrowType(Qt::LeftArrow);
       ui_button_prev->setDefaultAction( ACTIONS()->value(BROWSER_PREV) );
-    
+
       ui_button_next = new QToolButton(m_header);
       ui_button_next->setAutoRaise(true);
       //ui_button_next->setArrowType(Qt::RightArrow);
@@ -161,7 +161,7 @@ void MainLeftWidget::create_header_ui()
       //ui_button_up->setArrowType(Qt::UpArrow);
       ui_button_up->setDefaultAction( ACTIONS()->value(BROWSER_UP) );
 
-    
+
     QHBoxLayout* h2 = new QHBoxLayout(m_header);
     h2->setSpacing(2);
     h2->setContentsMargins(4, 4, 4, 4);
@@ -171,27 +171,27 @@ void MainLeftWidget::create_header_ui()
     h2->addWidget( new FixedSpacer( m_header, QSize(4, 0)) );
     h2->addWidget( m_title );
     h2->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Minimum));
-    
+
     h2->addWidget( ui_search_lineedit );
     h2->addWidget( ui_save_button );
-    h2->addWidget( ui_cancel_button );    
+    h2->addWidget( ui_cancel_button );
     h2->addWidget( new FixedSpacer( m_header, QSize(4, 0)) );
-    
+
     ui_button_up->setVisible(false);
-    
+
     /*--------------------------------*/
     /* Connection                     */
-    /*--------------------------------*/      
+    /*--------------------------------*/
     connect(ui_advance_search_button, SIGNAL(clicked ()), this, SLOT(slot_advance_search_clicked()));
-    
+
     connect(ui_search_lineedit, SIGNAL(textfield_entered()), this, SLOT(slot_send_quick_filter_change()));
     connect(ACTIONS()->value(APP_ENABLE_SEARCH_POPUP), SIGNAL(triggered()), this, SLOT(slot_explorer_popup_setting_change()));
     connect(ui_save_button, SIGNAL(clicked()), this, SIGNAL(settings_save_clicked()));
     connect(ui_cancel_button, SIGNAL(clicked()), this, SIGNAL(settings_cancel_clicked()));
-  
+
     /*--------------------------------*/
     /* Init                           */
-    /*--------------------------------*/  
+    /*--------------------------------*/
     slot_explorer_popup_setting_change();
 }
 
@@ -203,16 +203,16 @@ void MainLeftWidget::setTitle(const QString& title)
 
 
 void MainLeftWidget::slot_advance_search_clicked()
-{  
+{
     if(!ui_editor_search) {
       ui_editor_search = new EditorSearch(m_parent);
       QObject::connect(ui_editor_search, SIGNAL(search_triggered()), this, SLOT(slot_advanced_search_triggered()));
     }
-    
+
     ui_editor_search->show();
-  
+
     ui_editor_search->move (
-      m_parent->mapToGlobal(QPoint(contentWidget()->width()-ui_editor_search->width(), m_header->height())) 
+      m_parent->mapToGlobal(QPoint(contentWidget()->width()-ui_editor_search->width(), m_header->height()))
     );
 }
 
@@ -224,10 +224,10 @@ void MainLeftWidget::slot_advanced_search_triggered()
       ui_search_lineedit->lineEdit()->clear();
       ui_search_lineedit->clearFocus();
     }
-    
+
     QVariant var = ui_editor_search->get_search();
     emit browser_search_change( var );
-    
+
     //Debug::debug() << "MainLeftWidget::slot_advanced_search_triggered: " << var;
 }
 
@@ -238,7 +238,7 @@ void MainLeftWidget::setBrowserSearch(QVariant variant)
     {
        if(ui_editor_search)
          ui_editor_search->set_search( variant );
-       
+
        ui_search_lineedit->setCustomSearch(true);
     }
     else
@@ -247,14 +247,14 @@ void MainLeftWidget::setBrowserSearch(QVariant variant)
       ui_search_lineedit->setCustomSearch(false);
       ui_search_lineedit->setText(pattern);
       ui_search_lineedit->clearFocus();
-    }      
+    }
 }
 
 
 QVariant MainLeftWidget::browserSearch()
 {
     //Debug::debug() << "MainLeftWidget::browserSearch";
-  
+
     QVariant variant;
     if(ui_editor_search && ui_editor_search->isActive() )
         variant = ui_editor_search->get_search();
@@ -268,7 +268,7 @@ QVariant MainLeftWidget::browserSearch()
 void MainLeftWidget::slot_send_quick_filter_change()
 {
     const QString pattern = ui_search_lineedit->text();
-    
+
     if(pattern.isEmpty())
     {
       /* quick filter is cleared */
@@ -302,16 +302,16 @@ void MainLeftWidget::slot_explorer_popup_setting_change()
 void MainLeftWidget::setMode(VIEW::Id mode)
 {
     m_mode = mode;
-    
+
     ui_advance_search_button->setEnabled(
        (typeForView(m_mode) == VIEW::LOCAL) && (m_mode != VIEW::ViewSmartPlaylist)
     );
-    
+
     ui_button_up->setVisible(m_mode == VIEW::ViewFileSystem);
-    
+
     ui_save_button->setVisible(m_mode == VIEW::ViewSettings);
     ui_cancel_button->setVisible(m_mode == VIEW::ViewSettings);
-    
+
     ui_search_lineedit->setVisible(  typeForView(m_mode) == VIEW::FILESYSTEM ||
                                      typeForView(m_mode) == VIEW::LOCAL ||
                                      typeForView(m_mode) == VIEW::RADIO );

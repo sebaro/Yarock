@@ -2,7 +2,7 @@
     <qresource prefix="/">
         <file>data/lyrics/ultimate_providers.xml</file>
         <file>icon/yarock_64x64.png</file>
-        <file>fonts/yarock-font.ttf</file>        
+        <file>fonts/yarock-font.ttf</file>
         <file>images/default-cover-200x200.png</file>
         <file>images/default-cover-256x256.png</file>
         <file>images/about-48x48.png</file>
@@ -38,7 +38,7 @@
         <file>images/media-smartplaylist3-150x150.png</file>
         <file>images/media-smartplaylist4-150x150.png</file>
         <file>images/chart-48x48.png</file>
-        <file>images/smart-playlist-48x48.png</file>       
+        <file>images/smart-playlist-48x48.png</file>
         <file>images/star-off.png</file>
         <file>images/star-on.png</file>
         <file>images/star-on-2.png</file>

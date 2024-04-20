@@ -72,7 +72,7 @@ ExLineEdit::ExLineEdit(QWidget *parent) : QWidget(parent)
     this->setSizePolicy(m_lineEdit->sizePolicy());
     this->setBackgroundRole(m_lineEdit->backgroundRole());
     this->setMouseTracking(true);
-    
+
 
     setPalette(m_lineEdit->palette());
 
@@ -120,7 +120,7 @@ void ExLineEdit::setInactiveText(const QString& text)
 void ExLineEdit::addLeftIcon(QPushButton* ib)
 {
     ib->setParent(this);
-    m_left_icons << ib; 
+    m_left_icons << ib;
 }
 
 /*******************************************************************************
@@ -153,7 +153,7 @@ void ExLineEdit::slotClearField()
 {
     m_lineEdit->clear();
     this->clearFocus();
-    
+
     emit textfield_entered();
 }
 
@@ -170,7 +170,7 @@ QSize ExLineEdit::sizeHint() const
 {
     QFontMetrics fm( QApplication::font() );
     int H = fm.height();
-    
+
     return QSize(
       m_lineEdit->sizeHint().width() + m_clearButton->sizeHint().width(),
       qMax(H + 8, 30)
@@ -185,12 +185,8 @@ void ExLineEdit::resizeEvent(QResizeEvent *event)
 
 void ExLineEdit::updateGeometries()
 {
-    #if QT_VERSION >= 0x050000
     QStyleOptionFrame panel;
-    #else
-    QStyleOptionFrameV2 panel;
-    #endif
-    
+
     initStyleOption(&panel);
     QRect rect = style()->subElementRect(QStyle::SE_LineEditContents, &panel, this);
 
@@ -209,7 +205,7 @@ void ExLineEdit::updateGeometries()
         bt->setGeometry(rect.x() + 2 + icons_W,1, icon_W, icon_H);
         icons_W += icon_W ;
     }
-    
+
     m_lineEdit->setGeometry(rect.x() + 2 + icons_W, padding,
                             width - clearButton_W - icons_W, this->height() - padding*2);
 
@@ -222,14 +218,9 @@ void ExLineEdit::paintEvent(QPaintEvent *event)
 Q_UNUSED(event)
     //! draw the frame
     QPainter p(this);
-    
-    #if QT_VERSION >= 0x050000
+
     QStyleOptionFrame panel;
-    #else
-    QStyleOptionFrameV2 panel;
-    #endif
-    
-  
+
     initStyleOption(&panel);
     QApplication::style()->drawPrimitive(QStyle::PE_PanelLineEdit, &panel, &p, this);
 
@@ -251,21 +242,17 @@ Q_UNUSED(event)
     }
 }
 
-#if QT_VERSION >= 0x050000
 void ExLineEdit::initStyleOption(QStyleOptionFrame *option) const
-#else
-void ExLineEdit::initStyleOption(QStyleOptionFrameV2 *option) const
-#endif
 {
     option->initFrom(this);
     option->rect = contentsRect();
     option->lineWidth = style()->pixelMetric(QStyle::PM_DefaultFrameWidth, option, this);
     option->midLineWidth = 0;
-#if QT_VERSION >= 0x050000    
+#if QT_VERSION >= 0x050000
     option->frameShape = QFrame::StyledPanel;
-#endif    
+#endif
     option->state |= QStyle::State_Sunken;
-    option->features = QStyleOptionFrameV2::None;
+    option->features = QStyleOptionFrame::None;
 }
 
 void ExLineEdit::keyPressEvent(QKeyEvent *event)
@@ -303,7 +290,7 @@ void ExLineEdit::focusOutEvent(QFocusEvent *event)
 
 void ExLineEdit::contextMenuEvent ( QContextMenuEvent * event )
 {
-    if (m_context_menu) 
+    if (m_context_menu)
     {
       m_context_menu->popup(event->globalPos());
       event->accept();

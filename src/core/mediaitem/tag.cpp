@@ -119,7 +119,7 @@ static float maybeAddGain( const TagLib::String &input )
     qreal gain = value.toFloat( &ok );
     if (ok)
       return gain;
-    
+
     return 0.0;
 }
 
@@ -127,7 +127,7 @@ static float maybeAddGain( const TagLib::String &input )
 /* convertPOPMRating / convertToPOPMRating                                    */
 /*  (from clementine)                                                         */
 /*----------------------------------------------------------------------------*/
-// static float convertPOPMRating(const int POPM_rating) 
+// static float convertPOPMRating(const int POPM_rating)
 // {
 //   if (POPM_rating < 0x01) {
 //     return 0.0;
@@ -143,7 +143,7 @@ static float maybeAddGain( const TagLib::String &input )
 //   return 1.0; // 5 stars
 // }
 
-static int convertToPOPMRating(const float rating) 
+static int convertToPOPMRating(const float rating)
 {
   if (rating < 0.20) {
     return 0x00;
@@ -187,7 +187,7 @@ static void init(MEDIA::TrackPtr track)
     track->isPlaying    =  false;
     track->isBroken     =  false;
     track->isPlayed     =  false;
-    track->isStopAfter  =  false;    
+    track->isStopAfter  =  false;
 }
 
 
@@ -196,8 +196,8 @@ static void init(MEDIA::TrackPtr track)
 /*----------------------------------------------------------------------------*/
 static void readID3v2Tags(TagLib::ID3v2::Tag *tag, MEDIA::TrackPtr track, QString& s_disc )
 {
-    Debug::debug() << " [Tag] readID3v2Tags";  
-    
+    Debug::debug() << " [Tag] readID3v2Tags";
+
     const TagLib::ID3v2::FrameListMap& map = tag->frameListMap();
 
     if ( !map["TPOS"].isEmpty() )
@@ -211,12 +211,12 @@ static void readID3v2Tags(TagLib::ID3v2::Tag *tag, MEDIA::TrackPtr track, QStrin
 
 
     /* read FMPS frames */
-    for (int i=0 ; i < map["TXXX"].size() ; ++i) 
+    for (int i=0 ; i < map["TXXX"].size() ; ++i)
     {
         const TagLib::ID3v2::UserTextIdentificationFrame* frame =
           dynamic_cast<const TagLib::ID3v2::UserTextIdentificationFrame*>(map["TXXX"][i]);
 
-        if (frame && frame->description().startsWith("FMPS_")) 
+        if (frame && frame->description().startsWith("FMPS_"))
         {
           TagLib::StringList fields = frame->fieldList();
 
@@ -231,14 +231,14 @@ static void readID3v2Tags(TagLib::ID3v2::Tag *tag, MEDIA::TrackPtr track, QStrin
           }
         }
     }
-      
-    /* read POPM tags */        
-    if ( !map["POPM"].isEmpty() ) 
+
+    /* read POPM tags */
+    if ( !map["POPM"].isEmpty() )
     {
         const TagLib::ID3v2::PopularimeterFrame* frame =
           dynamic_cast<const TagLib::ID3v2::PopularimeterFrame*>( map["POPM"].front() );
-        
-        if (frame) 
+
+        if (frame)
         {
           /* only read anonymous ratings */
           if( TaglibStringToQString( frame->email() ).isEmpty() )
@@ -249,11 +249,11 @@ static void readID3v2Tags(TagLib::ID3v2::Tag *tag, MEDIA::TrackPtr track, QStrin
                 track->playcount = frame->counter();
           }
         }
-    }        
-    
+    }
+
     /* read ID3v2.3.0 tags replay gain tags */
     bool albumTagOK = false;
-    for (int i=0 ; i < map["TXXX"].size() ; ++i) 
+    for (int i=0 ; i < map["TXXX"].size() ; ++i)
     {
         const TagLib::ID3v2::UserTextIdentificationFrame* frame =
           dynamic_cast<const TagLib::ID3v2::UserTextIdentificationFrame*>(map["TXXX"][i]);
@@ -273,13 +273,13 @@ static void readID3v2Tags(TagLib::ID3v2::Tag *tag, MEDIA::TrackPtr track, QStrin
                 track->trackPeak = maybeAddPeak( frame->fieldList()[1] );
         }
     }
-    
-    if ( ! albumTagOK ) 
+
+    if ( ! albumTagOK )
     {
       track->albumGain = track->trackGain;
       track->albumPeak = track->trackPeak;
     }
-    
+
     /* TODO ID3v2.4.0 RVA2 frame */
 }
 
@@ -289,34 +289,34 @@ static void readID3v2Tags(TagLib::ID3v2::Tag *tag, MEDIA::TrackPtr track, QStrin
 /*----------------------------------------------------------------------------*/
 static void readMP4Tags(TagLib::MP4::Tag *tag, MEDIA::TrackPtr track, QString& s_disc )
 {
-    const TagLib::MP4::ItemListMap& items = tag->itemListMap();
+    const TagLib::MP4::ItemMap& items = tag->itemMap();
 
     /* album artists tags */
-    TagLib::MP4::ItemListMap::ConstIterator it = items.find("aART");
-    if ( it != items.end() ) 
+    TagLib::MP4::ItemMap::ConstIterator it = items.find("aART");
+    if ( it != items.end() )
     {
         TagLib::StringList album_artists = it->second.toStringList();
         if ( !album_artists.isEmpty() )
           track->artist = TaglibStringToQString( album_artists.front() );
-    }    
-    
+    }
+
     /* disc number */
     if ( items.contains("disk") ) {
         s_disc = TaglibStringToQString(TagLib::String::number(items["disk"].toIntPair().first));
-    }    
-    
+    }
+
     /* rating */
     if ( items.contains(kMP4_FMPS_Rating_ID) ) {
         float rating = TaglibStringToQString(items[kMP4_FMPS_Rating_ID].toStringList().toString('\n')).toFloat();
-        
+
         if( track->rating <= 0 && rating > 0 )
           track->rating = rating;
     }
-    
-    /* playcount */    
+
+    /* playcount */
     if ( items.contains(kMP4_FMPS_Playcount_ID) ) {
         int playcount = TaglibStringToQString(items[kMP4_FMPS_Playcount_ID].toStringList().toString('\n')).toFloat();
-        
+
         if( track->playcount <= 0 && playcount > 0 )
                 track->playcount = playcount;
     }
@@ -328,31 +328,31 @@ static void readMP4Tags(TagLib::MP4::Tag *tag, MEDIA::TrackPtr track, QString& s
 /*----------------------------------------------------------------------------*/
 static void readOggTags(TagLib::Ogg::XiphComment *tag, MEDIA::TrackPtr track, QString& s_disc )
 {
-    Debug::debug() << " [Tag] readOggTags";  
-  
+    Debug::debug() << " [Tag] readOggTags";
+
     const TagLib::Ogg::FieldListMap& map = tag->fieldListMap();
-  
-    if (!map["ALBUMARTIST"].isEmpty()) 
+
+    if (!map["ALBUMARTIST"].isEmpty())
     {
         track->artist = TaglibStringToQString( map["ALBUMARTIST"].front() );
     }
-    else if (!map["ALBUM ARTIST"].isEmpty()) 
+    else if (!map["ALBUM ARTIST"].isEmpty())
     {
         track->artist = TaglibStringToQString( map["ALBUM ARTIST"].front() );
     }
 
     if ( !map["BPM"].isEmpty() )
         track->extra["bpm"] = TaglibStringToQString( map["BPM"].front() ).trimmed().toFloat();
-  
+
     if (!map["DISCNUMBER"].isEmpty() )
         s_disc = TaglibStringToQString( map["DISCNUMBER"].front() );
-    
+
     if (!map["FMPS_RATING"].isEmpty() && track->rating <= 0)
         track->rating = TaglibStringToQString( map["FMPS_RATING"].front() ).toFloat();
 
     if (!map["FMPS_PLAYCOUNT"].isEmpty() && track->playcount <= 0)
         track->playcount = TaglibStringToQString( map["FMPS_PLAYCOUNT"].front() ).toFloat();
-    
+
     /* get replay gain */
     if ( !map["REPLAYGAIN_TRACK_GAIN"].isEmpty() )
         track->trackGain = maybeAddGain( map["REPLAYGAIN_TRACK_GAIN"].front() );
@@ -362,12 +362,12 @@ static void readOggTags(TagLib::Ogg::XiphComment *tag, MEDIA::TrackPtr track, QS
     if ( !map["REPLAYGAIN_ALBUM_GAIN"].isEmpty() )
         track->albumGain = maybeAddGain( map["REPLAYGAIN_ALBUM_GAIN"].front() );
     else
-        track->albumGain = track->trackGain; 
+        track->albumGain = track->trackGain;
 
     if ( !map["REPLAYGAIN_ALBUM_PEAK"].isEmpty() )
         track->albumPeak = maybeAddPeak( map["REPLAYGAIN_ALBUM_PEAK"].front() );
     else
-        track->albumPeak = track->trackPeak; 
+        track->albumPeak = track->trackPeak;
 }
 
 /*----------------------------------------------------------------------------*/
@@ -375,8 +375,8 @@ static void readOggTags(TagLib::Ogg::XiphComment *tag, MEDIA::TrackPtr track, QS
 /*----------------------------------------------------------------------------*/
 static void readAPETags(TagLib::APE::Tag *tag, MEDIA::TrackPtr track, QString& s_disc )
 {
-Q_UNUSED(s_disc)  
-    Debug::debug() << " [Tag] readAPETags";  
+Q_UNUSED(s_disc)
+    Debug::debug() << " [Tag] readAPETags";
 
     const TagLib::APE::ItemListMap &map = tag->itemListMap();
 
@@ -388,8 +388,8 @@ Q_UNUSED(s_disc)
     if ( map.contains("FMPS_PLAYCOUNT") )
     {
       track->playcount = TaglibStringToQString( map["FMPS_PLAYCOUNT"].values()[0] ).toInt();
-    }  
-    
+    }
+
     /* get replay gain */
     if ( map.contains("REPLAYGAIN_TRACK_GAIN") )
         track->trackGain = maybeAddGain( map["REPLAYGAIN_TRACK_GAIN"].values()[0] );
@@ -412,12 +412,12 @@ Q_UNUSED(s_disc)
 /*----------------------------------------------------------------------------*/
 static void readASFTags(TagLib::ASF::Tag *tag, MEDIA::TrackPtr track, QString& s_disc )
 {
-Q_UNUSED(s_disc)  
-    Debug::debug() << " [Tag] readASFTags";  
+Q_UNUSED(s_disc)
+    Debug::debug() << " [Tag] readASFTags";
 
     const TagLib::ASF::AttributeListMap& map = tag->attributeListMap();
-    
-    if (map.contains("FMPS/Rating")) 
+
+    if (map.contains("FMPS/Rating"))
     {
       const TagLib::ASF::AttributeList& attributes = map["FMPS/Rating"];
       if (!attributes.isEmpty()) {
@@ -427,8 +427,8 @@ Q_UNUSED(s_disc)
         }
       }
     }
-    
-    if (map.contains("FMPS/Playcount")) 
+
+    if (map.contains("FMPS/Playcount"))
     {
       const TagLib::ASF::AttributeList& attributes = map["FMPS/Playcount"];
       if (!attributes.isEmpty()) {
@@ -439,11 +439,11 @@ Q_UNUSED(s_disc)
       }
     }
 
-    if (map.contains("REPLAYGAIN_TRACK_GAIN") && !map["REPLAYGAIN_TRACK_GAIN"].isEmpty()) 
+    if (map.contains("REPLAYGAIN_TRACK_GAIN") && !map["REPLAYGAIN_TRACK_GAIN"].isEmpty())
         track->trackGain = maybeAddGain( map["REPLAYGAIN_TRACK_GAIN"].front().toString() );
     if ( map.contains("REPLAYGAIN_TRACK_PEAK") && !map["REPLAYGAIN_TRACK_PEAK"].isEmpty() )
         track->trackPeak = maybeAddPeak( map["REPLAYGAIN_TRACK_PEAK"].front().toString() );
-    
+
     if ( map.contains("REPLAYGAIN_ALBUM_GAIN") && !map["REPLAYGAIN_ALBUM_GAIN"].isEmpty() )
         track->albumGain = maybeAddGain( map["REPLAYGAIN_ALBUM_GAIN"].front().toString() );
     else
@@ -462,12 +462,12 @@ Q_UNUSED(s_disc)
 void readFile(MEDIA::TrackPtr track, const QString& url, int* p_disc)
 {
     Debug::debug() << " [Tag] readFile";
-    
+
     QString s_disc;
-    
+
     /* initial value */
     init(track);
-    
+
     /* get taglib fileref */
     #ifdef COMPLEX_TAGLIB_FILENAME
         const wchar_t *encodedName = reinterpret_cast< const wchar_t * >( QFileInfo(url).canonicalFilePath().utf16() );
@@ -475,7 +475,7 @@ void readFile(MEDIA::TrackPtr track, const QString& url, int* p_disc)
         QByteArray fileName = QFile::encodeName( QFileInfo(url).canonicalFilePath() );
         const char *encodedName = fileName.constData();
     #endif
-    
+
     if (!encodedName) {
       Debug::error() << "media item -> encoded path error :" << url;
       track->isBroken   = true;
@@ -489,7 +489,7 @@ void readFile(MEDIA::TrackPtr track, const QString& url, int* p_disc)
       track->isBroken   = true;
       return;
     }
-    
+
 
     /* read basic tag */
     TagLib::Tag* tag = fileref.tag();
@@ -500,7 +500,7 @@ void readFile(MEDIA::TrackPtr track, const QString& url, int* p_disc)
         track->genre      = TaglibStringToQString( tag->genre() );
         track->num        = tag->track();
         track->year       = tag->year();
-    }    
+    }
 
     /* duration reading */
     TagLib::AudioProperties *audioProperties = fileref.audioProperties();
@@ -513,11 +513,11 @@ void readFile(MEDIA::TrackPtr track, const QString& url, int* p_disc)
 
     /* read tags */
     /* -> handle all files which have VorbisComments (Ogg, OPUS, ...) */
-    if (TagLib::Ogg::XiphComment* tag = dynamic_cast<TagLib::Ogg::XiphComment*>(fileref.file()->tag())) 
+    if (TagLib::Ogg::XiphComment* tag = dynamic_cast<TagLib::Ogg::XiphComment*>(fileref.file()->tag()))
     {
         readOggTags( tag, track, s_disc );
     }
-    
+
     if ( TagLib::MPEG::File* file = dynamic_cast<TagLib::MPEG::File *>( fileref.file() ) )
     {
         /* read IDV3v2 tag first, only try APE if no IDV3v2 */
@@ -526,7 +526,7 @@ void readFile(MEDIA::TrackPtr track, const QString& url, int* p_disc)
         else if ( file->APETag() )
             readAPETags( file->APETag(), track, s_disc );
     }
-    else if (TagLib::FLAC::File* file = dynamic_cast<TagLib::FLAC::File*>( fileref.file() )) 
+    else if (TagLib::FLAC::File* file = dynamic_cast<TagLib::FLAC::File*>( fileref.file() ))
     {
         if ( file->xiphComment() )
             readOggTags( file->xiphComment(), track, s_disc );
@@ -543,13 +543,13 @@ void readFile(MEDIA::TrackPtr track, const QString& url, int* p_disc)
         if ( file->tag() )
             readASFTags( file->tag(), track, s_disc );
     }
-    
+
     /* return disc number */
-    if(p_disc != 0) 
+    if(p_disc != 0)
     {
       *p_disc = 0;
-      
-      if ( !s_disc.isEmpty() ) 
+
+      if ( !s_disc.isEmpty() )
       {
         int i = s_disc.indexOf('/');
         if ( i != -1 ) {
@@ -559,11 +559,11 @@ void readFile(MEDIA::TrackPtr track, const QString& url, int* p_disc)
         }
         else
           *p_disc = s_disc.toInt();
-      
+
         //Debug::debug() << " [Tag] Item from local file disc number: " << *p_disc;
       }
     }
-    
+
     /* ----- post traitement ----- */
     if ( track->title.isEmpty() )
       track->title = QFileInfo(url).baseName();
@@ -601,7 +601,7 @@ bool writeTrackRatingToFile(const QString& url, float rating)
       QByteArray fileName = QFile::encodeName( QFileInfo(url).canonicalFilePath() );
       const char *encodedName = fileName.constData();
     #endif
-    
+
     if (!encodedName) {
       Debug::warning() << " [Tag] encoded path error :" << url;
       return false;
@@ -615,7 +615,7 @@ bool writeTrackRatingToFile(const QString& url, float rating)
     }
 
     /* write tags */
-    if (TagLib::MPEG::File* file = dynamic_cast<TagLib::MPEG::File*>(fileref.file())) 
+    if (TagLib::MPEG::File* file = dynamic_cast<TagLib::MPEG::File*>(fileref.file()))
     {
       TagLib::ID3v2::Tag* tag = file->ID3v2Tag(true);
 
@@ -632,7 +632,7 @@ bool writeTrackRatingToFile(const QString& url, float rating)
         frame->setDescription( name );
         frame->setText( value );
         tag->addFrame(frame);
-    
+
       /* update POPM frame */
         TagLib::ID3v2::PopularimeterFrame* popframe = NULL;
 
@@ -647,27 +647,28 @@ bool writeTrackRatingToFile(const QString& url, float rating)
 
         popframe->setRating( convertToPOPMRating( rating ) );
     }
-    else if (TagLib::FLAC::File* file = dynamic_cast<TagLib::FLAC::File*>(fileref.file())) 
+    else if (TagLib::FLAC::File* file = dynamic_cast<TagLib::FLAC::File*>(fileref.file()))
     {
       TagLib::Ogg::XiphComment* vorbis_comments = file->xiphComment(true);
-      
+
       vorbis_comments->addField("FMPS_RATING", QStringToTaglibString(QString::number( rating )));
     }
-    else if (TagLib::Ogg::XiphComment* tag = dynamic_cast<TagLib::Ogg::XiphComment*>(fileref.file()->tag())) 
+    else if (TagLib::Ogg::XiphComment* tag = dynamic_cast<TagLib::Ogg::XiphComment*>(fileref.file()->tag()))
     {
       tag->addField("FMPS_RATING", QStringToTaglibString(QString::number( rating )));
     }
-    else if (TagLib::ASF::File* file = dynamic_cast<TagLib::ASF::File*>(fileref.file())) 
+    else if (TagLib::ASF::File* file = dynamic_cast<TagLib::ASF::File*>(fileref.file()))
     {
       TagLib::ASF::Tag* tag = file->tag();
       tag->addAttribute("FMPS/Rating",    NumberToASFAttribute( rating ));
     }
-    else if (TagLib::MP4::File* file = dynamic_cast<TagLib::MP4::File*>(fileref.file())) 
+    else if (TagLib::MP4::File* file = dynamic_cast<TagLib::MP4::File*>(fileref.file()))
     {
       TagLib::MP4::Tag* tag = file->tag();
-      tag->itemListMap()[kMP4_FMPS_Rating_ID] = TagLib::StringList(QStringToTaglibString(QString::number( rating )));
+      //tag->itemMap()[kMP4_FMPS_Rating_ID] = TagLib::StringList(QStringToTaglibString(QString::number( rating )));
+      tag->setItem(kMP4_FMPS_Rating_ID, TagLib::StringList(QStringToTaglibString(QString::number( rating ))));
     }
-    else 
+    else
     {
       return true;
     }
@@ -679,7 +680,7 @@ bool writeTrackRatingToFile(const QString& url, float rating)
           change the timestamps as well. (this is what touch does) */
        utimensat(0, QFile::encodeName(url).constData(), NULL, 0);
     }
-    
+
     return ret;
 }
 
@@ -690,26 +691,26 @@ QByteArray loadCoverByteArrayFromFile(const QString& filename)
 {
     if (filename.isEmpty())
       return QByteArray();
-    
+
     TagLib::FileRef ref(QFile::encodeName(filename).constData());
 
     if (ref.isNull() || !ref.file())
       return QByteArray();
-    
+
     /*-----------------------------------------------------------*/
     /* MP3                                                       */
-    /* ----------------------------------------------------------*/    
+    /* ----------------------------------------------------------*/
     TagLib::MPEG::File* file = dynamic_cast<TagLib::MPEG::File*>(ref.file());
     if (file && file->ID3v2Tag())
-    {      
+    {
       TagLib::ID3v2::FrameList apic_frames = file->ID3v2Tag()->frameListMap()["APIC"];
       if (apic_frames.isEmpty())
         return QByteArray();
 
-      if (apic_frames.size() != 1) 
+      if (apic_frames.size() != 1)
       {
         TagLib::ID3v2::FrameList::Iterator it = apic_frames.begin();
-        for (; it != apic_frames.end(); ++it) 
+        for (; it != apic_frames.end(); ++it)
         {
             // This must be dynamic_cast<>, TagLib will return UnknownFrame in APIC for encrypted frames.
             TagLib::ID3v2::AttachedPictureFrame *frame = dynamic_cast<TagLib::ID3v2::AttachedPictureFrame *>(*it);
@@ -729,7 +730,7 @@ QByteArray loadCoverByteArrayFromFile(const QString& filename)
 
     /*-----------------------------------------------------------*/
     /* Ogg vorbis/speex                                          */
-    /* ----------------------------------------------------------*/    
+    /* ----------------------------------------------------------*/
     TagLib::Ogg::XiphComment* xiph_comment = dynamic_cast<TagLib::Ogg::XiphComment*>(ref.file()->tag());
 
     if (xiph_comment)
@@ -743,14 +744,14 @@ QByteArray loadCoverByteArrayFromFile(const QString& filename)
 
       return QByteArray::fromBase64(map["COVERART"].toString().toCString());
     }
-  
+
 
     /*-----------------------------------------------------------*/
     /* FLAC                                                      */
     /* ----------------------------------------------------------*/
 #ifdef TAGLIB_HAS_FLAC_PICTURELIST
     TagLib::FLAC::File* flac_file = dynamic_cast<TagLib::FLAC::File*>(ref.file());
-    if (flac_file && flac_file->xiphComment()) 
+    if (flac_file && flac_file->xiphComment())
     {
         const TagLib::List<TagLib::FLAC::Picture*> picturelist = flac_file->pictureList();
         for( TagLib::List<TagLib::FLAC::Picture*>::ConstIterator it = picturelist.begin(); it != picturelist.end(); it++ )
@@ -763,22 +764,22 @@ QByteArray loadCoverByteArrayFromFile(const QString& filename)
             }
         }
     }
-#endif  
+#endif
 
     /*-----------------------------------------------------------*/
     /* MP4/AAC                                                   */
     /* ----------------------------------------------------------*/
     TagLib::MP4::File* aac_file = dynamic_cast<TagLib::MP4::File*>(ref.file());
-    if (aac_file) 
+    if (aac_file)
     {
       TagLib::MP4::Tag* tag = aac_file->tag();
-      const TagLib::MP4::ItemListMap& items = tag->itemListMap();
-      TagLib::MP4::ItemListMap::ConstIterator it = items.find("covr");
-      if (it != items.end()) 
+      const TagLib::MP4::ItemMap& items = tag->itemMap();
+      TagLib::MP4::ItemMap::ConstIterator it = items.find("covr");
+      if (it != items.end())
       {
         const TagLib::MP4::CoverArtList& art_list = it->second.toCoverArtList();
 
-        if (!art_list.isEmpty()) 
+        if (!art_list.isEmpty())
         {
           // Just take the first one for now
           const TagLib::MP4::CoverArt& art = art_list.front();
@@ -790,5 +791,5 @@ QByteArray loadCoverByteArrayFromFile(const QString& filename)
     return QByteArray();
 }
 
-    
+
 } // end namespace

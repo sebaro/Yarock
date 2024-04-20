@@ -57,7 +57,7 @@ QList<UltimateLyricsProvider*> UltimateLyricsReader::ParseDevice(QIODevice* devi
   while (!reader.atEnd()) {
     reader.readNext();
 
-    if (reader.name() == "provider") {
+    if (reader.name().toString() == "provider") {
       UltimateLyricsProvider* provider = ParseProvider(&reader);
       if (provider) {
         provider->moveToThread(qApp->thread());
@@ -72,7 +72,7 @@ QList<UltimateLyricsProvider*> UltimateLyricsReader::ParseDevice(QIODevice* devi
 UltimateLyricsProvider* UltimateLyricsReader::ParseProvider(QXmlStreamReader* reader) const
 {
   //Debug::debug() << "      [UltimateLyricsReader] ParseProvider";
-  
+
   QXmlStreamAttributes attributes = reader->attributes();
 
   UltimateLyricsProvider* scraper = new UltimateLyricsProvider;
@@ -87,15 +87,15 @@ UltimateLyricsProvider* UltimateLyricsReader::ParseProvider(QXmlStreamReader* re
     if (reader->tokenType() == QXmlStreamReader::EndElement)
       break;
 
-    if (reader->tokenType() == QXmlStreamReader::StartElement) 
+    if (reader->tokenType() == QXmlStreamReader::StartElement)
     {
-      if (reader->name() == "extract")
+      if (reader->name().toString() == "extract")
         scraper->add_extract_rule(ParseRule(reader));
-      else if (reader->name() == "exclude")
+      else if (reader->name().toString() == "exclude")
         scraper->add_exclude_rule(ParseRule(reader));
-      else if (reader->name() == "invalidIndicator")
+      else if (reader->name().toString() == "invalidIndicator")
         scraper->add_invalid_indicator(ParseInvalidIndicator(reader));
-      else if (reader->name() == "urlFormat") {
+      else if (reader->name().toString() == "urlFormat") {
         scraper->add_url_format(reader->attributes().value("replace").toString(),
                                 reader->attributes().value("with").toString());
         reader->skipCurrentElement();
@@ -111,7 +111,7 @@ UltimateLyricsProvider::Rule UltimateLyricsReader::ParseRule(QXmlStreamReader* r
   UltimateLyricsProvider::Rule ret;
   //Debug::debug() << "      [UltimateLyricsReader] ParseRule";
 
-  while (!reader->atEnd()) 
+  while (!reader->atEnd())
   {
     reader->readNext();
 
@@ -119,13 +119,13 @@ UltimateLyricsProvider::Rule UltimateLyricsReader::ParseRule(QXmlStreamReader* r
       break;
 
     if (reader->tokenType() == QXmlStreamReader::StartElement) {
-      if (reader->name() == "item") {
+      if (reader->name().toString() == "item") {
         //Debug::debug() << "      [UltimateLyricsReader] ParseRule find item";
 
         QXmlStreamAttributes attr = reader->attributes();
         if (attr.hasAttribute("tag"))
           ret << UltimateLyricsProvider::RuleItem(attr.value("tag").toString(), QString());
-        else if (attr.hasAttribute("begin")) 
+        else if (attr.hasAttribute("begin"))
         {
           ret << UltimateLyricsProvider::RuleItem(attr.value("begin").toString(),
                                                   attr.value("end").toString());

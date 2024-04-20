@@ -16,7 +16,7 @@
 *****************************************************************************************/
 //! Qt
 #include <QApplication>
-#include <QTextCodec>
+//#include <QTextCodec>
 #include <QNetworkReply>
 #include <QString>
 #include <QDebug>
@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationVersion(VERSION);
     QCoreApplication::setOrganizationName(ORG_NAME);
     QCoreApplication::setOrganizationDomain("yarock-player.org");
-    
+
     //! taken from amarok
     // This call is needed to prevent a crash on exit with Phonon-VLC and LibPulse
     XInitThreads();
@@ -77,24 +77,24 @@ int main(int argc, char *argv[])
     QApplication application(argc, argv);
 #if QT_VERSION < 0x050000
     application.setGraphicsSystem("raster");
-#endif    
+#endif
     application.setApplicationName(APP_NAME);
     application.setApplicationVersion(VERSION);
     application.setOrganizationName(ORG_NAME);
     application.setOrganizationDomain("yarock-player.org");
     application.setAttribute(Qt::AA_DontShowIconsInMenus, false);
-    
-    
+
+
     //! Qt Type registration
     qRegisterMetaType<QNetworkReply::NetworkError>("QNetworkReply::NetworkError");
-    qRegisterMetaTypeStreamOperators<Equalizer::EqPreset>("Equalizer::Params");
+    //qRegisterMetaTypeStreamOperators<Equalizer::EqPreset>("Equalizer::Params");
 
     qRegisterMetaType<MEDIA::MediaPtr>();
     qRegisterMetaType<MEDIA::ArtistPtr>();
     qRegisterMetaType<MEDIA::AlbumPtr>();
     qRegisterMetaType<MEDIA::TrackPtr>();
     qRegisterMetaType<MEDIA::PlaylistPtr>();
-   
+
     //! DBUS
     QDBusConnection::sessionBus().registerService("com.seb-apps.yarock");
     qDBusRegisterMetaType<QImage>();
@@ -104,6 +104,6 @@ int main(int argc, char *argv[])
 
     Starter starter(argc,argv);
     Q_UNUSED(starter)
-    
+
     return application.exec();
 }

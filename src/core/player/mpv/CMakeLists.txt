@@ -1,80 +1,77 @@
-cmake_minimum_required(VERSION 2.6)
 
+# ------------------------------------------------------------------------------
+# CMake
+# ------------------------------------------------------------------------------
+cmake_minimum_required(VERSION 3.16)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+# ------------------------------------------------------------------------------
+# Project
+# ------------------------------------------------------------------------------
 project(enginempv)
-# ------------------------------------------------------------------------------
-#  build def (QT PLUGIN)
-# ------------------------------------------------------------------------------
-ADD_DEFINITIONS( -Wall )
-ADD_DEFINITIONS(-DQT_PLUGIN)
-ADD_DEFINITIONS(-DQT_NO_DEBUG)
-ADD_DEFINITIONS(-DQT_SHARED)
-ADD_DEFINITIONS(-DQT_THREAD)
-
-
-ADD_DEFINITIONS( -DENABLE_MPV )
 
 # ------------------------------------------------------------------------------
-#  EXTERNAL LIB
+# Definitions
 # ------------------------------------------------------------------------------
-FIND_PACKAGE( LIBMPV REQUIRED)
+add_definitions( -Wall )
+add_definitions(-DQT_PLUGIN)
+add_definitions(-DQT_NO_DEBUG)
+add_definitions(-DQT_SHARED)
+add_definitions(-DQT_THREAD)
+
+add_definitions( -DENABLE_MPV )
+
+# ------------------------------------------------------------------------------
+# LibMpv
+# ------------------------------------------------------------------------------
+find_package(LIBMPV REQUIRED)
+
+include_directories(${LIBMPV_INCLUDE_DIR})
+
+# ------------------------------------------------------------------------------
+# Qt
+# ------------------------------------------------------------------------------
+set(QT_LIBRARIES ${Qt6Core_LIBRARIES})
+set(QT_INCLUDES ${Qt6Core_INCLUDE_DIRS})
+add_definitions( ${Qt6Core_DEFINITIONS})
+qt_standard_project_setup()
+
+include_directories(${QT_INCLUDES})
 
 
 # ------------------------------------------------------------------------------
-#  INCLUDES
+# Sources
 # ------------------------------------------------------------------------------
-INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/player/
+include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/player/
                      ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/player/mpv
                      ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/mediaitem
                      ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src
 )
 
-INCLUDE_DIRECTORIES( ${LIBMPV_INCLUDE_DIR} )
-  
-if (ENABLE_QT5)
-    set (QTLIBS ${Qt5Core_LIBRARIES})
-    
-    set (QTINCLUDES ${Qt5Core_INCLUDE_DIRS})
-
-    add_definitions( ${Qt5Core_DEFINITIONS})
-
-else (ENABLE_QT5)
-    set (QTLIBS ${QT_QTCORE_LIBRARY})
-
-    set (QTINCLUDES ${QT_INCLUDES})
-    
-    add_definitions(${QT_DEFINITIONS})    
-endif (ENABLE_QT5)
-
-INCLUDE_DIRECTORIES( ${QTINCLUDES} )
+set(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/player/mpv/engine_mpv.cpp)
 
 # ------------------------------------------------------------------------------
-#  SOURCES
+# Building
 # ------------------------------------------------------------------------------
-SET(SOURCES
-    ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/player/mpv/engine_mpv.cpp
-)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
-# ------------------------------------------------------------------------------
-#  BUILDING
-# ------------------------------------------------------------------------------
-set( CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib )
+add_library( enginempv SHARED ${SOURCES})
 
-ADD_LIBRARY( enginempv SHARED ${SOURCES} )
+set_target_properties(enginempv PROPERTIES AUTOMOC TRUE)
 
-SET_TARGET_PROPERTIES(enginempv PROPERTIES AUTOMOC TRUE)
+add_dependencies(enginempv yarock)
 
-ADD_DEPENDENCIES(enginempv yarock)
-
-TARGET_LINK_LIBRARIES(enginempv ${LIBMPV_LIBRARY} ${QTLIBS})
+target_link_libraries(enginempv ${LIBMPV_LIBRARY} ${QT_LIBRARIES})
 
 # ------------------------------------------------------------------------------
-#  INSTALL
-# ------------------------------------------------------------------------------  
-if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-   set (CMAKE_INSTALL_PREFIX /usr CACHE PATH "default install path" FORCE )
+# Installation
+# ------------------------------------------------------------------------------
+if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+    set (CMAKE_INSTALL_PREFIX /usr CACHE PATH "default install path" FORCE)
 endif()
 
 set(CMAKE_INSTALL_LIB "${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX}/yarock"  CACHE PATH "libraries installation path" FORCE)
 
 install(TARGETS enginempv DESTINATION ${CMAKE_INSTALL_LIB} )
-

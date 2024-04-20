@@ -39,10 +39,14 @@ Q_OBJECT
     void mousePressEvent(QMouseEvent* event);
     void mouseReleaseEvent(QMouseEvent* event);
     void mouseMoveEvent(QMouseEvent* event);
-    void enterEvent(QEvent*);
+    #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+      void enterEvent(QEvent*);
+    #else
+      void enterEvent(QEnterEvent*);
+    #endif
     void leaveEvent(QEvent*);
-  
-  
+
+
   private :
     void seek(int);
     void stop();
@@ -51,7 +55,7 @@ Q_OBJECT
     void slot_stateChanged();
     void slot_tick(qint64);
     void slot_length(qint64);
-  
+
   private:
     bool        m_enable;
     bool        m_ticking;

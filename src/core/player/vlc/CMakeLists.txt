@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 3.16)
 
 project(enginevlc)
 # ------------------------------------------------------------------------------
@@ -30,20 +30,20 @@ INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/player/
 
 INCLUDE_DIRECTORIES( ${LIBVLC_INCLUDE_DIR} )
 
-if (ENABLE_QT5)
+if (ENABLE_QT6)
+    set (QTLIBS ${Qt6Core_LIBRARIES})
+
+    set (QTINCLUDES ${Qt6Core_INCLUDE_DIRS})
+
+    add_definitions( ${Qt6Core_DEFINITIONS})
+
+else (ENABLE_QT6)
     set (QTLIBS ${Qt5Core_LIBRARIES})
-    
+
     set (QTINCLUDES ${Qt5Core_INCLUDE_DIRS})
 
     add_definitions( ${Qt5Core_DEFINITIONS})
-
-else (ENABLE_QT5)
-    set (QTLIBS ${QT_QTCORE_LIBRARY})
-
-    set (QTINCLUDES ${QT_INCLUDES})
-    
-    add_definitions(${QT_DEFINITIONS})    
-endif (ENABLE_QT5)
+endif (ENABLE_QT6)
 
 INCLUDE_DIRECTORIES( ${QTINCLUDES} )
 
@@ -53,7 +53,7 @@ INCLUDE_DIRECTORIES( ${QTINCLUDES} )
 # ------------------------------------------------------------------------------
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/config.h.in
                ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/player/vlc/config.h)
-               
+
 # ------------------------------------------------------------------------------
 #  SOURCES
 # ------------------------------------------------------------------------------
@@ -64,7 +64,7 @@ SET(SOURCES
 )
 
 
-               
+
 # ------------------------------------------------------------------------------
 #  BUILDING
 # ------------------------------------------------------------------------------
@@ -80,7 +80,7 @@ TARGET_LINK_LIBRARIES(enginevlc ${LIBVLC_LIBRARY} ${QTLIBS})
 
 # ------------------------------------------------------------------------------
 #  INSTALL
-# ------------------------------------------------------------------------------  
+# ------------------------------------------------------------------------------
 if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
    set (CMAKE_INSTALL_PREFIX /usr CACHE PATH "default install path" FORCE )
 endif()

@@ -63,28 +63,28 @@ FileScene::FileScene(QWidget* parent) : SceneBase(parent)
 void FileScene::initScene()
 {
     Debug::debug() << "   [FileScene] initScene";
-    
+
     /* init model */
     m_model        = new FileModel(this);
     m_current_path = m_model->rootPath();
- 
+
     /* get folder pixmap */
     /* add scaled because pixmap size from icon is not garantee */
     QIcon icon = m_model->iconProvider()->icon(QFileIconProvider::Folder);
     m_folder_pixmap = icon.pixmap ( QSize(90,90) ,QIcon::Normal, QIcon::On);
-    m_folder_pixmap = m_folder_pixmap.scaled ( QSize(90,90), Qt::KeepAspectRatio); 
+    m_folder_pixmap = m_folder_pixmap.scaled ( QSize(90,90), Qt::KeepAspectRatio);
 
     /* actions */
     ACTIONS()->insert(BROWSER_DIR_ITEM_MOUSE_MOVE, new QAction(this));
-    
+
     /* signal connections */
     connect(ACTIONS()->value(BROWSER_DIR_ITEM_MOUSE_MOVE), SIGNAL(triggered()), this, SLOT(slot_item_mouseMove()));
     connect(ACTIONS()->value(BROWSER_UP), SIGNAL(triggered()), this, SLOT(slot_on_go_up()));
     connect(m_model, SIGNAL(directoryLoaded ( const QString & )), this, SLOT(slot_on_directory_loaded()));
     connect(VirtualPlayqueue::instance(), SIGNAL(signal_playing_status_change()),  this, SLOT(update()));
-    
+
     loading_directory = false;
-    
+
     setInit(true);
 }
 
@@ -99,7 +99,7 @@ void FileScene::resizeScene()
 
     int new_item_count = (parentView()->width()/140 > 2) ? parentView()->width()/140 : 2;
 
-    if(item_count != new_item_count)  
+    if(item_count != new_item_count)
     {
       slot_on_directory_loaded();
     }
@@ -107,7 +107,7 @@ void FileScene::resizeScene()
     {
       update();
     }
-} 
+}
 
 /*******************************************************************************
      setSearch
@@ -123,13 +123,13 @@ void FileScene::setSearch(const QVariant& variant)
 void FileScene::setData(const QVariant& data)
 {
     QString path = data.toString();
-    
+
     if( QDir(path).exists() )
     {
       SETTINGS()->_filesystem_path = path;
-    
+
       setPath(path);
-      
+
       ACTIONS()->value(BROWSER_UP)->setEnabled(QDir::rootPath() != path);
     }
     else
@@ -140,14 +140,14 @@ void FileScene::setData(const QVariant& data)
     }
 }
 
-    
+
 /*******************************************************************************
     populateScene
 *******************************************************************************/
 void FileScene::populateScene()
 {
 }
-    
+
 /*******************************************************************************
     slot_on_directory_loaded
 *******************************************************************************/
@@ -159,28 +159,28 @@ void FileScene::slot_on_directory_loaded()
     /* clear the scene FIRST */
     clear();
     map_graphic_items.clear();
-    
+
     foreach(MEDIA::TrackPtr track, m_tracks) {
          track.reset();
          delete track.data();
     }
     m_tracks.clear();
-    
-    
+
+
     m_infosize = 0;
-    
+
     QStringList urls;
-    
+
     /* populate scene */
     int folderRow     = 0;
     int trackRow      = 0;
     int Column        = 0;
     int categorieRow  = 0;
-    
+
     item_count = (parentView()->width()/140 > 2) ? parentView()->width()/140 : 2;
 
 
-    
+
     CategorieGraphicItem *cat = new CategorieGraphicItem(qobject_cast<QGraphicsView*> (parentView())->viewport());
     cat->m_name = m_model->rootPath();
     cat->setPos( 0 ,10 + categorieRow*50);
@@ -189,11 +189,11 @@ void FileScene::slot_on_directory_loaded()
 
     m_model->sort(0, Qt::AscendingOrder);
     QModelIndex root_idx = m_model->index(m_current_path);
-    
-    
-    for(int childRow = 0; childRow < m_model->rowCount(root_idx); ++childRow) 
+
+
+    for(int childRow = 0; childRow < m_model->rowCount(root_idx); ++childRow)
     {
-        QModelIndex childIndex = root_idx.child(childRow, 0);
+        QModelIndex childIndex = root_idx.sibling(childRow, 0);
 
         QFileInfo fileInfo = m_model->fileInfo ( childIndex );
 
@@ -202,13 +202,13 @@ void FileScene::slot_on_directory_loaded()
 
         if(!m_filter.isEmpty() && !path.contains(m_filter,Qt::CaseInsensitive)) continue;
 
-        
+
         /* ---- symlink ---- */
         if ( fileInfo.isSymLink() )
         {
              QString new_path = fileInfo.symLinkTarget();
              QFileInfo new_info(new_path);
-             
+
              if( new_info.exists() && fileInfo.isDir() )
              {
                  DirectoryGraphicItem *item = new DirectoryGraphicItem();
@@ -216,7 +216,7 @@ void FileScene::slot_on_directory_loaded()
                  item->setPath( new_info.canonicalFilePath() );
                  item->setDirname( QDir(new_info.canonicalFilePath()).dirName() );
                  item->setPixmap( m_folder_pixmap );
-                 
+
                  item->setPos(4+140*Column, 10 + folderRow*150 + categorieRow*50);
                  addItem(item);
                  //Debug::debug() << "   [FileScene] PopulateScene add item : " << item->path();
@@ -228,9 +228,9 @@ void FileScene::slot_on_directory_loaded()
                  continue;
              }
         }
-                
+
         /* ---- directory ---- */
-        else if(fileInfo.isDir()) 
+        else if(fileInfo.isDir())
         {
           DirectoryGraphicItem *item = new DirectoryGraphicItem();
           item->setPath(fileInfo.canonicalFilePath());
@@ -254,35 +254,35 @@ void FileScene::slot_on_directory_loaded()
           Column = 0;
           folderRow++;
         }
-    }  
+    }
 
     if(Column > 0)
       folderRow++;
-    
-    foreach (const QString& url, urls) 
-    {    
+
+    foreach (const QString& url, urls)
+    {
         TrackGraphicItem_v4 *track_item = new TrackGraphicItem_v4();
         track_item->media = 0;
         track_item->setPath(url);
         track_item->setPos(30,  10 + folderRow*150 + categorieRow*50 + trackRow*20);
         track_item->_width = parentView()->width()-30-20;
         addItem(track_item);
-        trackRow++; 
+        trackRow++;
         m_infosize++;
 
         map_graphic_items[url] = track_item;
     }
-    
-    QtConcurrent::run(this, &FileScene::async_load_item); 
+
+    QtConcurrent::run(&FileScene::async_load_item, this);
 
     if(m_infosize==0) {
       InfoGraphicItem *info = new InfoGraphicItem(qobject_cast<QGraphicsView*> (parentView())->viewport());
       info->_text = tr("No entry found");
       info->setPos( 0 , 10 + folderRow*150 + categorieRow*50);
       addItem(info);
-    }    
-    
-    
+    }
+
+
     /* we need to ajust SceneRect */
     setSceneRect ( itemsBoundingRect().adjusted(0, -10, 0, 40) );
     loading_directory = false;
@@ -297,13 +297,13 @@ void FileScene::async_load_item()
 
     if (!Database::instance()->open())
       return;
-    
+
     foreach(const QString url, map_graphic_items.keys())
     {
-      
+
       MEDIA::TrackPtr track;
-      
-      if ( MEDIA::isPlaylistFile(url) ) 
+
+      if ( MEDIA::isPlaylistFile(url) )
       {
           track = MEDIA::TrackPtr(new MEDIA::Track());
           track->setType(TYPE_PLAYLIST);
@@ -311,7 +311,7 @@ void FileScene::async_load_item()
           track->url          =  url;
       }
       /* local track */
-      else 
+      else
       {
           track = MEDIA::FromDataBase(url);
 
@@ -320,7 +320,7 @@ void FileScene::async_load_item()
             track->id = -1;
           }
       }
-      
+
       m_tracks << track;
 
       /* update graphic item */
@@ -344,10 +344,10 @@ void FileScene::slot_on_go_up()
 {
     //Debug::debug() << "   [FileScene] slot_on_go_up";
     QModelIndex root_idx = m_model->index(m_current_path);
-    
+
     QModelIndex parent_idx = root_idx.parent();
-    
-    if(parent_idx.isValid()) 
+
+    if(parent_idx.isValid())
     {
       QFileInfo fileInfo = m_model->fileInfo ( parent_idx );
 
@@ -392,9 +392,9 @@ void FileScene::mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * event )
     Debug::debug() << "   [FileScene] mouseDoubleClickEvent";
     if(event->button() != Qt::LeftButton) {
       event->ignore();
-      return;      
+      return;
     }
-    
+
     m_mouseGrabbedItem = this->itemAt(event->scenePos(), QTransform());
 
     if(!m_mouseGrabbedItem) {
@@ -405,19 +405,19 @@ void FileScene::mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * event )
     if(m_mouseGrabbedItem->type() == GraphicsItem::FileSystemType)
     {
       DirectoryGraphicItem *item = static_cast<DirectoryGraphicItem*>(m_mouseGrabbedItem);
-      
+
       QString new_path = item->path();
-      
+
       //Debug::debug() << "   [FileScene] mouseDoubleClickEvent dirname" << item->dirname();
       //Debug::debug() << "   [FileScene] mouseDoubleClickEvent new_path" << new_path;
-  
+
       emit load_directory( QVariant(new_path) );
     }
-    else if( m_mouseGrabbedItem->type() == GraphicsItem::TrackType ) 
+    else if( m_mouseGrabbedItem->type() == GraphicsItem::TrackType )
     {
       TrackGraphicItem *item = static_cast<TrackGraphicItem*>(m_mouseGrabbedItem);
       MEDIA::TrackPtr track = item->media;
-      
+
       if( MEDIA::isPlaylistFile(track->url) )
       {
         QList<MEDIA::TrackPtr> list = MEDIA::PlaylistFromFile(track->url);
@@ -431,7 +431,7 @@ void FileScene::mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * event )
         VirtualPlayqueue::instance()->addTracksAndPlayAt(tracks, 0);
       }
     }
-        
+
     // no need to propagate to item
     event->accept();
 }
@@ -447,7 +447,7 @@ void FileScene::slot_item_mouseMove()
     QGraphicsItem *gItem = qvariant_cast<QGraphicsItem *>( (ACTIONS()->value(BROWSER_DIR_ITEM_MOUSE_MOVE))->data() );
     Debug::debug() << "   [FileScene] slot_item_mouseMove gItem->type()" << gItem->type();
 
-    switch(gItem->type()) 
+    switch(gItem->type())
     {
       case GraphicsItem::FileSystemType : startDirectoriesDrag(gItem);break;
       case GraphicsItem::TrackType      : startTracksDrag(gItem);     break;
@@ -471,15 +471,15 @@ void FileScene::startDirectoriesDrag(QGraphicsItem* i)
     {
       foreach(QGraphicsItem* gi, selectedItems())
       {
-        DirectoryGraphicItem *item = static_cast<DirectoryGraphicItem*>(gi);      
+        DirectoryGraphicItem *item = static_cast<DirectoryGraphicItem*>(gi);
         urls << QUrl::fromLocalFile( item->path() );
       }
     }
-    
+
     QMimeData* mimedata = new QMimeData();
-    mimedata->setUrls(urls);                  
+    mimedata->setUrls(urls);
     //Debug::debug() << "   [FileScene] startDirectoriesDrag:" << urls;
-    
+
     QDrag *drag = new QDrag(parentView());
     drag->setPixmap(m_folder_pixmap);
     drag->setMimeData(mimedata);
@@ -494,16 +494,16 @@ void FileScene::startTracksDrag(QGraphicsItem* i)
     if(this->selectedItems().isEmpty() || !selectedItems().contains(i))
     {
         TrackGraphicItem *item = static_cast<TrackGraphicItem *>(i);
-        
-        MEDIA::TrackPtr track = item->media;        
-        
+
+        MEDIA::TrackPtr track = item->media;
+
         if( MEDIA::isPlaylistFile(track->url) )
         {
             QList<MEDIA::TrackPtr> list = MEDIA::PlaylistFromFile(track->url);
-           
+
             MediaMimeData* mimedata = new MediaMimeData(SOURCE_COLLECTION);
             mimedata->addTracks( list );
- 
+
             QDrag *drag = new QDrag(parentView());
             drag->setMimeData(mimedata);
             drag->exec();
@@ -512,7 +512,7 @@ void FileScene::startTracksDrag(QGraphicsItem* i)
         {
             item->startDrag(parentView());
         }
-    }  
+    }
     else /* multiple tracks drags */
     {
       MediaMimeData* mimedata = new MediaMimeData(SOURCE_COLLECTION);
@@ -520,9 +520,9 @@ void FileScene::startTracksDrag(QGraphicsItem* i)
       foreach(QGraphicsItem* gi, selectedItems())
       {
           TrackGraphicItem *item = static_cast<TrackGraphicItem *>(gi);
-  
+
           MEDIA::TrackPtr track = item->media;
-          
+
           if( MEDIA::isPlaylistFile(track->url) )
           {
               QList<MEDIA::TrackPtr> list = MEDIA::PlaylistFromFile(track->url);

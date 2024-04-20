@@ -18,11 +18,10 @@
 #ifndef _ENGINE_H_
 #define _ENGINE_H_
 
+#include <QtCore/QObject>
+#include <QtCore/QString>
+
 #include "engine_base.h"
-#include <QString>
-
-
-
 
 /*
 ********************************************************************************
@@ -30,19 +29,19 @@
 *    Class Engine                                                              *
 *                                                                              *
 ********************************************************************************
-*/ 
+*/
 class Engine
 {
-    static EngineBase         *CORE_INSTANCE;
+static EngineBase         *CORE_INSTANCE;
 
 public:
     Engine();
     static EngineBase* instance() { return CORE_INSTANCE; }
-    
+
     QString error() { return m_error;}
 
     static ENGINE::E_ENGINE_TYPE activeEngine();
-    
+
 private:
     QString m_error;
 };

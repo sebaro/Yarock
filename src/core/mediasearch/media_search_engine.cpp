@@ -22,9 +22,11 @@
 
 #include "debug.h"
 
-#include <QtAlgorithms>    // qSort/qSwap
+#include <QtAlgorithms>    // std::sort/qSwap
 #include <QtGlobal>        // qrand
 #include <algorithm>       // for std::random_shuffle
+#include <random>
+
 /*
 ********************************************************************************
 *                                                                              *
@@ -84,7 +86,7 @@ bool SearchEngine::mediaMatch(const MediaSearch& search, MEDIA::TrackPtr track)
           return false;
         }
     }
-    
+
     /* return last result */
     return result;
 }
@@ -95,20 +97,21 @@ void SearchEngine::doSearch(bool for_playqueue /*= false*/)
     Debug::debug() << "      [SearchEngine] doSearch";
 
     list_result_media_.clear();
-    
+
     // un-ordered media track
     QList<MEDIA::TrackPtr> list_media;
     if(!for_playqueue)
       list_media = LocalTrackModel::instance()->trackItemHash.values();
     else
       list_media = Playqueue::instance()->tracks();
-    
+
     QList<MEDIA::TrackPtr> list_media2;
 
     //! sort random
-    if(search_.sort_type_ == MediaSearch::Sort_Random) 
+    if(search_.sort_type_ == MediaSearch::Sort_Random)
     {
-      std::random_shuffle( list_media.begin(), list_media.end() );
+      auto rng = std::default_random_engine {};
+      std::shuffle( list_media.begin(), list_media.end(), rng );
     }
     //! sort by field
     else if(search_.sort_type_ == MediaSearch::Sort_FieldAsc || search_.sort_type_ == MediaSearch::Sort_FieldDesc )
@@ -180,7 +183,7 @@ QVariant SearchEngine::fieldData(SearchQuery::Search_Field field, MEDIA::TrackPt
     //Debug::debug() << "      [SearchEngine] fieldData ";
     /* ------------------- TRACK -------------------  */
     if(track->type() == TYPE_TRACK)
-    {    
+    {
       switch(field)
       {
         case SearchQuery::field_track_filename  : return QVariant(track->url);       break;
@@ -196,10 +199,10 @@ QVariant SearchEngine::fieldData(SearchQuery::Search_Field field, MEDIA::TrackPt
         case SearchQuery::field_track_playcount : return QVariant(track->playcount); break;
         case SearchQuery::field_track_rating    : return QVariant(track->rating);    break;
 
-        case SearchQuery::field_track_lastPlayed: return QVariant(QDateTime::fromTime_t(track->lastPlayed).date()); break;
+        case SearchQuery::field_track_lastPlayed: return QVariant(QDateTime::fromSecsSinceEpoch(track->lastPlayed).date()); break;
         default : break;
       }
-      
+
       if(track->id != -1)
       {
         MEDIA::AlbumPtr album   = MEDIA::AlbumPtr::staticCast(track->parent());
@@ -220,7 +223,7 @@ QVariant SearchEngine::fieldData(SearchQuery::Search_Field field, MEDIA::TrackPt
     else if(track->type() == TYPE_STREAM)
     {
       switch(field)
-      {      
+      {
         case SearchQuery::field_track_filename  : return QVariant(track->url);       break;
         case SearchQuery::field_track_trackname : return track->extra["station"];    break;
         default:break;
@@ -348,7 +351,7 @@ bool SearchEngine::sortMedia(const MEDIA::TrackPtr track1,const MEDIA::TrackPtr 
     return match(ope, SearchQuery::TypeOf(field), fieldData(field, track1), fieldData(field, track2));
 }
 
-// code adapted from Qt qSort in qalgorithms.h
+// code adapted from Qt std::sort in qalgorithms.h
 // no need to use boost::bind to use class member sortMedia function
 void SearchEngine::sortMedias(media_iterator start,media_iterator end)
 {

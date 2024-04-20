@@ -52,80 +52,81 @@ PlayerToolBarCompact::PlayerToolBarCompact(QWidget *parent) : PlayerToolBarBase(
     this->setObjectName(QString::fromUtf8("playerToolBar"));
     this->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
 
-    
+
     QPalette palette = QApplication::palette();
-    palette.setColor(QPalette::Background, palette.color(QPalette::Base));
+    palette.setColor(QPalette::Window, palette.color(QPalette::Base));
     this->setPalette(palette);
     this->setAutoFillBackground(true);
-    
+
     /* -- cover, title, album -- */
       ui_image           = new QLabel();
       ui_image->setAlignment(Qt::AlignCenter);
       ui_image->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
-    
-    
+
+
       QFont font1 = QApplication::font();
-      font1.setWeight(87);
-      font1.setPointSize(font1.pointSize()*1.1);
+      //font1.setWeight(87);
+      font1.setWeight(QFont::Bold);
+      font1.setPointSize(font1.pointSize());
 
       ui_label_title     = new QLabel();
-      ui_label_title->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );      
+      ui_label_title->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
       ui_label_title->setFont( font1 );
       ui_label_title->setAlignment(Qt::AlignBottom);
 
       QFont font2 = QApplication::font();
-      font2.setPointSize(font2.pointSize()*1.1);
+      font2.setPointSize(font2.pointSize());
 
       ui_label_album     = new QLabel();
-      ui_label_album->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );      
+      ui_label_album->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
       ui_label_album->setFont( font2 );
       ui_label_album->setAlignment(Qt::AlignTop);
-    
+
       ui_collection_info = new QLabel();
-      ui_collection_info->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );      
+      ui_collection_info->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
       ui_collection_info->setFont( font2 );
       ui_collection_info->setAlignment(Qt::AlignVCenter);
-      
-      
+
+
       QVBoxLayout* vl1 = new QVBoxLayout();
       vl1->setContentsMargins(0, 0, 0, 0);
       vl1->setSpacing(0);
       vl1->addWidget( ui_label_title , Qt::AlignVCenter | Qt::AlignLeft);
-      vl1->addWidget( ui_collection_info, Qt::AlignVCenter | Qt::AlignLeft);      
+      vl1->addWidget( ui_collection_info, Qt::AlignVCenter | Qt::AlignLeft);
       vl1->addWidget( ui_label_album , Qt::AlignVCenter | Qt::AlignLeft);
 
-    
+
       QHBoxLayout* hl1 = new QHBoxLayout();
       hl1->setContentsMargins(0, 0, 0, 0);
       hl1->setSpacing(8);
       hl1->addWidget( ui_image );
       hl1->addLayout( vl1 );
 
-      
+
       m_now_playing_widget = new QWidget( this );
       m_now_playing_widget->setLayout( hl1 );
       m_now_playing_widget->setMinimumHeight(60);
       m_now_playing_widget->setFocusPolicy( Qt::ClickFocus );
-      
+
       QColor color = SETTINGS()->_baseColor;
       qreal saturation = color.saturationF();
       saturation *= 0.5;
       color.setHsvF( color.hueF(), saturation, color.valueF(), color.alphaF() );
-        
+
       m_now_playing_widget->setStyleSheet(
           QString("QWidget::focus { border: none; background-color:%1;}")
           .arg(color.name())
-        ); 
-    
+        );
+
     /* -- time track position -- */
       QFont font = QApplication::font();
-      font.setPointSize(font.pointSize()*1.4);
-    
+      font.setPointSize(font.pointSize() * 1.5);
+
       m_currentTime = new QLabel(this);
       m_currentTime->setFont(font);
       m_currentTime->setAlignment( Qt::AlignLeft );
       m_currentTime->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
-    
+
       m_totalTime = new QLabel(this);
       m_totalTime->setFont(font);
       m_totalTime->setAlignment( Qt::AlignRight );
@@ -137,34 +138,34 @@ PlayerToolBarCompact::PlayerToolBarCompact(QWidget *parent) : PlayerToolBarBase(
       m_separator->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
       m_separator->setText("/");
       m_separator->hide();
-    
+
       m_pauseState = new QLabel(this);
       m_pauseState->setFont(font);
       m_pauseState->setAlignment( Qt::AlignRight );
       m_pauseState->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
       m_pauseState->setText(tr("[paused]"));
       m_pauseState->hide();
-    
+
       QPalette p = m_pauseState->palette();
       p.setColor(m_pauseState->foregroundRole(), SETTINGS()->_baseColor);
-      m_pauseState->setPalette(p);  
+      m_pauseState->setPalette(p);
 
       QHBoxLayout *trackTimeLayout = new QHBoxLayout();
       trackTimeLayout->setContentsMargins( 0, 0, 0, 0);
       trackTimeLayout->setSpacing(1);
-      trackTimeLayout->setMargin(0);
+      //trackTimeLayout->setContentsMargins(0);
       trackTimeLayout->addWidget( m_pauseState, 0, Qt::AlignVCenter | Qt::AlignLeft);
       trackTimeLayout->addWidget( new FixedSpacer(this, QSize(10,0)) );
       trackTimeLayout->addWidget( m_currentTime, 0, Qt::AlignVCenter | Qt::AlignRight);
       trackTimeLayout->addWidget( m_separator, 0, Qt::AlignVCenter | Qt::AlignRight);
       trackTimeLayout->addWidget( m_totalTime, 0, Qt::AlignVCenter | Qt::AlignRight);
 
-    
+
     /* -- ToolButton creation -- */
     ToolButtonBase* ui_prev_button = new ToolButtonBase(this);
     ui_prev_button->setDefaultAction(ACTIONS()->value(ENGINE_PLAY_PREV));
     ui_prev_button->setIconSize( QSize( 32, 32 ) );
-    
+
     ToolButtonBase* ui_next_button = new ToolButtonBase(this);
     ui_next_button->setDefaultAction(ACTIONS()->value(ENGINE_PLAY_NEXT));
     ui_next_button->setIconSize( QSize( 32, 32 ) );
@@ -180,11 +181,11 @@ PlayerToolBarCompact::PlayerToolBarCompact(QWidget *parent) : PlayerToolBarBase(
     ToolButtonBase* ui_equalizer_button = new ToolButtonBase(this);
     ui_equalizer_button->setDefaultAction(ACTIONS()->value(ENGINE_AUDIO_EQ));
     ui_equalizer_button->setIconSize( QSize( 32, 32 ) );
-    
- 
+
+
     ToolButtonBase* ui_expand_button = new ToolButtonBase(this);
     ui_expand_button->setIcon( IconManager::instance()->icon( "chevron-up") );
-    
+
     /* -- tool button layout -- */
     QGridLayout* gl = new QGridLayout();
     gl->setContentsMargins(0, 0, 0, 0);
@@ -193,7 +194,7 @@ PlayerToolBarCompact::PlayerToolBarCompact(QWidget *parent) : PlayerToolBarBase(
     gl->addWidget( ui_equalizer_button, 0, 2) ;
     gl->addWidget( new FixedSpacer(this, QSize(10,0)), 0,3 );
     gl->addWidget( m_now_playing_widget , 0,4);
-    
+
     gl->addWidget( ui_prev_button, 0, 5) ;
     gl->addWidget( ui_play_button, 0, 6) ;
     gl->addWidget( ui_stop_button, 0, 7) ;
@@ -203,31 +204,31 @@ PlayerToolBarCompact::PlayerToolBarCompact(QWidget *parent) : PlayerToolBarBase(
     gl->addWidget( new RepeatControl(this) , 0, 11, Qt::AlignRight);
     gl->addWidget( new ShuffleControl(this), 0, 12, Qt::AlignRight);
     gl->addWidget( ui_expand_button, 0, 13, Qt::AlignRight);
-    
+
     gl->addWidget( new FixedSpacer(this, QSize(5,0)) , 0, 13,Qt::AlignRight);
-    
+
     gl->setColumnStretch( 4, 1);
     gl->setColumnStretch( 9, 1);
-    
+
     /* -- widget layout -- */
       QVBoxLayout *layout = new QVBoxLayout(this);
       layout->setContentsMargins( 0, 0, 0, 0 );
       layout->setSpacing(0);
       layout->addWidget(new SeekSlider(this));
       layout->addLayout(gl);
-    
+
     /* -- signals connection -- */
     connect(this->m_player, SIGNAL(mediaTick(qint64)), this, SLOT(slot_update_time_position(qint64)));
     connect(this->m_player, SIGNAL(mediaMetaDataChanged()), this, SLOT(slot_update_track_playing_info()));
     connect(this->m_player, SIGNAL(mediaChanged()), this, SLOT(slot_update_track_playing_info()));
     connect(this->m_player, SIGNAL(engineStateChanged()), this, SLOT(slot_update_track_playing_info()));
-    
+
     connect( ui_expand_button, SIGNAL( clicked ( bool ) ), this, SIGNAL( switchToolBarType() ) );
 }
 
 void PlayerToolBarCompact::fullUpdate()
 {
-    slot_update_track_playing_info();      
+    slot_update_track_playing_info();
 }
 
 
@@ -237,7 +238,7 @@ void PlayerToolBarCompact::clear()
     ui_image->clear();
     ui_label_album->clear();
     ui_label_title->clear();
-    
+
     m_currentTime->clear();
     m_totalTime->clear();
     m_pauseState->hide();
@@ -252,11 +253,11 @@ void PlayerToolBarCompact::slot_update_track_playing_info()
     Debug::debug() << "      [PlayerToolBarCompact] slot_update_track_playing_info";
     MEDIA::TrackPtr track = m_player->playingTrack();
 
-    /* update now playing widget */     
+    /* update now playing widget */
     if(m_player->state() != ENGINE::STOPPED && track)
     {
         ui_collection_info->hide();
-        
+
         /* ----- update total time for current track ----- */
         slot_update_total_time( m_player->currentTotalTime() );
 
@@ -264,7 +265,7 @@ void PlayerToolBarCompact::slot_update_track_playing_info()
           m_pauseState->show();
         else
           m_pauseState->hide();
-    
+
 //         Debug::debug() << "## Now playing TITLE :" << track->title;
 //         Debug::debug() << "## Now playing NAME  :" << track->name;
 //         Debug::debug() << "## Now playing URL   :" << track->url;
@@ -272,7 +273,7 @@ void PlayerToolBarCompact::slot_update_track_playing_info()
 
         /* ----- update image ----- */
         QPixmap pix = CoverCache::instance()->cover(track);
-        QPixmap newpix = pix.scaled(QSize(60,60), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);      
+        QPixmap newpix = pix.scaled(QSize(60,60), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
         ui_image->setPixmap( newpix );
 
         /* ----- update tracks title/album/artist ----- */
@@ -281,7 +282,7 @@ void PlayerToolBarCompact::slot_update_track_playing_info()
             title_or_url = track->title.isEmpty() ? track->extra["station"].toString() : track->title;
 
         const int width = m_now_playing_widget->width() - 70;
-        
+
         QString clippedText = QFontMetrics(ui_label_title->font()).elidedText(title_or_url, Qt::ElideRight, width);
 
         ui_label_title->setText( clippedText );
@@ -306,11 +307,11 @@ void PlayerToolBarCompact::setCollectionInfo(QString info,VIEW::Id mode)
 {
     Debug::debug() << "      [PlayerToolBarCompact] setCollectionInfo";
 
-  
+
     m_mode = mode;
-    
+
     ui_collection_info->setText(info);
-    
+
     if(m_player->state() == ENGINE::STOPPED || !m_player->playingTrack())
     {
         switch( m_mode )
@@ -319,14 +320,14 @@ void PlayerToolBarCompact::setCollectionInfo(QString info,VIEW::Id mode)
             case (VIEW::ViewDashBoard)  :     ui_image->setPixmap( QPixmap(":/images/chart-48x48.png").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
             case (VIEW::ViewSettings)  :      ui_image->setPixmap( QPixmap(":/images/settings-48x48").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
             case (VIEW::ViewAlbum)    :       ui_image->setPixmap( QPixmap(":/images/album.png").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
-            case (VIEW::ViewArtist)   :       ui_image->setPixmap( 
-                IconManager::instance()->icon( "artist").pixmap(QSize(24, 24))                
+            case (VIEW::ViewArtist)   :       ui_image->setPixmap(
+                IconManager::instance()->icon( "artist").pixmap(QSize(24, 24))
             ); break;
             case (VIEW::ViewTrack)    :       ui_image->setPixmap( IconManager::instance()->icon("track").pixmap(QSize(24,24))); break;
             case (VIEW::ViewGenre)    :       ui_image->setPixmap( QPixmap(":/images/genre.png").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
             case (VIEW::ViewYear)     :       ui_image->setPixmap( QPixmap(":/images/date-48x48.png").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
             case (VIEW::ViewFavorite) :       ui_image->setPixmap( QPixmap(":/images/favorites-48x48.png").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
-            case (VIEW::ViewPlaylist) :       ui_image->setPixmap( 
+            case (VIEW::ViewPlaylist) :       ui_image->setPixmap(
                  IconManager::instance()->icon("playlist1").pixmap(QSize(24, 24))
             ); break;
             case (VIEW::ViewSmartPlaylist) :  ui_image->setPixmap( QPixmap(":/images/smart-playlist-48x48.png").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
@@ -335,7 +336,7 @@ void PlayerToolBarCompact::setCollectionInfo(QString info,VIEW::Id mode)
             case (VIEW::ViewTuneIn)        :  ui_image->setPixmap( QPixmap(":/images/tunein_48x48.png").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
             case (VIEW::ViewFavoriteRadio) :  ui_image->setPixmap( QPixmap(":/images/favorites-48x48.png").scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation)); break;
 
-            default:ui_image->clear();break;   
+            default:ui_image->clear();break;
         }
     }
 }
@@ -357,7 +358,7 @@ void PlayerToolBarCompact::slot_update_time_position(qint64 newPos /*ms*/)
 
 void PlayerToolBarCompact::slot_update_total_time(qint64 newTotalTime /*ms*/)
 {
-    if (newTotalTime <= 0) 
+    if (newTotalTime <= 0)
     {
         m_separator->hide();
         m_totalTime->clear();

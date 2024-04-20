@@ -24,6 +24,7 @@
 #include "debug.h"
 
 #include <QTextDocument>
+
 /*
 ********************************************************************************
 *                                                                              *
@@ -39,7 +40,7 @@ void UltimateLyricsProvider::FetchInfo(INFO::InfoRequestData request)
 {
     //Debug::debug() << name() << " fetch info ";
 
-    const QTextCodec* codec = QTextCodec::codecForName(charset_.toLatin1().constData());
+    std::optional<QStringConverter::Encoding> codec = QStringConverter::encodingForName(charset_.toUtf8().constData());
     if (!codec) {
       qWarning() << "Invalid codec" << charset_;
       emit Finished(request);
@@ -53,8 +54,8 @@ void UltimateLyricsProvider::FetchInfo(INFO::InfoRequestData request)
     ReplaceFields(request, &lyrics_url_);
 
     //Debug::debug() << "      [UltimateLyricsProvider] complete url " << lyrics_url_;
-    
-    
+
+
     QUrl url(lyrics_url_);
 
     QObject *reply = HTTP()->get( url );
@@ -69,9 +70,9 @@ void UltimateLyricsProvider::signalFinish()
 {
     QObject* reply = qobject_cast<QObject*>(sender());
     if (!reply || !m_requests.contains(reply))   return;
-    
+
     INFO::InfoRequestData request =  m_requests.take(reply);
- 
+
     emit Finished(request);
 }
 
@@ -79,16 +80,18 @@ void UltimateLyricsProvider::signalFinish()
 void UltimateLyricsProvider::LyricsFetched(QByteArray bytes)
 {
     Debug::debug() << "      [UltimateLyricsProvider] " << name_ << " LyricsFetched";
- 
+
     QObject* reply = qobject_cast<QObject*>(sender());
     if (!reply || !m_requests.contains(reply))   return;
 
     INFO::InfoRequestData request =  m_requests.take(reply);
 
-    const QTextCodec* codec = QTextCodec::codecForName(charset_.toLatin1().constData());
-    const QString original_content = codec->toUnicode(bytes);
+    std::optional<QStringConverter::Encoding> codec = QStringConverter::encodingForName(charset_.toUtf8().constData());
+    auto converter = QStringEncoder(QStringEncoder::Utf8);
+    QByteArray encodedString = converter(QString(bytes));
+    const QString original_content = QString(encodedString);
     //Debug::debug() << "      [UltimateLyricsProvider] original_content :" << original_content;
-    
+
     QString lyrics;
 
     // Check for invalid indicators
@@ -99,7 +102,7 @@ void UltimateLyricsProvider::LyricsFetched(QByteArray bytes)
       }
     }
 
-    
+
     // Apply extract rules
     foreach (const Rule& rule, extract_rules_) {
       // Modify the rule for this request's metadata
@@ -129,12 +132,12 @@ void UltimateLyricsProvider::LyricsFetched(QByteArray bytes)
     QTextDocument doc;
     doc.setHtml( lyrics );
 
-    if (!lyrics.isEmpty() && !doc.toPlainText().isEmpty()) 
+    if (!lyrics.isEmpty() && !doc.toPlainText().isEmpty())
     {
       //Debug::debug() << "      [UltimateLyricsProvider] :" << name_ << " emit InfoReady !!";
       emit InfoReady(request, lyrics);
     }
-    else 
+    else
     {
       /* WARNING CHANGE FOR YAROCK : only emit Finished in case of No Lyrics WARNING*/
       /* Request are send synchronously if no lyrics is found */
@@ -161,11 +164,14 @@ void UltimateLyricsProvider::ApplyExtractRule(const Rule& rule, QString* content
 
 QString UltimateLyricsProvider::ExtractXmlTag(const QString& source, const QString& tag)
 {
-    QRegExp re("<(\\w+).*>");
-    if (re.indexIn(tag) == -1)
+    QRegularExpression re("<(\\w+).*>");
+    QRegularExpressionMatch match = re.match(tag);
+    if (!match.hasMatch()) {
       return QString();
-
-    return Extract(source, tag, "</" + re.cap(1) + ">");
+    }
+    else {
+      return Extract(source, tag, "</" + match.captured(1) + ">");
+    }
 }
 
 
@@ -199,11 +205,14 @@ void UltimateLyricsProvider::ApplyExcludeRule(const Rule& rule, QString* content
 
 QString UltimateLyricsProvider::ExcludeXmlTag(const QString& source, const QString& tag)
 {
-    QRegExp re("<(\\w+).*>");
-    if (re.indexIn(tag) == -1)
+    QRegularExpression re("<(\\w+).*>");
+    QRegularExpressionMatch match = re.match(tag);
+    if (!match.hasMatch()) {
       return source;
-
-    return Exclude(source, tag, "</" + re.cap(1) + ">");
+    }
+    else {
+      return Exclude(source, tag, "</" + match.captured(1) + ">");
+    }
 }
 
 
@@ -249,7 +258,7 @@ void UltimateLyricsProvider::ReplaceField(const QString& tag, const QString& val
     // Apply URL character replacement
     QString value_copy(value);
     foreach (const UrlFormat& format, url_formats_) {
-      QRegExp re("[" + QRegExp::escape(format.first) + "]");
+      QRegularExpression re("[" + QRegularExpression::escape(format.first) + "]");
       value_copy.replace(re, format.second);
     }
 
@@ -262,7 +271,7 @@ void UltimateLyricsProvider::ReplaceFields(INFO::InfoRequestData request, QStrin
     INFO::InfoStringHash hash = request.data.value< INFO::InfoStringHash >();
 
     QString cleantitle = hash["title"].remove("&").simplified();
-    
+
     ReplaceField("{artist}",  hash["artist"].toLower(),          text);
     ReplaceField("{artist2}", NoSpace(hash["artist"].toLower()), text);
     ReplaceField("{album}",   hash["album"].toLower(),           text);

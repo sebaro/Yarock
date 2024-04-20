@@ -87,7 +87,7 @@ PlaylistView::PlaylistView(QWidget *parent, PlayqueueModel* model) : QListView(p
     this->setMouseTracking(true);
     this->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
-    
+
     //! vertical scrolbar setup
     this->verticalScrollBar()->setContextMenuPolicy(Qt::NoContextMenu);
 
@@ -163,7 +163,7 @@ void PlaylistView::selectItems(QList<MEDIA::TrackPtr> list)
       QModelIndex proxy_idx = m_model->proxy()->mapFromSource(
          m_model->index(m_model->rowForTrack(track), 0)
       );
-      
+
       this->selectionModel()->select(proxy_idx, QItemSelectionModel::Select);
     }
 }
@@ -185,7 +185,7 @@ const MEDIA::TrackPtr PlaylistView::firstSelectedTrack()
     QModelIndexList idx_selection = selection.indexes();
 
 
-    qSort(idx_selection.begin(), idx_selection.end(), SortByRowUptoDown);
+    std::sort(idx_selection.begin(), idx_selection.end(), SortByRowUptoDown);
 
     QModelIndex selected_model_index = idx_selection.first();
     if (m_model->rowExists(selected_model_index.row()))
@@ -213,7 +213,7 @@ void PlaylistView::removeSelected()
 
     QModelIndexList idx_selection = selection.indexes();
 
-    qSort(idx_selection.begin(), idx_selection.end(), SortByRowDowntoUp);
+    std::sort(idx_selection.begin(), idx_selection.end(), SortByRowDowntoUp);
 
     foreach (const QModelIndex& selected_model_index, idx_selection) {
        m_model->removeRows(selected_model_index.row(), 1, QModelIndex());
@@ -231,8 +231,8 @@ void PlaylistView::jumpToCurrentlyPlayingTrack()
 {
     MEDIA::TrackPtr track = Engine::instance()->playingTrack();
     int row = m_model->rowForTrack(track);
-    
-    if (row > 0) 
+
+    if (row > 0)
     {
       QModelIndex model_idx = m_model->proxy()->mapFromSource(
          m_model->index(row, 0)
@@ -240,10 +240,10 @@ void PlaylistView::jumpToCurrentlyPlayingTrack()
 
       if (!model_idx.isValid())
         return;
-      
+
       // Scroll to the item
       scrollTo(model_idx, QAbstractItemView::PositionAtCenter);
-    } 
+    }
 }
 
 
@@ -253,7 +253,7 @@ void PlaylistView::jumpToCurrentlyPlayingTrack()
 void PlaylistView::paintEvent(QPaintEvent *event)
 {
     QPainter painter(viewport());
-    
+
     if(model()->rowCount() < 1)
     {
       const QString message = tr("Add file to play or Drag and Drop File from Collection");
@@ -327,7 +327,7 @@ void PlaylistView::paintEvent(QPaintEvent *event)
 void PlaylistView::dragMoveEvent(QDragMoveEvent *event)
 {
     QListView::dragMoveEvent(event);
-    QModelIndex index(indexAt(event->pos()));
+    QModelIndex index(indexAt(event->position().toPoint()));
     m_drop_indicator_row = index.isValid() ? index.row() : 0;
 }
 
@@ -356,12 +356,12 @@ void PlaylistView::mouseMoveEvent(QMouseEvent* event)
     //Debug::debug() << "    [PlaylistView] mouseMoveEvent";
     if(ACTIONS()->value(PLAYQUEUE_OPTION_SHOW_RATING)->isChecked())
     {
-        QModelIndex index = indexAt(event->pos());
-        if(index.isValid() &&  (event->pos().x() >= this->viewport()->width() - 75))
+        QModelIndex index = indexAt(event->position().toPoint());
+        if(index.isValid() &&  (event->position().toPoint().x() >= this->viewport()->width() - 75))
         {
-            m_delegate->set_mouse_over(index, event->pos() );
+            m_delegate->set_mouse_over(index, event->position().toPoint() );
             update(index);
-    
+
             foreach (const QModelIndex& index, selectedIndexes())
               update(index);
         }
@@ -374,15 +374,15 @@ void PlaylistView::mouseMoveEvent(QMouseEvent* event)
               update(index);
         }
     }
-  
+
     if (!m_drag_over)
       QListView::mouseMoveEvent(event);
 }
 
-void PlaylistView::leaveEvent(QEvent* event) 
+void PlaylistView::leaveEvent(QEvent* event)
 {
     //Debug::debug() << "    [PlaylistView] leaveEvent";
-    
+
     if (m_delegate->is_mouse_over()) {
 
       const QModelIndex old_index = m_delegate->mouse_over_index();
@@ -393,44 +393,44 @@ void PlaylistView::leaveEvent(QEvent* event)
     QListView::leaveEvent(event);
 }
 
-void PlaylistView::mousePressEvent(QMouseEvent* event) 
+void PlaylistView::mousePressEvent(QMouseEvent* event)
 {
-    QModelIndex index = indexAt(event->pos());
+    QModelIndex index = indexAt(event->position().toPoint());
     //Debug::debug() << "    [PlaylistView] mousePressEvent";
-    
+
     if(ACTIONS()->value(PLAYQUEUE_OPTION_SHOW_RATING)->isChecked())
     {
         if (event->button() == Qt::LeftButton && index.isValid() )
         {
-            if(event->pos().x() >= this->viewport()->width() - 75) 
+            if(event->position().toPoint().x() >= this->viewport()->width() - 75)
             {
                 //Debug::debug() << "    [PlaylistView] mousePressEvent  RATE";
 
                 float hover_rating = RatingPainter::RatingForPos(m_delegate->mouse_over_pos(), QRect(viewport()->width()-75, 0, 80, 16));
 
                 QList<MEDIA::MediaPtr> tracks;
-                if (selectedIndexes().contains(index)) 
+                if (selectedIndexes().contains(index))
                 {
                 foreach (const QModelIndex& idx, selectedIndexes())
                 {
                     MEDIA::TrackPtr track = m_model->trackAt( idx.row() );
                     track->rating = hover_rating;
-                    tracks << track; 
+                    tracks << track;
                 }
                 }
-                else 
+                else
                 {
                     MEDIA::TrackPtr track = m_model->trackAt( index.row() );
                     track->rating = hover_rating;
-                    tracks << track; 
+                    tracks << track;
                 }
 
-                /* rate in database */  
+                /* rate in database */
                 QtConcurrent::run(DatabaseCmd::rateMediaItems, tracks);
-            }  
+            }
         }
     }
-  
+
     QListView::mousePressEvent(event);
 }
 /*******************************************************************************
@@ -452,7 +452,7 @@ void PlaylistView::keyPressEvent(QKeyEvent* event)
       /* keep proxy selection indexes, as map to source is done in slot_itemActivated  */
       QModelIndexList idx_selection = selection.indexes();
 
-      qSort(idx_selection.begin(), idx_selection.end(), SortByRowUptoDown);
+      std::sort(idx_selection.begin(), idx_selection.end(), SortByRowUptoDown);
       QModelIndex selected_model_index = idx_selection.first();
       if (m_model->rowExists(selected_model_index.row()))
         slot_itemActivated(selected_model_index);
@@ -535,7 +535,7 @@ void PlaylistDelegate::paint ( QPainter * painter, const QStyleOptionViewItem & 
 
     /* Turn on antialiasing*/
     //painter->setRenderHint(QPainter::Antialiasing, true);
-  
+
     /* draw background */
     #if QT_VERSION >= 0x050000
     QStyleOptionViewItem opt(option);
@@ -551,7 +551,7 @@ void PlaylistDelegate::paint ( QPainter * painter, const QStyleOptionViewItem & 
     opt.state |= QStyle::State_HasFocus;
     if( isSelected )
       opt.state |= QStyle::State_Selected;
-    
+
     UTIL::getStyle()->drawPrimitive(QStyle::PE_PanelItemViewItem, &opt, painter, opt.widget);
 
     /* set painter font & color*/
@@ -565,7 +565,7 @@ void PlaylistDelegate::paint ( QPainter * painter, const QStyleOptionViewItem & 
     int leftoffset  = 3;
     int rightoffset = 0;
 
-    if(ACTIONS()->value(PLAYQUEUE_OPTION_SHOW_COVER)->isChecked()) 
+    if(ACTIONS()->value(PLAYQUEUE_OPTION_SHOW_COVER)->isChecked())
     {
         if(track->isPlaying)
           UTIL::drawPlayingIcon(painter,height, 17, QPoint(left,top));
@@ -574,13 +574,13 @@ void PlaylistDelegate::paint ( QPainter * painter, const QStyleOptionViewItem & 
 
         leftoffset += height+4; //icon size = (height-4) + 8 for padding
     }
-    else 
+    else
     {
         if(track->isPlaying)
           UTIL::drawPlayingIcon(painter,20, 0, QPoint(leftoffset, top+(height-16)/2));
         else
           this->getIcon(track).paint(painter, leftoffset, top+(height-16)/2, 16, 16, Qt::AlignCenter, QIcon::Normal);
-        
+
         leftoffset += 16+8; //icon size = 16 + 8 for padding
     }
 
@@ -639,7 +639,7 @@ void PlaylistDelegate::paint ( QPainter * painter, const QStyleOptionViewItem & 
             track_title = track->title;
         else
             track_title = track->extra["station"].toString();
-        
+
         track_title = fm.elidedText ( track_title, Qt::ElideRight, width-leftoffset-rectDuree.width()-5 );
         painter->drawText(leftoffset,top+height/2-fm.height()-1,width-leftoffset-rectDuree.width(), fm.height()+2,Qt::AlignTop | Qt::AlignLeft, track_title);
     }
@@ -688,13 +688,13 @@ QIcon PlaylistDelegate::getIcon(const MEDIA::TrackPtr track) const
     }
     else
     {
-        if ( !ACTIONS()->value(PLAYQUEUE_OPTION_SHOW_COVER)->isChecked() ) 
-        {  
+        if ( !ACTIONS()->value(PLAYQUEUE_OPTION_SHOW_COVER)->isChecked() )
+        {
             if(track->type() == TYPE_TRACK)
               return icon_media_track;
             else
               return icon_media_stream;
-        }        
+        }
         else
         {
             return QIcon( CoverCache::instance()->cover(track) );

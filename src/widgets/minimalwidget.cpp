@@ -53,26 +53,26 @@ MinimalWidget::MinimalWidget(QWidget *parent) : QWidget(parent)
     ui_image           = new QLabel();
     ui_image->setAlignment(Qt::AlignCenter);
     ui_image->setFixedSize(200,200);
-    
+
     ui_label_title     = new QLabel();
     ui_label_album     = new QLabel();
 
     ui_label_title->setAlignment(Qt::AlignCenter);
     ui_label_album->setAlignment(Qt::AlignCenter);
-    
+
     QFont font1 = QApplication::font();
     font1.setBold( true );
     font1.setPointSize(QApplication::font().pointSize()*1.2);
-    
+
     QFont font2 = QApplication::font();
     font2.setPointSize(QApplication::font().pointSize()*1.1);
-    
+
     ui_label_title->setFont( font1 );
     ui_label_title->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
-    
+
     ui_label_album->setFont( font2 );
 
-    
+
     QHBoxLayout* hl0 = new QHBoxLayout();
     hl0->setSpacing(0);
     hl0->setContentsMargins(0, 0, 0, 0);
@@ -85,9 +85,9 @@ MinimalWidget::MinimalWidget(QWidget *parent) : QWidget(parent)
     hl1->setContentsMargins(0, 0, 0, 0);
     hl1->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Minimum));
     hl1->addWidget( ui_rating );
-    hl1->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Minimum));    
+    hl1->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Minimum));
 
-    
+
     QVBoxLayout* vl0 = new QVBoxLayout();
     vl0->setSpacing(2);
     vl0->setContentsMargins(4, 4, 4, 4);
@@ -106,32 +106,32 @@ MinimalWidget::MinimalWidget(QWidget *parent) : QWidget(parent)
     ui_toolbar->addAction( ACTIONS()->value(ENGINE_PLAY_NEXT) );
     ui_toolbar->addAction( ACTIONS()->value(APP_MODE_NORMAL) );
 
-     
+
     QHBoxLayout* hl2 = new QHBoxLayout();
     hl2->setSpacing(0);
     hl2->setContentsMargins(0, 0, 0, 0);
     hl2->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Minimum));
     hl2->addWidget( ui_toolbar );
     hl2->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Minimum));
-    
-    
+
+
     QVBoxLayout* layout = new QVBoxLayout(this);
     layout->setSpacing(0);
     layout->setContentsMargins(0, 0, 0, 0);
     layout->addLayout( vl0 );
     layout->addItem(new QSpacerItem(1, 1, QSizePolicy::Minimum, QSizePolicy::Expanding));
     layout->addLayout( hl2 );
-    
+
     this->setMinimumSize(QSize(250,250));
     this->adjustSize();
     this->setFixedSize( sizeHint() );
     this->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
 
-    /* signals connection */    
+    /* signals connection */
     connect(Engine::instance(), SIGNAL(mediaChanged()), this, SLOT(slot_update()));
     connect(Engine::instance(), SIGNAL(mediaMetaDataChanged()), this, SLOT(slot_update()));
     connect(Engine::instance(), SIGNAL(engineStateChanged()), this, SLOT(slot_update()));
-    
+
     installEventFilter(this);
 }
 
@@ -144,7 +144,7 @@ bool MinimalWidget::eventFilter( QObject */*obj*/, QEvent *event )
 
     if ( type == QEvent::MouseMove )
     {
-      move( static_cast<QMouseEvent*>( event )->globalPos() );
+      move( static_cast<QMouseEvent*>( event )->globalPosition().toPoint() );
       return true;
     }
 
@@ -157,8 +157,8 @@ bool MinimalWidget::eventFilter( QObject */*obj*/, QEvent *event )
 void MinimalWidget::slot_update()
 {
     MEDIA::TrackPtr track = Engine::instance()->playingTrack();
-  
-    /* update widget */     
+
+    /* update widget */
     if(Engine::instance()->state() != ENGINE::STOPPED && track)
     {
         /* update image */
@@ -166,20 +166,20 @@ void MinimalWidget::slot_update()
 
         if(pix.size().width() > 200)
         {
-          pix = pix.scaled( QSize(200,200), Qt::KeepAspectRatio, Qt::SmoothTransformation);	  
+          pix = pix.scaled( QSize(200,200), Qt::KeepAspectRatio, Qt::SmoothTransformation);
         }
 
         QPixmap p_out(QSize(200,200));
         p_out.fill(Qt::transparent);
-    
+
         QPainter p(&p_out);
 
         p.drawPixmap((200-pix.size().width())/2, (200-pix.size().width())/2, pix);
-        p.end();     
-    
+        p.end();
+
         ui_image->setPixmap( p_out );
-    
-    
+
+
         /* update labels title/album/artist */
         QString title_or_url = track->title.isEmpty() ? track->url : track->title;
         if(track->type() == TYPE_STREAM)
@@ -208,9 +208,9 @@ void MinimalWidget::slot_update()
     }
     else
     {
-        ui_image->clear(); 
+        ui_image->clear();
         ui_image->setPixmap( QPixmap(":/images/default-cover-200x200.png") );
-        
+
         ui_label_title->clear();
         ui_label_album->clear();
         ui_rating->hide();
@@ -237,9 +237,9 @@ void MinimalWidget::paintEvent(QPaintEvent *)
     //! draw background
     QPainter painter(this);
 
-    QColor back_color = QApplication::palette().color(QPalette::Normal, QPalette::Background);
-    
-    
+    QColor back_color = QApplication::palette().color(QPalette::Normal, QPalette::Window);
+
+
     back_color.setAlpha(70);
 
     painter.setBrush(QBrush(back_color));

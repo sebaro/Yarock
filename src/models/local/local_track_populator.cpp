@@ -73,7 +73,7 @@ void LocalTrackPopulator::run()
     /* database option                                           */
     /* ----------------------------------------------------------*/
     m_isGrouping = Database::instance()->param()._option_group_albums;
-    
+
     /*-----------------------------------------------------------*/
     /* Parse Database and populate model                         */
     /* ----------------------------------------------------------*/
@@ -110,7 +110,7 @@ void LocalTrackPopulator::run()
         artistItem->setParent(m_model->rootItem());
       }
 
-      if(  album_id != query_1.value(5) ) 
+      if(  album_id != query_1.value(5) )
       {
         album_id = query_1.value(5);
 
@@ -119,10 +119,10 @@ void LocalTrackPopulator::run()
         int disc_number = query_1.value(12).toInt();
 
         if(disc_number != 0 && m_isGrouping) {
-          QString album_hash = getAlbumHash(query_1.value(1).toString(),query_1.value(6).toString()); 
+          QString album_hash = getAlbumHash(query_1.value(1).toString(),query_1.value(6).toString());
 
           if(album_hash == prev_album_hash) {
-            is_new_album = false;  
+            is_new_album = false;
             albumItem->disc_number++; // now it's disc count
             albumItem->ids << album_id.toInt();
           }
@@ -151,7 +151,7 @@ void LocalTrackPopulator::run()
         }
       }
 
-      if(  track_id != query_1.value(12) ) 
+      if(  track_id != query_1.value(12) )
       {
         track_id = query_1.value(12);
 
@@ -215,30 +215,30 @@ void LocalTrackPopulator::run()
     /* End                                                       */
     /* ----------------------------------------------------------*/
     Debug::debug() << "  [LocalTrackPopulator] end " << QTime::currentTime().second() << ":" << QTime::currentTime().msec();
-    
+
     if(!m_exit)
       emit populatingFinished();
 }
 
 void LocalTrackPopulator::initGenreModel()
 {
-    
+
     QString s_genre     = "";
     MEDIA::MediaPtr     media;
     MEDIA::LinkPtr      link;
 
-    qSort(tracks_by_genre.begin(), tracks_by_genre.end(),MEDIA::compareTrackItemGenre);
+    std::sort(tracks_by_genre.begin(), tracks_by_genre.end(),MEDIA::compareTrackItemGenre);
 
     foreach (MEDIA::TrackPtr track, tracks_by_genre)
     {
-        
+
       if( QString::compare(s_genre, track->genre, Qt::CaseInsensitive)  == 0 &&
           media == track->parent()
       )
       {
           continue;
       }
-      
+
       /* ------- New Genre ------- */
       if(QString::compare(s_genre, track->genre, Qt::CaseInsensitive)  != 0)
       {
@@ -252,11 +252,11 @@ void LocalTrackPopulator::initGenreModel()
 
       /* ------- New Album ------- */
       media = track->parent();
-      
+
       link->insertChildren( media );
 
     } /* end foreach track */
-    
+
     tracks_by_genre.clear();
 }
 

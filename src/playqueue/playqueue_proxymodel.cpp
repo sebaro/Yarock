@@ -29,17 +29,17 @@ PlayqueueProxyModel::PlayqueueProxyModel(QObject *parent) : QSortFilterProxyMode
 
 bool PlayqueueProxyModel::filterAcceptsRow(int sourceRow,const QModelIndex &sourceParent) const
 {
-Q_UNUSED(sourceParent)  
+Q_UNUSED(sourceParent)
     // get track
     PlayqueueModel* source_model = static_cast<PlayqueueModel*>(sourceModel());
     MEDIA::TrackPtr track = source_model->trackAt(sourceRow);
-    
-    const QString pattern = filterRegExp().pattern();
+
+    const QString pattern = filterRegularExpression().pattern();
     if(pattern.isEmpty())
       return true;
-    
+
     if(track->type() == TYPE_TRACK) {
-      if(pattern.length() < 3) 
+      if(pattern.length() < 3)
       {
         return  (track->url.startsWith ( pattern, Qt::CaseInsensitive )   ||
                  track->title.startsWith ( pattern, Qt::CaseInsensitive ) ||
@@ -55,7 +55,7 @@ Q_UNUSED(sourceParent)
       }
     }
     else { // STREAM TYPE
-      if(pattern.length() < 3) 
+      if(pattern.length() < 3)
       {
         return  (track->url.startsWith ( pattern, Qt::CaseInsensitive )   ||
                  track->extra["station"].toString().startsWith ( pattern, Qt::CaseInsensitive )  ||

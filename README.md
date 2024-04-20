@@ -1,7 +1,9 @@
 
+Qt6 port
+
 About
 ----------------------------------------------------------------------------------------------
-Yarock is a modern looking music player, packed with features, that doesn’t depend on any specific desktop environment. 
+Yarock is a modern looking music player, packed with features, that doesn’t depend on any specific desktop environment.
 Yarock is designed to provide an easy and pretty music browser based on cover art. Yarock is easy to build with a minimal set of dependancies, and offers the choose of differents audio back-end.
 
   * Website : http://seb-apps.github.io/yarock/
@@ -12,7 +14,7 @@ Yarock is designed to provide an easy and pretty music browser based on cover ar
 
 Features
 ----------------------------------------------------------------------------------------------
-  * Browse artist photos, album covers 
+  * Browse artist photos, album covers
   * Music collection database (SQLite 3)
   * Easy search and filter music collection
   * Manage favorites item (album, artist)
@@ -26,7 +28,7 @@ Features
   * Contextual info & cover art download (lastfm, echonest, musicbrainz)
   * Supports scrobbling to Last.fm
   * Command line interface, Mpris interface
-  * Clean and simple user interface 
+  * Clean and simple user interface
   * No GNOME or KDE dependancies
 
 
@@ -72,7 +74,7 @@ On a **Fedora 23** fresh system, Install following packages using  `sudo dnf ins
  * taglib-devel, taglib-extras-devel
  * htmlcxx, htmlcxx-devel
  * phonon-devel [vlc-devel, libmpv-devel]
-    
+
 For Qt5 build:
 
  * qt5-qtbase-devel
@@ -83,11 +85,11 @@ For Qt5 build:
 On a **Ubuntu 15.10** fresh system, Install following packages using  `sudo apt-get install <PACKAGE>`
 
  * build-essential
- * qt4-dev-tools 
+ * qt4-dev-tools
  * libphonon-dev [libvlc-dev, mpv ]
  * libtag1-dev
- * libqt4-sql-sqlite 
- * libqjson-dev 
+ * libqt4-sql-sqlite
+ * libqjson-dev
  * libhtmlcxx-dev
 
 For Qt5 build:
@@ -119,18 +121,18 @@ Compiling from source
 
 #### Phonon
 
-By default, Yarock player use the phonon capabilities system provided by Qt. 
+By default, Yarock player use the phonon capabilities system provided by Qt.
 
-You have to install a phonon backend and check your Phonon setup. 
+You have to install a phonon backend and check your Phonon setup.
 
-See Phonon backends : VLC, gstreamer, Xine, Mplayer... 
+See Phonon backends : VLC, gstreamer, Xine, Mplayer...
 
-Under some linux distro (tested on Mageia) you need to change link to phonon plugin with 
+Under some linux distro (tested on Mageia) you need to change link to phonon plugin with
 
       ln -s /usr/lib/kde4/plugins/phonon_backend /usr/lib/qt/plugins
       (OR) ln -s /usr/lib64/kde4/plugins/phonon_backend /usr/lib64/qt4/plugins
-     
-     
+
+
 #### Alternate Audio engine
 
 You can build yarock with alternate audio engine (vlc,phonon or mpv). Vlc is the default audio engine
@@ -151,9 +153,9 @@ Tips & Tricks
 
 #### Change systray icon
 
-you can use your on icon for yarock in the systray by using the file 
+you can use your on icon for yarock in the systray by using the file
 
-    /home/your name/.config/yarock/systray_icon.png 
+    /home/your name/.config/yarock/systray_icon.png
 
 
 Legal Stuff

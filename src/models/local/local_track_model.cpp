@@ -25,7 +25,7 @@
 
 #include "debug.h"
 
-#include <QRegExp>
+#include <QRegularExpression>
 
 LocalTrackModel* LocalTrackModel::INSTANCE = 0;
 
@@ -42,10 +42,10 @@ LocalTrackModel::LocalTrackModel(QObject *parent) : QObject(parent)
     INSTANCE         = this;
 
     m_rootItem       = MEDIA::MediaPtr(new MEDIA::Media());
-    
+
     m_rootGenreItem  = MEDIA::LinkPtr(new MEDIA::Link());
     m_rootGenreItem->name = QString(tr("All"));
-    
+
     m_active_link = m_rootGenreItem;
 }
 
@@ -66,7 +66,7 @@ void LocalTrackModel::clear()
     m_rootGenreItem.reset();
     m_rootGenreItem  = MEDIA::LinkPtr(new MEDIA::Link());
     m_rootGenreItem->name = QString(tr("All"));
-    
+
     m_active_link = m_rootGenreItem;
 }
 
@@ -75,8 +75,8 @@ bool LocalTrackModel::isEmpty() const
 {
     return m_rootItem->childCount() == 0;
 }
-     
-     
+
+
 
 //! ----------------------- Get tracks method ----------------------------------
 QList<MEDIA::TrackPtr> LocalTrackModel::getItemChildrenTracks(const MEDIA::MediaPtr parent)
@@ -89,16 +89,16 @@ QList<MEDIA::TrackPtr> LocalTrackModel::getItemChildrenTracks(const MEDIA::Media
 
     MEDIA::MediaPtr media = parent;
 
-    if (media->type() == TYPE_TRACK) 
+    if (media->type() == TYPE_TRACK)
     {
       SearchEngine se;
       bool match = se.mediaMatch(
-                       qvariant_cast<MediaSearch>(m_search), 
+                       qvariant_cast<MediaSearch>(m_search),
                        MEDIA::TrackPtr::staticCast(media) );
       if(match)
         result.append( MEDIA::TrackPtr::staticCast(media) );
     }
-    else 
+    else
     {
       //! Recursive !!
       for (int i = 0; i < media->childCount(); i++) {
@@ -114,21 +114,21 @@ QList<MEDIA::TrackPtr> LocalTrackModel::getAlbumChildrenTracksGenre(const MEDIA:
     QList<MEDIA::TrackPtr> result;
 
     if(!album) return result;
-    
+
     if(album->type() != TYPE_ALBUM) return result;
 
-    for (int i = 0; i < album->childCount(); i++) 
+    for (int i = 0; i < album->childCount(); i++)
     {
       MEDIA::TrackPtr track = MEDIA::TrackPtr::staticCast( album->child(i) );
-      
-      if (!QRegExp(genre, Qt::CaseSensitive).exactMatch(track->genre)) continue;
-      
+
+      if (!QRegularExpression(genre).match(track->genre).hasMatch()) continue;
+
       SearchEngine se;
       bool match = se.mediaMatch(
-                       qvariant_cast<MediaSearch>(m_search), 
+                       qvariant_cast<MediaSearch>(m_search),
                        track );
       if(match)
-        result.append( track );      
+        result.append( track );
     }
     return result;
 }
@@ -145,7 +145,7 @@ float LocalTrackModel::getItemAutoRating(const MEDIA::MediaPtr media)
     {
         //Debug::debug() << " => getItemAutoRating : return track rating = " << MEDIA::TrackPtr::staticCast(media)->rating;
         float track_rate = MEDIA::TrackPtr::staticCast(media)->rating;
-        
+
         return track_rate > 0 ? track_rate : 0.0;
     }
     else {
@@ -173,7 +173,7 @@ bool LocalTrackModel::isMediaMatch(MEDIA::MediaPtr media)
     {
       SearchEngine se;
       bool match = se.mediaMatch(
-                       qvariant_cast<MediaSearch>(m_search), 
+                       qvariant_cast<MediaSearch>(m_search),
                        MEDIA::TrackPtr::staticCast(media) );
       if(match) return true;
     }
@@ -183,25 +183,25 @@ bool LocalTrackModel::isMediaMatch(MEDIA::MediaPtr media)
         if( isMediaMatch( media->child(i) ) )
           return true;
     }
-    
+
     return false;
 }
-      
+
 void LocalTrackModel::slot_activate_link()
 {
     Debug::debug() << "    [LocalTrackModel] slot_activate_link";
-  
+
     ButtonItem* button = qobject_cast<ButtonItem*>(sender());
-    
-    if (!button) return;  
-  
+
+    if (!button) return;
+
     MEDIA::LinkPtr link = qvariant_cast<MEDIA::LinkPtr>( button->data() );
-      
+
     m_active_link = link;
-    
-    /* register update */        
+
+    /* register update */
     m_active_link->state = SERVICE::DATA_OK;
-    
+
     emit dataChanged();
 }
 

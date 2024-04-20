@@ -61,12 +61,12 @@ GraphicsItemMenu::GraphicsItemMenu(QWidget *parent) : QMenu(parent)
     this->setContentsMargins(4,4,4,4);
 
     this->setStyleSheet( "QMenu {background-color: none;border: none;}");
-    
-   
+
+
     /* menu actions */
     m_map_actions.insert(ALBUM_PLAY,          new QAction(IconManager::instance()->icon("media-play"), tr("Play"), 0));
     m_map_actions.insert(ALBUM_QUEUE_END,     new QAction(IconManager::instance()->icon("playlist1"), tr("Add to play queue"), 0));
-    
+
     m_map_actions.insert(UPDATE_FAVORITE,     new QAction(QIcon(":/images/favorites-48x48.png"), "", 0));
     m_map_actions.insert(EDIT,                new QAction(QIcon(":/images/edit-48x48.png"), tr("Edit"), 0));
 
@@ -88,7 +88,7 @@ GraphicsItemMenu::GraphicsItemMenu(QWidget *parent) : QMenu(parent)
     m_map_actions.insert(STREAM_QUEUE_END,     new QAction(IconManager::instance()->icon("playlist1"), tr("Add to play queue"), 0));
     m_map_actions.insert(STREAM_FAVORITE,      new QAction(QIcon(":/images/favorites-48x48.png"), tr("Add to favorites"), 0));
     m_map_actions.insert(STREAM_WEBSITE,       new QAction(QIcon(":/images/media-url-48x48.png"), tr("Website"), 0));
-    
+
     m_map_actions.insert(SELECTION_PLAY,       new QAction(IconManager::instance()->icon("media-play"), tr("Play"), 0));
     m_map_actions.insert(SELECTION_QUEUE_END,  new QAction(IconManager::instance()->icon("playlist1"), tr("Add to play queue"), 0));
     m_map_actions.insert(SELECTION_TRACK_EDIT, new QAction(QIcon(":/images/edit-48x48.png"), tr("Edit"), 0));
@@ -99,11 +99,11 @@ GraphicsItemMenu::GraphicsItemMenu(QWidget *parent) : QMenu(parent)
       QObject::connect(action, SIGNAL(triggered()), this, SLOT(slot_actionsTriggered()));
 
     connect(Engine::instance(), SIGNAL(mediaChanged()), this, SLOT(slot_updateScene()));
-    
+
     /* initialization */
     m_scene = 0;
     m_view  = 0;
-}    
+}
 
 
 // public
@@ -122,29 +122,29 @@ void GraphicsItemMenu::appendItems(QList<QGraphicsItem*> items)
 void GraphicsItemMenu::updateMenu(bool isSelection)
 {
     //Debug::debug() << "GraphicsItemMenu::updateMenu";
-  
+
     /* delete action_widget */
     this->clear();
     m_scene = 0;
-    
+
     COVER_SIZE = SETTINGS()->_coverSize;
-    
+
     is_selection = isSelection;
-  
+
     if(m_items.isEmpty()) return;
 
 
     /* main widget*/
     QWidget* main_widget = new QWidget(this);
     main_widget->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
-             
+
     QLabel* ui_label = new QLabel(this);
     ui_label->setFont(QFont("Arial",14,QFont::Normal));
     ui_label->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     ui_label->setStyleSheet(
         QString("QLabel { color : %1; }").arg(QColor(SETTINGS()->_baseColor).name())
     );
-    
+
     /*-------------------------------------------------*/
     /* Selected items                                  */
     /* ------------------------------------------------*/
@@ -159,10 +159,10 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
         case GraphicsItem::StreamType     : text = QString(tr("%1 streams")).arg(m_items.count());break;
         case GraphicsItem::PlaylistType   : text = QString(tr("%1 playlist")).arg(m_items.count());break;
         default: break;
-      }    
-    
+      }
+
       ui_label->setText(text);
-      
+
 
       /* tool bar content */
       QToolBar *tool_bar = new QToolBar(main_widget);
@@ -172,7 +172,7 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
 
       if ( m_items.first()->type() == GraphicsItem::TrackType )
         tool_bar->addAction( m_map_actions.value(SELECTION_TRACK_EDIT) );
-      
+
       QHBoxLayout * hbox = new QHBoxLayout();
       hbox->addItem(new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
       hbox->addWidget(tool_bar);
@@ -193,8 +193,8 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
     {
       m_scene = new QGraphicsScene(main_widget);
       m_view = new QGraphicsView(main_widget);
-    
-      /* QGraphicsView setup */  
+
+      /* QGraphicsView setup */
       m_view->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
       m_view->setFrameShape(QFrame::NoFrame);
       m_view->setFrameShadow(QFrame::Plain);
@@ -202,9 +202,8 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
       m_view->setCacheMode(QGraphicsView::CacheNone);
       m_view->setDragMode(QGraphicsView::NoDrag);
       m_view->setRenderHint(QPainter::Antialiasing);
-      
+
       m_view->setOptimizationFlags(  QGraphicsView::DontAdjustForAntialiasing
-                                 | QGraphicsView::DontClipPainter
                                  | QGraphicsView::DontSavePainterState);
       m_view->setResizeAnchor(QGraphicsView::NoAnchor);
       m_view->setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
@@ -212,16 +211,16 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
 
       m_view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
       m_view->verticalScrollBar()->setContextMenuPolicy(Qt::NoContextMenu);
-            
+
       // set palette for graphic view background
       QPalette palette = QApplication::palette();
       QColor c = palette.color(QPalette::Window);
       palette.setColor(QPalette::Window, c);
       palette.setColor(QPalette::Base, c);
-      m_view->setPalette(palette);    
-      
+      m_view->setPalette(palette);
 
-      m_view->setScene(m_scene);    
+
+      m_view->setScene(m_scene);
       m_scene->installEventFilter(this);
 
       /* get media data */
@@ -238,11 +237,11 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
       m_scene->addItem(aiv2);
 
       QList<MEDIA::TrackPtr> tracks = LocalTrackModel::instance()->getItemChildrenTracks(item->media);
-    
-      foreach(MEDIA::TrackPtr track, tracks) 
+
+      foreach(MEDIA::TrackPtr track, tracks)
       {
           TrackGraphicItem_v5 *track_item = new TrackGraphicItem_v5();
-          
+
           track_item->setFlag(QGraphicsItem::ItemIsSelectable, false);
 
           track_item->media = track;
@@ -250,12 +249,12 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
           yPos += 20;
 
           m_scene->addItem(track_item);
-      }    
-    
+      }
+
       m_scene->setSceneRect ( m_scene->itemsBoundingRect().adjusted(0, 0, 10, 10) );
 
       ui_label->setText(album->name);
-    
+
       /* tool bar content */
       QToolBar *tool_bar = new QToolBar(main_widget);
       tool_bar->setIconSize( QSize( 16, 16 ) );
@@ -266,14 +265,14 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
       tool_bar->addSeparator();
       tool_bar->addAction( m_map_actions.value(UPDATE_FAVORITE) );
       tool_bar->addSeparator();
-      
+
       tool_bar->addAction( ACTIONS()->value(BROWSER_JUMP_TO_MEDIA) );
       ACTIONS()->value(BROWSER_JUMP_TO_MEDIA)->setText(tr("jump to tracks"));
       QVariant v;
       v.setValue(static_cast<MEDIA::MediaPtr>(tracks.first()));
       ACTIONS()->value(BROWSER_JUMP_TO_MEDIA)->setData(v);
-      
-      
+
+
       QHBoxLayout * hbox = new QHBoxLayout();
       hbox->addItem(new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
       hbox->addWidget(tool_bar);
@@ -300,8 +299,8 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
     {
       m_scene = new QGraphicsScene(main_widget);
       m_view = new QGraphicsView(main_widget);
-    
-      /* QGraphicsView setup */  
+
+      /* QGraphicsView setup */
       m_view->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
       m_view->setFrameShape(QFrame::NoFrame);
       m_view->setFrameShadow(QFrame::Plain);
@@ -309,9 +308,8 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
       m_view->setCacheMode(QGraphicsView::CacheNone);
       m_view->setDragMode(QGraphicsView::NoDrag);
       m_view->setRenderHint(QPainter::Antialiasing);
-      
+
       m_view->setOptimizationFlags(  QGraphicsView::DontAdjustForAntialiasing
-                                 | QGraphicsView::DontClipPainter
                                  | QGraphicsView::DontSavePainterState);
       m_view->setResizeAnchor(QGraphicsView::NoAnchor);
       m_view->setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
@@ -319,15 +317,15 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
 
       m_view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
       m_view->verticalScrollBar()->setContextMenuPolicy(Qt::NoContextMenu);
-            
+
       // set palette for graphic view background
       QPalette palette = QApplication::palette();
       QColor c = palette.color(QPalette::Window);
       palette.setColor(QPalette::Window, c);
       palette.setColor(QPalette::Base, c);
-      m_view->setPalette(palette);   
+      m_view->setPalette(palette);
 
-      m_view->setScene(m_scene);    
+      m_view->setScene(m_scene);
       m_scene->installEventFilter(this);
 
       /* get media data */
@@ -344,8 +342,8 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
       m_scene->addItem(aiv2);
 
       QList<MEDIA::TrackPtr> tracks = LocalTrackModel::instance()->getAlbumChildrenTracksGenre(item->media,item->_genre);
-    
-      foreach(MEDIA::TrackPtr track, tracks) 
+
+      foreach(MEDIA::TrackPtr track, tracks)
       {
           TrackGraphicItem_v5 *track_item = new TrackGraphicItem_v5();
           track_item->setFlag(QGraphicsItem::ItemIsSelectable, false);
@@ -355,12 +353,12 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
           yPos += 20;
 
           m_scene->addItem(track_item);
-      }    
+      }
       m_scene->setSceneRect ( m_scene->itemsBoundingRect().adjusted(0, 0, 10, 10) );
-    
+
       ui_label->setText(album->name);
-      
-      
+
+
       /* tool bar content */
       QToolBar *tool_bar = new QToolBar(main_widget);
       tool_bar->setIconSize( QSize( 16, 16 ) );
@@ -376,7 +374,7 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
       v.setValue(static_cast<MEDIA::MediaPtr>(tracks.first()));
       ACTIONS()->value(BROWSER_JUMP_TO_MEDIA)->setData(v);
 
-      
+
       QHBoxLayout * hbox = new QHBoxLayout();
       hbox->addItem(new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
       hbox->addWidget(tool_bar);
@@ -399,8 +397,8 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
       //Debug::debug() << "GraphicsItemMenu::ArtistType";
       m_scene = new QGraphicsScene(main_widget);
       m_view = new QGraphicsView(main_widget);
-    
-      /* QGraphicsView setup */  
+
+      /* QGraphicsView setup */
       m_view->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
       m_view->setFrameShape(QFrame::NoFrame);
       m_view->setFrameShadow(QFrame::Plain);
@@ -408,9 +406,8 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
       m_view->setCacheMode(QGraphicsView::CacheNone);
       m_view->setDragMode(QGraphicsView::NoDrag);
       m_view->setRenderHint(QPainter::Antialiasing);
-      
+
       m_view->setOptimizationFlags(  QGraphicsView::DontAdjustForAntialiasing
-                                 | QGraphicsView::DontClipPainter
                                  | QGraphicsView::DontSavePainterState);
       m_view->setResizeAnchor(QGraphicsView::NoAnchor);
       m_view->setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
@@ -418,30 +415,30 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
 
       m_view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
       m_view->verticalScrollBar()->setContextMenuPolicy(Qt::NoContextMenu);
-            
+
       // set palette for graphic view background
       QPalette palette = QApplication::palette();
       QColor c = palette.color(QPalette::Window);
       palette.setColor(QPalette::Window, c);
       palette.setColor(QPalette::Base, c);
-      m_view->setPalette(palette);   
+      m_view->setPalette(palette);
 
       m_view->setScene(m_scene);
       m_scene->installEventFilter(this);
-    
+
       /* get media data */
       ArtistGraphicItem *item = static_cast<ArtistGraphicItem*>(m_items.first());
       MEDIA::ArtistPtr artist = MEDIA::ArtistPtr::staticCast(item->media);
-    
+
       int Column   = 0;
       int albumRow = 0;
       int max_item_per_colum = (m_browserview->width()-40)/(COVER_SIZE*1.25);
-    
+
       m_view->setMaximumHeight(m_browserview->height() - 40 );
-    
+
       //Debug::debug() << "max_item_per_colum " << max_item_per_colum;
       for (int i=0 ; i < artist->childCount(); i++ )
-      {    
+      {
         MEDIA::AlbumPtr album = MEDIA::AlbumPtr::staticCast(artist->child(i));
 
         AlbumGraphicItem_v2 *album_item = new AlbumGraphicItem_v2();
@@ -458,9 +455,9 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
           albumRow++;
         }
       }
-      
+
       m_scene->setSceneRect ( m_scene->itemsBoundingRect().adjusted(0, 0, 10, 10) );
-      
+
       ui_label->setText(artist->name);
 
       /* tool bar content */
@@ -509,13 +506,13 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
       TrackGraphicItem *item = static_cast<TrackGraphicItem*>(m_items.first());
       MEDIA::TrackPtr track = MEDIA::TrackPtr::staticCast(item->media);
 
-      
+
       /* hack for stream in playlist item */
       if( MEDIA::isLocal(item->media->url) )
         ui_label->setText( track->title );
       else
         ui_label->setText( track->extra["station"].toString() );
-      
+
       /* tool bar content */
       QToolBar *tool_bar = new QToolBar(main_widget);
       tool_bar->setIconSize( QSize( 16, 16 ) );
@@ -547,10 +544,10 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
       /* get media data */
       PlaylistGraphicItem *item = static_cast<PlaylistGraphicItem*>(m_items.first());
       MEDIA::PlaylistPtr playlist = MEDIA::PlaylistPtr::staticCast(item->media);
-      
-      
+
+
       ui_label->setText(playlist->name);
-      
+
       QToolBar *tool_bar = new QToolBar(main_widget);
       tool_bar->setIconSize( QSize( 16, 16 ) );
       tool_bar->addAction( m_map_actions.value(PLAYLIST_PLAY) );
@@ -587,15 +584,15 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
       StreamGraphicItem *item = static_cast<StreamGraphicItem*>(m_items.first());
       MEDIA::TrackPtr stream = MEDIA::TrackPtr::staticCast(item->media);
 
-      
+
       ui_label->setText( stream->extra["station"].toString() );
-      
+
       QLabel* ui_pix = new QLabel(this);
-      ui_pix->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);    
+      ui_pix->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
       ui_pix->setPixmap( CoverCache::instance()->cover(stream).scaled(QSize(48,48), Qt::KeepAspectRatio, Qt::SmoothTransformation) );
-      
-      
-      
+
+
+
       QToolBar *tool_bar = new QToolBar(main_widget);
       tool_bar->setIconSize( QSize( 16, 16 ) );
       tool_bar->addAction( m_map_actions.value(STREAM_PLAY) );
@@ -606,7 +603,7 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
         tool_bar->addAction( m_map_actions.value(STREAM_EDIT) );
 
       tool_bar->addAction( m_map_actions.value(STREAM_WEBSITE) );
-      
+
       if(item->media->isFavorite)
         m_map_actions.value(STREAM_FAVORITE)->setText( tr("Remove from favorites") );
       else
@@ -618,13 +615,13 @@ void GraphicsItemMenu::updateMenu(bool isSelection)
       hbox->addWidget(tool_bar);
       hbox->addItem(new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
 
-      
+
       QVBoxLayout * vbox = new QVBoxLayout();
       vbox->setSpacing(0);
       vbox->setContentsMargins(4,4,4,4);
       vbox->addWidget(ui_label);
       vbox->addLayout(hbox);
-      
+
       /* main layout */
       QHBoxLayout * main_layout = new QHBoxLayout();
       main_layout->addWidget( ui_pix );

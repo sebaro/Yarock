@@ -42,24 +42,24 @@ MenuWidget::MenuWidget(QWidget * parent) : QWidget(parent)
 {
     INSTANCE = this;
     m_parent = parent;
-    
+
     QPalette palette = QApplication::palette();
-    palette.setColor(QPalette::Background, palette.color(QPalette::Base));
+    palette.setColor(QPalette::Window, palette.color(QPalette::Base));
     this->setPalette(palette);
 
     this->setAutoFillBackground(true);
-    
+
     this->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::MinimumExpanding );
     this->setMinimumWidth(50);
     this->setMaximumWidth(50);
-    
-    
+
+
     /* global instance */
     new MenuModel();
-    
+
     /*  navigator bar  */
     m_menuBar = new MenuBar(this);
-    
+
     /* layout */
     QVBoxLayout* layout = new QVBoxLayout(this);
     layout->setSpacing(0);

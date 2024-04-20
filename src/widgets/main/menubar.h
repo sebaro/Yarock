@@ -46,9 +46,9 @@ Q_OBJECT
   private:
     MenuModel               *m_model;
     MenuBarButton           *m_settings_button;
-    
+
   private slots:
-    void slot_on_database_menu_changed();    
+    void slot_on_database_menu_changed();
 };
 
 
@@ -70,7 +70,11 @@ Q_OBJECT
     QWidget* menuWidget() {return m_menu_widget;}
 
   protected:
-    void enterEvent(QEvent *e);
+    #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+      void enterEvent(QEvent *e);
+    #else
+      void enterEvent(QEnterEvent *e);
+    #endif
     void leaveEvent(QEvent *e);
     void mousePressEvent ( QMouseEvent * e );
     bool eventFilter(QObject *obj, QEvent *ev);

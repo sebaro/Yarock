@@ -45,7 +45,7 @@ WebLinkItem::WebLinkItem()
     setAcceptsHoverEvents(true);
 #else
     setAcceptHoverEvents(true);
-#endif    
+#endif
     setAcceptDrops(false);
     setFlag(QGraphicsItem::ItemIsSelectable, false);
     setFlag(QGraphicsItem::ItemIsMovable, false);
@@ -76,13 +76,13 @@ QRectF WebLinkItem::boundingRect() const
 {
     if(m_text.isEmpty())
       return QRectF(0,0,0,0);
-    
+
     QFont font;
     font.setPointSize( 8 );
 
     QFontMetrics fm( font );
-    
-    return QRectF(0, 0, fm.width(m_text) + 12, fm.height() + 4);
+
+    return QRectF(0, 0, fm.horizontalAdvance(m_text) + 12, fm.height() + 4);
 }
 
 // Inherited from QGraphicsLayoutItem
@@ -141,7 +141,7 @@ TextGraphicItem::TextGraphicItem()
     setAcceptsHoverEvents(true);
 #else
     setAcceptHoverEvents(true);
-#endif    
+#endif
     setAcceptDrops(false);
     setFlag(QGraphicsItem::ItemIsSelectable, false);
     setFlag(QGraphicsItem::ItemIsMovable, false);
@@ -150,15 +150,15 @@ TextGraphicItem::TextGraphicItem()
     setGraphicsItem(this);
     setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
 
-    
+
     setFont( QApplication::font() );
-    
+
     setDefaultTextColor(QApplication::palette().color(QPalette::Normal, QPalette::WindowText));
     setTextInteractionFlags(Qt::TextBrowserInteraction);
     setOpenExternalLinks(false);
 
     setFlag(QGraphicsItem::ItemIsFocusable, false);
-    
+
     this->document()->setDefaultStyleSheet("p { margin: 4; }");
 }
 
@@ -179,7 +179,7 @@ void TextGraphicItem::updateItem()
 
 QRectF TextGraphicItem::boundingRect() const
 {
-  
+
   return QRectF(0, 0, document()->size().width(), document()->size().height());
 }
 
@@ -219,7 +219,7 @@ AlbumThumbGraphicItem::AlbumThumbGraphicItem()
     setAcceptsHoverEvents(true);
 #else
     setAcceptHoverEvents(true);
-#endif    
+#endif
     setAcceptDrops(false);
     setFlag(QGraphicsItem::ItemIsSelectable, false);
     setFlag(QGraphicsItem::ItemIsMovable, false);
@@ -309,7 +309,7 @@ ArtistThumbGraphicItem::ArtistThumbGraphicItem()
     setAcceptsHoverEvents(true);
 #else
     setAcceptHoverEvents(true);
-#endif    
+#endif
     setAcceptDrops(false);
     setFlag(QGraphicsItem::ItemIsSelectable, false);
     setFlag(QGraphicsItem::ItemIsMovable, false);
@@ -358,9 +358,9 @@ void ArtistThumbGraphicItem::paint(QPainter * painter, const QStyleOptionGraphic
 {
 Q_UNUSED(option)
     QSize size = m_pix.size();
-    
+
     int offset_h = qMax(12, (240 - size.height())/2);
-    
+
     QPixmap pixTemp(QSize(240,240));
     {
       pixTemp.fill(Qt::transparent);
@@ -376,10 +376,10 @@ Q_UNUSED(option)
    /* paint artist name */
    painter->setFont(QFont("Arial", 8, QFont::Normal));
    painter->setPen(QApplication::palette().color(QPalette::Normal, QPalette::WindowText));
-   
+
    QFontMetrics m1( painter->font());
    const QString elided_artist = m1.elidedText ( m_name, Qt::ElideRight, 220);
-   
+
    painter->drawText(QRect(10, 0, 220, 10), Qt::AlignTop | Qt::AlignCenter, elided_artist);
 }
 

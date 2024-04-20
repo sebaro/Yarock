@@ -49,25 +49,25 @@ MenuBar::MenuBar(QWidget * parent) : QWidget(parent)
     this->setFocusPolicy(Qt::NoFocus);
 
     QPalette palette = QApplication::palette();
-    palette.setColor(QPalette::Background, palette.color(QPalette::Base));
+    palette.setColor(QPalette::Window, palette.color(QPalette::Base));
     this->setPalette(palette);
-    
-    
+
+
     /* ----- set fixed width to 50 (sizepolicy is Fixed) ----- */
     this->setMinimumWidth(50);
     this->setMaximumWidth(50);
-    
+
     m_model = MenuModel::instance();
     connect(m_model, SIGNAL(databaseMenuChanged()), this, SLOT(slot_on_database_menu_changed()));
-    
+
     /* ----- create ui ----- */
     QVBoxLayout* layout = new QVBoxLayout(this);
     layout->setSpacing(20);
     layout->setContentsMargins(0, 0, 0, 0);
 
-    
+
     layout->addItem(new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::MinimumExpanding));
-    
+
     for (int i=0; i < m_model->rowCount(QModelIndex()); i++)
     {
       const QModelIndex &idx = m_model->index(i, 0, QModelIndex());
@@ -80,7 +80,7 @@ MenuBar::MenuBar(QWidget * parent) : QWidget(parent)
 
       MenuBarButton *button = new MenuBarButton(icon,text,this);
       this->layout()->addWidget(button);
-     
+
 
       if( m_model->settingsModelIdx() == idx )
            m_settings_button = button;
@@ -103,14 +103,14 @@ MenuBar::MenuBar(QWidget * parent) : QWidget(parent)
  #else
       menu->setWindowFlags(Qt::Popup /*| Qt::FramelessWindowHint*/);
  #endif
-    
+
       for (int j=0; j < m_model->rowCount(idx); j++)
       {
           const QModelIndex childIdx = m_model->index(j, 0, idx);
 
           QAction *a = m_model->modelIndexAction( childIdx );
 
-          if( a ) 
+          if( a )
           {
              a->setIconVisibleInMenu(true);
              menu->addAction(a);
@@ -128,14 +128,14 @@ MenuBar::MenuBar(QWidget * parent) : QWidget(parent)
                       QApplication::palette().color(QPalette::Normal, QPalette::Highlight).name()
                 )
             );
-      
+
              for (int k=0; k < m_model->rowCount(childIdx); k++)
              {
                 const QModelIndex childIdx2 = m_model->index(k, 0, childIdx);
 
                 QAction *a = m_model->modelIndexAction( childIdx2 );
 
-                if( a ) 
+                if( a )
                 {
                    a->setIconVisibleInMenu(true);
                    menu2->addAction(a);
@@ -147,17 +147,17 @@ MenuBar::MenuBar(QWidget * parent) : QWidget(parent)
       button->setMenuWidget( menu );
     }
 
-    layout->addItem(new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::MinimumExpanding));    
+    layout->addItem(new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::MinimumExpanding));
 }
 
 
 void MenuBar::slot_on_database_menu_changed()
 {
     QMenu *menu = qobject_cast<QMenu*>(m_settings_button->menuWidget());
-    
+
     menu->hide();
 
-    foreach (QWidget * child, menu->findChildren<QWidget*>()) 
+    foreach (QWidget * child, menu->findChildren<QWidget*>())
         delete child;
 
     for (int j=0; j < m_model->rowCount( m_model->settingsModelIdx() ); j++)
@@ -166,7 +166,7 @@ void MenuBar::slot_on_database_menu_changed()
 
           QAction *a = m_model->modelIndexAction( childIdx );
 
-          if( a ) 
+          if( a )
           {
             menu->addAction( a );
           }
@@ -184,11 +184,11 @@ void MenuBar::slot_on_database_menu_changed()
                       QApplication::palette().color(QPalette::Normal, QPalette::Highlight).name()
                 )
             );
-             
+
              for (int k=0; k < m_model->rowCount(childIdx); k++)
              {
                  const QModelIndex childIdx2 = m_model->index(k, 0, childIdx);
-                 
+
                  QAction *a = m_model->modelIndexAction( childIdx2 );
 
                  if( a )
@@ -211,7 +211,7 @@ void MenuBar::slot_on_database_menu_changed()
 MenuBarButton::MenuBarButton( const QIcon &icon, const QString &text, QWidget *parent )
     : QPushButton( icon, "", parent )
 {
-    this->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );  
+    this->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
     this->setFocusPolicy(Qt::TabFocus);
     this->setIconSize( QSize(32,32) );
     this->setFlat ( true );
@@ -219,16 +219,16 @@ MenuBarButton::MenuBarButton( const QIcon &icon, const QString &text, QWidget *p
 
     this->setStyleSheet(
       QString ("QPushButton { border: none;min-width: 40px;min-height: 32px;}" \
-               "QPushButton:checked { background-color: %1 ;border: none;min-width: 40px;min-height: 32px;}" ) 
+               "QPushButton:checked { background-color: %1 ;border: none;min-width: 40px;min-height: 32px;}" )
           .arg( QApplication::palette().color( QPalette::Window ).name() )
     );
     m_name = text;
     m_ismenumouseover = false;
-    m_ismouseover = false;   
+    m_ismouseover = false;
 }
 
 
-void MenuBarButton::setMenuWidget(QWidget* w) 
+void MenuBarButton::setMenuWidget(QWidget* w)
 {
     m_menu_widget=w;
     m_menu_widget->installEventFilter(this);
@@ -238,35 +238,35 @@ void MenuBarButton::setMenuWidget(QWidget* w)
 bool MenuBarButton::eventFilter(QObject* obj, QEvent* event)
 {
   QWidget *m = qobject_cast<QWidget*>(obj);
-    
+
   if (m && (m == m_menu_widget) )
   {
-      switch (event->type()) 
+      switch (event->type())
       {
         case QEvent::Leave:
-        {            
-          m_ismenumouseover = false;  
+        {
+          m_ismenumouseover = false;
           foreach (QWidget * child, m_menu_widget->findChildren<QWidget*>()) {
             if( QMenu* submenu = qobject_cast<QMenu*>(child) )
             {
                 if(submenu->isVisible()) {
                     m_ismenumouseover = true;
                 }
-                    
+
             }
           }
-          
+
           if( !m_ismenumouseover )
           {
               QRect widgetRect = this->geometry();
               widgetRect.moveTopLeft(this->parentWidget()->mapToGlobal(widgetRect.topLeft()));
               widgetRect.adjust(0,0, 10, 0);
-              
+
               if (!widgetRect.contains(QCursor::pos())) {
                   if(!m_ismouseover)
                       activate(false);
               }
-          }     
+          }
           return true;
         }
         break;
@@ -275,7 +275,7 @@ bool MenuBarButton::eventFilter(QObject* obj, QEvent* event)
         m_ismenumouseover = true;
         return true;
         break;
-  
+
       default:break;
      }
   }
@@ -289,15 +289,15 @@ QSize MenuBarButton::sizeHint() const
     QSize size = QPushButton::sizeHint();
 
     int width = 8;
-    if( !icon().isNull() ) 
+    if( !icon().isNull() )
     {
         width += iconSize().width();
     }
 
-    if( !text().isEmpty() )  
+    if( !text().isEmpty() )
     {
         QFontMetrics fm( this->font() );
-        width += fm.width( text() );
+        width += fm.horizontalAdvance( text() );
         width += 10; // paddding
     }
     size.setWidth( width );
@@ -305,7 +305,7 @@ QSize MenuBarButton::sizeHint() const
 }
 
 
-void MenuBarButton::enterEvent(QEvent *e)
+void MenuBarButton::enterEvent(QEnterEvent *e)
 {
     m_ismouseover = true;
     activate(true);
@@ -319,30 +319,30 @@ void MenuBarButton::leaveEvent(QEvent *e)
     QRect widgetRect = this->geometry();
     widgetRect.moveTopLeft(this->parentWidget()->mapToGlobal(widgetRect.topLeft()));
     widgetRect.adjust(0,0, 10, 0);
-    
+
     if (!widgetRect.contains(QCursor::pos())) {
       if(!m_ismenumouseover)
         activate(false);
     }
-    
-    QPushButton::leaveEvent(e);    
+
+    QPushButton::leaveEvent(e);
 }
 
 void MenuBarButton::activate(bool active)
 {
     setChecked(active);
 
-    if(!active) 
+    if(!active)
     {
       m_menu_widget->hide();
     }
     else if(!m_menu_widget->isVisible())
     {
       QPoint location = this->mapToGlobal( QPoint(this->width(),0) );
-     
+
       m_menu_widget->move(location);
       m_menu_widget->show();
-      m_menu_widget->raise();     
+      m_menu_widget->raise();
     }
 }
 

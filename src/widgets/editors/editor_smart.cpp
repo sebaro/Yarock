@@ -48,15 +48,15 @@ EditorSmart::EditorSmart(QWidget *parent) : QScrollArea(parent)
     starting = true;
     m_databaseId = -1;
 
-    /* ----- init playlist data ----- */    
+    /* ----- init playlist data ----- */
     m_playlist = MEDIA::PlaylistPtr( new MEDIA::Playlist() );
     m_playlist->id       =  -1;
     m_playlist->url      =  QString();
     m_playlist->name     =  QString("untitled playlist");
     m_playlist->p_type   =  T_SMART;
-    
 
-    /* ----- create ui ----- */    
+
+    /* ----- create ui ----- */
     ui_buttonBox = new QDialogButtonBox();
     ui_buttonBox->setOrientation(Qt::Horizontal);
     ui_buttonBox->setStandardButtons(QDialogButtonBox::Apply|QDialogButtonBox::Close);
@@ -64,7 +64,7 @@ EditorSmart::EditorSmart(QWidget *parent) : QScrollArea(parent)
     QLabel* ui_header = new QLabel(tr("Edit smart playlist"));
     ui_header->setFont(QFont("Arial",12,QFont::Bold));
     ui_header->setStyleSheet(QString("QLabel { color : %1; }").arg(SETTINGS()->_baseColor.name()));
-    
+
     QVBoxLayout *l2 = new QVBoxLayout();
     l2->setSpacing(2);
     l2->setContentsMargins(0, 6, 0, 6);
@@ -78,7 +78,7 @@ EditorSmart::EditorSmart(QWidget *parent) : QScrollArea(parent)
     l3->setSpacing(2);
     l3->addWidget( new QLabel(tr("Name")) );
     l3->addWidget( ui_edit_name );
-    
+
     QVBoxLayout *layout = new QVBoxLayout();
     layout->setSpacing(2);
     layout->setContentsMargins(4, 2, 4, 4);
@@ -88,15 +88,15 @@ EditorSmart::EditorSmart(QWidget *parent) : QScrollArea(parent)
     layout->addWidget( ui_buttonBox );
 
     QWidget *w  = new QWidget();
-    w->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Minimum);    
+    w->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Minimum);
     w->setLayout(layout);
-    
+
 //     QScrollArea *area = new QScrollArea();
     this->setWidget(w);
     this->setWidgetResizable(true);
     this->setFrameShape(QFrame::NoFrame);
     this->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Expanding);
-    
+
     starting = false;
 
     QObject::connect(ui_buttonBox, SIGNAL(clicked ( QAbstractButton *)), this, SLOT(on_buttonBox_clicked(QAbstractButton *)));
@@ -110,7 +110,7 @@ QLayout* EditorSmart::create_ui()
     l1->setFont(QFont("Arial",10,QFont::Bold));
 
     ui_search_mode = new QComboBox();
-    ui_search_mode->setSizeAdjustPolicy(QComboBox::AdjustToMinimumContentsLength);
+    ui_search_mode->setSizeAdjustPolicy(QComboBox::AdjustToContents);
     ui_search_mode->addItem(tr("Match search term (AND)"));
     ui_search_mode->setItemData(0, MediaSearch::Type_And);
     ui_search_mode->addItem(tr("Match search term (OR)"));
@@ -119,7 +119,7 @@ QLayout* EditorSmart::create_ui()
     ui_search_mode->setItemData(2, MediaSearch::Type_All);
     QObject::connect(ui_search_mode,SIGNAL(currentIndexChanged(int)), SLOT(slot_search_mode_change()));
 
-    
+
     QFrame *f1 = new QFrame();
     f1->setFrameShape(QFrame::HLine);
     f1->setFrameShadow(QFrame::Sunken);
@@ -237,16 +237,16 @@ QLayout* EditorSmart::create_ui()
 void EditorSmart::setPlaylist(MEDIA::PlaylistPtr playlist)
 {
     Debug::debug() << "EditorSmart::setPlaylist";
-  
+
     m_playlist = playlist;
     m_databaseId = playlist->id;
-    
+
     /* update ui  */
     ui_edit_name->setText( playlist->name );
-    
-    
+
+
     MediaSearch media_search = qvariant_cast<MediaSearch>( playlist->rules );
-      
+
     /* search mode */
     ui_search_mode->setCurrentIndex(ui_search_mode->findData(media_search.search_type_));
 
@@ -352,20 +352,20 @@ bool EditorSmart::is_search_valid()
 void EditorSmart::on_buttonBox_clicked(QAbstractButton * button)
 {
     Debug::debug() << "EditorSmart on_buttonBox_clicked";
-  
+
     QDialogButtonBox::ButtonRole role = ui_buttonBox->buttonRole(button);
 
     switch (role)
     {
       case QDialogButtonBox::ApplyRole :
-         if( is_search_valid() ) 
+         if( is_search_valid() )
          {
            m_playlist->name = ui_edit_name->text();
            if(m_playlist->name.isEmpty())
              m_playlist->name = "no name";
 
            m_playlist->rules = QVariant::fromValue<MediaSearch>( get_search() );
-   
+
            SmartPlaylist::updatePlaylist(m_playlist);
            ThreadManager::instance()->populateLocalPlaylistModel();
            emit close();

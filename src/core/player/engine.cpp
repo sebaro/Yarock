@@ -34,18 +34,18 @@ EngineBase* Engine::CORE_INSTANCE = 0;
 *    Class Engine                                                              *
 *                                                                              *
 ********************************************************************************
-*/ 
+*/
 Engine::Engine()
 {
     /* retrieve engine name */
     QString engine_name;
-  
+
     switch ( SETTINGS()->_engine )
     {
       case ENGINE::VLC          :    engine_name = "enginevlc";     break;
       case ENGINE::MPV          :    engine_name = "enginempv";     break;
-      case ENGINE::PHONON       :    engine_name = "enginephonon";  break;    
-      case ENGINE::QTMULTIMEDIA :    engine_name = "engineqtmultimedia";  break;    
+      case ENGINE::PHONON       :    engine_name = "enginephonon";  break;
+      case ENGINE::QTMULTIMEDIA :    engine_name = "engineqtmultimedia";  break;
       default:break;
     };
 
@@ -53,7 +53,7 @@ Engine::Engine()
     QString lookup_dir;
     //Debug::debug() << "[Engine] ###  QCoreApplication::applicationDirPath() " << QCoreApplication::applicationDirPath() ;
     //Debug::debug() << "[Engine] ###  QString(CMAKE_INSTALL_BIN) " << QString(CMAKE_INSTALL_BIN);
-    
+
     if ( QCoreApplication::applicationDirPath() !=  QString(CMAKE_INSTALL_BIN) )
     {
       lookup_dir = QCoreApplication::applicationDirPath() + "/lib";
@@ -69,11 +69,11 @@ Engine::Engine()
 
     Debug::debug() << "[Engine] Audio engine library directory:" << lib_dir.canonicalPath();
 
-    foreach (QString fileName, lib_dir.entryList(QDir::Files)) 
+    foreach (QString fileName, lib_dir.entryList(QDir::Files))
     {
         if( !fileName.contains( engine_name ) )
           continue;
-        
+
         if( !QLibrary::isLibrary(fileName) )
           continue;
 
@@ -83,15 +83,17 @@ Engine::Engine()
         try
         {
           QPluginLoader loader( lib_dir.absoluteFilePath(fileName) );
-    
+
           obj = loader.instance();
+
+          Debug::debug() << loader.errorString();
         }
         catch(...)
         {
           Debug::debug() << "########### Loading library failed ";
         }
-        
-        if (obj) 
+
+        if (obj)
         {
           CORE_INSTANCE = qobject_cast<EngineBase *>(obj);
         }
@@ -102,11 +104,11 @@ Engine::Engine()
         }
     }
 
-    
+
     if( CORE_INSTANCE != 0 )
     {
         Debug::debug() << "[Engine] engine status OK:" << CORE_INSTANCE->isEngineOK();
-        if( !CORE_INSTANCE->isEngineOK() ) 
+        if( !CORE_INSTANCE->isEngineOK() )
         {
             m_error = QString ("[Engine] engine " + CORE_INSTANCE->name() + " loading failure" );
             Debug::error() << m_error;
@@ -133,7 +135,7 @@ ENGINE::E_ENGINE_TYPE Engine::activeEngine()
         Debug::debug() << "CORE_INSTANCE->type()" << CORE_INSTANCE->type();
         return CORE_INSTANCE->type();
     }
-    
+
     return ENGINE::NO_ENGINE;
 }
 

@@ -27,6 +27,7 @@
 #include <QDialogButtonBox>
 #include <QVBoxLayout>
 #include <QApplication>
+#include <QStandardPaths>
 
 /*
 ********************************************************************************
@@ -46,28 +47,28 @@ DatabaseAddDialog::DatabaseAddDialog(QWidget *parent) : DialogBase(parent, tr("A
     ui_line_edit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
     ui_line_edit->clearFocus();
     ui_line_edit->setInactiveText(tr("Choose collection name"));
-    
+
     ui_add_folder = new AddFolderWidget();
     ui_add_folder->hideRemoveButton();
     ui_add_folder->setMinimumWidth(350);
-    
+
     ui_info_label = new QLabel();
     ui_info_label->setStyleSheet("QLabel { color : red; }");
-    
+
     /* --- layout --- */
     QGridLayout *grid_layout = new QGridLayout();
     grid_layout->setContentsMargins(0, 0, 0, 0);
 
     grid_layout->addWidget(new QLabel( tr("Name") ), 0, 0, 1, 1);
     grid_layout->addWidget(ui_line_edit, 0, 1, 1, 1);
-    
+
     grid_layout->addWidget(new QLabel( tr("Path") ), 1, 0, 1, 1);
     grid_layout->addWidget(ui_add_folder, 1, 1, 1, 1);
 
     grid_layout->addWidget(ui_info_label, 2, 1, 1, 2);
-    
+
     setContentLayout( grid_layout );
-    
+
     /* -- initialization -- */
 #if QT_VERSION < 0x050000
     QDir userMusicDir = QDir( QDesktopServices::storageLocation( QDesktopServices::MusicLocation ) );
@@ -84,7 +85,7 @@ DatabaseAddDialog::DatabaseAddDialog(QWidget *parent) : DialogBase(parent, tr("A
 
     /* -- connection -- */
     QObject::connect(buttonBox(), SIGNAL(accepted()), this, SLOT(on_buttonBox_accepted()));
-    QObject::connect(buttonBox(), SIGNAL(rejected()), this, SLOT(on_buttonBox_rejected()));    
+    QObject::connect(buttonBox(), SIGNAL(rejected()), this, SLOT(on_buttonBox_rejected()));
 }
 
 /* ---------------------------------------------------------------------------*/
@@ -123,7 +124,7 @@ void DatabaseAddDialog::on_buttonBox_rejected()
 void DatabaseAddDialog::on_buttonBox_accepted()
 {
     Debug::debug() << "DatabaseAddDialog::on_buttonBox_accepted";
-    
+
     /* -- checks name -- */
     QString new_db_name = ui_line_edit->text();
     if( new_db_name.isEmpty() )
@@ -131,8 +132,8 @@ void DatabaseAddDialog::on_buttonBox_accepted()
         ui_info_label->setText( tr (" Collection name cannot be empty") );
         return;
     }
-    
-    foreach (const QString& name, Database::instance()->param_names()) 
+
+    foreach (const QString& name, Database::instance()->param_names())
     {
         if( name == new_db_name )
         {
@@ -140,8 +141,8 @@ void DatabaseAddDialog::on_buttonBox_accepted()
           return;
         }
     }
-    
-    /* -- set database parameters -- */       
+
+    /* -- set database parameters -- */
     Database::Param param;
     param._name                     = new_db_name;
     param._option_auto_rebuild      = false;
@@ -150,7 +151,7 @@ void DatabaseAddDialog::on_buttonBox_accepted()
     param._option_group_albums      = false;
     param._option_artist_image      = true;
     param._option_wr_rating_to_file = false;
-    
+
     if( QFileInfo( ui_add_folder->path() ).isDir() )
       param._paths.append( ui_add_folder->path() );
 

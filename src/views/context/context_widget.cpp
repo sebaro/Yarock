@@ -26,7 +26,7 @@
 #include <QGraphicsView>
 #include <QCryptographicHash>
 #include <QGraphicsProxyWidget>
-
+#include <QFile>
 
 /*
 ********************************************************************************
@@ -44,13 +44,13 @@ ArtistInfoWidget::ArtistInfoWidget(QWidget* parentView) :
 
     m_subtitle = new TextGraphicItem();
     m_subtitle->setParentItem(this);
-    
+
     QFont font = QApplication::font();
     font.setPointSize( font.pointSize() + 1 );
     font.setBold( true );
     m_subtitle->setFont(font);
-    
-    
+
+
     m_bio     =  new TextGraphicItem();
     m_bio->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
     m_bio->setTextWidth(m_parent->width() - 240);
@@ -66,7 +66,7 @@ ArtistInfoWidget::ArtistInfoWidget(QWidget* parentView) :
     QGraphicsProxyWidget *image_proxy_widget = new QGraphicsProxyWidget( this );
     image_proxy_widget->setWidget( m_image );
     image_proxy_widget->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
-    
+
     QGraphicsLinearLayout* m_layout_v = new QGraphicsLinearLayout( Qt::Vertical );
     m_layout_v->setContentsMargins(20,0,0,0);
     m_layout_v->addItem( m_subtitle );
@@ -78,12 +78,12 @@ ArtistInfoWidget::ArtistInfoWidget(QWidget* parentView) :
     m_layout_h->addItem( m_layout_v );
     m_layout_h->addItem( image_proxy_widget );
     m_layout_h->setAlignment( image_proxy_widget, Qt::AlignTop );
-    
+
     QGraphicsLinearLayout* m_layout   = new QGraphicsLinearLayout( Qt::Vertical , this);
     m_layout->setContentsMargins(0,0,0,0);
     m_layout->addItem( m_title );
     m_layout->addItem( m_layout_h );
-    
+
     this->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
 }
 
@@ -105,7 +105,7 @@ QSizeF ArtistInfoWidget::sizeHint(Qt::SizeHint which, const QSizeF &constraint) 
 Q_UNUSED(which);
 Q_UNUSED(constraint);
     return QSizeF( m_parent->width(),
-                   qMax(/*title*/ 30 + m_image->sizeHint().height() + 30 /*margin*/, 
+                   qMax(/*title*/ 30 + m_image->sizeHint().height() + 30 /*margin*/,
                         /*title*/ 30 + m_bio->height() + m_button->height()+ 30 /*margin*/)
                  );
 }
@@ -129,22 +129,22 @@ void ArtistInfoWidget::clear()
 {
     m_image->clear();
     m_bio->clear();
-    
+
     update();
 }
 
 
 void ArtistInfoWidget::setData(INFO::InfoRequestData request, QVariant data)
 {
-    if(request.type == INFO::InfoArtistBiography ) 
+    if(request.type == INFO::InfoArtistBiography )
     {
       QVariantMap biohash =  qvariant_cast<QVariantMap>(data);
 
       if(!biohash.isEmpty())
-      {     
+      {
         QString html = QString("<html>");
         QString text = biohash["text"].toString();
-  
+
         int split  = text.indexOf('\n', 1024);
         if(split == -1)
           split = text.indexOf(". ", 1024);
@@ -154,36 +154,36 @@ void ArtistInfoWidget::setData(INFO::InfoRequestData request, QVariant data)
 
         if (split != -1)
           html += "...";
-      
+
         html += "</p></html>";
-    
+
         m_bio->show();
         m_bio->setHtml(html);
         m_bio->updateItem();
-            
+
         m_subtitle->setPlainText(tr("Biography"));
 
-        m_button->setLink(biohash["url"].toString()); 
-        m_button->setText(biohash["site"].toString()); 
+        m_button->setLink(biohash["url"].toString());
+        m_button->setText(biohash["site"].toString());
         m_button->setPos(m_subtitle->x() + m_subtitle->width() + 30,m_subtitle->y() + 4);
 
         this->update();
       }
    }
-   else if(request.type == INFO::InfoArtistImages ) 
+   else if(request.type == INFO::InfoArtistImages )
    {
       const QByteArray bytes = data.toByteArray();
 
       QPixmap cover;
       cover.loadFromData( bytes );
 
-      if(!cover.isNull()) 
+      if(!cover.isNull())
       {
         QPixmap pix = UTIL::squareCenterPixmap( cover ).scaled(QSize(200,200), Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
         m_image->setPixmap( UTIL::createRoundedImage( pix ) );
         m_image->adjustSize();
-        this->update();     
+        this->update();
       }
    }
 }
@@ -213,7 +213,7 @@ void ArtistSimilarWidget::clear()
 
     m_title->hide();
     m_title->m_name.clear();
-    
+
     update();
 }
 
@@ -246,7 +246,7 @@ Q_UNUSED(event)
 
 void ArtistSimilarWidget::setData(INFO::InfoRequestData request, QVariant data)
 {
-    if(request.type == INFO::InfoArtistSimilars ) 
+    if(request.type == INFO::InfoArtistSimilars )
     {
         foreach(QVariant artist, data.toList())
         {
@@ -258,13 +258,13 @@ void ArtistSimilarWidget::setData(INFO::InfoRequestData request, QVariant data)
             item->setParentItem(this);
             m_artists[artistMap["name"].toString()] = item;
         }
-        
+
         if(!data.toList().isEmpty()) {
           m_title->m_name = tr("Similar artists");
           m_title->show();
         }
     }
-    else if(request.type == INFO::InfoArtistImages ) 
+    else if(request.type == INFO::InfoArtistImages )
     {
         INFO::InfoStringHash hash = request.data.value< INFO::InfoStringHash >();
 
@@ -279,14 +279,14 @@ void ArtistSimilarWidget::setData(INFO::InfoRequestData request, QVariant data)
             cover.loadFromData( bytes );
 
             if(!cover.isNull()) {
-              m_artists[hash["artist"]]->m_pix = 
+              m_artists[hash["artist"]]->m_pix =
               QPixmap( UTIL::squareCenterPixmap( cover ) ).scaled(QSize(200,200), Qt::KeepAspectRatio, Qt::SmoothTransformation);
-              m_artists[hash["artist"]]->update(); 
+              m_artists[hash["artist"]]->update();
             }
         }
-    } 
-    
-    this->update();       
+    }
+
+    this->update();
 }
 
 
@@ -294,7 +294,7 @@ QSizeF ArtistSimilarWidget::doLayout(bool redraw) const
 {
      if(m_title->m_name.isEmpty())
        return QSize(0,0);
-     
+
      m_title->show();
 
      qreal left, top, right, bottom;
@@ -316,7 +316,7 @@ QSizeF ArtistSimilarWidget::doLayout(bool redraw) const
 
      QList<ArtistThumbGraphicItem*> artists = m_artists.values();
 
-     for (int i = 0; i < artists.count(); ++i) 
+     for (int i = 0; i < artists.count(); ++i)
      {
          ArtistThumbGraphicItem* artist = artists.at(i);
          pref = artist->effectiveSizeHint(Qt::PreferredSize);
@@ -368,17 +368,17 @@ void DiscoInfoWidget::setData(INFO::InfoRequestData request , QVariant data)
 {
     //Debug::debug() << "######" << Q_FUNC_INFO;
     INFO::InfoStringHash input = request.data.value< INFO::InfoStringHash >();
-         
-    if(request.type == INFO::InfoArtistReleases ) 
+
+    if(request.type == INFO::InfoArtistReleases )
     {
         QVariantMap vmap =  qvariant_cast<QVariantMap>(data);
 
         foreach(QVariant release, vmap.value("releases").toList())
         {
             QVariantMap releasevmap =  qvariant_cast<QVariantMap>(release);
-            
+
             const QString akey =  INFO::albumKey(input.value("artist"), releasevmap["album"].toString());
-            
+
             if( m_albums.keys().contains(akey) )
               continue;
 
@@ -389,16 +389,16 @@ void DiscoInfoWidget::setData(INFO::InfoRequestData request , QVariant data)
             album_item->setParentItem(this);
             m_albums[ akey ] = album_item;
         }
-        
+
         if(!vmap.value("releases").toList().isEmpty()) {
           m_title->m_name = tr("Discography");
           m_title->show();
-        }        
+        }
     }
-    else if(request.type == INFO::InfoAlbumCoverArt ) 
+    else if(request.type == INFO::InfoAlbumCoverArt )
     {
         const QString akey =  INFO::albumKey(input.value("artist"), input.value("album"));
-            
+
         if(m_albums.contains( akey ))
         {
             //Debug::debug() << "#####" << Q_FUNC_INFO << "INFO::InfoAlbumCoverArt : album found " << input.value("album");
@@ -415,10 +415,10 @@ void DiscoInfoWidget::setData(INFO::InfoRequestData request , QVariant data)
             }
         }
     }
-  
+
     this->update();
 }
-    
+
 void DiscoInfoWidget::clear()
 {
     //Debug::debug() << "DiscoInfoWidget::clear ";
@@ -426,8 +426,8 @@ void DiscoInfoWidget::clear()
     m_albums.clear();
     m_title->hide();
     m_title->m_name.clear();
-    
-    update();    
+
+    update();
 }
 
 void DiscoInfoWidget::update()
@@ -460,7 +460,7 @@ QSizeF DiscoInfoWidget::doLayout(bool redraw) const
 {
      if(m_title->m_name.isEmpty())
        return QSize(0,0);
-     
+
      m_title->show();
      //Debug::debug() << "DiscoInfoWidget::doLayout ";
      qreal left, top, right, bottom;
@@ -472,7 +472,7 @@ QSizeF DiscoInfoWidget::doLayout(bool redraw) const
      right  += 40;
      top    += 40;
      bottom += 20;
-     
+
      const qreal maxw = m_parent->width() - left - right;
 
      qreal x = 0;
@@ -480,7 +480,7 @@ QSizeF DiscoInfoWidget::doLayout(bool redraw) const
      qreal maxRowHeight = 0;
      QSizeF pref;
 
-     
+
      QList<AlbumThumbGraphicItem*> albums = m_albums.values();
 
      for (int i = 0; i < albums.count(); ++i) {
@@ -530,7 +530,7 @@ LyricsInfoWidget::LyricsInfoWidget(QWidget* parentView) :
 
     m_title         = new CategorieLayoutItem(qobject_cast<QGraphicsView*> (m_parent)->viewport());
     m_title->m_name = tr("Song lyrics");
-    
+
     m_lyrics        = new TextGraphicItem();
     m_lyrics->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Expanding );
 
@@ -559,7 +559,7 @@ LyricsInfoWidget::LyricsInfoWidget(QWidget* parentView) :
     m_layout_h0->setAlignment(m_button_link, Qt::AlignVCenter);
     m_layout_h0->setAlignment(m_button_add, Qt::AlignVCenter);
     m_layout_h0->setAlignment(m_button_remove, Qt::AlignVCenter);
-    
+
     QGraphicsLinearLayout* m_layout_v2 = new QGraphicsLinearLayout( Qt::Vertical);
     m_layout_v2->setContentsMargins(20,0,0,0);
     m_layout_v2->addItem( m_layout_h0 );
@@ -614,13 +614,13 @@ Q_UNUSED(event)
 void LyricsInfoWidget::setData(INFO::InfoRequestData request , QVariant data)
 {
     //Debug::debug() << Q_FUNC_INFO;
- 
-    if(request.type == INFO::InfoTrackLyrics ) 
+
+    if(request.type == INFO::InfoTrackLyrics )
     {
         if(m_lyrics_found) return; // lyrics already found
 
         QVariantHash vhash =  qvariant_cast<QVariantHash>(data);
-        
+
         //! local provider
         if(vhash["provider"].toString() == "local")
         {

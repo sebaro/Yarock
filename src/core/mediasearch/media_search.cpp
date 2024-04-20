@@ -17,6 +17,7 @@
 
 #include "core/mediasearch/media_search.h"
 //#include "debug.h"
+
 /*
 ********************************************************************************
 *                                                                              *
@@ -46,7 +47,7 @@ MediaSearch::MediaSearch(
 
 /* ---------------------------------------------------------------------------*/
 /* MediaSearch::init                                                          */
-/* ---------------------------------------------------------------------------*/ 
+/* ---------------------------------------------------------------------------*/
 void MediaSearch::init()
 {
     search_type_ = Type_And;
@@ -58,7 +59,7 @@ void MediaSearch::init()
 
 /* ---------------------------------------------------------------------------*/
 /* MediaSearch::is_valid                                                      */
-/* ---------------------------------------------------------------------------*/ 
+/* ---------------------------------------------------------------------------*/
 bool MediaSearch::is_valid() const
 {
     if (search_type_ == Type_All)
@@ -68,7 +69,7 @@ bool MediaSearch::is_valid() const
 
 /* ---------------------------------------------------------------------------*/
 /* MediaSearch::database stream                                               */
-/* ---------------------------------------------------------------------------*/ 
+/* ---------------------------------------------------------------------------*/
 MediaSearch MediaSearch::fromDatabase(QVariant variant)
 {
     const QByteArray byte_array = variant.toByteArray();
@@ -84,10 +85,14 @@ MediaSearch MediaSearch::fromDatabase(QVariant variant)
 QVariant MediaSearch::toDatabase(MediaSearch search)
 {
     QByteArray byte_array;
-    QDataStream s(&byte_array, QIODevice::ReadWrite);
+    #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+        QDataStream s(&byte_array, QIODevice::ReadWrite);
+    #else
+        QDataStream s(&byte_array, QIODeviceBase::ReadWrite);
+    #endif
 
     s << search;
-    
+
     return QVariant(byte_array);
 }
 

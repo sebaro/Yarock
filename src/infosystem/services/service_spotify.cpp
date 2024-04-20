@@ -29,7 +29,7 @@
 #endif
 
 
-namespace Spotify 
+namespace Spotify
 {
   static const QString CLIENT_ID     = "53235d5dc7ef42c1add557dae2cfd3fd";
 
@@ -47,7 +47,7 @@ namespace Spotify
              + '&';
     }
     return data;
-  }  
+  }
 }
 
 const QString USER_AGENT = QString( QString(APP_NAME) + "/" + QString(VERSION) );
@@ -65,14 +65,14 @@ ServiceSpotify::ServiceSpotify() : InfoService()
     Debug::debug() << "    [ServiceSpotify] start";
 
     setName("spotify");
-    
+
     m_supportedInfoTypes << INFO::InfoArtistImages;
 
     getAuthentification();
 }
 
 
-ServiceSpotify::~ServiceSpotify() 
+ServiceSpotify::~ServiceSpotify()
 {
 }
 
@@ -87,9 +87,9 @@ void ServiceSpotify::getInfo( INFO::InfoRequestData requestData )
 void ServiceSpotify::fetchInfo( INFO::InfoRequestData requestData )
 {
     Debug::debug() << "    [ServiceSpotify::] fetchInfo";
-    
+
     switch ( requestData.type )
-    {      
+    {
       case INFO::InfoArtistImages    : fetch_artist_image(requestData);break;
       case INFO::InfoArtistSimilars  : fetch_artist_similar(requestData);break;
       case INFO::InfoArtistTerms     : break;
@@ -99,7 +99,7 @@ void ServiceSpotify::fetchInfo( INFO::InfoRequestData requestData )
           emit info( requestData, QVariant() );
           return;
       }
-    }  
+    }
 }
 
 /*******************************************************************************
@@ -108,31 +108,31 @@ void ServiceSpotify::fetchInfo( INFO::InfoRequestData requestData )
 void ServiceSpotify::getAuthentification()
 {
     Debug::debug() << "    [ServiceSpotify] getAuthentification";
-  
+
     QUrl url("https://accounts.spotify.com/api/token");
 
     QNetworkRequest request(url);
     request.setRawHeader("Content-Type", "application/x-www-form-urlencoded");
 
     QByteArray ba;
-    ba.append(Spotify::CLIENT_ID + ":" + Spotify::CLIENT_SECRET );
+    ba.append((Spotify::CLIENT_ID + ":" + Spotify::CLIENT_SECRET).toUtf8());
     request.setRawHeader("Authorization", "Basic " + ba.toBase64());
     Debug::debug() << "    [ServiceSpotify]  ba.toBase64()" <<  ba.toBase64();
 
 
     QMap<QString, QString> params;
     params["grant_type"]    = "client_credentials";
-    
+
     QObject *reply = HTTP()->post(request,Spotify::paramToBytearray(params));
- 
-    connect(reply, SIGNAL(finished(QNetworkReply*)), SLOT(slot_getAuthentification(QNetworkReply*)));  
+
+    connect(reply, SIGNAL(finished(QNetworkReply*)), SLOT(slot_getAuthentification(QNetworkReply*)));
 }
 
 
 void ServiceSpotify::slot_getAuthentification(QNetworkReply* reply)
 {
     Debug::debug() << "    [ServiceSpotify] slot_getAuthentification";
-    
+
     int status = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
     if (status != 200)
     {
@@ -148,14 +148,14 @@ void ServiceSpotify::slot_getAuthentification(QNetworkReply* reply)
     bool ok;
     QVariantMap reply_map = parser.parse(reply->readAll(), &ok).toMap();
 #endif
-    
+
     if (!ok || !reply_map.contains("access_token")) {
       m_auth_info["access_token"] = "";
       Debug::debug() << "    [ServiceSpotify] no authentication token";
       return;
-    }    
-    
-    
+    }
+
+
     m_auth_info["access_token"] = reply_map.value("access_token").toString();
     m_auth_info["token_type"] = reply_map.value("token_type").toString();
 }
@@ -167,9 +167,9 @@ void ServiceSpotify::slot_getAuthentification(QNetworkReply* reply)
 void ServiceSpotify::fetch_artist_image(INFO::InfoRequestData request)
 {
     Debug::debug() << "    [ServiceSpotify] fetch_artist_image";
-    
+
     INFO::InfoStringHash hash = request.data.value< INFO::InfoStringHash >();
-    
+
     if ( hash.contains( "artist" ) )
     {
         QUrl url("https://api.spotify.com/v1/search");
@@ -179,13 +179,13 @@ void ServiceSpotify::fetch_artist_image(INFO::InfoRequestData request)
         UTIL::urlAddQueryItem( url, QLatin1String("limit"), QString::number( 1 ) );
 
         QNetworkRequest req(url);
-        req.setRawHeader("Authorization", 
+        req.setRawHeader("Authorization",
             m_auth_info.value("token_type").toUtf8() + " " + m_auth_info.value("access_token").toUtf8()
         );
-        
+
         QObject *reply = HTTP()->get( req/*url*/);
-        m_requests[reply] = request;    
-    
+        m_requests[reply] = request;
+
         connect(reply, SIGNAL(data(QByteArray)), this, SLOT(slot_get_artist_images(QByteArray)));
         connect(reply, SIGNAL(error(QNetworkReply*)), this, SLOT(slot_request_error()));
     }
@@ -195,12 +195,12 @@ void ServiceSpotify::fetch_artist_image(INFO::InfoRequestData request)
 void ServiceSpotify::slot_get_artist_images(QByteArray bytes)
 {
     Debug::debug() << "    [ServiceSpotify] slot_get_artist_images";
-  
+
     /* get sender reply */
     QObject* reply = qobject_cast<QObject*>(sender());
     if (!reply || !m_requests.contains(reply))
       return;
-    
+
     INFO::InfoRequestData request =  m_requests.take(reply);
 
     /* Parse response */
@@ -216,12 +216,12 @@ void ServiceSpotify::slot_get_artist_images(QByteArray bytes)
     if (!ok || !reply_map.contains("artists")) {
       Debug::debug() << "    [ServiceSpotify] bad response " << reply_map;
       return;
-    }   
+    }
 
     QVariantMap resp_map =  qvariant_cast<QVariantMap>(reply_map.value("artists"));
 
     if ( resp_map.contains("items") )
-    {      
+    {
         foreach (const QVariant& artist, resp_map.value("items").toList())
         {
            if( artist.toMap().contains("images") )
@@ -229,7 +229,7 @@ void ServiceSpotify::slot_get_artist_images(QByteArray bytes)
               foreach (const QVariant& image, artist.toMap().value("images").toList())
               {
                  QUrl url = QUrl( image.toMap().value("url").toString() );
-            
+
                  QObject* reply = HTTP()->get( url );
                  m_requests[reply] = request;
                  connect(reply, SIGNAL(data(QByteArray)), this, SLOT(slot_image_received(QByteArray)));
@@ -245,14 +245,14 @@ void ServiceSpotify::slot_get_artist_images(QByteArray bytes)
 void ServiceSpotify::slot_image_received(QByteArray bytes)
 {
     Debug::debug() << "    [ServiceSpotify] slot_image_received";
-  
+
     QObject* reply = qobject_cast<QObject*>(sender());
     if (!reply || !m_requests.contains(reply))
       return;
 
     INFO::InfoRequestData request =  m_requests.take(reply);
 
-    emit info( request, QVariant(bytes) );  
+    emit info( request, QVariant(bytes) );
 }
 
 
@@ -262,12 +262,12 @@ void ServiceSpotify::slot_image_received(QByteArray bytes)
 void ServiceSpotify::fetch_artist_similar(INFO::InfoRequestData request)
 {
 Q_UNUSED(request)
-  
+
 }
 
 void ServiceSpotify::slot_get_artist_similar(QByteArray bytes)
 {
-Q_UNUSED(bytes)    
+Q_UNUSED(bytes)
 }
 
 

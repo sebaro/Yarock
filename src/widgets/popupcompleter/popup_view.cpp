@@ -31,7 +31,7 @@
 PopupView::PopupView(QWidget *parent) : QListView(parent)
 {
     QPalette palette = QApplication::palette();
-    palette.setColor(QPalette::Background, palette.color(QPalette::Base));
+    palette.setColor(QPalette::Window, palette.color(QPalette::Base));
     this->setPalette(palette);
 
     this->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);

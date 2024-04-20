@@ -23,7 +23,7 @@
 
 //! Qt
 #include <QApplication>
-#include <QTextCodec>
+//#include <QTextCodec>
 #include <QTranslator>
 #include <QNetworkReply>
 #include <QDir>
@@ -74,12 +74,12 @@ void LoadTranslation(const QString& prefix,
 Starter::Starter(int argc,char **argv, QObject* parent) : QObject(parent)
 {
     m_mainwindow = 0;
-    
+
     /* get command line */
     CommandlineOptions options(argc, argv);
 
     /* Help option -- or Invalid option */
-    if( options.Parse() == false ) 
+    if( options.Parse() == false )
     {
       exit(0);
     }
@@ -90,7 +90,7 @@ Starter::Starter(int argc,char **argv, QObject* parent) : QObject(parent)
 
 
     /* trying to create server */
-    if( m_server->listen (UDS_PATH) ) 
+    if( m_server->listen (UDS_PATH) )
     {
         startPlayer( options );
     }
@@ -110,7 +110,7 @@ Starter::Starter(int argc,char **argv, QObject* parent) : QObject(parent)
            }
 
            qWarning("[Starter] removed invalid socket file");
-           
+
            if( m_server->listen (UDS_PATH) )
            {
                startPlayer( options );
@@ -148,11 +148,11 @@ Starter::~Starter()
 void Starter::startPlayer(const CommandlineOptions& options)
 {
     qDebug("[Starter] start a new instance of player");
-    
+
     //! init debug activation
     qDebug() << "== main -> options.debug()" << options.debug();
     Debug::setDebugEnabled( options.debug() );
-    if(!options.debug()) 
+    if(!options.debug())
     {
         qDebug() << "**********************************************************************************************";
         qDebug() << "** YAROCK WAS STARTED IN NORMAL MODE. IF YOU WANT TO SEE DEBUGGING INFORMATION, PLEASE USE: **";
@@ -166,17 +166,21 @@ void Starter::startPlayer(const CommandlineOptions& options)
     qDebug() << "[Starter] locale : " << QLocale::system().name();
 
     //! setup translations
-    LoadTranslation("qt", QLibraryInfo::location(QLibraryInfo::TranslationsPath), language);
+    #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+        LoadTranslation("qt", QLibraryInfo::location(QLibraryInfo::TranslationsPath), language);
+    #else
+        LoadTranslation("qt", QLibraryInfo::path(QLibraryInfo::TranslationsPath), language);
+    #endif
     LoadTranslation("yarock", QLatin1String( CMAKE_INSTALL_TRANS ), language);
     LoadTranslation("yarock", QCoreApplication::applicationDirPath() + "../translation", language); // in case of local running
     qDebug() << "[Starter] translation loaded ";
 
-#if QT_VERSION < 0x050000    
-    QTextCodec::setCodecForTr(QTextCodec::codecForName("utf8"));
-    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
-#endif
+//#if QT_VERSION < 0x050000
+//    QTextCodec::setCodecForTr(QTextCodec::codecForName("utf8"));
+//    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
+//#endif
     //! QRand initialisation
-    qsrand( QTime( 0, 0, 0 ).secsTo( QTime::currentTime() ) );
+    //qsrand( QTime( 0, 0, 0 ).secsTo( QTime::currentTime() ) );
 
     //! Directories settings
     QDir().mkpath(UTIL::CONFIGDIR);
@@ -185,7 +189,7 @@ void Starter::startPlayer(const CommandlineOptions& options)
     QDir().mkpath(UTIL::CONFIGDIR + "/artists");
     QDir().mkpath(UTIL::CONFIGDIR + "/lyrics");
 
-   
+
     m_mainwindow = new MainWindow();
     connect(m_server, SIGNAL(newConnection()), SLOT(readCommand()));
     m_mainwindow->show();
@@ -196,7 +200,7 @@ void Starter::writeCommand(const CommandlineOptions& options)
 {
     qDebug("[Starter] writeCommand");
     QByteArray ba = options.Serialize();
-    
+
     m_socket->write(ba);
     m_socket->flush();
 }
@@ -205,10 +209,10 @@ void Starter::writeCommand(const CommandlineOptions& options)
 void Starter::readCommand()
 {
     qDebug("[Starter] readCommand:");
-    
+
     QLocalSocket *socket = m_server->nextPendingConnection();
     socket->waitForReadyRead();
-    
+
     QByteArray inputArray = socket->readAll();
 
     if(inputArray.isEmpty())
@@ -216,13 +220,13 @@ void Starter::readCommand()
         socket->deleteLater();
         return;
     }
-    
+
     CommandlineOptions options;
     options.Load( inputArray );
 
     m_mainwindow->set_command_line( options );
     m_mainwindow->commandlineOptionsHandle();
-    
+
     socket->deleteLater();
 }
 

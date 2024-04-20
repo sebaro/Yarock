@@ -46,8 +46,8 @@ HistoManager::HistoManager()
     //! set player trigger
     m_player = Engine::instance();
     m_timer = new QTimer();
-    
-    connect(m_player, SIGNAL(mediaChanged()), this, SLOT(addEntry()));      
+
+    connect(m_player, SIGNAL(mediaChanged()), this, SLOT(addEntry()));
     connect(m_timer, SIGNAL(timeout()), this, SLOT(addToDatabase()));
 
     //! check database histo table
@@ -88,7 +88,7 @@ void HistoManager::addToDatabase()
     }
 
     MEDIA::TrackPtr media   =  m_player->playingTrack();
-    int       now_date      =  QDateTime::currentDateTime().toTime_t();
+    int       now_date      =  QDateTime::currentDateTime().toSecsSinceEpoch();
 
     QString   engine_url    =  media->url;
     if(engine_url.isEmpty())
@@ -108,7 +108,7 @@ void HistoManager::addToDatabase()
     //    add or update entry in history
     //---------------------------------------
     QSqlQuery q("", *Database::instance()->db());
-    
+
     if(SETTINGS()->_useHistory)
     {
         q.prepare("SELECT `id`,`url` FROM `histo` WHERE `url`=:val;");

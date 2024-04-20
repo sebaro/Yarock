@@ -86,7 +86,7 @@ void LocalScene::initScene()
     m_infosize          = 0;
     m_mouseGrabbedItem  = 0;
     item_count          = 0;
-    
+
     /*  graphic item context menu */
     m_graphic_item_menu = new GraphicsItemMenu(0);
     m_graphic_item_menu->setBrowserView(this->parentView());
@@ -95,10 +95,10 @@ void LocalScene::initScene()
     //! gestion du double click par action globale et data
     ACTIONS()->insert(BROWSER_ITEM_RATING_CLICK, new QAction(this));
     ACTIONS()->insert(BROWSER_LOCAL_ITEM_MOUSE_MOVE, new QAction(this));
-    
+
     connect(ACTIONS()->value(BROWSER_LOCAL_ITEM_MOUSE_MOVE), SIGNAL(triggered()), this, SLOT(slot_item_mouseMove()), Qt::DirectConnection);
     connect(ACTIONS()->value(BROWSER_ITEM_RATING_CLICK), SIGNAL(triggered()), this, SLOT(slot_item_ratingclick()), Qt::DirectConnection);
-    
+
     setInit(true);
 }
 
@@ -106,7 +106,7 @@ void LocalScene::initScene()
 /*******************************************************************************
     actions
 *******************************************************************************/
-QList<QAction *> LocalScene::actions() 
+QList<QAction *> LocalScene::actions()
 {
     if(m_actions.isEmpty())
     {
@@ -117,10 +117,10 @@ QList<QAction *> LocalScene::actions()
         m_actions.insert("new_smart",       ACTIONS()->value(NEW_SMART_PLAYLIST));
         m_actions.insert("reload_histo",    new QAction(QIcon(":/images/rebuild.png"),QString(tr("reload history")),this));
         m_actions.insert("clear_histo",     new QAction(QIcon(),QString(tr("clear history")),this));
-        
+
         m_actions.value("album_grid")->setCheckable(true);
         m_actions.value("album_grid")->setChecked( SETTINGS()->_album_view_type == 0);
-        
+
         m_actions.value("playlist_tracks")->setCheckable(true);
         m_actions.value("playlist_tracks")->setChecked(SETTINGS()->_playlist_view_type ==1);
 
@@ -128,11 +128,11 @@ QList<QAction *> LocalScene::actions()
         connect(m_actions.value("playlist_tracks"), SIGNAL(triggered()), this, SLOT(slot_change_view_settings()));
 
         connect(m_actions.value("reload_histo"), SIGNAL(triggered()), this, SLOT(populateScene()));
-        connect(m_actions.value("clear_histo"), SIGNAL(triggered()), this, SLOT(slot_clear_history()));     
+        connect(m_actions.value("clear_histo"), SIGNAL(triggered()), this, SLOT(slot_clear_history()));
     }
 
     QList<QAction*> list;
-   
+
     switch(this->mode())
     {
       case VIEW::ViewAlbum:
@@ -151,11 +151,11 @@ QList<QAction *> LocalScene::actions()
         break;
       default:break;
     }
-  
+
     return list;
 }
 
-    
+
 
 /*******************************************************************************
      setSearch
@@ -163,7 +163,7 @@ QList<QAction *> LocalScene::actions()
 void LocalScene::setSearch(const QVariant& variant)
 {
     Debug::debug() << "   [LocalScene] setSearch";
-    
+
     if(variant.canConvert<MediaSearch>())
     {
        m_localTrackModel->setSearch( variant );
@@ -173,15 +173,15 @@ void LocalScene::setSearch(const QVariant& variant)
     else
     {
       QString pattern = variant.toString();
-      
+
       MediaSearch search;
       search.search_type_   =  MediaSearch::Type_Or;
-      search.query_list_    =  SearchQueryList() 
+      search.query_list_    =  SearchQueryList()
              << SearchQuery(SearchQuery::field_artist_name, SearchQuery::op_Contains, pattern)
              << SearchQuery(SearchQuery::field_album_name, SearchQuery::op_Contains, pattern)
              << SearchQuery(SearchQuery::field_track_trackname, SearchQuery::op_Contains, pattern)
-             << SearchQuery(SearchQuery::field_genre_name, SearchQuery::op_Contains, pattern);      
-      
+             << SearchQuery(SearchQuery::field_genre_name, SearchQuery::op_Contains, pattern);
+
        m_localTrackModel->setSearch( QVariant::fromValue<MediaSearch>(search) );
        m_localPlaylistModel->setSearch( QVariant::fromValue<MediaSearch>(search) );
        m_histoModel->setSearch( QVariant::fromValue<MediaSearch>(search) );
@@ -194,11 +194,11 @@ void LocalScene::setSearch(const QVariant& variant)
 void LocalScene::setData(const QVariant& data)
 {
     MEDIA::LinkPtr active_link = qvariant_cast<MEDIA::LinkPtr>(data);
-    
+
     if( active_link )
     {
       Debug::debug() << "LocalScene::setData active link" << active_link->name;
-        
+
       m_localTrackModel->setActiveLink(active_link);
     }
     else if (mode() == VIEW::ViewGenre)
@@ -212,10 +212,10 @@ void LocalScene::setData(const QVariant& data)
 *******************************************************************************/
 void LocalScene::resizeScene()
 {
-    //Debug::debug() << "   [LocalScene] resizeScene";   
+    //Debug::debug() << "   [LocalScene] resizeScene";
     int new_item_count = (parentView()->width()/160 > 2) ? parentView()->width()/160 : 2;
 
-    if(item_count != new_item_count)  
+    if(item_count != new_item_count)
     {
       populateScene();
     }
@@ -232,7 +232,7 @@ void LocalScene::slot_change_view_settings()
 {
     SETTINGS()->_album_view_type    = m_actions.value("album_grid")->isChecked() ? 0 : 1;
     SETTINGS()->_playlist_view_type = m_actions.value("playlist_tracks")->isChecked() ? 1 : 0;
-    
+
     populateScene();
 }
 
@@ -244,10 +244,10 @@ void LocalScene::slot_on_model_data_changed()
     Debug::debug() << "   [LocalScene] slot_on_model_data_changed";
 
     MEDIA::LinkPtr link = m_localTrackModel->activeLink();
-    
+
     QVariant v;
     v.setValue( static_cast<MEDIA::LinkPtr>(link) );
-       
+
     emit linked_changed( v );
 }
 
@@ -261,15 +261,15 @@ void LocalScene::populateScene()
 
     //! clear scene and delete all items
     clear();
-    
+
     COVER_SIZE = SETTINGS()->_coverSize;
 
     /* si model est vide et database est en cours de construction */
     if(m_localTrackModel->isEmpty() && ThreadManager::instance()->isDbRunning())
     {
       populateLocalSceneBuilding();
-    }    
-    else 
+    }
+    else
     {
       switch(mode())
       {
@@ -384,7 +384,7 @@ void LocalScene::populateAlbumGridScene()
     int Column        = 0;
     m_infosize        = 0;
     int categorieRow  = 0;
-    
+
     item_count = (parentView()->width()/(COVER_SIZE*1.25) > 2) ? parentView()->width()/(COVER_SIZE*1.25) : 2;
 
 
@@ -443,10 +443,10 @@ void LocalScene::populateArtistScene()
     int Column       = 0;
     m_infosize       = 0;
     int idx          = 0;
-    
+
     item_count = (parentView()->width()/(COVER_SIZE*1.25) > 2) ? parentView()->width()/(COVER_SIZE*1.25) : 2;
-   
-    
+
+
     /* artist loop */
     QChar start_char;
     for (int i=0 ; i < m_localTrackModel->rootItem()->childCount(); i++ )
@@ -492,8 +492,8 @@ void LocalScene::populateArtistScene()
           /* WARNING limite de l'affichage à 6 cover max */
           if(artist_item->albums_covers.size() >=6) break;
         }
-        
-        
+
+
         if(Column < (item_count-1)) {
           Column++;
         }
@@ -531,7 +531,7 @@ void LocalScene::populateTrackScene()
       if(!m_localTrackModel->isMediaMatch(m_localTrackModel->rootItem()->child(i)) ) continue;
 
       MEDIA::ArtistPtr artist = MEDIA::ArtistPtr::staticCast(m_localTrackModel->rootItem()->child(i));
-      
+
       CategorieGraphicItem *category = new CategorieGraphicItem(qobject_cast<QGraphicsView*> (parentView())->viewport());
       category->m_name = artist->name;
       category->setPos( 0 ,artistRow*50 + albumRow*30 + trackRow*20 + offset );
@@ -563,10 +563,10 @@ void LocalScene::populateTrackScene()
 
           MEDIA::TrackPtr track = MEDIA::TrackPtr::staticCast(album->child(k));
 
-          if(m_isGrouping && album->isMultiset() && (disc_number != track->disc_number)) 
+          if(m_isGrouping && album->isMultiset() && (disc_number != track->disc_number))
           {
             disc_number = track->disc_number;
-            
+
             QGraphicsTextItem* text_item = new QGraphicsTextItem(QString(tr("disc %1")).arg(disc_number));
             text_item->setDefaultTextColor(QApplication::palette().color(QPalette::Disabled, QPalette::WindowText));
             text_item->setFont( QFont("Arial", 10, QFont::Bold) );
@@ -580,7 +580,7 @@ void LocalScene::populateTrackScene()
           TrackGraphicItem_v2 *track_item = new TrackGraphicItem_v2();
           track_item->media = track;
           track_item->setPos((COVER_SIZE*1.25)+5, artistRow*50 + albumRow*30 + trackRow*20 + offset);
-	  
+
           //PATCH (-20 => fix alignement of the scene)
           track_item->_width = parentView()->width()-(COVER_SIZE*1.25)-20;
 
@@ -617,9 +617,9 @@ void LocalScene::populateGenreScene()
     m_infosize       = 0;
     item_count = (parentView()->width()/(COVER_SIZE*1.25)  > 2) ? parentView()->width()/(COVER_SIZE*1.25) : 2;
 
-    
+
     int Xpos = 20,Ypos = 10;
-    
+
     /* -------------- add ROOT button ------------------ */
     ButtonStateItem* button = new ButtonStateItem();
     button->setText(m_localTrackModel->rootLink()->name);
@@ -627,28 +627,28 @@ void LocalScene::populateGenreScene()
     QVariant v;
     v.setValue(static_cast<MEDIA::LinkPtr>(m_localTrackModel->rootLink()));
     button->setData(v);
-  
+
     connect(button, SIGNAL(clicked()), m_localTrackModel, SLOT(slot_activate_link()));
-      
+
     button->setPos(Xpos ,Ypos );
     Xpos = Xpos + button->width() + 20;
 
-    addItem(button);    
-    
+    addItem(button);
+
     /* -------------- add CHILD GENRE button ----------- */
     for ( int i = 0; i < m_localTrackModel->rootLink()->childCount(); i++ )
     {
       MEDIA::LinkPtr link = MEDIA::LinkPtr::staticCast( m_localTrackModel->rootLink()->child(i) );
-        
+
       ButtonStateItem* button = new ButtonStateItem();
       button->setText(link->name);
       button->setChecked(link == m_localTrackModel->activeLink());
       QVariant v;
       v.setValue(static_cast<MEDIA::LinkPtr>(link));
       button->setData(v);
-  
+
       connect(button, SIGNAL(clicked()), m_localTrackModel, SLOT(slot_activate_link()));
-      
+
       if(Xpos + button->width() > parentView()->width()-20) {
         Xpos = 20;
         Ypos = Ypos + 30;
@@ -658,8 +658,8 @@ void LocalScene::populateGenreScene()
       Xpos = Xpos + button->width() + 20;
 
       addItem(button);
-    }      
-    
+    }
+
     /* -------------- add ALBUMS by GENRE ------------- */
     categorieRow++;
     for ( int i = 0; i < m_localTrackModel->rootLink()->childCount(); i++ )
@@ -668,7 +668,7 @@ void LocalScene::populateGenreScene()
 
       if(m_localTrackModel->activeLink() != m_localTrackModel->rootLink())
           if( m_localTrackModel->activeLink() != link ) continue;
-      
+
       if(!m_localTrackModel->isMediaMatch(link)) continue;
 
       /* ------- New Genre ------- */
@@ -682,11 +682,11 @@ void LocalScene::populateGenreScene()
       m_infosize++; // on compte les categorie = genre
       categorieRow++;
       Column     = 0;
-      
+
       for ( int j = 0; j < link->childCount(); j++ )
       {
           if(!m_localTrackModel->isMediaMatch(link->child(j))) continue;
-      
+
           AlbumGenreGraphicItem *album_item = new AlbumGenreGraphicItem();
           album_item->media    = MEDIA::AlbumPtr::staticCast( link->child(j) );
           album_item->_genre   = link->name;
@@ -727,7 +727,7 @@ void LocalScene::populateYearScene()
     QList<MEDIA::AlbumPtr> list_album_by_year = m_localTrackModel->albumItemList;
 
     //! Sort Media Album Item list By Year
-    qSort(list_album_by_year.begin(), list_album_by_year.end(),MEDIA::compareAlbumItemYear);
+    std::sort(list_album_by_year.begin(), list_album_by_year.end(),MEDIA::compareAlbumItemYear);
 
     foreach (MEDIA::AlbumPtr album, list_album_by_year)
     {
@@ -781,7 +781,7 @@ void LocalScene::populateYearScene()
 void LocalScene::populateFavoriteScene()
 {
     //Debug::debug() << "   [LocalScene] populateFavoriteScene";
-    
+
     int categorieRow = 0;
     int artistRow    = 0;
     int albumRow     = 0;
@@ -790,7 +790,7 @@ void LocalScene::populateFavoriteScene()
     item_count = (parentView()->width()/(COVER_SIZE*1.25) > 2) ? parentView()->width()/(COVER_SIZE*1.25) : 2;
 
 
-    
+
     CategorieGraphicItem *category = new CategorieGraphicItem(qobject_cast<QGraphicsView*> (parentView())->viewport());
     category->m_name = tr("Artists");
     category->setPos( 0 , 10 + categorieRow*50 + artistRow*165);
@@ -946,7 +946,7 @@ void LocalScene::populatePlaylistByTrackScene()
     int offset        = 0;
     m_infosize         = 0;
 
-   
+
 
     //! playlist loop
     for ( int i = 0; i < m_localPlaylistModel->rootItem()->childCount(); i++ )
@@ -981,7 +981,7 @@ void LocalScene::populatePlaylistByTrackScene()
 
         TrackGraphicItem *track_item = new TrackGraphicItem();
         track_item->media = track;
-        track_item->setPos(180, categorieRow*50 + playlistRow*30 + trackRow*20 + offset);        
+        track_item->setPos(180, categorieRow*50 + playlistRow*30 + trackRow*20 + offset);
         track_item->_width = parentView()->width()-180-20;
 
         addItem(track_item);
@@ -1066,10 +1066,10 @@ void LocalScene::populateHistoScene()
     for ( int i = 0; i < m_histoModel->itemCount(); i++ )
     {
       MEDIA::TrackPtr track = m_histoModel->trackAt(i);
-      
+
       if(!m_histoModel->isMediaMatch( track )) continue;
-      
-      newDate = QDateTime::fromTime_t(track->lastPlayed).date();
+
+      newDate = QDateTime::fromSecsSinceEpoch(track->lastPlayed).date();
 
       if(oldDate != newDate)
       {
@@ -1115,7 +1115,7 @@ void LocalScene::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
     if(!m_mouseGrabbedItem) {
       m_graphic_item_menu->hide();
       event->accept();
-      
+
       return;
     }
 
@@ -1131,7 +1131,7 @@ void LocalScene::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
       m_graphic_item_menu->appendItem(m_mouseGrabbedItem);
       m_graphic_item_menu->updateMenu(false);
     }
-    else 
+    else
     {
       m_graphic_item_menu->appendItems(selectedItems());
       m_graphic_item_menu->updateMenu(true);
@@ -1207,7 +1207,7 @@ void LocalScene::slot_item_mouseMove()
 
 void LocalScene::mousePressEvent ( QGraphicsSceneMouseEvent * event )
 {
-    //Debug::debug() << "   [LocalScene] mousePressEvent";  
+    //Debug::debug() << "   [LocalScene] mousePressEvent";
     m_mouseGrabbedItem = this->itemAt(event->scenePos(), QTransform());
 
     if(m_mouseGrabbedItem && (Qt::ShiftModifier == QApplication::keyboardModifiers()) )
@@ -1224,7 +1224,7 @@ void LocalScene::mousePressEvent ( QGraphicsSceneMouseEvent * event )
          if (pointdiff.manhattanLength() < mindistance)
            startPoint =  item->scenePos().toPoint();
       }
-      
+
       if(!startPoint.isNull())
       {
         if(startPoint.y() < currentpoint.y())
@@ -1240,13 +1240,13 @@ void LocalScene::mousePressEvent ( QGraphicsSceneMouseEvent * event )
          item->setSelected(true);
        event->accept();
        return;
-      }      
+      }
     }
 
     QGraphicsScene::mousePressEvent(event);
 }
 
-    
+
 void LocalScene::mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * event )
 {
     //Debug::debug() << "   [LocalScene] mouseDoubleClickEvent";
@@ -1302,7 +1302,7 @@ void LocalScene::dragEnterEvent(QGraphicsSceneDragDropEvent * event)
     else
     {
         event->ignore();
-    }    
+    }
 }
 
 
@@ -1326,11 +1326,11 @@ void LocalScene::dropEvent(QGraphicsSceneDragDropEvent * event)
 {
     Debug::debug() << "  [LocalScene] dropEvent";
     const QMimeData* data = event->mimeData();
-    
-    if (data->hasFormat(MEDIA_MIME)) 
-    {           
+
+    if (data->hasFormat(MEDIA_MIME))
+    {
         const MediaMimeData* mediaMimeData = dynamic_cast<const MediaMimeData*>( data );
-        
+
         if(mediaMimeData)
         {
             /* drop from playqueue ---- */
@@ -1338,15 +1338,15 @@ void LocalScene::dropEvent(QGraphicsSceneDragDropEvent * event)
             {
                 Debug::debug() << "  [LocalScene] dropEvent from playqueue";
                 PlaylistGraphicItem *item = static_cast<PlaylistGraphicItem*>(m_mouseGrabbedItem);
-                
+
                 MEDIA::PlaylistPtr pl = item->media;
-                
-                foreach(MEDIA::TrackPtr track, mediaMimeData->getTracks()) 
+
+                foreach(MEDIA::TrackPtr track, mediaMimeData->getTracks())
                 {
                     Debug::debug() << "  # add to playqueue:" << track->url;
                     pl->insertChildren(track);
                 }
-                
+
                 // save changes to database
                 Playqueue::instance()->manager()->playlistSaveToDb(pl);
             }
@@ -1362,23 +1362,23 @@ void LocalScene::keyPressEvent ( QKeyEvent * keyEvent )
 {
     //Debug::debug() << "  [LocalScene] keyPressEvent " << keyEvent->key();
 
-    if( keyEvent->key() == Qt::Key_Escape ) 
+    if( keyEvent->key() == Qt::Key_Escape )
     {
        clearSelection();
        keyEvent->accept();
-       return;      
+       return;
     }
-    else if( keyEvent->key() == Qt::Key_Return ) 
+    else if( keyEvent->key() == Qt::Key_Return )
     {
        if( selectedItems().isEmpty() )
            playSelected();
 //        else
 //            playItem();
-       
+
        keyEvent->accept();
-       return;       
+       return;
     }
-    
+
     QGraphicsScene::keyPressEvent (keyEvent);
 }
 
@@ -1395,13 +1395,13 @@ void LocalScene::slot_item_ratingclick()
     QGraphicsItem *gItem = qvariant_cast<QGraphicsItem *>( (ACTIONS()->value(BROWSER_ITEM_RATING_CLICK))->data() );
 
     QList<QGraphicsItem*> items;
-    if(selectedItems().contains(gItem)) 
+    if(selectedItems().contains(gItem))
       items << selectedItems();
     else
       items << gItem;
 
     QList<MEDIA::MediaPtr> medias;
-    foreach(QGraphicsItem* gi, items) 
+    foreach(QGraphicsItem* gi, items)
     {
         switch(gi->type()) {
             case GraphicsItem::AlbumType      :
@@ -1411,8 +1411,8 @@ void LocalScene::slot_item_ratingclick()
             default: return;break;
         }
     }
-      
-    /* rate in database */  
+
+    /* rate in database */
     QtConcurrent::run(DatabaseCmd::rateMediaItems, medias);
 }
 
@@ -1448,7 +1448,7 @@ QList<QGraphicsItem*> LocalScene::sortedSelectedItem()
           lessthan = false;
 
         if(!lessthan) {
-          selected.swap(i,i+1);
+          selected.swapItemsAt(i,i+1);
           sort_ok = true;
         }
       } // end for
@@ -1516,9 +1516,9 @@ void LocalScene::edit_media_dialog()
 {
     //Debug::debug() << "   [LocalScene] edit_media_dialog ";
     if(!m_mouseGrabbedItem) return;
-    
+
     QWidget* editor = 0;
-    
+
     if ( ArtistGraphicItem *item = dynamic_cast<ArtistGraphicItem*>(m_mouseGrabbedItem) )
     {
        editor = new EditorArtist( item->media, this );
@@ -1532,7 +1532,7 @@ void LocalScene::edit_media_dialog()
        editor = new EditorTrack( item->media, this );
     }
     else if( PlaylistGraphicItem *item = dynamic_cast<PlaylistGraphicItem*>(m_mouseGrabbedItem) )
-    {    
+    {
       const int type       = int(item->media->p_type);
 
       if(type == T_DATABASE || type == T_FILE)
@@ -1546,7 +1546,7 @@ void LocalScene::edit_media_dialog()
         static_cast<EditorSmart*>(editor)->setPlaylist(item->media);
       }
     }
-    
+
     MainRightWidget::instance()->addWidget(editor);
 }
 
@@ -1564,7 +1564,7 @@ void LocalScene::edit_media_dialog_selection()
         tracks << item->media;
       }
     } // end foreach
-    
+
     MainRightWidget::instance()->addWidget( new EditorTrack( tracks, this ) );
 }
 
@@ -1579,7 +1579,7 @@ void LocalScene::updateMediaFavorite()
     {
       item->media->isFavorite = !item->media->isFavorite;
       DatabaseCmd::updateFavorite(item->media, item->media->isFavorite);
-      item->update();      
+      item->update();
     }
     else if ( ArtistGraphicItem *item = dynamic_cast<ArtistGraphicItem*>(m_mouseGrabbedItem) )
     {
@@ -1613,7 +1613,7 @@ void LocalScene::removePlaylistFromDisk()
 
     //! remove from database
     if (!Database::instance()->open()) return;
-    
+
     if(type == T_SMART)
     {
       QSqlQuery q("",*Database::instance()->db());
@@ -1621,21 +1621,21 @@ void LocalScene::removePlaylistFromDisk()
       q.addBindValue( id );
       Debug::debug() << "database -> delete smart playlist :" << q.exec();
     }
-    else 
-    {      
+    else
+    {
       /* remove file on disk */
-      if(type == T_FILE) 
+      if(type == T_FILE)
       {
         QFile playlistFile(fname);
         if(playlistFile.exists())
           playlistFile.remove();
-      }      
-      
+      }
+
       QSqlQuery q("",*Database::instance()->db());
       q.prepare("DELETE FROM `playlists` WHERE `id`=?;");
       q.addBindValue( id );
       Debug::debug() << "database -> delete playlist :" << q.exec();
-    
+
       q.prepare("DELETE FROM `playlist_items` WHERE `playlist_id` NOT IN (SELECT `id` FROM `playlists`);");
       Debug::debug() << "database -> delete playlist :" << q.exec();
     }

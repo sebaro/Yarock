@@ -37,6 +37,7 @@
 #include <QTime>
 #include <QPixmap>
 #include <QCryptographicHash>
+#include <QRegularExpression>
 
 const QStringList mediaFilter    = QStringList() << "mp3" << "ogg" << "flac" << "wav" << "m4a" << "aac" << "ape" << "opus";
 const QStringList playlistFilter = QStringList() << "m3u" << "m3u8" << "pls" << "xspf";
@@ -77,7 +78,7 @@ MEDIA::Album::Album() : Media()
 QString MEDIA::Album::yearToString() const
 {
     if (year == -1)
-      return QString::null;
+      return QString();
 
     return QString::number(year);
 }
@@ -108,7 +109,7 @@ QStringList MEDIA::Album::genres()
       if( !track->genre.isEmpty() &&  !result.contains( track->genre ) )
         result << track->genre;
     }
-    
+
     return result;
 }
 
@@ -166,7 +167,7 @@ MEDIA::Track::Track() : Media()
 QString MEDIA::Track::yearToString() const
 {
     if (year == -1)
-      return QString::null;
+      return QString();
 
     return QString::number(year);
 }
@@ -193,7 +194,7 @@ QString MEDIA::Track::coverHash() const
 QString MEDIA::Track::lastplayed_ago() const
 {
     const QDateTime now  = QDateTime::currentDateTime();
-    const QDateTime then = QDateTime::fromTime_t(this->lastPlayed);
+    const QDateTime then = QDateTime::fromSecsSinceEpoch(this->lastPlayed);
 
     const int days_ago   = then.date().daysTo(now.date());
     const QString s_then = then.toString(QLocale::system().dateFormat(QLocale::ShortFormat));
@@ -231,9 +232,9 @@ MEDIA::Playlist::Playlist() : Media()
 QString MEDIA::Playlist::dateToString() const
 {
     if (date == -1)
-      return QString::null;
+      return QString();
 
-    QDateTime datetime = QDateTime::fromTime_t(date);
+    QDateTime datetime = QDateTime::fromSecsSinceEpoch(date);
 
     return datetime.toString ( "dd.MM.yyyy" );
 }
@@ -302,7 +303,7 @@ bool MEDIA::Media::removeChildren(int idx)
     MEDIA::MediaPtr child = childItems.takeAt(idx);
     child.reset();
     delete child.data();
-    
+
     return true;
 }
 
@@ -354,20 +355,20 @@ float MEDIA::rating(const MediaPtr mi)
 MEDIA::TrackPtr MEDIA::FromLocalFile(const QString url, int* p_disc)
 {
     Debug::debug() << "[MEDIA] from local file : " << url;
-  
+
     /* URL check */
     if(url.isEmpty()) {
       Debug::warning() <<  " Media Item from local file empty url : ";
-      return MEDIA::MediaPtr(0);  
+      return MEDIA::MediaPtr(0);
     }
-  
+
     MEDIA::TrackPtr media = MEDIA::TrackPtr(new MEDIA::Track());
 
     media->id         = -1;
     media->url        = QFileInfo(url).absoluteFilePath().toUtf8();
-    
+
     Tag::readFile(media, url, p_disc);
-    
+
     return media;
 }
 
@@ -385,11 +386,11 @@ MEDIA::TrackPtr MEDIA::FromDataBase(const QString url)
         "number,length,artist_name,genre_name,album_name,year,last_played," \
         "playcount,rating " \
         "FROM view_tracks WHERE filename=? LIMIT 1;");
-    
+
     q.addBindValue( QFileInfo(url).canonicalFilePath() );
     q.exec();
-    
-    if (q.first()) 
+
+    if (q.first())
     {
       MEDIA::TrackPtr media = MEDIA::TrackPtr(new MEDIA::Track());
 
@@ -433,11 +434,11 @@ MEDIA::TrackPtr MEDIA::FromDataBase(int trackId)
        "number,length,artist_name,genre_name,album_name,year,last_played," \
        "playcount,rating " \
        "FROM view_tracks WHERE id=? LIMIT 1;");
-    
+
   q.addBindValue( QString::number(trackId) );
   q.exec();
-  
-  if (q.first()) 
+
+  if (q.first())
   {
       MEDIA::TrackPtr media = MEDIA::TrackPtr(new MEDIA::Track());
 
@@ -478,11 +479,11 @@ void MEDIA::ReplayGainFromDataBase(MEDIA::TrackPtr track)
   /* search track info into database */
   QSqlQuery q("", *Database::instance()->db());
   q.prepare("SELECT albumgain,albumpeakgain,trackgain,trackpeakgain FROM tracks WHERE id=? LIMIT 1;");
-    
+
   q.addBindValue( QString::number(track->id) );
   q.exec();
-  
-  if (q.first()) 
+
+  if (q.first())
   {
       track->albumGain  =  q.value(0).value<qreal>();
       track->albumPeak  =  q.value(1).value<qreal>();
@@ -502,16 +503,16 @@ void MEDIA::ExtraFromDataBase(MEDIA::TrackPtr track)
   /* search track info into database */
   QSqlQuery q("", *Database::instance()->db());
   q.prepare("SELECT bitrate,samplerate,bpm FROM tracks WHERE id=? LIMIT 1;");
-    
+
   q.addBindValue( QString::number(track->id) );
   q.exec();
-  
-  if (q.first()) 
+
+  if (q.first())
   {
       track->extra["bitrate"]    =  q.value(0).toInt();
       track->extra["samplerate"] =  q.value(1).toInt();
       track->extra["bpm"]        =  q.value(2).isNull() ? -1 : q.value(2).toDouble();
-      
+
   }
 }
 
@@ -524,11 +525,11 @@ QImage MEDIA::LoadImageFromFile(const QString& filename, QSize size)
 
     if(image.isNull())
       return QImage();
-    
+
     if(size != image.size()) {
         image = image.scaled(size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
     }
-  
+
     return image;
 }
 
@@ -541,11 +542,11 @@ QPixmap MEDIA::LoadCoverFromFile(const QString& filename, QSize size)
 
     if(image.isNull())
       return QPixmap();
-    
+
     if(size != image.size()) {
         image = image.scaled(size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
     }
-  
+
     return QPixmap::fromImage( image );
 }
 
@@ -554,7 +555,7 @@ QPixmap MEDIA::LoadCoverFromFile(const QString& filename, QSize size)
 /* ---------------------------------------------------------------------------*/
 bool MEDIA::isLocal(const QString& url)
 {
-    if (url.contains(QRegExp("^[a-z]{3,}:"))) {
+    if (url.contains(QRegularExpression("^[a-z]{3,}:"))) {
       if (QUrl(url).scheme() == "file")
         return true;
       else
@@ -584,13 +585,13 @@ bool MEDIA::isCueFile(const QString& url)
 
 bool MEDIA::isMediaPlayable(const QString& url)
 {
-    return 
-      /* not a playlist */            
+    return
+      /* not a playlist */
       !playlistFilter.contains(QFileInfo(url).suffix().toLower()) &&
       /* not a shoutcast type .pls?<id> */
       !url.contains(".pls?") &&
       /* not a tune in type */
-      !url.contains("ashx?id");  
+      !url.contains("ashx?id");
 }
 
 /* ---------------------------------------------------------------------------*/
@@ -598,7 +599,7 @@ bool MEDIA::isMediaPlayable(const QString& url)
 /* ---------------------------------------------------------------------------*/
 bool MEDIA::compareTrackNatural(const TrackPtr mi1, const TrackPtr mi2)
 {
-    QString s1, s2; 
+    QString s1, s2;
     if( mi1->num != 0 && mi2->num != 0)
     {
       s1 = mi1->artist + mi1->album + QString::number(mi1->num).rightJustified(4, '0');
@@ -617,7 +618,7 @@ bool MEDIA::compareTrackItemGenre(const TrackPtr mi1, const TrackPtr mi2)
 {
     const QString s1 = mi1->genre + mi1->album + QString::number(mi1->disc_number);
     const QString s2 = mi2->genre + mi2->album + QString::number(mi2->disc_number);
-    
+
     return QString::compare(s1, s2, Qt::CaseInsensitive) < 0;
 }
 
@@ -655,11 +656,11 @@ bool MEDIA::compareArtistItemRating(const ArtistPtr mi1, const ArtistPtr mi2)
 /* ---------------------------------------------------------------------------*/
 /* MEDIA::registerTrackPlaying                                                */
 /* ---------------------------------------------------------------------------*/
-void MEDIA::registerTrackPlaying(MEDIA::TrackPtr tk, bool isPlaying) 
+void MEDIA::registerTrackPlaying(MEDIA::TrackPtr tk, bool isPlaying)
 {
     //Debug::debug() << "[MEDIA] registerTrackPlaying " << isPlaying;
     MEDIA::MediaPtr media = tk;
-    
+
     do
     {
       switch (media->type()) {
@@ -667,16 +668,16 @@ void MEDIA::registerTrackPlaying(MEDIA::TrackPtr tk, bool isPlaying)
         case TYPE_ALBUM    : MEDIA::AlbumPtr::staticCast(media)->isPlaying    = isPlaying; break;
         case TYPE_PLAYLIST : MEDIA::PlaylistPtr::staticCast(media)->isPlaying = isPlaying; break;
         case TYPE_STREAM   :
-        case TYPE_TRACK    : MEDIA::TrackPtr::staticCast(media)->isPlaying    = isPlaying; 
-                             
+        case TYPE_TRACK    : MEDIA::TrackPtr::staticCast(media)->isPlaying    = isPlaying;
+
                              if(isPlaying) {
-                               MEDIA::TrackPtr::staticCast(media)->isPlayed     = true; 
+                               MEDIA::TrackPtr::staticCast(media)->isPlayed     = true;
                                MEDIA::TrackPtr::staticCast(media)->isBroken     = false;
                              }
                              break;
         default: break;
       }
-    
+
       media  = media->parent();
     } while(media);
 }
@@ -687,15 +688,15 @@ void MEDIA::registerTrackPlaying(MEDIA::TrackPtr tk, bool isPlaying)
 void MEDIA::registerTrackBroken(MEDIA::TrackPtr tk, bool isBroken)
 {
     MEDIA::MediaPtr media = tk;
-    
+
     do
     {
-      if (media->type() == TYPE_STREAM || media->type() == TYPE_TRACK ) 
+      if (media->type() == TYPE_STREAM || media->type() == TYPE_TRACK )
       {
-           MEDIA::TrackPtr::staticCast(media)->isBroken     = isBroken; 
-           MEDIA::TrackPtr::staticCast(media)->isPlaying    = false; 
+           MEDIA::TrackPtr::staticCast(media)->isBroken     = isBroken;
+           MEDIA::TrackPtr::staticCast(media)->isPlaying    = false;
       }
-    
+
       media  = media->parent();
     } while(media);
 }

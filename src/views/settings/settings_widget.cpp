@@ -64,7 +64,7 @@ void PageGeneral::createGui()
     m_title   = new CategorieLayoutItem(qobject_cast<QGraphicsView*> (m_parent)->viewport());
     m_title->m_name   = tr("General");
 
-    
+
     m_button = new ButtonItem();
     m_button->setPos(0,0);
     m_button->setColor(QApplication::palette().color(QPalette::Base));
@@ -72,16 +72,16 @@ void PageGeneral::createGui()
     m_button->setParentItem(this);
 
     connect(m_button, SIGNAL(clicked()), this, SLOT(slot_on_titlebutton_clicked()));
-    
-    
+
+
     // main widget
     QWidget* main_widget = new QWidget();
 
-    main_widget->setAttribute(Qt::WA_NoBackground, true);
+    main_widget->setAttribute(Qt::WA_OpaquePaintEvent, true);
     main_widget->setAutoFillBackground(true);
 
     QVBoxLayout* vl0 = new QVBoxLayout(main_widget);
-    
+
     /*-------------------------------------------------*/
     /* General settings                                */
     /* ------------------------------------------------*/
@@ -93,8 +93,8 @@ void PageGeneral::createGui()
     ui_check_enableDbus->setText( tr("Enable notification") );
 
     ui_check_enableHistory = new QCheckBox(main_widget);
-    ui_check_enableHistory->setText( tr("Enable playing history") );    
-    
+    ui_check_enableHistory->setText( tr("Enable playing history") );
+
     //! systray parameter
     ui_check_systray = new QCheckBox(main_widget);
     ui_check_systray->setText(tr("Minimize application to systray"));
@@ -106,15 +106,15 @@ void PageGeneral::createGui()
     ui_color_button->setMinimumWidth(150);
     ui_color_button->setMaximumWidth(150);
     ui_color_button->setFlat(false);
-    
+
     QPalette  pal;
     pal.setColor( QPalette::Active, QPalette::Button, SETTINGS()->_baseColor );
     pal.setColor( QPalette::Inactive, QPalette::Button, SETTINGS()->_baseColor );
     ui_color_button->setPalette(pal);
-    
+
     ui_color_button->setText(tr("Choose color"));
     connect(this->ui_color_button, SIGNAL(clicked()), this, SLOT(slot_color_button_clicked()));
-    
+
     /*-------------------------------------------------*/
     /* Graphical Interface settings                    */
     /* ------------------------------------------------*/
@@ -140,14 +140,14 @@ void PageGeneral::resizeEvent( QGraphicsSceneResizeEvent *event )
 Q_UNUSED(event)
     //Debug::debug() << "## PageGeneral::resizeEvent";
 this->update();
-  
+
 }
 
 void PageGeneral::doLayout()
 {
     m_button->setPos(qobject_cast<QGraphicsView*> (m_parent)->viewport()->width()-40,0);
     proxy_widget->setPos(50,30);
-    
+
     updateGeometry();
 }
 
@@ -156,12 +156,12 @@ void PageGeneral::update()
     prepareGeometryChange();
 
     doLayout();
- 
+
     //updateGeometry();
- 
+
     QGraphicsWidget::update();
 
-    emit layout_changed();  
+    emit layout_changed();
 }
 
 QSizeF PageGeneral::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
@@ -228,12 +228,12 @@ void PageGeneral::slot_color_button_clicked()
     {
        SETTINGS()->_baseColor = color;
        SETTINGS()->updateCheckedColor();
-      
+
        QPalette  pal;
        pal.setColor( QPalette::Active, QPalette::Button, color );
        pal.setColor( QPalette::Inactive, QPalette::Button, color );
        ui_color_button->setPalette(pal);
-    } 
+    }
 }
 
 void PageGeneral::setContentVisible(bool b)
@@ -251,14 +251,14 @@ void PageGeneral::slot_on_titlebutton_clicked()
       m_button->update();
       isOpen = false;
     }
-    else 
+    else
     {
       proxy_widget->show();
       m_button->setPixmap(QPixmap(":/images/remove_32x32.png"));
       m_button->update();
       isOpen = true;
     }
-    
+
     this->update();
 }
 
@@ -274,7 +274,7 @@ PagePlayer::PagePlayer(QWidget* parentView) : QGraphicsWidget(0)
     m_parent         = parentView;
     isOpen           = true;
     _isEngineChanged = false;
-    
+
     //! create Gui
     createGui();
 }
@@ -291,12 +291,12 @@ void PagePlayer::createGui()
     m_button->setPixmap(QPixmap(":/images/remove_32x32.png"));
     m_button->setParentItem(this);
 
-    connect(m_button, SIGNAL(clicked()), this, SLOT(slot_on_titlebutton_clicked()));    
-    
+    connect(m_button, SIGNAL(clicked()), this, SLOT(slot_on_titlebutton_clicked()));
+
     // main widget
     QWidget* main_widget = new QWidget();
 
-    main_widget->setAttribute(Qt::WA_NoBackground, true);
+    main_widget->setAttribute(Qt::WA_OpaquePaintEvent, true);
     main_widget->setAutoFillBackground(true);
 
     /*-------------------------------------------------*/
@@ -305,21 +305,21 @@ void PagePlayer::createGui()
     ui_engineButton = new QPushButton(main_widget);
     ui_engineButton->setMaximumWidth(150);
     ui_engineButton->setMinimumWidth(150);
-    
+
     QMenu *menu = new QMenu(ui_engineButton);
     menu->setMaximumWidth(150);
-    menu->setMinimumWidth(150);    
+    menu->setMinimumWidth(150);
     menu->setContentsMargins(8,8,8,8);
     menu->setStyleSheet(
-        QString ("QMenu {icon-size: 32px; background-color: none;border: none;} ")                 
+        QString ("QMenu {icon-size: 32px; background-color: none;border: none;} ")
     );
 #if QT_VERSION < 0x050000
         menu->setStyleSheet(QString("QMenu::item:disabled { color : gray; }"));
-#endif    
+#endif
     ui_engineButton->setMenu(menu);
-    
+
     ui_engineGroup = new QActionGroup(this);
-    ui_engineGroup->setExclusive(true);    
+    ui_engineGroup->setExclusive(true);
 
         QAction *a1 = new QAction(QIcon(), "vlc", this);
         a1->setData(QVariant::fromValue((int)ENGINE::VLC));
@@ -330,30 +330,30 @@ void PagePlayer::createGui()
 #endif
         QAction *a2 = new QAction(QIcon(), "mpv", this);
         a2->setData(QVariant::fromValue((int)ENGINE::MPV));
-        a2->setIconVisibleInMenu(true);        
+        a2->setIconVisibleInMenu(true);
         a2->setCheckable(true);
 #ifndef ENABLE_MPV
         a2->setEnabled(false);
 #endif
         QAction *a3 = new QAction(QIcon(), "phonon", this);
         a3->setData(QVariant::fromValue((int)ENGINE::PHONON));
-        a3->setIconVisibleInMenu(true);        
+        a3->setIconVisibleInMenu(true);
         a3->setCheckable(true);
 #ifndef ENABLE_PHONON
         a3->setEnabled(false);
-#endif    
+#endif
 //         QAction *a4 = new QAction(QIcon(), "qtmultimedia", this);
 //         a4->setData(QVariant::fromValue((int)ENGINE::QTMULTIMEDIA));
-//         a4->setIconVisibleInMenu(true);        
+//         a4->setIconVisibleInMenu(true);
 //         a4->setCheckable(true);
 // #ifndef ENABLE_QTMULTIMEDIA
 //         a4->setEnabled(false);
 // #endif
         QAction *a5 = new QAction(QIcon(), "no engine", this);
         a5->setData(QVariant::fromValue((int)ENGINE::NO_ENGINE));
-        a5->setIconVisibleInMenu(true);        
+        a5->setIconVisibleInMenu(true);
         a5->setCheckable(true);
-        
+
         ui_engineGroup->addAction(a1);
         ui_engineGroup->addAction(a2);
         ui_engineGroup->addAction(a3);
@@ -365,7 +365,7 @@ void PagePlayer::createGui()
         {
            connect(a, SIGNAL(triggered()), this, SLOT(slot_engineClicked()));
         }
- 
+
 
     ui_stopOnPlayqueueClear = new QCheckBox(main_widget);
     ui_stopOnPlayqueueClear->setText(tr("Stop playing on playqueue clear"));
@@ -375,30 +375,30 @@ void PagePlayer::createGui()
 
     ui_restorePlayqueue = new QCheckBox(main_widget);
     ui_restorePlayqueue->setText(tr("Restore last playqueue content at startup"));
-    
+
     ui_enable_replaygain = new QCheckBox(main_widget);
-    ui_enable_replaygain->setText(tr("Use ReplayGain"));    
+    ui_enable_replaygain->setText(tr("Use ReplayGain"));
     connect(this->ui_enable_replaygain, SIGNAL(clicked()), this, SLOT(slot_enable_replaygain()));
 
 
     ui_comboRGMode = new QComboBox(main_widget);
-    
+
     ui_comboRGMode->setMaximumWidth(150);
     ui_comboRGMode->setMinimumWidth(150);
     ui_comboRGMode->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Minimum);
 
-    ui_comboRGMode->addItem("radio");   
-    ui_comboRGMode->addItem("album");   
-    
+    ui_comboRGMode->addItem("radio");
+    ui_comboRGMode->addItem("album");
+
     QLabel *lbl1 = new QLabel(tr("Engine"), main_widget);
     lbl1->setFont(QFont("Arial",10,QFont::Bold));
 
     QLabel *lbl2 = new QLabel(tr("Replaygain"), main_widget);
     lbl2->setFont(QFont("Arial",10,QFont::Bold));
- 
+
     QLabel *lbl3 = new QLabel(tr("Others"), main_widget);
     lbl3->setFont(QFont("Arial",10,QFont::Bold));
-    
+
     QVBoxLayout* vl0 = new QVBoxLayout(main_widget);
     vl0->addWidget( lbl1 );
     vl0->addWidget( ui_engineButton );
@@ -411,7 +411,7 @@ void PagePlayer::createGui()
     vl0->addWidget( ui_stopOnPlayqueueClear );
     vl0->addWidget( ui_restartPlayingAtStartup );
     vl0->addWidget( ui_restorePlayqueue );
-    
+
 
     // proxy widget
     proxy_widget = new QGraphicsProxyWidget( this );
@@ -442,12 +442,12 @@ void PagePlayer::update()
     prepareGeometryChange();
 
     doLayout();
- 
+
     updateGeometry();
- 
+
     QGraphicsWidget::update();
 
-    emit layout_changed();  
+    emit layout_changed();
 }
 
 
@@ -473,14 +473,14 @@ void PagePlayer::saveSettings()
     SETTINGS()->_stopOnPlayqueueClear    = this->ui_stopOnPlayqueueClear->isChecked();
     SETTINGS()->_restartPlayingAtStartup = this->ui_restartPlayingAtStartup->isChecked();
     SETTINGS()->_restorePlayqueue        = this->ui_restorePlayqueue->isChecked();
-    
+
     if(!ui_enable_replaygain->isChecked())
         SETTINGS()->_replaygain = 0;
     else if(ui_comboRGMode->currentIndex() == 0)
         SETTINGS()->_replaygain = 1;
     else
         SETTINGS()->_replaygain = 2;
-    
+
     /* save active engine */
     foreach(QAction* a, ui_engineGroup->actions())
     {
@@ -490,13 +490,13 @@ void PagePlayer::saveSettings()
            SETTINGS()->_engine = a->data().toInt();
            break;
        }
-    }    
+    }
 }
 
 void PagePlayer::restoreSettings()
 {
     Debug::debug() << "PagePlayer::restoreSettings";
-    
+
     this->ui_stopOnPlayqueueClear->setChecked( SETTINGS()->_stopOnPlayqueueClear );
     this->ui_restartPlayingAtStartup->setChecked( SETTINGS()->_restartPlayingAtStartup );
     this->ui_restorePlayqueue->setChecked( SETTINGS()->_restorePlayqueue );
@@ -514,7 +514,7 @@ void PagePlayer::restoreSettings()
             ui_engineButton->setText(a->text());
             break;
         }
-    }    
+    }
 }
 
 void PagePlayer::slot_engineClicked()
@@ -545,7 +545,7 @@ void PagePlayer::slot_on_titlebutton_clicked()
       m_button->update();
       isOpen = false;
     }
-    else 
+    else
     {
       proxy_widget->show();
       m_button->setPixmap(QPixmap(":/images/remove_32x32.png"));
@@ -553,7 +553,7 @@ void PagePlayer::slot_on_titlebutton_clicked()
       isOpen = true;
     }
 
-    this->update();  
+    this->update();
 }
 
 
@@ -568,21 +568,21 @@ PageLibrary::PageLibrary(QWidget* parentView) : QGraphicsWidget(0)
 {
     m_parent       = parentView;
     isOpen         = true;
-    
+
     //! create Gui
     createGui();
 
     //! connection
     connect(this->ui_add_path_button, SIGNAL(clicked()), this, SLOT(slot_on_add_folder_clicked()));
-    
+
     connect(this->ui_auto_update, SIGNAL(stateChanged (int)), this, SLOT(slot_oncheckbox_clicked()));
     connect(this->ui_download_cover, SIGNAL(stateChanged (int)), this, SLOT(slot_oncheckbox_clicked()));
     connect(this->ui_search_cover, SIGNAL(stateChanged (int)), this, SLOT(slot_oncheckbox_clicked()));
     connect(this->ui_group_albums, SIGNAL(stateChanged (int)), this, SLOT(slot_oncheckbox_clicked()));
     connect(this->ui_use_artist_image, SIGNAL(stateChanged (int)), this, SLOT(slot_oncheckbox_clicked()));
     connect(this->ui_rating_to_file, SIGNAL(stateChanged (int)), this, SLOT(slot_oncheckbox_clicked()));
-    
-    
+
+
     connect(this->ui_choose_db, SIGNAL(currentIndexChanged(QString)), SLOT(loadDatabaseParam(QString)));
     connect(this->ui_db_new_button, SIGNAL(clicked()), this, SLOT(newDatabaseParam()));
     connect(this->ui_db_del_button, SIGNAL(clicked()), this, SLOT(delDatabaseParam()));
@@ -596,7 +596,7 @@ void PageLibrary::createGui()
     m_title           = new CategorieLayoutItem(qobject_cast<QGraphicsView*> (m_parent)->viewport());
     m_title->m_name   = tr("Library settings");
 
-    
+
     m_button = new ButtonItem();
     m_button->setPos(0,0);
     m_button->setColor(QApplication::palette().color(QPalette::Base));
@@ -605,10 +605,10 @@ void PageLibrary::createGui()
 
     connect(m_button, SIGNAL(clicked()), this, SLOT(slot_on_titlebutton_clicked()));
 
-    
+
     // main widget
     m_main_widget = new QWidget();
-    m_main_widget->setAttribute(Qt::WA_NoBackground, true);
+    m_main_widget->setAttribute(Qt::WA_OpaquePaintEvent, true);
     m_main_widget->setAutoFillBackground(true);
 
     /*-------------------------------------------------*/
@@ -648,7 +648,7 @@ void PageLibrary::createGui()
       QLabel *lbl2 = new QLabel(tr("Properties"), m_main_widget);
       lbl2->setFont(QFont("Arial",10,QFont::Bold));
 
-      
+
       ui_folders_layout = new QVBoxLayout();
       ui_folders_layout->setSpacing(1);
       ui_folders_layout->setContentsMargins(0,0,0,0);
@@ -659,9 +659,9 @@ void PageLibrary::createGui()
       widget->setText( tr(" Choose music folder") );
 
       ui_folders_layout->addWidget(widget);
-      ui_folderWidgets.append(widget); 
+      ui_folderWidgets.append(widget);
       QObject::connect(widget, SIGNAL(pathChanged()), this, SLOT(slot_on_path_changed()));
-      
+
       ui_add_path_button = new QPushButton(m_main_widget);
       ui_add_path_button->setText(tr("Add ..."));
 
@@ -672,7 +672,7 @@ void PageLibrary::createGui()
       /* Check box : group multiset albums */
       ui_group_albums = new QCheckBox(m_main_widget);
       ui_group_albums->setText(tr("Group multi disc albums as one album"));
-    
+
       /* Check box : artist image */
       ui_use_artist_image = new QCheckBox(m_main_widget);
       ui_use_artist_image->setText(tr("Use artist image (album cover stack otherwise)"));
@@ -680,33 +680,33 @@ void PageLibrary::createGui()
       /* Check box : artist image */
       ui_rating_to_file = new QCheckBox(m_main_widget);
       ui_rating_to_file->setText(tr("Write rating to file"));
-      
+
       /* Images options */
       QLabel *lbl3 = new QLabel(tr("Image settings"), m_main_widget);
-      lbl3->setFont(QFont("Arial",10,QFont::Bold));            
-      
+      lbl3->setFont(QFont("Arial",10,QFont::Bold));
+
       ui_cover_size_spinbox = new QSpinBox();
       ui_cover_size_spinbox->setMinimum(128);
       ui_cover_size_spinbox->setMaximum(256);
       ui_cover_size_spinbox->setValue(200);
       ui_cover_size_spinbox->setPrefix(tr("image size: "));
       ui_cover_size_spinbox->setFocusPolicy( Qt::NoFocus );
-      
+
       /* Check box --> search cover into directory */
       ui_search_cover = new QCheckBox(m_main_widget);
       ui_search_cover->setText(tr("Search cover art from file directory"));
-      
+
       ui_download_cover = new QCheckBox(m_main_widget);
       ui_download_cover->setText(tr("Download image (artist and album) from internet"));
-      
-      
-    /* ----- Final Layout ----- */    
+
+
+    /* ----- Final Layout ----- */
       QVBoxLayout* layout = new QVBoxLayout( m_main_widget );
       layout->addWidget( lbl1 );
       layout->addLayout( hl1 );
       layout->addItem( new QSpacerItem(20, 15, QSizePolicy::Fixed, QSizePolicy::Fixed) );
-      
-      layout->addWidget( lbl2 );      
+
+      layout->addWidget( lbl2 );
       layout->addLayout( ui_folders_layout ,0);
       layout->addWidget( ui_add_path_button );
       layout->addWidget( ui_auto_update );
@@ -715,12 +715,12 @@ void PageLibrary::createGui()
       layout->addWidget( ui_rating_to_file );
       layout->addItem( new QSpacerItem(20, 15, QSizePolicy::Fixed, QSizePolicy::Fixed) );
 
-      layout->addWidget( lbl3 );      
+      layout->addWidget( lbl3 );
       layout->addWidget( ui_search_cover );
-      layout->addWidget( ui_download_cover );      
+      layout->addWidget( ui_download_cover );
       layout->addWidget( ui_cover_size_spinbox );
-      
-      
+
+
       layout->setSizeConstraint(QLayout::SetMinimumSize );
       layout->addItem( new QSpacerItem(20, 15, QSizePolicy::Fixed, QSizePolicy::Expanding) );
 
@@ -728,7 +728,7 @@ void PageLibrary::createGui()
     proxy_widget = new QGraphicsProxyWidget( this );
     proxy_widget->setWidget( m_main_widget );
     proxy_widget->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
-    
+
     m_title->setParentItem(this);
     m_title->setPos(0,0);
 }
@@ -743,8 +743,8 @@ bool PageLibrary::isViewChanged()
 {
     return ( Database::instance()->param()._option_group_albums != ui_group_albums->isChecked() );
 }
-    
-    
+
+
 void PageLibrary::resizeEvent( QGraphicsSceneResizeEvent *event )
 {
 Q_UNUSED(event)
@@ -762,22 +762,22 @@ void PageLibrary::doLayout()
 void PageLibrary::update()
 {
     prepareGeometryChange();
-    
+
     m_main_widget->layout()->invalidate();
     doLayout();
 
     updateGeometry();
- 
+
     QGraphicsWidget::update();
 
-    emit layout_changed();  
+    emit layout_changed();
 }
 
 QSizeF PageLibrary::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
 {
 Q_UNUSED(which);
 Q_UNUSED(constraint);
-   
+
   if(proxy_widget->isVisible())
     return QSize(
       proxy_widget->geometry().size().width(),
@@ -791,7 +791,7 @@ Q_UNUSED(constraint);
 void PageLibrary::restoreSettings()
 {
     Debug::debug() << "PageLibrary::restoreSettings";
-  
+
     //! read settings from Database
     Database *database = Database::instance();
     Debug::debug() << "PageLibrary::restoreSettings multi database" << database->isMultiDb();
@@ -809,14 +809,14 @@ void PageLibrary::restoreSettings()
     if (selectedIdx != -1)
       ui_choose_db->setCurrentIndex(selectedIdx);
 
-    
+
     if(SETTINGS()->_coverSize < 120 || SETTINGS()->_coverSize > 256 )
     {
-      SETTINGS()->_coverSize = 200;      
+      SETTINGS()->_coverSize = 200;
     }
-    
+
     ui_cover_size_spinbox->setValue( SETTINGS()->_coverSize );
-    
+
     _isLibraryChanged = false;
 }
 
@@ -827,8 +827,8 @@ void PageLibrary::saveSettings()
 
     //! save cover size
     SETTINGS()->_coverSize = ui_cover_size_spinbox->value();
-    
-    
+
+
     //! save settings file
     Database *database = Database::instance();
 
@@ -846,7 +846,7 @@ void PageLibrary::saveSettings()
 void PageLibrary::slot_oncheckbox_clicked()
 {
     QCheckBox *cb = qobject_cast<QCheckBox *>(sender());
-    if(!cb) 
+    if(!cb)
       return;
 
     const QString db_name = ui_choose_db->currentText();
@@ -859,7 +859,7 @@ void PageLibrary::slot_oncheckbox_clicked()
     }
     else if( cb == ui_search_cover )
     {
-      m_db_params[db_name]._option_check_cover   = ui_search_cover->isChecked();      
+      m_db_params[db_name]._option_check_cover   = ui_search_cover->isChecked();
     }
     else if ( cb == ui_auto_update )
     {
@@ -883,10 +883,10 @@ void PageLibrary::slot_oncheckbox_clicked()
 void PageLibrary::loadDatabaseParam(QString db_name)
 {
     Debug::debug() << "PageLibrary::loadDatabaseParam";
-  
+
     if(db_name.isEmpty()) return;
 
-    if(m_db_params.contains(db_name)) 
+    if(m_db_params.contains(db_name))
     {
      //Debug::debug() << "SettingCollectionPage::loadDatabaseParam   database name = " << db_name;
      //Debug::debug() << "SettingCollectionPage::loadDatabaseParam   option_auto_rebuild = " << m_db_params[db_name]._option_auto_rebuild;
@@ -894,10 +894,10 @@ void PageLibrary::loadDatabaseParam(QString db_name)
      //Debug::debug() << "SettingCollectionPage::loadDatabaseParam   option_download_cover = " << m_db_params[db_name].option_download_cover;
 
       ui_auto_update->setChecked( m_db_params[db_name]._option_auto_rebuild );
-      
+
       ui_search_cover->setChecked( m_db_params[db_name]._option_check_cover );
       ui_download_cover->setChecked( m_db_params[db_name]._option_download_cover );
-      
+
       ui_group_albums->setChecked( m_db_params[db_name]._option_group_albums );
       ui_use_artist_image->setChecked( m_db_params[db_name]._option_artist_image );
       ui_rating_to_file->setChecked( m_db_params[db_name]._option_wr_rating_to_file );
@@ -905,7 +905,7 @@ void PageLibrary::loadDatabaseParam(QString db_name)
       foreach(AddFolderWidget* widget, ui_folderWidgets) {
         ui_folders_layout->removeWidget(widget);
         const int index = ui_folderWidgets.indexOf(widget);
-        ui_folderWidgets.takeAt(index)->deleteLater(); 
+        ui_folderWidgets.takeAt(index)->deleteLater();
       }
 
       foreach (QString path, m_db_params[db_name]._paths) {
@@ -923,7 +923,7 @@ void PageLibrary::newDatabaseParam()
     DialogInput input(0, tr("New database"), tr("Name"));
     input.setEditValue(currentDbName);
     input.setFixedSize(480,140);
-    
+
 
     if(input.exec() == QDialog::Accepted)
     {
@@ -931,12 +931,12 @@ void PageLibrary::newDatabaseParam()
 
        if (name.isEmpty()) return;
 
-       if (m_db_params.contains(name)) 
+       if (m_db_params.contains(name))
        {
           DialogMessage dlg(0,tr("New database"));
           dlg.setMessage(tr("The database  \"%1\" already exists, please try another name").arg(name));
           dlg.resize(445, 120);
-          dlg.exec();  
+          dlg.exec();
           return;
        }
 
@@ -959,7 +959,7 @@ void PageLibrary::newDatabaseParam()
 void PageLibrary::addDatabaseParam(const QString& name, const Database::Param& param)
 {
     Debug::debug() << "PageLibrary::addDatabaseParam";
-  
+
     m_db_params[name]._name                     = name;
     m_db_params[name]._option_auto_rebuild      = param._option_auto_rebuild;
     m_db_params[name]._option_check_cover       = param._option_check_cover;
@@ -968,7 +968,7 @@ void PageLibrary::addDatabaseParam(const QString& name, const Database::Param& p
     m_db_params[name]._option_artist_image      = param._option_artist_image;
     m_db_params[name]._option_wr_rating_to_file = param._option_wr_rating_to_file;
     m_db_params[name]._paths                    = param._paths;
-    
+
     Debug::debug() << "PageLibrary::addDatabaseParam  name" <<  name;
     Debug::debug() << "PageLibrary::addDatabaseParam  paths" << param._paths;
     Debug::debug() << "PageLibrary::addDatabaseParam  option_auto_rebuild" << param._option_auto_rebuild;
@@ -985,7 +985,7 @@ void PageLibrary::addDatabaseParam(const QString& name, const Database::Param& p
 void PageLibrary::delDatabaseParam()
 {
     Debug::debug() << "PageLibrary::delDatabaseParam";
-  
+
     QString name = ui_choose_db->currentText();
 
     if (!m_db_params.contains(name) || name.isEmpty()) return;
@@ -994,7 +994,7 @@ void PageLibrary::delDatabaseParam()
     dlg.setQuestion(tr("Are you sure you want to delete the \"%1\" database?").arg(name));
     dlg.resize(445, 120);
 
-    if(dlg.exec() == QDialog::Accepted) 
+    if(dlg.exec() == QDialog::Accepted)
     {
       m_db_params.remove(name);
       ui_choose_db->removeItem(ui_choose_db->currentIndex());
@@ -1008,17 +1008,17 @@ void PageLibrary::renameDatabaseParam()
 
     QString oldName = ui_choose_db->currentText();
 
-    
+
     DialogInput input(0, tr("Rename database"), tr("Name"));
     input.setFixedSize(480,140);
     input.setEditValue(oldName);
 
     if(input.exec() != QDialog::Accepted)
       return;
-    
+
     QString newName = input.editValue();
-    
-    
+
+
     if (newName.isEmpty() || (newName == oldName) )
       return;
 
@@ -1045,7 +1045,7 @@ void PageLibrary::renameDatabaseParam()
 }
 
 
-    
+
 void PageLibrary::slot_on_add_folder_clicked(const QString text/*=QString()*/)
 {
     Debug::debug() << "PageLibrary::slot_on_add_folder_clicked";
@@ -1057,7 +1057,7 @@ void PageLibrary::slot_on_add_folder_clicked(const QString text/*=QString()*/)
       widget->setText( text );
 
     ui_folders_layout->addWidget(widget);
-    ui_folderWidgets.append(widget); 
+    ui_folderWidgets.append(widget);
     QObject::connect(widget, SIGNAL(removedClicked()), this, SLOT(slot_on_remove_folder_clicked()));
     QObject::connect(widget, SIGNAL(pathChanged()), this, SLOT(slot_on_path_changed()));
 
@@ -1067,18 +1067,18 @@ void PageLibrary::slot_on_add_folder_clicked(const QString text/*=QString()*/)
 void PageLibrary::slot_on_remove_folder_clicked()
 {
     Debug::debug() << "PageLibrary::slot_on_remove_folder_clicked";
-  
+
     AddFolderWidget * widget = qobject_cast<AddFolderWidget*>(sender());
     ui_folders_layout->removeWidget(widget);
-    
+
     const int index = ui_folderWidgets.indexOf(widget);
-    
-    widget->disconnect(); 
-    
+
+    widget->disconnect();
+
     ui_folderWidgets.takeAt(index)->deleteLater();
 
-    this->update();      
-    
+    this->update();
+
     slot_on_path_changed();
 }
 
@@ -1088,17 +1088,17 @@ void PageLibrary::slot_on_path_changed()
 
     QString dbName = ui_choose_db->currentText();
     m_db_params[dbName]._paths.clear();
-    
-    for (int i = 0; i < ui_folderWidgets.count(); i++) 
+
+    for (int i = 0; i < ui_folderWidgets.count(); i++)
     {
       const QString path = ui_folderWidgets.at(i)->path();
       if( QFileInfo(path).isDir() )
         m_db_params[dbName]._paths << path;
     }
- 
-    _isLibraryChanged = true; 
+
+    _isLibraryChanged = true;
 }
-    
+
 
 void PageLibrary::setContentVisible(bool b)
 {
@@ -1114,14 +1114,14 @@ void PageLibrary::slot_on_titlebutton_clicked()
       m_button->update();
       isOpen = false;
     }
-    else 
+    else
     {
       proxy_widget->show();
       m_button->setPixmap(QPixmap(":/images/remove_32x32.png"));
       m_button->update();
       isOpen = true;
     }
-    
+
     this->update();
 }
 
@@ -1163,21 +1163,21 @@ void PageShortcut::createGui()
     connect(m_button, SIGNAL(clicked()), this, SLOT(slot_on_titlebutton_clicked()));
 
 
-    
+
     //! Check box to enable/disable shorcuts
     QWidget* main_widget = new QWidget();
-    main_widget->setAttribute(Qt::WA_NoBackground, true);
+    main_widget->setAttribute(Qt::WA_OpaquePaintEvent, true);
     main_widget->setAutoFillBackground(true);
 
     QVBoxLayout* vl0 = new QVBoxLayout(main_widget);
     ui_enable_shortcut = new QCheckBox();
     ui_enable_shortcut->setText(tr("Enable shortcuts"));
     vl0->addWidget(ui_enable_shortcut);
-    
+
     proxy_widget = new QGraphicsProxyWidget( this );
     proxy_widget->setWidget( main_widget );
     proxy_widget->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
-    
+
 
     m_items["play"]        = new ShortcutGraphicItem(tr("Play/Pause"), SETTINGS()->_shortcutsKey["play"], IconManager::instance()->icon("media-play").pixmap(QSize(32,32)));
     m_items["stop"]        = new ShortcutGraphicItem(tr("Stop"), SETTINGS()->_shortcutsKey["stop"], IconManager::instance()->icon("media-stop").pixmap(QSize(32,32)));
@@ -1188,7 +1188,7 @@ void PageShortcut::createGui()
     m_items["mute_volume"] = new ShortcutGraphicItem(tr("Mute/Unmute volume"), SETTINGS()->_shortcutsKey["mute_volume"], QPixmap(":/images/volume-muted.png"));
     m_items["jump_to_track"] = new ShortcutGraphicItem(tr("Jump to track"), SETTINGS()->_shortcutsKey["jump_to_track"], IconManager::instance()->icon("goto").pixmap(QSize(32,32)));
     m_items["clear_playqueue"] = new ShortcutGraphicItem(tr("Clear playqueue"), SETTINGS()->_shortcutsKey["clear_playqueue"], QPixmap());
-    
+
     connect(m_items.value("play"), SIGNAL(clicked()),this, SLOT(slot_on_shorcutItem_clicked()));
     connect(m_items.value("stop"), SIGNAL(clicked()),this, SLOT(slot_on_shorcutItem_clicked()));
     connect(m_items.value("prev_track"), SIGNAL(clicked()),this, SLOT(slot_on_shorcutItem_clicked()));
@@ -1211,7 +1211,7 @@ void PageShortcut::createGui()
 
     m_title->setParentItem(this);
     m_title->setPos(0,0);
-    
+
     // slots
     connect(this->ui_enable_shortcut, SIGNAL(clicked()), this, SLOT(enableChange()));
 }
@@ -1227,10 +1227,10 @@ void PageShortcut::doLayout()
 {
     //Debug::debug() << "## PageShortcut::doLayout";
     m_button->setPos(qobject_cast<QGraphicsView*> (m_parent)->viewport()->width()-40,0);
-  
+
     int Xpos = 50;
     int Ypos = 30;
-    
+
     proxy_widget->setPos(Xpos,Ypos);
     Ypos += 50;
 
@@ -1250,7 +1250,7 @@ void PageShortcut::doLayout()
     Ypos += 35;
     m_items.value("jump_to_track")->setPos(Xpos,Ypos);
     Ypos += 35;
-    m_items.value("clear_playqueue")->setPos(Xpos,Ypos);    
+    m_items.value("clear_playqueue")->setPos(Xpos,Ypos);
 }
 
 void PageShortcut::update()
@@ -1258,12 +1258,12 @@ void PageShortcut::update()
     prepareGeometryChange();
 
     doLayout();
- 
+
     updateGeometry();
- 
+
     QGraphicsWidget::update();
 
-    emit layout_changed();  
+    emit layout_changed();
 }
 
 QSizeF PageShortcut::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
@@ -1272,7 +1272,7 @@ Q_UNUSED(which);
 Q_UNUSED(constraint);
 
   if(m_items.value("play")->isVisible())
-    return QSize( m_parent->width()-350, 
+    return QSize( m_parent->width()-350,
                   proxy_widget->geometry().size().height() + 50 + m_items.size()*35 );
   else
     return QSize( m_parent->width()-350, 30);
@@ -1305,10 +1305,10 @@ void PageShortcut::restoreSettings()
     m_items["jump_to_track"]->m_status   = ShortcutsManager::instance()->shortcuts().value("jump_to_track").status;
     m_items["clear_playqueue"]->m_status = ShortcutsManager::instance()->shortcuts().value("clear_playqueue").status;
 
-    
+
     _isEnableOld = SETTINGS()->_useShortcut;
-    this->ui_enable_shortcut->setChecked(_isEnableOld);    
-    
+    this->ui_enable_shortcut->setChecked(_isEnableOld);
+
     _isChanged = false;
     update();
 }
@@ -1327,8 +1327,8 @@ void PageShortcut::saveSettings()
     SETTINGS()->_shortcutsKey["mute_volume"]     = m_items["mute_volume"]->m_key;
     SETTINGS()->_shortcutsKey["jump_to_track"]   = m_items["jump_to_track"]->m_key;
     SETTINGS()->_shortcutsKey["clear_playqueue"] = m_items["clear_playqueue"]->m_key;
-    
-    
+
+
     SETTINGS()->_useShortcut = this->ui_enable_shortcut->isChecked();
 }
 
@@ -1369,23 +1369,23 @@ void PageShortcut::slot_on_titlebutton_clicked()
         proxy_widget->hide();
         foreach(ShortcutGraphicItem* item, m_items)
             item->hide();
-    
+
         m_button->setPixmap(QPixmap(":/images/add_32x32.png"));
         m_button->update();
         isOpen = false;
     }
-    else 
+    else
     {
         proxy_widget->show();
-        
+
         foreach(ShortcutGraphicItem* item, m_items)
             item->show();
-      
+
         m_button->setPixmap(QPixmap(":/images/remove_32x32.png"));
         m_button->update();
         isOpen = true;
     }
-    
+
     this->update();
 }
 
@@ -1421,7 +1421,7 @@ ShortcutGraphicItem::ShortcutGraphicItem(const QString& name, const QString& key
     setAcceptsHoverEvents(true);
 #else
     setAcceptHoverEvents(true);
-#endif 
+#endif
     setAcceptDrops(false);
     setFlag(QGraphicsItem::ItemIsSelectable, false);
     setFlag(QGraphicsItem::ItemIsMovable, false);
@@ -1537,11 +1537,11 @@ PageScrobbler::PageScrobbler(QWidget* parentView) : QGraphicsWidget(0)
 
     connect(m_button, SIGNAL(clicked()), this, SLOT(slot_on_titlebutton_clicked()));
 
-    
+
     // main widget
     QWidget* main_widget = new QWidget();
 
-    main_widget->setAttribute(Qt::WA_NoBackground, true);
+    main_widget->setAttribute(Qt::WA_OpaquePaintEvent, true);
     main_widget->setAutoFillBackground(true);
 
     /*-------------------------------------------------*/
@@ -1574,7 +1574,7 @@ PageScrobbler::PageScrobbler(QWidget* parentView) : QGraphicsWidget(0)
     gl->addWidget(label_2, 1, 0, 1, 1);
 
     lineEdit_1 = new QLineEdit(accountGroupB);
-    lineEdit_1->setMinimumWidth(QFontMetrics(QFont()).width("WWWWWWWWWWWW"));
+    lineEdit_1->setMinimumWidth(QFontMetrics(QFont()).horizontalAdvance("WWWWWWWWWWWW"));
     gl->addWidget(lineEdit_1, 0, 1, 1, 1);
 
     lineEdit_2 = new QLineEdit(accountGroupB);
@@ -1626,12 +1626,12 @@ void PageScrobbler::update()
     prepareGeometryChange();
 
     doLayout();
- 
+
     updateGeometry();
- 
+
     QGraphicsWidget::update();
 
-    emit layout_changed();  
+    emit layout_changed();
 }
 
 QSizeF PageScrobbler::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
@@ -1654,7 +1654,7 @@ void PageScrobbler::saveSettings()
     Debug::debug() << "PageScrobbler::saveSettings";
 
     SETTINGS()->_useLastFmScrobbler = this->useLastFmScrobbler->isChecked();
-    
+
     LastFmService::instance()->saveSettings();
 }
 
@@ -1743,7 +1743,7 @@ void PageScrobbler::slotSignInDone()
         DialogMessage dlg(0,tr("Authentication failed"));
         dlg.setMessage( tr("Your Last.fm credentials were incorrect"));
         dlg.resize(445, 120);
-        dlg.exec();  
+        dlg.exec();
     }
 }
 
@@ -1761,14 +1761,14 @@ void PageScrobbler::slot_on_titlebutton_clicked()
       m_button->update();
       isOpen = false;
     }
-    else 
+    else
     {
       proxy_widget->show();
       m_button->setPixmap(QPixmap(":/images/remove_32x32.png"));
       m_button->update();
       isOpen = true;
     }
-    
+
     this->update();
 }
 
@@ -1789,7 +1789,7 @@ PageSongInfo::PageSongInfo(QWidget* parentView) : QGraphicsWidget(0)
     m_title   = new CategorieLayoutItem(qobject_cast<QGraphicsView*> (m_parent)->viewport());
     m_title->m_name   = tr("Song info");
 
-    
+
     m_button = new ButtonItem();
     m_button->setPos(0,0);
     m_button->setColor(QApplication::palette().color(QPalette::Base));
@@ -1797,40 +1797,40 @@ PageSongInfo::PageSongInfo(QWidget* parentView) : QGraphicsWidget(0)
     m_button->setParentItem(this);
 
     connect(m_button, SIGNAL(clicked()), this, SLOT(slot_on_titlebutton_clicked()));
-    
-    
+
+
     // main widget
     QWidget* main_widget = new QWidget();
-    main_widget->setAttribute(Qt::WA_NoBackground, true);
+    main_widget->setAttribute(Qt::WA_OpaquePaintEvent, true);
     main_widget->setAutoFillBackground(true);
 
-    
+
     QLabel *ui_label = new QLabel(tr("Choose the websites you want to use when searching for lyrics"), main_widget);
 
     ui_listwidget = new QListWidget();
     ui_listwidget->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    
+
     ui_move_up   = new QPushButton(tr("move up"), main_widget);
     ui_move_down = new QPushButton(tr("move down"), main_widget);
-    
-    ui_move_up->setEnabled(false);   
+
+    ui_move_up->setEnabled(false);
     ui_move_down->setEnabled(false);
-    
+
     QVBoxLayout* vl1 = new QVBoxLayout();
     vl1->addWidget(ui_move_up);
     vl1->addWidget(ui_move_down);
     vl1->addItem(new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding));
-    
+
     QHBoxLayout* hl0 = new QHBoxLayout();
-    hl0->addWidget(ui_listwidget);    
+    hl0->addWidget(ui_listwidget);
     hl0->addLayout(vl1);
-    
+
     QVBoxLayout* vl0 = new QVBoxLayout(main_widget);
     vl0->addWidget(ui_label);
     vl0->addLayout(hl0);
-    
-    connect(ui_listwidget, SIGNAL(itemChanged(QListWidgetItem*)),SLOT(slot_item_changed(QListWidgetItem*)));    
+
+    connect(ui_listwidget, SIGNAL(itemChanged(QListWidgetItem*)),SLOT(slot_item_changed(QListWidgetItem*)));
 
     connect(ui_listwidget, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)),
           SLOT(slot_current_item_changed(QListWidgetItem*)));
@@ -1838,7 +1838,7 @@ PageSongInfo::PageSongInfo(QWidget* parentView) : QGraphicsWidget(0)
 
     connect(ui_move_up, SIGNAL(clicked()), this, SLOT(slot_move_up()));
     connect(ui_move_down, SIGNAL(clicked()), this, SLOT(slot_move_down()));
-  
+
     // proxy widget
     proxy_widget = new QGraphicsProxyWidget( this );
     proxy_widget->setWidget( main_widget );
@@ -1866,12 +1866,12 @@ void PageSongInfo::update()
     prepareGeometryChange();
 
     doLayout();
- 
+
     updateGeometry();
- 
+
     QGraphicsWidget::update();
 
-    emit layout_changed();  
+    emit layout_changed();
 }
 
 QSizeF PageSongInfo::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
@@ -1893,7 +1893,7 @@ void PageSongInfo::saveSettings()
 {
     Debug::debug() << "PageSongInfo::saveSettings";
     QStringList search_order;
-    for (int i=0 ; i < ui_listwidget->count() ; ++i) 
+    for (int i=0 ; i < ui_listwidget->count() ; ++i)
     {
         const QListWidgetItem* item = ui_listwidget->item(i);
         if (item->checkState() == Qt::Checked)
@@ -1907,11 +1907,11 @@ void PageSongInfo::saveSettings()
 void PageSongInfo::restoreSettings()
 {
     /* loop over user activated providers */
-    foreach(const QString& provider_name, SETTINGS()->_lyrics_providers) 
+    foreach(const QString& provider_name, SETTINGS()->_lyrics_providers)
     {
-      foreach(const QString& name, ServiceLyrics::fullProvidersList()) 
+      foreach(const QString& name, ServiceLyrics::fullProvidersList())
       {
-         if (provider_name == name) 
+         if (provider_name == name)
          {
           QListWidgetItem* item = new QListWidgetItem(ui_listwidget);
           item->setText(provider_name);
@@ -1920,15 +1920,15 @@ void PageSongInfo::restoreSettings()
          }
       }
     }
-    
-    foreach(const QString& name, ServiceLyrics::fullProvidersList()) 
+
+    foreach(const QString& name, ServiceLyrics::fullProvidersList())
     {
         if( !SETTINGS()->_lyrics_providers.contains( name ) )
         {
           QListWidgetItem* item = new QListWidgetItem(ui_listwidget);
           item->setText(name);
           item->setCheckState(Qt::Unchecked);
-          item->setForeground(palette().color(QPalette::Disabled, QPalette::Text));	  
+          item->setForeground(palette().color(QPalette::Disabled, QPalette::Text));
         }
     }
 }
@@ -1947,25 +1947,25 @@ void PageSongInfo::slot_on_titlebutton_clicked()
       m_button->update();
       isOpen = false;
     }
-    else 
+    else
     {
       proxy_widget->show();
       m_button->setPixmap(QPixmap(":/images/remove_32x32.png"));
       m_button->update();
       isOpen = true;
     }
-    
+
     this->update();
 }
 
-void PageSongInfo::slot_item_changed(QListWidgetItem* item) 
+void PageSongInfo::slot_item_changed(QListWidgetItem* item)
 {
   const bool checked = item->checkState() == Qt::Checked;
   item->setForeground(checked ? palette().color(QPalette::Active, QPalette::Text)
                               : palette().color(QPalette::Disabled, QPalette::Text));
 }
 
-void PageSongInfo::slot_current_item_changed(QListWidgetItem* item) 
+void PageSongInfo::slot_current_item_changed(QListWidgetItem* item)
 {
   if (!item) {
     ui_move_up->setEnabled(false);
@@ -1977,17 +1977,17 @@ void PageSongInfo::slot_current_item_changed(QListWidgetItem* item)
   }
 }
 
-void PageSongInfo::slot_move_up() 
+void PageSongInfo::slot_move_up()
 {
     Move(-1);
 }
 
-void PageSongInfo::slot_move_down() 
+void PageSongInfo::slot_move_down()
 {
     Move(+1);
 }
 
-void PageSongInfo::Move(int d) 
+void PageSongInfo::Move(int d)
 {
   const int row = ui_listwidget->currentRow();
   QListWidgetItem* item = ui_listwidget->takeItem(row);

@@ -37,11 +37,11 @@ Search_Query_Widget::Search_Query_Widget(QWidget *parent) : QWidget(parent)
 
     QHBoxLayout* hl0 = new QHBoxLayout(this);
     hl0->setSpacing(0);
-    hl0->setMargin(0);
+    hl0->setContentsMargins(0, 0, 0 ,0 );
 
     ui_search_field   =  new QComboBox(this);
     ui_search_field->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Minimum);
-    
+
     ui_search_rules   =  new QComboBox(this);
     ui_search_rules->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Minimum);
 
@@ -70,35 +70,35 @@ Search_Query_Widget::Search_Query_Widget(QWidget *parent) : QWidget(parent)
     ui_page_text->setObjectName("ui_page_text");
     QVBoxLayout* vl0 = new QVBoxLayout(ui_page_text);
     vl0->setSpacing(0);
-    vl0->setMargin(0);
+    vl0->setContentsMargins(0, 0, 0 ,0 );
     vl0->addWidget(ui_line_edit);
 
     ui_page_number = new QWidget();
     ui_page_number->setObjectName("ui_page_number");
     QVBoxLayout* vl1 = new QVBoxLayout(ui_page_number);
     vl1->setSpacing(0);
-    vl1->setMargin(0);
+    vl1->setContentsMargins(0, 0, 0 ,0 );
     vl1->addWidget(ui_spin_box);
 
     ui_page_time = new QWidget();
     ui_page_time->setObjectName("ui_page_time");
     QVBoxLayout* vl2 = new QVBoxLayout(ui_page_time);
     vl2->setSpacing(0);
-    vl2->setMargin(0);
+    vl2->setContentsMargins(0, 0, 0 ,0 );
     vl2->addWidget(ui_time_edit);
 
     ui_page_date = new QWidget();
     ui_page_date->setObjectName("ui_page_date");
     QVBoxLayout* vl3 = new QVBoxLayout(ui_page_date);
     vl3->setSpacing(0);
-    vl3->setMargin(0);
+    vl3->setContentsMargins(0, 0, 0 ,0 );
     vl3->addWidget(ui_date_edit);
 
     ui_page_rating = new QWidget();
     ui_page_rating->setObjectName("ui_page_rating");
     QVBoxLayout* vl4 = new QVBoxLayout(ui_page_rating);
     vl4->setSpacing(0);
-    vl4->setMargin(0);
+    vl4->setContentsMargins(0, 0, 0 ,0 );
     vl4->addWidget(ui_rating_widget);
 
     ui_stacked_widget->addWidget (ui_page_text);
@@ -111,7 +111,7 @@ Search_Query_Widget::Search_Query_Widget(QWidget *parent) : QWidget(parent)
     ui_remove_button->setStyleSheet(
       QString ("QPushButton { border: none;min-width: 20px;min-height: 20px;}")
     );
-    
+
     hl0->addWidget(ui_search_field);
     hl0->addWidget(ui_search_rules);
     hl0->addWidget(ui_stacked_widget);
@@ -186,7 +186,7 @@ void Search_Query_Widget::set_query(SearchQuery& query)
         break;
 
       case SearchQuery::type_Date:
-        //ui_date_edit->setDateTime( QDateTime::fromTime_t(query.value_.toInt()) );
+        //ui_date_edit->setDateTime( QDateTime::fromSecsSinceEpoch(query.value_.toInt()) );
         ui_date_edit->setDateTime( query.value_.toDateTime() );
         break;
 

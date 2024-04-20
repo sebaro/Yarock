@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 3.16)
 
 project(enginephonon)
 # ------------------------------------------------------------------------------
@@ -16,12 +16,12 @@ ADD_DEFINITIONS( -DENABLE_PHONON )
 # ------------------------------------------------------------------------------
 #  EXTERNAL LIB
 # ------------------------------------------------------------------------------
-if(ENABLE_QT5)
+if(ENABLE_QT6)
+    FIND_PACKAGE( Phonon4Qt6 REQUIRED )
+else(ENABLE_QT6)
     FIND_PACKAGE( Phonon4Qt5 REQUIRED )
-else(ENABLE_QT5)
-    FIND_PACKAGE( Phonon REQUIRED )
-endif (ENABLE_QT5)    
- 
+endif (ENABLE_QT6)
+
 
 # ------------------------------------------------------------------------------
 #  INCLUDES
@@ -33,27 +33,27 @@ INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/player/
 )
 
 
-if (ENABLE_QT5)
+if (ENABLE_QT6)
+    INCLUDE_DIRECTORIES( ${PHONON4QT6_INCLUDE_DIR}/phonon4qt6 )
+else (ENABLE_QT6)
     INCLUDE_DIRECTORIES( ${PHONON4QT5_INCLUDE_DIR}/phonon4qt5 )
-else (ENABLE_QT5)
-    INCLUDE_DIRECTORIES( ${PHONON_INCLUDES} )
-endif (ENABLE_QT5)  
+endif (ENABLE_QT6)
 
 
-if (ENABLE_QT5)
+if (ENABLE_QT6)
+    set (QTLIBS ${Qt6Core_LIBRARIES})
+
+    set (QTINCLUDES ${Qt6Core_INCLUDE_DIRS})
+
+    add_definitions( ${Qt6Core_DEFINITIONS})
+
+else (ENABLE_QT6)
     set (QTLIBS ${Qt5Core_LIBRARIES})
-    
+
     set (QTINCLUDES ${Qt5Core_INCLUDE_DIRS})
 
     add_definitions( ${Qt5Core_DEFINITIONS})
-
-else (ENABLE_QT5)
-    set (QTLIBS ${QT_QTCORE_LIBRARY})
-
-    set (QTINCLUDES ${QT_INCLUDES})
-    
-    add_definitions(${QT_DEFINITIONS})    
-endif (ENABLE_QT5)
+endif (ENABLE_QT6)
 
 INCLUDE_DIRECTORIES( ${QTINCLUDES} )
 
@@ -75,15 +75,15 @@ SET_TARGET_PROPERTIES(enginephonon PROPERTIES AUTOMOC TRUE)
 
 ADD_DEPENDENCIES(enginephonon yarock)
 
-if(ENABLE_QT5)  
+if(ENABLE_QT6)
+    TARGET_LINK_LIBRARIES(enginephonon ${PHONON4QT6_LIBRARY} ${QTLIBS})
+else(ENABLE_QT6)
     TARGET_LINK_LIBRARIES(enginephonon ${PHONON4QT5_LIBRARY} ${QTLIBS})
-else(ENABLE_QT5)
-    TARGET_LINK_LIBRARIES(enginephonon ${PHONON_LIBS} ${QTLIBS})
-endif(ENABLE_QT5)
+endif(ENABLE_QT6)
 
 # ------------------------------------------------------------------------------
 #  INSTALL
-# ------------------------------------------------------------------------------  
+# ------------------------------------------------------------------------------
 if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
    set (CMAKE_INSTALL_PREFIX /usr CACHE PATH "default install path" FORCE )
 endif()

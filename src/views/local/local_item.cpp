@@ -56,7 +56,7 @@ AlbumGraphicItem::AlbumGraphicItem()
     setAcceptsHoverEvents(true);
 #else
     setAcceptHoverEvents(true);
-#endif    
+#endif
     setAcceptDrops(false);
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setFlag(QGraphicsItem::ItemIsMovable, false);
@@ -66,7 +66,7 @@ AlbumGraphicItem::AlbumGraphicItem()
     opt.widget = 0;
     opt.palette = QApplication::palette();
     opt.font = QApplication::font();
-    opt.font.setStyleStrategy(QFont::PreferAntialias);    
+    opt.font.setStyleStrategy(QFont::PreferAntialias);
     opt.fontMetrics = QFontMetrics(opt.font);
 
     opt.showDecorationSelected = true;
@@ -77,9 +77,9 @@ AlbumGraphicItem::AlbumGraphicItem()
     opt.state &= ~ QStyle::State_Active;
     opt.state |= QStyle::State_Enabled;
     opt.state &= ~QStyle::State_Selected;
-    
+
     m_coverSize = SETTINGS()->_coverSize;
-    
+
     opt.rect = boundingRect().toRect();
     opt.palette.setColor(QPalette::Active, QPalette::Highlight, SETTINGS()->_baseColor);
     opt.palette.setColor(QPalette::Inactive, QPalette::Highlight, QApplication::palette().color(QPalette::Normal,QPalette::Highlight));
@@ -101,8 +101,8 @@ Q_UNUSED(option)
     {
         opt.state |= QStyle::State_Selected;
         opt.state |= QStyle::State_Active;
-    }    
-    else 
+    }
+    else
     {
         opt.state &= ~QStyle::State_Active;
         opt.state &= ~QStyle::State_Selected;
@@ -111,7 +111,7 @@ Q_UNUSED(option)
             opt.state |= QStyle::State_Selected;
         }
     }
-    
+
 
     /* Draw frame for State_HasFocus item */
     UTIL::getStyle()->drawControl(QStyle::CE_ItemViewItem, &opt, painter, widget);
@@ -121,16 +121,16 @@ Q_UNUSED(option)
        pixTemp.fill(Qt::transparent);
        QPainter p;
        p.begin(&pixTemp);
- 
+
        //! paint cover art
        QPixmap pix = CoverCache::instance()->cover(media);
        p.drawPixmap((opt.rect.size().width()- m_coverSize)/2,2, pix);
        p.end();
     }
- 
+
     /* manual graphics shadow (Qgraphics Effect cause refresh pb) */
     drawShadow(painter,QPointF(0,0),pixTemp,boundingRect());
-    
+
 
     /* paint album title */
     painter->setPen(opt.palette.color ( QPalette::Normal, isSelected() ? QPalette::HighlightedText : QPalette::WindowText) );
@@ -147,10 +147,10 @@ Q_UNUSED(option)
         painter->setBrush(QBrush( brush_color ,Qt::SolidPattern));
         painter->drawRoundedRect(QRect(1,36,16,16), 8.0, 8.0);
         painter->restore();
-     
+
         painter->drawText(QRect(0, 35, 18, 18), Qt::AlignTop | Qt::AlignCenter, QString::number(media->disc_number));
     }
-   
+
     /* paint artist name */
     painter->setFont( UTIL::alternateFont() );
     painter->setPen(opt.palette.color ( QPalette::Disabled, isSelected() ? QPalette::HighlightedText : QPalette::WindowText) );
@@ -237,8 +237,8 @@ Q_UNUSED(option)
     {
         opt.state |= QStyle::State_Selected;
         opt.state |= QStyle::State_Active;
-    }    
-    else 
+    }
+    else
     {
         opt.state &= ~QStyle::State_Active;
         opt.state &= ~QStyle::State_Selected;
@@ -257,13 +257,13 @@ Q_UNUSED(option)
        pixTemp.fill(Qt::transparent);
        QPainter p;
        p.begin(&pixTemp);
- 
+
        //! paint cover art
        QPixmap pix = CoverCache::instance()->cover(media);
        p.drawPixmap((opt.rect.size().width()- m_coverSize)/2,2, pix);
        p.end();
     }
- 
+
     /* manual graphics shadow (Qgraphics Effect cause refresh pb) */
     drawShadow(painter,QPointF(0,0),pixTemp,boundingRect());
 
@@ -282,10 +282,10 @@ Q_UNUSED(option)
         painter->setBrush(QBrush( brush_color ,Qt::SolidPattern));
         painter->drawRoundedRect(QRect(1,36,16,16), 8.0, 8.0);
         painter->restore();
-     
+
         painter->drawText(QRect(0, 35, 18, 18), Qt::AlignTop | Qt::AlignCenter, QString::number(media->disc_number));
     }
-  
+
     /* paint year */
     painter->setFont( UTIL::alternateFont() );
     painter->setPen(opt.palette.color ( QPalette::Disabled, isSelected() ? QPalette::HighlightedText : QPalette::WindowText));
@@ -316,7 +316,7 @@ void AlbumGenreGraphicItem::startDrag(QWidget* w)
     for(int i =0; i < this->media->childCount();i++)
     {
       MEDIA::TrackPtr track = MEDIA::TrackPtr::staticCast( this->media->child(i) );
-      
+
       if(!LocalTrackModel::instance()->isMediaMatch(track)) continue;
       if(track->genre == _genre)
         mimedata->addTrack(MEDIA::TrackPtr::staticCast( this->media->child(i) ));
@@ -369,8 +369,8 @@ Q_UNUSED(option)
     {
         opt.state |= QStyle::State_Selected;
         opt.state |= QStyle::State_Active;
-    }    
-    else 
+    }
+    else
     {
         opt.state &= ~QStyle::State_Active;
         opt.state &= ~QStyle::State_Selected;
@@ -461,8 +461,8 @@ Q_UNUSED(option)
     {
         opt.state |= QStyle::State_Selected;
         opt.state |= QStyle::State_Active;
-    }    
-    else 
+    }
+    else
     {
         opt.state &= ~QStyle::State_Active;
         opt.state &= ~QStyle::State_Selected;
@@ -589,7 +589,7 @@ ArtistGraphicItem::ArtistGraphicItem()
     setAcceptsHoverEvents(true);
 #else
     setAcceptHoverEvents(true);
-#endif 
+#endif
     setAcceptDrops(false);
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setFlag(QGraphicsItem::ItemIsMovable, false);
@@ -599,7 +599,7 @@ ArtistGraphicItem::ArtistGraphicItem()
     opt.widget = 0;
     opt.palette = QApplication::palette();
     opt.font = QApplication::font();
-    opt.font.setStyleStrategy(QFont::PreferAntialias);    
+    opt.font.setStyleStrategy(QFont::PreferAntialias);
     opt.fontMetrics = QFontMetrics(opt.font);
 
     opt.showDecorationSelected = true;
@@ -610,7 +610,7 @@ ArtistGraphicItem::ArtistGraphicItem()
     opt.state &= ~ QStyle::State_Active;
     opt.state |= QStyle::State_Enabled;
     opt.state &= ~QStyle::State_Selected;
-    
+
     m_coverSize = SETTINGS()->_coverSize;
 
     opt.rect = boundingRect().toRect();
@@ -634,8 +634,8 @@ Q_UNUSED(option)
     {
         opt.state |= QStyle::State_Selected;
         opt.state |= QStyle::State_Active;
-    }    
-    else 
+    }
+    else
     {
         opt.state &= ~QStyle::State_Active;
         opt.state &= ~QStyle::State_Selected;
@@ -659,7 +659,7 @@ Q_UNUSED(option)
 
       //! paint cover art
       QPixmap pix = CoverCache::instance()->image(media, albums_covers);
-      
+
       p.drawPixmap((opt.rect.size().width()-m_coverSize)/2,2,pix);
       p.end();
     }
@@ -756,8 +756,8 @@ Q_UNUSED(option)
     {
         opt.state |= QStyle::State_Selected;
         opt.state |= QStyle::State_Active;
-    }    
-    else 
+    }
+    else
     {
         opt.state &= ~QStyle::State_Active;
         opt.state &= ~QStyle::State_Selected;
@@ -805,7 +805,7 @@ Q_UNUSED(option)
 
     const QString elided_artist = opt.fontMetrics.elidedText ( media->name, Qt::ElideRight, m_coverSize*1.25);
     painter->drawText(QRect(0, m_coverSize+22, m_coverSize*1.25, 25), Qt::AlignTop | Qt::AlignHCenter, elided_artist);
-    
+
     /* paint favorite attibute */
     if(media->isFavorite)
       painter->drawPixmap(0, 60, QPixmap(":/images/favorites-18x18.png"));
@@ -841,8 +841,8 @@ Q_UNUSED(option)
     {
         opt.state |= QStyle::State_Selected;
         opt.state |= QStyle::State_Active;
-    }    
-    else 
+    }
+    else
     {
         opt.state &= ~QStyle::State_Active;
         opt.state &= ~QStyle::State_Selected;
@@ -851,10 +851,10 @@ Q_UNUSED(option)
             opt.state |= QStyle::State_Selected;
         }
     }
-    
+
     /* Draw frame for State_HasFocus item */
     UTIL::getStyle()->drawControl(QStyle::CE_ItemViewItem, &opt, painter, widget);
-    
+
     /* draw artist image 200x200 */
     QPixmap pixTemp( opt.rect.size() );
     {
@@ -963,7 +963,7 @@ TrackGraphicItem::TrackGraphicItem()
     setAcceptsHoverEvents(true);
 #else
     setAcceptHoverEvents(true);
-#endif 
+#endif
     setAcceptDrops(false);
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setFlag(QGraphicsItem::ItemIsMovable, false);
@@ -973,7 +973,7 @@ TrackGraphicItem::TrackGraphicItem()
     opt.widget = 0;
     opt.palette = QApplication::palette();
     opt.font = QApplication::font();
-    opt.font.setStyleStrategy(QFont::PreferAntialias);    
+    opt.font.setStyleStrategy(QFont::PreferAntialias);
     opt.fontMetrics = QFontMetrics(opt.font);
 
     opt.showDecorationSelected = true;
@@ -1049,7 +1049,7 @@ Q_UNUSED(option)
         const QString duree_elided = opt.fontMetrics.elidedText ( media->durationToString(), Qt::ElideRight, 50);
         painter->drawText(QRect(60+title_width*3, 0, 50, 22), Qt::AlignRight | Qt::AlignVCenter,duree_elided);
    }
-   else 
+   else
    {
         painter->setPen( opt.palette.color ( isSelected() ? QPalette::Normal : QPalette::Disabled, isSelected() ? QPalette::HighlightedText : QPalette::WindowText) );
         painter->setFont( opt.font );
@@ -1061,7 +1061,7 @@ Q_UNUSED(option)
         else
         {
           QString info = !media->extra["station"].toString().isEmpty() ? media->extra["station"].toString() : media->url;
-          
+
           const QString name_elided = opt.fontMetrics.elidedText ( info, Qt::ElideRight, width -20);
           painter->drawText(QRect(30, 0,  width -20, 22), Qt::AlignLeft | Qt::AlignVCenter, name_elided);
         }
@@ -1350,12 +1350,12 @@ Q_UNUSED(option)
      const float rating_ = media->rating;
      RatingPainter::instance()->Paint(painter, QRect(title_width*3-50 + 115, 0, 80, 22), hover_rating_ == -1.0 ? rating_ : hover_rating_, true);
    }
-   else 
+   else
    {
      painter->setPen( opt.palette.color ( isSelected() ? QPalette::Normal : QPalette::Disabled, isSelected() ? QPalette::HighlightedText : QPalette::WindowText) );
      painter->setFont(opt.font);
 
-     if(isTrack) 
+     if(isTrack)
      {
          const QString name_elided = opt.fontMetrics.elidedText ( media->url, Qt::ElideRight, width -20);
          painter->drawText(QRect(30, 0,  width -20, 22), Qt::AlignLeft | Qt::AlignVCenter, name_elided);
@@ -1363,7 +1363,7 @@ Q_UNUSED(option)
      else
      {
          QString info = !media->extra["station"].toString().isEmpty() ? media->extra["station"].toString() : media->url;
-          
+
          const QString name_elided = opt.fontMetrics.elidedText ( info, Qt::ElideRight, width -20);
          painter->drawText(QRect(30, 0,  width -20, 22), Qt::AlignLeft | Qt::AlignVCenter, name_elided);
      }
@@ -1574,7 +1574,7 @@ PlaylistGraphicItem::PlaylistGraphicItem()
     setAcceptsHoverEvents(true);
 #else
     setAcceptHoverEvents(true);
-#endif 
+#endif
    setAcceptDrops(false);
    setFlag(QGraphicsItem::ItemIsSelectable, true);
    setFlag(QGraphicsItem::ItemIsMovable, false);
@@ -1595,7 +1595,7 @@ PlaylistGraphicItem::PlaylistGraphicItem()
    opt.state &= ~ QStyle::State_Active;
    opt.state |= QStyle::State_Enabled;
    opt.state &= ~QStyle::State_Selected;
-   
+
    opt.palette.setColor(QPalette::Active, QPalette::Highlight, SETTINGS()->_baseColor);
    opt.palette.setColor(QPalette::Inactive, QPalette::Highlight, QApplication::palette().color(QPalette::Normal,QPalette::Highlight));
 }
@@ -1618,8 +1618,8 @@ Q_UNUSED(option)
    {
        opt.state |= QStyle::State_Selected;
        opt.state |= QStyle::State_Active;
-   }    
-   else 
+   }
+   else
    {
        opt.state &= ~QStyle::State_Active;
        opt.state &= ~QStyle::State_Selected;
@@ -1629,7 +1629,7 @@ Q_UNUSED(option)
        }
    }
 
-   
+
    //! Draw frame for State_HasFocus item
    opt.rect = boundingRect().toRect().adjusted(0,0,0,0);
    UTIL::getStyle()->drawControl(QStyle::CE_ItemViewItem, &opt, painter, widget);
@@ -1643,7 +1643,7 @@ Q_UNUSED(option)
    //! paint playlist date
    if( media->p_type == T_FILE || media->p_type== T_DATABASE)
    {
-      QDateTime date        =  QDateTime::fromTime_t(media->date);
+      QDateTime date        =  QDateTime::fromSecsSinceEpoch(media->date);
       painter->drawText(boundingRect().toRect().adjusted(0, 0, 0, -150), Qt::AlignCenter, date.toString("dd.MM.yyyy"));
    }
 

@@ -26,6 +26,7 @@
 #include <QDialogButtonBox>
 #include <QCryptographicHash>
 #include <QFile>
+#include <QRegularExpression>
 
 
 /*
@@ -124,14 +125,14 @@ void LyricsEditor::saveLyrics()
     out << lyricsData;
 
     //! Emit Lyrics Changed
-    lyricsData.replace(QRegExp("\n"), "<br>");
+    lyricsData.replace(QRegularExpression("\n"), "<br>");
 
     /* notify info */
     QVariantHash output;
     output[ "provider" ] = QString("local");
     output[ "lyrics" ]   = lyricsData;
     output[ "url" ]      = path;
-        
+
     INFO::InfoRequestData request;
     request.type = INFO::InfoTrackLyrics;
 

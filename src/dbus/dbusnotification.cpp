@@ -55,7 +55,7 @@ QDBusArgument& operator<< (QDBusArgument& arg, const QImage& image)
   int channels = i.isGrayscale() ? 1 : (i.hasAlphaChannel() ? 4 : 3);
   arg << i.depth() / channels;
   arg << channels;
-  arg << QByteArray(reinterpret_cast<const char*>(i.bits()), i.byteCount());
+  arg << QByteArray(reinterpret_cast<const char*>(i.bits()), i.sizeInBytes());
   arg.endStructure();
   return arg;
 }
@@ -113,7 +113,7 @@ void DbusNotification::reloadSettings()
 
     connect(Engine::instance(), SIGNAL(engineStateChanged()), this, SLOT(handleStateChanged()));
     connect(Engine::instance(), SIGNAL(mediaChanged()), this, SLOT(sendNowPlayingNotif()));
-    
+
     /* FIXE ME */
     connect(MainWindow::instance(), SIGNAL(playlistFinished()), this, SLOT(sendPlaylistFinished()));
 }
@@ -128,14 +128,14 @@ void DbusNotification::handleVolumeChanged()
 void DbusNotification::handleStateChanged()
 {
     //Debug::debug() << "  [DbusNotification] handleStateChanged";
-    
+
 /* note 07-12-2012 :
  * les messages pour la piste de lecture ne sont pas envoyés (mandriva + phonon-gstreamer)
  * il faut utiliser le signal  TrackChanged à la place du stateChange
  */
     ENGINE::E_ENGINE_STATE engine_state = Engine::instance()->state();
 
-    switch (engine_state) 
+    switch (engine_state)
     {
       case ENGINE::PLAYING :
         //! with phonon-gstreamer PLAYING state is not send for each trach
@@ -146,11 +146,11 @@ void DbusNotification::handleStateChanged()
         //! phonon-vlc send pause state between track
         /*sendPaused();*/
         break;
-      case ENGINE::STOPPED : 
+      case ENGINE::STOPPED :
           if( !Engine::instance()->nextTrack() && !Engine::instance()->playingTrack() )
-              sendStopped(); 
+              sendStopped();
         break;
-      case ENGINE::ERROR   : sendStopped(); 
+      case ENGINE::ERROR   : sendStopped();
         break;
     }
 }

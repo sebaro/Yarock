@@ -37,42 +37,42 @@ EditorSearch::EditorSearch(QWidget *parent) : QWidget(parent)
 {
     //Debug::debug() << "      [EditorSearch] create";
     this->setWindowFlags(Qt::Popup);
- 
+
     QLabel *l1 = new QLabel(tr("Search mode"));
     l1->setFont(QFont("Arial",10,QFont::Bold));
-    
+
     ui_search_mode = new QComboBox();
-    ui_search_mode->setSizeAdjustPolicy(QComboBox::AdjustToMinimumContentsLength);
+    ui_search_mode->setSizeAdjustPolicy(QComboBox::AdjustToContents);
     ui_search_mode->addItem(tr("Match search term (AND)"));
     ui_search_mode->setItemData(0, MediaSearch::Type_And);
     ui_search_mode->addItem(tr("Match search term (OR)"));
     ui_search_mode->setItemData(1, MediaSearch::Type_Or);
 
     QLabel *l2 = new QLabel(tr("Search terms"));
-    l2->setFont(QFont("Arial",10,QFont::Bold));  
-  
-    
+    l2->setFont(QFont("Arial",10,QFont::Bold));
+
+
     ui_search_query_layout = new QVBoxLayout();
     ui_search_query_layout->setSpacing(0);
     ui_search_query_layout->setContentsMargins(0,0,0,0);
-      
+
     Search_Query_Widget * ui_search_query_widget = new Search_Query_Widget();
-    ui_search_query_layout->addWidget(ui_search_query_widget);    
+    ui_search_query_layout->addWidget(ui_search_query_widget);
     listSearchWidget.append(ui_search_query_widget);
 
     /* --- add search Button ---*/
     ui_add_search_button = new QPushButton(tr("Add search query"));
-  
-  
+
+
     ui_buttonBox = new QDialogButtonBox();
     ui_buttonBox->setOrientation(Qt::Horizontal);
-    ui_buttonBox->setStandardButtons(QDialogButtonBox::Apply | QDialogButtonBox::Reset);    
-    
-    
+    ui_buttonBox->setStandardButtons(QDialogButtonBox::Apply | QDialogButtonBox::Reset);
+
+
     /* --- scrollarea ---*/
     QWidget *w  = new QWidget();
     w->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Minimum);
-     
+
     QVBoxLayout* vl0 = new QVBoxLayout(w);
     vl0->addWidget(l1);
     vl0->addWidget(ui_search_mode);
@@ -81,13 +81,13 @@ EditorSearch::EditorSearch(QWidget *parent) : QWidget(parent)
     vl0->addWidget(ui_add_search_button);
     vl0->addItem(new QSpacerItem(10, 10, QSizePolicy::Minimum, QSizePolicy::MinimumExpanding));
     vl0->addWidget(ui_buttonBox);
-  
+
     ui_scrollarea = new QScrollArea();
     ui_scrollarea->setWidget(w);
     ui_scrollarea->setWidgetResizable(true);
     ui_scrollarea->setFrameShape(QFrame::NoFrame);
     ui_scrollarea->viewport()->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Minimum);
-    
+
     /* --- layout ---*/
     QVBoxLayout *layout = new QVBoxLayout();
     layout->setSpacing(2);
@@ -98,9 +98,9 @@ EditorSearch::EditorSearch(QWidget *parent) : QWidget(parent)
     /* --- connection --- */
     QObject::connect(ui_buttonBox, SIGNAL(clicked ( QAbstractButton *)), this, SLOT(on_buttonBox_clicked(QAbstractButton *)));
     QObject::connect(ui_search_mode,SIGNAL(currentIndexChanged(int)), SLOT(slot_search_mode_change()));
-    QObject::connect(ui_add_search_button, SIGNAL(clicked()), this, SLOT(on_button_AddSearch_clicked()));  
+    QObject::connect(ui_add_search_button, SIGNAL(clicked()), this, SLOT(on_button_AddSearch_clicked()));
 
-  
+
     /* --- initialization --- */
     m_isActive = false;
 }
@@ -134,7 +134,7 @@ void EditorSearch::on_button_AddSearch_clicked()
 void EditorSearch::add_search_query_widget(Search_Query_Widget* widget)
 {
     //Debug::debug() << "      [EditorSearch] add_search_query_widget";
-  
+
     ui_search_query_layout->addWidget(widget);
     listSearchWidget.append(widget);
 
@@ -142,16 +142,16 @@ void EditorSearch::add_search_query_widget(Search_Query_Widget* widget)
     ui_scrollarea->viewport()->updateGeometry();
     ui_scrollarea->viewport()->update();
     ui_scrollarea->update();
-    
+
     QObject::connect(widget, SIGNAL(signalRemoveClicked()), this, SLOT(slot_remove_search_query_widget()));
 }
 
 void EditorSearch::remove_search_query_widget(Search_Query_Widget* widget)
 {
     //Debug::debug() << "      [EditorSearch] remove_search_query_widget";
-  
+
      const int H = widget->sizeHint().height();
-     
+
      ui_search_query_layout->removeWidget(widget);
      const int index = listSearchWidget.indexOf(widget);
 
@@ -159,8 +159,8 @@ void EditorSearch::remove_search_query_widget(Search_Query_Widget* widget)
      ui_scrollarea->viewport()->updateGeometry();
      ui_scrollarea->viewport()->update();
      ui_scrollarea->update();
-      
-     delete listSearchWidget.takeAt(index);       
+
+     delete listSearchWidget.takeAt(index);
 }
 
 
@@ -198,23 +198,23 @@ bool EditorSearch::is_search_valid()
 void EditorSearch::on_buttonBox_clicked(QAbstractButton * button)
 {
     //Debug::debug() << "      [EditorSearch] on_buttonBox_clicked";
-  
+
     QDialogButtonBox::ButtonRole role = ui_buttonBox->buttonRole(button);
 
     if ( role == QDialogButtonBox::ResetRole )
     {
       ui_search_mode->setCurrentIndex(0);
- 
+
       foreach(Search_Query_Widget *w, listSearchWidget)
         remove_search_query_widget(w);
-     
+
       m_isActive = false;
     }
     else
     {
-      m_isActive = true; 
+      m_isActive = true;
     }
-    
+
     emit search_triggered();
     this->hide();
 }
@@ -223,8 +223,8 @@ void EditorSearch::keyPressEvent(QKeyEvent* event)
 {
     if (event->key() == Qt::Key_Enter /*|| event->key() == Qt::Key_Return*/)
     {
-      m_isActive = true; 
-    
+      m_isActive = true;
+
       this->hide();
       event->accept();
       emit search_triggered();
@@ -235,20 +235,20 @@ void EditorSearch::keyPressEvent(QKeyEvent* event)
 void EditorSearch::set_search(QVariant v_search)
 {
     //Debug::debug() << "      [EditorSearch] set_search";
-  
+
     MediaSearch media_search = qvariant_cast<MediaSearch>(v_search);
-     
+
     m_isActive = is_search_valid() ? true : false;
-     
+
     /* search mode */
     ui_search_mode->setCurrentIndex(ui_search_mode->findData(media_search.search_type_));
- 
+
     /* search query */
     foreach(Search_Query_Widget *w, listSearchWidget)
       remove_search_query_widget(w);
-      
+
     listSearchWidget.clear();
- 
+
     foreach(SearchQuery query, media_search.query_list_) {
       Search_Query_Widget* widget =  new Search_Query_Widget();
       widget->set_query(query);
@@ -260,12 +260,12 @@ void EditorSearch::set_search(QVariant v_search)
 QVariant EditorSearch::get_search()
 {
     //Debug::debug() << "      [EditorSearch] get_search";
-  
+
     if(!is_search_valid()) {
       Debug::debug() << "      [EditorSearch] search is not valid";
       return QVariant();
     }
-    
+
     MediaSearch  search;
 
     search.search_type_      = MediaSearch::SearchType(ui_search_mode->itemData(ui_search_mode->currentIndex()).toInt());
@@ -278,13 +278,13 @@ QVariant EditorSearch::get_search()
 //       Debug::debug() << "EditorSmart::get_search query field: " << SearchQuery::FieldName(w->query().field_);
 //       Debug::debug() << "EditorSmart::get_search query operator: "
 //          << SearchQuery::OperatorText(SearchQuery::TypeOf(w->query().field_), w->query().operator_);
-// 
+//
 //       Debug::debug() << "EditorSmart::get_search query value: " <<  w->query().value_;
-    }      
-      
-    
+    }
+
+
     QVariant stored;
     stored.setValue(search);
-    
+
     return stored;
 }

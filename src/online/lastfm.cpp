@@ -13,7 +13,7 @@
 *                                                                                       *
 *  You should have received a copy of the GNU General Public License along with         *
 *  this program.  If not, see <http://www.gnu.org/licenses/>.                           *
-*****************************************************************************************/ 
+*****************************************************************************************/
 #include "lastfm.h"
 #include "debug.h"
 #include "utilities.h"
@@ -33,7 +33,7 @@
 
 /*******************************************************************************
     namespace LastFm
-*******************************************************************************/ 
+*******************************************************************************/
 namespace LastFm {
 
   namespace GLOBAL {
@@ -43,8 +43,8 @@ namespace LastFm {
         QString auth_token;
         QString username;
   }
-  
-  void sign(QMap<QString, QString>& params) 
+
+  void sign(QMap<QString, QString>& params)
   {
     QString s;
     QMapIterator<QString, QString> i(params);
@@ -54,16 +54,16 @@ namespace LastFm {
     }
     s += LastFm::GLOBAL::secret_key;
     params["api_sig"] = QString::fromLatin1(QCryptographicHash::hash(s.toUtf8(), QCryptographicHash::Md5).toHex());
-  }  
-  
-  
+  }
+
+
   /* md5 of string */
   inline QString md5( const QByteArray& src )
   {
     QByteArray const digest = QCryptographicHash::hash( src, QCryptographicHash::Md5 );
     return QString::fromLatin1( digest.toHex() ).rightJustified( 32, '0' ).toLower();
   }
-  
+
   QByteArray paramToBytearray( QMap<QString, QString>& params )
   {
      QByteArray data;
@@ -88,11 +88,11 @@ namespace LastFm {
 */
 static LastFmService* INSTANCE = 0;
 
-LastFmService* LastFmService::instance() 
+LastFmService* LastFmService::instance()
 {
-    if (!INSTANCE) 
+    if (!INSTANCE)
       INSTANCE = new LastFmService();
-    
+
     return INSTANCE;
 }
 
@@ -100,7 +100,7 @@ LastFmService* LastFmService::instance()
 LastFmService::LastFmService()
 {
     Debug::debug() << "    [LastFmService] create";
-    init();  
+    init();
 }
 
 
@@ -122,15 +122,15 @@ void LastFmService::saveSettings()
     settings.sync();
 }
 
-    
+
 
 void LastFmService::init()
 {
     m_currentTrack    = 0;
-    
+
     bool enable = SETTINGS()->_useLastFmScrobbler;
     Debug::debug() << "    [LastFmService] init enable " << enable;
-    
+
     disconnect(Engine::instance(), 0,this, 0);
 
     /*  load settings */
@@ -142,13 +142,13 @@ void LastFmService::init()
     LastFm::GLOBAL::api_key       = "b3717637c18071e1619e92ee2c3eb0f8";
     LastFm::GLOBAL::secret_key    = "8192599d44d34b27c520d597d34f3714";
     settings.endGroup();
-    
-    if( enable && isAuthenticated() ) 
+
+    if( enable && isAuthenticated() )
     {
        connect(Engine::instance(), SIGNAL(engineStateChanged()), this, SLOT(slot_state_changed()));
        connect(Engine::instance(), SIGNAL(mediaChanged()), this, SLOT(slot_track_changed()));
     }
-    
+
     /* change status for send love action */
     ACTIONS()->value(PLAYQUEUE_TRACK_LOVE)->setEnabled(enable);
     ACTIONS()->value(PLAYING_TRACK_LOVE)->setEnabled(enable);
@@ -156,7 +156,7 @@ void LastFmService::init()
 
 QString LastFmService::username() {return LastFm::GLOBAL::username;}
 
-    
+
 bool LastFmService::isAuthenticated() const
 {
     return !LastFm::GLOBAL::session_key.isEmpty();
@@ -167,9 +167,9 @@ void LastFmService::signIn(const QString& username, const QString& password)
 {
     Debug::debug() << "    [LastFmService] Sign In request - username" << username;
     signOut();
-    
+
     QUrl url("https://ws.audioscrobbler.com/2.0/");
-    
+
     QMap<QString, QString> params;
     params["method"]    = "auth.getMobileSession";
     params["username"]  = username;
@@ -214,14 +214,14 @@ void LastFmService::slot_sign_in_finished(QNetworkReply* reply)
         Debug::debug() << "    [LastFmService] Sign in Successful LastFm::GLOBAL::username " << LastFm::GLOBAL::username;
     }
 
-    emit signInFinished();  
+    emit signInFinished();
 }
 
 void LastFmService::signOut()
 {
     Debug::debug() << "    [LastFmService] Sign out";
     LastFm::GLOBAL::username.clear();
-    LastFm::GLOBAL::session_key.clear();  
+    LastFm::GLOBAL::session_key.clear();
 }
 
 
@@ -240,33 +240,33 @@ void LastFmService::love(MEDIA::TrackPtr track, bool love)
     params["track"]       = track->title;
     params["api_key"]     = LastFm::GLOBAL::api_key;
     params["sk"]          = LastFm::GLOBAL::session_key;
-    
+
     LastFm::sign(params);
 
     QByteArray data = LastFm::paramToBytearray( params );
-    
+
     /* post request */
     NetworkReply *reply = HTTP()->post(url, data);
-    connect(reply, SIGNAL(finished(QNetworkReply*)), SLOT(scrobbled(QNetworkReply*)));  
-  
+    connect(reply, SIGNAL(finished(QNetworkReply*)), SLOT(scrobbled(QNetworkReply*)));
+
 }
 
 
-void LastFmService::scrobble() 
+void LastFmService::scrobble()
 {
     Debug::debug() << "    [LastFmService] scrobble ";
-  
+
     if(!m_currentTrack) {
       Debug::debug() << "    [LastFmService] no current track ";
       return;
     }
-    
+
     if (LastFm::GLOBAL::session_key.isEmpty()) {
         Debug::warning() <<  "    [LastFmService] Not authenticated to Last.fm";
         return;
     }
-    
-    m_playbackLength  += QDateTime::currentDateTime().toTime_t() - m_unpauseTime;
+
+    m_playbackLength  += QDateTime::currentDateTime().toSecsSinceEpoch() - m_unpauseTime;
     //Debug::debug() << "    [LastFmService] scrobble track m_playbackLength" << m_playbackLength;
     //Debug::debug() << "    [LastFmService] scrobble track m_trackLength" << m_trackLength;
 
@@ -275,8 +275,8 @@ void LastFmService::scrobble()
     if (((m_playbackLength < m_currentTrack->duration / 2) && (m_playbackLength < 240)) || (m_currentTrack->duration < 30)) {
         Debug::debug() << "    [LastFmService] track " << m_currentTrack->title << "was not played long enough or is too short, not scrobbling";
         return;
-    }  
-    
+    }
+
     QUrl url("https://ws.audioscrobbler.com/2.0/");
 
     QMap<QString, QString> params;
@@ -293,24 +293,24 @@ void LastFmService::scrobble()
     LastFm::sign(params);
 
     QByteArray data = LastFm::paramToBytearray( params );
-      
+
     /* post request */
     NetworkReply *reply = HTTP()->post(url, data);
     connect(reply, SIGNAL(finished(QNetworkReply*)), SLOT(slot_lastfm_response(QNetworkReply*)));
 }
 
 
-void LastFmService::nowPlaying() 
+void LastFmService::nowPlaying()
 {
     Debug::debug() << "    [LastFmService] now playing";
     if(!m_currentTrack) {
       Debug::debug() << "    [LastFmService] now playing : no current track ";
       return;
     }
-    
+
     if(m_currentTrack->type() != TYPE_TRACK)
       return;
-      
+
     QUrl url("https://ws.audioscrobbler.com/2.0/");
 
     QMap<QString, QString> params;
@@ -325,13 +325,13 @@ void LastFmService::nowPlaying()
     params["sk"]      = LastFm::GLOBAL::session_key;
 
     LastFm::sign(params);
-  
+
     QByteArray data = LastFm::paramToBytearray( params );
-    
+
     /* post request */
     NetworkReply *reply = HTTP()->post(url, data);
     connect(reply, SIGNAL(finished(QNetworkReply*)), SLOT(slot_lastfm_response(QNetworkReply*)));
-}   
+}
 
 
 void LastFmService::slot_lastfm_response(QNetworkReply* reply)
@@ -348,58 +348,58 @@ void LastFmService::slot_lastfm_response(QNetworkReply* reply)
     document.setContent(reply->readAll());
 
     QDomElement lfm = document.documentElement();
-    if (lfm.attribute("status", "") == "ok") 
+    if (lfm.attribute("status", "") == "ok")
     {
         Debug::debug() << "    [LastFmService] successful";
     }
-    else 
+    else
     {
         Debug::debug() << "    [LastFmService] failed";
-    }  
-}     
+    }
+}
 
 
-void LastFmService::slot_track_changed() 
+void LastFmService::slot_track_changed()
 {
     Debug::debug() << "    [LastFmService] slot_track_changed " << m_currentTrack;
 
     if (m_currentTrack)
       scrobble();
-      
+
     m_currentTrack  = Engine::instance()->playingTrack();
-    
+
     /* init time counter */
-    m_playbackStart  = QDateTime::currentDateTime().toTime_t();
+    m_playbackStart  = QDateTime::currentDateTime().toSecsSinceEpoch();
     m_playbackLength = 0;
     m_unpauseTime    = m_playbackStart;
- 
+
     nowPlaying();
 }
 
 
-void LastFmService::slot_state_changed() 
+void LastFmService::slot_state_changed()
 {
     Debug::debug() << "    [LastFmService] slot_state_changed " << m_currentTrack;
 
     if ( m_engineOldState == ENGINE::PAUSED && Engine::instance()->state() == ENGINE::PLAYING)
     {
       if (m_currentTrack)
-        m_unpauseTime = QDateTime::currentDateTime().toTime_t();
+        m_unpauseTime = QDateTime::currentDateTime().toSecsSinceEpoch();
     }
     else if ( m_engineOldState == ENGINE::PLAYING && Engine::instance()->state() == ENGINE::PAUSED)
     {
       if (m_currentTrack)
-        m_playbackLength += QDateTime::currentDateTime().toTime_t() - m_unpauseTime;
+        m_playbackLength += QDateTime::currentDateTime().toSecsSinceEpoch() - m_unpauseTime;
     }
     else if ( Engine::instance()->state() == ENGINE::STOPPED )
     {
       if (m_currentTrack)
-        scrobble(); 
+        scrobble();
 
       /* unset current track */
-      m_currentTrack = MEDIA::TrackPtr(0);      
+      m_currentTrack = MEDIA::TrackPtr(0);
     }
-    
-    m_engineOldState = Engine::instance()->state();  
+
+    m_engineOldState = Engine::instance()->state();
 }
 

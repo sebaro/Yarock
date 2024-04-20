@@ -1,13 +1,17 @@
 Yarock changes
 
-#### 1.4.0  - PUBLIC RELEASE - mars 2019
+#### 1.5.0  - PUBLIC RELEASE - april 2024
+---------------------------------------------------------------------------------
+  - New    : Ported to Qt6
+
+#### 1.4.0  - PUBLIC RELEASE - march 2019
 ---------------------------------------------------------------------------------
   - BugFix : fix Appstream metadata legacy location and format #1813638
   - BugFix : fix widget bottom toolbar save/restore state
   - BugFix : fix debian Lintian spelling errors #1815382
   - BugFix : fix internal build rules for phonon engine #1745854
   - BugFix : improve mpris metatada for web stream
-  - BugFix : fix icon installation under some environment #1747308 
+  - BugFix : fix icon installation under some environment #1747308
 
 #### 1.3.1  - PUBLIC RELEASE - february 2018
 ---------------------------------------------------------------------------------
@@ -32,7 +36,7 @@ Yarock changes
   - BugFix : Fix mpv engine player crash
   - Changes: Improve playing item visibility
   - Changes: Restore previous playing cover for radio stream
-  - Changes: Minor code update for deprecated Qt5 
+  - Changes: Minor code update for deprecated Qt5
   - Changes: Minor ui changes & improvments
 
 
@@ -67,7 +71,7 @@ Yarock changes
   - New    : new favorites web radio management
   - New    : new redesign webradio view layout
   - Change : many GUI changes and improvments
-        - Option to reach collections from the left side pane [#1489281]
+  - Option to reach collections from the left side pane [#1489281]
   - BugFix : missing icons and wrong context menu under gnome desktop
   - BugFix : fix album cover during complete database reconstruction [#1493948]
   - BugFix : segfaults on Fedora 23 when rating a track [#1529087]
@@ -104,7 +108,7 @@ Yarock changes
   - New : add symbolic link support for file system view
   - New : add MP4 audio files tag reading
   - New : add ape files import into playqueue
-  - New : add browsing history support for stream link in radio views  
+  - New : add browsing history support for stream link in radio views
   - BugFix : fix network redirection management
   - BugFix : fix volume slider for phonon engine
   - BugFix : fix "lyrics.com" radio provider
@@ -126,7 +130,7 @@ Yarock changes
 #### 1.1.2  - PUBLIC RELEASE - may 2015
 ---------------------------------------------------------------------------------
   - New    : add alternate mpv audio engine (mplayer based)
-  - New    : add plugin system for audio back-ends, in order to load at run time desire audio engine (vlc, mpv, phonon)  
+  - New    : add plugin system for audio back-ends, in order to load at run time desire audio engine (vlc, mpv, phonon)
   - New    : add "search and play" option for quick playing tracks according to your search result
   - New    : add add equalizer support for vlc audio engine (vlclib > 2.2)
   - New    : add popup on player seek bar
@@ -134,7 +138,7 @@ Yarock changes
   - BugFix : vlc audio engine -> fix backwards seeking
   - BugFix : fix minor issue when dragging tracks to the bottom of playqueue
   - BugFix : fix crash when playing stream added to user playlist
-  - Change : dirble radio use api v2 
+  - Change : dirble radio use api v2
   - Change : improve media key support
   - Change : improve Qt5 building support
   - Change : improve Qt5 third party source building
@@ -146,13 +150,13 @@ Yarock changes
 ---------------------------------------------------------------------------------
   - BugFix : database issue
   - BugFix : fix song lenght update (#1393027)
-  - BugFix : Jumbled Text in Settings Area (#1394508) 
+  - BugFix : Jumbled Text in Settings Area (#1394508)
   - BugFix : minor ui presentation for filesystem view
   - BugFix : image for stream management
   - Change : add ascending order for filesystem view
   - Change : file dialog open user music folder by default if exists
   - Change : file dialog in settings -> open saved directory
-  - Change : easiest first time user startup 
+  - Change : easiest first time user startup
   - Change : add saving position in browser view
   - Change : update and add translation
 
@@ -191,16 +195,16 @@ Yarock changes
 ---------------------------------------------------------------------------------
   - New : add contextual playing information for stream
   - New : improve contextual playing information
-     - add musicbrainz support
-     - rewrite echonest provider (remove echonest library dependancy)
-     - change discogs provider (new policy for cover downloading)
-     - add similars artist images fetching
-  - New : internet radio services: 
+      - add musicbrainz support
+      - rewrite echonest provider (remove echonest library dependancy)
+      - change discogs provider (new policy for cover downloading)
+      - add similars artist images fetching
+  - New : internet radio services:
       - remove Icecast directory (no conveniant api to sort & search...)
       - add Dirble radio service
       - add stream search capability for radio services (tunin,shoutcast,dirble)
   - New : improve contextual menu for artist/album/track
-  - New : add settings option to restore or not playqueue at startup  
+  - New : add settings option to restore or not playqueue at startup
   - New : add settings option to chose/sort lyrics provider for contextual lyrics
   - New : improve navigation between artist/album/track
   - BugFix : minor fix for filesystem view
@@ -213,10 +217,10 @@ Yarock changes
   - New : add tunein stream image download support
   - New : add option to remove or not duplicate tracks in playqueue
   - New : improve discography part in context view
-  - New : add loading status when building database  
+  - New : add loading status when building database
   - BugFix : fix last fm now playing method
   - BugFix : fix crash on browser favorite view
-  - BugFix : fix crash on menu  bar clicking 
+  - BugFix : fix crash on menu  bar clicking
   - BugFix : fix mpris2 support
   - BugFix : fix smart playlist edition (losing configuration)
   - BugFix : fix little freeze when entering view by genre
@@ -224,7 +228,7 @@ Yarock changes
   - BugFix : fix file dialog issue
   - BugFix : fix regression on tracks move inside playqueue
   - Change : improve settings view
-  - Change : lot of code rewrite/refactoring  
+  - Change : lot of code rewrite/refactoring
   - Building : change to facilitate fedora packaging (thanks to fedora community help)
      => CMakeLists : add option to use system lib for src3party
      => CMakeLists : change default installation path
@@ -232,14 +236,14 @@ Yarock changes
 #### 0.9.64 - PUBLIC RELEASE - November 2013
 ---------------------------------------------------------------------------------
   - New : add support for multiset album (grouping or not)
-  - New : add support to drag from playqueue to file browser 
+  - New : add support to drag from playqueue to file browser
           (in order to copie music file to folder)
   - New : add standalone vlc audio engine (without phonon layer)
   - New : add option to choose color scheme
   - BugFix : fix multithreading issue when populating playqueue
   - BugFix : fix cover searcher threadmanager
   - BugFix : fix crash on media item context menu access
-  - BugFix : fix lyricsmania extraction rule  
+  - BugFix : fix lyricsmania extraction rule
   - BugFix : fix echonest artist image download
   - BugFix : fix context view item layout update
   - BugFix : fix seek bar and time label widget spacing
@@ -268,7 +272,7 @@ Yarock changes
   - New : add option to disable volume notification
   - Change : change build system to cmake
   - Change : change application name from YaRock to "yarock" without upper case
-        - Note: you can recover your old install configuration dir by copying 
+        - Note: you can recover your old install configuration dir by copying
             $   mv <home folder>/.config/YaRock to <home folder>/.config/yarock)
   - Change : minor rewrite code for dbus notification
   - Change : single click on shortcut widget in settings page to trigger shortcut dialogs
@@ -285,7 +289,7 @@ Yarock changes
   - BugFix : item context menu (bug #1102793)
   - BugFix : crash on file path broken with vlc backend (ok with gstreamer)
   - BugFix : automatic rating for artist wrong computation
-  - BugFix : fix playing button action when no track is selected (play first track in playqueue) 
+  - BugFix : fix playing button action when no track is selected (play first track in playqueue)
   - BugFix : fix file include for building on mandriva
   - Change : add Ctr+F shortcut to focus on search line edit widget
   - Change : improve statusWidget design
@@ -305,7 +309,7 @@ Yarock changes
   - New : add filtering support for dashboard view
   - New : add context view information (artist discography)
   - New : add new settings dialogs page instead of dialog window
-  - New : add new dialog to add internet stream  
+  - New : add new dialog to add internet stream
   - BugFix : fix artist database edition
   - BugFix : add a limit to "never played tracks" smart playlist to avoid UI freeze
   - BugFix : fix discogs album cover issue (api key + other minor bug)
@@ -319,7 +323,7 @@ Yarock changes
   - Change : rewrite track info providers (lastfm, discogs, echonest)
   - Change : rewrite web link widget for context view
   - Change : update libechonest library
-  - Change : update lyrics info provider data  
+  - Change : update lyrics info provider data
   - Change : update icons and minor ui changes
   - Change : update translations
 
@@ -334,7 +338,7 @@ Yarock changes
 ---------------------------------------------------------------------------------
   - 0.0.58 - New : add option du disable menu on mouse over (Launchpad bug #1041611)
   - 0.0.58 - New : add a basic stream list editor (for custom user stream file)
-  - 0.0.58 - New : add ctrl/click on item to enqueue in playqueue 
+  - 0.0.58 - New : add ctrl/click on item to enqueue in playqueue
   - 0.0.58 - BugFix : wrong context view update
   - 0.0.58 - BugFix : wrong .pro file for translation isntallation
   - 0.0.58 - BugFix : wrong playlist view update when adding playlist with playlist editor
@@ -352,15 +356,15 @@ Yarock changes
   - 0.0.57 - New : add messages in view in case of empty result in radio streammodel
   - 0.0.57 - New : add support for custom sysray icon
   - 0.0.57 - New : add option to start with hidden windows if systray is activated
-  - 0.0.57 - BugFix : wrong album metada update 
+  - 0.0.57 - BugFix : wrong album metada update
   - 0.0.57 - BugFix : fix insensitive sorting for artist view
   - 0.0.57 - BugFix : track queuing with phonon-vlc
   - 0.0.57 - BugFix : artist rating display
   - 0.0.57 - Bugfix : lack in dbus now playing notification under some system (mandriva + phonon-gstreamer)
   - 0.0.57 - Bugfix wrong playing item update (in case of symlink)
   - 0.0.57 - Bugfix volume menu location (on some distro like mandriva)
-  - 0.0.57 - Bugfix crash when enabling equalizer 
-  - 0.0.57 - Change: Rewrite equalizer settings management 
+  - 0.0.57 - Bugfix crash when enabling equalizer
+  - 0.0.57 - Change: Rewrite equalizer settings management
   - 0.0.57 - Change sorting for album by year view
   - 0.0.57 - Change : update qxt provided library to 0.6.2
   - 0.0.57 - Change : rewrite contextual right click menu
@@ -383,21 +387,21 @@ Yarock changes
 ---------------------------------------------------------------------------------
   - 0.0.55 - New : add track/album/artist rating support
   - 0.0.55 - New : smart playlist generator
-  - 0.0.55 - New : add playlist editor   
+  - 0.0.55 - New : add playlist editor
   - 0.0.55 - New : add advance media search engine
   - 0.0.55 - New : add cover search from discogs
-  - 0.0.55 - Change : delete file browser view  
-  - 0.0.55 - Change : rewrite/change diashboard view  
+  - 0.0.55 - Change : delete file browser view
+  - 0.0.55 - Change : rewrite/change diashboard view
   - 0.0.55 - Change : improve playlist file database handling
   - 0.0.55 - Change : improve history database handling
-  - 0.0.55 - BugFix : track time tracking invalid (lauchpad bug : #887505)  
+  - 0.0.55 - BugFix : track time tracking invalid (lauchpad bug : #887505)
   - 0.0.55 - BugFix : add artist name to albums views  (lauchpad bug : #927557)
   - 0.0.55 - BugFix : (partially ) add option to enqueue media item into playqueue (lauchpad bug : #927747)
   - 0.0.55 - BugFix : bugfix color sheme for dark theme (lauchpad bug : #928789)
   - 0.0.55 - BugFix : improve loading collection time (lauchpad bug : #927563)
   - 0.0.55 - BugFix : crash when database is rebuilding and next mediaitem is requested (data model cleared)
   - 0.0.55 - BugFix : album update info not working
-  - 0.0.55 - Minor Change : default font, gui minor changes  
+  - 0.0.55 - Minor Change : default font, gui minor changes
 
 #### 0.0.54 - PUBLIC RELEASE - January 2012
 ---------------------------------------------------------------------------------
@@ -405,27 +409,27 @@ Yarock changes
   - 0.0.54 - New : new layout for playlist
   - 0.0.54 - New : add hide/show now playing widget option
   - 0.0.54 - New : add basic key support (delete/play) for playlist view
-  - 0.0.54 - New : add multiple selection in playlist views 
-  - 0.0.54 - New : add delete multiple selected files from playlist 
-  - 0.0.54 - New : add internal track move in playlist 
+  - 0.0.54 - New : add multiple selection in playlist views
+  - 0.0.54 - New : add delete multiple selected files from playlist
+  - 0.0.54 - New : add internal track move in playlist
   - 0.0.54 - Update Czech translation (thanks to pavel)
   - 0.0.54 - BugFix : crash when adding manual url to playlist
   - 0.0.54 - BugFix : crask on right click on the playlist
   - 0.0.54 - BugFix : total time track not updated all the time
-  - 0.0.54 - GUI : change browser color scheme 
+  - 0.0.54 - GUI : change browser color scheme
   - 0.0.54 - GUI : status widget rework and replace statusbar
   - 0.0.54 - GUI : current playing track put in tool bar (instead of old status bar)
   - 0.0.54 - Internal code rewrite (engineplayer, merge with inforesolver code)
 
 #### 0.0.53 - PUBLIC RELEASE - December 2011
 ---------------------------------------------------------------------------------
-  - 0.0.53 - New : add remote control through command line 
+  - 0.0.53 - New : add remote control through command line
   - 0.0.53 - New : add remote control through mpris1 interface
   - 0.0.53 - New : add option to hide status bar and new status widget instead
   - 0.0.53 - New : add option to perform a simple database update
   - 0.0.53 - New : option active(de-activate) notification/mpris/systray without restarting
   - 0.0.53 - New : add m4a/aac format support (depending on phonon backend to be played)
-  - 0.0.53 - New : add volume Up/Down/Mute media key support 
+  - 0.0.53 - New : add volume Up/Down/Mute media key support
   - 0.0.53 - Changes : lastfm authentication rework
   - 0.0.53 - Changes : improve status message for database loading or scanning
   - 0.0.53 - Changes : delete useless Menu Bar
@@ -454,11 +458,11 @@ Yarock changes
   - 0.0.51 - BugFix : fix smart playlist creation
   - 0.0.51 - BugFix : fix first start widget size
   - 0.0.50 - New : add now playing desktop notification
-  - 0.0.50 - New : dynamic layout resize for the collection browser 
+  - 0.0.50 - New : dynamic layout resize for the collection browser
   - 0.0.50 - New : add option to remove duplicate stream
   - 0.0.50 - New : add tooltip for stream with url
   - 0.0.50 - New : improve failed stream detection
-  - 0.0.50 - New : add search support for prev/next history navigation 
+  - 0.0.50 - New : add search support for prev/next history navigation
   - 0.0.50 - New : add menu entry for file browsing depending on mounted devices (etc/mtab)
   - 0.0.50 - New : add Romanian translation (thanks to Sebastian)
   - 0.0.50 - GUI : add custom font (Segoe UI light) for Library, update typography
@@ -468,8 +472,8 @@ Yarock changes
   - 0.0.50 - Changes : delete Up/down navigation arrow from ToolBar (now up/down navigation is done by clicking on scrollbar area)
   - 0.0.50 - BugFix : workaround for file access issue
   - 0.0.50 - BugFix : seekslider not working properly dependings on backends
-  - 0.0.50 - BugFix : empty title for stream read from remote pls playlist 
-  - 0.0.50 - BugFix : workaround for failed stream detection stream 
+  - 0.0.50 - BugFix : empty title for stream read from remote pls playlist
+  - 0.0.50 - BugFix : workaround for failed stream detection stream
   - 0.0.50 - BugFix : crash on navigation prev/next and navigator bar interaction
 
 #### 0.0.49 - PUBLIC RELEASE - May 2011
@@ -497,7 +501,7 @@ Yarock changes
   - 0.0.45 - New history view (last played track & stream)
   - 0.0.45 - New add a view to sort album by date
   - 0.0.45 - Changes : disable playqueue track internal move :(
-  - 0.0.45 - Changes : improve algorithm to sort album by genre 
+  - 0.0.45 - Changes : improve algorithm to sort album by genre
   - 0.0.45 - Changes : improve Drag & Drop from collection to playqueue
   - 0.0.45 - Changes : code refactoring for internal data management
   - 0.0.45 - Changes : code refactoring & optimisation (use QPixmapCache)
@@ -505,7 +509,7 @@ Yarock changes
   - 0.0.45 - Changes : fix selection into menu view (selection follow the good page)
   - 0.0.45 - Changes : display history view with one category for one day
   - 0.0.45 - Changes : minor code rewrite for contexte view
-  - 0.0.45 - BugFix  : lot of minor bug fixes & minor regression 
+  - 0.0.45 - BugFix  : lot of minor bug fixes & minor regression
   - 0.0.45 - BugFix  : major fix shoutcast file download
   - 0.0.45 - BugFix  : fix up/down navigation for radio browser
   - 0.0.44 - New multiple database support
@@ -518,9 +522,9 @@ Yarock changes
   - 0.0.43 - New add visual icon for broken media item or stream
   - 0.0.43 - New audio equalizer
   - 0.0.43 - New simple application minimal mode widget
-  - 0.0.43 - New copy of icecast & shoutcast file during first run of application   
+  - 0.0.43 - New copy of icecast & shoutcast file during first run of application
   - 0.0.43 - New filer browser not loaded at startup (only on demand)
-  - 0.0.43 - GUI simplify & clean GUI, icon, hidden menuBar 
+  - 0.0.43 - GUI simplify & clean GUI, icon, hidden menuBar
   - 0.0.43 - GUI change playlist image into browser
   - 0.0.43 - GUI add splitter collapser
   - 0.0.43 - GUI add visual item selection
@@ -546,16 +550,16 @@ Yarock changes
 
 #### 0.0.41 - PUBLIC RELEASE - december 2010
 ---------------------------------------------------------------------------------
-  - 0.0.41 - New ToolBar with Prev/Next browsing, read only BreadCrumb  
-  - 0.0.41 - Change (MAJOR) music collection redesign (less memory usage, better performance) 
-  - 0.0.41 - New ShoutCast radio browser 
+  - 0.0.41 - New ToolBar with Prev/Next browsing, read only BreadCrumb
+  - 0.0.41 - Change (MAJOR) music collection redesign (less memory usage, better performance)
+  - 0.0.41 - New ShoutCast radio browser
   - 0.0.40 - BugFix streammodel missing active stream initialization
   - 0.0.40 - New favorite radio item (stored into xspf file)
   - 0.0.40 - New add support for remote playlist to be played diectly from radio browser
   - 0.0.39 - New Menu with tree structure and radio file
   - 0.0.39 - New add radio setting for adding/removing specific radio file
   - 0.0.39 - New radio browser for user radio file
-  - 0.0.39 - New IceCast radio browser 
+  - 0.0.39 - New IceCast radio browser
   - 0.0.39 - Change core graphic painting method improvement
   - 0.0.39 - Change core thread management improvement
   - 0.0.38 - New internal Database v8 (internal & user playlist file)
@@ -573,16 +577,16 @@ Yarock changes
   - 0.0.35 - Code refactoring
   - 0.0.34 - New Setting option to activate/de-activate systray
   - 0.0.34 - User Settings rewritten
-  - 0.0.34 - New Menu panel on Home button 
-  - 0.0.34 - Simple systray 
+  - 0.0.34 - New Menu panel on Home button
+  - 0.0.34 - Simple systray
   - 0.0.33 - Change Hard coded lower case for artist/album deleted (db is now case sensitive)
   - 0.0.33 - Change Now playing cover art display simplification
-  - 0.0.33 - BugFix Now playing database search for title playing 
+  - 0.0.33 - BugFix Now playing database search for title playing
   - 0.0.33 - Change default image for empty cover art pre-sized to useful value
   - 0.0.33 - New support load/save playlist from/to file (m3u, pls, xspf)
-  - 0.0.32 - New automatic fetch for all the collection 
+  - 0.0.32 - New automatic fetch for all the collection
   - 0.0.32 - Change Status bar Progress action
-  - 0.0.32 - BugFix Status bar database search for title playing 
+  - 0.0.32 - BugFix Status bar database search for title playing
   - 0.0.32 - New option to get cover from file directory
   - 0.0.31 - New main home icon (with collection, filer, ...)
   - 0.0.31 - Code refactoring
@@ -608,7 +612,7 @@ Yarock changes
 #### 0.0.20 : PUBLIC RELEASE - september 2010
 ---------------------------------------------------------------------------------
   - 0.0.20 : Bug fix Major playing track from track view
-  - 0.0.19 : New architecture design between database and collection viewer (model added)   
+  - 0.0.19 : New architecture design between database and collection viewer (model added)
   - 0.0.18 : New simple file browser view
   - 0.0.18 : Bug fix severals minor bug
   - 0.0.17 : Change minor changes/improvements

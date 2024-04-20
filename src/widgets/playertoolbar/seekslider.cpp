@@ -27,6 +27,7 @@
 
 #include <QApplication>
 #include <QStyleOptionSlider>
+
 /*
 ********************************************************************************
 *                                                                              *
@@ -55,7 +56,7 @@ SeekSlider::SeekSlider(QWidget *parent) : QProgressBar(parent)
 
     /* popup */
     m_popup = new SeekSliderPopup(window());
-   
+
     /* pretty style */
     this->setStyleSheet(
       QString(
@@ -65,7 +66,7 @@ SeekSlider::SeekSlider(QWidget *parent) : QProgressBar(parent)
         QString( " QProgressBar::chunk {  background-color: %1;}").arg(SETTINGS()->_baseColor.name())
       )
     );
-    
+
     /* init state */
     stop();
 }
@@ -81,7 +82,7 @@ void SeekSlider::mousePressEvent ( QMouseEvent * event )
 {
     //Debug::debug() << "      [SeekSlider] mousePressEvent ";
 
-    seek((double)event->x()*maximum()/width());
+    seek((double)event->position().x()*maximum()/width());
 }
 
 void SeekSlider::slot_tick(qint64 msec)
@@ -120,7 +121,7 @@ void SeekSlider::slot_stateChanged()
       /* seekable signal is not used anymore removed because signal is not emitted */
       /* correctly for all engine (phonon, vlc, mpv) */
       bool local = MEDIA::isLocal( track->url );
-      if( local ) 
+      if( local )
       {
         setEnabled(true);
         m_enable = true;
@@ -147,7 +148,7 @@ void SeekSlider::stop()
 }
 
 
-void SeekSlider::enterEvent(QEvent* event)
+void SeekSlider::enterEvent(QEnterEvent* event)
 {
     //Debug::debug() << "      [SeekSlider] enterEvent";
     QProgressBar::enterEvent(event);
@@ -155,7 +156,7 @@ void SeekSlider::enterEvent(QEvent* event)
       m_popup->show();
 }
 
-void SeekSlider::leaveEvent(QEvent* event) 
+void SeekSlider::leaveEvent(QEvent* event)
 {
     QProgressBar::leaveEvent(event);
     m_popup->hide();
@@ -168,24 +169,24 @@ void SeekSlider::mouseReleaseEvent(QMouseEvent* event)
 }
 
 
-void SeekSlider::mouseMoveEvent(QMouseEvent* event) 
+void SeekSlider::mouseMoveEvent(QMouseEvent* event)
 {
     //Debug::debug() << "      [SeekSlider] mouseMoveEvent";
-  
+
     QProgressBar::mouseMoveEvent(event);
 
-    if( m_enable ) 
+    if( m_enable )
     {
-      m_mouse_hover_sec = ((double)event->x()*maximum()/width()) / 1000;
+      m_mouse_hover_sec = ((double)event->position().x()*maximum()/width()) / 1000;
 
       m_popup->SetText( UTIL::durationToString( m_mouse_hover_sec ) );
-  
+
       int delta_seconds = m_mouse_hover_sec - value()/1000;
 
       m_popup->SetSmallText( UTIL::deltaTimeToString(delta_seconds) );
-      
+
       m_popup->SetPopupPosition(mapTo(window(), QPoint(
-         event->x(), rect().center().y()))
+         event->position().x(), rect().center().y()))
       );
     }
 }

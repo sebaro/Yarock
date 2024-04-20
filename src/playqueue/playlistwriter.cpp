@@ -54,8 +54,8 @@ void PlaylistWriter::run()
 {
     if (m_fileToSave.isEmpty()) return;
     m_isRunning     = true;
-    
-    if(MEDIA::isPlaylistFile(m_fileToSave)) 
+
+    if(MEDIA::isPlaylistFile(m_fileToSave))
     {
         //! save to file
         MEDIA::PlaylistToFile( m_fileToSave, m_model->tracks() );
@@ -97,32 +97,32 @@ void PlaylistWriter::updateDatabase(QList<MEDIA::TrackPtr> list)
     QString fname    = fileInfo.filePath().toUtf8();
     QString pname    = fileInfo.baseName();
     QString dir_path = fileInfo.canonicalPath();
-    uint mtime       = fileInfo.lastModified().toTime_t();
+    uint mtime       = fileInfo.lastModified().toSecsSinceEpoch();
 
     if (!Database::instance()->open())
       return;
 
     /*-----------------------------------------------------------*/
     /* clean up database                                         */
-    /* ----------------------------------------------------------*/    
+    /* ----------------------------------------------------------*/
     QSqlQuery query(*Database::instance()->db());
     query.prepare("DELETE FROM `playlists` WHERE `filename`=?;");
     query.addBindValue(fname);
     query.exec();
-  
+
     query.prepare("DELETE FROM `playlist_items` WHERE `playlist_id` NOT IN (SELECT `id` FROM `playlists`);");
     query.exec();
 
     /*-----------------------------------------------------------*/
     /* directory part in DATABASE                                */
-    /* ----------------------------------------------------------*/     
+    /* ----------------------------------------------------------*/
     query.prepare("SELECT `id` FROM `directories` WHERE `path`=:val;");
     query.bindValue(":val", dir_path );
     query.exec();
 
     if ( !query.next() ) {
-      uint mtime   = QFileInfo(dir_path).lastModified().toTime_t();
-      
+      uint mtime   = QFileInfo(dir_path).lastModified().toSecsSinceEpoch();
+
       query.prepare("INSERT INTO `directories`(`path`,`mtime`) VALUES (?,?);");
       query.addBindValue(dir_path);
       query.addBindValue(mtime);
@@ -138,7 +138,7 @@ void PlaylistWriter::updateDatabase(QList<MEDIA::TrackPtr> list)
 
     /*-----------------------------------------------------------*/
     /* PLAYLIST part in database                                 */
-    /* ----------------------------------------------------------*/ 
+    /* ----------------------------------------------------------*/
     Debug::debug() << "  [PlaylistWriter] insert playlist into db" << m_fileToSave;
 
     query.prepare("INSERT INTO `playlists`(`filename`,`name`,`type`,`favorite`,`dir_id`,`mtime`)" \

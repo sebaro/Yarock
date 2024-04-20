@@ -69,14 +69,14 @@ void PlaylistDbWriter::saveToDatabase(const QString& playlist_name)
 void PlaylistDbWriter::saveToDatabase(MEDIA::PlaylistPtr playlist)
 {
     Debug::debug() << "  [PlaylistDbWriter] saveToDatabase name:" << playlist->name;
-    
+
     m_playlist       = playlist;
     _isSessionSaving = false;
     _playlist_name   = m_playlist->name;
     _database_id     = m_playlist->id;
 }
 
-    
+
 /* ---------------------------------------------------------------------------*/
 /* PlaylistDbWriter::saveSessionToDatabase                                    */
 /* ---------------------------------------------------------------------------*/
@@ -91,12 +91,12 @@ void PlaylistDbWriter::saveSessionToDatabase()
 void PlaylistDbWriter::run()
 {
     _isRunning     = true;
-    
+
     if(_isSessionSaving)
       saveSession();
     else
       savePlaylist();
-    
+
     _isRunning       = false;
 
      emit playlistSaved();
@@ -108,9 +108,9 @@ void PlaylistDbWriter::run()
 void PlaylistDbWriter::savePlaylist()
 {
     Debug::debug() << "  [PlaylistDbWriter] savePlaylist";
-    
+
     //! playlist data for Database
-    uint mtime       = QDateTime::currentDateTime().toTime_t();
+    uint mtime       = QDateTime::currentDateTime().toSecsSinceEpoch();
     QString fname    = QString(QCryptographicHash::hash(QString::number(mtime).toUtf8().constData(), QCryptographicHash::Sha1).toHex());
 
 
@@ -118,25 +118,25 @@ void PlaylistDbWriter::savePlaylist()
 
     if (!Database::instance()->open())
       return;
-    
+
     QSqlQuery q("", *Database::instance()->db());
     q.prepare("SELECT `id` FROM `playlists` WHERE `type`=? AND `id`=?;");
     q.addBindValue( (int)T_DATABASE );
     q.addBindValue( _database_id );
     q.exec();
-    
-    if ( q.next() ) 
+
+    if ( q.next() )
     {
       _database_id = q.value(0).toInt();
 
       Debug::debug() << "  [PlaylistDbWriter] existing playlist -> update contents name" << m_playlist->name;
       Debug::debug() << "  [PlaylistDbWriter] existing playlist -> update contents id" << m_playlist->id;
-        
+
       q.prepare("DELETE FROM `playlist_items` WHERE `playlist_id`=?;");
       q.addBindValue( _database_id );
-      Debug::debug() << "query exec " << q.exec();  
-      
-      q.prepare("UPDATE `playlists` SET `filename`=?,`name`=?,`type`=?,`favorite`=?,`dir_id`=?,`mtime`=? WHERE `id`=?");      
+      Debug::debug() << "query exec " << q.exec();
+
+      q.prepare("UPDATE `playlists` SET `filename`=?,`name`=?,`type`=?,`favorite`=?,`dir_id`=?,`mtime`=? WHERE `id`=?");
       q.addBindValue( fname );
       q.addBindValue( _playlist_name );
       q.addBindValue( (int) T_DATABASE );
@@ -149,7 +149,7 @@ void PlaylistDbWriter::savePlaylist()
     else
     {
       Debug::debug() << "  [PlaylistDbWriter] new playlist -> create";
-        
+
       q.prepare("INSERT INTO `playlists` (`filename`,`name`,`type`,`favorite`,`dir_id`,`mtime`)" \
                  " VALUES(?,?,?,?,?,?);");
 
@@ -160,18 +160,18 @@ void PlaylistDbWriter::savePlaylist()
       q.addBindValue( -1 );
       q.addBindValue( mtime );
       Debug::debug() << "query exec " << q.exec();
-      
+
       if(q.numRowsAffected() < 1)
         Debug::warning() << "    [PlaylistDbWriter] playlist database insertion failure";
 
       q.prepare("SELECT `id` FROM `playlists` WHERE `filename`=?;");
       q.addBindValue( fname );
-      Debug::debug() << "query exec " << q.exec();    
+      Debug::debug() << "query exec " << q.exec();
       q.next();
       _database_id = q.value(0).toInt();
     }
-    
-    Debug::debug() << "  [PlaylistDbWriter] new database id:" << _database_id;    
+
+    Debug::debug() << "  [PlaylistDbWriter] new database id:" << _database_id;
 
     /*-----------------------------------------------------------*/
     /* PLAYLIST ITEMS part in database                           */
@@ -179,14 +179,14 @@ void PlaylistDbWriter::savePlaylist()
     // take playlist item because we save a playlist item outside playqueue widget/editor
     if( m_playlist && m_model == Playqueue::instance() )
     {
-        for (int i = 0; i < m_playlist->childCount(); i++) 
+        for (int i = 0; i < m_playlist->childCount(); i++)
         {
             MEDIA::TrackPtr track = MEDIA::TrackPtr::staticCast(m_playlist->child(i));
-                                
+
             const QString item_url   = track->url;
-            const QString item_name  = MEDIA::isLocal(track->url) ? 
+            const QString item_name  = MEDIA::isLocal(track->url) ?
             track->title : track->extra["station"].toString();
-        
+
             Debug::debug() << "  [PlaylistDbWriter] insert playlist item url: " << item_url;
             Debug::debug() << "  [PlaylistDbWriter] insert playlist item title: " << item_name;
 
@@ -200,12 +200,12 @@ void PlaylistDbWriter::savePlaylist()
     // take model from playqueue/playlist editor
     else
     {
-        for (int i = 0; i < m_model->rowCount(QModelIndex()); i++) 
+        for (int i = 0; i < m_model->rowCount(QModelIndex()); i++)
         {
             const QString item_url   = m_model->trackAt(i)->url;
-            const QString item_name  = MEDIA::isLocal(m_model->trackAt(i)->url) ? 
+            const QString item_name  = MEDIA::isLocal(m_model->trackAt(i)->url) ?
             m_model->trackAt(i)->title : m_model->trackAt(i)->extra["station"].toString();
-        
+
             Debug::debug() << "  [PlaylistDbWriter] insert playlist item url: " << item_url;
             Debug::debug() << "  [PlaylistDbWriter] insert playlist item title: " << m_model->trackAt(i)->title;
             Debug::debug() << "  [PlaylistDbWriter] insert playlist item station: " << m_model->trackAt(i)->extra["station"].toString();
@@ -217,7 +217,7 @@ void PlaylistDbWriter::savePlaylist()
             q.exec();
         }
     }
-    
+
     q.finish();
     if( m_playlist )
     {
@@ -235,7 +235,7 @@ void PlaylistDbWriter::saveSession()
     Debug::debug() << "  [PlaylistDbWriter] saveSession";
 
     //! playlist data for Database
-    uint mtime       = QDateTime::currentDateTime().toTime_t();
+    uint mtime       = QDateTime::currentDateTime().toSecsSinceEpoch();
     QString pname    = "playqueue_session";
     QString fname    = QString(QCryptographicHash::hash(pname.toUtf8().constData(), QCryptographicHash::Sha1).toHex());
 
@@ -244,27 +244,27 @@ void PlaylistDbWriter::saveSession()
 
     /*-----------------------------------------------------------*/
     /* clean up database                                         */
-    /* ----------------------------------------------------------*/      
+    /* ----------------------------------------------------------*/
     QSqlQuery query(*Database::instance()->db());
 
     query.prepare("SELECT `id` FROM `playlists` WHERE `type`=? LIMIT 1;");
     query.addBindValue((int)T_PLAYQUEUE);
     query.exec();
-    
-    if ( query.next() ) 
+
+    if ( query.next() )
     {
       _database_id = query.value(0).toString().toInt();
-    
+
       Debug::debug() << "  [PlaylistDbWriter] saveSession db id " << _database_id;
-    
+
       query.prepare("DELETE FROM `playlist_items` WHERE `playlist_id`=?;");
       query.addBindValue( _database_id );
-      Debug::debug() << "query exec " << query.exec();    
-      
-      query.prepare("UPDATE `playlists` SET `mtime`=? WHERE `id`=?");      
+      Debug::debug() << "query exec " << query.exec();
+
+      query.prepare("UPDATE `playlists` SET `mtime`=? WHERE `id`=?");
       query.addBindValue( mtime );
       query.addBindValue( _database_id );
-      Debug::debug() << "query exec " << query.exec();        
+      Debug::debug() << "query exec " << query.exec();
     }
     else
     {
@@ -277,30 +277,30 @@ void PlaylistDbWriter::saveSession()
       query.addBindValue(  0 );
       query.addBindValue( -1 );
       query.addBindValue( mtime );
-      Debug::debug() << "query exec " << query.exec();        
+      Debug::debug() << "query exec " << query.exec();
     }
 
     /*-----------------------------------------------------------*/
     /* PLAYLIST part in database                                 */
-    /* ----------------------------------------------------------*/    
+    /* ----------------------------------------------------------*/
     query.prepare("SELECT `id` FROM `playlists` WHERE `type`=? LIMIT 1;");
     query.addBindValue((int)T_PLAYQUEUE);
     query.exec();
-    
-    if ( query.next() )  
+
+    if ( query.next() )
     {
       _database_id = query.value(0).toString().toInt();
     }
-    else                        
+    else
     {
       Debug::warning() << "  [PlaylistDbWriter] no playlist in database to operate";
       return;
     }
-    
+
     /*-----------------------------------------------------------*/
     /* PLAYLIST ITEMS part in database                           */
     /* ----------------------------------------------------------*/
-    for (int i = 0; i < m_model->rowCount(QModelIndex()); i++) 
+    for (int i = 0; i < m_model->rowCount(QModelIndex()); i++)
     {
         const QString item_url   = m_model->trackAt(i)->url;
         const QString item_name  = MEDIA::isLocal(m_model->trackAt(i)->url) ?

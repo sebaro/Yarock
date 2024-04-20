@@ -33,7 +33,7 @@ ButtonItem::ButtonItem()
     setAcceptsHoverEvents(true);
 #else
     setAcceptHoverEvents(true);
-#endif    
+#endif
     setAcceptDrops(false);
     setFlag(QGraphicsItem::ItemIsSelectable, false);
     setFlag(QGraphicsItem::ItemIsMovable, false);
@@ -46,7 +46,7 @@ ButtonItem::ButtonItem()
 
     setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
 
-    m_brush_color = SETTINGS()->_baseColor;     
+    m_brush_color = SETTINGS()->_baseColor;
     m_alpha = 0.6;
 }
 
@@ -77,10 +77,10 @@ QRectF ButtonItem::boundingRect() const
     font.setBold( true );
 
     QFontMetrics fm( font );
-    int width = fm.width(m_text);
+    int width = fm.horizontalAdvance(m_text);
 
     int margin = width == 0 ? 8 : 12;
-    
+
     return QRectF(0, 0, width + m_pixmap.width()  + margin, 26);
 }
 
