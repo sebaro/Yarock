@@ -6,6 +6,8 @@ About
 Yarock is a modern looking music player, packed with features, that doesn’t depend on any specific desktop environment.
 Yarock is designed to provide an easy and pretty music browser based on cover art. Yarock is easy to build with a minimal set of dependancies, and offers the choose of differents audio back-end.
 
+![](https://gitlab.com/sebaro/Yarock/raw/main/screenshot.png)
+
   * Website : http://seb-apps.github.io/yarock/
   * Bugreport: https://bugs.launchpad.net/yarock
   * Translate : https://www.transifex.net/projects/p/yarock-translation/
