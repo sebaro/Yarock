@@ -1,42 +1,19 @@
-/****************************************************************************************
-*  YAROCK                                                                               *
-*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
-*                                                                                       *
-*  This program is free software; you can redistribute it and/or modify it under        *
-*  the terms of the GNU General Public License as published by the Free Software        *
-*  Foundation; either version 2 of the License, or (at your option) any later           *
-*  version.                                                                             *
-*                                                                                       *
-*  This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
-*  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
-*  PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
-*                                                                                       *
-*  You should have received a copy of the GNU General Public License along with         *
-*  this program.  If not, see <http://www.gnu.org/licenses/>.                           *
-*****************************************************************************************/
 
 #include "local_scene.h"
-
 #include "views/item_button.h"
 #include "views/item_common.h"
 #include "views/local/local_item.h"
-
 #include "models/local/local_track_model.h"
 #include "models/local/local_playlist_model.h"
 #include "models/local/histo_model.h"
-
 #include "playqueue/playqueue_model.h"
 #include "playqueue/virtual_playqueue.h"
 #include "playqueue/task_manager.h"
-
 #include "core/mediaitem/mediaitem.h"
 #include "covers/covercache.h"
-
 #include "core/database/database.h"
 #include "core/database/database_cmd.h"
-
 #include "core/history/histomanager.h"
-
 #include "smartplaylist/smartplaylist.h"
 #include "widgets/main/main_right.h"
 #include "widgets/editors/editor_playlist.h"
@@ -44,7 +21,6 @@
 #include "widgets/editors/editor_artist.h"
 #include "widgets/editors/editor_track.h"
 #include "widgets/editors/editor_smart.h"
-
 #include "threadmanager.h"
 #include "settings.h"
 #include "utilities.h"
@@ -52,14 +28,13 @@
 #include "debug.h"
 #include "filedialog.h"
 
-#if QT_VERSION >= 0x050000
 #include <QtConcurrent>
-#endif
-
 #include <QtCore>
 #include <QSqlQuery>
 #include <QGraphicsView>
 #include <QGraphicsSceneEvent>
+
+
 /*
 ********************************************************************************
 *                                                                              *
@@ -1413,7 +1388,7 @@ void LocalScene::slot_item_ratingclick()
     }
 
     /* rate in database */
-    QtConcurrent::run(DatabaseCmd::rateMediaItems, medias);
+    QFuture<void> future = QtConcurrent::run(DatabaseCmd::rateMediaItems, medias);
 }
 
 /*******************************************************************************

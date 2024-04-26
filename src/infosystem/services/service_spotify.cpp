@@ -21,12 +21,7 @@
 #include "debug.h"
 #include "config.h"
 
-// QJson
-#if QT_VERSION >= 0x050000
 #include <QtCore/QJsonDocument>
-#else
-#include <qjson/parser.h>
-#endif
 
 
 namespace Spotify
@@ -140,14 +135,8 @@ void ServiceSpotify::slot_getAuthentification(QNetworkReply* reply)
         return;
     }
 
-#if QT_VERSION >= 0x050000
     bool ok = true;
     QVariantMap reply_map = QJsonDocument::fromJson(reply->readAll()).toVariant().toMap();
-#else
-    QJson::Parser parser;
-    bool ok;
-    QVariantMap reply_map = parser.parse(reply->readAll(), &ok).toMap();
-#endif
 
     if (!ok || !reply_map.contains("access_token")) {
       m_auth_info["access_token"] = "";
@@ -204,14 +193,8 @@ void ServiceSpotify::slot_get_artist_images(QByteArray bytes)
     INFO::InfoRequestData request =  m_requests.take(reply);
 
     /* Parse response */
-#if QT_VERSION >= 0x050000
     bool ok = true;
     QVariantMap reply_map = QJsonDocument::fromJson(bytes).toVariant().toMap();
-#else
-    QJson::Parser parser;
-    bool ok;
-    QVariantMap reply_map = parser.parse(bytes, &ok).toMap();
-#endif
 
     if (!ok || !reply_map.contains("artists")) {
       Debug::debug() << "    [ServiceSpotify] bad response " << reply_map;

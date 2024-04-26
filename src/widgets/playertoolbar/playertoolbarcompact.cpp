@@ -108,7 +108,7 @@ PlayerToolBarCompact::PlayerToolBarCompact(QWidget *parent) : PlayerToolBarBase(
       m_now_playing_widget->setMinimumHeight(60);
       m_now_playing_widget->setFocusPolicy( Qt::ClickFocus );
 
-      QColor color = SETTINGS()->_baseColor;
+      /*QColor color = SETTINGS()->_baseColor;
       qreal saturation = color.saturationF();
       saturation *= 0.5;
       color.setHsvF( color.hueF(), saturation, color.valueF(), color.alphaF() );
@@ -116,7 +116,7 @@ PlayerToolBarCompact::PlayerToolBarCompact(QWidget *parent) : PlayerToolBarBase(
       m_now_playing_widget->setStyleSheet(
           QString("QWidget::focus { border: none; background-color:%1;}")
           .arg(color.name())
-        );
+        );*/
 
     /* -- time track position -- */
       QFont font = QApplication::font();

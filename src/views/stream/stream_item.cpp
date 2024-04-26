@@ -42,11 +42,7 @@
 */
 StreamGraphicItem::StreamGraphicItem()
 {
-#if QT_VERSION < 0x050000
-    setAcceptsHoverEvents(true);
-#else
     setAcceptHoverEvents(true);
-#endif    
    setAcceptDrops(false);
    setFlag(QGraphicsItem::ItemIsSelectable, true);
    setFlag(QGraphicsItem::ItemIsMovable, false);
@@ -56,7 +52,7 @@ StreamGraphicItem::StreamGraphicItem()
    opt.widget = 0;
    opt.palette = QApplication::palette();
    opt.font = QApplication::font();
-   opt.font.setStyleStrategy(QFont::PreferAntialias);    
+   opt.font.setStyleStrategy(QFont::PreferAntialias);
    opt.fontMetrics = QFontMetrics(opt.font);
 
    opt.showDecorationSelected = true;
@@ -68,13 +64,13 @@ StreamGraphicItem::StreamGraphicItem()
    opt.state &= ~ QStyle::State_Active;
    opt.state |= QStyle::State_Enabled;
    opt.state &= ~QStyle::State_Selected;
-    
-    
+
+
    m_coverSize = SETTINGS()->_coverSize;
-   
+
    opt.rect = boundingRect().toRect();
    opt.palette.setColor(QPalette::Active, QPalette::Highlight, SETTINGS()->_baseColor);
-   opt.palette.setColor(QPalette::Inactive, QPalette::Highlight, QApplication::palette().color(QPalette::Normal,QPalette::Highlight));   
+   opt.palette.setColor(QPalette::Inactive, QPalette::Highlight, QApplication::palette().color(QPalette::Normal,QPalette::Highlight));
 }
 
 QRectF StreamGraphicItem::boundingRect() const
@@ -88,15 +84,15 @@ void StreamGraphicItem::paint(QPainter * painter, const QStyleOptionGraphicsItem
 Q_UNUSED(option)
    //! get Model data
    if(!media) return;
-   
-   
+
+
     /* Get color for state */
     if(media->isPlaying)
     {
         opt.state |= QStyle::State_Selected;
         opt.state |= QStyle::State_Active;
-    }    
-    else 
+    }
+    else
     {
         opt.state &= ~QStyle::State_Active;
         opt.state &= ~QStyle::State_Selected;
@@ -112,21 +108,21 @@ Q_UNUSED(option)
     painter->drawPixmap(QPointF((opt.rect.size().width()- m_coverSize)/2,2),CoverCache::instance()->cover(media));
 
 
-    
+
     /* paint stream/radio title */
     painter->setPen(opt.palette.color ( QPalette::Normal, isSelected() ? QPalette::HighlightedText : QPalette::WindowText) );
     painter->setFont(opt.font);
 
     const QString elided_name = opt.fontMetrics.elidedText ( media->extra["station"].toString(), Qt::ElideRight, (m_coverSize*1.25)-20);
     painter->drawText(QRect (10,m_coverSize,(m_coverSize*1.25)-20, 25), Qt::AlignTop | Qt::AlignHCenter,elided_name );
-    
-    
+
+
     /* paint bitrate */
     painter->setFont( UTIL::alternateFont() );
     painter->setPen(opt.palette.color ( QPalette::Disabled, isSelected() ? QPalette::HighlightedText : QPalette::WindowText));
     painter->drawText(QRect(0, m_coverSize +3 + opt.fontMetrics.height() + 2, m_coverSize*1.25, 25),  Qt::AlignTop | Qt::AlignHCenter, "#" + media->extra["bitrate"].toString());
 
-    
+
     /* paint playing or favorite attibute */
     if(media->isBroken)
         painter->drawPixmap(2, 1, QPixmap(":/images/media-broken-18x18.png"));

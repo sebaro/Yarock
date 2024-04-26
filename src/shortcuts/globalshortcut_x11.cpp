@@ -15,12 +15,12 @@
 *  this program.  If not, see <http://www.gnu.org/licenses/>.                           *
 *****************************************************************************************/
 
-/* NOTE : 
+/* NOTE :
  This class is base on depreciated qxt library
    - rewrite to remove qxt dependancy
    - using media key patch (from clementine) for Media Key
    - using "Global shortcuts for X11 with Qt 5" from Lukas Holecek
-        -> for Qt5 replace QX11Info by qplatformnativeinterface to get display   
+        -> for Qt5 replace QX11Info by qplatformnativeinterface to get display
 */
 
 #include "globalshortcut_p.h"
@@ -29,25 +29,15 @@
 #include <QVector>
 #include <QtDebug>
 
-#if QT_VERSION < 0x050000
-#   include <QX11Info>
-#else
-#   include <QApplication>
-#   include <qpa/qplatformnativeinterface.h>
-#   include <xcb/xcb.h>
-#endif
+#include <QApplication>
+#include <qpa/qplatformnativeinterface.h>
+#include <xcb/xcb.h>
 
 #include <X11/Xlib.h>
 #include "keymapper_x11.h"
 
 
 int GlobalShortcutX11Private::ref = 0;
-
-
-#if QT_VERSION < QT_VERSION_CHECK(5,0,0)
-QAbstractEventDispatcher::EventFilter GlobalShortcutX11Private::prevEventFilter = 0;
-#endif
-
 
 QHash<QPair<quint32, quint32>, GlobalShortcut*> GlobalShortcutX11Private::shortcuts;
 
@@ -59,11 +49,7 @@ GlobalShortcutX11Private::GlobalShortcutX11Private(GlobalShortcut *gs) : enabled
 {
     if (ref == 0)
     {
-#if QT_VERSION < QT_VERSION_CHECK(5,0,0)
-        prevEventFilter = QAbstractEventDispatcher::instance()->setEventFilter(eventFilter);
-#else
         QAbstractEventDispatcher::instance()->installNativeEventFilter(this);
-#endif
     }
     ++ref;
 }
@@ -71,16 +57,12 @@ GlobalShortcutX11Private::GlobalShortcutX11Private(GlobalShortcut *gs) : enabled
 GlobalShortcutX11Private::~GlobalShortcutX11Private()
 {
     --ref;
-    if (ref == 0) 
+    if (ref == 0)
     {
         QAbstractEventDispatcher *ed = QAbstractEventDispatcher::instance();
-        if (ed != 0) 
+        if (ed != 0)
         {
-#if QT_VERSION < QT_VERSION_CHECK(5,0,0)
-            ed->setEventFilter(prevEventFilter);
-#else
             ed->removeNativeEventFilter(this);
-#endif
         }
     }
 }
@@ -137,7 +119,7 @@ const QVector<quint32> maskModifiers = QVector<quint32>()
 typedef int (*X11ErrorHandler)(Display *display, XErrorEvent *event);
 
 
-class GS_X11ErrorHandler 
+class GS_X11ErrorHandler
 {
 public:
     static bool error;
@@ -184,19 +166,15 @@ private:
 
 bool GS_X11ErrorHandler::error = false;
 
-class X11Data 
+class X11Data
 {
 public:
     X11Data()
     {
-#if QT_VERSION < QT_VERSION_CHECK(5,0,0)
-        m_display = QX11Info::display();
-#else
         QPlatformNativeInterface *native = qApp->platformNativeInterface();
         void *display = native->nativeResourceForScreen(QByteArray("display"),
                                                         QGuiApplication::primaryScreen());
         m_display = reinterpret_cast<Display *>(display);
-#endif
     }
 
     bool isValid()
@@ -255,38 +233,19 @@ private:
 /*  GlobalShortcutX11Private (part from qxtglobalshortcut_x11.cpp                             */
 /* -------------------------------------------------------------------------------------------*/
 
-#if QT_VERSION < QT_VERSION_CHECK(5,0,0)
-bool GlobalShortcutX11Private::eventFilter(void *message)
-{
-    XEvent *event = static_cast<XEvent *>(message);
-    if (event->type == KeyPress)
-    {
-        XKeyEvent *key = reinterpret_cast<XKeyEvent *>(event);
-        unsigned int keycode = key->keycode;
-        unsigned int keystate = key->state;
-        
-        activateShortcut(
-            keycode,
-            keystate & (ShiftMask | ControlMask | Mod1Mask | Mod4Mask)
-        );
-    }        
-    
-    return prevEventFilter ? prevEventFilter(message) : false;
-}  
-#else
 bool GlobalShortcutX11Private::nativeEventFilter(const QByteArray & eventType,void *message, long *result)
 {
     Q_UNUSED(result);
 
     xcb_key_press_event_t *kev = 0;
-    if (eventType == "xcb_generic_event_t") 
+    if (eventType == "xcb_generic_event_t")
     {
         xcb_generic_event_t *ev = static_cast<xcb_generic_event_t *>(message);
         if ((ev->response_type & 127) == XCB_KEY_PRESS)
             kev = static_cast<xcb_key_press_event_t *>(message);
     }
 
-    if (kev != 0) 
+    if (kev != 0)
     {
         unsigned int keycode = kev->detail;
         unsigned int keystate = 0;
@@ -304,10 +263,9 @@ bool GlobalShortcutX11Private::nativeEventFilter(const QByteArray & eventType,vo
             keystate & (ShiftMask | ControlMask | Mod1Mask | Mod4Mask)
         );
     }
-    
+
     return false;
 }
-#endif
 
 quint32 GlobalShortcutX11Private::nativeModifiers(Qt::KeyboardModifiers modifiers)
 {
@@ -332,7 +290,7 @@ quint32 GlobalShortcutX11Private::nativeModifiers(Qt::KeyboardModifiers modifier
 quint32 GlobalShortcutX11Private::nativeKeycode(Qt::Key key)
 {
     // !!!!!! KEEP THIS MODIFICATION TO HAVE media keys works !!!!!
-    
+
     // (davidsansome) Try the table from QKeyMapper first - this seems to be
     // the only way to get Keysyms for the media keys.
     unsigned int keysym = 0;

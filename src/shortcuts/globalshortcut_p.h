@@ -15,11 +15,11 @@
 *  this program.  If not, see <http://www.gnu.org/licenses/>.                           *
 *****************************************************************************************/
 
-/* NOTE : 
+/* NOTE :
  This class is base on depreciated qxt library
    - rewrite to remove qxt dependancy
    - using media key patch (from clementine) for Media Key
-   - using "Global shortcuts for X11 with Qt 5" from Lukas Holecek 
+   - using "Global shortcuts for X11 with Qt 5" from Lukas Holecek
         -> for Qt5 replace QX11Info by qplatformnativeinterface to get display
 */
 
@@ -33,9 +33,8 @@
 #include <QKeySequence>
 #include <QHash>
 
-#if QT_VERSION >= QT_VERSION_CHECK(5,0,0)
 #include <QAbstractNativeEventFilter>
-#endif
+
 
 /*
 ********************************************************************************
@@ -44,11 +43,7 @@
 *                                                                              *
 ********************************************************************************
 */
-#if QT_VERSION < 0x050000
-class GlobalShortcutX11Private 
-#else
 class GlobalShortcutX11Private : public QAbstractNativeEventFilter
-#endif
 {
 public:
     GlobalShortcutX11Private(GlobalShortcut* gs);
@@ -63,12 +58,7 @@ public:
 
     static bool error;
     static int ref;
-#if QT_VERSION < 0x050000
-    static QAbstractEventDispatcher::EventFilter prevEventFilter;
-    static bool eventFilter(void* message);
-#else
     bool nativeEventFilter(const QByteArray &, void *message, long *result);
-#endif
 
 private:
     static quint32 nativeKeycode(Qt::Key keycode);
@@ -79,7 +69,7 @@ private:
     static void activateShortcut(quint32 nativeKey, quint32 nativeMods);
 
     static QHash<QPair<quint32, quint32>, GlobalShortcut*> shortcuts;
-    
+
 private :
     GlobalShortcut * const q_ptr;
 };

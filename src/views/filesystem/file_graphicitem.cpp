@@ -21,7 +21,7 @@
 #include "debug.h"
 
 #include <QtCore>
-#include <QPainter>    
+#include <QPainter>
 /*
 ********************************************************************************
 *                                                                              *
@@ -31,11 +31,7 @@
 */
 DirectoryGraphicItem::DirectoryGraphicItem()
 {
-#if QT_VERSION < 0x050000
-    setAcceptsHoverEvents(true);
-#else
     setAcceptHoverEvents(true);
-#endif 
     setAcceptDrops(false);
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setFlag(QGraphicsItem::ItemIsMovable, false);
@@ -55,7 +51,7 @@ DirectoryGraphicItem::DirectoryGraphicItem()
     opt.state |= QStyle::State_Active;
     opt.state |= QStyle::State_Enabled;
     opt.state &= ~QStyle::State_Selected;
-    
+
     isSymbLink = false;
 }
 
@@ -101,17 +97,17 @@ Q_UNUSED(option)
       p.end();
     }
     painter->drawPixmap(0, 0, pixTemp);
-    
+
    //! paint directory name
    painter->setPen(opt.palette.color ( QPalette::Normal, isSelected() ? QPalette::HighlightedText : QPalette::WindowText) );
    if (isSymbLink)
      painter->setPen(opt.palette.color ( QPalette::Normal, isSelected() ? QPalette::HighlightedText : QPalette::Link) );
-       
-   painter->setFont(opt.font);    
-   
+
+   painter->setFont(opt.font);
+
    const QString elided_dirname = opt.fontMetrics.elidedText ( m_dirname, Qt::ElideRight, 130);
-   
-   painter->drawText(QRect (0,pixmap.height()+5,130, opt.fontMetrics.height()+4), Qt::AlignTop | Qt::AlignHCenter,elided_dirname );   
+
+   painter->drawText(QRect (0,pixmap.height()+5,130, opt.fontMetrics.height()+4), Qt::AlignTop | Qt::AlignHCenter,elided_dirname );
 }
 
 
@@ -206,7 +202,7 @@ Q_UNUSED(option)
 
      const QString name_elided = opt.fontMetrics.elidedText ( m_path, Qt::ElideRight, width -20);
      painter->drawText(QRect(30, 0,  width -20, 22), Qt::AlignLeft | Qt::AlignVCenter, name_elided);
-   }    
+   }
    else
    {
       bool isTrack       = (media->type() == TYPE_TRACK) ? true : false;
@@ -244,14 +240,14 @@ Q_UNUSED(option)
         const QString name_elided = opt.fontMetrics.elidedText ( media->url, Qt::ElideRight, width -20);
         painter->drawText(QRect(30, 0,  width -20, 22), Qt::AlignLeft | Qt::AlignVCenter, name_elided);
       }
-      
+
       //! paint activated item
       if(media->isPlaying)
         UTIL::drawPlayingIcon(painter,18, 1, QPoint(5,2));
       else if(media->isBroken)
         painter->drawPixmap(1, 1, QPixmap(":/images/media-broken-18x18.png"));
       else if (!isTrack)
-        painter->drawPixmap(1, 1, QPixmap(":/images/files-18x18.png"));      
+        painter->drawPixmap(1, 1, QPixmap(":/images/files-18x18.png"));
    }
 }
 

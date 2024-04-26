@@ -71,11 +71,7 @@ QDebug Debug::debugStream( DebugLevel level )
 
     QString text = toString(level);
 
-#if QT_VERSION < QT_VERSION_CHECK(5,5,0)
-    return QDebug( QtDebugMsg ) << qPrintable( text );
-#else
     return QDebug( QtInfoMsg ) << qPrintable( text );
-#endif    
 }
 
 

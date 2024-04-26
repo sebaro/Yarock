@@ -15,13 +15,13 @@ project(enginempv)
 # ------------------------------------------------------------------------------
 # Definitions
 # ------------------------------------------------------------------------------
-add_definitions( -Wall )
+add_definitions(-Wall)
 add_definitions(-DQT_PLUGIN)
 add_definitions(-DQT_NO_DEBUG)
 add_definitions(-DQT_SHARED)
 add_definitions(-DQT_THREAD)
 
-add_definitions( -DENABLE_MPV )
+add_definitions(-DENABLE_MPV)
 
 # ------------------------------------------------------------------------------
 # LibMpv
@@ -40,7 +40,6 @@ qt_standard_project_setup()
 
 include_directories(${QT_INCLUDES})
 
-
 # ------------------------------------------------------------------------------
 # Sources
 # ------------------------------------------------------------------------------
@@ -57,7 +56,7 @@ set(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/player/mpv/engine_m
 # ------------------------------------------------------------------------------
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
-add_library( enginempv SHARED ${SOURCES})
+add_library(enginempv SHARED ${SOURCES})
 
 set_target_properties(enginempv PROPERTIES AUTOMOC TRUE)
 
@@ -69,7 +68,7 @@ target_link_libraries(enginempv ${LIBMPV_LIBRARY} ${QT_LIBRARIES})
 # Installation
 # ------------------------------------------------------------------------------
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-    set (CMAKE_INSTALL_PREFIX /usr CACHE PATH "default install path" FORCE)
+    set(CMAKE_INSTALL_PREFIX /usr CACHE PATH "default install path" FORCE)
 endif()
 
 set(CMAKE_INSTALL_LIB "${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX}/yarock"  CACHE PATH "libraries installation path" FORCE)

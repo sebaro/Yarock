@@ -11,7 +11,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake )
 # ------------------------------------------------------------------------------
 # Project
 # ------------------------------------------------------------------------------
-project( yarock )
+project(yarock)
 set(YAROCK_MAJOR_VERSION 1)
 set(YAROCK_MINOR_VERSION 5)
 set(YAROCK_PATCH_VERSION 0)
@@ -25,17 +25,18 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/config.h.in ${CMAKE_CURRENT_BINAR
 # ------------------------------------------------------------------------------
 # Definitions
 # ------------------------------------------------------------------------------
-#add_definitions( -DTEST_FLAG )
-add_definitions(-Wall -Wextra )
+#add_definitions(-DTEST_FLAG)
+add_definitions(-Wall -Wextra)
 
 # ------------------------------------------------------------------------------
 # Options
 # ------------------------------------------------------------------------------
-option(ENABLE_PHONON "Enable/disable Phonon audio engine" OFF)
-option(ENABLE_VLC "Enable/disable VLC audio engine" OFF)
+
 option(ENABLE_MPV "Enable/disable MPV audio engine" ON)
-# option(ENABLE_QTMULTIMEDIA "Enable/disable QtMultimedia audio engine" OFF)
-# option(ENABLE_SHORTCUT "Enable/disable global shortcut manager" OFF)
+option(ENABLE_VLC "Enable/disable VLC audio engine" ON)
+option(ENABLE_PHONON "Enable/disable Phonon audio engine" OFF)
+option(ENABLE_QTMULTIMEDIA "Enable/disable QtMultimedia audio engine" ON)
+option(ENABLE_SHORTCUT "Enable/disable global shortcut manager" OFF)
 
 # ------------------------------------------------------------------------------
 # Qt
@@ -74,7 +75,7 @@ include_directories(${QT_INCLUDES})
 qt_standard_project_setup()
 
 # ------------------------------------------------------------------------------
-### Taglib
+# Taglib
 # ------------------------------------------------------------------------------
 find_package(Taglib 1.6.0 REQUIRED)
 if(TAGLIB_FOUND)
@@ -84,7 +85,7 @@ endif(TAGLIB_FOUND)
 include_directories(${TAGLIB_INCLUDES})
 
 # ------------------------------------------------------------------------------
-### HtmlCxx
+# HtmlCxx
 # ------------------------------------------------------------------------------
 find_package(HtmlCxx)
 include_directories(${HTMLCXX_INCLUDES})
@@ -113,15 +114,11 @@ if(ENABLE_PHONON)
   add_subdirectory(src/core/player/phonon)
 endif(ENABLE_PHONON)
 
-# message(STATUS "Audio Engine QtMultimedia: "${ENABLE_QTMULTIMEDIA} [use cmake .. -DENABLE_QTMULTIMEDIA=ON/OFF]")
-# if(ENABLE_QTMULTIMEDIA)
-#     if(ENABLE_QT5)
-#       add_definitions(-DENABLE_QTMULTIMEDIA)
-#       add_subdirectory(src/core/player/qtmultimedia)
-#     else(ENABLE_QT5)
-#       message(WARNING "QtMultimedia can be set with QT5")
-#     endif(ENABLE_QT5)
-# endif (ENABLE_QTMULTIMEDIA)
+message(STATUS "Audio Engine QtMultimedia: ${ENABLE_QTMULTIMEDIA} [use cmake .. -DENABLE_QTMULTIMEDIA=ON/OFF]")
+if(ENABLE_QTMULTIMEDIA)
+  add_definitions(-DENABLE_QTMULTIMEDIA)
+  add_subdirectory(src/core/player/qtmultimedia)
+endif (ENABLE_QTMULTIMEDIA)
 
 if(ENABLE_SHORTCUT)
   add_definitions(-DENABLE_SHORTCUT)

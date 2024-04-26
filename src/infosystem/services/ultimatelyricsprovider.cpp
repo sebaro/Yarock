@@ -87,7 +87,7 @@ void UltimateLyricsProvider::LyricsFetched(QByteArray bytes)
     INFO::InfoRequestData request =  m_requests.take(reply);
 
     std::optional<QStringConverter::Encoding> codec = QStringConverter::encodingForName(charset_.toUtf8().constData());
-    auto converter = QStringEncoder(QStringEncoder::Utf8);
+    auto converter = QStringEncoder(codec.value());
     QByteArray encodedString = converter(QString(bytes));
     const QString original_content = QString(encodedString);
     //Debug::debug() << "      [UltimateLyricsProvider] original_content :" << original_content;

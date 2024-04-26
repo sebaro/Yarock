@@ -1,17 +1,10 @@
 
-Qt6 port
-
 About
 ----------------------------------------------------------------------------------------------
 Yarock is a modern looking music player, packed with features, that doesn’t depend on any specific desktop environment.
 Yarock is designed to provide an easy and pretty music browser based on cover art. Yarock is easy to build with a minimal set of dependancies, and offers the choose of differents audio back-end.
 
 ![](https://gitlab.com/sebaro/Yarock/raw/main/screenshot.png)
-
-  * Website : http://seb-apps.github.io/yarock/
-  * Bugreport: https://bugs.launchpad.net/yarock
-  * Translate : https://www.transifex.net/projects/p/yarock-translation/
-  * Donate: http://qt-apps.org/content/donate.php?content=129372
 
 
 Features
@@ -37,74 +30,24 @@ Features
 Dependencies
 ----------------------------------------------------------------------------------------------
 
-Qt4 dependencies:
+Build:
 
- * qt4-devel
- * qjson-devel
- * taglib-devel, taglib-extras-devel
- * htmlcxx, htmlcxx-devel
- * phonon-devel [vlc-devel, libmpv-devel]
+ * c++-17 compiler
+ * cmake >= 3.16
+ * make
 
-Qt5 dependencies:
+GUI:
 
- * qt5-qtbase-devel
- * qt5-qtx11extras-devel
- * qt5-linguist
- * phonon-qt5-devel
- * phonon-devel, [vlc-devel, libmpv-devel]
+ * qt6
+ * taglib
+ * htmlcxx
 
-Links
+Engines:
 
- * CMake        http://www.cmake.org/
- * Qt           http://qt-project.org
- * QJson        http://qjson.sourceforge.net/
- * TagLib       http://developer.kde.org/~wheeler/taglib.html
- * htmlcxx      http://htmlcxx.sourceforge.net/
- * Phonon       http://phonon.kde.org/
- * Libvlc       http://www.videolan.org/vlc/libvlc.html
- * Libmpv       http://mpv.io/
-
-
-Dependencies installation
-----------------------------------------------------------------------------------------------
-
-On a **Fedora 23** fresh system, Install following packages using  `sudo dnf install <PACKAGE>`
-
- * cmake, gcc-c++
- * qt4-devel
- * qjson-devel
- * taglib-devel, taglib-extras-devel
- * htmlcxx, htmlcxx-devel
- * phonon-devel [vlc-devel, libmpv-devel]
-
-For Qt5 build:
-
- * qt5-qtbase-devel
- * qt5-qtx11extras-devel
- * qt5-linguist
- * phonon-qt5-devel
-
-On a **Ubuntu 15.10** fresh system, Install following packages using  `sudo apt-get install <PACKAGE>`
-
- * build-essential
- * qt4-dev-tools
- * libphonon-dev [libvlc-dev, mpv ]
- * libtag1-dev
- * libqt4-sql-sqlite
- * libqjson-dev
- * libhtmlcxx-dev
-
-For Qt5 build:
- * cmake
- * qtbase5-dev
- * qtbase5-private-dev
- * qtbase5-dev-tools
- * qttools5-dev-tools
- * qttools5-dev
- * libqt5x11extras5-dev
- * libtag1-dev
- * libhtmlcxx-dev
- * libphonon4qt5-dev [libvlc-dev,libmpv-dev]
+ * mpv (libmpv)
+ * vlv (libvlc)
+ * phonon
+ * qtmultimedia
 
 
 Compiling from source
@@ -120,34 +63,16 @@ Compiling from source
 
     make install (as root)
 
+#### Audio engine
 
-#### Phonon
-
-By default, Yarock player use the phonon capabilities system provided by Qt.
-
-You have to install a phonon backend and check your Phonon setup.
-
-See Phonon backends : VLC, gstreamer, Xine, Mplayer...
-
-Under some linux distro (tested on Mageia) you need to change link to phonon plugin with
-
-      ln -s /usr/lib/kde4/plugins/phonon_backend /usr/lib/qt/plugins
-      (OR) ln -s /usr/lib64/kde4/plugins/phonon_backend /usr/lib64/qt4/plugins
-
-
-#### Alternate Audio engine
-
-You can build yarock with alternate audio engine (vlc,phonon or mpv). Vlc is the default audio engine
-since the 1.1.5 versio.
+You can build yarock with alternate audio engine (vlc, phonon or mpv).
 
 If you want enable/disable audio engine use the following cmake option :
 
-      mkdir build && cd build
-      cmake ..  -DENABLE_VLC=ON -DENABLE_MPV=ON -DENABLE_PHONON=ON
-      make
-      make install (as root)
-
-
+    mkdir build && cd build
+    cmake .. -DENABLE_VLC=ON -DENABLE_MPV=ON -DENABLE_PHONON=ON -DENABLE_QTMULTIMEDIA=ON
+    make
+    make install (as root)
 
 
 Tips & Tricks
@@ -155,15 +80,20 @@ Tips & Tricks
 
 #### Change systray icon
 
-you can use your on icon for yarock in the systray by using the file
+You can use your on icon for yarock in the systray by using the file
 
     /home/your name/.config/yarock/systray_icon.png
 
 
-Legal Stuff
+Original version (Qt4/Qt5)
 ----------------------------------------------------------------------------------------------
 
-Copyright (C) 2010-2016 Sébastien Amardeilh sebastien.amardeilh+yarock@gmail.com
+  * Website : http://seb-apps.github.io/yarock/
+  * Bugreport: https://bugs.launchpad.net/yarock
+  * Translate : https://www.transifex.net/projects/p/yarock-translation/
+  * Donate: http://qt-apps.org/content/donate.php?content=129372
+
+Copyright (C) 2010-2019 Sébastien Amardeilh sebastien.amardeilh+yarock@gmail.com
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

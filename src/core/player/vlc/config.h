@@ -21,7 +21,7 @@
 #define CMAKE_INSTALL_LIB "/usr/lib/yarock"
 #define CMAKE_INSTALL_TRANS "/usr/share/yarock/translations"
 
-#define VERSION "1.4.0" 
+#define VERSION "1.5.0" 
 
 #define APP_NAME "yarock"
 #define ORG_NAME "yarock"

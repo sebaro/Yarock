@@ -38,11 +38,7 @@ public:
     inline T *data() const { return d; }
     inline const T *constData() const { return d; }
 
-    #if QT_VERSION >= 0x050000
     inline void detach() { if (d && d->ref.loadRelaxed() != 1) detach_helper(); }
-    #else
-    inline void detach() { if (d && d->ref != 1) detach_helper(); }
-    #endif
 
     inline void reset()
     {

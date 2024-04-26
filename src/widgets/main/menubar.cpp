@@ -31,9 +31,7 @@
 #include <QMenu>
 
 #include <QtGui>
-#if QT_VERSION >= 0x050000
-  #include <QToolButton>
-#endif
+#include <QToolButton>
 
 
 /*
@@ -98,11 +96,7 @@ MenuBar::MenuBar(QWidget * parent) : QWidget(parent)
                 )
       );
 
- #if QT_VERSION >= 0x050000
       menu->setWindowFlags(Qt::ToolTip);
- #else
-      menu->setWindowFlags(Qt::Popup /*| Qt::FramelessWindowHint*/);
- #endif
 
       for (int j=0; j < m_model->rowCount(idx); j++)
       {

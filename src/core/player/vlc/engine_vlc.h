@@ -44,46 +44,44 @@ class EngineVlc : public EngineBase
 {
 Q_OBJECT
 Q_INTERFACES(EngineBase)
-#if QT_VERSION >= 0x050000
 Q_PLUGIN_METADATA(IID "EngineVlc")
-#endif 
 
 public:
     EngineVlc();
     ~EngineVlc();
-    
+
     /* play/pause/stop */
     void play();
     void pause();
     void stop();
-    
+
     /* media management */
     void setMediaItem(MEDIA::TrackPtr track);
     void setNextMediaItem(MEDIA::TrackPtr track);
-    
-    /* audio */ 
+
+    /* audio */
     int maxVolume() const { return 150;};
     int volume() const;
     void setVolume(const int &);
     bool isMuted() const;
     void setMuted( bool mute );
-    
+
     /* time */
     void seek( qint64 );
-    
-    /* effect */ 
-#if (LIBVLC_VERSION_INT >= LIBVLC_VERSION(2, 2, 0, 0))    
+
+    /* effect */
+#if (LIBVLC_VERSION_INT >= LIBVLC_VERSION(2, 2, 0, 0))
     bool isEqualizerAvailable();
     void addEqualizer();
     void removeEqualizer();
-    void applyEqualizer(QList<int>);    
+    void applyEqualizer(QList<int>);
 #endif
-    
+
 public slots:
     void volumeMute( );
     void volumeInc( );
     void volumeDec( );
-    
+
 private:
     void applyInternalVolume();
     void applyInternalMute();
@@ -93,7 +91,7 @@ private:
     void setVlcMedia(const QString&);
     void update_total_time();
     void loadEqualizerSettings();
-    
+
 private slots:
     void slot_on_media_change();
     void slot_on_duration_change(qint64);
@@ -102,7 +100,7 @@ private slots:
     void slot_on_media_about_to_finish();
     void slot_on_metadata_change();
     void internal_vlc_stateChanged(ENGINE::E_ENGINE_STATE state);
-    
+
 private:
     VlcLib                    *m_vlclib;
     VlcMedia                  *m_vlc_media;
@@ -115,7 +113,7 @@ private:
 #endif
     int                        m_internal_volume;
     bool                       m_is_volume_changed;
-    
+
     bool                       m_internal_is_mute;
     bool                       m_is_muted_changed;
 };

@@ -173,11 +173,7 @@ Q_UNUSED(e)
     // Draw the background
     if(draw_frame_)
     {
-      #if QT_VERSION >= 0x050000
       QStyleOptionFrame opt;
-      #else
-      QStyleOptionFrameV3 opt;
-      #endif        
       opt.initFrom(this);
       opt.state |= QStyle::State_Sunken;
       opt.frameShape = QFrame::StyledPanel;

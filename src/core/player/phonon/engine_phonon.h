@@ -49,9 +49,7 @@ class EnginePhonon : public EngineBase
 {
 Q_OBJECT
 Q_INTERFACES(EngineBase)
-#if QT_VERSION >= 0x050000
 Q_PLUGIN_METADATA(IID "EnginePhonon")
-#endif 
 
 public:
     EnginePhonon();
@@ -61,21 +59,21 @@ public:
     void play();
     void pause();
     void stop();
-    
+
     /* media management */
     void setMediaItem(MEDIA::TrackPtr track);
     void setNextMediaItem(MEDIA::TrackPtr track);
-   
-    /* audio */ 
+
+    /* audio */
     int volume() const;
     void setVolume(const int &);
     bool isMuted() const;
     void setMuted( bool mute );
-    
+
     /* time */
     void seek( qint64 );
-    
-    /* effect */ 
+
+    /* effect */
     bool isEqualizerAvailable();
     void addEqualizer();
     void removeEqualizer();
@@ -85,11 +83,11 @@ public slots:
     void volumeMute( );
     void volumeInc( );
     void volumeDec( );
-    
+
 private:
     void loadEqualizerSettings();
     void update_total_time();
-    
+
 private slots:
     void slot_on_media_change();
     void slot_on_duration_change(qint64);
@@ -99,7 +97,7 @@ private slots:
     void slot_on_metadata_change();
 
     void slot_on_phonon_state_changed(Phonon::State, Phonon::State);
-    
+
 private:
     Phonon::MediaObject     *m_mediaObject;
     Phonon::AudioOutput     *m_audioOutput;

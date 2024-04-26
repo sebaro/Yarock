@@ -52,11 +52,7 @@
 */
 AlbumGraphicItem::AlbumGraphicItem()
 {
-#if QT_VERSION < 0x050000
-    setAcceptsHoverEvents(true);
-#else
     setAcceptHoverEvents(true);
-#endif
     setAcceptDrops(false);
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setFlag(QGraphicsItem::ItemIsMovable, false);
@@ -585,11 +581,7 @@ void AlbumGraphicItem_v4::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 */
 ArtistGraphicItem::ArtistGraphicItem()
 {
-#if QT_VERSION < 0x050000
-    setAcceptsHoverEvents(true);
-#else
     setAcceptHoverEvents(true);
-#endif
     setAcceptDrops(false);
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setFlag(QGraphicsItem::ItemIsMovable, false);
@@ -959,11 +951,7 @@ void ArtistGraphicItem_v3::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 */
 TrackGraphicItem::TrackGraphicItem()
 {
-#if QT_VERSION < 0x050000
-    setAcceptsHoverEvents(true);
-#else
     setAcceptHoverEvents(true);
-#endif
     setAcceptDrops(false);
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setFlag(QGraphicsItem::ItemIsMovable, false);
@@ -1570,11 +1558,7 @@ void TrackGraphicItem_v5::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 */
 PlaylistGraphicItem::PlaylistGraphicItem()
 {
-#if QT_VERSION < 0x050000
-    setAcceptsHoverEvents(true);
-#else
     setAcceptHoverEvents(true);
-#endif
    setAcceptDrops(false);
    setFlag(QGraphicsItem::ItemIsSelectable, true);
    setFlag(QGraphicsItem::ItemIsMovable, false);

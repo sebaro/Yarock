@@ -313,9 +313,7 @@ void PagePlayer::createGui()
     menu->setStyleSheet(
         QString ("QMenu {icon-size: 32px; background-color: none;border: none;} ")
     );
-#if QT_VERSION < 0x050000
-        menu->setStyleSheet(QString("QMenu::item:disabled { color : gray; }"));
-#endif
+
     ui_engineButton->setMenu(menu);
 
     ui_engineGroup = new QActionGroup(this);
@@ -342,13 +340,13 @@ void PagePlayer::createGui()
 #ifndef ENABLE_PHONON
         a3->setEnabled(false);
 #endif
-//         QAction *a4 = new QAction(QIcon(), "qtmultimedia", this);
-//         a4->setData(QVariant::fromValue((int)ENGINE::QTMULTIMEDIA));
-//         a4->setIconVisibleInMenu(true);
-//         a4->setCheckable(true);
-// #ifndef ENABLE_QTMULTIMEDIA
-//         a4->setEnabled(false);
-// #endif
+        QAction *a4 = new QAction(QIcon(), "qtmultimedia", this);
+        a4->setData(QVariant::fromValue((int)ENGINE::QTMULTIMEDIA));
+        a4->setIconVisibleInMenu(true);
+        a4->setCheckable(true);
+#ifndef ENABLE_QTMULTIMEDIA
+        a4->setEnabled(false);
+#endif
         QAction *a5 = new QAction(QIcon(), "no engine", this);
         a5->setData(QVariant::fromValue((int)ENGINE::NO_ENGINE));
         a5->setIconVisibleInMenu(true);
@@ -357,7 +355,7 @@ void PagePlayer::createGui()
         ui_engineGroup->addAction(a1);
         ui_engineGroup->addAction(a2);
         ui_engineGroup->addAction(a3);
-        //ui_engineGroup->addAction(a4);
+        ui_engineGroup->addAction(a4);
         ui_engineGroup->addAction(a5);
         menu->addActions(ui_engineGroup->actions());
 
@@ -1417,11 +1415,7 @@ ShortcutGraphicItem::ShortcutGraphicItem(const QString& name, const QString& key
     m_pixmap = pix.scaled(QSize(24,24), Qt::KeepAspectRatio, Qt::SmoothTransformation);
     m_status = true;
 
-#if QT_VERSION < 0x050000
-    setAcceptsHoverEvents(true);
-#else
     setAcceptHoverEvents(true);
-#endif
     setAcceptDrops(false);
     setFlag(QGraphicsItem::ItemIsSelectable, false);
     setFlag(QGraphicsItem::ItemIsMovable, false);

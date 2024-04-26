@@ -41,34 +41,30 @@ SearchLineEdit::SearchLineEdit(QWidget *parent) : ExLineEdit(parent)
     isCustomSearch = false;
 }
 
-void SearchLineEdit::setCustomSearch(bool b) 
+void SearchLineEdit::setCustomSearch(bool b)
 {
     isCustomSearch = b;
-    
+
     if(isCustomSearch)
       m_lineEdit->clear();
-    
+
     m_lineEdit->setReadOnly( isCustomSearch );
-    
+
     if(isCustomSearch)
       m_clearButton->setVisible(true);
     else
       m_clearButton->setVisible(!m_lineEdit->text().isEmpty());
 }
-    
+
 
 void SearchLineEdit::paintEvent(QPaintEvent *event)
 {
 Q_UNUSED(event)
     //! draw the frame
     QPainter p(this);
-    
-    #if QT_VERSION >= 0x050000
+
     QStyleOptionFrame panel;
-    #else
-    QStyleOptionFrameV2 panel;
-    #endif
-    
+
     initStyleOption(&panel);
     UTIL::getStyle()->drawPrimitive(QStyle::PE_PanelLineEdit, &panel, &p, this);
 
@@ -92,17 +88,17 @@ Q_UNUSED(event)
     else if (isCustomSearch)
     {
         QRect r = UTIL::getStyle()->subElementRect(QStyle::SE_LineEditContents, &panel, this);
-      
+
         QFont font = QApplication::font();
         font.setBold(true);
-    
+
         QFontMetrics fm(font);
         int horizontalMargin = 2;
         int leftMargin = !m_left_icons.isEmpty() ? m_left_icons.count()*(this->height()) : 2;
 
         QRect lineRect(horizontalMargin + r.x() + leftMargin,
                        r.y() + (r.height() - fm.height() + 1) / 2,
-                       r.width() - 2 * horizontalMargin - m_clearButton->width(), 
+                       r.width() - 2 * horizontalMargin - m_clearButton->width(),
                        fm.height());
 
         QPainter painter(this);
