@@ -23,11 +23,7 @@
 #include "debug.h"
 
 #include <QtCore>
-#if QT_VERSION >= 0x050000
 #include <QtCore/QJsonDocument>
-#else
-#include <qjson/parser.h>
-#endif
 
 
 /* KEY
@@ -209,15 +205,7 @@ void Dirble::slotBrowseLinkDone(QByteArray bytes)
     MEDIA::LinkPtr link = m_requests.take(reply);
 
     /* parse response */
-#if QT_VERSION >= 0x050000
     QVariantList reply_list = QJsonDocument::fromJson(bytes).toVariant().toList();
-#else
-    QJson::Parser parser;
-    bool ok;
-    QVariantList reply_list = parser.parse(bytes, &ok).toList();
-
-    if (!ok) return;
-#endif
 
     foreach (const QVariant& genre_link, reply_list)
     {
@@ -298,15 +286,7 @@ void Dirble::slotBrowseStationDone(QByteArray bytes)
     MEDIA::LinkPtr link = m_requests.take(reply);
 
     /* parse response */
-#if QT_VERSION >= 0x050000
     QVariantList reply_list = QJsonDocument::fromJson(bytes).toVariant().toList();
-#else
-    QJson::Parser parser;
-    bool ok;
-    QVariantList reply_list = parser.parse(bytes, &ok).toList();
-
-    if (!ok) return;
-#endif
 
     foreach (const QVariant& station, reply_list)
     {
@@ -333,11 +313,7 @@ void Dirble::slotBrowseStationDone(QByteArray bytes)
           {
               if( map["categories"].toList().isEmpty() == false )
               {
-#if QT_VERSION < QT_VERSION_CHECK(5,6,0)
-                QVariantMap cat = map["categories"].toList().first().toMap();
-#else
                 QVariantMap cat = map["categories"].toList().constFirst().toMap();
-#endif
                 stream->genre             = cat["title"].toString();
               }
           }

@@ -54,14 +54,10 @@ class AlbumGraphicItem : public QGraphicsItem
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
-    
+
     int   m_coverSize;
   public:
-    #if QT_VERSION >= 0x050000
     QStyleOptionViewItem opt;
-    #else
-    QStyleOptionViewItemV4 opt;
-    #endif
 };
 
 /*
@@ -164,7 +160,7 @@ class ArtistGraphicItem : public QGraphicsItem
     void startDrag(QWidget*);
 
     QList<MEDIA::AlbumPtr>       albums_covers;
-    
+
   protected:
     // Implement QGraphicsItem method
     QRectF boundingRect() const;
@@ -174,14 +170,10 @@ class ArtistGraphicItem : public QGraphicsItem
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
-    
+
     int   m_coverSize;
   public:
-    #if QT_VERSION >= 0x050000
     QStyleOptionViewItem opt;
-    #else
-    QStyleOptionViewItemV4 opt;
-    #endif
 };
 
 /*
@@ -258,11 +250,7 @@ class TrackGraphicItem : public QGraphicsItem
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 
   public:
-    #if QT_VERSION >= 0x050000
     QStyleOptionViewItem opt;
-    #else
-    QStyleOptionViewItemV4 opt;
-    #endif
 };
 
 /*
@@ -375,11 +363,7 @@ class PlaylistGraphicItem : public QGraphicsItem
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 
   private:
-    #if QT_VERSION >= 0x050000
     QStyleOptionViewItem opt;
-    #else
-    QStyleOptionViewItemV4 opt;
-    #endif
 };
 
 

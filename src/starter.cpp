@@ -1,19 +1,4 @@
-/****************************************************************************************
-*  YAROCK                                                                               *
-*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
-*                                                                                       *
-*  This program is free software; you can redistribute it and/or modify it under        *
-*  the terms of the GNU General Public License as published by the Free Software        *
-*  Foundation; either version 2 of the License, or (at your option) any later           *
-*  version.                                                                             *
-*                                                                                       *
-*  This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
-*  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
-*  PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
-*                                                                                       *
-*  You should have received a copy of the GNU General Public License along with         *
-*  this program.  If not, see <http://www.gnu.org/licenses/>.                           *
-*****************************************************************************************/
+
 #include "starter.h"
 #include "commandlineoptions.h"
 #include "mainwindow.h"
@@ -21,9 +6,7 @@
 #include "utilities.h"
 #include "debug.h"
 
-//! Qt
 #include <QApplication>
-//#include <QTextCodec>
 #include <QTranslator>
 #include <QNetworkReply>
 #include <QDir>
@@ -31,32 +14,19 @@
 #include <QTime>
 #include <QLocalServer>
 #include <QLocalSocket>
-
 #include <QLocale>
 #include <QLibraryInfo>
 #include <QDebug>
+#include <QRandomGenerator>
 
 #include <unistd.h> // for getuid
-
-//! X11 and signal
 #include <X11/Xlib.h>
 #include <csignal>
 
 
 #define UDS_PATH QString("/tmp/yarock.sock.%1").arg(getuid()).toLatin1().constData()
 
-
-/*
-********************************************************************************
-*                                                                              *
-*    LoadTranslation                                                           *
-*                                                                              *
-********************************************************************************
-*/
-void LoadTranslation(const QString& prefix,
-                     const QString& path,
-                     const QString& language)
-{
+void LoadTranslation(const QString& prefix, const QString& path, const QString& language) {
   QTranslator* t = new QTranslator();
   if (t->load(prefix + "_" + language, path))
     QCoreApplication::installTranslator(t);
@@ -64,15 +34,7 @@ void LoadTranslation(const QString& prefix,
     delete t;
 }
 
-/*
-********************************************************************************
-*                                                                              *
-*    Starter                                                                   *
-*                                                                              *
-********************************************************************************
-*/
-Starter::Starter(int argc,char **argv, QObject* parent) : QObject(parent)
-{
+Starter::Starter(int argc,char **argv, QObject* parent) : QObject(parent) {
     m_mainwindow = 0;
 
     /* get command line */
@@ -84,10 +46,8 @@ Starter::Starter(int argc,char **argv, QObject* parent) : QObject(parent)
       exit(0);
     }
 
-
     m_server = new QLocalServer(this);
     m_socket = new QLocalSocket(this);
-
 
     /* trying to create server */
     if( m_server->listen (UDS_PATH) )
@@ -136,17 +96,14 @@ Starter::Starter(int argc,char **argv, QObject* parent) : QObject(parent)
    }
 }
 
-Starter::~Starter()
-{
+Starter::~Starter() {
     qDebug("[~Starter]");
 
     if (m_mainwindow)
         delete m_mainwindow;
 }
 
-
-void Starter::startPlayer(const CommandlineOptions& options)
-{
+void Starter::startPlayer(const CommandlineOptions& options) {
     qDebug("[Starter] start a new instance of player");
 
     //! init debug activation
@@ -166,21 +123,13 @@ void Starter::startPlayer(const CommandlineOptions& options)
     qDebug() << "[Starter] locale : " << QLocale::system().name();
 
     //! setup translations
-    #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-        LoadTranslation("qt", QLibraryInfo::location(QLibraryInfo::TranslationsPath), language);
-    #else
-        LoadTranslation("qt", QLibraryInfo::path(QLibraryInfo::TranslationsPath), language);
-    #endif
+    LoadTranslation("qt", QLibraryInfo::path(QLibraryInfo::TranslationsPath), language);
     LoadTranslation("yarock", QLatin1String( CMAKE_INSTALL_TRANS ), language);
     LoadTranslation("yarock", QCoreApplication::applicationDirPath() + "../translation", language); // in case of local running
     qDebug() << "[Starter] translation loaded ";
 
-//#if QT_VERSION < 0x050000
-//    QTextCodec::setCodecForTr(QTextCodec::codecForName("utf8"));
-//    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
-//#endif
     //! QRand initialisation
-    //qsrand( QTime( 0, 0, 0 ).secsTo( QTime::currentTime() ) );
+    QRandomGenerator::global()->generate();
 
     //! Directories settings
     QDir().mkpath(UTIL::CONFIGDIR);
@@ -189,15 +138,12 @@ void Starter::startPlayer(const CommandlineOptions& options)
     QDir().mkpath(UTIL::CONFIGDIR + "/artists");
     QDir().mkpath(UTIL::CONFIGDIR + "/lyrics");
 
-
     m_mainwindow = new MainWindow();
     connect(m_server, SIGNAL(newConnection()), SLOT(readCommand()));
     m_mainwindow->show();
 }
 
-
-void Starter::writeCommand(const CommandlineOptions& options)
-{
+void Starter::writeCommand(const CommandlineOptions& options) {
     qDebug("[Starter] writeCommand");
     QByteArray ba = options.Serialize();
 
@@ -205,9 +151,7 @@ void Starter::writeCommand(const CommandlineOptions& options)
     m_socket->flush();
 }
 
-
-void Starter::readCommand()
-{
+void Starter::readCommand() {
     qDebug("[Starter] readCommand:");
 
     QLocalSocket *socket = m_server->nextPendingConnection();
@@ -229,4 +173,3 @@ void Starter::readCommand()
 
     socket->deleteLater();
 }
-

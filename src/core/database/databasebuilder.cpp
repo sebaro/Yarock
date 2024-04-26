@@ -692,16 +692,27 @@ bool DataBaseBuilder::saveAlbumCoverFromDirectory(MEDIA::TrackPtr track)
 
     //! search album art into file source directory
     const QStringList imageFilters = QStringList() << "*.jpg" << "*.png";
-    QDir sourceDir(QFileInfo(track->url).absolutePath());
+    //QDir sourceDir(QFileInfo(track->url).absolutePath());
+    QString trackPath = QFileInfo(track->url).absolutePath();
+    QDir sourceDir(trackPath);
 
     sourceDir.setNameFilters(imageFilters);
 
     QStringList entryList = sourceDir.entryList(imageFilters, QDir::Files, QDir::Size);
 
+    if (entryList.isEmpty()) {
+      if (trackPath.contains("/disc", Qt::CaseInsensitive) || trackPath.contains("/cd", Qt::CaseInsensitive)) {
+				sourceDir.cdUp();
+				trackPath = sourceDir.absolutePath();
+				entryList = sourceDir.entryList(imageFilters, QDir::Files, QDir::Size);
+			}
+		}
+
     while(!entryList.isEmpty()) {
       //! I take the first one (the biggest one)
       //!WARNING simplification WARNING
-      QString file = QFileInfo(track->url).absolutePath() + "/" + entryList.takeFirst();
+      //QString file = QFileInfo(track->url).absolutePath() + "/" + entryList.takeFirst();
+			QString file = trackPath + "/" + entryList.takeFirst();
       QImage image = QImage(file);
       //! check if not null image (occur when file is KO)
       if(!image.isNull()) {

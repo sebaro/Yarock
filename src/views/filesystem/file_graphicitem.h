@@ -46,9 +46,9 @@ class DirectoryGraphicItem : public QGraphicsItem
 
     QString dirname() {return m_dirname;}
     QString path() {return m_path;}
-        
+
     void setSymbLink() { isSymbLink = true;}
-        
+
   protected:
     // Implement QGraphicsItem method
     QRectF boundingRect() const;
@@ -58,15 +58,11 @@ class DirectoryGraphicItem : public QGraphicsItem
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
-    
+
   private:
-    #if QT_VERSION >= 0x050000
     QStyleOptionViewItem opt;
-    #else
-    QStyleOptionViewItemV4 opt;
-    #endif
-    
-    
+
+
     QString  m_dirname;
     QString  m_path;
     QPixmap  pixmap;
@@ -93,7 +89,7 @@ class TrackGraphicItem_v4 : public TrackGraphicItem
     void paint(QPainter *p, const QStyleOptionGraphicsItem *, QWidget *);
 
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
-    
+
   private:
      QString  m_path;
 };

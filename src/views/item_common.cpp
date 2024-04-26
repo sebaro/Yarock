@@ -31,11 +31,7 @@
 */
 InfoGraphicItem::InfoGraphicItem(QWidget* parentView)
 {
-#if QT_VERSION < 0x050000
-    setAcceptsHoverEvents(true);
-#else
     setAcceptHoverEvents(true);
-#endif       
     setAcceptDrops(false);
     setFlag(QGraphicsItem::ItemIsSelectable, false);
     setFlag(QGraphicsItem::ItemIsMovable, false);
@@ -47,7 +43,7 @@ QRectF InfoGraphicItem::boundingRect() const
 {
     const int w_parent  = m_parent->width() - 20;
     const int width     = w_parent < 100 ? 100 : w_parent;
-    
+
     return QRectF(0, 0, width, 40);
 }
 
@@ -55,7 +51,7 @@ void InfoGraphicItem::paint(QPainter * painter, const QStyleOptionGraphicsItem *
 {
 Q_UNUSED(option)
     const QRect rect = boundingRect().toRect();
-    const int width  = rect.width(); 
+    const int width  = rect.width();
 
     QFont font_normal = QApplication::font();
     font_normal.setBold(false);
@@ -120,9 +116,7 @@ Q_UNUSED(constraint);
 */
 LoadingGraphicItem::LoadingGraphicItem(QWidget* parentView)
 {
-#if QT_VERSION < 0x050000
-    setAcceptsHoverEvents(true);
-#endif    
+    setAcceptHoverEvents(true);
     setAcceptDrops(false);
     setFlag(QGraphicsItem::ItemIsSelectable, false);
     setFlag(QGraphicsItem::ItemIsMovable, false);
@@ -130,17 +124,17 @@ LoadingGraphicItem::LoadingGraphicItem(QWidget* parentView)
 
     m_timer = new QTimer(this);
     connect(m_timer, SIGNAL(timeout()), this, SLOT(slot_timeout()));
-    m_timer->start(100); 
-     
+    m_timer->start(100);
+
     m_value  = 0;
-    m_parent = parentView;     
+    m_parent = parentView;
 }
 
 QRectF LoadingGraphicItem::boundingRect() const
 {
     const int w_parent  = m_parent->width() - 20;
     const int width     = w_parent < 100 ? 100 : w_parent;
-    
+
     return QRectF(0, 0, width, 40);
 }
 
@@ -148,7 +142,7 @@ void LoadingGraphicItem::paint(QPainter * painter, const QStyleOptionGraphicsIte
 {
 Q_UNUSED(option)
     const QRect rect = boundingRect().toRect();
-    const int width  = rect.width();     
+    const int width  = rect.width();
 
     QFont font_normal = QApplication::font();
     font_normal.setBold(false);
@@ -172,7 +166,7 @@ Q_UNUSED(option)
         painter->setPen(QPen(col, 2));
         painter->drawArc(rectangle, (((constSpinnerSteps-m_value)*1.0)/(constSpinnerSteps*1.0)*360*16)+(i*2.0*size), size);
     }
-    
+
     /* draw text  */
     painter->drawText(rect.adjusted(70,6,-100,-10), Qt::AlignVCenter, elided);
 }
@@ -195,23 +189,19 @@ void LoadingGraphicItem::slot_timeout()
 */
 CategorieGraphicItem::CategorieGraphicItem(QWidget* parentView)
 {
-#if QT_VERSION < 0x050000
-    setAcceptsHoverEvents(true);
-#else
     setAcceptHoverEvents(true);
-#endif     
     setAcceptDrops(false);
     setFlag(QGraphicsItem::ItemIsSelectable, false);
     setFlag(QGraphicsItem::ItemIsMovable, false);
     setFlag(QGraphicsItem::ItemIgnoresTransformations, true);
-    m_parent = parentView; 
+    m_parent = parentView;
 }
 
 QRectF CategorieGraphicItem::boundingRect() const
 {
     const int w_parent  = m_parent->width() - 10;
     const int width     = w_parent < 100 ? 100 : w_parent;
-    
+
     return QRectF(0, 0, width, 30);
 }
 

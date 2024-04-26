@@ -62,7 +62,7 @@ Q_OBJECT
     bool isHistoryChanged();
 
     void setContentVisible(bool b);
-    
+
     void update();
     void doLayout();
 
@@ -74,24 +74,24 @@ Q_OBJECT
     QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint = QSizeF()) const;
 
   private slots:
-    void slot_color_button_clicked();  
+    void slot_color_button_clicked();
     void slot_on_titlebutton_clicked();
-    
+
   private:
     QCheckBox              *ui_check_systray;
     QCheckBox              *ui_check_hideAtStartup;
     QCheckBox              *ui_check_enableMpris;
     QCheckBox              *ui_check_enableDbus;
-    QCheckBox              *ui_check_enableHistory;    
+    QCheckBox              *ui_check_enableHistory;
     QPushButton            *ui_color_button;
 
     CategorieLayoutItem    *m_title;
     QGraphicsProxyWidget   *proxy_widget;
     QWidget                *m_parent;
-    
+
     ButtonItem             *m_button;
     bool                   isOpen;
-    
+
   signals:
     void layout_changed();
 };
@@ -114,9 +114,9 @@ Q_OBJECT
     void saveSettings();
 
     bool isEngineChanged() {return _isEngineChanged;}
-    
+
     void setContentVisible(bool b);
-    
+
     void update();
     void doLayout();
 
@@ -126,15 +126,15 @@ Q_OBJECT
   protected:
     void resizeEvent( QGraphicsSceneResizeEvent *event );
     QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint = QSizeF()) const;
-    
+
   private slots:
     void slot_engineClicked();
     void slot_enable_replaygain();
     void slot_on_titlebutton_clicked();
-  
+
   private:
     bool                   _isEngineChanged; /* restart needed */
-      
+
     QCheckBox              *ui_stopOnPlayqueueClear;
     QCheckBox              *ui_restartPlayingAtStartup;
     QCheckBox              *ui_restorePlayqueue;
@@ -145,19 +145,19 @@ Q_OBJECT
 
     QPushButton            *ui_engineButton;
     QActionGroup           *ui_engineGroup;
-    
+
     QCheckBox              *ui_enable_replaygain;
     QComboBox              *ui_comboRGMode;
-    
+
     CategorieLayoutItem    *m_title;
     QGraphicsProxyWidget   *proxy_widget;
     QWidget                *m_parent;
-    
+
     ButtonItem             *m_button;
     bool                   isOpen;
 
   signals:
-    void layout_changed();    
+    void layout_changed();
 };
 
 
@@ -183,14 +183,14 @@ Q_OBJECT
     bool isCoverSizeChanged();
 
     void setContentVisible(bool b);
-    
+
     void update();
     void doLayout();
 
   private:
     void createGui();
     void addDatabaseParam(const QString& name, const Database::Param& param);
-    
+
   protected:
     void resizeEvent( QGraphicsSceneResizeEvent *event );
     QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint = QSizeF()) const;
@@ -207,13 +207,13 @@ Q_OBJECT
     void slot_on_remove_folder_clicked();
     void slot_on_path_changed();
 
-    
+
   private:
     bool         _isLibraryChanged; //! we need to rebuild database
-    
+
     QList<AddFolderWidget*>  ui_folderWidgets;
     QVBoxLayout              *ui_folders_layout;
-    
+
     QCheckBox              *ui_auto_update;
     QCheckBox              *ui_search_cover;
     QCheckBox              *ui_download_cover;
@@ -223,7 +223,7 @@ Q_OBJECT
     QComboBox              *ui_choose_db;
 
     QSpinBox               *ui_cover_size_spinbox;
-    
+
     QPushButton            *ui_add_path_button;
 
     QToolButton            *ui_db_new_button;
@@ -236,7 +236,7 @@ Q_OBJECT
     QGraphicsProxyWidget   *proxy_widget;
     QWidget                *m_parent;
     QWidget                *m_main_widget;
-    
+
     ButtonItem             *m_button;
     bool                   isOpen;
 
@@ -263,7 +263,7 @@ Q_INTERFACES(QGraphicsLayoutItem)
     QString m_key;
     QPixmap m_pixmap;
     bool    m_status;
-    
+
   protected:
     // Inherited from QGraphicsLayoutItem
     void setGeometry(const QRectF &geom);
@@ -278,11 +278,7 @@ Q_INTERFACES(QGraphicsLayoutItem)
     void mousePressEvent ( QGraphicsSceneMouseEvent * event );
 
   private:
-    #if QT_VERSION >= 0x050000
     QStyleOptionViewItem opt;
-    #else
-    QStyleOptionViewItemV4 opt;
-    #endif
 
   signals:
     void clicked();
@@ -307,7 +303,7 @@ Q_OBJECT
     bool isChanged() {return _isChanged;}
 
     void setContentVisible(bool b);
-    
+
     void update();
     void doLayout();
 
@@ -329,21 +325,21 @@ Q_OBJECT
   private:
     bool                    _isChanged;
     bool                    _isEnableOld;
-    
+
     QCheckBox               *ui_enable_shortcut;
-    
+
     QMap<QString, ShortcutGraphicItem*>  m_items;
     QWidget                 *m_parent;
 
     CategorieLayoutItem     *m_title;
 
     QGraphicsProxyWidget    *proxy_widget;
-    
+
     ButtonItem              *m_button;
     bool                    isOpen;
 
   signals:
-    void layout_changed();    
+    void layout_changed();
 };
 
 
@@ -366,7 +362,7 @@ Q_OBJECT
     bool isChanged() {return _isChanged;}
 
     void setContentVisible(bool b);
-    
+
     void update();
     void doLayout();
 
@@ -375,7 +371,7 @@ Q_OBJECT
     void slotSignInDone();
     void enableChange();
     void slot_on_titlebutton_clicked();
-    
+
   private:
     void updateSignInStatus();
 
@@ -398,15 +394,15 @@ Q_OBJECT
 
     bool                   _isChanged;
     bool                   _isEnableOld;
-    
+
     ButtonItem             *m_button;
     bool                   isOpen;
 
   signals:
     void layout_changed();
  };
- 
- 
+
+
 /*
 ********************************************************************************
 *                                                                              *
@@ -424,15 +420,15 @@ Q_OBJECT
     void saveSettings();
 
     bool isChanged() {return _isChanged;}
- 
+
     void setContentVisible(bool b);
 
     void update();
     void doLayout();
 
   private:
-    void Move(int);  
-    
+    void Move(int);
+
   private slots:
     void slot_on_titlebutton_clicked();
     void slot_item_changed(QListWidgetItem*);
@@ -452,15 +448,15 @@ Q_OBJECT
     QListWidget           *ui_listwidget;
     QPushButton           *ui_move_up;
     QPushButton           *ui_move_down;
-    
+
     ButtonItem             *m_button;
 
     bool                   isOpen;
     bool                   _isChanged;
-   
+
   signals:
     void layout_changed();
 };
- 
- 
+
+
 #endif // _SETTINGS_WIDGETS_H_

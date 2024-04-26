@@ -20,19 +20,17 @@
 #include <QFile>
 
 
-QIcon IconLoader::Load(const QString &name) 
+QIcon IconLoader::Load(const QString &name)
 {
   QIcon ret;
 
   if (name.isEmpty())
     return ret;
 
-#if QT_VERSION >= 0x040600
   // Try to load it from the theme initially
   ret = QIcon::fromTheme(name);
   if (!ret.isNull())
     return ret;
-#endif
 
   // Otherwise use our fallback theme
   const QString path(":/images/%1_48x48.png");

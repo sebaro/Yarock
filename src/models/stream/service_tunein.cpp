@@ -23,11 +23,7 @@
 #include "debug.h"
 
 #include <QtCore>
-#if QT_VERSION >= 0x050000
 #include <QtCore/QJsonDocument>
-#else
-#include <qjson/parser.h>
-#endif
 
 /*
 API :
@@ -206,15 +202,7 @@ void TuneIn::slotBrowseLinkDone(QByteArray bytes)
 
 
     /* parse response */
-#if QT_VERSION >= 0x050000
     QVariantMap replyMap = QJsonDocument::fromJson(bytes).toVariant().toMap();
-#else
-    QJson::Parser parser;
-    bool ok;
-    QVariantMap replyMap = parser.parse(bytes, &ok).toMap();
-
-    if (!ok) return;
-#endif
 
     QVariantList list =     replyMap["body"].toList();
 

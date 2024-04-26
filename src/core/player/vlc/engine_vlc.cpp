@@ -23,8 +23,8 @@
 #include "vlc/vlc_lib.h"
 #include "vlc/vlc_media.h"
 #include "vlc/libvlc_version.h"
- 
-#include "settings.h" 
+
+#include "settings.h"
 #include "debug.h"
 
 #include <QtPlugin>
@@ -36,14 +36,10 @@
         that, "internal_vlc_stateChanged", \
         Qt::QueuedConnection, \
         Q_ARG(ENGINE::E_ENGINE_STATE, __state))
-        
+
 // like phonon
 static const int ABOUT_TO_FINISH_TIME = 2000;
 static const int TICK_INTERVAL        = 100;
-
-#if QT_VERSION < 0x050000
-Q_EXPORT_PLUGIN2(enginevlc, EngineVlc) 
-#endif 
 
 /*
 ********************************************************************************
@@ -59,10 +55,10 @@ EngineVlc::EngineVlc() : EngineBase("vlc")
 
 #if (LIBVLC_VERSION_INT < LIBVLC_VERSION(2, 2, 0, 0))
     Debug::debug() << "[EngineVlc] -> if vlc engine fails to start, try to regenerate VLC's plugin cache !";
-    // NOTE : Under ubuntu running "/usr/lib/vlc/vlc-cache-gen -f /usr/lib/vlc/plugins/" 
+    // NOTE : Under ubuntu running "/usr/lib/vlc/vlc-cache-gen -f /usr/lib/vlc/plugins/"
     //        as root fixes the crash
-#endif    
-    
+#endif
+
     /* ----- create vlc lib instance ----- */
     m_vlclib = new VlcLib();
 
@@ -75,34 +71,34 @@ EngineVlc::EngineVlc() : EngineBase("vlc")
     /* ----- create vlc media player ----- */
     m_vlc_player = libvlc_media_player_new(m_vlclib->core());
     m_vlc_events = libvlc_media_player_event_manager(m_vlc_player);
- 
+
     /* ----- disable mouse and keyboard events ----- */
     libvlc_video_set_key_input(m_vlc_player, false);
     libvlc_video_set_mouse_input(m_vlc_player, false);
-    
+
     if(VlcLib::isError())
       VlcLib::print_error();
     else
       Debug::debug() << "[EngineVlc] vlc initialisation OK !";
-    
+
     /* ----- internal vlc connection ----- */
     createCoreConnections();
-    
+
     /* ----- internal inits ----- */
     m_vlc_media         = 0;
-    m_tickInterval      = TICK_INTERVAL;    
-    
+    m_tickInterval      = TICK_INTERVAL;
+
     /* ----- internal volume & mute ----- */
     m_internal_volume = -1;
     int restoredVolume = SETTINGS()->_volumeLevel > this->maxVolume() ? this->maxVolume() : SETTINGS()->_volumeLevel;
     setVolume( restoredVolume );
-    
+
     m_internal_is_mute  = true;
     setMuted(false);
-    
+
     /* ----- init equalizer ----- */
     m_equalizer = 0;
-#if (LIBVLC_VERSION_INT >= LIBVLC_VERSION(2, 2, 0, 0))    
+#if (LIBVLC_VERSION_INT >= LIBVLC_VERSION(2, 2, 0, 0))
     m_equalizer = libvlc_audio_equalizer_new();
     if( SETTINGS()->_enableEq )
     {
@@ -114,15 +110,15 @@ EngineVlc::EngineVlc() : EngineBase("vlc")
 #if (LIBVLC_VERSION_INT >= LIBVLC_VERSION(2, 1, 0, 0))
     libvlc_media_player_set_video_title_display(m_vlc_player, libvlc_position_disable, 0);
 #endif
-    
+
     m_version = QString(libvlc_get_version());
 }
 
 EngineVlc::~EngineVlc()
 {
     Debug::debug() << "[EngineVlc] -> delete";
-    if( m_isEngineOK ) 
-    {  
+    if( m_isEngineOK )
+    {
       removeCoreConnections();
 
       libvlc_media_player_release(m_vlc_player);
@@ -139,7 +135,7 @@ void EngineVlc::play()
 {
     Debug::debug() << "[EngineVlc] -> play";
     libvlc_media_player_play(m_vlc_player);
-    
+
     VlcLib::print_error();
 }
 
@@ -174,17 +170,17 @@ void EngineVlc::setMediaItem(MEDIA::TrackPtr track)
     Debug::debug() << "[EngineVlc] -> setMediaItem";
     libvlc_media_player_stop(m_vlc_player);
 
-    if(m_currentMediaItem) 
+    if(m_currentMediaItem)
     {
       MEDIA::registerTrackPlaying(m_currentMediaItem, false);
     }
 
     m_currentMediaItem = MEDIA::TrackPtr(track);
 
-    if(m_nextMediaItem) 
+    if(m_nextMediaItem)
     {
       m_nextMediaItem    = MEDIA::TrackPtr(0);
-    }  
+    }
 
     /* checks media validity */
     if( m_currentMediaItem->isBroken )
@@ -197,15 +193,15 @@ void EngineVlc::setMediaItem(MEDIA::TrackPtr track)
     /* load media */
     m_aboutToFinishEmitted = false;
     m_lastTick = 0;
-    
+
     const QString path = MEDIA::Track::path(track->url);
     Debug::debug() << "[EngineVlc] -> set url " << path;
-    
+
     setVlcMedia( path );
-    
+
     this->play();
 }
- 
+
 void EngineVlc::setNextMediaItem(MEDIA::TrackPtr track)
 {
     m_nextMediaItem = MEDIA::TrackPtr(track);
@@ -218,15 +214,15 @@ void EngineVlc::setVlcMedia(const QString& url)
         m_vlc_media->deleteLater();
         m_vlc_media = 0;
     }
-    
+
     m_vlc_media = new VlcMedia();
-    
+
     m_vlc_media->init(url, MEDIA::isLocal(url));
 
     // Connect to Media signals. Disconnection is done at unloading.
     connect(m_vlc_media, SIGNAL(durationChanged(qint64)), this, SLOT(slot_on_duration_change(qint64)));
     connect(m_vlc_media, SIGNAL(metaDataChanged()), this, SLOT(slot_on_metadata_change()));
-    
+
     libvlc_media_player_set_media(m_vlc_player, m_vlc_media->core());
 }
 
@@ -244,13 +240,13 @@ int EngineVlc::volume() const
 void EngineVlc::setVolume(const int &volume_in_percent)
 {
     Debug::debug() << "[EngineVlc] -> setVolume";
-    
+
     /* Don't change if volume is the same */
     if( m_internal_volume != volume_in_percent )
     {
       m_internal_volume   = volume_in_percent;
       m_is_volume_changed = true;
-      
+
       applyInternalVolume();
 
       emit volumeChanged();
@@ -261,14 +257,14 @@ void EngineVlc::setVolume(const int &volume_in_percent)
 void EngineVlc::applyInternalVolume()
 {
     Debug::debug() << "[EngineVlc] -> applyInternalVolume";
-  
-    /* vlc can not handle volume if no playing output is active */  
+
+    /* vlc can not handle volume if no playing output is active */
     libvlc_clearerr();
-    if( m_current_state == ENGINE::PLAYING ) 
+    if( m_current_state == ENGINE::PLAYING )
     {
         libvlc_audio_set_volume(m_vlc_player, m_internal_volume);
-        
-        if(libvlc_errmsg()) 
+
+        if(libvlc_errmsg())
         {
           VlcLib::print_error();
         }
@@ -301,25 +297,25 @@ void EngineVlc::setMuted( bool mute )
 
 void EngineVlc::applyInternalMute()
 {
-    /* vlc can not handle mute changes if no playing output is active */  
+    /* vlc can not handle mute changes if no playing output is active */
     if( m_current_state == ENGINE::PLAYING || m_current_state == ENGINE::PAUSED )
     {
         int m = m_internal_is_mute ? 1 : 0;
-        
+
         libvlc_audio_set_mute(m_vlc_player, int(m));
-        
+
         VlcLib::print_error();
 
         m_is_muted_changed = false;
     }
 }
 
-void EngineVlc::volumeMute( ) 
+void EngineVlc::volumeMute( )
 {
     setMuted( !isMuted() );
 };
 
-void EngineVlc::volumeInc( ) 
+void EngineVlc::volumeInc( )
 {
     int percent = volume() < 100 ? volume() + 1 : 100;
     setVolume(percent);
@@ -358,7 +354,7 @@ void EngineVlc::createCoreConnections()
      foreach(const libvlc_event_e &event, list) {
          libvlc_event_attach(m_vlc_events, event, libvlc_callback, this);
      }
-} 
+}
 
 void EngineVlc::removeCoreConnections()
 {
@@ -411,7 +407,7 @@ void EngineVlc::libvlc_callback(const libvlc_event_t *event,void *data)
     case libvlc_MediaPlayerEncounteredError:
        P_CHANGE_STATE(ENGINE::ERROR);
        break;
-      
+
     case libvlc_MediaPlayerEndReached:
         QMetaObject::invokeMethod(
                     that, "slot_on_media_finished",
@@ -422,7 +418,7 @@ void EngineVlc::libvlc_callback(const libvlc_event_t *event,void *data)
         QMetaObject::invokeMethod(
                     that, "slot_on_time_change",
                     Qt::QueuedConnection,
-                    Q_ARG(qint64, event->u.media_player_time_changed.new_time));      
+                    Q_ARG(qint64, event->u.media_player_time_changed.new_time));
         break;
 
     case libvlc_MediaPlayerSeekableChanged:
@@ -470,23 +466,23 @@ void EngineVlc::internal_vlc_stateChanged(ENGINE::E_ENGINE_STATE state)
         m_old_state = m_current_state;
 
         emit engineStateChanged();
-    }       
-    
+    }
+
     if( m_is_volume_changed )
       applyInternalVolume();
 
     if( m_is_muted_changed )
-      applyInternalMute();    
+      applyInternalMute();
 }
 
-    
+
 /* ---------------------------------------------------------------------------*/
 /* EngineVlc::slot_on_media_change                                            */
 /*   -> private slot                                                          */
 /* ---------------------------------------------------------------------------*/
 void EngineVlc::slot_on_media_change()
 {
-    Debug::debug() << "[EngineVlc] -> slot_on_media_change"; 
+    Debug::debug() << "[EngineVlc] -> slot_on_media_change";
     if(!m_currentMediaItem)
     {
         Debug::error() << "[EngineVlc] -> no media set";
@@ -495,9 +491,9 @@ void EngineVlc::slot_on_media_change()
 
     /* register track change */
     update_total_time();
-    
+
     MEDIA::registerTrackPlaying(m_currentMediaItem, true);
- 
+
     emit mediaChanged();
 }
 
@@ -508,12 +504,12 @@ void EngineVlc::slot_on_media_change()
 void EngineVlc::slot_on_media_finished()
 {
     Debug::debug() << "[EngineVlc] -> slot_on_media_finished";
-    
+
     if(VlcLib::isError())
       VlcLib::print_error();
-    
+
     emit mediaFinished();
-    
+
     if(m_nextMediaItem)
     {
       Debug::debug() << "[EngineVlc] -> slot_queue_finished next mediaitem present !!";
@@ -529,16 +525,16 @@ void EngineVlc::slot_on_media_finished()
 /* ---------------------------------------------------------------------------*/
 /* EngineVlc::slot_on_duration_change                                         */
 /*   -> private slot                                                          */
-/* ---------------------------------------------------------------------------*/   
+/* ---------------------------------------------------------------------------*/
 void EngineVlc::slot_on_duration_change(qint64 duration)
 {
-Q_UNUSED(duration)  
-    //Debug::debug() << "[EngineVlc] -> slot_on_duration_change"; 
+Q_UNUSED(duration)
+    //Debug::debug() << "[EngineVlc] -> slot_on_duration_change";
     if(m_nextMediaItem) {
        // totalTimeChanged has been sent before currentSourceChanged
        return;
     }
-    
+
     update_total_time();
 }
 
@@ -548,8 +544,8 @@ Q_UNUSED(duration)
 /* ---------------------------------------------------------------------------*/
 void EngineVlc::update_total_time()
 {
-    Debug::debug() << "[EngineVlc] -> update_total_time"; 
-  
+    Debug::debug() << "[EngineVlc] -> update_total_time";
+
     if(m_currentMediaItem && m_currentMediaItem->type() == TYPE_TRACK)
     {
       if( m_currentMediaItem->duration > 0 )
@@ -567,7 +563,7 @@ void EngineVlc::update_total_time()
     {
       m_totalTime = (qint64)libvlc_media_player_get_time(m_vlc_player);
     }
-    
+
     emit mediaTotalTimeChanged(m_totalTime);
 }
 
@@ -584,9 +580,9 @@ void EngineVlc::slot_on_time_change(qint64 time)
         m_lastTick = time;
         emit mediaTick(time);
     }
-    
 
-    if(m_current_state == ENGINE::PLAYING) 
+
+    if(m_current_state == ENGINE::PLAYING)
     {
       const qint64 totalTime = m_totalTime;
       if (totalTime > 0 && time >= totalTime - ABOUT_TO_FINISH_TIME)
@@ -608,8 +604,8 @@ void EngineVlc::slot_on_media_about_to_finish()
         if(!m_nextMediaItem) {
           if (!m_aboutToFinishEmitted) {
             m_aboutToFinishEmitted = true;
-            emit mediaAboutToFinish(); // needed to set next media item  
-          }      
+            emit mediaAboutToFinish(); // needed to set next media item
+          }
         }
     }
 }
@@ -620,10 +616,10 @@ void EngineVlc::slot_on_media_about_to_finish()
 /* ---------------------------------------------------------------------------*/
 void EngineVlc::slot_on_metadata_change()
 {
-    Debug::debug() << "[EngineVlc] -> slot_on_metadata_change"; 
-    if(m_currentMediaItem->type() != TYPE_STREAM) 
+    Debug::debug() << "[EngineVlc] -> slot_on_metadata_change";
+    if(m_currentMediaItem->type() != TYPE_STREAM)
       return;
-    
+
     const QString artist     = m_vlc_media->meta(libvlc_meta_Artist);
     const QString album      = m_vlc_media->meta(libvlc_meta_Album);
     const QString title      = m_vlc_media->meta(libvlc_meta_Title);
@@ -632,20 +628,20 @@ void EngineVlc::slot_on_metadata_change()
     /* Streams sometimes have the artist and title munged in nowplaying */
     if (artist.isEmpty() && !nowPlaying.isEmpty())
     {
-        if(nowPlaying.contains("-")) 
+        if(nowPlaying.contains("-"))
         {
           QStringList list = nowPlaying.split(" - ");
           m_currentMediaItem->artist = list.first();
           m_currentMediaItem->title = list.last();
         }
     }
-    
+
     libvlc_media_track_t **arrayVlcTracks = new libvlc_media_track_t *[5];
 
     int numberOfTracks = libvlc_media_tracks_get(m_vlc_media->core(), &arrayVlcTracks);
 
     if(numberOfTracks == 1)
-    { 
+    {
         libvlc_media_track_t* track = arrayVlcTracks[0];
 
         m_currentMediaItem->extra["bitrate"] = track->i_bitrate/1000;
@@ -675,7 +671,7 @@ void EngineVlc::seek(qint64 milliseconds)
     const qint64 total = currentTotalTime();
 
     if (time < total - ABOUT_TO_FINISH_TIME)
-        m_aboutToFinishEmitted = false;    
+        m_aboutToFinishEmitted = false;
 };
 
 
@@ -683,7 +679,7 @@ void EngineVlc::seek(qint64 milliseconds)
 /* Equalizer management                                                       */
 /* ---------------------------------------------------------------------------*/
 #if (LIBVLC_VERSION_INT >= LIBVLC_VERSION(2, 2, 0, 0))
-bool EngineVlc::isEqualizerAvailable() 
+bool EngineVlc::isEqualizerAvailable()
 {
     return true;
 }
@@ -702,18 +698,18 @@ void EngineVlc::removeEqualizer()
 void EngineVlc::applyEqualizer(QList<int> gains)
 {
     Debug::debug() << "[EngineVlc] -> apply equalizer settings";
-  
+
     int u_band=-1;
     double scaled_value;
     foreach( int gain, gains )
     {
       scaled_value = gain;
-      
+
       if (u_band == -1 /* for preamp */)
         libvlc_audio_equalizer_set_preamp(m_equalizer, scaled_value);
       else
         libvlc_audio_equalizer_set_amp_at_index(m_equalizer, scaled_value, u_band);
-      
+
        u_band++;
     }
 }
@@ -732,6 +728,6 @@ void EngineVlc::loadEqualizerSettings()
       applyEqualizer(gains);
     }
 }
-#endif // libvlc > 2.2.0   
+#endif // libvlc > 2.2.0
 
 #endif // ENABLE_VLC

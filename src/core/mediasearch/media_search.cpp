@@ -85,11 +85,7 @@ MediaSearch MediaSearch::fromDatabase(QVariant variant)
 QVariant MediaSearch::toDatabase(MediaSearch search)
 {
     QByteArray byte_array;
-    #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-        QDataStream s(&byte_array, QIODevice::ReadWrite);
-    #else
-        QDataStream s(&byte_array, QIODeviceBase::ReadWrite);
-    #endif
+    QDataStream s(&byte_array, QIODeviceBase::ReadWrite);
 
     s << search;
 

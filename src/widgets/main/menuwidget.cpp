@@ -24,10 +24,8 @@
 #include <QtGui>
 #include <QApplication>
 #include <QLayout>
+#include <QVBoxLayout>
 
-#if QT_VERSION >= 0x050000
-  #include <QVBoxLayout>
-#endif
 
 MenuWidget* MenuWidget::INSTANCE = 0;
 

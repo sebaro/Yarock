@@ -70,11 +70,7 @@ Q_OBJECT
     QWidget* menuWidget() {return m_menu_widget;}
 
   protected:
-    #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-      void enterEvent(QEvent *e);
-    #else
-      void enterEvent(QEnterEvent *e);
-    #endif
+    void enterEvent(QEnterEvent *e);
     void leaveEvent(QEvent *e);
     void mousePressEvent ( QMouseEvent * e );
     bool eventFilter(QObject *obj, QEvent *ev);

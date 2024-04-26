@@ -41,11 +41,7 @@
 */
 WebLinkItem::WebLinkItem()
 {
-#if QT_VERSION < 0x050000
-    setAcceptsHoverEvents(true);
-#else
     setAcceptHoverEvents(true);
-#endif
     setAcceptDrops(false);
     setFlag(QGraphicsItem::ItemIsSelectable, false);
     setFlag(QGraphicsItem::ItemIsMovable, false);
@@ -137,11 +133,7 @@ Q_UNUSED(event)
 */
 TextGraphicItem::TextGraphicItem()
 {
-#if QT_VERSION < 0x050000
-    setAcceptsHoverEvents(true);
-#else
     setAcceptHoverEvents(true);
-#endif
     setAcceptDrops(false);
     setFlag(QGraphicsItem::ItemIsSelectable, false);
     setFlag(QGraphicsItem::ItemIsMovable, false);
@@ -215,11 +207,7 @@ void TextGraphicItem::contextMenuEvent ( QGraphicsSceneContextMenuEvent * event 
 */
 AlbumThumbGraphicItem::AlbumThumbGraphicItem()
 {
-#if QT_VERSION < 0x050000
-    setAcceptsHoverEvents(true);
-#else
     setAcceptHoverEvents(true);
-#endif
     setAcceptDrops(false);
     setFlag(QGraphicsItem::ItemIsSelectable, false);
     setFlag(QGraphicsItem::ItemIsMovable, false);
@@ -305,11 +293,7 @@ Q_UNUSED(option)
 */
 ArtistThumbGraphicItem::ArtistThumbGraphicItem()
 {
-#if QT_VERSION < 0x050000
-    setAcceptsHoverEvents(true);
-#else
     setAcceptHoverEvents(true);
-#endif
     setAcceptDrops(false);
     setFlag(QGraphicsItem::ItemIsSelectable, false);
     setFlag(QGraphicsItem::ItemIsMovable, false);

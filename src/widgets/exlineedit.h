@@ -58,19 +58,15 @@ Q_OBJECT
     QSize sizeHint() const;
 
     void setCustomContextMenu(QMenu* m) {m_context_menu =m;}
-    
+
   protected:
     void focusInEvent(QFocusEvent *event);
     void focusOutEvent(QFocusEvent *event);
     void resizeEvent(QResizeEvent *);
     void paintEvent(QPaintEvent *event);
     void updateGeometries();
-    
-    #if QT_VERSION >= 0x050000
+
     void initStyleOption(QStyleOptionFrame *option) const;
-    #else
-    void initStyleOption(QStyleOptionFrameV2 *option) const;
-    #endif
 
     void contextMenuEvent ( QContextMenuEvent * event );
 
@@ -87,12 +83,12 @@ Q_OBJECT
   protected:
     QToolButton   *m_clearButton;
     QList<QPushButton*> m_left_icons;
-    
+
     QLineEdit     *m_lineEdit;
     QString        m_inactiveText;
 
     QMenu*         m_context_menu;
-    
+
   signals:
     void textfield_entered();
     void textfield_changed();

@@ -1,36 +1,16 @@
-/****************************************************************************************
-*  YAROCK                                                                               *
-*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
-*                                                                                       *
-*  This program is free software; you can redistribute it and/or modify it under        *
-*  the terms of the GNU General Public License as published by the Free Software        *
-*  Foundation; either version 2 of the License, or (at your option) any later           *
-*  version.                                                                             *
-*                                                                                       *
-*  This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
-*  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
-*  PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
-*                                                                                       *
-*  You should have received a copy of the GNU General Public License along with         *
-*  this program.  If not, see <http://www.gnu.org/licenses/>.                           *
-*****************************************************************************************/
 
 #include "file_scene.h"
 #include "models/filesystem/file_model.h"
 #include "views/filesystem/file_graphicitem.h"
 #include "views/local/local_item.h"
 #include "views/item_common.h"
-
 #include "playqueue/virtual_playqueue.h"
 #include "core/database/database.h"
 #include "core/mediaitem/playlist_parser.h"
 #include "mediamimedata.h"
-
-
 #include "settings.h"
 #include "global_actions.h"
 #include "debug.h"
-
 
 #include <QtCore>
 #include <QDir>
@@ -39,11 +19,8 @@
 #include <QDrag>
 #include <QGraphicsSceneEvent>
 #include <QFileIconProvider>
-
-
-#if QT_VERSION >= 0x050000
 #include <QtConcurrent>
-#endif
+
 
 /*
 ********************************************************************************
@@ -193,7 +170,8 @@ void FileScene::slot_on_directory_loaded()
 
     for(int childRow = 0; childRow < m_model->rowCount(root_idx); ++childRow)
     {
-        QModelIndex childIndex = root_idx.sibling(childRow, 0);
+        //QModelIndex childIndex = root_idx.child(childRow, 0);
+        QModelIndex childIndex = m_model->index(childRow, 0, root_idx);
 
         QFileInfo fileInfo = m_model->fileInfo ( childIndex );
 
@@ -273,7 +251,7 @@ void FileScene::slot_on_directory_loaded()
         map_graphic_items[url] = track_item;
     }
 
-    QtConcurrent::run(&FileScene::async_load_item, this);
+    QFuture<void> future = QtConcurrent::run(&FileScene::async_load_item, this);
 
     if(m_infosize==0) {
       InfoGraphicItem *info = new InfoGraphicItem(qobject_cast<QGraphicsView*> (parentView())->viewport());

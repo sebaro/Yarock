@@ -35,9 +35,7 @@
 
 #include <cmath>
 
-#if QT_VERSION < 0x050000
-Q_EXPORT_PLUGIN2(enginephonon, EnginePhonon) 
-#endif
+
 /*
 ********************************************************************************
 *                                                                              *
@@ -48,14 +46,14 @@ Q_EXPORT_PLUGIN2(enginephonon, EnginePhonon)
 EnginePhonon::EnginePhonon() : EngineBase("phonon")
 {
     m_type = ENGINE::PHONON;
-    
+
     m_mediaObject = new Phonon::MediaObject(this);
     m_audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory, this);
 
     /* ----- by default tick every 1 second ----- */
     m_mediaObject->setTickInterval(100);
     Debug::debug() << "[EnginePhonon] -> tick Interval (actual): " << m_mediaObject->tickInterval();
-    
+
 
     /* ----- get the next track when there is 2 seconds left on the current one ----- */
     /*       in case of playing track from track view */
@@ -77,7 +75,7 @@ EnginePhonon::EnginePhonon() : EngineBase("phonon")
     /* needed for Mplayer2 backend */
     connect( m_audioOutput, SIGNAL( volumeChanged( qreal ) ),this, SIGNAL( volumeChanged() ) );
     connect( m_audioOutput, SIGNAL( mutedChanged( bool ) ), this,  SIGNAL( muteStateChanged() ) );
-    
+
     m_phononPath  = Phonon::createPath(m_mediaObject,m_audioOutput);
 
 
@@ -98,7 +96,7 @@ EnginePhonon::EnginePhonon() : EngineBase("phonon")
       {
           m_equalizer = new Phonon::Effect( mDescr, this );
 
-          if( SETTINGS()->_enableEq ) 
+          if( SETTINGS()->_enableEq )
           {
               addEqualizer();
               loadEqualizerSettings();
@@ -109,10 +107,10 @@ EnginePhonon::EnginePhonon() : EngineBase("phonon")
     /* ----- initial volume setup ----- */
     int restoredVolume = SETTINGS()->_volumeLevel > this->maxVolume() ? this->maxVolume() : SETTINGS()->_volumeLevel;
     setVolume( restoredVolume );
-    
+
     m_current_state    = ENGINE::STOPPED;
     m_old_state        = ENGINE::STOPPED;
-    
+
     m_version = QString();
 }
 
@@ -162,7 +160,7 @@ void EnginePhonon::setMediaItem(MEDIA::TrackPtr track)
     m_mediaObject->clearQueue();
     m_mediaObject->blockSignals(false);
 
-    if(m_currentMediaItem) 
+    if(m_currentMediaItem)
     {
       MEDIA::registerTrackPlaying(m_currentMediaItem, false);
     }
@@ -170,7 +168,7 @@ void EnginePhonon::setMediaItem(MEDIA::TrackPtr track)
     m_currentMediaItem = MEDIA::TrackPtr(track);
     //Debug::debug() << "[EnginePhonon] -> setMediaItem mi url:" << mi->data.url;
 
-    if(m_nextMediaItem) 
+    if(m_nextMediaItem)
     {
       m_nextMediaItem    = MEDIA::TrackPtr(0);
     }
@@ -180,26 +178,26 @@ void EnginePhonon::setMediaItem(MEDIA::TrackPtr track)
     {
       Debug::warning() << "[EnginePhonon] Track path seems to be broken:" << m_currentMediaItem->url;
       m_mediaObject->blockSignals(false);
-      //stop(); no stop FOR VLC BACKEND 
+      //stop(); no stop FOR VLC BACKEND
       return;
     }
     /* END */
 
-    
+
     /* get replay gain info */
-    if ( (m_currentMediaItem->type() == TYPE_TRACK) && 
+    if ( (m_currentMediaItem->type() == TYPE_TRACK) &&
          (SETTINGS()->_replaygain != SETTING::ReplayGainOff ) )
     {
-        MEDIA::ReplayGainFromDataBase(m_currentMediaItem);    
+        MEDIA::ReplayGainFromDataBase(m_currentMediaItem);
     }
-     
+
     //const QString path = MEDIA::Track::path(track->url);
     if( MEDIA::isLocal(track->url) )
       m_mediaObject->setCurrentSource( QUrl::fromLocalFile(QFileInfo(track->url).canonicalFilePath()) );
     else
       m_mediaObject->setCurrentSource( QUrl(track->url) );
-    
-    
+
+
     m_mediaObject->play();
 }
 
@@ -216,13 +214,13 @@ void EnginePhonon::setNextMediaItem(MEDIA::TrackPtr track)
     /* // DEBUG check queue
     foreach (Phonon::MediaSource source, m_mediaObject->queue() )
       Debug::debug() << "[EnginePhonon] -> #queue -> url :" << source.url() ;*/
-    
+
     /* get replay gain info */
-    if ( (m_nextMediaItem->type() == TYPE_TRACK) && 
+    if ( (m_nextMediaItem->type() == TYPE_TRACK) &&
          (SETTINGS()->_replaygain != SETTING::ReplayGainOff ) )
     {
-        MEDIA::ReplayGainFromDataBase(m_nextMediaItem);    
-    }    
+        MEDIA::ReplayGainFromDataBase(m_nextMediaItem);
+    }
 }
 
 
@@ -234,7 +232,7 @@ int EnginePhonon::volume() const
     /* return volume in percent */
     int volume_in_percent = m_audioOutput->volume()*100;
     volume_in_percent = qBound<qreal>( 0, volume_in_percent, 100 );
-    
+
     return volume_in_percent;
 }
 
@@ -261,20 +259,20 @@ bool EnginePhonon:: isMuted() const
 void EnginePhonon::setMuted( bool mute )
 {
     bool ismuted = m_audioOutput->isMuted();
-    
+
     if(mute != ismuted) {
       m_audioOutput->setMuted( mute );
       emit muteStateChanged();
     }
 }
 
-void EnginePhonon::volumeMute( ) 
+void EnginePhonon::volumeMute( )
 {
     //Debug::debug() << "[EnginePhonon] -> volumeMute";
     setMuted( !isMuted() );
 };
 
-void EnginePhonon::volumeInc( ) 
+void EnginePhonon::volumeInc( )
 {
     int percent = volume() < 100 ? volume() + 1 : 100;
     setVolume(percent);
@@ -329,14 +327,14 @@ void EnginePhonon::slot_on_phonon_state_changed(Phonon::State newState, Phonon::
     }
 }
 
-    
+
 
 /* ---------------------------------------------------------------------------*/
 /* EnginePhonon::slot_on_duration_change                                      */
 /* ---------------------------------------------------------------------------*/
 void  EnginePhonon::slot_on_duration_change(qint64 total_time_ms)
 {
-Q_UNUSED(total_time_ms)  
+Q_UNUSED(total_time_ms)
     //Debug::debug() << "[EnginePhonon] -> slot_on_duration_change" ;
 
     /* As Amarok note: don't rely on m_currentTrack here. At least some Phonon backends first emit
@@ -346,7 +344,7 @@ Q_UNUSED(total_time_ms)
        /* totalTimeChanged has been sent before currentSourceChanged */
        return;
     }
-    
+
     update_total_time();
 }
 
@@ -370,8 +368,8 @@ void EnginePhonon::update_total_time()
     {
       m_totalTime  = m_mediaObject->totalTime();
     }
-    
-    emit mediaTotalTimeChanged(m_totalTime);    
+
+    emit mediaTotalTimeChanged(m_totalTime);
 }
 
 
@@ -438,12 +436,12 @@ void EnginePhonon::slot_on_media_change()
         m_preamp->fadeTo( 1.0, 0 );
     }
 
- 
+
     /* register track change */
     update_total_time();
-    
+
     MEDIA::registerTrackPlaying(m_currentMediaItem, true);
- 
+
     emit mediaChanged();
 }
 
@@ -462,19 +460,19 @@ void EnginePhonon::slot_on_metadata_change()
 
     if( !metaData.value("ALBUM").isEmpty() && metaData.value("ALBUM") != "Streaming Data" )
       m_currentMediaItem->album = metaData.value("ALBUM");
-    
+
     if( !metaData.value("ARTIST").isEmpty() && metaData.value("ARTIST") != "Streaming Data" )
       m_currentMediaItem->artist = metaData.value("ARTIST");
-        
-    if(metaData.value("TITLE").contains("-")) 
+
+    if(metaData.value("TITLE").contains("-"))
     {
       QStringList list = metaData.value("TITLE").split(" - ");
       m_currentMediaItem->artist = list.first();
       m_currentMediaItem->title = list.last();
     }
-    
+
     // No support in phonon for bitrate/samplerate/format meta data
-    
+
 #ifdef TEST_FLAG
     foreach(QString key, metaData.keys())
       Debug::debug() << "[EnginePhonon] -> on_metadata_change " << key << ":" << metaData[key];
@@ -494,7 +492,7 @@ void EnginePhonon::slot_on_media_about_to_finish()
     {
         /* needed to set next media item */
         if(!m_nextMediaItem)
-          emit mediaAboutToFinish(); 
+          emit mediaAboutToFinish();
     }
 }
 
@@ -539,13 +537,13 @@ void EnginePhonon::slot_on_time_change(qint64 ms)
 {
     m_lastTick = ms;
     emit mediaTick(ms);
-  
+
 }
 
 /* ---------------------------------------------------------------------------*/
 /* Equalizer management                                                       */
 /* ---------------------------------------------------------------------------*/
-bool EnginePhonon::isEqualizerAvailable() 
+bool EnginePhonon::isEqualizerAvailable()
 {
     QList<Phonon::EffectDescription> effects = Phonon::BackendCapabilities::availableAudioEffects();
 
@@ -596,9 +594,9 @@ void EnginePhonon::applyEqualizer(QList<int> gains)
     QList<Phonon::EffectParameter> effect_param_list = m_equalizer->parameters();
 
     QListIterator<int> it_effect_param( gains );
-    
+
     /*Scaled value to set from universal -100 - 100 range to plugin scale */
-    double scaled_value; 
+    double scaled_value;
     foreach( const Phonon::EffectParameter &effect_param, effect_param_list )
     {
        scaled_value = it_effect_param.hasNext() ? it_effect_param.next() : 0;

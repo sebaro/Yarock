@@ -40,10 +40,8 @@
 #include "debug.h"
 
 #include <QtGui>
+#include <QShortcut>
 
-#if QT_VERSION >= 0x050000
-  #include <QShortcut>
-#endif
 
 MainLeftWidget* MainLeftWidget::INSTANCE = 0;
 

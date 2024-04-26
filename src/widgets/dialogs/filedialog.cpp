@@ -108,11 +108,7 @@ FileDialog::FileDialog(QWidget *parent, Mode mode, const QString& title) : Dialo
     m_rootIdx = m_model->index(QDir::rootPath());
 
 
-#if QT_VERSION < 0x050000
-     QDir userMusicDir = QDir( QDesktopServices::storageLocation( QDesktopServices::MusicLocation ) );
-#else
-     QDir userMusicDir = QDir( QStandardPaths::writableLocation( QStandardPaths::MusicLocation ) );
-#endif
+    QDir userMusicDir = QDir( QStandardPaths::writableLocation( QStandardPaths::MusicLocation ) );
 
     if(userMusicDir.exists())
       this->updateCurrentIndex( m_model->index(userMusicDir.path()) );

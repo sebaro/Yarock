@@ -1,48 +1,26 @@
-/****************************************************************************************
-*  YAROCK                                                                               *
-*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
-*                                                                                       *
-*  This program is free software; you can redistribute it and/or modify it under        *
-*  the terms of the GNU General Public License as published by the Free Software        *
-*  Foundation; either version 2 of the License, or (at your option) any later           *
-*  version.                                                                             *
-*                                                                                       *
-*  This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
-*  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
-*  PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
-*                                                                                       *
-*  You should have received a copy of the GNU General Public License along with         *
-*  this program.  If not, see <http://www.gnu.org/licenses/>.                           *
-*****************************************************************************************/
+
 #include "playlistview.h"
 #include "playqueue_model.h"
 #include "playqueue_proxymodel.h"
+#include "core/database/database_cmd.h"
 #include "core/mediaitem/mediaitem.h"
 #include "core/player/engine_base.h"
 #include "core/player/engine.h"
 #include "covers/covercache.h"
-
 #include "widgets/ratingwidget.h"
-#include "core/database/database_cmd.h"
-
 #include "online/lastfm.h"
-
 #include "iconmanager.h"
 #include "utilities.h"
 #include "settings.h"
 #include "global_actions.h"
 #include "debug.h"
 
-
-
-#if QT_VERSION >= 0x050000
 #include <QtConcurrent>
-#endif
-
 #include <QtCore>
 #include <QScrollBar>
 #include <QPainter>
 #include <QDragMoveEvent>
+
 
 bool SortByRowUptoDown(const QModelIndex& a, const QModelIndex& b) {
   return a.row() < b.row();
@@ -426,7 +404,7 @@ void PlaylistView::mousePressEvent(QMouseEvent* event)
                 }
 
                 /* rate in database */
-                QtConcurrent::run(DatabaseCmd::rateMediaItems, tracks);
+                QFuture<void> future = QtConcurrent::run(DatabaseCmd::rateMediaItems, tracks);
             }
         }
     }
@@ -537,11 +515,7 @@ void PlaylistDelegate::paint ( QPainter * painter, const QStyleOptionViewItem & 
     //painter->setRenderHint(QPainter::Antialiasing, true);
 
     /* draw background */
-    #if QT_VERSION >= 0x050000
     QStyleOptionViewItem opt(option);
-    #else
-    QStyleOptionViewItemV4 opt(option);
-    #endif
 
     opt.state = option.state;
     opt.showDecorationSelected = true;
