@@ -95,9 +95,7 @@ void ServiceLyrics::slot_ultimate_lyrics_parsed()
 QStringList ServiceLyrics::defaultProvidersList()
 {
     QStringList default_order;
-    default_order << "lyrics.wikia.com"
-                  << "lyricsreg.com"
-                  << "metrolyrics.com"
+    default_order << "lyricsreg.com"
                   << "azlyrics.com"
                   << "songlyrics.com"
                   << "genius.com"
@@ -105,14 +103,10 @@ QStringList ServiceLyrics::defaultProvidersList()
                   << "elyrics.net"
                   << "lyricsmode.com"
                   << "directlyrics.com"
-                  << "loudsongs.com";
-                  /*
-                  << "teksty.org"
+                  << "darklyrics.com"
                   << "tekstowo.pl (Polish translations)"
-                  << "vagalume.uol.com.br"
-                  << "vagalume.uol.com.br (Portuguese translations)"
-                  << "darklyrics.com";
-                  */
+                  << "vagalume.com.br"
+                  << "vagalume.com.br (Portuguese translations)";
 
     return default_order;
 }
@@ -124,21 +118,17 @@ QStringList ServiceLyrics::fullProvidersList()
 {
     QStringList full_list;
     full_list     << "genius.com"
-                  << "lyrics.wikia.com"
                   << "lyricsreg.com"
                   << "lyricsmania.com"
-                  << "metrolyrics.com"
                   << "azlyrics.com"
                   << "songlyrics.com"
                   << "elyrics.net"
                   << "lyricsmode.com"
                   << "directlyrics.com"
-                  << "loudsongs.com"
                   << "darklyrics.com"
-                  << "teksty.org"
                   << "tekstowo.pl (Polish translations)"
-                  << "vagalume.uol.com.br"
-                  << "vagalume.uol.com.br (Portuguese translations)";
+                  << "vagalume.com.br"
+                  << "vagalume.com.br (Portuguese translations)";
 
     return full_list;
 }

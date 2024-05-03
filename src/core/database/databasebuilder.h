@@ -52,7 +52,7 @@ class DataBaseBuilder :  public QThread
 
   private slots:
     void slot_systeminfo_received( INFO::InfoRequestData, QVariant );
-   
+
   private:
     void doScan();
     QStringList filesFromFilesystem(const QString& directory);
@@ -83,7 +83,7 @@ class DataBaseBuilder :  public QThread
 
   private:
     QList<quint64>       m_requests_ids;
-    
+
     // filename, mtime
     QHash<QString,uint>  m_db_dirs;
     QSet<QString>        m_fs_dirs;
