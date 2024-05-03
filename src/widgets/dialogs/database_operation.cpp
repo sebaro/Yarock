@@ -37,20 +37,20 @@ DatabaseOperationDialog::DatabaseOperationDialog(QWidget *parent) : DialogBase(p
     this->resize(445, 150);
 
     buttonBox()->setStandardButtons(QDialogButtonBox::Cancel);
-    
+
     QButtonGroup* group = new QButtonGroup();
     group->addButton( new QPushButton(QIcon(":/images/rebuild.png"), tr("Update")) , (int)OPE_RESCAN);
     group->addButton( new QPushButton(QIcon(":/images/rebuild.png"), tr("Rebuild")) , (int)OPE_REBUILD);
     group->addButton( new QPushButton(QIcon(":/images/download-48x48.png"), tr("Cover")) , (int)OPE_COVER);
     group->addButton( new QPushButton(QIcon(":/images/download-48x48.png"), tr("Artist")) , (int)OPE_ARTIST_IMAGE);
 //     group->addButton( new QPushButton(QIcon(":/images/download-48x48.png"), tr("Genre")) , (int)OPE_GENRE_TAG);
-    
+
     foreach(QAbstractButton* button, group->buttons() )
     {
        button->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Minimum);
        static_cast<QPushButton*>(button)->setFlat(false);
     }
-    
+
     QGridLayout *ui_grid_layout = new QGridLayout();
     ui_grid_layout->setContentsMargins(0, 0, 0, 0);
 
@@ -64,16 +64,16 @@ DatabaseOperationDialog::DatabaseOperationDialog(QWidget *parent) : DialogBase(p
 
     ui_grid_layout->addWidget(group->button( (int)OPE_ARTIST_IMAGE), 4, 0, 1, 1);
     ui_grid_layout->addWidget(new QLabel(tr("Download missing artist image")), 4, 1, 1, 1);
-    
+
 //     ui_grid_layout->addWidget(group->button( (int)OPE_GENRE_TAG), 5, 0, 1, 1);
 //     ui_grid_layout->addWidget(new QLabel(tr("Download genre tag")), 5, 1, 1, 1);
 
-    
+
     this->setContentLayout(ui_grid_layout);
 
     QObject::connect(buttonBox(), SIGNAL(rejected()), this, SLOT(on_buttonBox_rejected()));
-    QObject::connect(group, SIGNAL(buttonClicked ( int )), this, SLOT(on_button_clicked( int )));
-    
+    QObject::connect(group, SIGNAL(idClicked ( int )), this, SLOT(on_button_clicked( int )));
+
     /* initialize */
     m_operation = OPE_NONE;
 }
@@ -96,7 +96,7 @@ void DatabaseOperationDialog::on_buttonBox_rejected()
 void DatabaseOperationDialog::on_button_clicked( int id)
 {
     m_operation = (E_OPERATION)id;
-  
+
     this->setResult(QDialog::Accepted);
     QDialog::accept();
     this->close();
