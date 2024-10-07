@@ -14,12 +14,12 @@
 
 
 class EngineQtMultimedia : public EngineBase {
-  Q_OBJECT
-  Q_INTERFACES(EngineBase)
-  Q_PLUGIN_METADATA(IID "EngineQtMultimedia")
+    Q_OBJECT
+    Q_INTERFACES(EngineBase)
+    Q_PLUGIN_METADATA(IID "EngineQtMultimedia")
 
     public:
-        EngineQtMultimedia();
+			EngineQtMultimedia();
         ~EngineQtMultimedia();
 
         /* play/pause/stop */

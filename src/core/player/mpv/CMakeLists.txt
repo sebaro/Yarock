@@ -26,7 +26,7 @@ add_definitions(-DENABLE_MPV)
 # ------------------------------------------------------------------------------
 # LibMpv
 # ------------------------------------------------------------------------------
-find_package(LIBMPV REQUIRED)
+find_package(LibMPV REQUIRED)
 
 include_directories(${LIBMPV_INCLUDE_DIR})
 
@@ -35,7 +35,7 @@ include_directories(${LIBMPV_INCLUDE_DIR})
 # ------------------------------------------------------------------------------
 set(QT_LIBRARIES ${Qt6Core_LIBRARIES})
 set(QT_INCLUDES ${Qt6Core_INCLUDE_DIRS})
-add_definitions( ${Qt6Core_DEFINITIONS})
+add_definitions(${Qt6Core_DEFINITIONS})
 qt_standard_project_setup()
 
 include_directories(${QT_INCLUDES})
@@ -43,11 +43,10 @@ include_directories(${QT_INCLUDES})
 # ------------------------------------------------------------------------------
 # Sources
 # ------------------------------------------------------------------------------
-include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/player/
-                     ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/player/mpv
-                     ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/mediaitem
-                     ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src
-)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/player/
+                    ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/player/mpv
+                    ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/mediaitem
+                    ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src)
 
 set(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/player/mpv/engine_mpv.cpp)
 
@@ -73,4 +72,4 @@ endif()
 
 set(CMAKE_INSTALL_LIB "${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX}/yarock"  CACHE PATH "libraries installation path" FORCE)
 
-install(TARGETS enginempv DESTINATION ${CMAKE_INSTALL_LIB} )
+install(TARGETS enginempv DESTINATION ${CMAKE_INSTALL_LIB})

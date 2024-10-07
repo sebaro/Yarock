@@ -1,4 +1,4 @@
- 
+
 #Find includes header (client.h) from libmpv-dev
 FIND_PATH(LIBMPV_INCLUDE_DIR mpv/client.h
     "/usr/include"
@@ -27,8 +27,8 @@ ENDIF (LIBMPV_INCLUDE_DIR AND LIBMPV_LIBRARY)
 
 
 IF (LIBMPV_FOUND)
-    MESSAGE(STATUS "  Found LibMPV include-dir path: ${LIBMPV_INCLUDE_DIR}")
-    MESSAGE(STATUS "  Found LibMPV library path:${LIBMPV_LIBRARY}")
+    MESSAGE(STATUS "  Found LibMPV include path: ${LIBMPV_INCLUDE_DIR}")
+    MESSAGE(STATUS "  Found LibMPV library path: ${LIBMPV_LIBRARY}")
 ELSE (LIBMPV_FOUND)
     MESSAGE(FATAL_ERROR "Could not find LibMPV")
 ENDIF (LIBMPV_FOUND)
