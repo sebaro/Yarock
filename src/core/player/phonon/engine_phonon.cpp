@@ -1,50 +1,23 @@
-/****************************************************************************************
-*  YAROCK                                                                               *
-*  Copyright (c) 2010-2018 Sebastien amardeilh <sebastien.amardeilh+yarock@gmail.com>   *
-*                                                                                       *
-*  This program is free software; you can redistribute it and/or modify it under        *
-*  the terms of the GNU General Public License as published by the Free Software        *
-*  Foundation; either version 2 of the License, or (at your option) any later           *
-*  version.                                                                             *
-*                                                                                       *
-*  This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
-*  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
-*  PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
-*                                                                                       *
-*  You should have received a copy of the GNU General Public License along with         *
-*  this program.  If not, see <http://www.gnu.org/licenses/>.                           *
-*****************************************************************************************/
+
 #ifdef ENABLE_PHONON
 
-// local
 #include "engine_phonon.h"
 #include "utilities.h"
 #include "settings.h"
 #include "debug.h"
 
+#include <cmath>
 
-// Qt
 #include <QFileInfo>
 #include <QList>
 #include <QtPlugin>
 
-// phonon
 #include <phonon/backendcapabilities.h>
 #include <phonon/effect.h>
 #include <phonon/effectparameter.h>
 
-#include <cmath>
 
-
-/*
-********************************************************************************
-*                                                                              *
-*    Class EnginePhonon                                                        *
-*                                                                              *
-********************************************************************************
-*/
-EnginePhonon::EnginePhonon() : EngineBase("phonon")
-{
+EnginePhonon::EnginePhonon() : EngineBase("phonon") {
     m_type = ENGINE::PHONON;
 
     m_mediaObject = new Phonon::MediaObject(this);
@@ -78,7 +51,6 @@ EnginePhonon::EnginePhonon() : EngineBase("phonon")
 
     m_phononPath  = Phonon::createPath(m_mediaObject,m_audioOutput);
 
-
     /* ----- only create pre-amp if we have replaygain on, VolumeFaderEffect can cause phonon issues */
     m_preamp = 0;
     if( SETTINGS()->_replaygain != SETTING::ReplayGainOff )
@@ -111,32 +83,24 @@ EnginePhonon::EnginePhonon() : EngineBase("phonon")
     m_current_state    = ENGINE::STOPPED;
     m_old_state        = ENGINE::STOPPED;
 
-    m_version = QString();
+    m_version = QString("4Qt6");
 }
 
-EnginePhonon::~EnginePhonon()
-{
+EnginePhonon::~EnginePhonon() {
     m_mediaObject->stop();
     delete m_mediaObject;
     delete m_audioOutput;
 }
 
-
-/* ---------------------------------------------------------------------------*/
-/* Playing method                                                             */
-/* ---------------------------------------------------------------------------*/
-void EnginePhonon::play()
-{
+void EnginePhonon::play() {
     m_mediaObject->play();
 }
 
-void EnginePhonon::pause()
-{
+void EnginePhonon::pause() {
     m_mediaObject->pause();
 }
 
-void EnginePhonon::stop()
-{
+void EnginePhonon::stop() {
    Debug::debug() << "[EnginePhonon] -> stop";
 
    m_mediaObject->blockSignals(true);
@@ -148,11 +112,7 @@ void EnginePhonon::stop()
 }
 
 
-/* ---------------------------------------------------------------------------*/
-/* Media management method                                                    */
-/* ---------------------------------------------------------------------------*/
-void EnginePhonon::setMediaItem(MEDIA::TrackPtr track)
-{
+void EnginePhonon::setMediaItem(MEDIA::TrackPtr track) {
     Debug::debug() << "[EnginePhonon] -> setMediaItem";
 
     m_mediaObject->blockSignals(true);
@@ -201,8 +161,7 @@ void EnginePhonon::setMediaItem(MEDIA::TrackPtr track)
     m_mediaObject->play();
 }
 
-void EnginePhonon::setNextMediaItem(MEDIA::TrackPtr track)
-{
+void EnginePhonon::setNextMediaItem(MEDIA::TrackPtr track) {
     //Debug::debug() << "[EnginePhonon] ->setNextMediaItem";
     m_nextMediaItem = MEDIA::TrackPtr(track);
 
@@ -223,12 +182,7 @@ void EnginePhonon::setNextMediaItem(MEDIA::TrackPtr track)
     }
 }
 
-
-/* ---------------------------------------------------------------------------*/
-/* Audio                                                                      */
-/* ---------------------------------------------------------------------------*/
-int EnginePhonon::volume() const
-{
+int EnginePhonon::volume() const {
     /* return volume in percent */
     int volume_in_percent = m_audioOutput->volume()*100;
     volume_in_percent = qBound<qreal>( 0, volume_in_percent, 100 );
@@ -236,8 +190,7 @@ int EnginePhonon::volume() const
     return volume_in_percent;
 }
 
-void EnginePhonon::setVolume(const int& percent)
-{
+void EnginePhonon::setVolume(const int& percent) {
     Debug::debug() << "[EnginePhonon] -> set percent : " << percent;
     int vp = qBound<qreal>( 0, percent, 100 );
 
@@ -250,14 +203,12 @@ void EnginePhonon::setVolume(const int& percent)
     }
 }
 
-bool EnginePhonon:: isMuted() const
-{
+bool EnginePhonon:: isMuted() const {
     return m_audioOutput->isMuted();
 }
 
 
-void EnginePhonon::setMuted( bool mute )
-{
+void EnginePhonon::setMuted( bool mute ) {
     bool ismuted = m_audioOutput->isMuted();
 
     if(mute != ismuted) {
@@ -266,30 +217,22 @@ void EnginePhonon::setMuted( bool mute )
     }
 }
 
-void EnginePhonon::volumeMute( )
-{
+void EnginePhonon::volumeMute( ) {
     //Debug::debug() << "[EnginePhonon] -> volumeMute";
     setMuted( !isMuted() );
 };
 
-void EnginePhonon::volumeInc( )
-{
+void EnginePhonon::volumeInc( ) {
     int percent = volume() < 100 ? volume() + 1 : 100;
     setVolume(percent);
 };
 
-void EnginePhonon::volumeDec( )
-{
+void EnginePhonon::volumeDec( ) {
     int percent = volume() > 0 ? volume() -1 : 0;
     setVolume(percent);
 };
 
-
-/* ---------------------------------------------------------------------------*/
-/* Phonon state                                                               */
-/* ---------------------------------------------------------------------------*/
-void EnginePhonon::slot_on_phonon_state_changed(Phonon::State newState, Phonon::State oldState)
-{
+void EnginePhonon::slot_on_phonon_state_changed(Phonon::State newState, Phonon::State oldState) {
     //Debug::warning() << "[EnginePhonon] -> slot_on_phonon_state_changed : " << newState ;
     if(newState == oldState)
       return;
@@ -327,13 +270,7 @@ void EnginePhonon::slot_on_phonon_state_changed(Phonon::State newState, Phonon::
     }
 }
 
-
-
-/* ---------------------------------------------------------------------------*/
-/* EnginePhonon::slot_on_duration_change                                      */
-/* ---------------------------------------------------------------------------*/
-void  EnginePhonon::slot_on_duration_change(qint64 total_time_ms)
-{
+void  EnginePhonon::slot_on_duration_change(qint64 total_time_ms) {
 Q_UNUSED(total_time_ms)
     //Debug::debug() << "[EnginePhonon] -> slot_on_duration_change" ;
 
@@ -348,11 +285,7 @@ Q_UNUSED(total_time_ms)
     update_total_time();
 }
 
-/* ---------------------------------------------------------------------------*/
-/* EnginePhonon::update_total_time                                            */
-/* ---------------------------------------------------------------------------*/
-void EnginePhonon::update_total_time()
-{
+void EnginePhonon::update_total_time() {
     if(m_currentMediaItem && m_currentMediaItem->type() == TYPE_TRACK)
     {
       if( m_currentMediaItem->duration > 0 )
@@ -372,15 +305,9 @@ void EnginePhonon::update_total_time()
     emit mediaTotalTimeChanged(m_totalTime);
 }
 
-
-
-/* ---------------------------------------------------------------------------*/
-/* EnginePhonon::slot_on_media_change                                         */
-/* ---------------------------------------------------------------------------*/
 static const qreal log10over20 = 0.1151292546497022842; // ln(10) / 20
 
-void EnginePhonon::slot_on_media_change()
-{
+void EnginePhonon::slot_on_media_change() {
     Debug::debug() << "[EnginePhonon] -> slot_on_media_change";
 
     if( m_nextMediaItem )
@@ -436,7 +363,6 @@ void EnginePhonon::slot_on_media_change()
         m_preamp->fadeTo( 1.0, 0 );
     }
 
-
     /* register track change */
     update_total_time();
 
@@ -445,15 +371,11 @@ void EnginePhonon::slot_on_media_change()
     emit mediaChanged();
 }
 
-/* ---------------------------------------------------------------------------*/
-/* EnginePhonon::slot_on_metadata_change                                      */
-/* ---------------------------------------------------------------------------*/
-void EnginePhonon::slot_on_metadata_change()
-{
+void EnginePhonon::slot_on_metadata_change() {
     Debug::debug() << "[EnginePhonon] -> slot_on_metadata_change";
     if(!m_currentMediaItem || m_currentMediaItem->type() != TYPE_STREAM) return;
 
-    const QMap<QString, QString> &metaData = m_mediaObject->metaData();
+    const QMultiMap<QString, QString> &metaData = m_mediaObject->metaData();
 
     if( !metaData.value("TITLE").isEmpty() && metaData.value("TITLE") != "Streaming Data" )
       m_currentMediaItem->title = metaData.value("TITLE");
@@ -481,11 +403,7 @@ void EnginePhonon::slot_on_metadata_change()
     emit mediaMetaDataChanged();
 }
 
-/* ---------------------------------------------------------------------------*/
-/* EnginePhonon::slot_on_media_about_to_finish                                */
-/* ---------------------------------------------------------------------------*/
-void EnginePhonon::slot_on_media_about_to_finish()
-{
+void EnginePhonon::slot_on_media_about_to_finish() {
     Debug::debug() << "[EnginePhonon] -> slot_on_media_about_to_finish";
 
     if( m_currentMediaItem && !m_currentMediaItem->isStopAfter )
@@ -496,11 +414,7 @@ void EnginePhonon::slot_on_media_about_to_finish()
     }
 }
 
-/* ---------------------------------------------------------------------------*/
-/* EnginePhonon::slot_on_media_finished                                       */
-/* ---------------------------------------------------------------------------*/
-void  EnginePhonon::slot_on_media_finished()
-{
+void  EnginePhonon::slot_on_media_finished() {
     //Debug::debug() << "[EnginePhonon] slot_on_media_finished";
     emit mediaFinished();
 
@@ -516,11 +430,7 @@ void  EnginePhonon::slot_on_media_finished()
     }
 }
 
-/* ---------------------------------------------------------------------------*/
-/* Time management                                                            */
-/* ---------------------------------------------------------------------------*/
-void EnginePhonon::seek( qint64 milliseconds )
-{
+void EnginePhonon::seek( qint64 milliseconds ) {
     if( m_mediaObject->isSeekable() )
     {
         Debug::debug() << "[EnginePhonon] -> seek to: " << milliseconds;
@@ -533,18 +443,13 @@ void EnginePhonon::seek( qint64 milliseconds )
         Debug::warning() << "[EnginePhonon] -> not seekable media";
 }
 
-void EnginePhonon::slot_on_time_change(qint64 ms)
-{
+void EnginePhonon::slot_on_time_change(qint64 ms) {
     m_lastTick = ms;
     emit mediaTick(ms);
 
 }
 
-/* ---------------------------------------------------------------------------*/
-/* Equalizer management                                                       */
-/* ---------------------------------------------------------------------------*/
-bool EnginePhonon::isEqualizerAvailable()
-{
+bool EnginePhonon::isEqualizerAvailable() {
     QList<Phonon::EffectDescription> effects = Phonon::BackendCapabilities::availableAudioEffects();
 
     foreach (Phonon::EffectDescription effect, effects) {
@@ -554,8 +459,7 @@ bool EnginePhonon::isEqualizerAvailable()
      return false;
 }
 
-void EnginePhonon::addEqualizer()
-{
+void EnginePhonon::addEqualizer() {
     if(!m_equalizer) {
       Debug::debug() << "[EnginePhonon] -> addEqualizer : no equalizer available !";
       return;
@@ -575,17 +479,14 @@ void EnginePhonon::addEqualizer()
     }
 }
 
-
-void EnginePhonon::removeEqualizer()
-{
+void EnginePhonon::removeEqualizer() {
     //Debug::debug() << "[EnginePhonon] -> removeEqualizer !";
     if( m_phononPath.effects().indexOf( m_equalizer ) != -1 ) {
       m_phononPath.removeEffect( m_equalizer );
     }
 }
 
-void EnginePhonon::applyEqualizer(QList<int> gains)
-{
+void EnginePhonon::applyEqualizer(QList<int> gains) {
     if(!m_equalizer) {
       Debug::warning() << "[EnginePhonon] -> no equalizer initialized !!";
       return;
@@ -607,8 +508,7 @@ void EnginePhonon::applyEqualizer(QList<int> gains)
     }
 }
 
-void EnginePhonon::loadEqualizerSettings()
-{
+void EnginePhonon::loadEqualizerSettings() {
     const QString preset_name = SETTINGS()->_currentPreset;
 
     if( SETTINGS()->_presetEq.keys().contains(preset_name) ) {
@@ -621,6 +521,5 @@ void EnginePhonon::loadEqualizerSettings()
       applyEqualizer(gains);
     }
 }
-
 
 #endif // ENABLE_PHONON

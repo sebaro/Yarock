@@ -34,7 +34,7 @@ add_definitions(-Wall -Wextra)
 
 option(ENABLE_MPV "Enable/disable MPV audio engine" ON)
 option(ENABLE_VLC "Enable/disable VLC audio engine" ON)
-option(ENABLE_PHONON "Enable/disable Phonon audio engine" OFF)
+option(ENABLE_PHONON "Enable/disable Phonon audio engine" ON)
 option(ENABLE_QTMULTIMEDIA "Enable/disable QtMultimedia audio engine" ON)
 option(ENABLE_SHORTCUT "Enable/disable global shortcut manager" OFF)
 
@@ -206,7 +206,7 @@ install(FILES ${YAROCK_QM_FILES} DESTINATION "${CMAKE_INSTALL_PREFIX}/share/yaro
 install(FILES data/org.yarock.desktop  DESTINATION "${CMAKE_INSTALL_PREFIX}/share/applications")
 
 # -- install appdata file
-install(FILES data/org.yarock.appdata.xml  DESTINATION "${CMAKE_INSTALL_PREFIX}/share/appdata")
+install(FILES data/org.yarock.metainfo.xml  DESTINATION "${CMAKE_INSTALL_PREFIX}/share/metainfo")
 
 # -- install icons files
 install(FILES ${CMAKE_SOURCE_DIR}/icon/yarock_16x16.png DESTINATION "${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/16x16/apps" RENAME application-x-yarock.png)

@@ -17,9 +17,9 @@
 #ifndef CONFIG_H_IN
 #define CONFIG_H_IN
 
-#define CMAKE_INSTALL_BIN "/usr/bin"
-#define CMAKE_INSTALL_LIB "/usr/lib/yarock"
-#define CMAKE_INSTALL_TRANS "/usr/share/yarock/translations"
+#define CMAKE_INSTALL_BIN ""
+#define CMAKE_INSTALL_LIB ""
+#define CMAKE_INSTALL_TRANS ""
 
 #define VERSION "1.5.0" 
 

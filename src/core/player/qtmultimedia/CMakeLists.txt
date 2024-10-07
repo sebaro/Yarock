@@ -44,18 +44,17 @@ include_directories(${QT_INCLUDES})
 # ------------------------------------------------------------------------------
 # Sources
 # ------------------------------------------------------------------------------
-include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/player/
-                     ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/player/qtmultimedia
-                     ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/mediaitem
-                     ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src
-)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/player/
+                    ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/player/qtmultimedia
+                    ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/mediaitem
+                    ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src)
 
 set(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/player/qtmultimedia/engine_qtmultimedia.cpp)
 
 # ------------------------------------------------------------------------------
 # Building
 # ------------------------------------------------------------------------------
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib )
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
 add_library(engineqtmultimedia SHARED ${SOURCES} )
 
@@ -74,4 +73,4 @@ endif()
 
 set(CMAKE_INSTALL_LIB "${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX}/yarock"  CACHE PATH "libraries installation path" FORCE)
 
-install(TARGETS engineqtmultimedia DESTINATION ${CMAKE_INSTALL_LIB} )
+install(TARGETS engineqtmultimedia DESTINATION ${CMAKE_INSTALL_LIB})

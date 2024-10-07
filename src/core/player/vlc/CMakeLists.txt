@@ -26,7 +26,7 @@ add_definitions(-DENABLE_VLC)
 # ------------------------------------------------------------------------------
 # LibVLC
 # ------------------------------------------------------------------------------
-find_package(LIBVLC REQUIRED)
+find_package(LibVLC REQUIRED)
 
 include_directories(${LIBVLC_INCLUDE_DIR})
 
@@ -35,7 +35,7 @@ include_directories(${LIBVLC_INCLUDE_DIR})
 # ------------------------------------------------------------------------------
 set(QT_LIBRARIES ${Qt6Core_LIBRARIES})
 set(QT_INCLUDES ${Qt6Core_INCLUDE_DIRS})
-add_definitions( ${Qt6Core_DEFINITIONS})
+add_definitions(${Qt6Core_DEFINITIONS})
 qt_standard_project_setup()
 
 include_directories(${QT_INCLUDES})
@@ -49,17 +49,15 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/config.h.in
 # ------------------------------------------------------------------------------
 # Sources
 # ------------------------------------------------------------------------------
-include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/player/
-                     ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/player/vlc
-                     ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/mediaitem
-                     ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src
-)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/player/
+                    ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/player/vlc
+                    ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/mediaitem
+                    ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src)
 
 set(SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/player/vlc/engine_vlc.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/player/vlc/vlc_lib.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/player/vlc/vlc_media.cpp
-)
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/player/vlc/vlc_media.cpp)
 
 # ------------------------------------------------------------------------------
 # Building
@@ -72,7 +70,7 @@ set_target_properties(enginevlc PROPERTIES AUTOMOC TRUE)
 
 add_dependencies(enginevlc yarock)
 
-target_link_libraries(enginevlc ${LIBVLC_LIBRARY} ${QTLIBS})
+target_link_libraries(enginevlc ${LIBVLC_LIBRARY} ${QT_LIBRARIES})
 
 # ------------------------------------------------------------------------------
 # Installation
@@ -83,4 +81,4 @@ endif()
 
 set(CMAKE_INSTALL_LIB "${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX}/yarock"  CACHE PATH "libraries installation path" FORCE)
 
-install(TARGETS enginevlc DESTINATION ${CMAKE_INSTALL_LIB} )
+install(TARGETS enginevlc DESTINATION ${CMAKE_INSTALL_LIB})

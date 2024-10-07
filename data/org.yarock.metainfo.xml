@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop">
  <id>org.yarock.desktop</id>
  <name>Yarock</name>
@@ -28,7 +29,7 @@
         <li>No GNOME or KDE dependancies</li>
     </ul>
  </description>
- <url type="homepage">https://qt-apps.org/content/show.php/yarock?content=129372</url>
+ <url type="homepage">https://github.com/sebaro/yarock</url>
  <screenshots>
     <screenshot type="default">
         <image type="source" width="1248" height="702">https://launchpadlibrarian.net/189537409/screenshot_album_view.png</image>

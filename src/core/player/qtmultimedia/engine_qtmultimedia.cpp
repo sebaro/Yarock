@@ -35,7 +35,7 @@ EngineQtMultimedia::EngineQtMultimedia() : EngineBase("qtmultimedia") {
   m_current_state    = ENGINE::STOPPED;
   m_old_state        = ENGINE::STOPPED;
 
-  m_version = QString();
+  m_version = QString(QT_VERSION_STR);
 }
 
 EngineQtMultimedia::~EngineQtMultimedia() {
@@ -81,7 +81,6 @@ void EngineQtMultimedia::setMediaItem(MEDIA::TrackPtr track) {
     }
     /* END */
 
-
     /* get replay gain info */
     if ( (m_currentMediaItem->type() == TYPE_TRACK) &&
          (SETTINGS()->_replaygain != SETTING::ReplayGainOff ) )
@@ -94,7 +93,6 @@ void EngineQtMultimedia::setMediaItem(MEDIA::TrackPtr track) {
       m_player->setSource(QUrl::fromLocalFile(QFileInfo(track->url).canonicalFilePath()));
     else
       m_player->setSource(QUrl(track->url));
-
 
     m_player->play();
 }
@@ -133,7 +131,6 @@ void EngineQtMultimedia::setVolume(const int& percent) {
 bool EngineQtMultimedia::isMuted() const {
   return m_output->isMuted();
 }
-
 
 void EngineQtMultimedia::setMuted(bool mute) {
       bool ismuted = m_output->isMuted();
