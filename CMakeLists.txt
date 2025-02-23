@@ -206,7 +206,7 @@ install(FILES ${YAROCK_QM_FILES} DESTINATION "${CMAKE_INSTALL_PREFIX}/share/yaro
 install(FILES data/yarock.desktop DESTINATION "${CMAKE_INSTALL_PREFIX}/share/applications")
 
 # -- install appdata file
-install(FILES data/org.yarock.metainfo.xml  DESTINATION "${CMAKE_INSTALL_PREFIX}/share/metainfo")
+install(FILES data/yarock.metainfo.xml  DESTINATION "${CMAKE_INSTALL_PREFIX}/share/metainfo")
 
 # -- install icons files
 install(FILES ${CMAKE_SOURCE_DIR}/icon/yarock_16x16.png DESTINATION "${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/16x16/apps" RENAME application-x-yarock.png)
