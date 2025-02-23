@@ -203,7 +203,7 @@ install(TARGETS yarock DESTINATION ${CMAKE_INSTALL_BIN})
 install(FILES ${YAROCK_QM_FILES} DESTINATION "${CMAKE_INSTALL_PREFIX}/share/yarock/translations")
 
 # -- install destop file
-install(FILES data/org.yarock.desktop  DESTINATION "${CMAKE_INSTALL_PREFIX}/share/applications")
+install(FILES data/yarock.desktop DESTINATION "${CMAKE_INSTALL_PREFIX}/share/applications")
 
 # -- install appdata file
 install(FILES data/org.yarock.metainfo.xml  DESTINATION "${CMAKE_INSTALL_PREFIX}/share/metainfo")
