@@ -24,8 +24,6 @@ int main(int argc, char *argv[]) {
     //! core application settings
     QCoreApplication::setApplicationName(APP_NAME);
     QCoreApplication::setApplicationVersion(VERSION);
-    QCoreApplication::setOrganizationName(ORG_NAME);
-    QCoreApplication::setOrganizationDomain("yarock-player.org");
 
     //! taken from amarok
     // This call is needed to prevent a crash on exit with Phonon-VLC and LibPulse
@@ -40,8 +38,6 @@ int main(int argc, char *argv[]) {
     QApplication application(argc, argv);
     application.setApplicationName(APP_NAME);
     application.setApplicationVersion(VERSION);
-    application.setOrganizationName(ORG_NAME);
-    application.setOrganizationDomain("yarock-player.org");
     application.setAttribute(Qt::AA_DontShowIconsInMenus, false);
 
     //! Qt Type registration
