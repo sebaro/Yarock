@@ -43,6 +43,7 @@
 
 #include <taglib/textidentificationframe.h>
 #include <taglib/popularimeterframe.h>
+#include <taglib/attachedpictureframe.h>
 
 // Taglib added support for FLAC pictures in 1.7.0
 #if (TAGLIB_MAJOR_VERSION > 1) || (TAGLIB_MAJOR_VERSION == 1 && TAGLIB_MINOR_VERSION >= 7)
