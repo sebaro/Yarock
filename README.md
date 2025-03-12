@@ -2,7 +2,7 @@
 About
 ----------------------------------------------------------------------------------------------
 Yarock is a modern looking music player, packed with features, that doesn’t depend on any specific desktop environment.
-Yarock is designed to provide an easy and pretty music browser based on cover art. Yarock is easy to build with a minimal set of dependancies, and offers the choose of differents audio back-end.
+Yarock is designed to provide an easy and pretty music browser based on cover art. Yarock is easy to build with a minimal set of dependancies, and with the option to choose between different audio backends.
 
 ![](https://gitlab.com/sebaro/Yarock/raw/main/screenshot.png)
 
@@ -65,9 +65,9 @@ Compiling from source
 
 #### Audio engine
 
-You can build yarock with alternate audio engine (vlc, phonon or mpv).
+You can build yarock with multiple audio engines (vlc, mpv, phonon, qtmultimedia).
 
-If you want enable/disable audio engine use the following cmake option :
+If you want to enable/disable audio engines use the following cmake options:
 
     mkdir build && cd build
     cmake .. -DENABLE_VLC=ON -DENABLE_MPV=ON -DENABLE_PHONON=ON -DENABLE_QTMULTIMEDIA=ON
@@ -80,9 +80,9 @@ Tips & Tricks
 
 #### Change systray icon
 
-You can use your on icon for yarock in the systray by using the file
+You can use your own icon for yarock in the systray by using the file
 
-    /home/your name/.config/yarock/systray_icon.png
+    /home/[USER]/.config/yarock/systray_icon.png
 
 
 Original version (Qt4/Qt5)

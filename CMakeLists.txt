@@ -14,7 +14,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake )
 project(yarock)
 set(YAROCK_MAJOR_VERSION 1)
 set(YAROCK_MINOR_VERSION 5)
-set(YAROCK_PATCH_VERSION 0)
+set(YAROCK_PATCH_VERSION 1)
 set(YAROCK_VERSION "${YAROCK_MAJOR_VERSION}.${YAROCK_MINOR_VERSION}.${YAROCK_PATCH_VERSION}")
 
 # ------------------------------------------------------------------------------

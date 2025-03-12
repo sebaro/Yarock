@@ -8,7 +8,6 @@ Type=Application
 Icon=application-x-yarock
 Categories=Qt;Audio;Music;Player;AudioVideo;
 StartupNotify=true
-# Generic nale with translations
 GenericName=Audio Player
 GenericName[be]=Аўдыёпрайгравальнік
 GenericName[bg]=Аудио плеър
