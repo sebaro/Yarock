@@ -506,7 +506,7 @@ void readFile(MEDIA::TrackPtr track, const QString& url, int* p_disc)
     /* duration reading */
     TagLib::AudioProperties *audioProperties = fileref.audioProperties();
     if (audioProperties) {
-        track->duration            = audioProperties->length(); // Returns the length of the file in seconds
+        track->duration            = audioProperties->lengthInSeconds();
         track->extra["bitrate"]    = audioProperties->bitrate();
         track->extra["samplerate"] = audioProperties->sampleRate();
     }

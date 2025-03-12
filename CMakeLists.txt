@@ -18,11 +18,6 @@ set(YAROCK_PATCH_VERSION 0)
 set(YAROCK_VERSION "${YAROCK_MAJOR_VERSION}.${YAROCK_MINOR_VERSION}.${YAROCK_PATCH_VERSION}")
 
 # ------------------------------------------------------------------------------
-# Configuration
-# ------------------------------------------------------------------------------
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/config.h)
-
-# ------------------------------------------------------------------------------
 # Definitions
 # ------------------------------------------------------------------------------
 #add_definitions(-DTEST_FLAG)
@@ -216,3 +211,8 @@ install(FILES ${CMAKE_SOURCE_DIR}/icon/yarock_64x64.png DESTINATION "${CMAKE_INS
 install(FILES ${CMAKE_SOURCE_DIR}/icon/yarock_128x128.png DESTINATION "${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/128x128/apps" RENAME application-x-yarock.png)
 install(FILES ${CMAKE_SOURCE_DIR}/icon/yarock.svg DESTINATION "${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/apps" RENAME application-x-yarock.svg)
 install(FILES ${CMAKE_SOURCE_DIR}/icon/yarock_48x48.png DESTINATION "${CMAKE_INSTALL_PREFIX}/share/pixmaps/" RENAME application-x-yarock.png)
+
+# ------------------------------------------------------------------------------
+# Configuration
+# ------------------------------------------------------------------------------
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/config.h)
