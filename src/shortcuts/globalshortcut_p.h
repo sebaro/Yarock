@@ -58,7 +58,7 @@ public:
 
     static bool error;
     static int ref;
-    bool nativeEventFilter(const QByteArray &, void *message, long *result);
+    bool nativeEventFilter(const QByteArray &eventType, void *message, qintptr *result);
 
 private:
     static quint32 nativeKeycode(Qt::Key keycode);

@@ -1170,6 +1170,11 @@ void PageShortcut::createGui()
     QVBoxLayout* vl0 = new QVBoxLayout(main_widget);
     ui_enable_shortcut = new QCheckBox();
     ui_enable_shortcut->setText(tr("Enable shortcuts"));
+#ifndef ENABLE_SHORTCUTS
+    ui_enable_shortcut->setChecked(false);
+    ui_enable_shortcut->setCheckable(false);
+    ui_enable_shortcut->setEnabled(false);
+#endif
     vl0->addWidget(ui_enable_shortcut);
 
     proxy_widget = new QGraphicsProxyWidget( this );

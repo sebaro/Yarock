@@ -70,14 +70,14 @@ GlobalShortcutX11Private::~GlobalShortcutX11Private()
 bool GlobalShortcutX11Private::setShortcut(const QKeySequence& shortcut)
 {
     Qt::KeyboardModifiers allMods = Qt::ShiftModifier | Qt::ControlModifier | Qt::AltModifier | Qt::MetaModifier;
-    key = shortcut.isEmpty() ? Qt::Key(0) : Qt::Key((shortcut[0] ^ allMods) & shortcut[0]);
-    mods = shortcut.isEmpty() ? Qt::KeyboardModifiers(0) : Qt::KeyboardModifiers(shortcut[0] & allMods);
+    key = shortcut.isEmpty() ? Qt::Key(0) : Qt::Key((shortcut[0].toCombined() ^ allMods) & shortcut[0].toCombined() );
+    mods = shortcut.isEmpty() ? Qt::KeyboardModifiers(0) : Qt::KeyboardModifiers(shortcut[0].toCombined() & allMods);
     const quint32 nativeKey = nativeKeycode(key);
     const quint32 nativeMods = nativeModifiers(mods);
     const bool res = registerShortcut(nativeKey, nativeMods);
     shortcuts.insert(qMakePair(nativeKey, nativeMods), q_ptr);
     if (!res)
-        qWarning() << "[GlobalShortcut] failed to register:" << QKeySequence(key + mods).toString();
+        qWarning() << "[GlobalShortcut] failed to register:" << QKeySequence(key | mods).toString();
     return res;
 }
 
@@ -88,7 +88,7 @@ bool GlobalShortcutX11Private::unsetShortcut()
     const bool res = unregisterShortcut(nativeKey, nativeMods);
     shortcuts.remove(qMakePair(nativeKey, nativeMods));
     if (!res)
-        qWarning() << "[GlobalShortcut] failed to unregister:" << QKeySequence(key + mods).toString();
+        qWarning() << "[GlobalShortcut] failed to unregister:" << QKeySequence(key | mods).toString();
     key = Qt::Key(0);
     mods = Qt::KeyboardModifiers(0);
     return res;
@@ -233,7 +233,7 @@ private:
 /*  GlobalShortcutX11Private (part from qxtglobalshortcut_x11.cpp                             */
 /* -------------------------------------------------------------------------------------------*/
 
-bool GlobalShortcutX11Private::nativeEventFilter(const QByteArray & eventType,void *message, long *result)
+bool GlobalShortcutX11Private::nativeEventFilter(const QByteArray &eventType,void *message, qintptr *result)
 {
     Q_UNUSED(result);
 

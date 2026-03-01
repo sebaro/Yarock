@@ -31,7 +31,7 @@ option(ENABLE_MPV "Enable/disable MPV audio engine" ON)
 option(ENABLE_VLC "Enable/disable VLC audio engine" ON)
 option(ENABLE_PHONON "Enable/disable Phonon audio engine" ON)
 option(ENABLE_QTMULTIMEDIA "Enable/disable QtMultimedia audio engine" ON)
-option(ENABLE_SHORTCUT "Enable/disable global shortcut manager" OFF)
+option(ENABLE_SHORTCUTS "Enable/disable global shortcuts" ON)
 
 # ------------------------------------------------------------------------------
 # Qt
@@ -115,12 +115,13 @@ if(ENABLE_QTMULTIMEDIA)
   add_subdirectory(src/core/player/qtmultimedia)
 endif (ENABLE_QTMULTIMEDIA)
 
-if(ENABLE_SHORTCUT)
-  add_definitions(-DENABLE_SHORTCUT)
+message(STATUS "Shortcuts: ${ENABLE_SHORTCUTS} [use cmake .. -DENABLE_SHORTCUTS=ON/OFF]")
+if(ENABLE_SHORTCUTS)
+  add_definitions(-DENABLE_SHORTCUTS)
   add_subdirectory(src/shortcuts)
   include_directories(${CMAKE_SOURCE_DIR}/src/shortcuts)
-  set(LIB_INTERNAL_STATIC_SHORTCUT yarock_shortchut)
-endif(ENABLE_SHORTCUT)
+  set(LIB_INTERNAL_STATIC_SHORTCUTS yarock_shortcuts)
+endif(ENABLE_SHORTCUTS)
 
 include_directories(${CMAKE_SOURCE_DIR})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
@@ -167,11 +168,11 @@ add_executable(yarock ${YAROCK_SOURCES} ${YAROCK_RESOURCES_RCC} ${YAROCK_QM_FILE
 
 set_target_properties(yarock PROPERTIES AUTOMOC TRUE ENABLE_EXPORTS TRUE)
 
-set_property(TARGET ${LIB_INTERNAL_STATIC_SHORTCUT} PROPERTY IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/shortcuts)
+set_property(TARGET ${LIB_INTERNAL_STATIC_SHORTCUTS} PROPERTY IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/shortcuts)
 
-if(ENABLE_SHORTCUT)
-  target_link_libraries(yarock ${LIB_INTERNAL_STATIC_SHORTCUT})
-endif(ENABLE_SHORTCUT)
+if(ENABLE_SHORTCUTS)
+  target_link_libraries(yarock ${LIB_INTERNAL_STATIC_SHORTCUTS})
+endif(ENABLE_SHORTCUTS)
 
 target_link_libraries(yarock
   X11

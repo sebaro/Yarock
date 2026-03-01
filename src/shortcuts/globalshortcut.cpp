@@ -15,12 +15,12 @@
 *  this program.  If not, see <http://www.gnu.org/licenses/>.                           *
 *****************************************************************************************/
 
-/* NOTE : 
+/* NOTE :
  This class is base on depreciated qxt library
    - rewrite to remove qxt dependancy
    - using media key patch (from clementine) for Media Key
    - using "Global shortcuts for X11 with Qt 5" from Lukas Holecek
-        -> for Qt5 replace QX11Info by qplatformnativeinterface to get display   
+        -> for Qt5 replace QX11Info by qplatformnativeinterface to get display
 */
 
 #include "globalshortcut.h"
@@ -47,14 +47,14 @@ GlobalShortcut::~GlobalShortcut()
 
 QKeySequence GlobalShortcut::shortcut() const
 {
-    return QKeySequence(d_ptr->key | d_ptr->mods);    
+    return QKeySequence(d_ptr->key | d_ptr->mods);
 }
 
 bool GlobalShortcut::setShortcut(const QKeySequence& shortcut)
 {
     if (d_ptr->key != 0)
         d_ptr->unsetShortcut();
-    return d_ptr->setShortcut(shortcut);    
+    return d_ptr->setShortcut(shortcut);
 }
 
 bool GlobalShortcut::isEnabled() const

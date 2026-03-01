@@ -19,7 +19,7 @@
 #include "global_actions.h"
 #include "settings.h"
 
-#ifdef ENABLE_SHORTCUT
+#ifdef ENABLE_SHORTCUTS
 #include "shortcuts/globalshortcut.h"
 #endif
 
@@ -57,7 +57,7 @@ void ShortcutsManager::addShortcut(QString id, QAction* action)
 void ShortcutsManager::reloadSettings()
 {
     Debug::debug() << "ShortcutsManager::reloadSettings";
-  
+
     addShortcut("play",            ACTIONS()->value(ENGINE_PLAY) );
     addShortcut("stop",            ACTIONS()->value(ENGINE_STOP) );
     addShortcut("next_track",      ACTIONS()->value(ENGINE_PLAY_NEXT) );
@@ -67,7 +67,7 @@ void ShortcutsManager::reloadSettings()
     addShortcut("mute_volume",     ACTIONS()->value(ENGINE_VOL_MUTE) );
     addShortcut("jump_to_track",   ACTIONS()->value(BROWSER_JUMP_TO_TRACK) );
     addShortcut("clear_playqueue", ACTIONS()->value(PLAYQUEUE_CLEAR) );
-    
+
     // read settings
     m_shortcuts["play"].key            = QKeySequence::fromString(SETTINGS()->_shortcutsKey["play"]);
     m_shortcuts["stop"].key            = QKeySequence::fromString(SETTINGS()->_shortcutsKey["stop"]);
@@ -83,12 +83,12 @@ void ShortcutsManager::reloadSettings()
     QxtUnregister();
 
     if(SETTINGS()->_useShortcut)
-    { 
+    {
       // update Qxt shorcut
       QxtRegister();
     }
-    
-    emit setting_changed();  
+
+    emit setting_changed();
 }
 
 void ShortcutsManager::QxtUnregister()
@@ -104,7 +104,7 @@ void ShortcutsManager::QxtRegister()
 
     foreach (QString id, m_shortcuts.keys())
     {
-#ifdef ENABLE_SHORTCUT
+#ifdef ENABLE_SHORTCUTS
       GlobalShortcut* qxt_shortcut = new GlobalShortcut(this);
       bool is_OK = qxt_shortcut->setShortcut(m_shortcuts[id].key);
       m_shortcuts[id].status = is_OK;
@@ -114,7 +114,7 @@ void ShortcutsManager::QxtRegister()
         connect(qxt_shortcut, SIGNAL(activated()), m_shortcuts[id].action, SLOT(trigger()));
         m_qxt_shortcuts << qxt_shortcut;
       }
-#endif        
+#endif
     }
 }
 
