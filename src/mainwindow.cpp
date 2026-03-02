@@ -658,6 +658,8 @@ void MainWindow::playOrPause()
         {
             if( p->view()->isTrackSelected() )
               media = p->view()->firstSelectedTrack();
+            else
+              media = m_playqueue->trackAt(0);
         }
         /* check if one playlist is opened with selection */
         else
