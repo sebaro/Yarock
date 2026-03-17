@@ -343,6 +343,9 @@ void PlayerToolBarFull::slot_update_track_playing_info() {
 
         /* ----- update total time for current track ----- */
         slot_update_total_time( m_player->currentTotalTime() );
+        if(m_player->state() == ENGINE::PAUSED) {
+            slot_update_time_position( m_player->currentTime() );
+        }
 
 
         /* update actions */

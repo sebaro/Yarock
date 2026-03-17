@@ -106,7 +106,7 @@ PlayerToolBarCompact::PlayerToolBarCompact(QWidget *parent) : PlayerToolBarBase(
       m_now_playing_widget = new QWidget( this );
       m_now_playing_widget->setLayout( hl1 );
       m_now_playing_widget->setMinimumHeight(60);
-      m_now_playing_widget->setFocusPolicy( Qt::ClickFocus );
+      //m_now_playing_widget->setFocusPolicy( Qt::ClickFocus );
 
       /*QColor color = SETTINGS()->_baseColor;
       qreal saturation = color.saturationF();
@@ -211,11 +211,11 @@ PlayerToolBarCompact::PlayerToolBarCompact(QWidget *parent) : PlayerToolBarBase(
     gl->setColumnStretch( 9, 1);
 
     /* -- widget layout -- */
-      QVBoxLayout *layout = new QVBoxLayout(this);
-      layout->setContentsMargins( 0, 0, 0, 0 );
-      layout->setSpacing(0);
-      layout->addWidget(new SeekSlider(this));
-      layout->addLayout(gl);
+    QVBoxLayout *layout = new QVBoxLayout(this);
+    layout->setContentsMargins( 0, 0, 0, 0 );
+    layout->setSpacing(0);
+    layout->addWidget(new SeekSlider(this));
+    layout->addLayout(gl);
 
     /* -- signals connection -- */
     connect(this->m_player, SIGNAL(mediaTick(qint64)), this, SLOT(slot_update_time_position(qint64)));
@@ -260,6 +260,9 @@ void PlayerToolBarCompact::slot_update_track_playing_info()
 
         /* ----- update total time for current track ----- */
         slot_update_total_time( m_player->currentTotalTime() );
+        if(m_player->state() == ENGINE::PAUSED) {
+            slot_update_time_position( m_player->currentTime() );
+        }
 
         if( m_player->state() == ENGINE::PAUSED )
           m_pauseState->show();
@@ -281,7 +284,8 @@ void PlayerToolBarCompact::slot_update_track_playing_info()
         if(track->type() == TYPE_STREAM)
             title_or_url = track->title.isEmpty() ? track->extra["station"].toString() : track->title;
 
-        const int width = m_now_playing_widget->width() - 70;
+        //const int width = m_now_playing_widget->width() - 70;
+        const int width = qobject_cast<QWidget*>(this->parent())->width()/4;
 
         QString clippedText = QFontMetrics(ui_label_title->font()).elidedText(title_or_url, Qt::ElideRight, width);
 

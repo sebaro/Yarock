@@ -38,13 +38,13 @@ class VolumeButton : public ToolButtonBase
 Q_OBJECT
   public:
     VolumeButton(QWidget *);
-  
+
   private slots:
     void slot_show_menu();
     void slot_volume_change();
     void slot_mute_change();
     void slot_apply_volume(int);
-    
+
   private:
     QLabel       *m_volume_label;
     QSlider      *m_slider;

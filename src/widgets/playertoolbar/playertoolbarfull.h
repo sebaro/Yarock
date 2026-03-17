@@ -48,19 +48,19 @@ public:
     PlayerToolBarFull(QWidget *parent);
 
     void setCollectionInfo(QString info,VIEW::Id mode);
-        
+
     void fullUpdate();
-    
+
 private:
     void setAudioProperties();
-    
+
 private:
     QHash< QString, QString >  m_metadata;
     MEDIA::TrackPtr            m_track;
     QList<quint64>             m_requests_ids;
-    
+
     VIEW::Id                   m_mode;
-   
+
     EngineBase                *m_player;
 
     QWidget                   *m_now_playing_widget;
@@ -69,24 +69,24 @@ private:
     QLabel                    *m_totalTime;
     QLabel                    *m_separator;
     QLabel                    *m_pauseState;
-    
+
     QWidget               *ui_tags_widget;
-    
+
     QLabel                *ui_artist_image;
     QLabel                *ui_album_image;
     QLabel                *ui_collection_image;
-    QLabel                *ui_collection_info;    
-    
+    QLabel                *ui_collection_info;
+
     ToolButtonBase        *ui_btn_station;
     ToolButtonBase        *ui_btn_title;
     ToolButtonBase        *ui_btn_artist;
     ToolButtonBase        *ui_btn_audio;
 
     class RatingWidget    *ui_rating;
-    
+
     QAction* PLAYING_TRACK_ADD_QUEUE;
     QAction* PLAYING_TRACK_FAVORITE;
-    
+
 private :
     void clear();
 
@@ -95,22 +95,22 @@ private slots:
     void slot_update_track_playing_info();
     void slot_update_time_position(qint64);
     void slot_update_total_time(qint64);
-    
+
     void slot_rating_changed(float);
     void slot_on_lastfm_love();
     void slot_on_track_edit();
     void slot_on_track_add_to_queue();
     void slot_on_add_to_favorite();
-    
+
     void slot_get_artist_image();
     void slot_download_image();
     void slot_download_artists_tags();
     void slot_on_infosystem_received(INFO::InfoRequestData request, QVariant output);
     void slot_on_tag_clicked();
-    void slot_on_websearch(); 
-    
+    void slot_on_websearch();
+
 signals:
-    void switchToolBarType();    
+    void switchToolBarType();
 };
 
 #endif // _PLAYER_TOOLBAR_FULL_H_

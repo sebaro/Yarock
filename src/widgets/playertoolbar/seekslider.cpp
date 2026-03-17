@@ -68,7 +68,8 @@ SeekSlider::SeekSlider(QWidget *parent) : QProgressBar(parent)
     );
 
     /* init state */
-    stop();
+    //stop();
+    slot_stateChanged();
 }
 
 void SeekSlider::seek(int msec)
@@ -125,6 +126,14 @@ void SeekSlider::slot_stateChanged()
       {
         setEnabled(true);
         m_enable = true;
+        if (this->maximum() == 100) {
+          if (Engine::instance()->currentTotalTime() > 0) {
+            this->setMaximum(Engine::instance()->currentTotalTime());
+            if(Engine::instance()->state() == ENGINE::PAUSED) {
+              this->setValue(Engine::instance()->currentTime());
+            }
+          }
+        }
       }
       else
       {

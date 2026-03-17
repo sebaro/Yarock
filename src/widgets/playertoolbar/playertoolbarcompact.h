@@ -43,21 +43,21 @@ public:
     PlayerToolBarCompact(QWidget *parent);
 
     void setCollectionInfo(QString info,VIEW::Id mode);
-    
+
     void fullUpdate();
-    
+
 private:
     VIEW::Id         m_mode;
-   
+
     EngineBase       *m_player;
 
     QWidget          *m_now_playing_widget;
-    
+
     QLabel           *ui_image;
-    QLabel           *ui_label_title;    
-    QLabel           *ui_label_album;    
-    QLabel           *ui_collection_info;    
-    
+    QLabel           *ui_label_title;
+    QLabel           *ui_label_album;
+    QLabel           *ui_collection_info;
+
     QLabel           *m_currentTime;
     QLabel           *m_totalTime;
     QLabel           *m_separator;
@@ -70,7 +70,7 @@ private slots:
     void slot_update_track_playing_info();
     void slot_update_time_position(qint64);
     void slot_update_total_time(qint64);
-    
+
 signals:
     void switchToolBarType();
 };
