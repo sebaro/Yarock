@@ -37,7 +37,7 @@ public:
     static VlcLib* instance()  { return INSTANCE; }
     libvlc_instance_t* core();
 
-    //! initialization 
+    //! initialization
     bool init();
 
     //! print most recent error message of libvlc

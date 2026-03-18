@@ -144,7 +144,7 @@ void EngineVlc::play()
 /* ---------------------------------------------------------------------------*/
 void EngineVlc::pause()
 {
-    //Debug::debug() << "[EngineVlc] -> pause";
+    Debug::debug() << "[EngineVlc] -> pause";
 
     if (libvlc_media_player_can_pause(m_vlc_player))
         libvlc_media_player_set_pause(m_vlc_player, true);
@@ -155,9 +155,13 @@ void EngineVlc::pause()
 /* ---------------------------------------------------------------------------*/
 void EngineVlc::stop()
 {
-    //Debug::debug() << "[EngineVlc] -> stop";
+    Debug::debug() << "[EngineVlc] -> stop";
 
+#if (LIBVLC_VERSION_INT >= LIBVLC_VERSION(4, 0, 0, 0))
+    libvlc_media_player_stop_async(m_vlc_player);
+#else
     libvlc_media_player_stop(m_vlc_player);
+#endif
 
     EngineBase::stop();
 }
@@ -168,7 +172,11 @@ void EngineVlc::stop()
 void EngineVlc::setMediaItem(MEDIA::TrackPtr track)
 {
     Debug::debug() << "[EngineVlc] -> setMediaItem";
+#if (LIBVLC_VERSION_INT >= LIBVLC_VERSION(4, 0, 0, 0))
+    libvlc_media_player_stop_async(m_vlc_player);
+#else
     libvlc_media_player_stop(m_vlc_player);
+#endif
 
     if(m_currentMediaItem)
     {
@@ -342,13 +350,21 @@ void EngineVlc::createCoreConnections()
          << libvlc_MediaPlayerStopped
          << libvlc_MediaPlayerForward
          << libvlc_MediaPlayerBackward
+#if (LIBVLC_VERSION_INT >= LIBVLC_VERSION(4, 0, 0, 0))
+         << libvlc_MediaPlayerStopping
+#else
          << libvlc_MediaPlayerEndReached
+#endif
          << libvlc_MediaPlayerEncounteredError
          << libvlc_MediaPlayerTimeChanged
          << libvlc_MediaPlayerPositionChanged
          << libvlc_MediaPlayerSeekableChanged
          << libvlc_MediaPlayerPausableChanged
+#if (LIBVLC_VERSION_INT >= LIBVLC_VERSION(4, 0, 0, 0))
+         << libvlc_MediaPlayerTitleSelectionChanged
+#else
          << libvlc_MediaPlayerTitleChanged
+#endif
          << libvlc_MediaPlayerLengthChanged;
 
      foreach(const libvlc_event_e &event, list) {
@@ -368,13 +384,21 @@ void EngineVlc::removeCoreConnections()
          << libvlc_MediaPlayerStopped
          << libvlc_MediaPlayerForward
          << libvlc_MediaPlayerBackward
+#if (LIBVLC_VERSION_INT >= LIBVLC_VERSION(4, 0, 0, 0))
+         << libvlc_MediaPlayerStopping
+#else
          << libvlc_MediaPlayerEndReached
+#endif
          << libvlc_MediaPlayerEncounteredError
          << libvlc_MediaPlayerTimeChanged
          << libvlc_MediaPlayerPositionChanged
          << libvlc_MediaPlayerSeekableChanged
          << libvlc_MediaPlayerPausableChanged
+#if (LIBVLC_VERSION_INT >= LIBVLC_VERSION(4, 0, 0, 0))
+         << libvlc_MediaPlayerTitleSelectionChanged
+#else
          << libvlc_MediaPlayerTitleChanged
+#endif
          << libvlc_MediaPlayerLengthChanged;
 
     foreach(const libvlc_event_e &event, list) {
@@ -384,7 +408,7 @@ void EngineVlc::removeCoreConnections()
 
 void EngineVlc::libvlc_callback(const libvlc_event_t *event,void *data)
 {
-    //Debug::debug() << "[EngineVlc] libvlc_callback:" << QString(libvlc_event_type_name(event->type));
+    //Debug::debug() << "[EngineVlc] libvlc_callback:" << event->type;
     EngineVlc *that = reinterpret_cast<EngineVlc *>(data);
     Q_ASSERT(that);
 
@@ -408,7 +432,11 @@ void EngineVlc::libvlc_callback(const libvlc_event_t *event,void *data)
        P_CHANGE_STATE(ENGINE::ERROR);
        break;
 
+#if (LIBVLC_VERSION_INT >= LIBVLC_VERSION(4, 0, 0, 0))
+    case libvlc_MediaPlayerStopping:
+#else
     case libvlc_MediaPlayerEndReached:
+#endif
         QMetaObject::invokeMethod(
                     that, "slot_on_media_finished",
                     Qt::QueuedConnection);
@@ -431,8 +459,13 @@ void EngineVlc::libvlc_callback(const libvlc_event_t *event,void *data)
     case libvlc_MediaPlayerPausableChanged:
         //  emit that->pausableChanged(event->u.media_player_pausable_changed.new_pausable);
       break;
+#if (LIBVLC_VERSION_INT >= LIBVLC_VERSION(4, 0, 0, 0))
+    case libvlc_MediaPlayerTitleSelectionChanged:
+        //  emit that->titleChanged(event->u.media_player_title_selection_changed.new_title);
+#else
     case libvlc_MediaPlayerTitleChanged:
         //  emit that->titleChanged(event->u.media_player_title_changed.new_title);
+#endif
       break;
     case libvlc_MediaPlayerLengthChanged:
         // WARNING : nothing done here because work is done according media signal
@@ -447,9 +480,9 @@ void EngineVlc::libvlc_callback(const libvlc_event_t *event,void *data)
     case libvlc_MediaPlayerPositionChanged:
     default:
         break;
-        QString msg = QString("Unknown event: ") + QString(libvlc_event_type_name(event->type));
-        Q_ASSERT_X(false, "event_cb", qPrintable(msg));
-        break;
+        //QString msg = QString("Unknown event: ") + QString(libvlc_event_type_name(event->type));
+        //Q_ASSERT_X(false, "event_cb", qPrintable(msg));
+        //break;
     }
 }
 
@@ -617,7 +650,7 @@ void EngineVlc::slot_on_media_about_to_finish()
 void EngineVlc::slot_on_metadata_change()
 {
     Debug::debug() << "[EngineVlc] -> slot_on_metadata_change";
-    if(m_currentMediaItem->type() != TYPE_STREAM)
+    if(!m_currentMediaItem || m_currentMediaItem->type() != TYPE_STREAM)
       return;
 
     const QString artist     = m_vlc_media->meta(libvlc_meta_Artist);
@@ -636,8 +669,24 @@ void EngineVlc::slot_on_metadata_change()
         }
     }
 
-    libvlc_media_track_t **arrayVlcTracks = new libvlc_media_track_t *[5];
+#if (LIBVLC_VERSION_INT >= LIBVLC_VERSION(4, 0, 0, 0))
+    // libvlc_track_audio = 0 | libvlc_track_video = 1 | libvlc_track_text = 2
+    libvlc_track_type_t type = (libvlc_track_type_t)0;
+    libvlc_media_tracklist_t *tracklist = libvlc_media_get_tracklist(m_vlc_media->core(), type);
+    size_t numberOfTracks = libvlc_media_tracklist_count(tracklist);
 
+    if(numberOfTracks == 1)
+    {
+        libvlc_media_track_t *track = libvlc_media_tracklist_at(tracklist, 0);
+
+        m_currentMediaItem->extra["bitrate"] = track->i_bitrate/1000;
+        m_currentMediaItem->extra["samplerate"] = track->audio->i_rate;
+        const char* codecDesc = libvlc_media_get_codec_description(track->i_type,track->i_codec);
+        m_currentMediaItem->extra["format"] = QString(codecDesc);
+    }
+    libvlc_media_tracklist_delete(tracklist);
+#else
+    libvlc_media_track_t **arrayVlcTracks = new libvlc_media_track_t *[5];
     int numberOfTracks = libvlc_media_tracks_get(m_vlc_media->core(), &arrayVlcTracks);
 
     if(numberOfTracks == 1)
@@ -653,6 +702,7 @@ void EngineVlc::slot_on_metadata_change()
 #endif
          libvlc_media_tracks_release(arrayVlcTracks,1);
     }
+#endif
 
     emit mediaMetaDataChanged();
 }
@@ -665,7 +715,11 @@ void EngineVlc::seek(qint64 milliseconds)
 {
     Debug::debug() << "[EngineVlc] -> seek";
 
+#if (LIBVLC_VERSION_INT >= LIBVLC_VERSION(4, 0, 0, 0))
+    libvlc_media_player_set_time(m_vlc_player, milliseconds, true);
+#else
     libvlc_media_player_set_time(m_vlc_player, milliseconds);
+#endif
 
     const qint64 time  = currentTime();
     const qint64 total = currentTotalTime();

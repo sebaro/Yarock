@@ -41,18 +41,14 @@ qt_standard_project_setup()
 include_directories(${QT_INCLUDES})
 
 # ------------------------------------------------------------------------------
-# Configuration
-# ------------------------------------------------------------------------------
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/config.h.in
-               ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/player/vlc/config.h)
-
-# ------------------------------------------------------------------------------
 # Sources
 # ------------------------------------------------------------------------------
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/player/
                     ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/player/vlc
                     ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/mediaitem
                     ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src)
+
+include_directories(${CMAKE_BINARY_DIR})
 
 set(SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/../../../../src/core/player/vlc/engine_vlc.cpp

@@ -22,6 +22,7 @@
 #include "debug.h"
 
 #include <vlc/vlc.h>
+#include "vlc/libvlc_version.h"
 
 
 VlcMedia::VlcMedia() : QObject()
@@ -49,16 +50,24 @@ void VlcMedia::init(const QString &location, bool isLocal)
     /* Create a new libvlc media descriptor from location */
     if (isLocal)
     {
+#if (LIBVLC_VERSION_INT >= LIBVLC_VERSION(4, 0, 0, 0))
+      m_vlcMedia = libvlc_media_new_path(m_currentLocation.toLocal8Bit().data());
+#else
       m_vlcMedia = libvlc_media_new_path(VlcLib::instance()->core(), m_currentLocation.toLocal8Bit().data());
+#endif
       setOption("-no-auto-preparse");
     }
     else
     {
+#if (LIBVLC_VERSION_INT >= LIBVLC_VERSION(4, 0, 0, 0))
+      m_vlcMedia = libvlc_media_new_location(m_currentLocation.toLocal8Bit().data());
+#else
       m_vlcMedia = libvlc_media_new_location(VlcLib::instance()->core(), m_currentLocation.toLocal8Bit().data());
+#endif
     }
-            
+
     m_vlcEvents = libvlc_media_event_manager( m_vlcMedia );
-    
+
     createCoreConnections();
 }
 
@@ -112,7 +121,7 @@ void VlcMedia::libvlc_callback(const libvlc_event_t *event,void *data)
 {
     VlcMedia *vlc_media = (VlcMedia *)data;
     Q_ASSERT(vlc_media);
-    
+
     switch(event->type)
     {
     case libvlc_MediaDurationChanged:
@@ -127,7 +136,7 @@ void VlcMedia::libvlc_callback(const libvlc_event_t *event,void *data)
                     Qt::QueuedConnection);
         break;
     default:
-        Debug::error() << "Unknown event: " << QString(libvlc_event_type_name(event->type));
+        //Debug::error() << "Unknown event: " << QString(libvlc_event_type_name(event->type));
         break;
     }
 }

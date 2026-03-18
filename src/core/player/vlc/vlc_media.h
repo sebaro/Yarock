@@ -41,14 +41,14 @@ public:
     libvlc_media_t* core();
 
     void init(const QString &location,bool isLocal);
-    
+
     QString currentLocation() const;
 
     void setOption(const QString &option);
     void setOptions(const QStringList &options);
 
     QString meta(libvlc_meta_t meta);
-    
+
 signals:
     void durationChanged(qint64 duration);
     void metaDataChanged();
