@@ -1,9 +1,16 @@
 Yarock changes
 
+#### 1.5.2  - PUBLIC RELEASE - march 2026
+---------------------------------------------------------------------------------
+  - New    : Add support for building against VLC 4
+  - New    : Port shortcuts to Qt6
+  - BugFix : Fix track info and seekbar when toggling playertoolbar while playing
+  - Changes: Play first track when none is selected
+
 #### 1.5.1  - PUBLIC RELEASE - march 2025
 ---------------------------------------------------------------------------------
   - BugFix : Fix building against Taglib 2 [Issue #1]
-  - BugFix : Fix app metadata [Request #1]
+  - BugFix : Fix app metadata [Request #3]
   - BugFix : Fix creation of config.h
 
 #### 1.5.0  - PUBLIC RELEASE - april 2024
