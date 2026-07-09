@@ -37,7 +37,7 @@ option(ENABLE_SHORTCUTS "Enable/disable global shortcuts" ON)
 # Qt
 # ------------------------------------------------------------------------------
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt6Widgets_EXECUTABLE_COMPILE_FLAGS}")
-find_package(Qt6Gui REQUIRED)
+find_package(Qt6 REQUIRED COMPONENTS GuiPrivate)
 find_package(Qt6Widgets REQUIRED)
 find_package(Qt6Xml REQUIRED)
 find_package(Qt6Network REQUIRED)
