@@ -32,7 +32,7 @@ include_directories(${X11_INCLUDE_DIR})
 # ------------------------------------------------------------------------------
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt6Widgets_EXECUTABLE_COMPILE_FLAGS}")
 find_package(Qt6Core COMPONENTS PRIVATE_HEADERS REQUIRED)
-find_package(Qt6Gui REQUIRED COMPONENTS GuiPrivate)
+find_package(Qt6 REQUIRED COMPONENTS GuiPrivate)
 include_directories(${Qt6Gui_PRIVATE_INCLUDE_DIRS})
 include_directories( ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR} ${QTINCLUDES} )
 qt6_wrap_cpp(QXT-SOURCES-MOC ${QXT-MOC-HEADERS})
